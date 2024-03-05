@@ -1,0 +1,638 @@
+data_140K_publ
+
+_pd_block_id
+  2011-05-31T14:42|CUT|JPSM|i11
+
+# start Validation Reply Form
+_vrf_PLAT601_140K_publ
+;
+PROBLEM: Solvent accessible voids of 1189 A**3
+RESPONSE: Porous framework material in vacuo
+;
+_vrf_PLAT201_140K_publ
+;
+PROBLEM: Isotropic non-H atoms in main residue      20
+RESPONSE: Powder diffraction data, kept isotropic
+;
+_vrf_PLAT702_140K_publ
+;
+PROBLEM: Calculated and reported O4-Sc2-O6 angles differ
+RESPONSE: Rounding error.
+;
+# end Validation Reply Form
+
+_audit_creation_method  "from EXP file using GSAS2CIF"
+_audit_creation_date                   2011-05-31T14:42
+_audit_author_name                     JPSM
+_audit_update_record
+; 2011-05-31T14:42  Initial CIF as created by GSAS2CIF
+;
+
+#=============================================================================
+# this information describes the project, paper etc. for the CIF             #
+# Acta Cryst. Section C papers and editorial correspondence is generated     #
+# from the information in this section                                       #
+#                                                                            #
+#   (from)   CIF submission form for Rietveld refinements (Acta Cryst. C)    #
+#                                                 Version 14 December 1998   #
+#=============================================================================
+# 1. SUBMISSION DETAILS
+
+_publ_contact_author_name            ?   # Name of author for correspondence
+_publ_contact_author_address             # Address of author for correspondence
+; ?
+;
+_publ_contact_author_email           ?
+_publ_contact_author_fax             ?
+_publ_contact_author_phone           ?
+
+_publ_contact_letter
+; ?
+;
+
+_publ_requested_journal              ?
+_publ_requested_coeditor_name        ?
+_publ_requested_category             ?   # Acta C: one of CI/CM/CO/FI/FM/FO
+
+#==============================================================================
+
+# 2. PROCESSING SUMMARY (IUCr Office Use Only)
+
+_journal_data_validation_number      ?
+
+_journal_date_recd_electronic        ?
+_journal_date_to_coeditor            ?
+_journal_date_from_coeditor          ?
+_journal_date_accepted               ?
+_journal_date_printers_first         ?
+_journal_date_printers_final         ?
+_journal_date_proofs_out             ?
+_journal_date_proofs_in              ?
+_journal_coeditor_name               ?
+_journal_coeditor_code               ?
+_journal_coeditor_notes
+; ?
+;
+_journal_techeditor_code             ?
+_journal_techeditor_notes
+; ?
+;
+_journal_coden_ASTM                  ?
+_journal_name_full                   ?
+_journal_year                        ?
+_journal_volume                      ?
+_journal_issue                       ?
+_journal_page_first                  ?
+_journal_page_last                   ?
+_journal_paper_category              ?
+_journal_suppl_publ_number           ?
+_journal_suppl_publ_pages            ?
+
+#==============================================================================
+
+# 3. TITLE AND AUTHOR LIST
+
+_publ_section_title
+; ?
+;
+_publ_section_title_footnote
+; ?
+;
+
+# The loop structure below should contain the names and addresses of all
+# authors, in the required order of publication. Repeat as necessary.
+
+loop_
+	_publ_author_name
+        _publ_author_footnote
+	_publ_author_address
+ ?                                   #<--'Last name, first name'
+; ?
+;
+; ?
+;
+
+#==============================================================================
+
+# 4. TEXT
+
+_publ_section_synopsis
+;  ?
+;
+_publ_section_abstract
+; ?
+;
+_publ_section_comment
+; ?
+;
+_publ_section_exptl_prep      # Details of the preparation of the sample(s)
+                              # should be given here.
+; ?
+;
+_publ_section_exptl_refinement
+; ?
+;
+_publ_section_references
+; ?
+;
+_publ_section_figure_captions
+; ?
+;
+_publ_section_acknowledgements
+; ?
+;
+
+#=============================================================================
+# 5. OVERALL REFINEMENT & COMPUTING DETAILS
+
+_refine_special_details
+; ?
+;
+_pd_proc_ls_special_details
+; ?
+;
+
+# The following items are used to identify the programs used.
+_computing_molecular_graphics     ?
+_computing_publication_material   ?
+
+_refine_ls_weighting_scheme       ?
+_refine_ls_weighting_details      ?
+_refine_ls_hydrogen_treatment     ?
+_refine_ls_extinction_method      ?
+_refine_ls_extinction_coef        ?
+_refine_ls_number_constraints     ?
+
+_refine_ls_restrained_S_all       ?
+_refine_ls_restrained_S_obs       ?
+
+#==============================================================================
+# 6. SAMPLE PREPARATION DATA
+
+# (In the unusual case where multiple samples are used in a single
+#  Rietveld study, this information should be moved into the phase
+#  blocks)
+
+# The following three fields describe the preparation of the material.
+# The cooling rate is in K/min.  The pressure at which the sample was
+# prepared is in kPa.  The temperature of preparation is in K.
+
+_pd_prep_cool_rate                ?
+_pd_prep_pressure                 ?
+_pd_prep_temperature              ?
+
+_pd_char_colour                   ?       # use ICDD colour descriptions
+_refine_ls_shift/su_max                0.04
+_refine_ls_shift/su_mean               0.00
+_computing_structure_refinement        GSAS
+_refine_ls_number_parameters           64
+_refine_ls_goodness_of_fit_all         1.46
+_refine_ls_number_restraints           61
+_refine_ls_matrix_type                 full
+#==============================================================================
+# 7. CHEMICAL, STRUCTURAL AND CRYSTAL DATA
+
+_pd_char_particle_morphology      ?
+
+_chemical_name_systematic
+; ?
+;
+_chemical_name_common             ?
+_chemical_formula_moiety          ?
+_chemical_formula_structural      ?
+_chemical_formula_analytical      ?
+_chemical_melting_point           ?
+_chemical_compound_source         ?       # for minerals and
+                                          # natural products
+_symmetry_space_group_name_Hall   -C_2yc
+
+_exptl_crystal_F_000               ?
+_exptl_crystal_density_diffrn      1.21
+_exptl_crystal_density_meas        ?
+_exptl_crystal_density_method      ?
+
+_cell_measurement_temperature     140
+
+_cell_special_details
+; ?
+;
+
+_geom_special_details             ?
+
+# The following item identifies the program(s) used (if appropriate).
+_computing_structure_solution     ?
+
+_refine_diff_density_max          0.188
+_refine_diff_density_min          -0.254
+
+
+#==============================================================================
+
+# 8. Phase information from GSAS
+
+_pd_phase_name
+    "from C:/GSASSoln/ScBDC/Full-Temp-Series/ScBDC-model/Monoclinic C2c"
+_cell_length_a                         8.75434(14)
+_cell_length_b                         34.38536(13)
+_cell_length_c                         11.14542(8)
+_cell_angle_alpha                      90.0
+_cell_angle_beta                       111.4791(8)
+_cell_angle_gamma                      90.0
+_cell_volume                           3122.00(5)
+_symmetry_cell_setting                 monoclinic
+_symmetry_space_group_name_H-M         "C 1 2/c 1"
+loop_ _symmetry_equiv_pos_site_id _symmetry_equiv_pos_as_xyz
+       1 +x,+y,+z
+       2 -x,+y,-z+1/2
+      -1 -x,-y,-z
+      -2 +x,-y,+z+1/2
+     101 +x+1/2,+y+1/2,+z
+     102 -x+1/2,+y+1/2,-z+1/2
+    -101 -x+1/2,-y+1/2,-z
+    -102 +x+1/2,-y+1/2,+z+1/2
+
+# ATOMIC COORDINATES AND DISPLACEMENT PARAMETERS
+
+
+loop_
+      _atom_site_type_symbol
+      _atom_site_label
+      _atom_site_fract_x
+      _atom_site_fract_y
+      _atom_site_fract_z
+      _atom_site_occupancy
+      _atom_site_thermal_displace_type
+      _atom_site_U_iso_or_equiv
+      _atom_site_symmetry_multiplicity
+Sc
+Sc1     0.0          0.36604(11)  0.25         1.0        Uiso   0.0001(8)     4
+Sc
+Sc2     0.5          0.38714(11)  0.25         1.0        Uiso   0.0001(8)     4
+O
+O1      0.2037(4)    0.36537(16)  0.4232(4)    1.0        Uiso   0.0001(8)     8
+O
+O2      0.4214(4)    0.38742(15)  0.40591(26)  1.0        Uiso   0.0001(8)     8
+O
+O3      0.1151(4)    0.40831(9)   0.18076(31)  1.0        Uiso   0.0001(8)     8
+O
+O4      0.32673(29)  0.43037(13)  0.1614(5)    1.0        Uiso   0.0001(8)     8
+O
+O5     -0.10956(32)  0.32225(13)  0.32356(31)  1.0        Uiso   0.0001(8)     8
+O
+O6     -0.32766(34)  0.34422(9)   0.3401(5)    1.0        Uiso   0.0001(8)     8
+C
+C1      0.3516(4)    0.37482(22)  0.47815(22)  1.0        Uiso   0.0108(20)    8
+C
+C2      0.42794(30)  0.3784(4)    0.61758(12)  1.0        Uiso   0.0108(20)    8
+C
+C3      0.33183(17)  0.3743(5)    0.69110(22)  1.0        Uiso   0.0108(20)    8
+C
+C4      0.59598(20)  0.3751(5)    0.67608(16)  1.0        Uiso   0.0108(20)    8
+C
+C5      0.17693(31)  0.43548(9)   0.1389(4)    1.0        Uiso   0.0108(20)    8
+C
+C6      0.08434(27)  0.46751(5)   0.0612(4)    1.0        Uiso   0.0108(20)    8
+C
+C7     -0.07746(24)  0.47270(7)   0.04792(27)  1.0        Uiso   0.0108(20)    8
+C
+C8      0.16674(17)  0.49775(9)   0.0299(4)    1.0        Uiso   0.0108(20)    8
+C
+C9     -0.22937(34)  0.31634(8)   0.3572(4)    1.0        Uiso   0.0108(20)    8
+C
+C10    -0.24068(31)  0.28204(5)   0.42919(22)  1.0        Uiso   0.0108(20)    8
+C
+C11    -0.11637(19)  0.25488(8)   0.46448(25)  1.0        Uiso   0.0108(20)    8
+C
+C12    -0.36615(24)  0.27889(6)   0.47547(35)  1.0        Uiso   0.0108(20)    8
+
+# If you change Z, be sure to change all 3 of the following
+_chemical_formula_sum                  "C12 O6 Sc"
+_chemical_formula_weight               285.08
+_cell_formula_units_Z                  8
+
+# MOLECULAR GEOMETRY
+
+loop_
+      _geom_bond_atom_site_label_1
+      _geom_bond_atom_site_label_2
+      _geom_bond_distance
+      _geom_bond_site_symmetry_1
+      _geom_bond_site_symmetry_2
+      _geom_bond_publ_flag
+  Sc1       O1              2.0942(31)  .      1_555  N
+  Sc1       O1              2.0942(31)  .      2_555  N
+  Sc1       O3                2.072(4)  .      1_555  N
+  Sc1       O3                2.072(4)  .      2_555  N
+  Sc1       O5                2.106(4)  .      1_555  N
+  Sc1       O5                2.106(4)  .      2_555  N
+  Sc2       O2              2.0902(32)  .      1_555  N
+  Sc2       O2              2.0902(32)  .      2_655  N
+  Sc2       O4                2.095(4)  .      1_555  N
+  Sc2       O4                2.095(4)  .      2_655  N
+  Sc2       O6                2.087(4)  .      1_655  N
+  Sc2       O6                2.087(4)  .      2_555  N
+  O1        Sc1             2.0942(31)  .      1_555  N
+  O1        O2                2.125(5)  .      1_555  N
+  O1        C1                1.256(4)  .      1_555  N
+  O2        Sc2             2.0902(32)  .      1_555  N
+  O2        O1                2.125(5)  .      1_555  N
+  O2        C1                1.253(4)  .      1_555  N
+  O3        Sc1               2.072(4)  .      1_555  N
+  O3        O4                2.085(5)  .      1_555  N
+  O3        C5                1.253(4)  .      1_555  N
+  O4        Sc2               2.095(4)  .      1_555  N
+  O4        O3                2.085(5)  .      1_555  N
+  O4        C5              1.2540(34)  .      1_555  N
+  O5        Sc1               2.106(4)  .      1_555  N
+  O5        O6                2.123(5)  .      1_555  N
+  O5        C9                1.253(4)  .      1_555  N
+  O6        Sc2               2.087(4)  .      1_455  N
+  O6        O5                2.123(5)  .      1_555  N
+  O6        C9              1.2552(35)  .      1_555  N
+  C1        O1                1.256(4)  .      1_555  N
+  C1        O2                1.253(4)  .      1_555  N
+  C1        C2              1.4547(27)  .      1_555  N
+  C2        C1              1.4547(27)  .      1_555  N
+  C2        C3              1.3800(35)  .      1_555  N
+  C2        C4              1.3783(30)  .      1_555  N
+  C3        C2              1.3800(35)  .      1_555  N
+  C3        C4              1.3808(26)  .      2_656  N
+  C4        C2              1.3783(30)  .      1_555  N
+  C4        C3              1.3808(26)  .      2_656  N
+  C5        O3                1.253(4)  .      1_555  N
+  C5        O4              1.2540(34)  .      1_555  N
+  C5        C6              1.4512(32)  .      1_555  N
+  C6        C5              1.4512(32)  .      1_555  N
+  C6        C7              1.3808(30)  .      1_555  N
+  C6        C8              1.3809(34)  .      1_555  N
+  C7        C6              1.3808(30)  .      1_555  N
+  C7        C8              1.3782(32)  .     -1_565  N
+  C8        C6              1.3809(34)  .      1_555  N
+  C8        C7              1.3782(32)  .     -1_565  N
+  C9        O5                1.253(4)  .      1_555  N
+  C9        O6              1.2552(35)  .      1_555  N
+  C9        C10             1.4501(32)  .      1_555  N
+  C10       C9              1.4501(32)  .      1_555  N
+  C10       C11             1.3775(28)  .      1_555  N
+  C10       C12               1.378(4)  .      1_555  N
+  C11       C10             1.3775(28)  .      1_555  N
+  C11       C12             1.3765(32)  .   -101_346  N
+  C12       C10               1.378(4)  .      1_555  N
+  C12       C11             1.3765(32)  .   -101_346  N
+
+loop_
+      _geom_angle_atom_site_label_1
+      _geom_angle_atom_site_label_2
+      _geom_angle_atom_site_label_3
+      _geom_angle
+      _geom_angle_site_symmetry_1
+      _geom_angle_site_symmetry_2
+      _geom_angle_site_symmetry_3
+      _geom_angle_publ_flag
+  O1        Sc1       O1                178.7(4)      1_555  .      2_555  N
+  O1        Sc1       O3               89.14(17)      1_555  .      1_555  N
+  O1        Sc1       O3               91.74(18)      1_555  .      2_555  N
+  O1        Sc1       O5               89.35(17)      1_555  .      1_555  N
+  O1        Sc1       O5               89.75(17)      1_555  .      2_555  N
+  O1        Sc1       O3               91.74(18)      2_555  .      1_555  N
+  O1        Sc1       O3               89.14(17)      2_555  .      2_555  N
+  O1        Sc1       O5               89.75(17)      2_555  .      1_555  N
+  O1        Sc1       O5               89.35(17)      2_555  .      2_555  N
+  O3        Sc1       O3               90.90(24)      1_555  .      2_555  N
+  O3        Sc1       O5              178.16(14)      1_555  .      1_555  N
+  O3        Sc1       O5               90.21(14)      1_555  .      2_555  N
+  O3        Sc1       O5               90.21(14)      2_555  .      1_555  N
+  O3        Sc1       O5              178.16(14)      2_555  .      2_555  N
+  O5        Sc1       O5               88.72(25)      1_555  .      2_555  N
+  O2        Sc2       O2            180.0000(32)      1_555  .      2_655  N
+  O2        Sc2       O4               89.23(20)      1_555  .      1_555  N
+  O2        Sc2       O4               90.40(20)      1_555  .      2_655  N
+  O2        Sc2       O6               90.18(20)      1_555  .      1_655  N
+  O2        Sc2       O6               90.19(20)      1_555  .      2_555  N
+  O2        Sc2       O4               90.40(20)      2_655  .      1_555  N
+  O2        Sc2       O4               89.23(20)      2_655  .      2_655  N
+  O2        Sc2       O6               90.19(20)      2_655  .      1_655  N
+  O2        Sc2       O6               90.18(20)      2_655  .      2_555  N
+  O4        Sc2       O4               89.61(24)      1_555  .      2_655  N
+  O4        Sc2       O6            180.0000(23)      1_555  .      1_655  N
+  O4        Sc2       O6               90.22(13)      1_555  .      2_555  N
+  O4        Sc2       O6               90.22(13)      2_655  .      1_655  N
+  O4        Sc2       O6            180.0000(23)      2_655  .      2_555  N
+  O6        Sc2       O6               89.96(22)      1_655  .      2_555  N
+  Sc1       O1        C1                145.5(4)      1_555  .      1_555  N
+  Sc2       O2        C1                156.8(5)      1_555  .      1_555  N
+  Sc1       O3        C5              176.00(29)      1_555  .      1_555  N
+  Sc2       O4        C5              135.85(34)      1_555  .      1_555  N
+  Sc1       O5        C9              141.52(31)      1_555  .      1_555  N
+  Sc2       O6        C9                161.4(4)      1_455  .      1_555  N
+  O1        C1        O2              115.76(32)      1_555  .      1_555  N
+  O1        C1        C2                122.1(4)      1_555  .      1_555  N
+  O2        C1        C2                121.1(4)      1_555  .      1_555  N
+  C1        C2        C3              118.96(30)      1_555  .      1_555  N
+  C1        C2        C4              119.44(29)      1_555  .      1_555  N
+  C3        C2        C4              119.19(26)      1_555  .      1_555  N
+  C2        C3        C4              119.68(22)      1_555  .      2_656  N
+  C2        C4        C3              119.94(18)      1_555  .      2_656  N
+  O3        C5        O4              112.57(33)      1_555  .      1_555  N
+  O3        C5        C6              124.42(26)      1_555  .      1_555  N
+  O4        C5        C6              122.73(35)      1_555  .      1_555  N
+  C5        C6        C7              119.28(26)      1_555  .      1_555  N
+  C5        C6        C8              119.52(21)      1_555  .      1_555  N
+  C7        C6        C8              119.07(17)      1_555  .      1_555  N
+  C6        C7        C8              119.06(21)      1_555  .     -1_565  N
+  C6        C8        C7              119.06(15)      1_555  .     -1_565  N
+  O5        C9        O6                115.7(4)      1_555  .      1_555  N
+  O5        C9        C10             122.11(29)      1_555  .      1_555  N
+  O6        C9        C10             121.54(34)      1_555  .      1_555  N
+  C9        C10       C11             120.16(25)      1_555  .      1_555  N
+  C9        C10       C12             119.76(22)      1_555  .      1_555  N
+  C11       C10       C12             119.63(18)      1_555  .      1_555  N
+  C10       C11       C12             119.59(18)      1_555  .   -101_456  N
+  C10       C12       C11             119.62(17)      1_555  .   -101_456  N
+
+
+data_(NO2)-100K_publ
+
+_pd_phase_name
+                     "from C:/GSASSoln/ScBDC/Full-Temp-Series/SRM833/LEBAIL.EXP"
+_cell_length_a                         8.66745(20)
+_cell_length_b                         34.34855(30)
+_cell_length_c                         11.42264(15)
+_cell_angle_alpha                      90.0
+_cell_angle_beta                       115.2333(12)
+_cell_angle_gamma                      90.0
+_cell_volume                           3076.19(8)
+_symmetry_cell_setting                 monoclinic
+_symmetry_space_group_name_H-M         "C 1 2/c 1"
+loop_ _symmetry_equiv_pos_site_id _symmetry_equiv_pos_as_xyz
+         1 +x,+y,+z
+         2 -x,+y,-z+1/2
+        -1 -x,-y,-z
+        -2 +x,-y,+z+1/2
+       101 +x+1/2,+y+1/2,+z
+       102 -x+1/2,+y+1/2,-z+1/2
+      -101 -x+1/2,-y+1/2,-z
+      -102 +x+1/2,-y+1/2,+z+1/2
+
+loop_
+      _atom_site_type_symbol
+      _atom_site_label
+      _atom_site_fract_x
+      _atom_site_fract_y
+      _atom_site_fract_z
+      _atom_site_occupancy
+      _atom_site_thermal_displace_type
+      _atom_site_U_iso_or_equiv
+      _atom_site_symmetry_multiplicity
+Sc
+Sc1     0.0          0.36303(15)  0.25         1.0        Uiso   0.0043(13)    4
+Sc
+Sc2     0.5          0.38348(18)  0.25         1.0        Uiso   0.0043(13)    4
+O
+O1      0.2359(7)    0.3667(4)    0.4138(6)    1.0        Uiso   0.0115(18)    8
+O
+O2      0.4921(11)   0.3816(4)    0.4343(7)    1.0        Uiso   0.0115(18)    8
+O
+O3      0.0597(11)   0.40293(21)  0.1370(7)    1.0        Uiso   0.0115(18)    8
+O
+O4      0.3107(10)   0.42655(26)  0.1726(13)   1.0        Uiso   0.0115(18)    8
+O
+O5     -0.0771(11)   0.31810(21)  0.3363(9)    1.0        Uiso   0.0115(18)    8
+O
+O6     -0.3287(11)   0.33768(26)  0.3112(12)   1.0        Uiso   0.0115(18)    8
+C
+C1      0.3935(14)   0.3720(8)    0.4813(9)    1.0        Uiso   0.0855(26)    8
+C
+C2      0.4532(6)    0.3753(6)    0.6187(5)    1.0        Uiso   0.0855(26)    8
+C
+C3      0.3290(6)    0.3740(6)    0.6653(5)    1.0        Uiso   0.0855(26)    8
+C
+C4      0.6271(5)    0.3749(5)    0.7016(5)    1.0        Uiso   0.0855(26)    8
+N
+N4      0.7597(9)    0.3744(4)    0.6523(9)    0.5        Uiso   0.0855(26)    8
+C
+C5      0.1578(9)    0.43202(23)  0.1359(13)   1.0        Uiso   0.0855(26)    8
+C
+C6      0.0808(5)    0.46693(14)  0.0690(8)    1.0        Uiso   0.0855(26)    8
+C
+C7     -0.0971(5)    0.46722(11) -0.0069(11)   1.0        Uiso   0.0855(26)    8
+C
+C8      0.17620(19)  0.49598(14)  0.0443(7)    1.0        Uiso   0.0855(26)    8
+N
+N8      0.3628(5)    0.4902(4)    0.0701(11)   0.5        Uiso   0.0855(26)    8
+C
+C9     -0.1991(12)   0.31544(27)  0.3690(11)   1.0        Uiso   0.0855(26)    8
+C
+C10    -0.2151(7)    0.28298(19)  0.4445(9)    1.0        Uiso   0.0855(26)    8
+C
+C11    -0.0875(6)    0.25472(20)  0.4988(9)    1.0        Uiso   0.0855(26)    8
+N
+N11     0.0848(8)    0.2580(4)    0.5005(11)   0.5        Uiso   0.0855(26)    8
+C
+C12    -0.3756(7)    0.27801(21)  0.4426(10)   1.0        Uiso   0.0855(26)    8
+O
+O4A     0.8154(16)   0.3425(4)    0.6233(14)   0.5        Uiso   0.0855(26)    8
+O
+O4B     0.8312(15)   0.4048(4)    0.6340(14)   0.5        Uiso   0.0855(26)    8
+O
+O8A     0.3705(10)   0.4752(4)   -0.0292(9)    0.5        Uiso   0.0855(26)    8
+O
+O8B     0.4653(7)    0.5046(5)    0.1670(11)   0.5        Uiso   0.0855(26)    8
+O
+O11A    0.1193(14)   0.2421(5)    0.4107(12)   0.5        Uiso   0.0855(26)    8
+O
+O11B    0.2062(11)   0.2787(4)    0.5826(15)   0.5        Uiso   0.0855(26)    8
+
+# If you change Z, be sure to change all 3 of the following
+_chemical_formula_sum                  "C12 N1.50 O9.00 Sc"
+_chemical_formula_weight               354.09
+_cell_formula_units_Z                  8
+
+# MOLECULAR GEOMETRY
+
+loop_
+      _geom_bond_atom_site_label_1
+      _geom_bond_atom_site_label_2
+      _geom_bond_distance
+      _geom_bond_site_symmetry_1
+      _geom_bond_site_symmetry_2
+      _geom_bond_publ_flag
+    Sc1       O1                2.106(4)  .      1_555  N
+    Sc1       O1                2.106(4)  .      2_555  N
+    Sc1       O3                2.093(5)  .      1_555  N
+    Sc1       O3                2.093(5)  .      2_555  N
+    Sc1       O5                2.088(6)  .      1_555  N
+    Sc1       O5                2.088(6)  .      2_555  N
+    Sc2       O2                2.136(7)  .      1_555  N
+    Sc2       O2                2.136(7)  .      2_655  N
+    Sc2       O4                2.103(7)  .      1_555  N
+    Sc2       O4                2.103(7)  .      2_655  N
+    Sc2       O6                2.069(7)  .      1_655  N
+    Sc2       O6                2.069(7)  .      2_555  N
+    O1        Sc1               2.106(4)  .      1_555  N
+    O1        C1               1.263(10)  .      1_555  N
+    O2        Sc2               2.136(7)  .      1_555  N
+    O2        C1               1.232(12)  .      1_555  N
+    O3        Sc1               2.093(5)  .      1_555  N
+    O3        C5                1.316(8)  .      1_555  N
+    O4        Sc2               2.103(7)  .      1_555  N
+    O4        C5                1.223(9)  .      1_555  N
+    O5        Sc1               2.088(6)  .      1_555  N
+    O5        C9               1.266(11)  .      1_555  N
+    O6        Sc2               2.069(7)  .      1_455  N
+    O6        C9                1.284(9)  .      1_555  N
+    C1        O1               1.263(10)  .      1_555  N
+    C1        O2               1.232(12)  .      1_555  N
+    C1        C2               1.432(10)  .      1_555  N
+    C2        C1               1.432(10)  .      1_555  N
+    C2        C3                1.391(5)  .      1_555  N
+    C2        C4                1.397(5)  .      1_555  N
+    C3        C2                1.391(5)  .      1_555  N
+    C3        C4                1.401(5)  .      2_656  N
+    C4        C2                1.397(5)  .      1_555  N
+    C4        C3                1.401(5)  .      2_656  N
+    C4        N4                1.480(8)  .      1_555  N
+    N4        C4                1.480(8)  .      1_555  N
+    N4        O4A              1.294(12)  .      1_555  N
+    N4        O4B              1.277(12)  .      1_555  N
+    C5        O3                1.316(8)  .      1_555  N
+    C5        O4                1.223(9)  .      1_555  N
+    C5        C6                1.425(6)  .      1_555  N
+    C6        C5                1.425(6)  .      1_555  N
+    C6        C7                1.410(4)  .      1_555  N
+    C6        C8                1.399(5)  .      1_555  N
+    C7        C6                1.410(4)  .      1_555  N
+    C7        C8                1.414(4)  .     -1_565  N
+    C8        C6                1.399(5)  .      1_555  N
+    C8        C7                1.414(4)  .     -1_565  N
+    C8        N8                1.529(4)  .      1_555  N
+    N8        C8                1.529(4)  .      1_555  N
+    N8        O8A              1.273(11)  .      1_555  N
+    N8        O8B              1.191(10)  .      1_555  N
+    C9        O5               1.266(11)  .      1_555  N
+    C9        O6                1.284(9)  .      1_555  N
+    C9        C10               1.452(7)  .      1_555  N
+    C10       C9                1.452(7)  .      1_555  N
+    C10       C11               1.402(5)  .      1_555  N
+    C10       C12               1.393(6)  .      1_555  N
+    C11       C10               1.402(5)  .      1_555  N
+    C11       N11               1.489(7)  .      1_555  N
+    C11       C12               1.413(6)  .   -101_346  N
+    N11       C11               1.489(7)  .      1_555  N
+    N11       O11A             1.304(12)  .      1_555  N
+    N11       O11B             1.286(11)  .      1_555  N
+    C12       C10               1.393(6)  .      1_555  N
+    C12       C11               1.413(6)  .   -101_346  N
+    O4A       N4               1.294(12)  .      1_555  N
+    O4A       O4B              2.143(12)  .      1_555  N
+    O4B       N4               1.277(12)  .      1_555  N
+    O4B       O4A              2.143(12)  .      1_555  N
+    O8A       N8               1.273(11)  .      1_555  N
+    O8B       N8               1.191(10)  .      1_555  N
+    O8B       O8B              1.728(24)  .      2_655  N
+    O11A      N11              1.304(12)  .      1_555  N
+    O11A      O11B             2.178(13)  .      1_555  N
+    O11A      O11B             1.645(17)  .   -101_446  N
+    O11B      N11              1.286(11)  .      1_555  N
+    O11B      O11A             2.178(13)  .      1_555  N
+    O11B      O11A             1.645(17)  .   -101_446  N

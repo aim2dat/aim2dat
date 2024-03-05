@@ -1,0 +1,16 @@
+%YAML 1.2
+---
+entries:
+- chem_formula: {Cs: 2, Te: 0}
+  total_energy: {value: -10.0, unit: eV}
+- chem_formula: {Cs: 3, Te: 5}
+  total_energy: {value: -1.7, unit: hartree}
+- chem_formula: {Te: 4}
+  total_energy: {value: -20.0, unit: eV}
+- chem_formula: {Cs: 4, Te: 2}
+  total_energy: {value: -2.0, unit: RYDBERG}
+ref_values:
+- {formation_energy: 0.0, stability: 0.0}
+- {formation_energy: -0.7824195301780392, stability: 0.0}
+- {formation_energy: 0.0, stability: 0.0}
+- {formation_energy: 0.4647689959387928, stability: 0.882059412033747}

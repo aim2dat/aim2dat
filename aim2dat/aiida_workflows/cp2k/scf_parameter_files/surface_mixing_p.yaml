@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+- parameters:
+  - MAX_SCF: 75
+    MIXING: {METHOD: BROYDEN_MIXING, BETA: 0.5, ALPHA: 0.5, NBUFFER: 4}
+  - MAX_SCF: 100
+    MIXING: {METHOD: BROYDEN_MIXING, BETA: 0.5, ALPHA: 0.3, NBUFFER: 4}
+  - MAX_SCF: 125
+    MIXING: {METHOD: BROYDEN_MIXING, BETA: 0.5, ALPHA: 0.1, NBUFFER: 15}
+  - MAX_SCF: 125
+    MIXING: {METHOD: BROYDEN_MIXING, BETA: 0.5, ALPHA: 0.05, NBUFFER: 15}
+  - MAX_SCF: 150
+    MIXING: {METHOD: BROYDEN_MIXING, BETA: 0.5, ALPHA: 0.01, NBUFFER: 15}
+  allow_smearing: true
+  allow_uks: true
+  factor_extended_system:
+  - [[MAX_SCF], 2.0]

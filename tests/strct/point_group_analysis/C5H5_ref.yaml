@@ -1,0 +1,46 @@
+%YAML 1.2
+---
+point_group: $D_{5h}$
+symmetry_elements:
+- axis: [0.0, 1.0, 0.0]
+  n-fold: 2
+  label: $C_2$
+  type: rotation
+- axis: [0.0, 0.0, 1.0]
+  n-fold: 5
+  label: $C_5$
+  type: rotation
+- axis: [-0.9510533456015471, -0.30902675259612106, 0.0]
+  n-fold: 2
+  label: $C_2$
+  type: rotation
+- axis: [-0.5877265361743751, -0.8090596508765414, 0.0]
+  n-fold: 2
+  label: $C_2$
+  type: rotation
+- axis: [0.5877265361743751, -0.8090596508765414, 0.0]
+  n-fold: 2
+  label: $C_2$
+  type: rotation
+- axis: [0.9510533456015471, -0.30902675259612106, 0.0]
+  n-fold: 2
+  label: $C_2$
+  type: rotation
+- type: reflection
+  label: $\sigma$
+  n-vector: [-1.0, 0.0, 0.0]
+- type: reflection
+  label: $\sigma$
+  n-vector: [0.3089950577454417, -0.951063643658452, 0.0]
+- type: reflection
+  label: $\sigma$
+  n-vector: [-0.8090279584627076, -0.5877701612243204, 0.0]
+- type: reflection
+  label: $\sigma$
+  n-vector: [-0.3090227953323286, -0.9510546314302842, 0.0]
+- type: reflection
+  label: $\sigma$
+  n-vector: [0.8090279584627076, -0.5877701612243204, 0.0]
+- type: reflection
+  label: $\sigma$
+  n-vector: [0.0, 0.0, 1.0]

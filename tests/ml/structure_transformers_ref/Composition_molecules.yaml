@@ -1,0 +1,5 @@
+init_kwargs: {}
+add_structure_collection: True
+features_fit: [[0.5, 0.5]]
+features_transf: [[0.5, 0.5], [0.0, 0.0], [0.0, 0.6666666666666666], [0.0, 0.375]]
+feature_names_out: ['c_C', 'c_H']

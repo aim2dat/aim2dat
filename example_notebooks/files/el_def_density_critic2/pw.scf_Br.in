@@ -1,0 +1,41 @@
+&CONTROL
+    prefix='molecule',
+    pseudo_dir  = '/user/pubo1141/simulations/UPFs/pslibrary.1.0.0/pbe/PSEUDOPOTENTIALS/',
+    outdir = './output',
+    calculation = 'scf',
+    wf_collect = .true.,
+ /
+ &SYSTEM
+    assume_isolated = 'martyna-tuckerman',
+    ibrav = 8,
+    A = 18.410916,
+    B = 19.764488,
+    C = 15.0,
+    nat = 9,
+    ntyp = 4,
+    ecutwfc = 150.0,
+    ecutrho = 1000.0,
+    nbnd = 50,
+/
+ &ELECTRONS
+    mixing_beta = 0.7,
+    conv_thr = 1d-8,
+ /
+ATOMIC_SPECIES
+  C 12.0107 C.pbe-n-kjpaw_psl.1.0.0.UPF
+  H 1.00794 H.pbe-kjpaw_psl.1.0.0.UPF
+  N 14.00674 N.pbe-n-kjpaw_psl.1.0.0.UPF
+  Br 79.904 Br.pbe-n-kjpaw_psl.1.0.0.UPF
+
+ATOMIC_POSITIONS {angstrom}
+C             8.8165120061       10.3869977972        7.5000000000
+N             9.9617985490        9.6408116615        7.5000000000
+C             9.5689215688        8.3133625455        7.5000000000
+C             8.1944382747        8.3450713783        7.5000000000
+N             7.7316415777        9.6505553711        7.5000000000
+Br            8.8914707801       12.2663980974        7.5000000000
+H             7.5032955790        7.5084003768        7.5000000000
+H            10.2888433281        7.5031305673        7.5000000000
+H            10.9083783365       10.0036412051        7.5000000000
+
+K_POINTS gamma

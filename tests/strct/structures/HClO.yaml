@@ -1,0 +1,10 @@
+%YAML 1.2
+---
+elements: [Cl, O, H]
+pbc: [false, false, false]
+positions:
+- [-0.8367, 0.0,     0.0]
+- [ 0.8367, 0.0,     0.0]
+- [ 1.1755, 0.6566, -0.6315]
+attributes:
+  point_group: $C_s$

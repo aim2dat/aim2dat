@@ -1,0 +1,24 @@
+%YAML 1.2
+---
+inputs:
+  parameters:
+  - crystal NaCl_valence_density.cube
+  - load NaCl_valence_density.cube core zpsp
+  - load NaCl_valence_density.cube
+  - integrable 2
+  - yt
+  kind_info:
+  - element: Na
+    core_electrons: 2
+    valence_electrons: 9
+  - element: Cl
+    core_electrons: 10
+    valence_electrons: 7
+input_file:
+- crystal NaCl_valence_density.cube
+- load NaCl_valence_density.cube core zpsp Na 9 Cl 7
+- load NaCl_valence_density.cube
+- integrable 2
+- yt
+retrieve_list:
+- aiida.out

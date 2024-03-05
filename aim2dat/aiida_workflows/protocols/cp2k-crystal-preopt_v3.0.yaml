@@ -1,0 +1,192 @@
+%YAML 1.2
+---
+# Protocol with reduced settings for the proptimization of crystals.
+title: cp2k-crystal-preopt
+version: '3.0'
+description: Proptimization workflow with reduced numerial settings intended to be used with a reduced basis set.
+dependencies:
+- [aiida-core, '1.6', Null]
+parent_node_type: structure
+parent_node_input:
+  find_scf_parameters: structural_p.structure
+  unit_cell_opt: structural_p.structure
+tasks:
+  find_scf_parameters:
+    process: aim2dat.cp2k.find_scf_p
+    blacklist_inputs:
+    - custom_scf_method
+  unit_cell_opt:
+    process: aim2dat.cp2k.cell_opt
+    blacklist_inputs:
+    - custom_scf_method
+    - optimization_p.keep_symmetry
+    dependencies:
+      find_scf_parameters:
+      - [scf_parameters, structural_p.scf_parameters]
+general_input:
+  cp2k.parameters:
+    value:
+      GLOBAL:
+        PRINT_LEVEL: MEDIUM
+        PREFERRED_DIAG_LIBRARY: SCALAPACK
+        EXTENDED_FFT_LENGTHS: true
+      FORCE_EVAL:
+        METHOD: Quickstep
+        STRESS_TENSOR: ANALYTICAL
+        DFT:
+          MGRID: {}
+          POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+          BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT]
+          POTENTIAL_FILE_NAME: GTH_POTENTIALS
+          QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-12}
+          SCF: {EPS_SCF: 1.0e-6}
+          KPOINTS:
+            EPS_GEO: 1.0E-8
+            FULL_GRID: false
+            SYMMETRY: false
+          XC: {}
+        SUBSYS:
+          CELL: {PERIODIC: XYZ}
+    aiida_node: true
+    tasks: [find_scf_parameters, unit_cell_opt]
+  numerical_p.kpoints_ref_dist:
+    value: 0.2
+    aiida_node: true
+    tasks: [find_scf_parameters, unit_cell_opt]
+  factor_unocc_states:
+    value: 0.75
+    aiida_node: true
+    tasks: [find_scf_parameters, unit_cell_opt]
+  enable_roks:
+    value: false
+    aiida_node: true
+    tasks: [find_scf_parameters, unit_cell_opt]
+  scf_method:
+    value: density_mixing
+    aiida_node: true
+    tasks: [find_scf_parameters, unit_cell_opt]
+  adjust_scf_parameters:
+    value: true
+    aiida_node: true
+    tasks: [unit_cell_opt]
+  always_add_unocc_states:
+    value: true
+    aiida_node: true
+    tasks: [find_scf_parameters, unit_cell_opt]
+  max_iterations:
+    value: 100
+    aiida_node: true
+    compare: False
+    tasks: [find_scf_parameters, unit_cell_opt]
+  optimization_p.max_force:
+    value: 0.0005
+    aiida_node: true
+    tasks: [unit_cell_opt]
+  optimization_p.rms_force:
+    value: 0.00025
+    aiida_node: true
+    tasks: [unit_cell_opt]
+  optimization_p.max_dr:
+    value: 0.005
+    aiida_node: true
+    tasks: [unit_cell_opt]
+  optimization_p.rms_dr:
+    value: 0.0025
+    aiida_node: true
+    tasks: [unit_cell_opt]
+  optimization_p.pressure_tolerance:
+    value: 150.0
+    aiida_node: true
+    tasks: [unit_cell_opt]
+  optimization_p.keep_space_group:
+    value: true
+    aiida_node: true
+    tasks: [unit_cell_opt]
+  optimization_p.keep_angles:
+    value: true
+    aiida_node: true
+    tasks: [unit_cell_opt]
+  optimization_p.eps_symmetry:
+    value: 0.005
+    aiida_node: true
+    tasks: [unit_cell_opt]
+  optimization_p.ref_cell_scaling_factor:
+    value: 1.5
+    aiida_node: true
+    tasks: [unit_cell_opt]
+user_input:
+  scf_extended_system:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, unit_cell_opt]
+  numerical_p.xc_functional:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, unit_cell_opt]
+  numerical_p.cutoff_values:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, unit_cell_opt]
+  numerical_p.basis_sets:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, unit_cell_opt]
+  numerical_p.pseudo_file:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters, unit_cell_opt]
+  numerical_p.basis_file:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters, unit_cell_opt]
+  cp2k.code:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: false
+    tasks: [find_scf_parameters, unit_cell_opt]
+  cp2k.metadata:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters, unit_cell_opt]
+  clean_workdir:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters, unit_cell_opt]
+results:
+  scf_method_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [method_level]
+  scf_parameter_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [parameter_level]
+  scf_smearing_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [smearing_level]
+  optimized_structure:
+    task: unit_cell_opt
+    output_port: cp2k.output_structure
+  total_energy:
+    task: unit_cell_opt
+    output_port: cp2k.output_parameters
+    retrieve_value: [energy]
+    unit: Hartree
+  space_group:
+    task: unit_cell_opt
+    output_port: cp2k.output_parameters
+    retrieve_value: [spgr_info, sg_number]

@@ -1,0 +1,73 @@
+inputs:
+  scf_method: density_mixing
+  numerical_p.xc_functional: r2scan
+  numerical_p.basis_sets: {Cs: [Cs_bs, Cs_pp], Te: [Te_bs, Te_pp]}
+  numerical_p.kpoints_ref_dist: 0.01
+  factor_unocc_states: 0.5
+  always_add_unocc_states: True
+add_args:
+  fix_scf_m: False
+  fix_smearing: False
+  initial_scf_guess: ATOMIC
+  smearing_levels: [0.0, 250.0, 500.0, 1000.0]
+cp2k_parameters:
+  GLOBAL:
+    PRINT_LEVEL: MEDIUM
+    PREFERRED_DIAG_LIBRARY: SCALAPACK
+    EXTENDED_FFT_LENGTHS: true
+  FORCE_EVAL:
+    METHOD: Quickstep
+    STRESS_TENSOR: ANALYTICAL
+    DFT:
+      MGRID: {}
+      POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+      BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT]
+      POTENTIAL_FILE_NAME: GTH_POTENTIALS
+      QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
+      SCF: {EPS_SCF: 5.0e-7}
+      KPOINTS:
+        EPS_GEO: 1.0E-8
+        FULL_GRID: false
+        SYMMETRY: false
+      XC: {}
+    SUBSYS:
+      CELL: {PERIODIC: XYZ}
+ctx:
+  inputs:
+    parameters:
+      GLOBAL:
+        PRINT_LEVEL: MEDIUM
+        PREFERRED_DIAG_LIBRARY: SCALAPACK
+        EXTENDED_FFT_LENGTHS: true
+      FORCE_EVAL:
+        METHOD: Quickstep
+        STRESS_TENSOR: ANALYTICAL
+        DFT:
+          MGRID: {}
+          POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+          BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT]
+          POTENTIAL_FILE_NAME: GTH_POTENTIALS
+          QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
+          SCF: {EPS_SCF: 5.0e-7}
+          KPOINTS:
+            EPS_GEO: 1.0E-8
+            FULL_GRID: false
+            SYMMETRY: false
+          XC: 
+           XC_FUNCTIONAL: {'LIBXC': [{'FUNCTIONAL': 'MGGA_X_R2SCAN'}, {'FUNCTIONAL': 'MGGA_C_R2SCAN'}]}
+        SUBSYS:
+          CELL: {PERIODIC: XYZ}
+          KIND:
+          - {'BASIS_SET': 'Cs_bs', 'ELEMENT': 'Cs', 'POTENTIAL': 'Cs_pp', '_': 'Cs1'}
+          - {'BASIS_SET': 'Cs_bs', 'ELEMENT': 'Cs', 'POTENTIAL': 'Cs_pp', '_': 'Cs2'}
+          - {'BASIS_SET': 'Te_bs', 'POTENTIAL': 'Te_pp', '_': 'Te'}
+  scf_m_info: 
+    kpoints_ref_dist: 0.01
+    factor_unocc_states: 0.5
+    fix_smearing: False
+    fix_scf_m: False
+    smearing_levels: [0.0, 250.0, 500.0, 1000.0]
+    system_character: unknown
+    always_add_unocc_states: True
+    allow_pulay: True
+    scf_guess: ATOMIC

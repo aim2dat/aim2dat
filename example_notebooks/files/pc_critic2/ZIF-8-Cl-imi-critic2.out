@@ -1,0 +1,383 @@
+                  _   _     _          ___     
+                 (_) | |   (_)        |__ \    
+     ___   _ __   _  | |_   _    ___     ) |   
+    / __| | '__| | | | __| | |  / __|   / /    
+   | (__  | |    | | | |_  | | | (__   / /_    
+    \___| |_|    |_|  \__| |_|  \___| |____|   
+
+* CRITIC2: analysis of real-space scalar fields in solids and molecules.
+  (c) 1996-2019 A. Otero-de-la-Roza, A. Martin-Pendas, V. Lua~na
+  Distributed under GNU GPL v.3 (see COPYING for details)
+  Bugs, requests, and rants: aoterodelaroza@gmail.com 
+  Website: https://aoterodelaroza.github.io/critic2/
+  If you find this software useful, please cite:
+  A. Otero-de-la-Roza et al., Comput. Phys. Commun. 185 (2014) 1007-1018.
+  A. Otero-de-la-Roza et al., Comput. Phys. Commun. 180 (2009) 157-166.
+
++ critic2 (development), version 1.0 (git:n/a) 
+         host: Linux-3.10.0-514.el7.x86_64
+         date: Fri 10 Dec 2021 08:32:13
+ compiled dat: /user/garn1561/critic2-1.1dev/build/share/critic2
+      datadir: /user/garn1561/critic2-1.1dev/build/share/critic2
+     dic file: /user/garn1561/critic2-1.1dev/build/share/critic2/cif/cif_core.dic
+...was found?: T
+       spglib: 1.13.0
+        libxc: <unavailable>
+
+CRITIC2--2022/4/4, 14:21:22.623
+
+critic2:1> %% crystal valence_density.cube
+
+* Crystal structure
+  From: valence_density.cube
+  Lattice parameters (bohr): 34.791480  37.349625  28.345824
+  Lattice parameters (ang): 18.410858  19.764570  14.999964
+  Lattice angles (degrees): 90.000  90.000  90.000
+  Empirical formula: C_(3) N_(2) Cl(1) H_(3) 
+  Number of non-equivalent atoms in the unit cell: 9
+  Number of atoms in the unit cell: 9
+  Number of atomic species: 4
+  Number of electrons (with zero atomic charge): 52
+  Molar mass (amu, per unit cell): 102.522
+  Cell volume (bohr^3): 36833.94503
+  Cell volume (ang^3): 5458.22745
+  Density (g/cm^3): 0.031
+  Space group (H-M): Pm (6)
+
++ List of atomic species: 
+# spc = atomic species. Z = atomic number. name = atomic name (symbol).
+# Q = charge. ZPSP = pseudopotential charge.
+# spc  Z   name    Q   ZPSP
+   1   6    C_     0.0  -- 
+   2   7    N_     0.0  -- 
+   3  17    Cl     0.0  -- 
+   4   1    H_     0.0  -- 
+
++ List of non-equivalent atoms in the unit cell (cryst. coords.): 
+# at = complete list atomic ID. xyz = Cartesian coordinates. spc = atomic species.
+# wyck = wyckoff position. name = atomic name (symbol). mult = multiplicity.
+# Z = atomic number.
+# nat       x              y              z        spc wyck  name   mult  Z 
+   1   0.4790933297   0.5265817261   0.5000011995   1    1a   C_     1    6 
+   2   0.5412423961   0.4886421751   0.5000011995   2    1a   N_     1    7 
+   3   0.5196868889   0.4215127997   0.5000011995   1    1a   C_     1    6 
+   4   0.4450502824   0.4232829111   0.5000011995   1    1a   C_     1    6 
+   5   0.4200408836   0.4893346586   0.5000011995   2    1a   N_     1    7 
+   6   0.4826370997   0.6132580448   0.5000011995   3    1a   Cl     1   17 
+   7   0.4074839012   0.3809761142   0.5000011995   4    1a   H_     1    1 
+   8   0.5585855503   0.3803772059   0.5000011995   4    1a   H_     1    1 
+   9   0.5927566749   0.5067546461   0.5000011995   4    1a   H_     1    1 
+
++ List of atoms in the unit cell (cryst. coords.): 
+# at = complete list atomic ID. xyz = Cartesian coordinates. spc = atomic species.
+# name = atomic name (symbol). Z = atomic number. nat = non-equivalent atom id.
+# mol = molecular fragment.
+# at        x              y              z        spc  name    Z  nat mol
+   1   0.4790933297   0.5265817261   0.5000011995   1    C_     6   1   1 
+   2   0.5412423961   0.4886421751   0.5000011995   2    N_     7   2   1 
+   3   0.5196868889   0.4215127997   0.5000011995   1    C_     6   3   1 
+   4   0.4450502824   0.4232829111   0.5000011995   1    C_     6   4   1 
+   5   0.4200408836   0.4893346586   0.5000011995   2    N_     7   5   1 
+   6   0.4826370997   0.6132580448   0.5000011995   3    Cl    17   6   1 
+   7   0.4074839012   0.3809761142   0.5000011995   4    H_     1   7   1 
+   8   0.5585855503   0.3803772059   0.5000011995   4    H_     1   8   1 
+   9   0.5927566749   0.5067546461   0.5000011995   4    H_     1   9   1 
+
++ Lattice vectors (bohr)
+    a:   34.7914800000     0.0000000000     0.0000000000 
+    b:    0.0000000000    37.3496250000     0.0000000000 
+    c:    0.0000000000     0.0000000000    28.3458240000 
+
++ List of atoms in Cartesian coordinates (bohr): 
+# at = complete list atomic ID. xyz = Cartesian coordinates. spc = atomic species.
+# name = atomic name (symbol). Z = atomic number. dnn = nearest-neighbor distance.
+# nat = non-equivalent atom id. mol = molecular fragment.
+# at         x                y                z         spc  name    Z     dnn     nat mol
+   1    16.6683660000    19.6676300000    14.1729460000   1    C_     6    2.4812    1   1 
+   2    18.8306240000    18.2506020000    14.1729460000   2    N_     7    1.9157    2   1 
+   3    18.0806760000    15.7433450000    14.1729460000   1    C_     6    2.0475    3   1 
+   4    15.4839580000    15.8094580000    14.1729460000   1    C_     6    2.0506    4   1 
+   5    14.6138440000    18.2764660000    14.1729460000   2    N_     7    2.4812    5   1 
+   6    16.7916590000    22.9049580000    14.1729460000   3    Cl    17    3.2397    6   1 
+   7    14.1769680000    14.2293150000    14.1729460000   4    H_     1    2.0506    7   1 
+   8    19.4340180000    14.2069460000    14.1729460000   4    H_     1    2.0475    8   1 
+   9    20.6228820000    18.9270960000    14.1729460000   4    H_     1    1.9157    9   1 
+
++ List of symmetry operations (2):
+  Operation 1:
+     1.000000  0.000000  0.000000  0.000000
+     0.000000  1.000000  0.000000  0.000000
+     0.000000  0.000000  1.000000  0.000000
+  Operation 2:
+     1.000000  0.000000  0.000000  0.000000
+     0.000000  1.000000  0.000000  0.000000
+     0.000000  0.000000 -1.000000  0.000002
+
++ List of symmetry operations in crystallographic notation:
+# number: operation ... ## order of rotation [axis]; [axis in Cartesian]
+     1: x,y,z                          ##  1
+     2: x,y,-z                         ## -1 [0,0,1]; [0.000,0.000,1.000]
+
++ List of centering vectors (1):
+  Vector 1: 0.000000  0.000000  0.000000 
+
++ Crystal symmetry information
+  Space group (Hermann-Mauguin): Pm (number 6)
+  Point group (Hermann-Mauguin): m
+  Point group (Schoenflies): Cs
+  Holohedry: monoclinic
+  Laue class: 2/m
+
++ Cartesian/crystallographic coordinate transformation matrices:
+  A = car to crys (xcrys = A * xcar, bohr^-1)
+       0.0287426692     0.0000000000    -0.0000000000 
+       0.0000000000     0.0267740305    -0.0000000000 
+       0.0000000000     0.0000000000     0.0352785652 
+  B = crys to car (xcar = B * xcrys, bohr)
+      34.7914800000     0.0000000000     0.0000000000 
+       0.0000000000    37.3496250000     0.0000000000 
+       0.0000000000     0.0000000000    28.3458240000 
+  G = metric tensor (B'*B, bohr^2)
+    1210.4470805904     0.0000000000     0.0000000000 
+       0.0000000000  1394.9944876406     0.0000000000 
+       0.0000000000     0.0000000000   803.4857382390 
+
++ List of fragments in the system (1)
+# Id = fragment ID. nat = number of atoms in fragment. C-o-m = center of mass (bohr).
+# Discrete = is this fragment finite?
+# Id  nat           Center of mass            Discrete  
+  1    9      0.482704    0.518808    0.500001   Yes
+
++ This is a molecular crystal.
+  Number of molecules per cell (Z) = 1
+  Number of molecules in the asymmetric unit (Z') = 1
+
++ Atomic environment
+  Number of atoms (reduced cell/environment): 9 / 225
+  Radius of (unit cell/environment) circumscribed sphere (bohr): 29.1930 / 79.9864
+  Maximum interaction distance (bohr): 29.2030 
+  Covering regions: 
+    Total number of regions: 1920 (10 12 16)
+    Minimum region ID: -5 -6 -8
+    Maximum region ID: 4 5 7
+    Region side (bohr): 7.7101
+    Transformation origin (bohr): 17.3957,18.6748,14.1729
+    Search offsets: 12167
+    Maximum search offset: 11
+    Average number of atoms per region: 0.1172
+    Maximum number of atoms in a region: 8
+
++ Vertex of the WS cell in cryst. coords. (8)
+# id = vertex ID. xyz = vertex cryst. coords. d = vertex distance to origin (bohr).
+   id       x            y            z          d (bohr)   
+    1    0.500000    -0.500000     0.500000    29.19300989  
+    2   -0.500000     0.500000     0.500000    29.19300989  
+    3    0.500000     0.500000     0.500000    29.19300989  
+    4    0.500000     0.500000    -0.500000    29.19300989  
+    5    0.500000    -0.500000    -0.500000    29.19300989  
+    6   -0.500000    -0.500000     0.500000    29.19300989  
+    7   -0.500000    -0.500000    -0.500000    29.19300989  
+    8   -0.500000     0.500000    -0.500000    29.19300989  
+
++ Faces of the WS cell (6)
+# Face ID: vertexID1 vertexID2 ...
+   1: 3  1  6  2 
+   2: 3  4  8  2 
+   3: 3  4  5  1 
+   4: 7  5  4  8 
+   5: 1  5  7  6 
+   6: 2  8  7  6 
+
++ Lattice vectors for the Wigner-Seitz neighbors
+# FaceID: Voronoi lattice vector (cryst. coords.)
+   1:  0  0  1
+   2:  0  1  0
+   3:  1  0  0
+   4:  0  0 -1
+   5:  0 -1  0
+   6: -1  0  0
+
++ Lattice vectors for the Delaunay reduced cell (cryst. coords.)
+  a:  0  0  1
+  b:  1  0  0
+  c:  0  1  0
+  Delaunay reduced cell lengths: 28.345824 34.791480 37.349625
+  Delaunay reduced cell angles: 90.000 90.000 90.000
+
++ Is the cell orthogonal? T
++ Is the reduced cell orthogonal? T
+
+* List of scalar fields
++ Field number 0
+  Name: <promolecular>
+  Source: <generated>
+  Type: promolecular
+  Atoms in the environment: 225
+  Use core densities? F
+  Numerical derivatives? F
+  Nuclear CP signature: -3
+  Number of non-equivalent critical points: 9
+  Number of critical points in the unit cell: 9
+  Alias for this field (2): $0, $rho0
+  This is the REFERENCE field.
+
+* List of integrable properties (3)
+#  Id  Type  Field  Name
+    1   v        0  Volume  
+    2  fval      0  Pop  
+    3  lval      0  Lap  
+
+* List of additional properties at critical points (0)
+
+* List of core and pseudopotential charges for each field
+# id  type   core?  ZPSP
+  0  promol   no  
+
+critic2:2> %% load all_density.cube
+
++ Field number 1
+  Source: all_density.cube
+  Type: grid
+  Grid dimensions : 360  375  288
+  First elements... 6.740000000000E-09  1.410600000000E-09  2.942400000000E-08
+  Last elements... 4.999600000000E-09  6.353100000000E-08  -1.205500000000E-08
+  Sum of elements... 5.545990598878E+04
+  Sum of squares of elements... 2.564828768327E+06
+  Cell integral (grid SUM) = 52.54133561
+  Min: -1.65380000E-07
+  Average: 1.42643791E-03
+  Max: 1.43150000E+03
+  Interpolation mode (1=nearest,2=linear,3=spline,4=tricubic): 4
+  Use core densities? F
+  Numerical derivatives? F
+  Nuclear CP signature: -3
+  Number of non-equivalent critical points: 9
+  Number of critical points in the unit cell: 9
+  Alias for this field (1): $1
+
+* Field number 1 is now REFERENCE.
+
+critic2:3> %% load valence_density.cube
+
++ Field number 2
+  Source: valence_density.cube
+  Type: grid
+  Grid dimensions : 360  375  288
+  First elements... 6.740000000000E-09  1.410600000000E-09  2.942400000000E-08
+  Last elements... 4.999600000000E-09  6.353100000000E-08  -1.205500000000E-08
+  Sum of elements... 3.377749377678E+04
+  Sum of squares of elements... 6.070320704859E+03
+  Cell integral (grid SUM) = 31.99995754
+  Min: -1.65380000E-07
+  Average: 8.68762700E-04
+  Max: 6.68520000E-01
+  Interpolation mode (1=nearest,2=linear,3=spline,4=tricubic): 4
+  Use core densities? F
+  Numerical derivatives? F
+  Nuclear CP signature: -3
+  Number of non-equivalent critical points: 9
+  Number of critical points in the unit cell: 9
+  Alias for this field (1): $2
+
+critic2:4> %% integrable 2
+
+* List of integrable properties (4)
+#  Id  Type  Field  Name
+    1   v        0  Volume  
+    2  fval      1  Pop  
+    3  lval      1  Lap  
+    4   f        2  $2  
+
+critic2:5> %% yt
+
+* Yu-Trinkle integration 
+  Please cite: 
+  Min Yu, Dallas Trinkle, J. Chem. Phys. 134 (2011) 064111.
++ Distance atomic assignment (bohr): 1.0000E+40
++ Attractors in YT: 9
++ Attractors after reordering: 9
+
++ Integrating atomic properties
+
++ Integrated property (number 1): Volume
++ Integrated property (number 2): Pop
++ Integrated property (number 3): Lap
++ Integrated property (number 4): $2
+
+* List of properties integrated in the attractor basins
++ The "Label" entries will be used to identify the integrable
+  in the tables of integrated atomic properties. The entries with
+  an "x" will not be integrated.
+# id    Label      fid  Field       Additional
+  1       Volume    -- Volume       
+  2        Pop       1 Field (v)    
+  3        Lap       1 Laplcn (v)   
+  4         $2       2 Field        
+
+* Key for the interpretation of table headings
+# Id = attractor identifier
+# cp/at = critical point/atom from the complete CP/atom list
+# (lvec) = lattice translation from CP/atom to the main cell's representative
+# ncp/nat = critical point/atom from the non-equivalent CP/atom list
+# Name = atomic name
+# Z = atomic number
+# Position = atomic position
+# Mol = molecule identifier (see corresponding table above)
+# Volume = volume of the reference field basins.
+# Pop (population) = the reference field integrated in its own basins.
+# Lap = Laplacian of the reference field integrated in the reference field basins.
+# $xxx = field xxx integrated in the basins of the reference field.
+
+* List of attractors integrated
+# Id   cp   ncp   Name  Z   mult           Position (cryst.) 
+  1    1    1      C_   6   --    0.4790933    0.5265817    0.5000012 
+  2    2    2      N_   7   --    0.5412424    0.4886422    0.5000012 
+  3    3    3      C_   6   --    0.5196869    0.4215128    0.5000012 
+  4    4    4      C_   6   --    0.4450503    0.4232829    0.5000012 
+  5    5    5      N_   7   --    0.4200409    0.4893347    0.5000012 
+  6    6    6      Cl   17  --    0.4826371    0.6132580    0.5000012 
+  7    7    7      H_   1   --    0.4074839    0.3809761    0.5000012 
+  8    8    8      H_   1   --    0.5585856    0.3803772    0.5000012 
+  9    9    9      H_   1   --    0.5927567    0.5067546    0.5000012 
+
+* List of molecules integrated
++ Id   at (lvec)   nat    Name  Z              Position (cryst.) 
+# Molecule 1 with 9 atoms at  0.482704   0.518808   0.500001 
+1    1   ( 0  0  0) 1      C_   6    0.4790933    0.5265817    0.5000012 
+2    2   ( 0  0  0) 2      N_   7    0.5412424    0.4886422    0.5000012 
+3    3   ( 0  0  0) 3      C_   6    0.5196869    0.4215128    0.5000012 
+4    4   ( 0  0  0) 4      C_   6    0.4450503    0.4232829    0.5000012 
+5    5   ( 0  0  0) 5      N_   7    0.4200409    0.4893347    0.5000012 
+6    6   ( 0  0  0) 6      Cl   17   0.4826371    0.6132580    0.5000012 
+7    7   ( 0  0  0) 7      H_   1    0.4074839    0.3809761    0.5000012 
+8    8   ( 0  0  0) 8      H_   1    0.5585856    0.3803772    0.5000012 
+9    9   ( 0  0  0) 9      H_   1    0.5927567    0.5067546    0.5000012 
+
+* Integrated atomic properties
+# (See key above for interpretation of column headings.)
+# Integrable properties 1 to 4
+# Id   cp   ncp   Name  Z   mult     Volume            Pop             Lap             $2       
+  1    1    1      C_   6   --   2.35715868E+02  4.92341512E+00  3.36148886E-01  2.92854983E+00
+  2    2    2      N_   7   --   4.08510644E+02  8.21043612E+00 -2.25807950E-02  6.19617109E+00
+  3    3    3      C_   6   --   4.52568304E+02  5.70449905E+00  3.27189893E-02  3.68178504E+00
+  4    4    4      C_   6   --   4.08954998E+02  5.60533962E+00 -2.91610736E-03  3.60164353E+00
+  5    5    5      N_   7   --   3.15656713E+03  8.01188509E+00 -2.89275507E-03  6.01399070E+00
+  6    6    6      Cl   17  --   1.05419177E+04  1.76907124E+01 -3.37846016E-01  7.18282194E+00
+  7    7    7      H_   1   --   8.29551144E+03  9.37423006E-01 -2.69988785E-02  9.37411508E-01
+  8    8    8      H_   1   --   7.44886846E+03  9.17989795E-01  1.90583507E-02  9.17980601E-01
+  9    9    9      H_   1   --   5.88533053E+03  5.39635385E-01  5.30832625E-03  5.39603296E-01
+------------------------------------------------------------------------------------------------
+  Sum                            3.68339450E+04  5.25413356E+01 -6.58745020E-12  3.19999575E+01
+
+* Integrated molecular properties
+# (See key above for interpretation of column headings.)
+# Integrable properties 1 to 4
+# Mol     Volume            Pop             Lap             $2       
+  1     3.68339450E+04  5.25413356E+01 -6.58745020E-12  3.19999575E+01
+
+critic2:6> 
+CRITIC2 ended successfully (0 WARNINGS, 0 COMMENTS)
+
+Elapsed wall time: 4m 12s
+Elapsed CPU time: 15m 18s
+CRITIC2--2022/4/4, 14:25:35.238

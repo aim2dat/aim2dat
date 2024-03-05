@@ -1,0 +1,22 @@
+%YAML 1.2
+---
+point_group: $D_{2d}$
+symmetry_elements:
+- axis: [-0.5141887011656198, -0.3192531113445023, -0.7960448671340502]
+  n-fold: 2
+  label: $C_2$
+  type: rotation
+- axis: [-0.7244456370441038, 0.6585008963517615, 0.2038506523700361]
+  n-fold: 2
+  label: $C_2$
+  type: rotation
+- axis: [0.4591165960161742, 0.6815085695948451, -0.5698754432604631]
+  n-fold: 2
+  label: $C_2$
+  type: rotation
+- type: reflection
+  label: $\sigma$
+  n-vector: [0.1876150317537313, -0.9475305169111132, 0.25881754071585783]
+- type: reflection
+  label: $\sigma$
+  n-vector: [-0.836904688075379, -0.016268812518204053, 0.5471068166425092]

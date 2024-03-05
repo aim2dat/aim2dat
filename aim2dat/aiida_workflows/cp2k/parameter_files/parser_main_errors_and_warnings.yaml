@@ -1,0 +1,28 @@
+%YAML 1.2
+---
+errors:
+- - exceeded requested execution time
+  - exceeded_walltime
+- - ABORT
+  - aborted
+- - MAXIMUM NUMBER OF OPTIMIZATION STEPS REACHED
+  - geo_not_converged
+- - Use the LSD option for an odd number of electrons
+  - odd_nr_electrons
+- - Extra MOs (ADDED_MOS) are required for smearing
+  - need_added_mos
+- - exceeded requested execution time
+  - exceeded_walltime
+- - Cholesky decompose failed
+  - cholesky_decompose_failed
+- - Bad condition number R_COND
+  - bad_condition_number
+warnings:
+- - Using a non-square number of
+  - Using a non-square number of MPI ranks.
+- - SCF run NOT converged
+  - One or more SCF run did not converge.
+- - Specific L-BFGS convergence criteria
+  - LBFGS converged with specific criteria.
+- - Add more MOs for proper smearing
+  - Add more MOs for proper smearing.

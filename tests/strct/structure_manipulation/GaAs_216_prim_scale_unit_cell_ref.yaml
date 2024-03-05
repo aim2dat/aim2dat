@@ -1,0 +1,12 @@
+%YAML 1.2
+---
+function_args:
+  scaling_factor: 0.7
+structure:
+  pbc: [True, True, True]
+  elements: ['Ga', 'As']
+  positions: 
+  - [0.0, 0.0, 0.0]
+  - [4.2693, 4.2693, 4.2693]
+  is_cartesian: True
+  cell: [[0.0, 2.8462, 2.8462], [2.8462, 0.0, 2.8462], [2.8462, 2.8462, 0.0]]

@@ -1,0 +1,246 @@
+%YAML 1.2
+---
+# Base parser parameters used by all parsers.
+header_general:
+- pattern: ' GLOBAL| Run type'
+  key:
+  - [run_type]
+  type: str
+  position: [-1]
+  append: [false]
+  regex: false
+- pattern: ' MD_PAR| Ensemble type'
+  key:
+  - [run_type]
+  type: str
+  position: [-1]
+  append: [true]
+  append_connector: '-'
+  regex: false
+header_blocks:
+- start: ' BRILLOUIN| K-point scheme'
+  end: ' *******************************************************************************'
+  max_length: 2
+  patterns:
+  - pattern: ' BRILLOUIN| K-point scheme'
+    key:
+    - [kpoint_scheme]
+    type: str
+    position: [-1]
+    append: [false]
+    regex: false
+  - pattern: ' BRILLOUIN| K-Point grid'
+    key:
+    - [kpoint_grid]
+    - [kpoint_grid]
+    - [kpoint_grid]
+    type: int
+    position: [-3, -2, -1]
+    append: [true, true, true]
+    regex: false
+- start: ' DFT|'
+  end: ' FUNCTIONAL|'
+  max_length: 11
+  patterns:
+  - pattern: ' DFT| '
+    key:
+    - [dft_type]
+    type: str
+    position: [-1]
+    append: [false]
+    regex: false
+  - pattern: ' DFT| Multiplicity'
+    key:
+    - [multiplicity]
+    type: int
+    position: [-1]
+    append: [false]
+    regex: false
+  - pattern: ' DFT| Charge'
+    key:
+    - [charge]
+    type: float
+    position: [-1]
+    append: [false]
+    regex: false
+- start: ' FUNCTIONAL| ROUTINE'
+  end: ' vdW POTENTIAL|'
+  max_length: 20
+  patterns:
+  - pattern: '^\s*FUNCTIONAL\|\s*(.*?):$'
+    key:
+    - [xc, functional]
+    type: str
+    append: [true]
+    regex: true
+  - pattern: '^\s*FUNCTIONAL\|\s*(.*?):$'
+    key:
+    - [xc, functional]
+    type: str
+    append: [true]
+    regex: true
+- start: ' vdW POTENTIAL|'
+  end: ' QS|'
+  max_length: 11
+  patterns:
+  - pattern: ' vdW POTENTIAL|'
+    key:
+    - [xc, vdw_type]
+    type: str
+    position: [2, 3]
+    append: [false]
+    concatenate_str: true
+    regex: false
+  - pattern: ' vdW POTENTIAL|'
+    key:
+    - [xc, vdw_method]
+    type: str
+    position: [2]
+    append: [false]
+    regex: false
+- start: ' TOTAL NUMBERS AND MAXIMUM NUMBERS'
+  end: ' MODULE QUICKSTEP:'
+  max_length: 14
+  patterns:
+  - pattern: '                             - Atoms:'
+    key:
+    - ['natoms']
+    type: int
+    position: [-1]
+    append: [false]
+    regex: false
+- start: '                        added MOs'
+  end: '                        --------------------------------------------------------'
+  max_length: 1
+  patterns:
+  - pattern: '                        added MOs'
+    key:
+    - [added_mos_up]
+    - [added_mos_down]
+    type: int
+    position: [-2, -1]
+    append: [false, false]
+    regex: false
+- start: ' SPGR| SPACE GROUP NUMBER:'
+  end: ' SPGR| NUMBER OF SHELLS AND SYMMETRIZED SHELLS:'
+  max_length: -1
+  patterns:
+  - pattern: ' SPGR| SPACE GROUP NUMBER'
+    key:
+    - [spgr_info, sg_number]
+    type: int
+    position: [-1]
+    append: [false]
+    regex: false
+  - pattern: ' SPGR| INTERNATIONAL SYMBOL:'
+    key:
+    - [spgr_info, int_symbol]
+    type: str
+    position: [-1]
+    append: [false]
+    regex: false
+  - pattern: ' SPGR| POINT GROUP SYMBOL:'
+    key:
+    - [spgr_info, point_group_symbol]
+    type: str
+    position: [-1]
+    append: [false]
+    regex: false
+  - pattern: ' SPGR| SCHOENFLIES SYMBOL:'
+    key:
+    - [spgr_info, schoenflies_symbol]
+    type: str
+    position: [-1]
+    append: [false]
+    regex: false
+middle_general:
+- pattern: ' ENERGY| Total FORCE_EVAL'
+  key:
+  - ['energy']
+  type: float
+  position: [-1]
+  append: [false]
+  regex: false
+- pattern: '  Total energy:'
+  key:
+  - [energy_scf]
+  type: float
+  position: [-1]
+  append: [false]
+  regex: false
+- pattern: ' OPTIMIZATION STEP:'
+  key:
+  - ['nr_steps']
+  type: int
+  position: [-1]
+  append: [false]
+  regex: false
+- pattern: '  *** SCF run converged'
+  key:
+  - ['scf_converged']
+  type: int
+  position: [5]
+  append: [false]
+  regex: false
+- pattern: ' *** SCF run terminated'
+  key:
+  - ['scf_converged']
+  type: str
+  position: [3]
+  append: [false]
+  regex: false
+- pattern: ' *** WARNING in qs_scf.F:576 :: SCF run NOT converged'
+  key:
+  - ['scf_converged']
+  type: str
+  position: [7]
+  append: [false]
+  regex: false
+middle_blocks:
+- start: ' Number of electrons:'
+  end: ' Number of molecular orbitals:'
+  max_length: 3
+  patterns:
+  - pattern: ' Number of electrons:'
+    key:
+    - [nelectrons]
+    type: int
+    position: [-1]
+    append: [true]
+    regex: false
+  - pattern: ' Number of occupied orbitals:'
+    key:
+    - [nr_occ_orbitals]
+    type: int
+    position: [-1]
+    append: [true]
+    regex: false
+- start: ' Spin 2'
+  end: ''
+  max_length: 1
+  patterns:
+  - pattern: ' Spin 2'
+    key:
+    - [nr_spins]
+    type: int
+    position: [-1]
+    append: [false]
+    regex: false
+footer_general:
+- pattern: ' The number of warnings for this run is :'
+  key:
+  - [nwarnings]
+  type: int
+  position: [-1]
+  append: [false]
+  regex: false
+- pattern: ' CP2K       '
+  key:
+  - [runtime]
+  type: float
+  position: [-1]
+  append: [false]
+  regex: false
+footer_blocks: []
+extra_entries:
+  energy_units: "a.u."

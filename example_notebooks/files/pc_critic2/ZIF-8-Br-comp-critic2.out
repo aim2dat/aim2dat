@@ -1,0 +1,535 @@
+                  _   _     _          ___     
+                 (_) | |   (_)        |__ \    
+     ___   _ __   _  | |_   _    ___     ) |   
+    / __| | '__| | | | __| | |  / __|   / /    
+   | (__  | |    | | | |_  | | | (__   / /_    
+    \___| |_|    |_|  \__| |_|  \___| |____|   
+
+* CRITIC2: analysis of real-space scalar fields in solids and molecules.
+  (c) 1996-2019 A. Otero-de-la-Roza, A. Martin-Pendas, V. Lua~na
+  Distributed under GNU GPL v.3 (see COPYING for details)
+  Bugs, requests, and rants: aoterodelaroza@gmail.com 
+  Website: https://aoterodelaroza.github.io/critic2/
+  If you find this software useful, please cite:
+  A. Otero-de-la-Roza et al., Comput. Phys. Commun. 185 (2014) 1007-1018.
+  A. Otero-de-la-Roza et al., Comput. Phys. Commun. 180 (2009) 157-166.
+
++ critic2 (development), version 1.0 (git:n/a) 
+         host: Linux-3.10.0-514.el7.x86_64
+         date: Fri 10 Dec 2021 08:32:13
+ compiled dat: /user/garn1561/critic2-1.1dev/build/share/critic2
+      datadir: /user/garn1561/critic2-1.1dev/build/share/critic2
+     dic file: /user/garn1561/critic2-1.1dev/build/share/critic2/cif/cif_core.dic
+...was found?: T
+       spglib: 1.13.0
+        libxc: <unavailable>
+
+CRITIC2--2022/5/3, 13:51:19.431
+
+critic2:1> %% crystal valence_density.cube
+
+* Crystal structure
+  From: valence_density.cube
+  Lattice parameters (bohr): 41.926896  43.706700  43.709400
+  Lattice parameters (ang): 22.186758  23.128590  23.130018
+  Lattice angles (degrees): 90.000  90.000  90.000
+  Empirical formula: Zn(1) C_(12) N_(8) H_(10) Br(4) 
+  Number of non-equivalent atoms in the unit cell: 35
+  Number of atoms in the unit cell: 35
+  Number of atomic species: 5
+  Number of electrons (with zero atomic charge): 308
+  Molar mass (amu, per unit cell): 651.286
+  Cell volume (bohr^3): 80096.87517
+  Cell volume (ang^3): 11869.13218
+  Density (g/cm^3): 0.091
+  Space group (H-M): P1 (1)
+
++ List of atomic species: 
+# spc = atomic species. Z = atomic number. name = atomic name (symbol).
+# Q = charge. ZPSP = pseudopotential charge.
+# spc  Z   name    Q   ZPSP
+   1  30    Zn     0.0  -- 
+   2   6    C_     0.0  -- 
+   3   7    N_     0.0  -- 
+   4   1    H_     0.0  -- 
+   5  35    Br     0.0  -- 
+
++ List of non-equivalent atoms in the unit cell (cryst. coords.): 
+# at = complete list atomic ID. xyz = Cartesian coordinates. spc = atomic species.
+# wyck = wyckoff position. name = atomic name (symbol). mult = multiplicity.
+# Z = atomic number.
+# nat       x              y              z        spc wyck  name   mult  Z 
+   1   0.5023895640   0.5054384568   0.4947632317   1    1a   Zn     1   30 
+   2   0.4615573259   0.5717059169   0.6031016212   2    1a   C_     1    6 
+   3   0.4143389723   0.5789370737   0.6404448700   2    1a   C_     1    6 
+   4   0.4525574467   0.5221614764   0.5702613168   3    1a   N_     1    7 
+   5   0.3759034058   0.5328619640   0.6303471107   3    1a   N_     1    7 
+   6   0.6278469553   0.3698872942   0.5280751280   3    1a   N_     1    7 
+   7   0.5543158501   0.4338918061   0.5206016555   3    1a   N_     1    7 
+   8   0.5014888772   0.5980530216   0.5972343935   4    1a   H_     1    1 
+   9   0.4045485743   0.6118776069   0.6723418304   4    1a   H_     1    1 
+  10   0.3635971287   0.4328038264   0.5606788929   5    1a   Br     1   35 
+  11   0.6293965096   0.5595012893   0.5827733165   5    1a   Br     1   35 
+  12   0.4005058471   0.4999891550   0.5878712588   2    1a   C_     1    6 
+  13   0.6053970702   0.5911767075   0.5101556187   2    1a   C_     1    6 
+  14   0.5904865936   0.3609364011   0.5751200428   2    1a   C_     1    6 
+  15   0.5452485917   0.4008271958   0.5698204276   2    1a   C_     1    6 
+  16   0.5994682506   0.3279652090   0.6072005106   4    1a   H_     1    1 
+  17   0.5069299192   0.4082993912   0.5978444911   4    1a   H_     1    1 
+  18   0.4484946131   0.4782247802   0.4335821814   3    1a   N_     1    7 
+  19   0.5557581701   0.5713144209   0.4816029962   3    1a   N_     1    7 
+  20   0.6353902039   0.6334127491   0.4849641953   3    1a   N_     1    7 
+  21   0.6045320407   0.4141039017   0.4965355049   2    1a   C_     1    6 
+  22   0.3979278361   0.5034800385   0.4116237926   2    1a   C_     1    6 
+  23   0.4539036470   0.4281996353   0.4006761017   2    1a   C_     1    6 
+  24   0.5545840074   0.6053929947   0.4320464248   2    1a   C_     1    6 
+  25   0.6029966540   0.6426790629   0.4346985774   2    1a   C_     1    6 
+  26   0.6407024026   0.4412151684   0.4291340764   5    1a   Br     1   35 
+  27   0.3708877709   0.4755681166   0.3691696065   3    1a   N_     1    7 
+  28   0.3688922977   0.5748564408   0.4415117572   5    1a   Br     1   35 
+  29   0.4908208325   0.3980731787   0.4072127048   4    1a   H_     1    1 
+  30   0.4066847209   0.4272339939   0.3618618421   2    1a   C_     1    6 
+  31   0.5193604602   0.6002844186   0.3998405835   4    1a   H_     1    1 
+  32   0.6166113275   0.6756300293   0.4039179673   4    1a   H_     1    1 
+  33   0.3963100440   0.3952064329   0.3289740880   4    1a   H_     1    1 
+  34   0.3361829838   0.5246021777   0.6504050845   4    1a   H_     1    1 
+  35   0.6660209952   0.3478919022   0.5181730017   4    1a   H_     1    1 
+
++ List of atoms in the unit cell (cryst. coords.): 
+# at = complete list atomic ID. xyz = Cartesian coordinates. spc = atomic species.
+# name = atomic name (symbol). Z = atomic number. nat = non-equivalent atom id.
+# mol = molecular fragment.
+# at        x              y              z        spc  name    Z  nat mol
+   1   0.5023895640   0.5054384568   0.4947632317   1    Zn    30   1   1 
+   2   0.4615573259   0.5717059169   0.6031016212   2    C_     6   2   1 
+   3   0.4143389723   0.5789370737   0.6404448700   2    C_     6   3   1 
+   4   0.4525574467   0.5221614764   0.5702613168   3    N_     7   4   1 
+   5   0.3759034058   0.5328619640   0.6303471107   3    N_     7   5   1 
+   6   0.6278469553   0.3698872942   0.5280751280   3    N_     7   6   1 
+   7   0.5543158501   0.4338918061   0.5206016555   3    N_     7   7   1 
+   8   0.5014888772   0.5980530216   0.5972343935   4    H_     1   8   1 
+   9   0.4045485743   0.6118776069   0.6723418304   4    H_     1   9   1 
+  10   0.3635971287   0.4328038264   0.5606788929   5    Br    35  10   1 
+  11   0.6293965096   0.5595012893   0.5827733165   5    Br    35  11   1 
+  12   0.4005058471   0.4999891550   0.5878712588   2    C_     6  12   1 
+  13   0.6053970702   0.5911767075   0.5101556187   2    C_     6  13   1 
+  14   0.5904865936   0.3609364011   0.5751200428   2    C_     6  14   1 
+  15   0.5452485917   0.4008271958   0.5698204276   2    C_     6  15   1 
+  16   0.5994682506   0.3279652090   0.6072005106   4    H_     1  16   1 
+  17   0.5069299192   0.4082993912   0.5978444911   4    H_     1  17   1 
+  18   0.4484946131   0.4782247802   0.4335821814   3    N_     7  18   1 
+  19   0.5557581701   0.5713144209   0.4816029962   3    N_     7  19   1 
+  20   0.6353902039   0.6334127491   0.4849641953   3    N_     7  20   1 
+  21   0.6045320407   0.4141039017   0.4965355049   2    C_     6  21   1 
+  22   0.3979278361   0.5034800385   0.4116237926   2    C_     6  22   1 
+  23   0.4539036470   0.4281996353   0.4006761017   2    C_     6  23   1 
+  24   0.5545840074   0.6053929947   0.4320464248   2    C_     6  24   1 
+  25   0.6029966540   0.6426790629   0.4346985774   2    C_     6  25   1 
+  26   0.6407024026   0.4412151684   0.4291340764   5    Br    35  26   1 
+  27   0.3708877709   0.4755681166   0.3691696065   3    N_     7  27   1 
+  28   0.3688922977   0.5748564408   0.4415117572   5    Br    35  28   1 
+  29   0.4908208325   0.3980731787   0.4072127048   4    H_     1  29   1 
+  30   0.4066847209   0.4272339939   0.3618618421   2    C_     6  30   1 
+  31   0.5193604602   0.6002844186   0.3998405835   4    H_     1  31   1 
+  32   0.6166113275   0.6756300293   0.4039179673   4    H_     1  32   1 
+  33   0.3963100440   0.3952064329   0.3289740880   4    H_     1  33   1 
+  34   0.3361829838   0.5246021777   0.6504050845   4    H_     1  34   1 
+  35   0.6660209952   0.3478919022   0.5181730017   4    H_     1  35   1 
+
++ Lattice vectors (bohr)
+    a:   41.9268960000     0.0000000000     0.0000000000 
+    b:    0.0000000000    43.7067000000     0.0000000000 
+    c:    0.0000000000     0.0000000000    43.7094000000 
+
++ List of atoms in Cartesian coordinates (bohr): 
+# at = complete list atomic ID. xyz = Cartesian coordinates. spc = atomic species.
+# name = atomic name (symbol). Z = atomic number. dnn = nearest-neighbor distance.
+# nat = non-equivalent atom id. mol = molecular fragment.
+# at         x                y                z         spc  name    Z     dnn     nat mol
+   1    21.0636350000    22.0910470000    21.6258040000   1    Zn    30    3.6916    1   1 
+   2    19.3516660000    24.9873790000    26.3612100000   2    C_     6    2.0481    2   1 
+   3    17.3719470000    25.3034290000    27.9934610000   2    C_     6    2.0457    3   1 
+   4    18.9743290000    22.8219550000    24.9257800000   3    N_     7    2.5088    4   1 
+   5    15.7604630000    23.2896380000    27.5520940000   3    N_     7    1.9163    5   1 
+   6    26.3236740000    16.1665530000    23.0818470000   3    N_     7    1.9166    6   1 
+   7    23.2407430000    18.9639790000    22.7551860000   3    N_     7    2.5074    7   1 
+   8    21.0258720000    26.1389240000    26.1047570000   4    H_     1    2.0481    8   1 
+   9    16.9614660000    26.7431510000    29.3876580000   4    H_     1    2.0457    9   1 
+  10    15.2444990000    18.9164270000    24.5069380000   5    Br    35    3.5256   10   1 
+  11    26.3886420000    24.4539550000    25.4726720000   5    Br    35    3.6061   11   1 
+  12    16.7919670000    21.8528760000    25.6955000000   2    C_     6    2.5088   12   1 
+  13    25.3824200000    25.8383830000    22.2985960000   2    C_     6    2.4903   13   1 
+  14    24.7572700000    15.7753390000    25.1381520000   2    C_     6    2.0456   14   1 
+  15    22.8605810000    17.5188340000    24.9065090000   2    C_     6    2.0465   15   1 
+  16    25.1338430000    14.3342770000    26.5403700000   4    H_     1    2.0456   16   1 
+  17    21.2539980000    17.8454190000    26.1314240000   4    H_     1    2.0465   17   1 
+  18    18.8039870000    20.9016270000    18.9516170000   3    N_     7    2.5757   18   1 
+  19    23.3012150000    24.9702680000    21.0505780000   3    N_     7    2.5773   19   1 
+  20    26.6399390000    27.6843810000    21.1974940000   3    N_     7    2.4903   20   1 
+  21    25.3461520000    18.0991150000    21.7032690000   2    C_     6    2.5074   21   1 
+  22    16.6838790000    22.0054510000    17.9918290000   2    C_     6    2.4934   22   1 
+  23    19.0307710000    18.7151930000    17.5133120000   2    C_     6    2.0521   23   1 
+  24    23.2519860000    26.4597300000    18.8844900000   2    C_     6    2.0524   24   1 
+  25    25.2817780000    28.0893810000    19.0004140000   2    C_     6    2.0518   25   1 
+  26    26.8626630000    19.2840590000    18.7571930000   5    Br    35    3.5190   26   1 
+  27    15.5501730000    20.7855130000    16.1361820000   3    N_     7    2.4934   27   1 
+  28    15.4665090000    25.1250780000    19.2982140000   5    Br    35    3.5945   28   1 
+  29    20.5785940000    17.3984650000    17.7990230000   4    H_     1    2.0521   29   1 
+  30    17.0510280000    18.6729880000    15.8167640000   2    C_     6    2.0531   30   1 
+  31    21.7751720000    26.2364510000    17.4767920000   4    H_     1    2.0524   31   1 
+  32    25.8525990000    29.5295590000    17.6550120000   4    H_     1    2.0518   32   1 
+  33    16.6160500000    17.2731690000    14.3792600000   4    H_     1    2.0531   33   1 
+  34    14.0951090000    22.9286300000    28.4288160000   4    H_     1    1.9163   34   1 
+  35    27.9241930000    15.2052070000    22.6490310000   4    H_     1    1.9166   35   1 
+
++ List of symmetry operations (1):
+  Operation 1:
+     1.000000  0.000000  0.000000  0.000000
+     0.000000  1.000000  0.000000  0.000000
+     0.000000  0.000000  1.000000  0.000000
+
++ List of symmetry operations in crystallographic notation:
+# number: operation ... ## order of rotation [axis]; [axis in Cartesian]
+     1: x,y,z                          ##  1
+
++ List of centering vectors (1):
+  Vector 1: 0.000000  0.000000  0.000000 
+
++ Crystal symmetry information
+  Space group (Hermann-Mauguin): P1 (number 1)
+  Point group (Hermann-Mauguin): 1
+  Point group (Schoenflies): C1
+  Holohedry: triclinic
+  Laue class: -1
+
++ Cartesian/crystallographic coordinate transformation matrices:
+  A = car to crys (xcrys = A * xcar, bohr^-1)
+       0.0238510382     0.0000000000    -0.0000000000 
+       0.0000000000     0.0228797873    -0.0000000000 
+       0.0000000000     0.0000000000     0.0228783740 
+  B = crys to car (xcar = B * xcrys, bohr)
+      41.9268960000     0.0000000000     0.0000000000 
+       0.0000000000    43.7067000000     0.0000000000 
+       0.0000000000     0.0000000000    43.7094000000 
+  G = metric tensor (B'*B, bohr^2)
+    1757.8646081948     0.0000000000     0.0000000000 
+       0.0000000000  1910.2756248900     0.0000000000 
+       0.0000000000     0.0000000000  1910.5116483600 
+
++ List of fragments in the system (1)
+# Id = fragment ID. nat = number of atoms in fragment. C-o-m = center of mass (bohr).
+# Discrete = is this fragment finite?
+# Id  nat           Center of mass            Discrete  
+  1    35     0.501775    0.502228    0.502329   Yes
+
++ This is a molecular crystal.
+  Number of molecules per cell (Z) = 1
+  Number of molecules in the asymmetric unit (Z') = 1
+
++ Atomic environment
+  Number of atoms (reduced cell/environment): 35 / 786
+  Radius of (unit cell/environment) circumscribed sphere (bohr): 37.3452 / 87.4097
+  Maximum interaction distance (bohr): 37.3552 
+  Covering regions: 
+    Total number of regions: 1728 (12 12 12)
+    Minimum region ID: -6 -6 -6
+    Maximum region ID: 5 5 5
+    Region side (bohr): 9.2219
+    Transformation origin (bohr): 20.9634,21.8534,21.8547
+    Search offsets: 9261
+    Maximum search offset: 10
+    Average number of atoms per region: 0.4549
+    Maximum number of atoms in a region: 8
+
++ Vertex of the WS cell in cryst. coords. (8)
+# id = vertex ID. xyz = vertex cryst. coords. d = vertex distance to origin (bohr).
+   id       x            y            z          d (bohr)   
+    1    0.500000     0.500000     0.500000    37.34518671  
+    2    0.500000     0.500000    -0.500000    37.34518671  
+    3    0.500000    -0.500000     0.500000    37.34518671  
+    4   -0.500000     0.500000     0.500000    37.34518671  
+    5   -0.500000     0.500000    -0.500000    37.34518671  
+    6   -0.500000    -0.500000     0.500000    37.34518671  
+    7   -0.500000    -0.500000    -0.500000    37.34518671  
+    8    0.500000    -0.500000    -0.500000    37.34518671  
+
++ Faces of the WS cell (6)
+# Face ID: vertexID1 vertexID2 ...
+   1: 1  4  6  3 
+   2: 1  4  5  2 
+   3: 1  2  8  3 
+   4: 2  5  7  8 
+   5: 7  8  3  6 
+   6: 4  6  7  5 
+
++ Lattice vectors for the Wigner-Seitz neighbors
+# FaceID: Voronoi lattice vector (cryst. coords.)
+   1:  0  0  1
+   2:  0  1  0
+   3:  1  0  0
+   4:  0  0 -1
+   5:  0 -1  0
+   6: -1  0  0
+
++ Lattice vectors for the Delaunay reduced cell (cryst. coords.)
+  a:  1  0  0
+  b:  0  1  0
+  c:  0  0  1
+  Delaunay reduced cell lengths: 41.926896 43.706700 43.709400
+  Delaunay reduced cell angles: 90.000 90.000 90.000
+
++ Is the cell orthogonal? T
++ Is the reduced cell orthogonal? T
+
+* List of scalar fields
++ Field number 0
+  Name: <promolecular>
+  Source: <generated>
+  Type: promolecular
+  Atoms in the environment: 786
+  Use core densities? F
+  Numerical derivatives? F
+  Nuclear CP signature: -3
+  Number of non-equivalent critical points: 35
+  Number of critical points in the unit cell: 35
+  Alias for this field (2): $0, $rho0
+  This is the REFERENCE field.
+
+* List of integrable properties (3)
+#  Id  Type  Field  Name
+    1   v        0  Volume  
+    2  fval      0  Pop  
+    3  lval      0  Lap  
+
+* List of additional properties at critical points (0)
+
+* List of core and pseudopotential charges for each field
+# id  type   core?  ZPSP
+  0  promol   no  
+
+critic2:2> %% load all_density.cube
+
++ Field number 1
+  Source: all_density.cube
+  Type: grid
+  Grid dimensions : 432  450  450
+  First elements... -2.385000000000E-08  -9.746900000000E-09  -1.278500000000E-08
+  Last elements... 1.685100000000E-08  3.407100000000E-08  -4.703700000000E-08
+  Sum of elements... 3.341205549523E+05
+  Sum of squares of elements... 2.827951688958E+07
+  Cell integral (grid SUM) = 305.92149499
+  Min: -2.85830000E-07
+  Average: 3.81939363E-03
+  Max: 2.99330000E+03
+  Interpolation mode (1=nearest,2=linear,3=spline,4=tricubic): 4
+  Use core densities? F
+  Numerical derivatives? F
+  Nuclear CP signature: -3
+  Number of non-equivalent critical points: 35
+  Number of critical points in the unit cell: 35
+  Alias for this field (1): $1
+
+* Field number 1 is now REFERENCE.
+
+critic2:3> %% load valence_density.cube
+
++ Field number 2
+  Source: valence_density.cube
+  Type: grid
+  Grid dimensions : 432  450  450
+  First elements... -2.385000000000E-08  -9.746900000000E-09  -1.278500000000E-08
+  Last elements... 1.685100000000E-08  3.407100000000E-08  -4.703700000000E-08
+  Sum of elements... 1.507207274408E+05
+  Sum of squares of elements... 4.221701700964E+04
+  Cell integral (grid SUM) = 138.00022052
+  Min: -2.85830000E-07
+  Average: 1.72291641E-03
+  Max: 5.79710000E+00
+  Interpolation mode (1=nearest,2=linear,3=spline,4=tricubic): 4
+  Use core densities? F
+  Numerical derivatives? F
+  Nuclear CP signature: -3
+  Number of non-equivalent critical points: 35
+  Number of critical points in the unit cell: 35
+  Alias for this field (1): $2
+
+critic2:4> %% integrable 2
+
+* List of integrable properties (4)
+#  Id  Type  Field  Name
+    1   v        0  Volume  
+    2  fval      1  Pop  
+    3  lval      1  Lap  
+    4   f        2  $2  
+
+critic2:5> %% yt
+
+* Yu-Trinkle integration 
+  Please cite: 
+  Min Yu, Dallas Trinkle, J. Chem. Phys. 134 (2011) 064111.
++ Distance atomic assignment (bohr): 1.0000E+40
++ Attractors in YT: 35
++ Attractors after reordering: 35
+
++ Integrating atomic properties
+
++ Integrated property (number 1): Volume
++ Integrated property (number 2): Pop
++ Integrated property (number 3): Lap
++ Integrated property (number 4): $2
+
+* List of properties integrated in the attractor basins
++ The "Label" entries will be used to identify the integrable
+  in the tables of integrated atomic properties. The entries with
+  an "x" will not be integrated.
+# id    Label      fid  Field       Additional
+  1       Volume    -- Volume       
+  2        Pop       1 Field (v)    
+  3        Lap       1 Laplcn (v)   
+  4         $2       2 Field        
+
+* Key for the interpretation of table headings
+# Id = attractor identifier
+# cp/at = critical point/atom from the complete CP/atom list
+# (lvec) = lattice translation from CP/atom to the main cell's representative
+# ncp/nat = critical point/atom from the non-equivalent CP/atom list
+# Name = atomic name
+# Z = atomic number
+# Position = atomic position
+# Mol = molecule identifier (see corresponding table above)
+# Volume = volume of the reference field basins.
+# Pop (population) = the reference field integrated in its own basins.
+# Lap = Laplacian of the reference field integrated in the reference field basins.
+# $xxx = field xxx integrated in the basins of the reference field.
+
+* List of attractors integrated
+# Id   cp   ncp   Name  Z   mult           Position (cryst.) 
+  1    1    1      Zn   30  --    0.5023896    0.5054385    0.4947632 
+  2    2    2      C_   6   --    0.4615573    0.5717059    0.6031016 
+  3    3    3      C_   6   --    0.4143390    0.5789371    0.6404449 
+  4    4    4      N_   7   --    0.4525574    0.5221615    0.5702613 
+  5    5    5      N_   7   --    0.3759034    0.5328620    0.6303471 
+  6    6    6      N_   7   --    0.6278470    0.3698873    0.5280751 
+  7    7    7      N_   7   --    0.5543159    0.4338918    0.5206017 
+  8    8    8      H_   1   --    0.5014889    0.5980530    0.5972344 
+  9    9    9      H_   1   --    0.4045486    0.6118776    0.6723418 
+  10   10   10     Br   35  --    0.3635971    0.4328038    0.5606789 
+  11   11   11     Br   35  --    0.6293965    0.5595013    0.5827733 
+  12   12   12     C_   6   --    0.4005058    0.4999892    0.5878713 
+  13   13   13     C_   6   --    0.6053971    0.5911767    0.5101556 
+  14   14   14     C_   6   --    0.5904866    0.3609364    0.5751200 
+  15   15   15     C_   6   --    0.5452486    0.4008272    0.5698204 
+  16   16   16     H_   1   --    0.5994683    0.3279652    0.6072005 
+  17   17   17     H_   1   --    0.5069299    0.4082994    0.5978445 
+  18   18   18     N_   7   --    0.4484946    0.4782248    0.4335822 
+  19   19   19     N_   7   --    0.5557582    0.5713144    0.4816030 
+  20   20   20     N_   7   --    0.6353902    0.6334127    0.4849642 
+  21   21   21     C_   6   --    0.6045320    0.4141039    0.4965355 
+  22   22   22     C_   6   --    0.3979278    0.5034800    0.4116238 
+  23   23   23     C_   6   --    0.4539036    0.4281996    0.4006761 
+  24   24   24     C_   6   --    0.5545840    0.6053930    0.4320464 
+  25   25   25     C_   6   --    0.6029967    0.6426791    0.4346986 
+  26   26   26     Br   35  --    0.6407024    0.4412152    0.4291341 
+  27   27   27     N_   7   --    0.3708878    0.4755681    0.3691696 
+  28   28   28     Br   35  --    0.3688923    0.5748564    0.4415118 
+  29   29   29     H_   1   --    0.4908208    0.3980732    0.4072127 
+  30   30   30     C_   6   --    0.4066847    0.4272340    0.3618618 
+  31   31   31     H_   1   --    0.5193605    0.6002844    0.3998406 
+  32   32   32     H_   1   --    0.6166113    0.6756300    0.4039180 
+  33   33   33     H_   1   --    0.3963100    0.3952064    0.3289741 
+  34   34   34     H_   1   --    0.3361830    0.5246022    0.6504051 
+  35   35   35     H_   1   --    0.6660210    0.3478919    0.5181730 
+
+* List of molecules integrated
++ Id   at (lvec)   nat    Name  Z              Position (cryst.) 
+# Molecule 1 with 35 atoms at  0.501775   0.502228   0.502329 
+1    1   ( 0  0  0) 1      Zn   30   0.5023896    0.5054385    0.4947632 
+2    2   ( 0  0  0) 2      C_   6    0.4615573    0.5717059    0.6031016 
+3    3   ( 0  0  0) 3      C_   6    0.4143390    0.5789371    0.6404449 
+4    4   ( 0  0  0) 4      N_   7    0.4525574    0.5221615    0.5702613 
+5    5   ( 0  0  0) 5      N_   7    0.3759034    0.5328620    0.6303471 
+6    6   ( 0  0  0) 6      N_   7    0.6278470    0.3698873    0.5280751 
+7    7   ( 0  0  0) 7      N_   7    0.5543159    0.4338918    0.5206017 
+8    8   ( 0  0  0) 8      H_   1    0.5014889    0.5980530    0.5972344 
+9    9   ( 0  0  0) 9      H_   1    0.4045486    0.6118776    0.6723418 
+10   10  ( 0  0  0) 10     Br   35   0.3635971    0.4328038    0.5606789 
+11   11  ( 0  0  0) 11     Br   35   0.6293965    0.5595013    0.5827733 
+12   12  ( 0  0  0) 12     C_   6    0.4005058    0.4999892    0.5878713 
+13   13  ( 0  0  0) 13     C_   6    0.6053971    0.5911767    0.5101556 
+14   14  ( 0  0  0) 14     C_   6    0.5904866    0.3609364    0.5751200 
+15   15  ( 0  0  0) 15     C_   6    0.5452486    0.4008272    0.5698204 
+16   16  ( 0  0  0) 16     H_   1    0.5994683    0.3279652    0.6072005 
+17   17  ( 0  0  0) 17     H_   1    0.5069299    0.4082994    0.5978445 
+18   18  ( 0  0  0) 18     N_   7    0.4484946    0.4782248    0.4335822 
+19   19  ( 0  0  0) 19     N_   7    0.5557582    0.5713144    0.4816030 
+20   20  ( 0  0  0) 20     N_   7    0.6353902    0.6334127    0.4849642 
+21   21  ( 0  0  0) 21     C_   6    0.6045320    0.4141039    0.4965355 
+22   22  ( 0  0  0) 22     C_   6    0.3979278    0.5034800    0.4116238 
+23   23  ( 0  0  0) 23     C_   6    0.4539036    0.4281996    0.4006761 
+24   24  ( 0  0  0) 24     C_   6    0.5545840    0.6053930    0.4320464 
+25   25  ( 0  0  0) 25     C_   6    0.6029967    0.6426791    0.4346986 
+26   26  ( 0  0  0) 26     Br   35   0.6407024    0.4412152    0.4291341 
+27   27  ( 0  0  0) 27     N_   7    0.3708878    0.4755681    0.3691696 
+28   28  ( 0  0  0) 28     Br   35   0.3688923    0.5748564    0.4415118 
+29   29  ( 0  0  0) 29     H_   1    0.4908208    0.3980732    0.4072127 
+30   30  ( 0  0  0) 30     C_   6    0.4066847    0.4272340    0.3618618 
+31   31  ( 0  0  0) 31     H_   1    0.5193605    0.6002844    0.3998406 
+32   32  ( 0  0  0) 32     H_   1    0.6166113    0.6756300    0.4039180 
+33   33  ( 0  0  0) 33     H_   1    0.3963100    0.3952064    0.3289741 
+34   34  ( 0  0  0) 34     H_   1    0.3361830    0.5246022    0.6504051 
+35   35  ( 0  0  0) 35     H_   1    0.6660210    0.3478919    0.5181730 
+
+* Integrated atomic properties
+# (See key above for interpretation of column headings.)
+# Integrable properties 1 to 4
+# Id   cp   ncp   Name  Z   mult     Volume            Pop             Lap             $2       
+  1    1    1      Zn   30  --   8.46205847E+01  2.80369723E+01  1.20633727E-04  1.08150163E+01
+  2    2    2      C_   6   --   1.70487441E+02  5.60657095E+00 -4.35902797E-03  3.61220241E+00
+  3    3    3      C_   6   --   3.01387843E+02  5.65504420E+00 -5.45993875E-03  3.65611226E+00
+  4    4    4      N_   7   --   1.01252107E+02  8.13167332E+00 -1.21233357E-04  6.13728580E+00
+  5    5    5      N_   7   --   2.63035283E+02  8.18435046E+00 -2.02981606E-02  6.19113328E+00
+  6    6    6      N_   7   --   2.64455764E+02  8.18792612E+00 -1.10803178E-02  6.19649004E+00
+  7    7    7      N_   7   --   9.86989628E+01  8.14000807E+00  1.21854082E-02  6.14627955E+00
+  8    8    8      H_   1   --   6.20026935E+02  8.68630625E-01  2.19614155E-02  8.68626621E-01
+  9    9    9      H_   1   --   9.06532050E+03  9.02290053E-01  2.41085706E-02  9.02286340E-01
+  10   10   10     Br   35  --   4.14920972E+03  3.49493597E+01 -3.81102758E-02  6.93920240E+00
+  11   11   11     Br   35  --   4.81850115E+03  3.57563407E+01 -5.20122784E-02  7.12252882E+00
+  12   12   12     C_   6   --   6.56435497E+01  5.04673020E+00 -1.86149826E-03  3.04567827E+00
+  13   13   13     C_   6   --   6.94414807E+01  5.07497963E+00  2.56536216E-03  3.07968856E+00
+  14   14   14     C_   6   --   2.95927327E+02  5.62350693E+00 -9.74613532E-03  3.62445673E+00
+  15   15   15     C_   6   --   1.71604735E+02  5.57957989E+00 -3.77009533E-03  3.58685916E+00
+  16   16   16     H_   1   --   8.91278612E+03  9.16336236E-01  2.88139476E-03  9.16328383E-01
+  17   17   17     H_   1   --   6.89234985E+02  9.14875137E-01  5.06894433E-02  9.14862045E-01
+  18   18   18     N_   7   --   1.04844408E+02  8.21186962E+00 -2.62562669E-03  6.20249792E+00
+  19   19   19     N_   7   --   1.04253323E+02  8.20852217E+00 -7.58630332E-04  6.19533750E+00
+  20   20   20     N_   7   --   2.79099022E+03  8.09516830E+00  7.43447775E-04  6.09715673E+00
+  21   21   21     C_   6   --   6.50205182E+01  5.03810169E+00  2.44979033E-03  3.04251119E+00
+  22   22   22     C_   6   --   6.99435947E+01  5.08403343E+00  3.25748659E-04  3.08585117E+00
+  23   23   23     C_   6   --   2.22297678E+02  5.68042758E+00 -9.59737161E-03  3.68117485E+00
+  24   24   24     C_   6   --   2.16164089E+02  5.66437550E+00 -7.37609231E-03  3.67185769E+00
+  25   25   25     C_   6   --   3.07722408E+02  5.63928903E+00 -1.73341000E-04  3.64462733E+00
+  26   26   26     Br   35  --   4.42448870E+03  3.41755704E+01  4.24398389E-02  6.92104795E+00
+  27   27   27     N_   7   --   2.79108884E+03  8.09129214E+00  9.33468254E-03  6.07380180E+00
+  28   28   28     Br   35  --   5.10126909E+03  3.39321904E+01 -1.49898702E-03  7.10337566E+00
+  29   29   29     H_   1   --   9.16174840E+02  9.70300422E-01 -2.63998170E-02  9.70286493E-01
+  30   30   30     C_   6   --   3.08634942E+02  5.63033687E+00  5.12136931E-03  3.63090636E+00
+  31   31   31     H_   1   --   1.30090317E+03  9.41393864E-01  5.64785043E-03  9.41385152E-01
+  32   32   32     H_   1   --   1.00518770E+04  9.57956551E-01 -1.53288575E-02  9.57948464E-01
+  33   33   33     H_   1   --   1.00875600E+04  9.68564646E-01 -2.19461339E-02  9.68549332E-01
+  34   34   34     H_   1   --   5.56350168E+03  5.28112895E-01  4.57018427E-02  5.28081075E-01
+  35   35   35     H_   1   --   5.52850625E+03  5.28814871E-01  6.24702005E-03  5.28786942E-01
+------------------------------------------------------------------------------------------------
+  Sum                            8.00968752E+04  3.05921495E+02 -3.97969262E-11  1.38000221E+02
+
+* Integrated molecular properties
+# (See key above for interpretation of column headings.)
+# Integrable properties 1 to 4
+# Mol     Volume            Pop             Lap             $2       
+  1     8.00968752E+04  3.05921495E+02 -3.97969262E-11  1.38000221E+02
+
+critic2:6> 
+CRITIC2 ended successfully (0 WARNINGS, 0 COMMENTS)
+
+Elapsed wall time: 6m 33s
+Elapsed CPU time: 28m 30s
+CRITIC2--2022/5/3, 13:57:52.667

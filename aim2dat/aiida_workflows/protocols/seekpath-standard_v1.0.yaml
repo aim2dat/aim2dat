@@ -1,0 +1,30 @@
+%YAML 1.2
+---
+# Protocol with standard settings to run seekpath.
+title: seekpath-standard
+version: '1.0'
+description: Settings to determine the space group, primitive structure and k-path.
+dependencies:
+- [aiida-core, '1.6', Null]
+- [seekpath, '2.0', Null]
+parent_node_type: structure
+parent_node_input:
+  seekpath_analysis: structure
+tasks:
+  seekpath_analysis:
+    process: aim2dat.seekpath.structure_analysis
+general_input:
+  parameters:
+    value: {reference_distance: 0.015, symprec: 0.005}
+    aiida_node: true
+    tasks: [seekpath_analysis]
+results:
+  primitive_structure:
+    task: seekpath_analysis
+    output_port: primitive_structure
+  conventional_structure:
+    task: seekpath_analysis
+    output_port: conv_structure
+  path_parameters:
+    task: seekpath_analysis
+    output_port: parameters

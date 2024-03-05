@@ -1,0 +1,96 @@
+%YAML 1.2
+---
+# Standard parser parameters.
+header_blocks:
+- start: ' BRILLOUIN| List of Kpoints [2 Pi/Bohr]'
+  end: ' *******************************************************************************'
+  max_length: -1
+  patterns:
+  - pattern: '^\s*BRILLOUIN\|\s*(\d+)?\s*(\d+\.\d+)?\s*([-+]?[0-9]*\.?[0-9]*)?\s*([-+]?[0-9]*\.?[0-9]*)?\s*([-+]?[0-9]*\.?[0-9]*)?$'
+    key:
+    - [eigenvalues_raw, bz_kpoint_nrs]
+    - [eigenvalues_raw, weight]
+    - [eigenvalues_raw, x]
+    - [eigenvalues_raw, y]
+    - [eigenvalues_raw, z]
+    type: [int, float, float, float, float]
+    append: [true, true, true, true, true]
+    regex: true
+    repeat: true
+middle_blocks:
+- start: ' KPOINTS| Number of k-points in set'
+  end: '#'
+  max_length: 4
+  patterns:
+  - pattern: ' KPOINTS| Number of k-points in set'
+    key:
+    - ['bands_data', 'nr_points_in_set']
+    type: int
+    position: [-1]
+    append: [true]
+    regex: false
+  - pattern: ' KPOINTS| Special point'
+    key:
+    - ['bands_data', 'labels']
+    - ['bands_data', 'labels_pos_x']
+    - ['bands_data', 'labels_pos_y']
+    - ['bands_data', 'labels_pos_z']
+    type: str
+    position: [4, -3, -2, -1]
+    append: [true, true, true, true]
+    regex: false
+    repeat: true
+- start: '#  Point'
+  end: ['#  Point', ' KPOINTS|']
+  max_length: -1
+  patterns:
+  - pattern: '^#\s*Point\s*\d+\s*Spin\s*(\d+)?:\s*([-+]?[0-9]*\.?[0-9]*)?\s*([-+]?[0-9]*\.?[0-9]*)?\s*([-+]?[0-9]*\.?[0-9]*)?'
+    key:
+    - ['bands_data', 'spin']
+    - ['bands_data', 'pos_x']
+    - ['bands_data', 'pos_y']
+    - ['bands_data', 'pos_z']
+    type: [int, float, float, float]
+    append: [true, true, true, true]
+    regex: true
+  - pattern: '^\s*(\d+)?\s*([-+]?[0-9]*\.?[0-9]*)?\s*([-+]?[0-9]*\.?[0-9]*)?$'
+    key:
+    - ['bands_data', 'band_nr']
+    - ['bands_data', 'energies']
+    - ['bands_data', 'occ']
+    type: [int, float, float]
+    append: [true, true, true]
+    regex: true
+    repeat: true
+- start: [' MO| EIGENVALUES', ' MO| ALPHA EIGENVALUES', ' MO| BETA EIGENVALUES']
+  end: ' MO| Sum:'
+  max_length: -1
+  patterns:
+  - pattern: '^ MO\|\s([A-Z]*)?\s*EIGENVALUES AND OCCUPATION NUMBERS[A-Z\s]*(\d*)?$'
+    key:
+    - ['eigenvalues_raw', 'spin']
+    - ['eigenvalues_raw', 'kpoint_nrs']
+    type: [str, int]
+    append: [true, true]
+    regex: true
+    repeat: false
+  - pattern: '^\s*MO\|  \s*(\d+)?\s*([-+]?[0-9]*\.?[0-9]*)?\s*\S*\s*([-+]?[0-9]*\.?[0-9]*)?$'
+    key:
+    - ['eigenvalues_raw', 'mo_indices']
+    - ['eigenvalues_raw', 'eigenvalues']
+    - ['eigenvalues_raw', 'occupations']
+    type: [int, float, float]
+    append: [true, true, true]
+    regex: true
+    repeat: true
+- start: ' MO| E(Fermi):'
+  end: ' MO| E(Fermi):'
+  max_length: 1
+  patterns:
+  - pattern: ' MO| E(Fermi):'
+    key:
+    - ['fermi_energy']
+    type: float
+    position: [-4]
+    append: [False]
+    regex: False

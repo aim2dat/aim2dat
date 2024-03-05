@@ -1,0 +1,51 @@
+inputs:
+  cube_types: ["v_hartree", "tot_density"]
+cp2k_parameters:
+  GLOBAL:
+    PRINT_LEVEL: MEDIUM
+    PREFERRED_DIAG_LIBRARY: SCALAPACK
+    EXTENDED_FFT_LENGTHS: true
+  FORCE_EVAL:
+    METHOD: Quickstep
+    STRESS_TENSOR: ANALYTICAL
+    DFT:
+      MGRID: {}
+      POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+      BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT]
+      POTENTIAL_FILE_NAME: GTH_POTENTIALS
+      QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
+      SCF: {EPS_SCF: 5.0e-7}
+      KPOINTS:
+        EPS_GEO: 1.0E-8
+        FULL_GRID: false
+        SYMMETRY: false
+      XC: {}
+    SUBSYS:
+      CELL: {PERIODIC: XYZ}
+ref:
+  settings: {additional_retrieve_temporary_list: ["*.cube"], output_check_scf_conv: True}
+  parameters:
+    GLOBAL:
+      PRINT_LEVEL: MEDIUM
+      PREFERRED_DIAG_LIBRARY: SCALAPACK
+      EXTENDED_FFT_LENGTHS: true
+    FORCE_EVAL:
+      METHOD: Quickstep
+      STRESS_TENSOR: ANALYTICAL
+      DFT:
+        MGRID: {}
+        POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+        BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT]
+        POTENTIAL_FILE_NAME: GTH_POTENTIALS
+        QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
+        SCF: {EPS_SCF: 5.0e-7}
+        KPOINTS:
+          EPS_GEO: 1.0E-8
+          FULL_GRID: false
+          SYMMETRY: false
+        XC: {}
+        PRINT: 
+          V_HARTREE_CUBE: {STRIDE: 1}
+          TOT_DENSITY_CUBE: {STRIDE: 1}
+      SUBSYS:
+        CELL: {PERIODIC: XYZ}

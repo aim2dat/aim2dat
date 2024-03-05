@@ -1,0 +1,1554 @@
+%YAML 1.2
+---
+test:
+- chem_formula: {Cs: 4, Sb: 0}
+  attributes:
+    label: {value: MP-2020_09_08_mp-1012110_Cs4, unit: ''}
+    el_conc_Cs: {value: 1.0, unit: ''}
+    el_conc_Sb: {value: 0.0, unit: ''}
+    nr_atoms: {value: 4, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 12, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 12, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 12, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 5.510481266824746, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.19305839402443384, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 5.774211053290118, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 5.203285847516755, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: null, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_distance_max_Sb-Sb: {value: null, unit: ''}
+    coord_distance_min_Sb-Sb: {value: null, unit: ''}
+    structure_node: {value: 10471, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-1012110, unit: ''}
+    formation_energy: {value: 0.046335069568966, unit: ''}
+    stability: {value: 0.046335069568966, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.017645875, unit: ''}
+    icsd_ids:
+      value: [173930]
+      unit: ''
+  space_group: 57
+- chem_formula: {Cs: 8, Sb: 0}
+  attributes:
+    label: {value: MP-2020_09_08_mp-949029_Cs8, unit: ''}
+    el_conc_Cs: {value: 1.0, unit: ''}
+    el_conc_Sb: {value: 0.0, unit: ''}
+    nr_atoms: {value: 8, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 7.5, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 2.7774602993176543, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 12, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 6, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 5.3768080633819135, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.2339129970418911, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 5.492785829227393, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 4.912896999999999, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: null, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_distance_max_Sb-Sb: {value: null, unit: ''}
+    coord_distance_min_Sb-Sb: {value: null, unit: ''}
+    structure_node: {value: 10472, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-949029, unit: ''}
+    formation_energy: {value: 0.046689592068966, unit: ''}
+    stability: {value: 0.046689592068966, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 9.655e-05, unit: ''}
+    icsd_ids:
+      value: []
+      unit: ''
+  space_group: 223
+- chem_formula: {Cs: 1, Sb: 0}
+  attributes:
+    label: {value: MP-2020_09_08_mp-1055940_Cs, unit: ''}
+    el_conc_Cs: {value: 1.0, unit: ''}
+    el_conc_Sb: {value: 0.0, unit: ''}
+    nr_atoms: {value: 1, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 12, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 12, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 12, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 5.4583439201691935, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.0, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 5.4583439201691935, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 5.4583439201691935, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: null, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_distance_max_Sb-Sb: {value: null, unit: ''}
+    coord_distance_min_Sb-Sb: {value: null, unit: ''}
+    structure_node: {value: 10473, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-1055940, unit: ''}
+    formation_energy: {value: 0.041371492068966, unit: ''}
+    stability: {value: 0.041371492068966, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.0005489, unit: ''}
+    icsd_ids:
+      value: [53232, 53233, 42662]
+      unit: ''
+  space_group: 225
+- chem_formula: {Cs: 8, Sb: 0}
+  attributes:
+    label: {value: MP-2020_09_08_mp-573579_Cs8, unit: ''}
+    el_conc_Cs: {value: 1.0, unit: ''}
+    el_conc_Sb: {value: 0.0, unit: ''}
+    nr_atoms: {value: 8, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 10.5, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 0.5345224838248488, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 11, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 10, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 5.413626618320143, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.09016557608416904, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 5.566978853744729, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 5.200258080757279, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: null, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_distance_max_Sb-Sb: {value: null, unit: ''}
+    coord_distance_min_Sb-Sb: {value: null, unit: ''}
+    structure_node: {value: 10474, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-573579, unit: ''}
+    formation_energy: {value: 0.053976002068966, unit: ''}
+    stability: {value: 0.053976002068966, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.00136705, unit: ''}
+    icsd_ids:
+      value: [109022]
+      unit: ''
+  space_group: 64
+- chem_formula: {Cs: 4, Sb: 0}
+  attributes:
+    label: {value: MP-2020_09_08_mp-639727_Cs4, unit: ''}
+    el_conc_Cs: {value: 1.0, unit: ''}
+    el_conc_Sb: {value: 0.0, unit: ''}
+    nr_atoms: {value: 4, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 12, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 12, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 12, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 5.461594704548002, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.012605320853628393, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 5.47406804326362, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 5.449119556868609, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: null, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_distance_max_Sb-Sb: {value: null, unit: ''}
+    coord_distance_min_Sb-Sb: {value: null, unit: ''}
+    structure_node: {value: 10475, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-639727, unit: ''}
+    formation_energy: {value: 0.026212939568966, unit: ''}
+    stability: {value: 0.026212939568966, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.010763625, unit: ''}
+    icsd_ids:
+      value: [109023]
+      unit: ''
+  space_group: 194
+- chem_formula: {Cs: 20, Sb: 0}
+  attributes:
+    label: {value: MP-2020_09_08_mp-1183897_Cs20, unit: ''}
+    el_conc_Cs: {value: 1.0, unit: ''}
+    el_conc_Sb: {value: 0.0, unit: ''}
+    nr_atoms: {value: 20, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 12, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 12, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 12, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 5.53221041559627, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.19388133368617247, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 5.678935000062704, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 5.017372665619231, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: null, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_distance_max_Sb-Sb: {value: null, unit: ''}
+    coord_distance_min_Sb-Sb: {value: null, unit: ''}
+    structure_node: {value: 10476, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-1183897, unit: ''}
+    formation_energy: {value: 0.038676896068965, unit: ''}
+    stability: {value: 0.038676896068966, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.003577555, unit: ''}
+    icsd_ids:
+      value: []
+      unit: ''
+  space_group: 213
+- chem_formula: {Cs: 8, Sb: 0}
+  attributes:
+    label: {value: MP-2020_09_08_mp-672241_Cs8, unit: ''}
+    el_conc_Cs: {value: 1.0, unit: ''}
+    el_conc_Sb: {value: 0.0, unit: ''}
+    nr_atoms: {value: 8, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 10, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 10, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 10, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 5.432064717052647, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.2356433735282075, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 5.7000816374156145, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 5.150940781351802, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: null, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_distance_max_Sb-Sb: {value: null, unit: ''}
+    coord_distance_min_Sb-Sb: {value: null, unit: ''}
+    structure_node: {value: 10477, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-672241, unit: ''}
+    formation_energy: {value: 0.065470070818966, unit: ''}
+    stability: {value: 0.065470070818966, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.005105875, unit: ''}
+    icsd_ids:
+      value: [173928, 57192]
+      unit: ''
+  space_group: 135
+- chem_formula: {Cs: 1, Sb: 0}
+  attributes:
+    label: {value: MP-2020_09_08_mp-1_Cs, unit: ''}
+    el_conc_Cs: {value: 1.0, unit: ''}
+    el_conc_Sb: {value: 0.0, unit: ''}
+    nr_atoms: {value: 1, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 8, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 8, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 8, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 5.291449858139071, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.0, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 5.291449858139071, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 5.291449858139071, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: null, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_distance_max_Sb-Sb: {value: null, unit: ''}
+    coord_distance_min_Sb-Sb: {value: null, unit: ''}
+    structure_node: {value: 10478, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-1, unit: ''}
+    formation_energy: {value: 0.038769612068966, unit: ''}
+    stability: {value: 0.038769612068966, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.0023078, unit: ''}
+    icsd_ids:
+      value: [76941, 44754, 626969, 426937, 626975]
+      unit: ''
+  space_group: 229
+- chem_formula: {Cs: 2, Sb: 0}
+  attributes:
+    label: {value: MP-2020_09_08_mp-11832_Cs2, unit: ''}
+    el_conc_Cs: {value: 1.0, unit: ''}
+    el_conc_Sb: {value: 0.0, unit: ''}
+    nr_atoms: {value: 2, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 12, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 12, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 12, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 5.490428727022379, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.022358203970476897, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 5.512316268738579, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 5.468539392639877, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: null, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_distance_max_Sb-Sb: {value: null, unit: ''}
+    coord_distance_min_Sb-Sb: {value: null, unit: ''}
+    structure_node: {value: 10479, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-11832, unit: ''}
+    formation_energy: {value: 0.035108577068966, unit: ''}
+    stability: {value: 0.035108577068966, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.0030978, unit: ''}
+    icsd_ids:
+      value: [57180]
+      unit: ''
+  space_group: 194
+- chem_formula: {Cs: 1, Sb: 0}
+  attributes:
+    label: {value: MP-2020_09_08_mp-1096915_Cs, unit: ''}
+    el_conc_Cs: {value: 1.0, unit: ''}
+    el_conc_Sb: {value: 0.0, unit: ''}
+    nr_atoms: {value: 1, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 8, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 8, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 8, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 5.322709824404688, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.19326575401557305, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 5.610290820640674, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 5.110058106603583, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: null, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_distance_max_Sb-Sb: {value: null, unit: ''}
+    coord_distance_min_Sb-Sb: {value: null, unit: ''}
+    structure_node: {value: 10480, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-1096915, unit: ''}
+    formation_energy: {value: 0.042217512068966, unit: ''}
+    stability: {value: 0.042217512068966, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.0031651, unit: ''}
+    icsd_ids:
+      value: [35481]
+      unit: ''
+  space_group: 12
+- chem_formula: {Cs: 4, Sb: 0}
+  attributes:
+    label: {value: MP-2020_09_08_mp-1007976_Cs4, unit: ''}
+    el_conc_Cs: {value: 1.0, unit: ''}
+    el_conc_Sb: {value: 0.0, unit: ''}
+    nr_atoms: {value: 4, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 10, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 10, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 10, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 5.396935733190761, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.11686647799822035, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 5.511068368427075, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 5.244725206055801, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: null, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_distance_max_Sb-Sb: {value: null, unit: ''}
+    coord_distance_min_Sb-Sb: {value: null, unit: ''}
+    structure_node: {value: 10481, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-1007976, unit: ''}
+    formation_energy: {value: 0.054916592068966, unit: ''}
+    stability: {value: 0.054916592068966, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.008550975, unit: ''}
+    icsd_ids:
+      value: [173929]
+      unit: ''
+  space_group: 62
+- chem_formula: {Cs: 29, Sb: 0}
+  attributes:
+    label: {value: MP-2020_09_08_mp-1184151_Cs29, unit: ''}
+    el_conc_Cs: {value: 1.0, unit: ''}
+    el_conc_Sb: {value: 0.0, unit: ''}
+    nr_atoms: {value: 29, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 11.448275862068966, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 1.4537195371222187, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 16, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 10, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 5.522391747980537, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.28651094805244626, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 6.088560193055943, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 4.902411714359541, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: null, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_distance_max_Sb-Sb: {value: null, unit: ''}
+    coord_distance_min_Sb-Sb: {value: null, unit: ''}
+    structure_node: {value: 10482, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-1184151, unit: ''}
+    formation_energy: {value: 0.0, unit: ''}
+    stability: {value: 0.0, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.1362, unit: ''}
+    magnetic_moment: {value: 0.097845203448276, unit: ''}
+    icsd_ids:
+      value: []
+      unit: ''
+  space_group: 217
+- chem_formula: {Cs: 1, Sb: 0}
+  attributes:
+    label: {value: MP-2020_09_08_mp-1183694_Cs, unit: ''}
+    el_conc_Cs: {value: 1.0, unit: ''}
+    el_conc_Sb: {value: 0.0, unit: ''}
+    nr_atoms: {value: 1, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 12, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 12, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 12, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 5.477161438589425, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.07910704006148155, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 5.530717157884138, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 5.37005, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: null, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_distance_max_Sb-Sb: {value: null, unit: ''}
+    coord_distance_min_Sb-Sb: {value: null, unit: ''}
+    structure_node: {value: 10483, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-1183694, unit: ''}
+    formation_energy: {value: 0.037375242068966, unit: ''}
+    stability: {value: 0.037375242068966, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.0051888, unit: ''}
+    icsd_ids:
+      value: []
+      unit: ''
+  space_group: 139
+- chem_formula: {Cs: 2, Sb: 0}
+  attributes:
+    label: {value: MP-2020_09_08_mp-3_Cs2, unit: ''}
+    el_conc_Cs: {value: 1.0, unit: ''}
+    el_conc_Sb: {value: 0.0, unit: ''}
+    nr_atoms: {value: 2, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 8, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 8, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 8, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 5.230215293313492, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.08862139146301068, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 5.316022586626985, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 5.144408, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: null, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: null, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_distance_max_Sb-Sb: {value: null, unit: ''}
+    coord_distance_min_Sb-Sb: {value: null, unit: ''}
+    structure_node: {value: 10484, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-3, unit: ''}
+    formation_energy: {value: 0.097650387068966, unit: ''}
+    stability: {value: 0.097650387068966, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.0130538, unit: ''}
+    icsd_ids:
+      value: [150187, 109021]
+      unit: ''
+  space_group: 141
+- chem_formula: {Cs: 0, Sb: 2}
+  attributes:
+    label: {value: MP-2020_09_08_mp-80_Sb2, unit: ''}
+    el_conc_Cs: {value: 0.0, unit: ''}
+    el_conc_Sb: {value: 1.0, unit: ''}
+    nr_atoms: {value: 2, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: null, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_distance_max_Cs-Cs: {value: null, unit: ''}
+    coord_distance_min_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 12, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 12, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 12, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 3.384350009967793, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 0.00996962137070303, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 3.3941100000000004, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 3.3745892077886195, unit: ''}
+    structure_node: {value: 10485, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-80, unit: ''}
+    formation_energy: {value: 0.290331165, unit: ''}
+    stability: {value: 0.290331165, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 4.535e-05, unit: ''}
+    icsd_ids:
+      value: [651505, 52226]
+      unit: ''
+  space_group: 194
+- chem_formula: {Cs: 0, Sb: 14}
+  attributes:
+    label: {value: MP-2020_09_08_mp-1179613_Sb14, unit: ''}
+    el_conc_Cs: {value: 0.0, unit: ''}
+    el_conc_Sb: {value: 1.0, unit: ''}
+    nr_atoms: {value: 14, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: null, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_distance_max_Cs-Cs: {value: null, unit: ''}
+    coord_distance_min_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 5.428571428571429, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.7559289460184544, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 6, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 4, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 3.1110831490284934, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 0.11124668856348678, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 3.3183996243034284, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 2.9263541571208656, unit: ''}
+    structure_node: {value: 10486, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-1179613, unit: ''}
+    formation_energy: {value: 0.33329639714286, unit: ''}
+    stability: {value: 0.33329639714286, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 2.7428571428571e-06, unit: ''}
+    icsd_ids:
+      value: []
+      unit: ''
+  space_group: 2
+- chem_formula: {Cs: 0, Sb: 2}
+  attributes:
+    label: {value: MP-2020_09_08_mp-1179605_Sb2, unit: ''}
+    el_conc_Cs: {value: 0.0, unit: ''}
+    el_conc_Sb: {value: 1.0, unit: ''}
+    nr_atoms: {value: 2, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: null, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_distance_max_Cs-Cs: {value: null, unit: ''}
+    coord_distance_min_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 6, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 6, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 6, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 3.104948405515006, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 0.04933050362294188, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 3.152056987627744, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 3.040386228917273, unit: ''}
+    structure_node: {value: 10487, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-1179605, unit: ''}
+    formation_energy: {value: 0.050492435, unit: ''}
+    stability: {value: 0.050492435, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.00012935, unit: ''}
+    icsd_ids:
+      value: []
+      unit: ''
+  space_group: 11
+- chem_formula: {Cs: 0, Sb: 1}
+  attributes:
+    label: {value: MP-2020_09_08_mp-10631_Sb, unit: ''}
+    el_conc_Cs: {value: 0.0, unit: ''}
+    el_conc_Sb: {value: 1.0, unit: ''}
+    nr_atoms: {value: 1, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: null, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_distance_max_Cs-Cs: {value: null, unit: ''}
+    coord_distance_min_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 12, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 12, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 12, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 3.457891750627514, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 0.2310578077393024, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 3.614318625941271, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 3.145038, unit: ''}
+    structure_node: {value: 10488, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-10631, unit: ''}
+    formation_energy: {value: 0.301938285, unit: ''}
+    stability: {value: 0.301938285, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.000302, unit: ''}
+    icsd_ids:
+      value: [52199]
+      unit: ''
+  space_group: 139
+- chem_formula: {Cs: 0, Sb: 1}
+  attributes:
+    label: {value: MP-2020_09_08_mp-133_Sb, unit: ''}
+    el_conc_Cs: {value: 0.0, unit: ''}
+    el_conc_Sb: {value: 1.0, unit: ''}
+    nr_atoms: {value: 1, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: null, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_distance_max_Cs-Cs: {value: null, unit: ''}
+    coord_distance_min_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 6, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 6, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 6, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 3.102692, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 3.102692, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 3.102692, unit: ''}
+    structure_node: {value: 10489, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-133, unit: ''}
+    formation_energy: {value: 0.050562675, unit: ''}
+    stability: {value: 0.050562675, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.0003096, unit: ''}
+    icsd_ids:
+      value: [651488, 651489, 651490, 651491, 52227, 651499, 651504]
+      unit: ''
+  space_group: 221
+- chem_formula: {Cs: 0, Sb: 1}
+  attributes:
+    label: {value: MP-2020_09_08_mp-7761_Sb, unit: ''}
+    el_conc_Cs: {value: 0.0, unit: ''}
+    el_conc_Sb: {value: 1.0, unit: ''}
+    nr_atoms: {value: 1, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: null, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_distance_max_Cs-Cs: {value: null, unit: ''}
+    coord_distance_min_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 8, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 8, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 8, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 3.278185013504119, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 3.278185013504119, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 3.278185013504119, unit: ''}
+    structure_node: {value: 10490, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-7761, unit: ''}
+    formation_energy: {value: 0.238523485, unit: ''}
+    stability: {value: 0.238523485, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.000108, unit: ''}
+    icsd_ids:
+      value: [109038, 108182]
+      unit: ''
+  space_group: 229
+- chem_formula: {Cs: 0, Sb: 4}
+  attributes:
+    label: {value: MP-2020_09_08_mp-567144_Sb4, unit: ''}
+    el_conc_Cs: {value: 0.0, unit: ''}
+    el_conc_Sb: {value: 1.0, unit: ''}
+    nr_atoms: {value: 4, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: null, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_distance_max_Cs-Cs: {value: null, unit: ''}
+    coord_distance_min_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 6, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 6, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 6, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 3.1563260795838595, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 0.053535995691582065, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 3.19338598324776, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 3.0822044771249915, unit: ''}
+    structure_node: {value: 10491, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-567144, unit: ''}
+    formation_energy: {value: 0.2843399975, unit: ''}
+    stability: {value: 0.2843399975, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.000852625, unit: ''}
+    icsd_ids:
+      value: [109037]
+      unit: ''
+  space_group: 140
+- chem_formula: {Cs: 0, Sb: 2}
+  attributes:
+    label: {value: MP-2020_09_08_mp-104_Sb2, unit: ''}
+    el_conc_Cs: {value: 0.0, unit: ''}
+    el_conc_Sb: {value: 1.0, unit: ''}
+    nr_atoms: {value: 2, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: null, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_distance_max_Cs-Cs: {value: null, unit: ''}
+    coord_distance_min_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 3, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 3, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 3, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 2.947390343753122, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 2.743983346436891e-08, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 2.9473903614654584, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 2.9473903083284485, unit: ''}
+    structure_node: {value: 10492, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-104, unit: ''}
+    formation_energy: {value: 0.0, unit: ''}
+    stability: {value: 0.0, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.0, unit: ''}
+    icsd_ids:
+      value: [53795, 651492, 9859, 651497, 651498, 55402, 651506, 161493, 64695, 64696,
+        64697, 409754, 426972]
+      unit: ''
+  space_group: 166
+- chem_formula: {Cs: 0, Sb: 4}
+  attributes:
+    label: {value: MP-2020_09_08_mp-567409_Sb4, unit: ''}
+    el_conc_Cs: {value: 0.0, unit: ''}
+    el_conc_Sb: {value: 1.0, unit: ''}
+    nr_atoms: {value: 4, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: null, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_distance_max_Cs-Cs: {value: null, unit: ''}
+    coord_distance_min_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 3, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 3, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 3, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 2.9575970278210266, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 0.029624453524404085, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 2.977652877666745, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 2.917485328129591, unit: ''}
+    structure_node: {value: 10493, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-567409, unit: ''}
+    formation_energy: {value: 0.1229967425, unit: ''}
+    stability: {value: 0.1229967425, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 2.125e-06, unit: ''}
+    icsd_ids:
+      value: [42678]
+      unit: ''
+  space_group: 11
+- chem_formula: {Cs: 0, Sb: 1}
+  attributes:
+    label: {value: MP-2020_09_08_mp-10630_Sb, unit: ''}
+    el_conc_Cs: {value: 0.0, unit: ''}
+    el_conc_Sb: {value: 1.0, unit: ''}
+    nr_atoms: {value: 1, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: null, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_distance_max_Cs-Cs: {value: null, unit: ''}
+    coord_distance_min_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 12, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 12, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 12, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 3.3876891916951295, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 3.3876891916951295, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 3.3876891916951295, unit: ''}
+    structure_node: {value: 10494, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-10630, unit: ''}
+    formation_energy: {value: 0.328351975, unit: ''}
+    stability: {value: 0.328351975, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 0.0001413, unit: ''}
+    icsd_ids:
+      value: [52198]
+      unit: ''
+  space_group: 225
+- chem_formula: {Cs: 0, Sb: 14}
+  attributes:
+    label: {value: MP-2020_09_08_mp-1179618_Sb14, unit: ''}
+    el_conc_Cs: {value: 0.0, unit: ''}
+    el_conc_Sb: {value: 1.0, unit: ''}
+    nr_atoms: {value: 14, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: null, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_distance_max_Cs-Cs: {value: null, unit: ''}
+    coord_distance_min_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 5.285714285714286, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.7262730392025629, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 6, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 4, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 3.101403285705535, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 0.11590523456858329, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 3.3391402142483066, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 2.885701124034301, unit: ''}
+    structure_node: {value: 10495, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-1179618, unit: ''}
+    formation_energy: {value: 0.23457109571429, unit: ''}
+    stability: {value: 0.23457109571429, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 7.7142857142857e-07, unit: ''}
+    icsd_ids:
+      value: []
+      unit: ''
+  space_group: 2
+- chem_formula: {Cs: 0, Sb: 2}
+  attributes:
+    label: {value: MP-2020_09_08_mp-632286_Sb2, unit: ''}
+    el_conc_Cs: {value: 0.0, unit: ''}
+    el_conc_Sb: {value: 1.0, unit: ''}
+    nr_atoms: {value: 2, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: null, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: null, unit: ''}
+    coord_distance_max_Cs-Cs: {value: null, unit: ''}
+    coord_distance_min_Cs-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: null, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: null, unit: ''}
+    coord_distance_max_Cs-Sb: {value: null, unit: ''}
+    coord_distance_min_Cs-Sb: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: null, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 6, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 6, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 6, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 3.1266361610235123, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 0.08192624464138502, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 3.1978867182574158, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 3.0173807648131206, unit: ''}
+    structure_node: {value: 10496, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-632286, unit: ''}
+    formation_energy: {value: 0.05889713, unit: ''}
+    stability: {value: 0.05889713, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.0, unit: ''}
+    magnetic_moment: {value: 3.65e-05, unit: ''}
+    icsd_ids:
+      value: []
+      unit: ''
+  space_group: 11
+- chem_formula: {Cs: 3, Sb: 1}
+  attributes:
+    label: {value: MP-2020_09_08_mp-10378_Cs3Sb, unit: ''}
+    el_conc_Cs: {value: 0.75, unit: ''}
+    el_conc_Sb: {value: 0.25, unit: ''}
+    nr_atoms: {value: 4, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 5.333333333333333, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 2.309401076758503, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 8, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 4, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 4.0489987183710925, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 6.661338147750939e-16, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 4.048998718371093, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 4.048998718371092, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: 2.6666666666666665, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: 2.309401076758503, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: 4, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: 0, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: 4.0489987183710925, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: 4.7475133497774e-16, unit: ''}
+    coord_distance_max_Cs-Sb: {value: 4.048998718371093, unit: ''}
+    coord_distance_min_Cs-Sb: {value: 4.048998718371092, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: 8, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: 8, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: 8, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: 4.0489987183710925, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: 5.692068545052604e-16, unit: ''}
+    coord_distance_max_Sb-Cs: {value: 4.048998718371093, unit: ''}
+    coord_distance_min_Sb-Cs: {value: 4.048998718371092, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 0, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 0, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 0, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: null, unit: ''}
+    coord_distance_max_Sb-Sb: {value: null, unit: ''}
+    coord_distance_min_Sb-Sb: {value: null, unit: ''}
+    structure_node: {value: 10497, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-10378, unit: ''}
+    formation_energy: {value: -0.30401157719828, unit: ''}
+    stability: {value: 0.0, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 1.1015, unit: ''}
+    magnetic_moment: {value: 0.001032, unit: ''}
+    icsd_ids:
+      value: [53243]
+      unit: ''
+  space_group: 225
+- chem_formula: {Cs: 16, Sb: 16}
+  attributes:
+    label: {value: MP-2020_09_08_mp-1204039_Cs16Sb16, unit: ''}
+    el_conc_Cs: {value: 0.5, unit: ''}
+    el_conc_Sb: {value: 0.5, unit: ''}
+    nr_atoms: {value: 32, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 2.25, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 0.8563488385776752, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 3, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 1, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 4.299553035874378, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.12182492938560738, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 4.545958011522258, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 4.158577453780657, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: 6.75, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: 0.8563488385776752, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: 8, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: 6, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: 4.073429720527145, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: 0.21989570496594066, unit: ''}
+    coord_distance_max_Cs-Sb: {value: 4.539023166779429, unit: ''}
+    coord_distance_min_Cs-Sb: {value: 3.822681909598841, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: 0, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: 0, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: 0, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 2, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 2, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 2, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 2.9154951300782774, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 0.013132491739570217, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 2.9322441040697504, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 2.900618859309023, unit: ''}
+    structure_node: {value: 10498, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-1204039, unit: ''}
+    formation_energy: {value: -0.43665327021552, unit: ''}
+    stability: {value: 0.0020053450000002, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.5216, unit: ''}
+    magnetic_moment: {value: 0.0001813625, unit: ''}
+    icsd_ids:
+      value: [412154]
+      unit: ''
+  space_group: 14
+- chem_formula: {Cs: 16, Sb: 8}
+  attributes:
+    label: {value: MP-2020_09_08_mp-1191118_Cs16Sb8, unit: ''}
+    el_conc_Cs: {value: 0.6666666666666666, unit: ''}
+    el_conc_Sb: {value: 0.3333333333333333, unit: ''}
+    nr_atoms: {value: 24, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 4.75, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 0.4472135954999579, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 5, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 4, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 4.113957063826947, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.2372603806326542, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 4.405593620532596, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 3.817209009549711, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: 4.75, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: 1.3416407864998738, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: 6, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: 3, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: 4.057679559872815, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: 0.14404529097277494, unit: ''}
+    coord_distance_max_Cs-Sb: {value: 4.292011465874593, unit: ''}
+    coord_distance_min_Cs-Sb: {value: 3.710418334672153, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: 3.5, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: 2.6726124191242437, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: 6, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: 1, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: 3.9409975985672943, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: 0.09845344903638746, unit: ''}
+    coord_distance_max_Sb-Cs: {value: 4.0046912975943885, unit: ''}
+    coord_distance_min_Sb-Cs: {value: 3.710418334672153, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 1, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 1, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 1, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 2.9657989101161526, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 1.5879349912170361e-15, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 2.965798910116155, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 2.965798910116151, unit: ''}
+    structure_node: {value: 10499, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-1191118, unit: ''}
+    formation_energy: {value: -0.37678949362069, unit: ''}
+    stability: {value: 0.0, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.2818, unit: ''}
+    magnetic_moment: {value: 0.0001828375, unit: ''}
+    icsd_ids:
+      value: [92474]
+      unit: ''
+  space_group: 62
+- chem_formula: {Cs: 20, Sb: 32}
+  attributes:
+    label: {value: MP-2020_09_08_mp-628742_Cs20Sb32, unit: ''}
+    el_conc_Cs: {value: 0.38461538461538464, unit: ''}
+    el_conc_Sb: {value: 0.6153846153846154, unit: ''}
+    nr_atoms: {value: 52, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 1.4, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 1.0462967275611939, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 3, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 0, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 4.456489566207693, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.11356280754527476, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 4.607324722428218, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 4.304853105069067, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: 8.2, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: 0.7677718959499146, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: 9, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: 7, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: 4.121437897279458, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: 0.20729775829427202, unit: ''}
+    coord_distance_max_Cs-Sb: {value: 4.620206864182307, unit: ''}
+    coord_distance_min_Cs-Sb: {value: 3.770560747480702, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: 0, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: 0, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: 0, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 2.375, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.4918693768379647, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 3, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 2, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 2.8845180961979153, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 0.05460933243294717, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 2.9905061178636685, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 2.8112938837482977, unit: ''}
+    structure_node: {value: 10500, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-628742, unit: ''}
+    formation_energy: {value: -0.35231890458886, unit: ''}
+    stability: {value: 0.0, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.5848, unit: ''}
+    magnetic_moment: {value: 0.0452138, unit: ''}
+    icsd_ids:
+      value: [412155]
+      unit: ''
+  space_group: 14
+- chem_formula: {Cs: 8, Sb: 8}
+  attributes:
+    label: {value: MP-2020_09_08_mp-573514_Cs8Sb8, unit: ''}
+    el_conc_Cs: {value: 0.5, unit: ''}
+    el_conc_Sb: {value: 0.5, unit: ''}
+    nr_atoms: {value: 16, unit: ''}
+    coord_nrs_avg_Cs-Cs: {value: 2, unit: ''}
+    coord_nrs_stdev_Cs-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Cs-Cs: {value: 2, unit: ''}
+    coord_nrs_min_Cs-Cs: {value: 2, unit: ''}
+    coord_distance_avg_Cs-Cs: {value: 4.223470261194526, unit: ''}
+    coord_distance_stdev_Cs-Cs: {value: 0.04232055527447334, unit: ''}
+    coord_distance_max_Cs-Cs: {value: 4.264446962639598, unit: ''}
+    coord_distance_min_Cs-Cs: {value: 4.182493559749454, unit: ''}
+    coord_nrs_avg_Cs-Sb: {value: 6, unit: ''}
+    coord_nrs_stdev_Cs-Sb: {value: 1.0690449676496976, unit: ''}
+    coord_nrs_max_Cs-Sb: {value: 7, unit: ''}
+    coord_nrs_min_Cs-Sb: {value: 5, unit: ''}
+    coord_distance_avg_Cs-Sb: {value: 4.013014067994955, unit: ''}
+    coord_distance_stdev_Cs-Sb: {value: 0.17453731244922996, unit: ''}
+    coord_distance_max_Cs-Sb: {value: 4.473077187282702, unit: ''}
+    coord_distance_min_Cs-Sb: {value: 3.8366333541784106, unit: ''}
+    coord_nrs_avg_Sb-Cs: {value: 0, unit: ''}
+    coord_nrs_stdev_Sb-Cs: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Cs: {value: 0, unit: ''}
+    coord_nrs_min_Sb-Cs: {value: 0, unit: ''}
+    coord_distance_avg_Sb-Cs: {value: null, unit: ''}
+    coord_distance_stdev_Sb-Cs: {value: null, unit: ''}
+    coord_distance_max_Sb-Cs: {value: null, unit: ''}
+    coord_distance_min_Sb-Cs: {value: null, unit: ''}
+    coord_nrs_avg_Sb-Sb: {value: 2, unit: ''}
+    coord_nrs_stdev_Sb-Sb: {value: 0.0, unit: ''}
+    coord_nrs_max_Sb-Sb: {value: 2, unit: ''}
+    coord_nrs_min_Sb-Sb: {value: 2, unit: ''}
+    coord_distance_avg_Sb-Sb: {value: 2.909377757188567, unit: ''}
+    coord_distance_stdev_Sb-Sb: {value: 0.006866459782992225, unit: ''}
+    coord_distance_max_Sb-Sb: {value: 2.916026178285301, unit: ''}
+    coord_distance_min_Sb-Sb: {value: 2.902729336091834, unit: ''}
+    structure_node: {value: 10501, unit: ''}
+    source: {value: MP-2020_09_08, unit: ''}
+    source_id: {value: mp-573514, unit: ''}
+    formation_energy: {value: -0.43865861521552, unit: ''}
+    stability: {value: 0.0, unit: ''}
+    functional: {value: PBE, unit: ''}
+    direct_band_gap: {value: 0.5564, unit: ''}
+    magnetic_moment: {value: 2.325e-06, unit: ''}
+    icsd_ids:
+      value: [14031]
+      unit: ''
+  space_group: 19

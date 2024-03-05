@@ -1,0 +1,32 @@
+%YAML 1.2
+---
+entries:
+- chem_formula: {Cs: 8}
+  total_energy_per_atom: -540.0
+- chem_formula: {Cs: 1}
+  total_energy: -546.9454577375502
+- chem_formula: {Sb: 1}
+  total_energy: -40.0
+- chem_formula: {Sb: 1, Cs: 1}
+- chem_formula: {Sb: 2, Te: 1}
+  total_energy: -400.0
+- chem_formula: {Sb: 2, Cs: 4}
+  total_energy: -8000.0
+- chem_formula: {Sb: 9, Cs: 4}
+  total_energy: -500.0
+elemental_phases:
+  Cs: -546.9454577375502
+  Sb: -40.0
+ref_values:
+- formation_energy: 6.945457737550214
+  stability: 6.9454577375501
+- formation_energy: 0.0
+  stability: 0.0
+- formation_energy: 0.0
+  stability: 0.0
+- {}
+- {}
+- formation_energy: -955.3696948416332
+  stability: 0.0
+- formation_energy: 157.52167930386162
+  stability: 598.4615384615386

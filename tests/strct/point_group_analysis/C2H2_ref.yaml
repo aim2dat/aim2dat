@@ -1,0 +1,8 @@
+%YAML 1.2
+---
+point_group: $D_{\infty h}$
+symmetry_elements:
+- {label: inv_center, type: inversion}
+- label: linear
+  type: linear
+  axis: [-0.9999999997220548, -2.3577331587776993e-05, 0.0]

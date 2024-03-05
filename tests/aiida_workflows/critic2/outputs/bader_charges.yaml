@@ -1,0 +1,13 @@
+%YAML 1.2
+---
+output_parameters:
+  critic2_version: 1.0
+  critic2_branch: development
+  method: Yu-Trinkle integration
+  nwarnings: 0
+  ncomments: 0
+output_bader_populations:
+- element: Na
+  population: 8.13163977
+- element: Cl
+  population: 7.86834972

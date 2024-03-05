@@ -1,0 +1,21 @@
+init_kwargs: {feature_types: [nrs_avg, nrs_min, distance_avg]}
+add_structure_collection: False
+features_fit: [[0.0, 3.5, 7.0, 0.0, 0.0, 3.0, 7.0, 0.0, 0.0, 3.876081004436161, 3.876081004436161, 0.0]]
+features_transf:
+- [0.0, 3.5, 7.0, 0.0, 0.0, 3.0, 7.0, 0.0, 0.0, 3.876081004436161, 3.876081004436161, 0.0]
+- [4.0, 4.5, 3.0, 0.0, 0.0, 3.0, 3.0, 0.0, 4.231025300395622, 4.070133806489573, 3.7063220193740154, 0.0]
+- [0.0, 3.5, 7.0, 0.0, 0.0, 3.0, 7.0, 0.0, 0.0, 3.881010894316694, 3.881010894316694, 0.0]
+- [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+feature_names_out:
+- 'nrs_avg_Cs-Cs'
+- 'nrs_avg_Cs-Te'
+- 'nrs_avg_Te-Cs'
+- 'nrs_avg_Te-Te'
+- 'nrs_min_Cs-Cs'
+- 'nrs_min_Cs-Te'
+- 'nrs_min_Te-Cs'
+- 'nrs_min_Te-Te'
+- 'distance_avg_Cs-Cs'
+- 'distance_avg_Cs-Te'
+- 'distance_avg_Te-Cs'
+- 'distance_avg_Te-Te'

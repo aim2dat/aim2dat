@@ -1,0 +1,254 @@
+%YAML 1.2
+---
+entries:
+- chem_formula: {Cs: 8, Te: 0}
+  total_energy: -4377.131229145737
+- chem_formula: {Cs: 1, Te: 0}
+  total_energy: -546.9454577375502
+- chem_formula: {Cs: 20, Te: 0}
+  total_energy: -10942.787590872844
+- chem_formula: {Cs: 1, Te: 0}
+  total_energy: -547.1530374382698
+- chem_formula: {Cs: 0, Te: 1}
+  total_energy: -222.72765395602735
+- chem_formula: {Cs: 0, Te: 4}
+  total_energy: -891.4854162501307
+- chem_formula: {Cs: 0, Te: 4}
+  total_energy: -891.4870805836717
+- chem_formula: {Cs: 0, Te: 3}
+  total_energy: -668.734063551739
+- chem_formula: {Cs: 0, Te: 3}
+  total_energy: -668.7340629726535
+- chem_formula: {Cs: 4, Te: 4}
+  total_energy: -3088.976559356662
+- chem_formula: {Cs: 4, Te: 6}
+  total_energy: -3535.352922215291
+- chem_formula: {Cs: 10, Te: 6}
+  total_energy: -6828.629727968777
+- chem_formula: {Cs: 8, Te: 0}
+  total_energy: -4377.1937389327295
+- chem_formula: {Cs: 1, Te: 0}
+  total_energy: -547.1531419474347
+- chem_formula: {Cs: 20, Te: 0}
+  total_energy: -10942.788001770488
+- chem_formula: {Cs: 8, Te: 0}
+  total_energy: -4377.13122954765
+- chem_formula: {Cs: 4, Te: 0}
+  total_energy: -2188.483565507636
+- chem_formula: {Cs: 2, Te: 0}
+  total_energy: -1094.3026044409396
+- chem_formula: {Cs: 2, Te: 0}
+  total_energy: -1094.2973614277348
+- chem_formula: {Cs: 3, Te: 0}
+  total_energy: -1641.392148813573
+- chem_formula: {Cs: 2, Te: 0}
+  total_energy: -1094.3021215679285
+- chem_formula: {Cs: 0, Te: 3}
+  total_energy: -668.7340627843779
+- chem_formula: {Cs: 0, Te: 2}
+  total_energy: -445.74996228893957
+- chem_formula: {Cs: 0, Te: 1}
+  total_energy: -222.86672499696104
+- chem_formula: {Cs: 0, Te: 2}
+  total_energy: -445.5535449384451
+- chem_formula: {Cs: 0, Te: 2}
+  total_energy: -445.58824899006044
+- chem_formula: {Cs: 0, Te: 2}
+  total_energy: -445.5113224456342
+- chem_formula: {Cs: 0, Te: 4}
+  total_energy: -891.0754950822434
+- chem_formula: {Cs: 0, Te: 1}
+  total_energy: -222.71530572753665
+- chem_formula: {Cs: 0, Te: 1}
+  total_energy: -222.86798538510104
+- chem_formula: {Cs: 0, Te: 4}
+  total_energy: -890.49532673069
+- chem_formula: {Cs: 0, Te: 3}
+  total_energy: -668.5241213393823
+- chem_formula: {Cs: 0, Te: 3}
+  total_energy: -668.7340584408148
+- chem_formula: {Cs: 0, Te: 3}
+  total_energy: -668.7340613595625
+- chem_formula: {Cs: 0, Te: 3}
+  total_energy: -668.7340610350939
+- chem_formula: {Cs: 0, Te: 3}
+  total_energy: -668.7340605861333
+- chem_formula: {Cs: 0, Te: 3}
+  total_energy: -668.7340605714392
+- chem_formula: {Cs: 0, Te: 3}
+  total_energy: -668.7340572459085
+- chem_formula: {Cs: 0, Te: 3}
+  total_energy: -668.7340609480448
+- chem_formula: {Cs: 0, Te: 3}
+  total_energy: -668.7340599033724
+- chem_formula: {Cs: 0, Te: 3}
+  total_energy: -668.7340556334977
+- chem_formula: {Cs: 0, Te: 6}
+  total_energy: -1336.9326145377863
+- chem_formula: {Cs: 0, Te: 3}
+  total_energy: -668.5211968645687
+- chem_formula: {Cs: 0, Te: 12}
+  total_energy: -2674.1652484694678
+- chem_formula: {Cs: 4, Te: 4}
+  total_energy: -3088.976538453692
+- chem_formula: {Cs: 1, Te: 1}
+  total_energy: -771.6870016616399
+- chem_formula: {Cs: 1, Te: 1}
+  total_energy: -771.3295449915216
+- chem_formula: {Cs: 6, Te: 6}
+  total_energy: -4633.3058485666925
+- chem_formula: {Cs: 2, Te: 6}
+  total_energy: -2435.6133903268
+- chem_formula: {Cs: 1, Te: 3}
+  total_energy: -1216.6175644372272
+- chem_formula: {Cs: 2, Te: 1}
+  total_energy: -1320.997627829281
+- chem_formula: {Cs: 8, Te: 4}
+  total_energy: -5284.009765596342
+- chem_formula: {Cs: 4, Te: 2}
+  total_energy: -2637.6846273965325
+- chem_formula: {Cs: 4, Te: 6}
+  total_energy: -3535.3530529104896
+- chem_formula: {Cs: 4, Te: 10}
+  total_energy: -4427.470783018892
+- chem_formula: {Cs: 3, Te: 1}
+  total_energy: -1867.2244202683894
+- chem_formula: {Cs: 3, Te: 1}
+  total_energy: -1867.506731659928
+- chem_formula: {Cs: 3, Te: 22}
+  total_energy: -6552.189781911459
+- chem_formula: {Cs: 10, Te: 6}
+  total_energy: -6828.633454586597
+- chem_formula: {Cs: 8, Te: 12}
+  total_energy: -7070.8759965011195
+- chem_formula: {Cs: 2, Te: 6}
+  total_energy: -2433.6550422208165
+- chem_formula: {Cs: 10, Te: 6}
+  total_energy: -6828.633389788668
+- chem_formula: {Cs: 2, Te: 5}
+  total_energy: -2213.730717304551
+- chem_formula: {Cs: 4, Te: 4}
+  total_energy: -3088.9766052214536
+- chem_formula: {Cs: 1, Te: 1}
+  total_energy: -770.932668238326
+- chem_formula: {Cs: 4, Te: 6}
+  total_energy: -3535.3481056228184
+- chem_formula: {Cs: 2, Te: 6}
+  total_energy: -2435.95957582749
+- chem_formula: {Cs: 16, Te: 16}
+  total_energy: -12354.38230324968
+- chem_formula: {Cs: 8, Te: 20}
+  total_energy: -8853.868805249149
+- chem_formula: {Cs: 8, Te: 4}
+  total_energy: -5284.008251283799
+- chem_formula: {Cs: 1, Te: 1}
+  total_energy: -771.6806858180714
+- chem_formula: {Cs: 16, Te: 64}
+  total_energy: -23057.187988272697
+- chem_formula: {Cs: 4, Te: 2}
+  total_energy: -2641.783079964621
+- chem_formula: {Cs: 4, Te: 2}
+  total_energy: -2641.7614478794435
+- chem_formula: {Cs: 2, Te: 1}
+  total_energy: -1320.6429668598203
+- chem_formula: {Cs: 4, Te: 2}
+  total_energy: -2641.550611827587
+- chem_formula: {Cs: 4, Te: 4}
+  total_energy: -3088.8274628119916
+- chem_formula: {Cs: 1, Te: 1}
+  total_energy: -771.3887372584397
+- chem_formula: {Cs: 1, Te: 1}
+  total_energy: -771.4193746377483
+- chem_formula: {Cs: 8, Te: 8}
+  total_energy: -6177.140366723397
+- chem_formula: {Cs: 8, Te: 4}
+  total_energy: -5284.009716013115
+- chem_formula: {Cs: 8, Te: 12}
+  total_energy: -7070.876088873163
+- chem_formula: {Cs: 8, Te: 12}
+  total_energy: -7070.87606040706
+excl_keys: [50, 51, 69, 80]
+ref_values:
+- {formation_energy: 0.01173830421760158, stability: 0.01173830421760158}
+- {formation_energy: 0.20768420988451908, stability: 0.20768420988451908}
+- {formation_energy: 0.013762403792588885, stability: 0.013762403792588885}
+- {formation_energy: 0.00010450916488480289, stability: 0.00010450916488480289}
+- {formation_energy: 0.18370056121898415, stability: 0.18370056121898415}
+- {formation_energy: 0.0400004547136632, stability: 0.0400004547136632}
+- {formation_energy: 0.03958437132840231, stability: 0.03958437132840231}
+- {formation_energy: 0.0, stability: 0.0}
+- {formation_energy: 1.9302850281140613e-07, stability: 1.9302850281140613e-07}
+- {formation_energy: -1.0898216872422353, stability: 5.7330989307047275e-06}
+- {formation_energy: -0.9272227322074059, stability: 0.008512222129047564}
+- {formation_energy: -1.2268863369344416, stability: 0.00023291361372912434}
+- {formation_energy: 0.0039245808435453, stability: 0.0039245808435453}
+- {formation_energy: 0.0, stability: 0.0}
+- {formation_energy: 0.013741858910361771, stability: 0.013741858910361771}
+- {formation_energy: 0.011738253978478497, stability: 0.011738253978478497}
+- {formation_energy: 0.0322505705257754, stability: 0.0322505705257754}
+- {formation_energy: 0.0018397269649312875, stability: 0.0018397269649312875}
+- {formation_energy: 0.004461233567326417, stability: 0.004461233567326417}
+- {formation_energy: 0.022425676243756243, stability: 0.022425676243756243}
+- {formation_energy: 0.002081163470506908, stability: 0.002081163470506908}
+- {formation_energy: 2.557870478388698e-07, stability: 2.557870478388698e-07}
+- {formation_energy: 0.03637337277655206, stability: 0.03637337277655206}
+- {formation_energy: 0.044629520285297986, stability: 0.044629520285297986}
+- {formation_energy: 0.1345820480237876, stability: 0.1345820480237876}
+- {formation_energy: 0.11723002221611978, stability: 0.11723002221611978}
+- {formation_energy: 0.15569329442922708, stability: 0.15569329442922708}
+- {formation_energy: 0.14248074668549293, stability: 0.14248074668549293}
+- {formation_energy: 0.19604878970969253, stability: 0.19604878970969253}
+- {formation_energy: 0.04336913214530114, stability: 0.04336913214530114}
+- {formation_energy: 0.2875228345738492, stability: 0.2875228345738492}
+- {formation_energy: 0.06998073745224549, stability: 0.06998073745224549}
+- {formation_energy: 1.7036414116470648e-06, stability: 1.7036414116470648e-06}
+- {formation_energy: 7.307255221652061e-07, stability: 7.307255221652061e-07}
+- {formation_energy: 8.38881722605341e-07, stability: 8.38881722605341e-07}
+- {formation_energy: 9.885352483252063e-07, stability: 9.885352483252063e-07}
+- {formation_energy: 9.934332941459918e-07, stability: 9.934332941459918e-07}
+- {formation_energy: 2.1019435128740347e-06, stability: 2.1019435128740347e-06}
+- {formation_energy: 8.678980899882541e-07, stability: 8.678980899882541e-07}
+- {formation_energy: 1.2161222002760042e-06, stability: 1.2161222002760042e-06}
+- {formation_energy: 2.6394137648821925e-06, stability: 2.6394137648821925e-06}
+- {formation_energy: 0.08925209428196013, stability: 0.08925209428196013}
+- {formation_energy: 0.07095556239012997, stability: 0.07095556239012997}
+- {formation_energy: 0.06425047812403288, stability: 0.06425047812403288}
+- {formation_energy: -1.0898190743709364, stability: 8.345970229584054e-06}
+- {formation_energy: -0.8112525984794132, stability: 0.27857482186175275}
+- {formation_energy: -0.6325242634202795, stability: 0.4573031569208865}
+- {formation_energy: -1.0765724815504996, stability: 0.013254938790666415}
+- {formation_energy: -0.4798724160565655, stability: 0.12916946248651584}
+- {formation_energy: -0.18258973451335692, stability: 0.4264521440297244}
+- {formation_energy: -1.2599964723884323, stability: -0.035362615656898466}
+- {formation_energy: -1.2616009956565506, stability: -0.036967138925016796}
+- {formation_energy: -0.5415584287168164, stability: 0.6830754280147174}
+- {formation_energy: -0.9272358017272608, stability: 0.00849915260919265}
+- {formation_energy: -0.6960478611920929, stability: 0.0}
+- {formation_energy: -0.7134099772097144, stability: 0.20506541533893574}
+- {formation_energy: -0.7839878250943499, stability: 0.13448756745430024}
+- {formation_energy: -0.2672222675894227, stability: 0.0251178341112564}
+- {formation_energy: -1.2271192505481707, stability: 0.0}
+- {formation_energy: -0.9357303357342743, stability: 4.618602179151665e-06}
+- {formation_energy: -0.23507890280862398, stability: 0.37396297573445736}
+- {formation_energy: -1.2271152006776305, stability: 4.049870540256961e-06}
+- {formation_energy: -0.6953801176356852, stability: 0.0006677435564077516}
+- {formation_energy: -1.089827420341166, stability: 0.0}
+- {formation_energy: -0.4340858868224444, stability: 0.6557415335187216}
+- {formation_energy: -0.9267410729601352, stability: 0.008993881376318291}
+- {formation_energy: -0.5231456036428028, stability: 0.08589627490027851}
+- {formation_energy: -1.042198744211973, stability: 0.04762867612919308}
+- {formation_energy: -0.657734975883711, stability: 0.03831288530838195}
+- {formation_energy: -1.2614748029446428, stability: -0.03684094621310896}
+- {formation_energy: -0.8080946766951769, stability: 0.2817327436459891}
+- {formation_energy: -0.45513785012469726, stability: 0.03209565270976783}
+- {formation_energy: -1.2246338567315338, stability: 0.0}
+- {formation_energy: -1.2210285092019812, stability: 0.0036053475295525494}
+- {formation_energy: -1.1417761492348195, stability: 0.08285770749671428}
+- {formation_energy: -1.1858891672259138, stability: 0.038744689505620045}
+- {formation_energy: -1.0711846191584158, stability: 0.01864280118275019}
+- {formation_energy: -0.662120396879331, stability: 0.427707023461835}
+- {formation_energy: -0.6774390865336244, stability: 0.4123883338075416}
+- {formation_energy: -1.0390246878717875, stability: 0.0508027324693785}
+- {formation_energy: -1.2615968637210149, stability: -0.03696300698948107}
+- {formation_energy: -0.9357349543364535, stability: 0.0}
+- {formation_energy: -0.9357335310313146, stability: 1.4233051388590212e-06}

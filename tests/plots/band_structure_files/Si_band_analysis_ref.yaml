@@ -1,0 +1,51 @@
+%YAML 1.2
+---
+analyse_band:
+  inputs: {band_idx: 2, data_label: Si_band_structure}
+  result: !!python/tuple
+  - energy: -4.5441909
+    kpoint: [0.34259259, 0.34259259, 0.68518519]
+  - energy: 0.0
+    kpoint: &id001 [0.0, 0.0, 0.0]
+calculate_band_gap:
+  inputs: {data_label: Si_band_structure}
+  result:
+    cbm_band_idx: 4
+    cbm_energy: 0.6067583699999997
+    cbm_kpoint: [0.41447368, 0.0, 0.41447368]
+    cbm_label: 
+    cbm_rel_distance: 0.82894736
+    direct_gap: 2.605352729999999
+    direct_gap_kpoint: *id001
+    direct_gap_label: \Gamma
+    direct_gap_rel_distance: 0.0
+    indirect_gap: 0.6067583699999997
+    vbm_band_idx: 3
+    vbm_energy: 0.0
+    vbm_kpoint: *id001
+    vbm_label: \Gamma
+    vbm_rel_distance: 0.0
+calculate_energy_diff_at_kpoint:
+  inputs:
+    band_idx1: 2
+    band_idx2: 3
+    data_labels: Si_band_structure
+    kpoint: [0, 0, 0]
+  result: 0.0
+calculate_smallest_direct_energy_diff:
+  inputs: {band_idx1: 2, band_idx2: 5, data_label: Si_band_structure}
+  result:
+    energy: 2.6053613899999997
+    kpoint: *id001
+    label: \Gamma
+    rel_distance: 0.0
+calculate_smallest_energy_diff:
+  inputs: {band_idx1: 2, band_idx2: 5, data_label: Si_band_structure}
+  result:
+    energy: 0.7967521
+    kpoint_max: *id001
+    kpoint_min: [0.5, 0.0, 0.5]
+    label_max: \Gamma
+    label_min: X
+    rel_distance_max: 0.0
+    rel_distance_min: 0.0

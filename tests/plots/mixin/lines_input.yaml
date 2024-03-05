@@ -1,0 +1,52 @@
+%YAML 1.2
+---
+properties: {subplot_nrows: 2}
+import_data:
+- function: import_scatter_data_set
+  args:
+    data_label: test dataset
+    x_values: [0.0, 1.0, 2.0, 3.0]
+    y_values: [-1.0, 2.0, 3.0, 0.0]
+- function: import_scatter_data_set
+  args:
+    data_label: test dataset 2
+    x_values: [0.0, 1.0, 2.0, 3.0]
+    y_values: [4.0, 1.0, 3.0, 2.0]
+    plot_label: Test 2
+    marker: o
+    alpha: 0.5
+- function: import_bar_data_set
+  args:
+    data_label: test dataset 3
+    x_values: [1.0, 4.0]
+    y_values: [2.0, 3.0]
+    heights: [4.0, 1.0]
+    plot_label: Bar data set
+    width: 0.15
+    bottom: 1.5
+    color: C4
+- function: add_hline
+  args:
+    y: 2.0
+    x_min: 0.0
+    x_max: 4.0
+    scaled: False
+    color: C1
+- function: add_vline
+  args:
+    x: 0.5
+    y_min: 0.2
+    y_max: 0.8
+    scaled: True
+    color: black
+    subplot_assignment: [0, 1]
+- function: add_vline
+  args:
+    x: 0.5
+    y_min: 0.4
+    y_max: 0.5
+    scaled: True
+    color: grey
+    line_style: dotted
+    foreground: True
+    subplot_assignment: 0

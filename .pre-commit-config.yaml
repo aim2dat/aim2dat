@@ -1,0 +1,28 @@
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+    -   id: trailing-whitespace
+        exclude: tests|example_notebooks
+    -   id: end-of-file-fixer
+        exclude: tests|example_notebooks
+    -   id: check-yaml
+        args: ["--unsafe"]
+    -   id: check-added-large-files
+        args: ["--maxkb=1000"]
+    -   id: check-merge-conflict
+-   repo: https://github.com/psf/black-pre-commit-mirror
+    rev: "24.1.1"
+    hooks:
+    - id: black
+-   repo: https://github.com/PyCQA/flake8
+    rev: "7.0.0"
+    hooks:
+    -   id: flake8
+        additional_dependencies: [
+            'flake8-docstrings',
+            'flake8_builtins',
+            'mccabe',
+            'pycodestyle',
+            'pyflakes',
+        ]

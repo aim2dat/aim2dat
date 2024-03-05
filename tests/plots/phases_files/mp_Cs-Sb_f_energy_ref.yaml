@@ -1,0 +1,347 @@
+%YAML 1.2
+---
+attributes:
+  plot_type: scatter
+  plot_property: formation_energy
+  show_crystal_system: True
+  top_labels: [{"Cs": 2, "Sb": 1}]
+  show_convex_hull: True
+plot_args:
+  data_labels: ["test"]
+  subplot_assignment: [0]
+ref:
+  data_sets:
+  - {x: 0.6666666666666666, color: black, linestyle: dashed, scaled: true, type: vline}
+  - x_values: [0.0]
+    y_values: [0.33329639714286]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 0
+    label: triclinic
+  - x_values: [0.0]
+    y_values: [0.23457109571429]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 0
+  - x_values: [0.0]
+    y_values: [0.050492435]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 1
+  - x_values: [0.0]
+    y_values: [0.1229967425]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 1
+  - x_values: [0.0]
+    y_values: [0.05889713]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 1
+  - x_values: [1.0]
+    y_values: [0.042217512068966]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 1
+    label: monoclinic
+  - x_values: [0.5]
+    y_values: [-0.43665327021552]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 1
+  - x_values: [0.38461538461538464]
+    y_values: [-0.35231890458886]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 1
+  - x_values: [0.5]
+    y_values: [-0.43865861521552]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 2
+  - x_values: [1.0]
+    y_values: [0.046335069568966]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 2
+    label: orthorhombic
+  - x_values: [1.0]
+    y_values: [0.054916592068966]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 2
+  - x_values: [0.6666666666666666]
+    y_values: [-0.37678949362069]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 2
+  - x_values: [1.0]
+    y_values: [0.053976002068966]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 2
+  - x_values: [1.0]
+    y_values: [0.065470070818966]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 3
+    label: tetragonal
+  - x_values: [1.0]
+    y_values: [0.037375242068966]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 3
+  - x_values: [0.0]
+    y_values: [0.301938285]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 3
+  - x_values: [0.0]
+    y_values: [0.2843399975]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 3
+  - x_values: [1.0]
+    y_values: [0.097650387068966]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 3
+  - x_values: [0.0]
+    y_values: [0.0]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 4
+    label: trigonal
+  - x_values: [1.0]
+    y_values: [0.026212939568966]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 5
+    label: hexagonal
+  - x_values: [1.0]
+    y_values: [0.035108577068966]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 5
+  - x_values: [0.0]
+    y_values: [0.290331165]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 5
+  - x_values: [1.0]
+    y_values: [0.038676896068965]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 6
+  - x_values: [1.0]
+    y_values: [0.0]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 6
+  - x_values: [0.0]
+    y_values: [0.050562675]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 6
+  - x_values: [1.0]
+    y_values: [0.046689592068966]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 6
+    label: cubic
+  - x_values: [1.0]
+    y_values: [0.041371492068966]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 6
+  - x_values: [0.0]
+    y_values: [0.328351975]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 6
+  - x_values: [0.75]
+    y_values: [-0.30401157719828]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 6
+  - x_values: [1.0]
+    y_values: [0.038769612068966]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 6
+  - x_values: [0.0]
+    y_values: [0.238523485]
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    marker: 6
+  - x_values: [0.0, 0.38461538461538464, 0.5, 0.6666666666666666, 0.75, 1.0]
+    y_values: [0.0, -0.35231890458886, -0.43865861521552, -0.37678949362069, -0.30401157719828,
+      0.0]
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    label: Convex hull
+    group_by: color
+  x_ticks:
+  y_ticks:
+  x_tick_labels:
+  y_tick_labels:
+  sec_axis:
+  - ticks: [0.6666666666666666]
+    tick_labels: ['$\mathrm{Cs}_\mathrm{2}\mathrm{Sb}$']
+    coord: x

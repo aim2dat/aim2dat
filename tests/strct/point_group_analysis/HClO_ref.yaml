@@ -1,0 +1,7 @@
+%YAML 1.2
+---
+point_group: $C_s$
+symmetry_elements:
+- type: reflection
+  label: $\sigma$
+  n-vector: [0.0, 0.6931964594794259, 0.7207486861349028]

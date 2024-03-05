@@ -1,0 +1,13 @@
+distance:
+  function_args:
+    site_index1: 0
+    site_index2: 4
+    backfold_positions: False
+  reference: 2.4388
+angle:
+  function_args:
+    site_index1: 8
+    site_index2: 7
+    site_index3: 11
+    backfold_positions: False
+  reference: 60.0

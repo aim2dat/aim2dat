@@ -1,0 +1,78 @@
+%YAML 1.2
+---
+# Partial charges parser parameters.
+header_blocks:
+- start: '  Atom  Kind  Element'
+  end: ' SCF PARAMETERS'
+  max_length: -1
+  patterns:
+  - pattern: '^\s*\d+\s*(\d+)?\s*([A-Za-z]+)?\s*(\d+)?\s*[-+]?[0-9]+\.?[0-9]*\s*[-+]?[0-9]+\.?[0-9]*\s*[-+]?[0-9]+\.?[0-9]*\s*([-+]?[0-9]+\.?[0-9]*)?\s*([-+]?[0-9]*\.?[0-9]*)?$'
+    key:
+    - ['kind_info', 'kind']
+    - ['kind_info', 'element']
+    - ['kind_info', 'atomic_nr']
+    - ['kind_info', 'valence_e']
+    - ['kind_info', 'mass']
+    type: [int, str, int, float, float]
+    append: [true, true, true, true, true]
+    regex: true
+    repeat: true
+middle_blocks:
+- start: ' #  Atom  Element  Kind  Atomic population                           Net charge'
+  end: ' !-----------------------------------------------------------------------------!'
+  max_length: -1
+  patterns:
+  - pattern: '^\s\s*[0-9]*\s*([A-Za-z]*)?\s*([0-9]*)?\s*([-+]?[0-9]*\.?[0-9]*)?\s*([-+]?[0-9]*\.?[0-9]*)?$'
+    key:
+    - ['mulliken', 'element']
+    - ['mulliken', 'kind']
+    - ['mulliken', 'population']
+    - ['mulliken', 'charge']
+    type: [str, int, float, float]
+    append: [true, true, true, true]
+    regex: true
+    repeat: true
+- start: ' #  Atom  Element  Kind  Atomic population (alpha,beta) Net charge  Spin moment'
+  end: ' !-----------------------------------------------------------------------------!'
+  max_length: -1
+  patterns:
+  - pattern: '^\s\s*[0-9]*\s*([A-Za-z]*)?\s*([0-9]*)?\s*([-+]?[0-9]*\.?[0-9]*)?\s*([-+]?[0-9]*\.[0-9]*)?\s*([-+]?[0-9]*\.[0-9]*)?\s*([-+]?[0-9]*\.[0-9]*)?\s*[-+]?[0-9]*\.[0-9]*$'
+    key:
+    - ['mulliken', 'element']
+    - ['mulliken', 'kind']
+    - ['mulliken', 'population_alpha']
+    - ['mulliken', 'population_beta']
+    - ['mulliken', 'charge']
+    type: [str, int, float, float, float]
+    append: [true, true, true, true, true]
+    regex: true
+    repeat: true
+- start: '  #Atom  Element  Kind  Ref Charge     Population                    Net charge'
+  end: ' !-----------------------------------------------------------------------------!'
+  max_length: -1
+  patterns:
+  - pattern: '^\s\s*[0-9]*\s*([A-Za-z]*)?\s*([0-9]*)?\s*[-+]?[0-9]*\.?[0-9]*\s*([-+]?[0-9]*\.[0-9]*)?\s*([-+]?[0-9]*\.[0-9]*)?$'
+    key:
+    - ['hirshfeld', 'element']
+    - ['hirshfeld', 'kind']
+    - ['hirshfeld', 'population']
+    - ['hirshfeld', 'charge']
+    type: [str, int, float, float]
+    append: [true, true, true, true]
+    regex: true
+    repeat: true
+- start: '  #Atom  Element  Kind  Ref Charge     Population       Spin moment  Net charge'
+  end: ' !-----------------------------------------------------------------------------!'
+  max_length: -1
+  patterns:
+  - pattern: '^\s\s*[0-9]*\s*([A-Za-z]*)?\s*([0-9]*)?\s*[-+]?[0-9]*\.?[0-9]*\s*([-+]?[0-9]*\.[0-9]*)?\s*([-+]?[0-9]*\.[0-9]*)?\s*[-+]?[0-9]*\.[0-9]*\s*([-+]?[0-9]*\.[0-9]*)?$'
+    key:
+    - ['hirshfeld', 'element']
+    - ['hirshfeld', 'kind']
+    - ['hirshfeld', 'population_alpha']
+    - ['hirshfeld', 'population_beta']
+    - ['hirshfeld', 'charge']
+    type: [str, int, float, float, float]
+    append: [true, true, true, true, true]
+    regex: true
+    repeat: true

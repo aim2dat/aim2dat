@@ -1,0 +1,14 @@
+space_group:
+  int_symbol: F-43m
+  sg_number: 216
+  hall_number: 512
+  point_group_symbol: '-43m'
+  schoenflies_symbol: 'Td^2'
+  centrosymmetric: False
+equivalent_sites: 
+- sites: [0]
+  symmetry: '-43m'
+  wyckoff: a
+- sites: [1]
+  symmetry: '-43m'
+  wyckoff: c

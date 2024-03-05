@@ -1,0 +1,14 @@
+%YAML 1.2
+---
+function_args:
+  elements: H
+  site_indices: [0, 1, 10, 11]
+structure:
+  elements: [C, C, C, C]
+  pbc: [false, false, false]
+  positions:
+  - [-1.4081,   -0.0000,   -0.0000]
+  - [ 1.4081,    0.0000,    0.0000]
+  - [-0.7040,    1.2194,    0.0000]
+  - [ 0.7040,    1.2194,   -0.0000]
+  is_cartesian: true

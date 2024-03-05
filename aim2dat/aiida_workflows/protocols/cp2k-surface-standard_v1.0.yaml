@@ -1,0 +1,396 @@
+%YAML 1.2
+---
+# Protocol with standard settings for the surface workflow.
+title: cp2k-surface-standard
+version: '1.0'
+description: Standard settings to calculate surface properties.
+dependencies:
+- [aiida-core, '1.6', Null]
+- [seekpath, '2.0', Null]
+parent_node_type: aim2dat.surface
+parent_node_input: {surface_opt: structural_p.surface}
+tasks:
+  surface_opt:
+    process: aim2dat.cp2k.combined.surface_opt
+    blacklist_inputs:
+    - custom_scf_method
+  band_structure:
+    process: aim2dat.cp2k.band_structure
+    blacklist_inputs:
+    - custom_scf_method
+    dependencies:
+      surface_opt:
+      - [cp2k.output_structure, structural_p.structure]
+      - [cp2k.remote_folder, cp2k.parent_calc_folder]
+      - [scf_parameters, structural_p.scf_parameters]
+      - [path_parameters, path_parameters]
+  pdos:
+    process: aim2dat.cp2k.pdos
+    blacklist_inputs:
+    - custom_scf_method
+    dependencies:
+      surface_opt:
+      - [cp2k.output_structure, structural_p.structure]
+      - [scf_parameters, structural_p.scf_parameters]
+  partial_charges:
+    process: aim2dat.cp2k.partial_charges
+    blacklist_inputs:
+    - custom_scf_method
+    dependencies:
+      surface_opt:
+      - [cp2k.output_structure, structural_p.structure]
+      - [cp2k.remote_folder, cp2k.parent_calc_folder]
+      - [scf_parameters, structural_p.scf_parameters]
+  el_density_fields:
+    process: aim2dat.cp2k.planar_fields
+    blacklist_inputs:
+    - custom_scf_method
+    dependencies:
+      surface_opt:
+      - [cp2k.output_structure, structural_p.structure]
+      - [cp2k.remote_folder, cp2k.parent_calc_folder]
+      - [scf_parameters, structural_p.scf_parameters]
+  cube:
+    process: aim2dat.cp2k.cube
+    blacklist_inputs:
+    - custom_scf_method
+    dependencies:
+      surface_opt:
+      - [cp2k.output_structure, structural_p.structure]
+      - [cp2k.remote_folder, cp2k.parent_calc_folder]
+      - [scf_parameters, structural_p.scf_parameters]
+general_input:
+  cp2k.parameters:
+    value:
+      GLOBAL:
+        PRINT_LEVEL: MEDIUM
+        PREFERRED_DIAG_LIBRARY: SCALAPACK
+        EXTENDED_FFT_LENGTHS: true
+      FORCE_EVAL:
+        METHOD: Quickstep
+        DFT:
+          MGRID: {}
+          POISSON: {PERIODIC: XY, POISSON_SOLVER: MT}
+          BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT]
+          POTENTIAL_FILE_NAME: GTH_POTENTIALS
+          QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
+          SCF: {EPS_SCF: 5.0e-7}
+          KPOINTS:
+            EPS_GEO: 1.0E-8
+            FULL_GRID: false
+            SYMMETRY: false
+          XC: {}
+        SUBSYS:
+          CELL: {PERIODIC: XY}
+    aiida_node: true
+    tasks: [surface_opt, band_structure, pdos, partial_charges, el_density_fields, cube]
+  numerical_p.kpoints_ref_dist:
+    value: 0.15
+    aiida_node: true
+    tasks: [surface_opt, band_structure, partial_charges, el_density_fields, cube]
+  factor_unocc_states:
+    value: 0.75
+    aiida_node: true
+    tasks: [surface_opt, band_structure, pdos, partial_charges, el_density_fields, cube]
+  enable_roks:
+    value: false
+    aiida_node: true
+    tasks: [surface_opt, band_structure, pdos, partial_charges, el_density_fields, cube]
+  scf_method:
+    value: surface_mixing
+    aiida_node: true
+    tasks: [surface_opt, band_structure, pdos, partial_charges, el_density_fields, cube]
+  adjust_scf_parameters:
+    value: true
+    aiida_node: true
+    tasks: [surface_opt, band_structure, pdos, partial_charges, el_density_fields, cube]
+  always_add_unocc_states:
+    value: true
+    aiida_node: true
+    tasks: [surface_opt, partial_charges, el_density_fields, cube]
+  max_iterations:
+    value: 100
+    aiida_node: true
+    compare: False
+    tasks: [surface_opt, band_structure, pdos, partial_charges, el_density_fields, cube]
+  preopt_optimization_p.max_force:
+    value: 0.005
+    aiida_node: true
+    tasks: [surface_opt]
+  preopt_optimization_p.rms_force:
+    value: 0.005
+    aiida_node: true
+    tasks: [surface_opt]
+  preopt_optimization_p.max_dr:
+    value: 0.02
+    aiida_node: true
+    tasks: [surface_opt]
+  preopt_optimization_p.rms_dr:
+    value: 0.01
+    aiida_node: true
+    tasks: [surface_opt]
+  optimization_p.max_force:
+    value: 0.00019
+    aiida_node: true
+    tasks: [surface_opt]
+  optimization_p.rms_force:
+    value: 0.00019
+    aiida_node: true
+    tasks: [surface_opt]
+  optimization_p.max_dr:
+    value: 0.002
+    aiida_node: true
+    tasks: [surface_opt]
+  optimization_p.rms_dr:
+    value: 0.001
+    aiida_node: true
+    tasks: [surface_opt]
+  structural_p.vacuum:
+    value: 0.0
+    aiida_node: true
+    tasks: [surface_opt]
+  structural_p.vacuum_factor:
+    value: 1.1
+    aiida_node: true
+    tasks: [surface_opt]
+  structural_p.periodic:
+    value: false
+    aiida_node: true
+    tasks: [surface_opt]
+  structural_p.minimum_slab_size:
+    value: 20.0
+    aiida_node: true
+    tasks: [surface_opt]
+  structural_p.maximum_slab_size:
+    value: 50.0
+    aiida_node: true
+    tasks: [surface_opt]
+  slab_conv.criteria:
+    value: surface_energy
+    aiida_node: true
+    tasks: [surface_opt]
+  slab_conv.threshold:
+    value: 0.0005
+    aiida_node: true
+    tasks: [surface_opt]
+  resolve_atoms->pdos:
+    value: true
+    aiida_node: true
+  minimum_cell_length->pdos:
+    value: 25.0
+    aiida_node: true
+  maximum_cell_length->pdos:
+    value: 50.0
+    aiida_node: true
+  critic2.parameters->partial_charges:
+    value:
+    - crystal aiida-ELECTRON_DENSITY-1_0.cube
+    - load aiida-ELECTRON_DENSITY-1_0.cube core zpsp
+    - load aiida-ELECTRON_DENSITY-1_0.cube
+    - integrable 2
+    - yt
+    dependency: critic2.code
+    aiida_node: true
+  chargemol.parameters->partial_charges:
+    value: {periodicity along A, B, and C vectors: [true, true, true], charge type: DDEC6}
+    dependency: chargemol.code
+    aiida_node: true
+  store_cubes->partial_charges:
+    value: false
+    aiida_node: true
+  field_types->el_density_fields:
+    value: ["deformation_density", "elf", "total_density"]
+    aiida_node: true
+  store_cubes->el_density_fields:
+    value: false
+    aiida_node: true
+user_input:
+  bulk_reference:
+    validation: aim2dat.cp2k.combined.surface_opt
+    namespace: true
+    compare: false
+    tasks: [surface_opt]
+  scf_extended_system:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [surface_opt, band_structure, pdos, partial_charges, el_density_fields, cube]
+  numerical_p.xc_functional:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [surface_opt, band_structure, pdos, partial_charges, el_density_fields, cube]
+  numerical_p.cutoff_values:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [surface_opt, band_structure, pdos, partial_charges, el_density_fields, cube]
+  numerical_p.basis_sets:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [surface_opt, band_structure, pdos, partial_charges, el_density_fields, cube]
+  numerical_p.pseudo_file:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [surface_opt, band_structure, pdos, partial_charges, el_density_fields, cube]
+  numerical_p.basis_file:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [surface_opt, band_structure, pdos, partial_charges, el_density_fields, cube]
+  preopt_numerical_p.cutoff_values:
+    validation: aim2dat.cp2k.combined.surface_opt
+    aiida_node: true
+    compare: false
+    tasks: [surface_opt]
+  preopt_numerical_p.basis_sets:
+    validation: aim2dat.cp2k.combined.surface_opt
+    aiida_node: true
+    compare: false
+    tasks: [surface_opt]
+  preopt_numerical_p.basis_file:
+    validation: aim2dat.cp2k.combined.surface_opt
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [surface_opt]
+  wfn_n_homo->pdos:
+    validation: aim2dat.cp2k.pdos
+    aiida_node: true
+    compare: false
+    optional: true
+  wfn_n_lumo->pdos:
+    validation: aim2dat.cp2k.pdos
+    aiida_node: true
+    compare: false
+    optional: true
+  wfn_cube_list->pdos:
+    validation: aim2dat.cp2k.pdos
+    aiida_node: true
+    compare: false
+    optional: true
+  plane_vectors->el_density_fields:
+    validation: aim2dat.cp2k.planar_fields
+    aiida_node: true
+    compare: false
+    optional: true
+  cube_types->cube:
+    validation: aim2dat.cp2k.cube
+    aiida_node: true
+    compare: true
+    optional: true
+  cp2k.code:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: false
+    tasks: [surface_opt, band_structure, pdos, partial_charges, el_density_fields, cube]
+  cp2k.metadata:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+    tasks: [surface_opt, band_structure, pdos, partial_charges, el_density_fields, cube]
+  critic2.code:
+    validation: aim2dat.cp2k.partial_charges
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [partial_charges, el_density_fields]
+  critic2.metadata:
+    validation: aim2dat.cp2k.partial_charges
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+    tasks: [partial_charges, el_density_fields]
+  chargemol.code:
+    validation: aim2dat.cp2k.partial_charges
+    aiida_node: true
+    optional: true
+    tasks: [partial_charges]
+  chargemol.metadata:
+    validation: aim2dat.cp2k.partial_charges
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+    tasks: [partial_charges]
+  chargemol.path_atomic_densities:
+    validation: aim2dat.cp2k.partial_charges
+    aiida_node: true
+    dependency: chargemol.code
+    compare: false
+    tasks: [partial_charges]
+  clean_workdir:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [surface_opt, band_structure, pdos, partial_charges, el_density_fields, cube]
+results:
+  primitive_structure:
+    task: surface_opt
+    output_port: primitive_slab
+  scf_method_level:
+    task: surface_opt
+    output_port: scf_parameters
+    retrieve_value: [method_level]
+  scf_parameter_level:
+    task: surface_opt
+    output_port: scf_parameters
+    retrieve_value: [parameter_level]
+  scf_smearing_level:
+    task: surface_opt
+    output_port: scf_parameters
+    retrieve_value: [smearing_level]
+  optimized_structure:
+    task: surface_opt
+    output_port: cp2k.output_structure
+  total_energy:
+    task: surface_opt
+    output_port: cp2k.output_parameters
+    retrieve_value: [energy]
+    unit: Hartree
+  band_structure:
+    task: band_structure
+    output_port: cp2k.output_bands
+  e_fermi:
+    task: pdos
+    output_port: cp2k.output_parameters
+    retrieve_value: [e_fermi]
+    unit: eV
+  pdos:
+    task: pdos
+    output_port: cp2k.output_pdos
+  bader_populations:
+    task: partial_charges
+    output_port: critic2.output_bader_populations
+  ddec6_populations:
+    task: partial_charges
+    output_port: chargemol.output_ddec6_populations
+  hirshfeld_populations:
+    task: partial_charges
+    output_port: cp2k.output_hirshfeld_populations
+  mulliken_populations:
+    task: partial_charges
+    output_port: cp2k.output_mulliken_populations
+  elf:
+    task: el_density_fields
+    output_port: critic2.elf.output_planes.elf
+  def_density:
+    task: el_density_fields
+    output_port: critic2.deformation_density.output_planes.rhodef
+  electron_density:
+    task: cube
+    output_port: cp2k.output_cubes.e_density
+  total_density:
+    task: cube
+    output_port: cp2k.output_cubes.tot_density
+  electrostatic_potential:
+    task: cube
+    output_port: cp2k.output_cubes.v_hartree

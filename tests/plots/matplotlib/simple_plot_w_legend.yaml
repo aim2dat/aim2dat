@@ -1,0 +1,96 @@
+%YAML 1.2
+---
+properties:
+  show_legend: True
+import_data:
+- function: import_scatter_data_set
+  args:
+    data_label: test dataset
+    x_values: [0.0, 1.0, 2.0, 3.0]
+    y_values: [-1.0, 2.0, 3.0, 0.0]
+- function: import_scatter_data_set
+  args:
+    data_label: test dataset 2
+    x_values: [0.0, 1.0, 2.0, 3.0]
+    y_values: [4.0, 1.0, 3.0, 2.0]
+    plot_label: Test 2
+    marker: o
+    alpha: 0.5
+- function: import_bar_data_set
+  args:
+    data_label: test dataset 3
+    x_values: [1.0, 4.0]
+    y_values: [2.0, 3.0]
+    heights: [4.0, 1.0]
+    plot_label: Bar data set
+    width: 0.15
+    bottom: 1.5
+    color: C4
+ref:
+  n_axes: 1
+  axes:
+  - lines:
+    - color: '#1f77b4'
+      xdata: [0.0, 1.0, 2.0, 3.0]
+      ydata: [-1.0, 2.0, 3.0, 0.0]
+      linestyle: '-'
+      linewidth: 1.5
+      marker: None
+    - color: '#ff7f0e'
+      xdata: [0.0, 1.0, 2.0, 3.0]
+      ydata: [4.0, 1.0, 3.0, 2.0]
+      linestyle: '-'
+      linewidth: 1.5
+      marker: o
+      alpha: 0.5
+    patches:
+    - edgecolor: [0.0, 0.0, 0.0, 0.0]
+      facecolor: [0.5803921568627451, 0.403921568627451, 0.7411764705882353, 1.0]
+      xy: [0.925, 1.5]
+      width: 0.15
+      height: 4.0
+      angle: 0
+      rotation_point: xy
+    - edgecolor: [0.0, 0.0, 0.0, 0.0]
+      facecolor: [0.5803921568627451, 0.403921568627451, 0.7411764705882353, 1.0]
+      xy: [3.925, 1.5]
+      width: 0.15
+      height: 1.0
+      angle: 0
+      rotation_point: xy
+    legend:
+      Test 2: 
+        type: line
+        color: '#ff7f0e'
+        xdata: [0.0, 1.0, 2.0, 3.0]
+        ydata: [4.0, 1.0, 3.0, 2.0]
+        linestyle: '-'
+        linewidth: 1.5
+        marker: o
+        alpha: 0.5
+      Bar data set: 
+        type: bar_container
+        patches:
+        - edgecolor: [0.0, 0.0, 0.0, 0.0]
+          facecolor: [0.5803921568627451, 0.403921568627451, 0.7411764705882353, 1.0]
+          xy: [0.925, 1.5]
+          width: 0.15
+          height: 4.0
+          angle: 0
+          rotation_point: xy
+        - edgecolor: [0.0, 0.0, 0.0, 0.0]
+          facecolor: [0.5803921568627451, 0.403921568627451, 0.7411764705882353, 1.0]
+          xy: [3.925, 1.5]
+          width: 0.15
+          height: 1.0
+          angle: 0
+          rotation_point: xy
+  patch:
+    edgecolor: [1.0, 1.0, 1.0, 1.0]
+    facecolor: [1.0, 1.0, 1.0, 1.0]
+    xy: [0.0, 0.0]
+    width: 1.0
+    height: 1.0
+    angle: 0
+    rotation_point: xy
+  patches: []

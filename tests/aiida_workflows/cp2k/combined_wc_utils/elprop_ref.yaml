@@ -1,0 +1,187 @@
+find_scf_parameters:
+  numerical_p.kpoints_ref_dist: 0.15
+  factor_unocc_states: 0.75
+  enable_roks: False
+  scf_method: density_mixing
+  always_add_unocc_states: True
+  max_iterations: 100
+  numerical_p.xc_functional: PBE
+  cp2k.parameters: 
+    GLOBAL: {'PRINT_LEVEL': 'MEDIUM', 'PREFERRED_DIAG_LIBRARY': 'SCALAPACK', 'EXTENDED_FFT_LENGTHS': True}
+    FORCE_EVAL: 
+      METHOD: 'Quickstep'
+      STRESS_TENSOR: 'ANALYTICAL'
+      DFT: 
+        MGRID: {}
+        POISSON: {'PERIODIC': 'XYZ', 'POISSON_SOLVER': 'PERIODIC'}
+        BASIS_SET_FILE_NAME: ['BASIS_MOLOPT_UCL', 'BASIS_MOLOPT']
+        POTENTIAL_FILE_NAME: 'GTH_POTENTIALS'
+        QS: {'EXTRAPOLATION': 'USE_GUESS', 'EPS_DEFAULT': 1e-14}
+        SCF: {'EPS_SCF': 5e-07}
+        KPOINTS: {'EPS_GEO': 1e-08, 'FULL_GRID': False, 'SYMMETRY': False}
+        XC: {}
+      SUBSYS: {'CELL': {'PERIODIC': 'XYZ'}}
+  cp2k.code: "test"
+  cp2k.metadata: {"test": "test"}
+  scf_extended_system: False
+  numerical_p.cutoff_values: {"cutoff": 600.0, "rel_cutoff":100.0}
+  numerical_p.basis_sets: "STANDARD-TZV2P"
+unit_cell_opt:
+  optimization_p.keep_space_group: True
+  optimization_p.eps_symmetry: 0.005
+  optimization_p.ref_cell_scaling_factor: 1.5
+  optimization_p.max_force: 9.7e-05
+  optimization_p.pressure_tolerance: 100.0
+  numerical_p.kpoints_ref_dist: 0.15
+  factor_unocc_states: 0.75
+  enable_roks: False
+  scf_method: density_mixing
+  adjust_scf_parameters: True
+  always_add_unocc_states: True
+  max_iterations: 100
+  numerical_p.xc_functional: PBE
+  cp2k.parameters: 
+    GLOBAL: {'PRINT_LEVEL': 'MEDIUM', 'PREFERRED_DIAG_LIBRARY': 'SCALAPACK', 'EXTENDED_FFT_LENGTHS': True}
+    FORCE_EVAL: 
+      METHOD: 'Quickstep'
+      STRESS_TENSOR: 'ANALYTICAL'
+      DFT: 
+        MGRID: {}
+        POISSON: {'PERIODIC': 'XYZ', 'POISSON_SOLVER': 'PERIODIC'}
+        BASIS_SET_FILE_NAME: ['BASIS_MOLOPT_UCL', 'BASIS_MOLOPT']
+        POTENTIAL_FILE_NAME: 'GTH_POTENTIALS'
+        QS: {'EXTRAPOLATION': 'USE_GUESS', 'EPS_DEFAULT': 1e-14}
+        SCF: {'EPS_SCF': 5e-07}
+        KPOINTS: {'EPS_GEO': 1e-08, 'FULL_GRID': False, 'SYMMETRY': False}
+        XC: {}
+      SUBSYS: {'CELL': {'PERIODIC': 'XYZ'}}
+  cp2k.code: "test"
+  cp2k.metadata: {"test": "test"}
+  scf_extended_system: False
+  numerical_p.cutoff_values: {"cutoff": 600.0, "rel_cutoff":100.0}
+  numerical_p.basis_sets: "STANDARD-TZV2P"
+band_structure:
+  numerical_p.kpoints_ref_dist: 0.15
+  factor_unocc_states: 0.75
+  enable_roks: False
+  scf_method: density_mixing
+  adjust_scf_parameters: True
+  always_add_unocc_states: True
+  max_iterations: 100
+  numerical_p.xc_functional: PBE
+  cp2k.parameters: 
+    GLOBAL: {'PRINT_LEVEL': 'MEDIUM', 'PREFERRED_DIAG_LIBRARY': 'SCALAPACK', 'EXTENDED_FFT_LENGTHS': True}
+    FORCE_EVAL: 
+      METHOD: 'Quickstep'
+      STRESS_TENSOR: 'ANALYTICAL'
+      DFT: 
+        MGRID: {}
+        POISSON: {'PERIODIC': 'XYZ', 'POISSON_SOLVER': 'PERIODIC'}
+        BASIS_SET_FILE_NAME: ['BASIS_MOLOPT_UCL', 'BASIS_MOLOPT']
+        POTENTIAL_FILE_NAME: 'GTH_POTENTIALS'
+        QS: {'EXTRAPOLATION': 'USE_GUESS', 'EPS_DEFAULT': 1e-14}
+        SCF: {'EPS_SCF': 5e-07}
+        KPOINTS: {'EPS_GEO': 1e-08, 'FULL_GRID': False, 'SYMMETRY': False}
+        XC: {}
+      SUBSYS: {'CELL': {'PERIODIC': 'XYZ'}}
+  cp2k.code: "test"
+  cp2k.metadata: {"test": "test"}
+  scf_extended_system: False
+  numerical_p.cutoff_values: {"cutoff": 600.0, "rel_cutoff":100.0}
+  numerical_p.basis_sets: "STANDARD-TZV2P"
+eigenvalues:
+  numerical_p.kpoints_ref_dist: 0.075
+  factor_unocc_states: 0.75
+  enable_roks: False
+  scf_method: density_mixing
+  adjust_scf_parameters: True
+  always_add_unocc_states: True
+  max_iterations: 100
+  numerical_p.xc_functional: PBE
+  cp2k.parameters: 
+    GLOBAL: {'PRINT_LEVEL': 'MEDIUM', 'PREFERRED_DIAG_LIBRARY': 'SCALAPACK', 'EXTENDED_FFT_LENGTHS': True}
+    FORCE_EVAL: 
+      METHOD: 'Quickstep'
+      STRESS_TENSOR: 'ANALYTICAL'
+      DFT: 
+        MGRID: {}
+        POISSON: {'PERIODIC': 'XYZ', 'POISSON_SOLVER': 'PERIODIC'}
+        BASIS_SET_FILE_NAME: ['BASIS_MOLOPT_UCL', 'BASIS_MOLOPT']
+        POTENTIAL_FILE_NAME: 'GTH_POTENTIALS'
+        QS: {'EXTRAPOLATION': 'USE_GUESS', 'EPS_DEFAULT': 1e-14}
+        SCF: {'EPS_SCF': 5e-07}
+        KPOINTS: {'EPS_GEO': 1e-08, 'FULL_GRID': False, 'SYMMETRY': False}
+        XC: {}
+      SUBSYS: {'CELL': {'PERIODIC': 'XYZ'}}
+  cp2k.code: "test"
+  cp2k.metadata: {"test": "test"}
+  scf_extended_system: False
+  numerical_p.cutoff_values: {"cutoff": 600.0, "rel_cutoff":100.0}
+  numerical_p.basis_sets: "STANDARD-TZV2P"
+pdos:
+  minimum_cell_length: 25.0
+  maximum_cell_length: 40.0
+  resolve_atoms: True
+  numerical_p.kpoints_ref_dist: 0.15
+  factor_unocc_states: 0.75
+  enable_roks: False
+  scf_method: super_cell
+  adjust_scf_parameters: True
+  always_add_unocc_states: True
+  max_iterations: 100
+  numerical_p.xc_functional: PBE
+  cp2k.parameters: 
+    GLOBAL: {'PRINT_LEVEL': 'MEDIUM', 'PREFERRED_DIAG_LIBRARY': 'SCALAPACK', 'EXTENDED_FFT_LENGTHS': True}
+    FORCE_EVAL: 
+      METHOD: 'Quickstep'
+      STRESS_TENSOR: 'ANALYTICAL'
+      DFT: 
+        MGRID: {}
+        POISSON: {'PERIODIC': 'XYZ', 'POISSON_SOLVER': 'PERIODIC'}
+        BASIS_SET_FILE_NAME: ['BASIS_MOLOPT_UCL', 'BASIS_MOLOPT']
+        POTENTIAL_FILE_NAME: 'GTH_POTENTIALS'
+        QS: {'EXTRAPOLATION': 'USE_GUESS', 'EPS_DEFAULT': 1e-14}
+        SCF: {'EPS_SCF': 5e-07}
+        KPOINTS: {'EPS_GEO': 1e-08, 'FULL_GRID': False, 'SYMMETRY': False}
+        XC: {}
+      SUBSYS: {'CELL': {'PERIODIC': 'XYZ'}}
+  cp2k.code: "test"
+  cp2k.metadata: {"test": "test"}
+  scf_extended_system: False
+  numerical_p.cutoff_values: {"cutoff": 600.0, "rel_cutoff":100.0}
+  numerical_p.basis_sets: "STANDARD-TZV2P"
+partial_charges:
+  critic2.code: "test"
+  critic2.parameters: ['crystal aiida-ELECTRON_DENSITY-1_0.cube', 'load aiida-ELECTRON_DENSITY-1_0.cube core zpsp', 'load aiida-ELECTRON_DENSITY-1_0.cube', 'integrable 2', 'yt']
+  critic2.metadata: {"test": "test"}
+  chargemol.code: "test"
+  chargemol.parameters: {periodicity along A, B, and C vectors: [true, true, true], charge type: DDEC6}
+  chargemol.metadata: {"test": "test"}
+  numerical_p.kpoints_ref_dist: 0.15
+  factor_unocc_states: 0.75
+  enable_roks: False
+  scf_method: density_mixing
+  adjust_scf_parameters: True
+  always_add_unocc_states: True
+  max_iterations: 100
+  numerical_p.xc_functional: PBE
+  cp2k.parameters: 
+    GLOBAL: {'PRINT_LEVEL': 'MEDIUM', 'PREFERRED_DIAG_LIBRARY': 'SCALAPACK', 'EXTENDED_FFT_LENGTHS': True}
+    FORCE_EVAL: 
+      METHOD: 'Quickstep'
+      STRESS_TENSOR: 'ANALYTICAL'
+      DFT: 
+        MGRID: {}
+        POISSON: {'PERIODIC': 'XYZ', 'POISSON_SOLVER': 'PERIODIC'}
+        BASIS_SET_FILE_NAME: ['BASIS_MOLOPT_UCL', 'BASIS_MOLOPT']
+        POTENTIAL_FILE_NAME: 'GTH_POTENTIALS'
+        QS: {'EXTRAPOLATION': 'USE_GUESS', 'EPS_DEFAULT': 1e-14}
+        SCF: {'EPS_SCF': 5e-07}
+        KPOINTS: {'EPS_GEO': 1e-08, 'FULL_GRID': False, 'SYMMETRY': False}
+        XC: {}
+      SUBSYS: {'CELL': {'PERIODIC': 'XYZ'}}
+  cp2k.code: "test"
+  cp2k.metadata: {"test": "test"}
+  scf_extended_system: False
+  numerical_p.cutoff_values: {"cutoff": 600.0, "rel_cutoff":100.0}
+  numerical_p.basis_sets: "STANDARD-TZV2P"

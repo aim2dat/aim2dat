@@ -1,0 +1,10 @@
+title: missing-process
+version: '1.0'
+description: Test protocol to test the validation functions.
+parent_node_type: str
+parent_node_input: 
+  task_1: input_port
+tasks:
+  task_1: {}
+general_input: {}
+user_input: {}

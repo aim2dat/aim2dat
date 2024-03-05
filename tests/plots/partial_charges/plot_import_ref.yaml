@@ -1,0 +1,444 @@
+raw:
+  data_sets:
+  - - label: Cl
+      type: scatter
+      color: 0
+      marker: 0
+      linestyle: 0
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - -0.18815482833333333
+      - -0.18506859249999996
+      - -0.18282194000000018
+    - label: Br
+      type: scatter
+      color: 1
+      marker: 1
+      linestyle: 1
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - -0.018389427500000128
+      - -0.021538707500000198
+      - -0.023204050000000365
+  x_ticks:
+  - 0
+  - 1
+  - 2
+  y_ticks: null
+  x_tick_labels:
+  - structure
+  - complex
+  - imidazole
+  y_tick_labels: null
+  sec_axis: null
+with_subplot_assignment:
+  data_sets:
+  - - label: Cl
+      type: scatter
+      color: 0
+      marker: 0
+      linestyle: 0
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - -0.18815482833333333
+      - -0.18506859249999996
+      - -0.18282194000000018
+    - label: Br
+      type: scatter
+      color: 1
+      marker: 1
+      linestyle: 1
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - -0.018389427500000128
+      - -0.021538707500000198
+      - -0.023204050000000365
+    - label: Cl2
+      type: scatter
+      color: 2
+      marker: 2
+      linestyle: 2
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - 1.1963200999999994
+      - 1.1856871000000009
+      - null
+    - label: Br2
+      type: scatter
+      color: 3
+      marker: 3
+      linestyle: 3
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - 1.1937879000000002
+      - 1.1849837
+      - null
+  - - label: Cl
+      type: scatter
+      color: 0
+      marker: 0
+      linestyle: 0
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - -1.1769020649999997
+      - -1.15310983625
+      - -1.105080895
+    - label: Br
+      type: scatter
+      color: 1
+      marker: 1
+      linestyle: 1
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - -1.17872952
+      - -1.1549978275
+      - -1.1289588
+  - - label: Cl
+      type: scatter
+      color: 0
+      marker: 0
+      linestyle: 0
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - 1.5112964795000001
+      - 1.9978612723750002
+      - 1.9624365345
+    - label: Br
+      type: scatter
+      color: 1
+      marker: 1
+      linestyle: 1
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - 1.3518657640833334
+      - 1.8395749915000001
+      - 1.8493993880000001
+  x_ticks:
+  - 0
+  - 1
+  - 2
+  y_ticks: null
+  x_tick_labels:
+  - structure
+  - complex
+  - imidazole
+  y_tick_labels: null
+  sec_axis: null
+wo_ckd:
+  data_sets:
+  - - label: Cl
+      type: scatter
+      color: 0
+      marker: 0
+      linestyle: 0
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - 1.1963200999999994
+      - 1.1856871000000009
+      - null
+    - label: Br
+      type: scatter
+      color: 1
+      marker: 1
+      linestyle: 1
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - 1.1937879000000002
+      - 1.1849837
+      - null
+  x_ticks:
+  - 0
+  - 1
+  - 2
+  y_ticks: null
+  x_tick_labels:
+  - structure
+  - complex
+  - imidazole
+  y_tick_labels: null
+  sec_axis: null
+with_pc_plot_assignment:
+  data_sets:
+  - - label: Cl
+      type: scatter
+      color: 0
+      marker: 0
+      linestyle: 0
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - 1.1963200999999994
+      - 1.1856871000000009
+      - null
+    - label: Br
+      type: scatter
+      color: 1
+      marker: 1
+      linestyle: 1
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - 1.1937879000000002
+      - 1.1849837
+      - null
+  x_ticks:
+  - 0
+  - 1
+  - 2
+  y_ticks: null
+  x_tick_labels:
+  - structure
+  - complex
+  - imidazole
+  y_tick_labels: null
+  sec_axis: null
+with_pc_plot_and_subplot_assignment:
+  data_sets:
+  - - label: Cl
+      type: scatter
+      color: 0
+      marker: 0
+      linestyle: 0
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - 1.1963200999999994
+      - 1.1856871000000009
+      - null
+    - label: Br
+      type: scatter
+      color: 1
+      marker: 1
+      linestyle: 1
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - 1.1937879000000002
+      - 1.1849837
+      - null
+    - label: Cl2
+      type: scatter
+      color: 2
+      marker: 2
+      linestyle: 2
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - -0.18815482833333333
+      - -0.18506859249999996
+      - -0.18282194000000018
+    - label: Br2
+      type: scatter
+      color: 3
+      marker: 3
+      linestyle: 3
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - null
+      - null
+      - null
+  - - label: Cl
+      type: scatter
+      color: 0
+      marker: 0
+      linestyle: 0
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - 0.06503491783333333
+      - 0.1471272546
+      - 0.20166819833333335
+    - label: Br
+      type: scatter
+      color: 1
+      marker: 1
+      linestyle: 1
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - 0.06434800408333334
+      - 0.15028591530000002
+      - 0.20035058000000003
+  - - label: Cl
+      type: scatter
+      color: 0
+      marker: 0
+      linestyle: 0
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - 0.40641751625
+      - 0.41048125187500006
+      - 0.40129991499999995
+    - label: Br
+      type: scatter
+      color: 1
+      marker: 1
+      linestyle: 1
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - 0.55024522
+      - 0.553172835
+      - 0.5600374433333334
+  - - label: Cl
+      type: scatter
+      color: 0
+      marker: 0
+      linestyle: 0
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - -1.1769020649999997
+      - -1.15310983625
+      - -1.105080895
+    - label: Br
+      type: scatter
+      color: 1
+      marker: 1
+      linestyle: 1
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - -1.17872952
+      - -1.1549978275
+      - -1.1289588
+  - - label: Cl
+      type: scatter
+      color: 0
+      marker: 0
+      linestyle: 0
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - null
+      - null
+      - null
+    - label: Br
+      type: scatter
+      color: 1
+      marker: 1
+      linestyle: 1
+      x_values:
+      - 0
+      - 1
+      - 2
+      y_values:
+      - -0.018389427500000128
+      - -0.021538707500000198
+      - -0.023204050000000365
+  x_ticks:
+  - 0
+  - 1
+  - 2
+  y_ticks: null
+  x_tick_labels:
+  - structure
+  - complex
+  - imidazole
+  y_tick_labels: null
+  sec_axis: null
+bar_plot_type:
+  data_sets:
+  - - label: Cl
+      type: bar
+      color: 0
+      marker: 0
+      linestyle: 0
+      x_values:
+      - -0.225
+      - 0.775
+      - 1.775
+      heights:
+      - 1.1963200999999994
+      - 1.1856871000000009
+      - 0
+      width: 0.45
+    - label: Br
+      type: bar
+      color: 1
+      marker: 1
+      linestyle: 1
+      x_values:
+      - 0.22500000000000003
+      - 1.225
+      - 2.225
+      heights:
+      - 1.1937879000000002
+      - 1.1849837
+      - 0
+      width: 0.45
+  x_ticks:
+  - 0
+  - 1
+  - 2
+  y_ticks: null
+  x_tick_labels:
+  - structure
+  - complex
+  - imidazole
+  y_tick_labels: null
+  sec_axis: null

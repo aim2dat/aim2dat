@@ -1,0 +1,73 @@
+inputs:
+  scf_method: density_mixing
+  numerical_p.xc_functional: r2scan
+  numerical_p.basis_sets: standard-tzv2p
+  numerical_p.kpoints_ref_dist: 0.01
+  numerical_p.cutoff_values: {cutoff: 300, rel_cutoff: 100, ngrids: 4}
+  factor_unocc_states: 0.5
+add_args:
+  fix_scf_m: False
+  fix_smearing: False
+  initial_scf_guess: ATOMIC
+  smearing_levels: [0.0, 250.0, 500.0, 1000.0]
+cp2k_parameters:
+  GLOBAL:
+    PRINT_LEVEL: MEDIUM
+    PREFERRED_DIAG_LIBRARY: SCALAPACK
+    EXTENDED_FFT_LENGTHS: true
+  FORCE_EVAL:
+    METHOD: Quickstep
+    STRESS_TENSOR: ANALYTICAL
+    DFT:
+      MGRID: {}
+      POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+      BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT]
+      POTENTIAL_FILE_NAME: GTH_POTENTIALS
+      QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
+      SCF: {EPS_SCF: 5.0e-7}
+      KPOINTS:
+        EPS_GEO: 1.0E-8
+        FULL_GRID: false
+        SYMMETRY: false
+      XC: {}
+    SUBSYS:
+      CELL: {PERIODIC: XYZ}
+parent_calc_folder: test_folder
+ctx:
+  inputs:
+    parameters:
+      GLOBAL:
+        PRINT_LEVEL: MEDIUM
+        PREFERRED_DIAG_LIBRARY: SCALAPACK
+        EXTENDED_FFT_LENGTHS: true
+      FORCE_EVAL:
+        METHOD: Quickstep
+        STRESS_TENSOR: ANALYTICAL
+        DFT:
+          MGRID: {CUTOFF: 300, NGRIDS: 4, REL_CUTOFF: 100}
+          POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+          BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT]
+          POTENTIAL_FILE_NAME: POTENTIAL_UZH
+          QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
+          SCF: {EPS_SCF: 5.0e-7}
+          KPOINTS:
+            EPS_GEO: 1.0E-8
+            FULL_GRID: false
+            SYMMETRY: false
+          XC: 
+           XC_FUNCTIONAL: {'LIBXC': [{'FUNCTIONAL': 'MGGA_X_R2SCAN'}, {'FUNCTIONAL': 'MGGA_C_R2SCAN'}]}
+        SUBSYS:
+          CELL: {PERIODIC: XYZ}
+          KIND: [{'BASIS_SET': 'TZV2P-MOLOPT-SR-GTH-q3', 'POTENTIAL': 'GTH-SCAN-q3', '_': 'Al'}]
+  scf_m_info: 
+    kpoints_ref_dist: 0.01
+    factor_unocc_states: 0.5
+    fix_smearing: False
+    fix_scf_m: False
+    smearing_levels: [0.0, 250.0, 500.0, 1000.0]
+    system_character: unknown
+    always_add_unocc_states: False
+    allow_pulay: True
+    scf_guess: RESTART
+
+

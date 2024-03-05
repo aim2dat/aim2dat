@@ -1,0 +1,11 @@
+init_kwargs: {}
+add_structure_collection: False
+features_fit: [[0.012235, 0.0061174]]
+features_transf:
+- [0.012235, 0.0061174]
+- [0.013445, 0.0067226]
+- [0.012274, 0.0061370]
+- [0.016687, 0.0]
+feature_names_out:
+- 'density_Cs'
+- 'density_Te'

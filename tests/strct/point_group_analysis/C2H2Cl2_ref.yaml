@@ -1,0 +1,12 @@
+%YAML 1.2
+---
+point_group: $C_{2h}$
+symmetry_elements:
+- {label: inv_center, type: inversion}
+- axis: [-0.0, 0.0, 1.0]
+  n-fold: 2
+  label: $C_2$
+  type: rotation
+- type: reflection
+  label: $\sigma$
+  n-vector: [-1.552192508211248e-08, 3.6578184393319573e-07, 0.9999999999999329]

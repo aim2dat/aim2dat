@@ -1,0 +1,59 @@
+%YAML 1.2
+---
+# Structure parser parameters.
+blocks:
+- start: '^\s*&CELL\s*$'
+  end: '^\s*&END\s*CELL\s*$'
+  max_length: -1
+  regex: true
+  patterns:
+  - pattern: '^\s*A\s*([\w|.|+|-]*)?\s*([\w|.|+|-]*)?\s*([\w|.|+|-]*)?\s*$'
+    key:
+    - [a]
+    - [a]
+    - [a]
+    type: float
+    position: [-3, -2, -1]
+    append: [true, true, true]
+    regex: true
+  - pattern: '^\s*B\s*([\w|.|+|-]*)?\s*([\w|.|+|-]*)?\s*([\w|.|+|-]*)?\s*$'
+    key:
+    - [b]
+    - [b]
+    - [b]
+    type: float
+    position: [-3, -2, -1]
+    append: [true, true, true]
+    regex: true
+  - pattern: '^\s*C\s*([\w|.|+|-]*)?\s*([\w|.|+|-]*)?\s*([\w|.|+|-]*)?\s*$'
+    key:
+    - [c]
+    - [c]
+    - [c]
+    type: float
+    position: [-3, -2, -1]
+    append: [true, true, true]
+    regex: true
+  - pattern: '^\s*PERIODIC\s*(\w*)?\s*$'
+    key:
+    - [pbc]
+    type: str
+    position: [-1]
+    append: [true]
+    regex: true
+- start: '^\s*&COORD\s*$'
+  end: '^\s*&END\s*COORD\s*$'
+  max_length: -1
+  regex: true
+  patterns:
+  - pattern: '^\s*(\w*)?\s*([\w|.|+|-]*)?\s*([\w|.|+|-]*)?\s*([\w|.|+|-]*)?\s*$'
+    key:
+    - [kind]
+    - [x]
+    - [y]
+    - [z]
+    type: [str, float, float, float]
+    position: [-4, -3, -2, -1]
+    append: [true, true, true, true]
+    regex: true
+    repeat: true

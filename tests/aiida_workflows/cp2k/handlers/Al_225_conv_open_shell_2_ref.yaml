@@ -1,0 +1,94 @@
+inputs:
+  scf_method: density_mixing
+  scf_extended_system: False
+  numerical_p.xc_functional: r2scan
+  numerical_p.basis_sets: standard-tzv2p
+  numerical_p.kpoints_ref_dist: 0.01
+  numerical_p.cutoff_values: {cutoff: 300, rel_cutoff: 100, ngrids: 4}
+  factor_unocc_states: 0.5
+  enable_roks: True
+add_args:
+  fix_scf_m: False
+  fix_smearing: False
+  initial_scf_guess: ATOMIC
+  smearing_levels: [0.0, 250.0, 500.0, 1000.0]
+cp2k_parameters:
+  GLOBAL:
+    PRINT_LEVEL: MEDIUM
+    PREFERRED_DIAG_LIBRARY: SCALAPACK
+    EXTENDED_FFT_LENGTHS: true
+  FORCE_EVAL:
+    METHOD: Quickstep
+    STRESS_TENSOR: ANALYTICAL
+    DFT:
+      MGRID: {}
+      POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+      BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT]
+      POTENTIAL_FILE_NAME: GTH_POTENTIALS
+      QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
+      SCF: {EPS_SCF: 5.0e-7}
+      KPOINTS:
+        EPS_GEO: 1.0E-8
+        FULL_GRID: false
+        SYMMETRY: false
+      XC: {}
+    SUBSYS:
+      CELL: {PERIODIC: XYZ}
+calc: {outputs: {output_parameters: {scf_converged: True}}}
+error_handler: 
+  do_break: True
+  exit_code: {exit_status: 0, message: }
+updated_scf_m_info: 
+  kpoints_ref_dist: 0.01
+  factor_unocc_states: 0.5
+  fix_smearing: False
+  fix_scf_m: False
+  smearing_levels: [0.0, 250.0, 500.0, 1000.0]
+  system_character: 'unknown'
+  always_add_unocc_states: False
+  allow_pulay: True
+  scf_guess: ATOMIC
+  max_method: 10
+  max_parameter: 9
+  max_smearing: 4
+updated_cur_scf_p:
+  added_mos: 0
+  method_level: 0
+  parameter_level: 0
+  smearing_level: 0
+  parameters: {'MAX_SCF': 50, 'MIXING': {'METHOD': 'BROYDEN_MIXING', 'BETA': 0.5, 'ALPHA': 0.5, 'NBUFFER': 10}}
+  roks: True
+  uks: False
+  odd_kpoints: False
+  smearing_temperature: 0.0
+updated_cp2k_parameters:
+  GLOBAL: 
+    PRINT_LEVEL: 'MEDIUM'
+    PREFERRED_DIAG_LIBRARY: 'SCALAPACK'
+    EXTENDED_FFT_LENGTHS: True
+  FORCE_EVAL: 
+    METHOD: 'Quickstep'
+    STRESS_TENSOR: 'ANALYTICAL'
+    DFT:
+      ROKS: True 
+      MGRID: {'CUTOFF': 300, 'REL_CUTOFF': 100, 'NGRIDS': 4}
+      POISSON: {'PERIODIC': 'XYZ', 'POISSON_SOLVER': 'PERIODIC'}
+      BASIS_SET_FILE_NAME: ['BASIS_MOLOPT_UCL', 'BASIS_MOLOPT']
+      POTENTIAL_FILE_NAME: 'POTENTIAL_UZH'
+      QS: {'EXTRAPOLATION': 'USE_GUESS', 'EPS_DEFAULT': 1e-14}
+      SCF: 
+        EPS_SCF: 5e-07
+        MAX_SCF: 50
+        MIXING: {'METHOD': 'BROYDEN_MIXING', 'BETA': 0.5, 'ALPHA': 0.5, 'NBUFFER': 10}
+        SCF_GUESS: 'ATOMIC'
+        SMEAR: {'_': False}
+        ADDED_MOS: 0
+      KPOINTS: 
+        EPS_GEO: 1e-08
+        FULL_GRID: False
+        SYMMETRY: False
+        SCHEME: 'MONKHORST-PACK 156 156 156'
+      XC: {'XC_FUNCTIONAL': {'LIBXC': [{'FUNCTIONAL': 'MGGA_X_R2SCAN'}, {'FUNCTIONAL': 'MGGA_C_R2SCAN'}]}}
+    SUBSYS: 
+      CELL: {'PERIODIC': 'XYZ'}
+      KIND: [{'_': 'Al', 'BASIS_SET': 'TZV2P-MOLOPT-SR-GTH-q3', 'POTENTIAL': 'GTH-SCAN-q3'}]

@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+inputs:
+  parameters:
+  - crystal NaCl_valence_density.cube
+  - load NaCl_valence_density.cube core zpsp C 4 H 1 N 5 Zn 12
+  - load as "$1-$0"
+  - plane 0.471 0.123 0.836 0.682 0.333 0.599 0.124 0.475 0.837 201 201 field 2
+  - plane 0.439 0.095 0.817 0.722 0.39  0.681 0.078 0.431 0.791 201 201 field 2 file rhodef
+input_file:
+- crystal NaCl_valence_density.cube
+- load NaCl_valence_density.cube core zpsp C 4 H 1 N 5 Zn 12
+- load as "$1-$0"
+- plane 0.471 0.123 0.836 0.682 0.333 0.599 0.124 0.475 0.837 201 201 field 2
+- plane 0.439 0.095 0.817 0.722 0.39  0.681 0.078 0.431 0.791 201 201 field 2 file rhodef
+retrieve_list:
+- aiida.out
+- stdin_plane.dat
+- rhodef

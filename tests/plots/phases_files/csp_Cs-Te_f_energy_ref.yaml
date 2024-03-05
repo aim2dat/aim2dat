@@ -1,0 +1,102 @@
+%YAML 1.2
+---
+attributes:
+  plot_type: scatter
+  plot_property: formation_energy
+  show_crystal_system: True
+  top_labels: [{"Cs": 1, "Te": 1}]
+  show_convex_hull: [True, False]
+plot_args:
+  data_labels: ["test"]
+  subplot_assignment: [0]
+ref:
+  data_sets:
+  - {x: 0.5, color: black, linestyle: dashed, scaled: true, type: vline}
+  - x_values: [0.2857142857142857]
+    y_values: [-0.5775147166444056]
+    marker: 1
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    label: monoclinic
+  - x_values: [0.625]
+    y_values: [-0.9783589130691297]
+    marker: 1
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+  - x_values: [0.5]
+    y_values: [-0.8685617808328061]
+    marker: 2
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    label: orthorhombic
+  - x_values: [0.4]
+    y_values: [-0.7763231997798584]
+    marker: 2
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+  - x_values: [0.6666666666666666]
+    y_values: [-1.0246071228748026]
+    marker: 2
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+  - x_values: [0.2857142857142857]
+    y_values: [-0.5767541339031206]
+    marker: 2
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+  - x_values: [0.625]
+    y_values: [-0.9843562382449562]
+    marker: 3
+    linestyle: none
+    markerfacecolor: none
+    markeredgewidth: 1.7
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    group_by: color
+    label: tetragonal
+  - x_values: [0.0, 0.2857142857142857, 0.4, 0.6666666666666666]
+    y_values: [0.0, -0.5775147166444056, -0.7763231997798584, -1.0246071228748026]
+    color: 0
+    legendgrouptitle_text: test
+    legendgroup: test
+    label: Convex hull
+    group_by: color
+  x_ticks:
+  y_ticks:
+  x_tick_labels:
+  y_tick_labels:
+  sec_axis:
+  - ticks: [0.5]
+    tick_labels: ['$\mathrm{Cs}\mathrm{Te}$']
+    coord: x

@@ -1,0 +1,169 @@
+%YAML 1.2
+---
+plot_args: 
+  data_labels: [test dataset, test dataset 2, test dataset 3]
+  subplot_assignment: [0, 1, 1]
+extras_lines_background:
+  0: [{'x': 0.5, 'ymin': 0.2, 'ymax': 0.8, 'scaled': True, 'type': 'vline', 'color': 'black'}]
+  1: [{'x': 0.5, 'ymin': 0.2, 'ymax': 0.8, 'scaled': True, 'type': 'vline', 'color': 'black'}]
+  all: [{'y': 2.0, 'xmin': 0.0, 'xmax': 4.0, 'scaled': False, 'type': 'hline', 'color': 'C1'}]
+extras_lines_foreground:
+  0: [{'x': 0.5, 'ymin': 0.4, 'ymax': 0.5, 'scaled': True, 'type': 'vline', 'color': 'grey', 'linestyle': 'dotted'}]
+with_lines:
+  n_axes: 2
+  axes:
+  - lines:
+    - color: 'black'
+      xdata: [0.5, 0.5]
+      ydata: [0.2, 0.8]
+      linestyle: '-'
+      linewidth: 1.5
+      marker: None
+    - color: '#1f77b4'
+      xdata: [0.0, 1.0, 2.0, 3.0]
+      ydata: [-1.0, 2.0, 3.0, 0.0]
+      linestyle: '-'
+      linewidth: 1.5
+      marker: None
+    - color: 'grey'
+      xdata: [0.5, 0.5]
+      ydata: [0.4, 0.5]
+      linestyle: ':'
+      linewidth: 1.5
+      marker: None
+    patches: []
+  - lines:
+    - color: 'black'
+      xdata: [0.5, 0.5]
+      ydata: [0.2, 0.8]
+      linestyle: '-'
+      linewidth: 1.5
+      marker: None
+    - color: '#1f77b4'
+      xdata: [0.0, 1.0, 2.0, 3.0]
+      ydata: [4.0, 1.0, 3.0, 2.0]
+      linestyle: '-'
+      linewidth: 1.5
+      marker: o
+      alpha: 0.5
+    patches:
+    - edgecolor: [0.0, 0.0, 0.0, 0.0]
+      facecolor: [0.5803921568627451, 0.403921568627451, 0.7411764705882353, 1.0]
+      xy: [0.925, 1.5]
+      width: 0.15
+      height: 4.0
+      angle: 0
+      rotation_point: xy
+    - edgecolor: [0.0, 0.0, 0.0, 0.0]
+      facecolor: [0.5803921568627451, 0.403921568627451, 0.7411764705882353, 1.0]
+      xy: [3.925, 1.5]
+      width: 0.15
+      height: 1.0
+      angle: 0
+      rotation_point: xy
+    legend:
+      Test 2: 
+        type: line
+        color: '#1f77b4'
+        xdata: [0.0, 1.0, 2.0, 3.0]
+        ydata: [4.0, 1.0, 3.0, 2.0]
+        linestyle: '-'
+        linewidth: 1.5
+        marker: o
+        alpha: 0.5
+      Bar data set: 
+        type: bar_container
+        patches:
+        - edgecolor: [0.0, 0.0, 0.0, 0.0]
+          facecolor: [0.5803921568627451, 0.403921568627451, 0.7411764705882353, 1.0]
+          xy: [0.925, 1.5]
+          width: 0.15
+          height: 4.0
+          angle: 0
+          rotation_point: xy
+        - edgecolor: [0.0, 0.0, 0.0, 0.0]
+          facecolor: [0.5803921568627451, 0.403921568627451, 0.7411764705882353, 1.0]
+          xy: [3.925, 1.5]
+          width: 0.15
+          height: 1.0
+          angle: 0
+          rotation_point: xy
+  patch:
+    edgecolor: [1.0, 1.0, 1.0, 1.0]
+    facecolor: [1.0, 1.0, 1.0, 1.0]
+    xy: [0.0, 0.0]
+    width: 1.0
+    height: 1.0
+    angle: 0
+    rotation_point: xy
+  patches: []
+without_lines:
+  n_axes: 2
+  axes:
+  - lines:
+    - color: '#1f77b4'
+      xdata: [0.0, 1.0, 2.0, 3.0]
+      ydata: [-1.0, 2.0, 3.0, 0.0]
+      linestyle: '-'
+      linewidth: 1.5
+      marker: None
+    patches: []
+  - lines:
+    - color: '#1f77b4'
+      xdata: [0.0, 1.0, 2.0, 3.0]
+      ydata: [4.0, 1.0, 3.0, 2.0]
+      linestyle: '-'
+      linewidth: 1.5
+      marker: o
+      alpha: 0.5
+    patches:
+    - edgecolor: [0.0, 0.0, 0.0, 0.0]
+      facecolor: [0.5803921568627451, 0.403921568627451, 0.7411764705882353, 1.0]
+      xy: [0.925, 1.5]
+      width: 0.15
+      height: 4.0
+      angle: 0
+      rotation_point: xy
+    - edgecolor: [0.0, 0.0, 0.0, 0.0]
+      facecolor: [0.5803921568627451, 0.403921568627451, 0.7411764705882353, 1.0]
+      xy: [3.925, 1.5]
+      width: 0.15
+      height: 1.0
+      angle: 0
+      rotation_point: xy
+    legend:
+      Test 2: 
+        type: line
+        color: '#1f77b4'
+        xdata: [0.0, 1.0, 2.0, 3.0]
+        ydata: [4.0, 1.0, 3.0, 2.0]
+        linestyle: '-'
+        linewidth: 1.5
+        marker: o
+        alpha: 0.5
+      Bar data set: 
+        type: bar_container
+        patches:
+        - edgecolor: [0.0, 0.0, 0.0, 0.0]
+          facecolor: [0.5803921568627451, 0.403921568627451, 0.7411764705882353, 1.0]
+          xy: [0.925, 1.5]
+          width: 0.15
+          height: 4.0
+          angle: 0
+          rotation_point: xy
+        - edgecolor: [0.0, 0.0, 0.0, 0.0]
+          facecolor: [0.5803921568627451, 0.403921568627451, 0.7411764705882353, 1.0]
+          xy: [3.925, 1.5]
+          width: 0.15
+          height: 1.0
+          angle: 0
+          rotation_point: xy
+  patch:
+    edgecolor: [1.0, 1.0, 1.0, 1.0]
+    facecolor: [1.0, 1.0, 1.0, 1.0]
+    xy: [0.0, 0.0]
+    width: 1.0
+    height: 1.0
+    angle: 0
+    rotation_point: xy
+  patches: []

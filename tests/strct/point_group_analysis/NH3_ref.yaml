@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+point_group: $C_{3v}$
+symmetry_elements:
+- axis: [-0.4714042281504736, 0.816496621566332, -0.3333336476454519]
+  n-fold: 3
+  label: $C_3$
+  type: rotation
+- type: reflection
+  label: $\sigma$
+  n-vector: [-0.5773508710659162, 0.0, 0.8164961553365869]
+- type: reflection
+  label: $\sigma$
+  n-vector: [0.2886752307963149, 0.5000001820947614, 0.8164964354055073]
+- type: reflection
+  label: $\sigma$
+  n-vector: [0.8660255489641154, 0.49999974854133933, 0.0]

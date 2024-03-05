@@ -1,0 +1,116 @@
+%YAML 1.2
+---
+attributes:
+  plot_type: coord_nrs
+  show_crystal_system: True
+  top_labels: [{"Cs": 3, "Sb": 1}]
+plot_args:
+  data_labels: ["test"]
+  subplot_assignment: [0]
+ref:
+  data_sets:
+  - {x: 0.75, color: black, linestyle: dashed, scaled: true, type: vline}
+  - x_values: [0.0, 0.38461538461538464, 0.5, 0.6666666666666666, 0.75, 1.0]
+    y_values: [0.0, 1.4, 2.125, 4.75, 5.333333333333333, 10.389162561576354]
+    color: 0
+    linestyle: 0
+    legendgrouptitle_text: Cs-Cs
+    legendgroup: Cs-Cs
+    label: average
+    group_by: color
+  - x_values: [0.0, 0.38461538461538464, 0.5, 0.6666666666666666, 0.75, 1.0]
+    y_values: [0.0, 0.0, 1.0, 4.0, 4.0, 6.0]
+    color: 0
+    linestyle: 1
+    legendgrouptitle_text: Cs-Cs
+    legendgroup: Cs-Cs
+    label: extrema
+    group_by: color
+  - x_values: [0.0, 0.38461538461538464, 0.5, 0.6666666666666666, 0.75, 1.0]
+    y_values: [0.0, 3.0, 3.0, 5.0, 8.0, 16.0]
+    color: 0
+    linestyle: 1
+    legendgrouptitle_text: Cs-Cs
+    legendgroup: Cs-Cs
+    label: extrema
+    group_by: color
+  - x_values: [0.0, 0.38461538461538464, 0.5, 0.6666666666666666, 0.75, 1.0]
+    y_values: [0.0, 8.2, 6.375, 4.75, 2.6666666666666665, 0.0]
+    color: 1
+    linestyle: 0
+    legendgrouptitle_text: Cs-Sb
+    legendgroup: Cs-Sb
+    label: average
+    group_by: color
+  - x_values: [0.0, 0.38461538461538464, 0.5, 0.6666666666666666, 0.75, 1.0]
+    y_values: [0.0, 7.0, 5.0, 3.0, 0.0, 0.0]
+    color: 1
+    linestyle: 1
+    legendgrouptitle_text: Cs-Sb
+    legendgroup: Cs-Sb
+    label: extrema
+    group_by: color
+  - x_values: [0.0, 0.38461538461538464, 0.5, 0.6666666666666666, 0.75, 1.0]
+    y_values: [0.0, 9.0, 8.0, 6.0, 4.0, 0.0]
+    color: 1
+    linestyle: 1
+    legendgrouptitle_text: Cs-Sb
+    legendgroup: Cs-Sb
+    label: extrema
+    group_by: color
+  - x_values: [0.0, 0.38461538461538464, 0.5, 0.6666666666666666, 0.75, 1.0]
+    y_values: [0.0, 0.0, 0.0, 3.5, 8.0, 0.0]
+    color: 2
+    linestyle: 0
+    legendgrouptitle_text: Sb-Cs
+    legendgroup: Sb-Cs
+    label: average
+    group_by: color
+  - x_values: [0.0, 0.38461538461538464, 0.5, 0.6666666666666666, 0.75, 1.0]
+    y_values: [0.0, 0.0, 0.0, 1.0, 8.0, 0.0]
+    color: 2
+    linestyle: 1
+    legendgrouptitle_text: Sb-Cs
+    legendgroup: Sb-Cs
+    label: extrema
+    group_by: color
+  - x_values: [0.0, 0.38461538461538464, 0.5, 0.6666666666666666, 0.75, 1.0]
+    y_values: [0.0, 0.0, 0.0, 6.0, 8.0, 0.0]
+    color: 2
+    linestyle: 1
+    legendgrouptitle_text: Sb-Cs
+    legendgroup: Sb-Cs
+    label: extrema
+    group_by: color
+  - x_values: [0.0, 0.38461538461538464, 0.5, 0.6666666666666666, 0.75, 1.0]
+    y_values: [7.059523809523809, 2.375, 2.0, 1.0, 0.0, 0.0]
+    color: 3
+    linestyle: 0
+    legendgrouptitle_text: Sb-Sb
+    legendgroup: Sb-Sb
+    label: average
+    group_by: color
+  - x_values: [0.0, 0.38461538461538464, 0.5, 0.6666666666666666, 0.75, 1.0]
+    y_values: [3.0, 2.0, 2.0, 1.0, 0.0, 0.0]
+    color: 3
+    linestyle: 1
+    legendgrouptitle_text: Sb-Sb
+    legendgroup: Sb-Sb
+    label: extrema
+    group_by: color
+  - x_values: [0.0, 0.38461538461538464, 0.5, 0.6666666666666666, 0.75, 1.0]
+    y_values: [12.0, 3.0, 2.0, 1.0, 0.0, 0.0]
+    color: 3
+    linestyle: 1
+    legendgrouptitle_text: Sb-Sb
+    legendgroup: Sb-Sb
+    label: extrema
+    group_by: color
+  x_ticks:
+  y_ticks:
+  x_tick_labels:
+  y_tick_labels:
+  sec_axis:
+  - ticks: [0.75]
+    tick_labels: ['$\mathrm{Cs}_\mathrm{3}\mathrm{Sb}$']
+    coord: x

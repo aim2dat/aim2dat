@@ -1,0 +1,87 @@
+# Thermal properties / unit cell (natom)
+
+unit:
+  temperature:   K
+  free_energy:   kJ/mol
+  entropy:       J/K/mol
+  heat_capacity: J/K/mol
+
+natom: 8    
+cutoff_frequency: 0.00000
+num_modes: 3000
+num_integrated_modes: 3000
+
+zero_point_energy:      50.6571152
+
+thermal_properties:
+- temperature:         0.0000000
+  free_energy:        50.6571152
+  entropy:             0.0000000
+  heat_capacity:       0.0000000
+  energy:             50.6571152
+
+- temperature:        50.0000000
+  free_energy:        50.5145752
+  entropy:             9.2382161
+  heat_capacity:      22.3867790
+  energy:             50.9764860
+
+- temperature:       100.0000000
+  free_energy:        49.3944207
+  entropy:            36.6560675
+  heat_capacity:      59.3953138
+  energy:             53.0600274
+
+- temperature:       150.0000000
+  free_energy:        46.8065536
+  entropy:            67.0260812
+  heat_capacity:      92.1217825
+  energy:             56.8604658
+
+- temperature:       200.0000000
+  free_energy:        42.6912528
+  entropy:            97.4425183
+  heat_capacity:     119.4474171
+  energy:             62.1797565
+
+- temperature:       250.0000000
+  free_energy:        37.0874398
+  entropy:           126.3824303
+  heat_capacity:     139.5486323
+  energy:             68.6830473
+
+- temperature:       300.0000000
+  free_energy:        30.0894394
+  entropy:           153.1556444
+  heat_capacity:     153.7456523
+  energy:             76.0361327
+
+- temperature:       350.0000000
+  free_energy:        21.8099244
+  entropy:           177.6537079
+  heat_capacity:     163.7928303
+  energy:             83.9887222
+
+- temperature:       400.0000000
+  free_energy:        12.3595852
+  entropy:           200.0230587
+  heat_capacity:     171.0287158
+  energy:             92.3688087
+
+- temperature:       450.0000000
+  free_energy:         1.8393217
+  entropy:           220.4902595
+  heat_capacity:     176.3550499
+  energy:            101.0599385
+
+- temperature:       500.0000000
+  free_energy:        -9.6616314
+  entropy:           239.2881518
+  heat_capacity:     180.3626447
+  energy:            109.9824444
+
+- temperature:       550.0000000
+  free_energy:       -22.0652267
+  entropy:           256.6290913
+  heat_capacity:     183.4402852
+  energy:            119.0807735

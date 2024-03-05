@@ -1,0 +1,187 @@
+%YAML 1.2
+---
+properties:
+  plot_type: excess_atoms
+  plot_properties: [ionization_potential, band_gap]
+  area_unit: angstrom
+ref:
+  data_sets:
+  - - x_values: [-0.017696524774161376, 0.0, 0.017696524774161376]
+      y_values: [4.05804, 2.57176, 1.14367]
+      type: 'scatter' 
+      color: 0
+      linestyle: 0
+      alpha: 0
+    - x_values: [-0.017696524774161376, 0.0, 0.017696524774161376]
+      y_values: [4.08267, 2.9359, 1.51785]
+      type: 'scatter' 
+      color: 0
+      linestyle: 0
+      alpha: 0
+    - x_values: [-0.017696524774161376, 0.0, 0.017696524774161376]
+      y_values: [1.98115, 1.45853, 0.0]
+      type: 'scatter'
+      color: 1
+      linestyle: 1
+      alpha: 1
+    - x_values: [-0.017696524774161376, 0.0, 0.017696524774161376]
+      y_values: [1.98115, 1.92987, 0.0]
+      type: 'scatter'
+      color: 1
+      linestyle: 1
+      alpha: 1
+    - x_values: [-0.017696524774161376, -0.017696524774161376]
+      y_values: [4.05804, 1.98115]
+      linestyle: 'none'
+      type: 'scatter'
+      marker: 0
+      color: 2
+      label: '100 (100)'
+      legendgrouptitle_text: '6'
+      legendgroup: '6'
+      group_by: 'color'
+      customdata: 
+      - [-0.017696524774161376, '(100)', '6', '', '', '']
+      - [-0.017696524774161376, '(100)', '6', '', '', '']
+      hovertemplate: '<b>Excess:</b> %{customdata[0]}<br><b>Miller indices:</b> %{customdata[1]}<br><b>Ter.:</b> %{customdata[2]}<br><b>Ionization potential:</b> %{customdata[3]}<br><b>Work function:</b> %{customdata[4]}<br><b>Band gap:</b> %{customdata[5]}'
+    - x_values: [-0.017696524774161376, -0.017696524774161376]
+      y_values: [4.08267, 1.98115]
+      linestyle: 'none'
+      type: 'scatter'
+      marker: 0
+      color: 3
+      label: '100 (100)'
+      legendgrouptitle_text: '7'
+      legendgroup: '7'
+      group_by: 'color'
+      customdata: 
+      - [-0.017696524774161376, '(100)', '7', '', '', '']
+      - [-0.017696524774161376, '(100)', '7', '', '', '']
+      hovertemplate: '<b>Excess:</b> %{customdata[0]}<br><b>Miller indices:</b> %{customdata[1]}<br><b>Ter.:</b> %{customdata[2]}<br><b>Ionization potential:</b> %{customdata[3]}<br><b>Work function:</b> %{customdata[4]}<br><b>Band gap:</b> %{customdata[5]}'
+    - x_values: [0.0, 0.0]
+      y_values: [2.9359, 1.92987]
+      linestyle: 'none'
+      type: 'scatter'
+      marker: 0
+      color: 4
+      label: '100 (100)'
+      legendgrouptitle_text: '2'
+      legendgroup: '2'
+      group_by: 'color'
+      customdata: 
+      - [0.0, '(100)', '2', '', '', '']
+      - [0.0, '(100)', '2', '', '', '']
+      hovertemplate: '<b>Excess:</b> %{customdata[0]}<br><b>Miller indices:</b> %{customdata[1]}<br><b>Ter.:</b> %{customdata[2]}<br><b>Ionization potential:</b> %{customdata[3]}<br><b>Work function:</b> %{customdata[4]}<br><b>Band gap:</b> %{customdata[5]}'
+    - x_values: [0.0, 0.0]
+      y_values: [2.57176, 1.45853]
+      linestyle: 'none'
+      type: 'scatter'
+      marker: 0
+      color: 5
+      label: '100 (100)' 
+      legendgrouptitle_text: '3'
+      legendgroup: '3'
+      group_by: 'color'
+      customdata: 
+      - [0.0, '(100)', '3', '', '', '']
+      - [0.0, '(100)', '3', '', '', '']
+      hovertemplate: '<b>Excess:</b> %{customdata[0]}<br><b>Miller indices:</b> %{customdata[1]}<br><b>Ter.:</b> %{customdata[2]}<br><b>Ionization potential:</b> %{customdata[3]}<br><b>Work function:</b> %{customdata[4]}<br><b>Band gap:</b> %{customdata[5]}'
+    - x_values: [0.0, 0.0]
+      y_values: [2.71773, 1.83095]
+      linestyle: 'none'
+      type: 'scatter'
+      marker: 0
+      color: 6
+      label: '100 (100)'
+      legendgrouptitle_text: '4'
+      legendgroup: '4'
+      group_by: 'color'
+      customdata: 
+      - [0.0, '(100)', '4', '', '', '']
+      - [0.0, '(100)', '4', '', '', '']
+      hovertemplate: '<b>Excess:</b> %{customdata[0]}<br><b>Miller indices:</b> %{customdata[1]}<br><b>Ter.:</b> %{customdata[2]}<br><b>Ionization potential:</b> %{customdata[3]}<br><b>Work function:</b> %{customdata[4]}<br><b>Band gap:</b> %{customdata[5]}'
+    - x_values: [0.017696524774161376, 0.017696524774161376]
+      y_values: [1.51785, 0.0]
+      linestyle: 'none'
+      type: 'scatter'
+      marker: 0
+      color: 7
+      label: '100 (100)'
+      legendgrouptitle_text: '1'
+      legendgroup: '1'
+      group_by: 'color'
+      customdata: 
+      - [0.017696524774161376, '(100)', '1', '', '', '']
+      - [0.017696524774161376, '(100)', '1', '', '', ''] 
+      hovertemplate: '<b>Excess:</b> %{customdata[0]}<br><b>Miller indices:</b> %{customdata[1]}<br><b>Ter.:</b> %{customdata[2]}<br><b>Ionization potential:</b> %{customdata[3]}<br><b>Work function:</b> %{customdata[4]}<br><b>Band gap:</b> %{customdata[5]}'
+    - x_values: [0.017696524774161376, 0.017696524774161376]
+      y_values: [1.14367, 0.0]
+      linestyle: 'none'
+      type: 'scatter'
+      marker: 0
+      color: 8
+      label: '100 (100)'
+      legendgrouptitle_text: '5'
+      legendgroup: '5'
+      group_by: 'color'
+      customdata: 
+      - [0.017696524774161376, '(100)', '5', '', '', '']
+      - [0.017696524774161376, '(100)', '5', '', '', '']
+      hovertemplate: '<b>Excess:</b> %{customdata[0]}<br><b>Miller indices:</b> %{customdata[1]}<br><b>Ter.:</b> %{customdata[2]}<br><b>Ionization potential:</b> %{customdata[3]}<br><b>Work function:</b> %{customdata[4]}<br><b>Band gap:</b> %{customdata[5]}'
+  - - x_values: [-0.005883892444328963, 0.005883892444328963]
+      y_values: [2.8243, 0.96149]
+      type: 'scatter'
+      color: 0
+      linestyle: 0
+      alpha: 0
+    - x_values: [-0.005883892444328963, 0.005883892444328963]
+      y_values: [2.8243, 0.96149]
+      type: 'scatter'
+      color: 0
+      linestyle: 0
+      alpha: 0
+    - x_values: [-0.005883892444328963, 0.005883892444328963]
+      y_values: [2.03167, 0.0]
+      type: 'scatter'
+      color: 1
+      linestyle: 1
+      alpha: 1
+    - x_values: [-0.005883892444328963, 0.005883892444328963]
+      y_values: [2.03167, 0.0]
+      type: 'scatter'
+      color: 1
+      linestyle: 1
+      alpha: 1
+    - x_values: [-0.005883892444328963, -0.005883892444328963]
+      y_values: [2.8243, 2.03167]
+      linestyle: 'none'
+      type: 'scatter'
+      marker: 1
+      color: 4
+      label: '001 (001)'
+      legendgrouptitle_text: '2'
+      legendgroup: '2'
+      group_by: 'color'
+      customdata: 
+      - [-0.005883892444328963, '(001)', '2', '', '', '']
+      - [-0.005883892444328963, '(001)', '2', '', '', '']
+      hovertemplate: '<b>Excess:</b> %{customdata[0]}<br><b>Miller indices:</b> %{customdata[1]}<br><b>Ter.:</b> %{customdata[2]}<br><b>Ionization potential:</b> %{customdata[3]}<br><b>Work function:</b> %{customdata[4]}<br><b>Band gap:</b> %{customdata[5]}'
+    - x_values: [0.005883892444328963, 0.005883892444328963]
+      y_values: [0.96149, 0.0]
+      linestyle: 'none'
+      type: 'scatter'
+      marker: 1
+      color: 7
+      label: '001 (001)'
+      legendgrouptitle_text: '1'
+      legendgroup: '1'
+      group_by: 'color'
+      customdata: 
+      - [0.005883892444328963, '(001)', '1', '', '', '']
+      - [0.005883892444328963, '(001)', '1', '', '', '']
+      hovertemplate: '<b>Excess:</b> %{customdata[0]}<br><b>Miller indices:</b> %{customdata[1]}<br><b>Ter.:</b> %{customdata[2]}<br><b>Ionization potential:</b> %{customdata[3]}<br><b>Work function:</b> %{customdata[4]}<br><b>Band gap:</b> %{customdata[5]}'
+  x_ticks:
+  y_ticks:
+  x_tick_labels:
+  y_tick_labels:
+  sec_axis:

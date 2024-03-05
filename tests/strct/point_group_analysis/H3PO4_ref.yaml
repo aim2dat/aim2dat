@@ -1,0 +1,8 @@
+%YAML 1.2
+---
+point_group: $C_{3}$
+symmetry_elements:
+- axis: [-0.3333316085292306, -0.47141157663561095, -0.8164932113430234]
+  n-fold: 3
+  label: $C_3$
+  type: rotation

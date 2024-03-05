@@ -1,0 +1,14 @@
+%YAML 1.2
+---
+function_args:
+  elements: [[Ga, S], [As, Cs]]
+  radius_type:
+structure:
+  label: GaAs_216_prim_subst-GaS-AsCs
+  pbc: [True, True, True]
+  elements: ['S', 'Cs']
+  positions:
+  - [0.0, 0.0, 0.0]
+  - [6.099000000000002, 6.099000000000002, 6.099000000000002]
+  is_cartesian: True
+  cell: [[0.0, 4.066, 4.066], [4.066, 0.0, 4.066], [4.066, 4.066, 0.0]]

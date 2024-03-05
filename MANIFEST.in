@@ -1,0 +1,6 @@
+include LICENSE
+include aim2dat/aiida_workflows/*/*parameter_files/*.yaml
+include aim2dat/aiida_workflows/protocols/*.yaml
+include aim2dat/plots/matplotlib_style_sheets/*.mplstyle
+include aim2dat/strct/ext_manipulation/functional_groups/*.yaml
+include aim2dat/utils/data_files/*.yaml

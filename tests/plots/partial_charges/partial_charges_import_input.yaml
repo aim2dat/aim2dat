@@ -1,0 +1,789 @@
+ZIF_8_Cl_struc:
+  data_label: ZIF_8_Cl_struc
+  partial_charges:
+  - element: Zn
+    population: 10.8036799
+  - element: Zn
+    population: 10.8036799
+  - element: Zn
+    population: 10.8036799
+  - element: Zn
+    population: 10.8036799
+  - element: Zn
+    population: 10.8036799
+  - element: Zn
+    population: 10.8036799
+  - element: C
+    population: 2.92130177
+  - element: C
+    population: 2.92130177
+  - element: C
+    population: 2.92130177
+  - element: C
+    population: 2.92130177
+  - element: C
+    population: 2.92130177
+  - element: C
+    population: 2.92130177
+  - element: C
+    population: 2.92130177
+  - element: C
+    population: 2.92130177
+  - element: C
+    population: 2.92130177
+  - element: C
+    population: 2.92130177
+  - element: C
+    population: 2.92130177
+  - element: C
+    population: 2.92130177
+  - element: C
+    population: 3.63243668
+  - element: C
+    population: 3.63243658
+  - element: C
+    population: 3.63243666
+  - element: C
+    population: 3.63243662
+  - element: C
+    population: 3.63243664
+  - element: C
+    population: 3.63243674
+  - element: C
+    population: 3.63243676
+  - element: C
+    population: 3.63243658
+  - element: C
+    population: 3.6324366
+  - element: C
+    population: 3.63243658
+  - element: C
+    population: 3.63243676
+  - element: C
+    population: 3.63243676
+  - element: C
+    population: 3.6324366
+  - element: C
+    population: 3.63243658
+  - element: C
+    population: 3.63243658
+  - element: C
+    population: 3.63243674
+  - element: C
+    population: 3.6324367
+  - element: C
+    population: 3.63243666
+  - element: C
+    population: 3.6324367
+  - element: C
+    population: 3.63243676
+  - element: C
+    population: 3.63243674
+  - element: C
+    population: 3.63243676
+  - element: C
+    population: 3.63243668
+  - element: C
+    population: 3.63243658
+  - element: Cl
+    population: 7.18815473
+  - element: Cl
+    population: 7.18815425
+  - element: Cl
+    population: 7.18815391
+  - element: Cl
+    population: 7.18815481
+  - element: Cl
+    population: 7.18815481
+  - element: Cl
+    population: 7.18815481
+  - element: Cl
+    population: 7.18815491
+  - element: Cl
+    population: 7.1881555
+  - element: Cl
+    population: 7.18815505
+  - element: Cl
+    population: 7.18815499
+  - element: Cl
+    population: 7.18815465
+  - element: Cl
+    population: 7.18815552
+  - element: N
+    population: 6.17690208
+  - element: N
+    population: 6.17690208
+  - element: N
+    population: 6.17690208
+  - element: N
+    population: 6.17690205
+  - element: N
+    population: 6.17690205
+  - element: N
+    population: 6.17690205
+  - element: N
+    population: 6.17690205
+  - element: N
+    population: 6.17690208
+  - element: N
+    population: 6.17690208
+  - element: N
+    population: 6.17690208
+  - element: N
+    population: 6.17690205
+  - element: N
+    population: 6.17690205
+  - element: N
+    population: 6.17690208
+  - element: N
+    population: 6.17690208
+  - element: N
+    population: 6.17690208
+  - element: N
+    population: 6.17690208
+  - element: N
+    population: 6.17690208
+  - element: N
+    population: 6.17690208
+  - element: N
+    population: 6.17690205
+  - element: N
+    population: 6.17690205
+  - element: N
+    population: 6.17690205
+  - element: N
+    population: 6.17690205
+  - element: N
+    population: 6.17690205
+  - element: N
+    population: 6.17690205
+  - element: H
+    population: 0.934965892
+  - element: H
+    population: 0.934967423
+  - element: H
+    population: 0.934966928
+  - element: H
+    population: 0.934965872
+  - element: H
+    population: 0.934964252
+  - element: H
+    population: 0.93496266
+  - element: H
+    population: 0.934966111
+  - element: H
+    population: 0.934962882
+  - element: H
+    population: 0.934962352
+  - element: H
+    population: 0.934965293
+  - element: H
+    population: 0.934965763
+  - element: H
+    population: 0.93496446
+  - element: H
+    population: 0.934961778
+  - element: H
+    population: 0.93496421
+  - element: H
+    population: 0.934964718
+  - element: H
+    population: 0.934965418
+  - element: H
+    population: 0.93496587
+  - element: H
+    population: 0.934966927
+  - element: H
+    population: 0.934967149
+  - element: H
+    population: 0.934964807
+  - element: H
+    population: 0.934966132
+  - element: H
+    population: 0.93496446
+  - element: H
+    population: 0.934962552
+  - element: H
+    population: 0.934968063
+  valence_electrons: &id001
+    Zn: 12
+    H: 1
+    C: 4
+    N: 5
+    Br: 7
+    Cl: 7
+  plot_label: Cl
+  x_label: structure
+  custom_kind_dict: &id002
+    X:
+    - 42
+    - 43
+    - 44
+    - 45
+    - 46
+    - 47
+    - 48
+    - 49
+    - 50
+    - 51
+    - 52
+    - 53
+    Zn:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    N:
+    - 54
+    - 55
+    - 56
+    - 57
+    - 58
+    - 59
+    - 61
+    - 62
+    - 63
+    - 66
+    - 67
+    - 68
+    - 69
+    - 70
+    - 71
+    - 72
+    - 76
+    - 77
+    - 60
+    - 64
+    - 65
+    - 73
+    - 74
+    - 75
+    conjugated_network:
+    - - 6
+      - 7
+      - 8
+      - 9
+      - 10
+      - 11
+      - 12
+      - 13
+      - 14
+      - 15
+      - 16
+      - 17
+    - - 18
+      - 19
+      - 20
+      - 21
+      - 22
+      - 23
+      - 24
+      - 25
+      - 26
+      - 27
+      - 28
+      - 29
+      - 30
+      - 31
+      - 32
+      - 33
+      - 34
+      - 35
+      - 36
+      - 37
+      - 38
+      - 39
+      - 40
+      - 41
+    - - 78
+      - 79
+      - 80
+      - 81
+      - 82
+      - 83
+      - 84
+      - 85
+      - 86
+      - 87
+      - 88
+      - 89
+      - 90
+      - 91
+      - 92
+      - 93
+      - 94
+      - 95
+      - 96
+      - 97
+      - 98
+      - 99
+      - 100
+      - 101
+ZIF_8_Cl_comp:
+  data_label: ZIF_8_Cl_comp
+  partial_charges:
+  - element: Zn
+    population: 10.8143129
+  - element: C
+    population: 3.59683796
+  - element: C
+    population: 3.64618435
+  - element: N
+    population: 6.1337518
+  - element: N
+    population: 6.19113719
+  - element: N
+    population: 6.18953467
+  - element: N
+    population: 6.13717463
+  - element: H
+    population: 0.87525075
+  - element: H
+    population: 0.906834474
+  - element: Cl
+    population: 7.1167789
+  - element: Cl
+    population: 7.26840057
+  - element: C
+    population: 2.88561211
+  - element: C
+    population: 2.95951038
+  - element: C
+    population: 3.64006216
+  - element: C
+    population: 3.57837132
+  - element: H
+    population: 0.905904557
+  - element: H
+    population: 0.920108148
+  - element: N
+    population: 6.20779419
+  - element: N
+    population: 6.18666246
+  - element: N
+    population: 6.08838637
+  - element: C
+    population: 2.8777671
+  - element: C
+    population: 2.92868649
+  - element: C
+    population: 3.66413142
+  - element: C
+    population: 3.6780965
+  - element: C
+    population: 3.61660927
+  - element: Cl
+    population: 7.10279953
+  - element: N
+    population: 6.09043738
+  - element: Cl
+    population: 7.25229537
+  - element: H
+    population: 0.987582269
+  - element: C
+    population: 3.62015654
+  - element: H
+    population: 0.955262741
+  - element: H
+    population: 0.961914558
+  - element: H
+    population: 0.967609728
+  - element: H
+    population: 0.524394562
+  - element: H
+    population: 0.523865667
+  valence_electrons: *id001
+  plot_label: Cl
+  x_label: complex
+  custom_kind_dict: &id003
+    Zn:
+    - 0
+    X:
+    - 9
+    - 25
+    - 10
+    - 27
+    N:
+    - 3
+    - 6
+    - 4
+    - 5
+    - 17
+    - 18
+    - 19
+    - 26
+    conjugated_network:
+    - - 1
+      - 2
+      - 13
+      - 14
+      - 22
+      - 23
+      - 24
+      - 29
+    - - 11
+      - 20
+      - 12
+      - 21
+    - - 7
+      - 8
+      - 15
+      - 16
+      - 28
+      - 30
+      - 31
+      - 32
+    - - 33
+      - 34
+ZIF_8_Cl_imi:
+  data_label: ZIF_8_Cl_imi
+  partial_charges:
+  - element: C
+    population: 2.92854983
+  - element: N
+    population: 6.19617109
+  - element: C
+    population: 3.68178504
+  - element: C
+    population: 3.60164353
+  - element: N
+    population: 6.0139907
+  - element: Cl
+    population: 7.18282194
+  - element: H
+    population: 0.937411508
+  - element: H
+    population: 0.917980601
+  - element: H
+    population: 0.539603296
+  valence_electrons: *id001
+  plot_label: Cl
+  x_label: imidazole
+  custom_kind_dict: &id004
+    conjugated_network:
+    - - 0
+    - - 2
+      - 3
+    - - 6
+      - 7
+    - - 8
+    N:
+    - 1
+    - 4
+    X:
+    - 5
+ZIF_8_Br_struc:
+  data_label: ZIF_8_Br_struc
+  partial_charges:
+  - element: Zn
+    population: 10.8062121
+  - element: Zn
+    population: 10.8062121
+  - element: Zn
+    population: 10.8062121
+  - element: Zn
+    population: 10.8062121
+  - element: Zn
+    population: 10.8062121
+  - element: Zn
+    population: 10.8062121
+  - element: C
+    population: 3.0756997
+  - element: C
+    population: 3.0756997
+  - element: C
+    population: 3.0756997
+  - element: C
+    population: 3.0756997
+  - element: C
+    population: 3.0756997
+  - element: C
+    population: 3.0756997
+  - element: C
+    population: 3.07570124
+  - element: C
+    population: 3.07569926
+  - element: C
+    population: 3.07570124
+  - element: C
+    population: 3.07570124
+  - element: C
+    population: 3.07569926
+  - element: C
+    population: 3.07570124
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: C
+    population: 3.6367821
+  - element: Br
+    population: 7.01839062
+  - element: Br
+    population: 7.01838918
+  - element: Br
+    population: 7.01838794
+  - element: Br
+    population: 7.01838882
+  - element: Br
+    population: 7.01838882
+  - element: Br
+    population: 7.01838882
+  - element: Br
+    population: 7.01838767
+  - element: Br
+    population: 7.01839072
+  - element: Br
+    population: 7.01838942
+  - element: Br
+    population: 7.01839068
+  - element: Br
+    population: 7.01838976
+  - element: Br
+    population: 7.01839068
+  - element: N
+    population: 6.17872951
+  - element: N
+    population: 6.17872953
+  - element: N
+    population: 6.17872951
+  - element: N
+    population: 6.17872951
+  - element: N
+    population: 6.17872953
+  - element: N
+    population: 6.17872953
+  - element: N
+    population: 6.17872953
+  - element: N
+    population: 6.17872953
+  - element: N
+    population: 6.17872951
+  - element: N
+    population: 6.17872951
+  - element: N
+    population: 6.17872953
+  - element: N
+    population: 6.17872953
+  - element: N
+    population: 6.17872951
+  - element: N
+    population: 6.17872951
+  - element: N
+    population: 6.17872951
+  - element: N
+    population: 6.17872951
+  - element: N
+    population: 6.17872951
+  - element: N
+    population: 6.17872951
+  - element: N
+    population: 6.17872953
+  - element: N
+    population: 6.17872951
+  - element: N
+    population: 6.17872953
+  - element: N
+    population: 6.17872953
+  - element: N
+    population: 6.17872953
+  - element: N
+    population: 6.17872953
+  - element: H
+    population: 0.935652883
+  - element: H
+    population: 0.935654641
+  - element: H
+    population: 0.935653484
+  - element: H
+    population: 0.935652423
+  - element: H
+    population: 0.93565321
+  - element: H
+    population: 0.935649909
+  - element: H
+    population: 0.935652262
+  - element: H
+    population: 0.935650909
+  - element: H
+    population: 0.935649239
+  - element: H
+    population: 0.935652345
+  - element: H
+    population: 0.935651637
+  - element: H
+    population: 0.935651551
+  - element: H
+    population: 0.935648769
+  - element: H
+    population: 0.935650205
+  - element: H
+    population: 0.935651874
+  - element: H
+    population: 0.935652408
+  - element: H
+    population: 0.935653565
+  - element: H
+    population: 0.935654165
+  - element: H
+    population: 0.935654225
+  - element: H
+    population: 0.935652176
+  - element: H
+    population: 0.935652262
+  - element: H
+    population: 0.935651551
+  - element: H
+    population: 0.935648847
+  - element: H
+    population: 0.935653362
+  valence_electrons: *id001
+  plot_label: Br
+  x_label: structure
+  custom_kind_dict: *id002
+ZIF_8_Br_comp:
+  data_label: ZIF_8_Br_comp
+  partial_charges:
+  - element: Zn
+    population: 10.8150163
+  - element: C
+    population: 3.61220241
+  - element: C
+    population: 3.65611226
+  - element: N
+    population: 6.1372858
+  - element: N
+    population: 6.19113328
+  - element: N
+    population: 6.19649004
+  - element: N
+    population: 6.14627955
+  - element: H
+    population: 0.868626621
+  - element: H
+    population: 0.90228634
+  - element: Br
+    population: 6.9392024
+  - element: Br
+    population: 7.12252882
+  - element: C
+    population: 3.04567827
+  - element: C
+    population: 3.07968856
+  - element: C
+    population: 3.62445673
+  - element: C
+    population: 3.58685916
+  - element: H
+    population: 0.916328383
+  - element: H
+    population: 0.914862045
+  - element: N
+    population: 6.20249792
+  - element: N
+    population: 6.1953375
+  - element: N
+    population: 6.09715673
+  - element: C
+    population: 3.04251119
+  - element: C
+    population: 3.08585117
+  - element: C
+    population: 3.68117485
+  - element: C
+    population: 3.67185769
+  - element: C
+    population: 3.64462733
+  - element: Br
+    population: 6.92104795
+  - element: N
+    population: 6.0738018
+  - element: Br
+    population: 7.10337566
+  - element: H
+    population: 0.970286493
+  - element: C
+    population: 3.63090636
+  - element: H
+    population: 0.941385152
+  - element: H
+    population: 0.957948464
+  - element: H
+    population: 0.968549332
+  - element: H
+    population: 0.528081075
+  - element: H
+    population: 0.528786942
+  valence_electrons: *id001
+  plot_label: Br
+  x_label: complex
+  custom_kind_dict: *id003
+ZIF_8_Br_imi:
+  data_label: ZIF_8_Br_imi
+  partial_charges:
+  - element: C
+    population: 3.04080751
+  - element: N
+    population: 6.20870328
+  - element: C
+    population: 3.6766472
+  - element: C
+    population: 3.60243296
+  - element: N
+    population: 6.04921432
+  - element: Br
+    population: 7.02320405
+  - element: H
+    population: 0.938178293
+  - element: H
+    population: 0.919212183
+  - element: H
+    population: 0.541557784
+  valence_electrons: *id001
+  plot_label: Br
+  x_label: imidazole
+  custom_kind_dict: *id004

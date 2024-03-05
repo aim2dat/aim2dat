@@ -1,0 +1,68 @@
+%YAML 1.2
+---
+properties: {}
+import_data:
+- function: import_scatter_data_set
+  args:
+    data_label: test dataset
+    x_values: [0.0, 1.0, 2.0, 3.0]
+    y_values: [-1.0, 2.0, 3.0, 0.0]
+- function: import_scatter_data_set
+  args:
+    data_label: test dataset 2
+    x_values: [0.0, 1.0, 2.0, 3.0]
+    y_values: [4.0, 1.0, 3.0, 2.0]
+    plot_label: Test 2
+    marker: o
+    alpha: 0.5
+- function: import_bar_data_set
+  args:
+    data_label: test dataset 3
+    x_values: [1.0, 4.0]
+    y_values: [2.0, 3.0]
+    heights: [4.0, 1.0]
+    plot_label: Bar data set
+    width: 0.15
+    bottom: 1.5
+    color: C4
+ref:
+  layout:
+    barmode: stack
+    width: 700.0
+    height: 700.0
+  data:
+  - plotly_name: scatter
+    x: [0.0, 1.0, 2.0, 3.0]
+    y: [-1.0, 2.0, 3.0, 0.0]
+    mode: lines
+    fill:
+    fillcolor:
+    fillpattern:
+    opacity: 
+    legendgroup:
+    legendgrouptitle:
+    legendrank: 
+  - plotly_name: scatter
+    x: [0.0, 1.0, 2.0, 3.0]
+    y: [4.0, 1.0, 3.0, 2.0]
+    mode: lines
+    fill:
+    fillcolor:
+    fillpattern:
+    opacity: 
+    legendgroup:
+    legendgrouptitle:
+    legendrank: 
+  - plotly_name: bar
+    marker: 
+      color: '#9467bd'
+    name: Bar data set
+    x: [1.0, 4.0]
+    y: [4.0, 1.0]
+    fill:
+    fillcolor:
+    fillpattern:
+    opacity: 
+    legendgroup:
+    legendgrouptitle:
+    legendrank:     

@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+entries:
+- chem_formula: {Cs: 8}
+  total_energy_per_atom: -540.0
+- chem_formula: {Cs: 1}
+  total_energy: -546.9454577375502
+- chem_formula: {Cs: 1}
+  total_energy: -40.0
+- chem_formula: {Cs: 1}
+ref_values:
+- 6.945457737550214
+- 0.0
+- 506.9454577375502
+-

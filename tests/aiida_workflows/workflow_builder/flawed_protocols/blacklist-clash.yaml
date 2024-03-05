@@ -1,0 +1,16 @@
+title: blacklist-clash
+version: '1.0'
+description: Test protocol to test the validation functions.
+parent_node_type: str
+parent_node_input:
+  task_1: input_p_node
+tasks:
+  task_1:
+    process: core.arithmetic.add_multiply
+    blacklist_inputs: [input_variable]
+general_input: 
+  input_variable:
+    value: 2.0
+    aiida_node: True
+    tasks: [task_1]
+user_input: {}

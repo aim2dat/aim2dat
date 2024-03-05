@@ -1,0 +1,7 @@
+%YAML 1.2
+---
+point_group: $C_{\infty v}$
+symmetry_elements:
+- label: linear
+  type: linear
+  axis: [1.0, 0.0, 0.0]

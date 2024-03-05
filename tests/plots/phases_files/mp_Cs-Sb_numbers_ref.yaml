@@ -1,0 +1,69 @@
+%YAML 1.2
+---
+attributes:
+  plot_type: numbers
+  show_crystal_system: True
+  top_labels: [{"Cs": 3, "Sb": 1}]
+plot_args:
+  data_labels: ["test"]
+  subplot_assignment: [0]
+ref:
+  data_sets:
+  - {x: 0.75, color: black, linestyle: dashed, scaled: true, type: vline}
+  - x_values: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    bottom: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    heights: [2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    width: 0.095
+    type: bar
+    color: 0
+    label: triclinic
+  - x_values: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0] 
+    bottom: [2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0] 
+    heights: [3.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+    width: 0.095
+    type: bar
+    color: 1
+    label: monoclinic
+  - x_values: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    bottom: [5.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0]
+    heights: [0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, 0.0, 3.0]
+    width: 0.095
+    type: bar
+    color: 2
+    label: orthorhombic
+  - x_values: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    bottom: [5.0, 0.0, 0.0, 0.0, 1.0, 2.0, 0.0, 1.0, 0.0, 0.0, 4.0]
+    heights: [2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 3.0]
+    width: 0.095
+    type: bar
+    color: 3
+    label: tetragonal
+  - x_values: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    bottom: [7.0, 0.0, 0.0, 0.0, 1.0, 2.0, 0.0, 1.0, 0.0, 0.0, 7.0]
+    heights: [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    width: 0.095
+    type: bar
+    color: 4
+    label: trigonal
+  - x_values: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    bottom: [8.0, 0.0, 0.0, 0.0, 1.0, 2.0, 0.0, 1.0, 0.0, 0.0, 7.0]
+    heights: [1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0]
+    width: 0.095
+    type: bar
+    color: 5
+    label: hexagonal
+  - x_values: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    bottom: [9.0, 0.0, 0.0, 0.0, 1.0, 2.0, 0.0, 1.0, 0.0, 0.0, 9.0]
+    heights: [3.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 5.0]
+    width: 0.095
+    type: bar
+    color: 6
+    label: cubic
+  x_ticks:
+  y_ticks:
+  x_tick_labels:
+  y_tick_labels:
+  sec_axis:
+  - ticks: [0.75]
+    tick_labels: ['$\mathrm{Cs}_\mathrm{3}\mathrm{Sb}$']
+    coord: x

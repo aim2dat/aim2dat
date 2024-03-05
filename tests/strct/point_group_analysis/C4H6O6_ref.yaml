@@ -1,0 +1,5 @@
+%YAML 1.2
+---
+point_group: $C_i$
+symmetry_elements:
+- {label: inv_center, type: inversion}

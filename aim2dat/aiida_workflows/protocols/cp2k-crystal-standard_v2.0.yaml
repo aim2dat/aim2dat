@@ -1,0 +1,431 @@
+%YAML 1.2
+---
+# Protocol with standard settings for the crystal workflow.
+title: cp2k-crystal-standard
+version: '2.0'
+description: Standard settings to optimize the unit cell and calculate different electronic
+  properties.
+dependencies:
+- [aiida-core, '1.6', Null]
+- [seekpath, '2.0', Null]
+parent_node_type: structure
+tasks:
+  seekpath_analysis:
+    process: aim2dat.seekpath.structure_analysis
+    parent_node: structure
+    inputs:
+    - parameters
+    dependencies:
+  find_scf_parameters:
+    process: aim2dat.cp2k.find_scf_p
+    inputs:
+    - factor_unocc_states
+    - enable_roks
+    - scf_method
+    - scf_extended_system
+    - always_add_unocc_states
+    - max_iterations
+    - numerical_p.kpoints_ref_dist
+    - numerical_p.xc_functional
+    - numerical_p.cutoff_values
+    - numerical_p.basis_sets
+    - numerical_p.pseudo_file
+    - numerical_p.basis_file
+    - cp2k.parameters
+    - cp2k.code
+    - cp2k.metadata
+    - clean_workdir
+    dependencies:
+      seekpath_analysis:
+      - [primitive_structure, structural_p.structure]
+  unit_cell_preopt:
+    process: aim2dat.cp2k.cell_opt
+    inputs:
+    - factor_unocc_states
+    - enable_roks
+    - scf_method
+    - scf_extended_system
+    - adjust_scf_parameters
+    - always_add_unocc_states
+    - max_iterations
+    - numerical_p.kpoints_ref_dist
+    - numerical_p.xc_functional
+    - numerical_p.cutoff_values
+    - numerical_p.basis_sets
+    - numerical_p.pseudo_file
+    - numerical_p.basis_file
+    - optimization_p.keep_space_group
+    - optimization_p.keep_angles
+    - optimization_p.eps_symmetry
+    - cp2k.parameters
+    - cp2k.code
+    - cp2k.metadata
+    - clean_workdir
+    dependencies:
+      seekpath_analysis:
+      - [primitive_structure, structural_p.structure]
+      find_scf_parameters:
+      - [scf_parameters, structural_p.scf_parameters]
+  unit_cell_opt:
+    process: aim2dat.cp2k.cell_opt
+    inputs:
+    - factor_unocc_states
+    - enable_roks
+    - scf_method
+    - scf_extended_system
+    - adjust_scf_parameters
+    - always_add_unocc_states
+    - max_iterations
+    - numerical_p.kpoints_ref_dist
+    - numerical_p.xc_functional
+    - numerical_p.cutoff_values
+    - numerical_p.basis_sets
+    - numerical_p.pseudo_file
+    - numerical_p.basis_file
+    - optimization_p.keep_space_group
+    - optimization_p.keep_angles
+    - optimization_p.eps_symmetry
+    - cp2k.parameters
+    - cp2k.code
+    - cp2k.metadata
+    - clean_workdir
+    dependencies:
+      unit_cell_preopt:
+      - [cp2k.output_structure, structural_p.structure]
+      - [scf_parameters, structural_p.scf_parameters]
+  band_structure:
+    process: aim2dat.cp2k.band_structure
+    inputs:
+    - factor_unocc_states
+    - enable_roks
+    - scf_method
+    - scf_extended_system
+    - adjust_scf_parameters
+    - max_iterations
+    - numerical_p.kpoints_ref_dist
+    - numerical_p.xc_functional
+    - numerical_p.cutoff_values
+    - numerical_p.basis_sets
+    - numerical_p.pseudo_file
+    - numerical_p.basis_file
+    - cp2k.parameters
+    - cp2k.code
+    - cp2k.metadata
+    - clean_workdir
+    dependencies:
+      seekpath_analysis:
+      - [parameters, path_parameters]
+      unit_cell_opt:
+      - [cp2k.output_structure, structural_p.structure]
+      - [cp2k.remote_folder, cp2k.parent_calc_folder]
+      - [scf_parameters, structural_p.scf_parameters]
+  eigenvalues:
+    process: aim2dat.cp2k.eigenvalues
+    inputs:
+    - factor_unocc_states
+    - enable_roks
+    - scf_method
+    - scf_extended_system
+    - adjust_scf_parameters
+    - max_iterations
+    - numerical_p.kpoints_ref_dist
+    - numerical_p.xc_functional
+    - numerical_p.cutoff_values
+    - numerical_p.basis_sets
+    - numerical_p.pseudo_file
+    - numerical_p.basis_file
+    - cp2k.parameters
+    - cp2k.code
+    - cp2k.metadata
+    - clean_workdir
+    dependencies:
+      unit_cell_opt:
+      - [cp2k.output_structure, structural_p.structure]
+      - [cp2k.remote_folder, cp2k.parent_calc_folder]
+      - [scf_parameters, structural_p.scf_parameters]
+  pdos:
+    process: aim2dat.cp2k.pdos
+    inputs:
+    - factor_unocc_states
+    - enable_roks
+    - scf_method
+    - scf_extended_system
+    - adjust_scf_parameters
+    - max_iterations
+    - numerical_p.xc_functional
+    - numerical_p.cutoff_values
+    - numerical_p.basis_sets
+    - numerical_p.pseudo_file
+    - numerical_p.basis_file
+    - cp2k.parameters
+    - cp2k.code
+    - cp2k.metadata
+    - clean_workdir
+    dependencies:
+      unit_cell_opt:
+      - [cp2k.output_structure, structural_p.structure]
+      - [scf_parameters, structural_p.scf_parameters]
+  partial_charges:
+    process: aim2dat.cp2k.partial_charges
+    inputs:
+    - factor_unocc_states
+    - enable_roks
+    - scf_method
+    - scf_extended_system
+    - adjust_scf_parameters
+    - always_add_unocc_states
+    - max_iterations
+    - numerical_p.kpoints_ref_dist
+    - numerical_p.xc_functional
+    - numerical_p.cutoff_values
+    - numerical_p.basis_sets
+    - numerical_p.pseudo_file
+    - numerical_p.basis_file
+    - cp2k.parameters
+    - cp2k.code
+    - cp2k.metadata
+    - critic2.code
+    - critic2.metadata
+    - chargemol.code
+    - chargemol.path_atomic_densities
+    - chargemol.metadata
+    - clean_workdir
+    dependencies:
+      unit_cell_opt:
+      - [cp2k.output_structure, structural_p.structure]
+      - [cp2k.remote_folder, cp2k.parent_calc_folder]
+      - [scf_parameters, structural_p.scf_parameters]
+general_input:
+  cp2k.parameters:
+    value:
+      GLOBAL:
+        PRINT_LEVEL: MEDIUM
+        PREFERRED_DIAG_LIBRARY: SCALAPACK
+        EXTENDED_FFT_LENGTHS: true
+      FORCE_EVAL:
+        METHOD: Quickstep
+        STRESS_TENSOR: ANALYTICAL
+        DFT:
+          MGRID: {}
+          POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+          BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT]
+          POTENTIAL_FILE_NAME: GTH_POTENTIALS
+          QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
+          SCF: {EPS_SCF: 5.0e-7}
+          KPOINTS:
+            EPS_GEO: 1.0E-8
+            FULL_GRID: false
+            SYMMETRY: false
+          XC: {}
+        SUBSYS:
+          CELL: {PERIODIC: XYZ}
+    aiida_node: true
+  numerical_p.kpoints_ref_dist:
+    value: 0.15
+    aiida_node: true
+  factor_unocc_states:
+    value: 0.75
+    aiida_node: true
+  enable_roks:
+    value: false
+    aiida_node: true
+  scf_method:
+    value: density_mixing
+    aiida_node: true
+  adjust_scf_parameters:
+    value: true
+    aiida_node: true
+  always_add_unocc_states:
+    value: true
+    aiida_node: true
+  max_iterations:
+    value: 100
+    aiida_node: true
+    compare: False
+  optimization_p.keep_space_group:
+    value: true
+    aiida_node: true
+  optimization_p.keep_angles:
+    value: true
+    aiida_node: true
+  optimization_p.eps_symmetry:
+    value: 0.005
+    aiida_node: true
+  parameters->seekpath_analysis:
+    value: {reference_distance: 0.015, symprec: 0.005}
+    aiida_node: true
+  optimization_p.max_force->unit_cell_preopt:
+    value: 0.005
+    aiida_node: true
+  optimization_p.pressure_tolerance->unit_cell_preopt:
+    value: 200.0
+    aiida_node: true
+  numerical_p.kpoints_ref_dist->unit_cell_preopt:
+    value: 0.25
+    aiida_node: true
+  optimization_p.max_force->unit_cell_opt:
+    value: 0.000097
+    aiida_node: true
+  optimization_p.pressure_tolerance->unit_cell_opt:
+    value: 100.0
+    aiida_node: true
+  numerical_p.kpoints_ref_dist->eigenvalues:
+    value: 0.075
+    aiida_node: true
+  minimum_cell_length->pdos:
+    value: 25.0
+    aiida_node: true
+  maximum_cell_length->pdos:
+    value: 40.0
+    aiida_node: true
+  resolve_atoms->pdos:
+    value: true
+    aiida_node: true
+  critic2.parameters->partial_charges:
+    value:
+    - crystal aiida-ELECTRON_DENSITY-1_0.cube
+    - load aiida-ELECTRON_DENSITY-1_0.cube core zpsp
+    - load aiida-ELECTRON_DENSITY-1_0.cube
+    - integrable 2
+    - yt
+    dependency: critic2.code
+    aiida_node: true
+  chargemol.parameters->partial_charges:
+    value: {periodicity along A, B, and C vectors: [true, true, true], charge type: DDEC6}
+    dependency: chargemol.code
+    aiida_node: true
+user_input:
+  scf_extended_system:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+  numerical_p.xc_functional:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+  numerical_p.cutoff_values:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+  numerical_p.basis_sets:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+  numerical_p.pseudo_file:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+  numerical_p.basis_file:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+  numerical_p.cutoff_values->unit_cell_preopt:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+  numerical_p.basis_sets->unit_cell_preopt:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+  numerical_p.pseudo_file->unit_cell_preopt:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+  numerical_p.basis_file->unit_cell_preopt:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+  cp2k.code:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: false
+  cp2k.metadata:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+  critic2.code:
+    validation: aim2dat.cp2k.partial_charges
+    aiida_node: true
+    optional: true
+    compare: false
+  critic2.metadata:
+    validation: aim2dat.cp2k.partial_charges
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+  chargemol.code:
+    validation: aim2dat.cp2k.partial_charges
+    aiida_node: true
+    optional: true
+  chargemol.metadata:
+    validation: aim2dat.cp2k.partial_charges
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+  chargemol.path_atomic_densities:
+    validation: aim2dat.cp2k.partial_charges
+    aiida_node: true
+    dependency: chargemol.code
+    compare: false
+  clean_workdir:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+results:
+  primitive_structure:
+    task: seekpath_analysis
+    output_port: primitive_structure
+  conventional_structure:
+    task: seekpath_analysis
+    output_port: conv_structure
+  scf_method_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [method_level]
+  scf_parameter_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [parameter_level]
+  scf_smearing_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [smearing_level]
+  optimized_structure:
+    task: unit_cell_opt
+    output_port: cp2k.output_structure
+  total_energy:
+    task: unit_cell_opt
+    output_port: cp2k.output_parameters
+    retrieve_value: [energy]
+    unit: Hartree
+  space_group:
+    task: unit_cell_opt
+    output_port: cp2k.output_parameters
+    retrieve_value: [spgr_info, sg_number]
+  band_structure:
+    task: band_structure
+    output_port: cp2k.output_bands
+  pdos:
+    task: pdos
+    output_port: cp2k.output_pdos
+  bader_populations:
+    task: partial_charges
+    output_port: critic2.output_bader_populations
+  ddec6_populations:
+    task: partial_charges
+    output_port: chargemol.output_ddec6_populations
+  hirshfeld_populations:
+    task: partial_charges
+    output_port: cp2k.output_hirshfeld_populations
+  mulliken_populations:
+    task: partial_charges
+    output_port: cp2k.output_mulliken_populations

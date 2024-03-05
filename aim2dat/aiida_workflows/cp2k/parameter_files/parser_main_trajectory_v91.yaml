@@ -1,0 +1,254 @@
+%YAML 1.2
+---
+# Trajectory parser parameters
+header_blocks:
+- start: ' Atom  Kind  Element'
+  end: ' SCF PARAMETERS'
+  max_length: -1
+  patterns:
+  - pattern: '^\s\s*\d+\s*(\d+)?\s*([A-Za-z]+)?\s*(\d+)?\s*[-+]?[0-9]+\.?[0-9]*\s*[-+]?[0-9]+\.?[0-9]*\s*[-+]?[0-9]+\.?[0-9]*\s*([-+]?[0-9]+\.?[0-9]*)?\s*([-+]?[0-9]*\.?[0-9]*)?$'
+    key:
+    - ['kind_info', 'kind']
+    - ['kind_info', 'element']
+    - ['kind_info', 'atomic_nr']
+    - ['kind_info', 'valence_e']
+    - ['kind_info', 'mass']
+    type: [int, str, int, float, float]
+    append: [true, true, true, true, true]
+    regex: true
+    repeat: true
+- start: ' MD_PAR| Molecular dynamics protocol (MD input parameters)'
+  end: ' MD_PAR| Dump'
+  max_length: 12
+  patterns:
+  - pattern: ' MD_PAR| Time step [fs]'
+    key:
+    - [motion_step_info, time_step]
+    type: [float]
+    position: [-1]
+    append: [false]
+    regex: false
+    repeat: false
+middle_general:
+- pattern: '  *** SCF run converged'
+  key:
+  - [motion_step_info, scf_converged]
+  type: int
+  position: [5]
+  append: [true]
+  regex: false
+  repeat: false
+- pattern: ' *** SCF run terminated'
+  key:
+  - [motion_step_info, scf_converged]
+  type: str
+  position: [3]
+  append: [true]
+  regex: false
+  repeat: false
+- pattern: ' *** WARNING in qs_scf.F:598 :: SCF run NOT converged'
+  key:
+  - [motion_step_info, scf_converged]
+  type: str
+  position: [7]
+  append: [true]
+  regex: false
+  repeat: false
+- pattern: '  outer SCF loop converged in'
+  key:
+  - [motion_step_info, outer_scf_converged]
+  type: int
+  position: [8]
+  append: [true]
+  regex: false
+- pattern: '  outer SCF loop FAILED'
+  key:
+  - [motion_step_info, outer_scf_converged]
+  type: str
+  position: [3]
+  append: [true]
+  regex: false
+middle_blocks:
+- start: ' --------  Informations at step'
+  end: '  Used time'
+  max_length: 9
+  patterns:
+  - pattern: '  Internal Pressure [bar]'
+    key:
+    - [motion_step_info, pressure]
+    type: float
+    position: [-1]
+    append: [true]
+    regex: false
+- start: '  Convergence check :'
+  end: ' ---------------------------------------------------'
+  max_length: 14
+  patterns:
+  - pattern: '  Max. step size'
+    key:
+    - [motion_step_info, max_step]
+    type: float
+    position: [-1]
+    append: [true]
+    regex: false
+  - pattern: '  RMS step size'
+    key:
+    - [motion_step_info, rms_step]
+    type: float
+    position: [-1]
+    append: [true]
+    regex: false
+  - pattern: '  Max. gradient'
+    key:
+    - [motion_step_info, max_grad]
+    type: float
+    position: [-1]
+    append: [true]
+    regex: false
+  - pattern: '  RMS gradient'
+    key:
+    - [motion_step_info, rms_grad]
+    type: float
+    position: [-1]
+    append: [true]
+    regex: false
+- start: ' ENERGY| Total FORCE_EVAL'
+  end: ''
+  max_length: 1
+  patterns:
+  - pattern: ' ENERGY| Total FORCE_EVAL'
+    key:
+    - [motion_step_info, energy]
+    type: [float]
+    position: [-1]
+    append: [true]
+    regex: false
+- start: ' MD_INI| MD initialization'
+  end: ' MD_INI| Cell angles [deg]'
+  max_length: 9
+  patterns:
+  - pattern: ' MD_INI| Potential energy [hartree]'
+    key:
+    - ['motion_step_info', 'potential_energy']
+    type: float
+    position: [-1]
+    append: [true]
+    regex: false
+  - pattern: ' MD_INI| Kinetic energy [hartree]'
+    key:
+    - ['motion_step_info', 'kinetic_energy']
+    type: float
+    position: [-1]
+    append: [true]
+    regex: false
+  - pattern: ' MD_INI| Temperature [K]'
+    key:
+    - ['motion_step_info', 'temperature']
+    type: float
+    position: [-1]
+    append: [true]
+    regex: false
+- start: ' MD| ***************************************************************************'
+  end: ' MD| ***************************************************************************'
+  max_length: 13
+  patterns:
+  - pattern: ' MD| Step number'
+    key:
+    - ['motion_step_info', 'step_nr']
+    type: int
+    position: [-1]
+    append: [true]
+    regex: false
+  - pattern: ' MD| Time [fs]'
+    key:
+    - ['motion_step_info', 'time_fs']
+    type: float
+    position: [-1]
+    append: [true]
+    regex: false
+  - pattern: ' MD| Energy drift per atom [K]'
+    key:
+    - ['motion_step_info', 'energy_drift_p_atom']
+    type: float
+    position: [-2]
+    append: [true]
+    regex: false
+  - pattern: ' MD| Potential energy [hartree]'
+    key:
+    - ['motion_step_info', 'potential_energy']
+    type: float
+    position: [-2]
+    append: [true]
+    regex: false
+  - pattern: ' MD| Kinetic energy [hartree]'
+    key:
+    - ['motion_step_info', 'kinetic_energy']
+    type: float
+    position: [-2]
+    append: [true]
+    regex: false
+  - pattern: ' MD| Temperature [K]'
+    key:
+    - ['motion_step_info', 'temperature']
+    type: float
+    position: [-2]
+    append: [true]
+    regex: false
+- start: ' #  Atom  Element  Kind  Atomic population                           Net charge'
+  end: ' !-----------------------------------------------------------------------------!'
+  max_length: -1
+  patterns:
+  - pattern: '^\s\s*[0-9]*\s*([A-Za-z]*)?\s*([0-9]*)?\s*([-+]?[0-9]*\.?[0-9]*)?\s*([-+]?[0-9]*\.?[0-9]*)?$'
+    key:
+    - ['mulliken', 'element']
+    - ['mulliken', 'kind']
+    - ['mulliken', 'population']
+    - ['mulliken', 'charge']
+    type: [str, int, float, float]
+    append: [true, true, true, true]
+    regex: true
+    repeat: true
+- start: ' #  Atom  Element  Kind  Atomic population (alpha,beta) Net charge  Spin moment'
+  end: ' !-----------------------------------------------------------------------------!'
+  max_length: -1
+  patterns:
+  - pattern: '^\s\s*[0-9]*\s*([A-Za-z]*)?\s*([0-9]*)?\s*([-+]?[0-9]*\.?[0-9]*)?\s*([-+]?[0-9]*\.[0-9]*)?\s*([-+]?[0-9]*\.[0-9]*)?\s*([-+]?[0-9]*\.[0-9]*)?\s*[-+]?[0-9]*\.[0-9]*$'
+    key:
+    - ['mulliken', 'element']
+    - ['mulliken', 'kind']
+    - ['mulliken', 'population_alpha']
+    - ['mulliken', 'population_beta']
+    - ['mulliken', 'charge']
+    type: [str, int, float, float, float]
+    append: [true, true, true, true, true]
+    regex: true
+    repeat: true
+- start: '  #Atom  Element  Kind  Ref Charge     Population                    Net charge'
+  end: ' !-----------------------------------------------------------------------------!'
+  max_length: -1
+  patterns:
+  - pattern: '^\s\s*[0-9]*\s*([A-Za-z]*)?\s*([0-9]*)?\s*[-+]?[0-9]*\.?[0-9]*\s*([-+]?[0-9]*\.[0-9]*)?\s*([-+]?[0-9]*\.[0-9]*)?$'
+    key:
+    - ['hirshfeld', 'element']
+    - ['hirshfeld', 'kind']
+    - ['hirshfeld', 'population']
+    - ['hirshfeld', 'charge']
+    type: [str, int, float, float]
+    append: [true, true, true, true]
+    regex: true
+    repeat: true
+- start: '  #Atom  Element  Kind  Ref Charge     Population       Spin moment  Net charge'
+  end: ' !-----------------------------------------------------------------------------!'
+  max_length: -1
+  patterns:
+  - pattern: '^\s\s*[0-9]*\s*([A-Za-z]*)?\s*([0-9]*)?\s*[-+]?[0-9]*\.?[0-9]*\s*([-+]?[0-9]*\.[0-9]*)?\s*([-+]?[0-9]*\.[0-9]*)?\s*[-+]?[0-9]*\.[0-9]*\s*([-+]?[0-9]*\.[0-9]*)?$'
+    key:
+    - ['hirshfeld', 'element']
+    - ['hirshfeld', 'kind']
+    - ['hirshfeld', 'population_alpha']
+    - ['hirshfeld', 'population_beta']
+    - ['hirshfeld', 'charge']
+    type: [str, int, float, float, float]
+    append: [true, true, true, true, true]
+    regex: true
+    repeat: true

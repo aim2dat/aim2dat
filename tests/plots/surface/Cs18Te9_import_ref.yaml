@@ -1,0 +1,216 @@
+%YAML 1.2
+---
+properties: {}
+import_data:
+- function: set_elemental_phase
+  args:
+    element: Cs
+    total_energy: -20.105989
+    nr_atoms: 1
+    unit: Hartree
+- function: set_elemental_phase
+  args:
+    element: Te
+    total_energy: -24.576244
+    nr_atoms: 3
+    unit: Hartree
+- function: set_bulk_phase
+  args:
+    formula: Cs18Te9
+    total_energy: -436.884151
+    unit: Hartree
+- function: add_surface_facet
+  args:
+    data_label: '100'
+    miller_indices: [1, 0, 0]
+    formula: Cs38Te18
+    total_energy: -913.941990
+    surface_area: 56.508270
+    energy_unit: hartree
+    area_unit: angstrom
+    termination_label: '1'
+    band_gap: 0.0
+    ionization_potential: 1.51785
+- function: add_surface_facet
+  args:
+    data_label: '001'
+    miller_indices: [0, 0, 1]
+    formula: Cs45Te22
+    total_energy: -1087.969092
+    surface_area: 84.97776
+    energy_unit: hartree
+    area_unit: angstrom
+    termination_label: '1'
+    band_gap: 0.0
+    ionization_potential: 0.96149
+- function: add_surface_facet
+  args:
+    data_label: '100'
+    miller_indices: [1, 0, 0]
+    formula: Cs32Te16
+    total_energy: -776.630713
+    surface_area: 56.508270
+    energy_unit: hartree
+    area_unit: angstrom
+    termination_label: '2'
+    band_gap: 1.92987
+    ionization_potential: 2.9359
+- function: add_surface_facet
+  args:
+    data_label: '001'
+    miller_indices: [0, 0, 1]
+    formula: Cs39Te20
+    total_energy: -950.600342
+    surface_area: 84.97776
+    energy_unit: hartree
+    area_unit: angstrom
+    termination_label: '2'
+    band_gap: 2.03167
+    ionization_potential: 2.82430
+- function: add_surface_facet
+  args:
+    data_label: '100'
+    miller_indices: [1, 0, 0]
+    formula: Cs28Te14
+    total_energy: -679.515743
+    surface_area: 56.508270
+    energy_unit: hartree
+    area_unit: angstrom
+    termination_label: '3'
+    band_gap: 1.45853
+    ionization_potential: 2.57176
+- function: add_surface_facet
+  args:
+    data_label: '100'
+    miller_indices: [1, 0, 0]
+    formula: Cs30Te15
+    total_energy: -728.086458
+    surface_area: 56.508270
+    energy_unit: hartree
+    area_unit: angstrom
+    termination_label: '4'
+    band_gap: 1.83095
+    ionization_potential: 2.71773
+- function: add_surface_facet
+  args:
+    data_label: '100'
+    miller_indices: [1, 0, 0]
+    formula: Cs34Te16
+    total_energy: -816.856251
+    surface_area: 56.508270
+    energy_unit: hartree
+    area_unit: angstrom
+    termination_label: '5'
+    band_gap: 0.0
+    ionization_potential: 1.14367
+- function: add_surface_facet
+  args:
+    data_label: '100'
+    miller_indices: [1, 0, 0]
+    formula: Cs34Te18
+    total_energy:  -833.322449
+    surface_area: 56.508270
+    energy_unit: hartree
+    area_unit: angstrom
+    termination_label: '6'
+    band_gap: 1.98115
+    ionization_potential: 4.05804
+- function: add_surface_facet
+  args:
+    data_label: '100'
+    miller_indices: [1, 0, 0]
+    formula: Cs38Te20
+    total_energy:  -930.418739
+    surface_area: 56.508270
+    energy_unit: hartree
+    area_unit: angstrom
+    termination_label: '7'
+    band_gap: 1.98115
+    ionization_potential: 4.08267
+ref:
+  data: 
+    '100': 
+    - formula: {'Cs': 38.0, 'Te': 18.0}
+      total_energy: -913.94199
+      area: 56.50827
+      miller_indices: [1, 0, 0]
+      ter: '1'
+      area_unit: angstrom
+      energy_unit: hartree
+      properties: {'band_gap': 0.0, 'ionization_potential': 1.51785}
+    - formula: {'Cs': 32.0, 'Te': 16.0}
+      total_energy: -776.630713
+      area: 56.50827
+      miller_indices: [1, 0, 0]
+      ter: '2'
+      area_unit: angstrom
+      energy_unit: hartree
+      properties: {'band_gap': 1.92987, 'ionization_potential': 2.9359}
+    - formula: {'Cs': 28.0, 'Te': 14.0}
+      total_energy: -679.515743
+      area: 56.50827
+      miller_indices: [1, 0, 0]
+      ter: '3'
+      area_unit: angstrom
+      energy_unit: hartree
+      properties: {'band_gap': 1.45853, 'ionization_potential': 2.57176}
+    - formula: {'Cs': 30.0, 'Te': 15.0}
+      total_energy: -728.086458
+      area: 56.50827
+      miller_indices: [1, 0, 0]
+      ter: '4'
+      area_unit: angstrom
+      energy_unit: hartree
+      properties: {'band_gap': 1.83095, 'ionization_potential': 2.71773}
+    - formula: {'Cs': 34.0, 'Te': 16.0}
+      total_energy: -816.856251
+      area: 56.50827
+      miller_indices: [1, 0, 0]
+      ter: '5'
+      area_unit: angstrom
+      energy_unit: hartree
+      properties: {'band_gap': 0.0, 'ionization_potential': 1.14367}
+    - formula: {'Cs': 34.0, 'Te': 18.0}
+      total_energy: -833.322449
+      area: 56.50827
+      miller_indices: [1, 0, 0]
+      ter: '6'
+      area_unit: angstrom
+      energy_unit: hartree
+      properties: {'band_gap': 1.98115, 'ionization_potential': 4.05804}
+    - formula: {'Cs': 38.0, 'Te': 20.0}
+      total_energy: -930.418739
+      area: 56.50827
+      miller_indices: [1, 0, 0]
+      ter: '7'
+      area_unit: angstrom
+      energy_unit: hartree
+      properties: {'band_gap': 1.98115, 'ionization_potential': 4.08267}
+    '001':
+    - formula: {'Cs': 45.0, 'Te': 22.0}
+      total_energy: -1087.969092
+      area: 84.97776
+      miller_indices: [0, 0, 1]
+      ter: '1'
+      area_unit: angstrom
+      energy_unit: hartree
+      properties: {'band_gap': 0.0, 'ionization_potential': 0.96149}
+    - formula: {'Cs': 39.0, 'Te': 20.0}
+      total_energy: -950.600342
+      area: 84.97776
+      miller_indices: [0, 0, 1]
+      ter: '2'
+      area_unit: angstrom
+      energy_unit: hartree
+      properties: {'band_gap': 2.03167, 'ionization_potential': 2.8243}
+  elemental_phases:
+    Cs: 
+      total_energy: -20.105989
+      unit: hartree
+    Te: 
+      total_energy: -8.192081333333332
+      unit: hartree
+  bulk_phase:
+    formula: {'Cs': 18.0, 'Te': 9.0}
+    total_energy: -436.884151
+    unit: hartree

@@ -1,0 +1,171 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+dynamic = ["version"]
+name = "aim2dat"
+description = "Python library for pre-, post-processing and data management of ab-initio high-throughput workflows for computational materials science."
+keywords = ["ab-initio", "dft", "high-throughput", "automated", "science", "data-analysis", "machine learning"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Framework :: AiiDA",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU Lesser General Public License v2 (LGPLv2)",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+authors = [
+  {name = "Holger-Dietrich Saßnick", email = "holger-dietrich.sassnick@uni-oldenburg.de"},
+  {name = "Timo Reents", email = "timo.reents@uni-oldenburg.de"},
+  {name = "Joshua Edzards", email = "joshua.edzards@uni-oldenburg.de"},
+]
+maintainers = [
+  {name = "Holger-Dietrich Saßnick", email = "holger-dietrich.sassnick@uni-oldenburg.de"}
+]
+readme = "README.md"
+license = {text = "LGPL-2.1"}
+requires-python = ">=3.8"
+dependencies = [
+    "numpy>=1.17",
+    "scipy>=1.6.1",
+    "matplotlib>=3.6.0",
+    "pandas>=2.1.0",
+    "ruamel.yaml>=0.17.5",
+    "spglib>=1.16.1",
+    "ase>=3.22.0",
+    "packaging>=21.3",
+    "h5py>=3.7.0",
+    "tqdm>=4.64.1",
+]
+
+[project.urls]
+Repository = "https://github.com/aim2dat/aim2dat.git"
+Issues = "https://github.com/aim2dat/aim2dat/issues"
+Changelog = "https://github.com/aim2dat/aim2dat/blob/main/CHANGELOG"
+
+[project.optional-dependencies]
+aiida = [
+    "aiida-core>=2.1.0",
+    "seekpath>=2.0.1",
+]
+crystal_structure_generation = [
+    "pyxtal>=0.3.4",
+]
+phonons = [
+    "phonopy>=2.17.1",
+]
+database_interfaces = [
+    "pymatgen>=2022.02.03",
+    "msgpack>=1.0.2",
+    "qmpy_rester>=0.2.0",
+    "requests>=2.24.0",
+    "boto3>=1.25",
+]
+graphs = [
+    "nx>=2.7.1",
+    "graphviz>=0.19.1",
+]
+ml = [
+    "dscribe>=2.1.0",
+    "scikit-learn>=1.3.0",
+]
+plots = [
+    "plotly>=5.11.0",
+]
+tests = [
+    "aiida-core>=2.1.0",
+    "seekpath>=2.0.1",
+    "pyshtools<4.11",
+    "pyxtal>=0.3.4",
+    "boto3>=1.25",
+    "phonopy>=2.17.1",
+    "qmpy_rester>=0.2.0",
+    "h5py>=3.7.0",
+    "msgpack>=1.0.2",
+    "scikit-learn>=1.2.1",
+    "dscribe>=2.0.1",
+    "pytest>=6.2.5",
+    "pgtest>=1.3.2",
+    "pytest-cov>=3.0.0"
+]
+doc = [
+    "sphinx>=4.1.2",
+    "nbsphinx>=0.9.3",
+    "sphinx-immaterial>=0.11.10",
+    "sphinx-design>=0.5.0",
+    "sphinx-autoapi>=2.1.1",
+    "sphinxcontrib-contentui>=0.2.5",
+    "sphinxcontrib-details-directive>=0.1.0",
+    "aiida-core>=2.1.0",
+    "ipykernel>=6.29.2",
+    "ipywidgets>=8.1.2"
+]
+pre-commit = [
+    "pre-commit~=2.21",
+]
+
+[project.entry-points."aiida.data"]
+"aim2dat.xydb" = "aim2dat.aiida_data.xy_data:XyDataDB"
+"aim2dat.gaussian_cube" = "aim2dat.aiida_data.gaussian_cube_data:GaussianCubeData"
+"aim2dat.surface" = "aim2dat.aiida_data.surface_data:SurfaceData"
+
+[project.entry-points."aiida.calculations"]
+"aim2dat.cp2k" = "aim2dat.aiida_workflows.cp2k.calcjobs:Cp2kCalculation"
+"aim2dat.critic2" = "aim2dat.aiida_workflows.critic2.calcjobs:Critic2Calculation"
+"aim2dat.chargemol" = "aim2dat.aiida_workflows.chargemol.calcjobs:ChargemolCalculation"
+"aim2dat.enumlib" = "aim2dat.aiida_workflows.enumlib.enum_calcjob:EnumlibCalculation"
+"aim2dat.seekpath.structure_analysis" = "aim2dat.aiida_workflows.utils:seekpath_structure_analysis"
+"aim2dat.create_surface_slab" = "aim2dat.aiida_workflows.utils:create_surface_slab"
+
+[project.entry-points."aiida.parsers"]
+"aim2dat.cp2k.standard" = "aim2dat.aiida_workflows.cp2k.parsers:Cp2kStandardParser"
+"aim2dat.cp2k.partial_charges" = "aim2dat.aiida_workflows.cp2k.parsers:Cp2kPartialChargesParser"
+"aim2dat.cp2k.trajectory" = "aim2dat.aiida_workflows.cp2k.parsers:Cp2kTrajectoryParser"
+"aim2dat.critic2" = "aim2dat.aiida_workflows.critic2.parsers:Critic2Parser"
+"aim2dat.chargemol" = "aim2dat.aiida_workflows.chargemol.parsers:ChargemolParser"
+"aim2dat.enumlib" = "aim2dat.aiida_workflows.enumlib.enum_parsers:EnumlibParser"
+
+[project.entry-points."aiida.workflows"]
+"aim2dat.cp2k.find_scf_p" = "aim2dat.aiida_workflows.cp2k.find_scf_p_work_chain:FindSCFParametersWorkChain"
+"aim2dat.cp2k.geo_opt" = "aim2dat.aiida_workflows.cp2k.geo_opt_work_chain:GeoOptWorkChain"
+"aim2dat.cp2k.cell_opt" = "aim2dat.aiida_workflows.cp2k.cell_opt_work_chain:CellOptWorkChain"
+"aim2dat.cp2k.band_structure" = "aim2dat.aiida_workflows.cp2k.band_structure_work_chain:BandStructureWorkChain"
+"aim2dat.cp2k.eigenvalues" = "aim2dat.aiida_workflows.cp2k.eigenvalues_work_chain:EigenvaluesWorkChain"
+"aim2dat.cp2k.pdos" = "aim2dat.aiida_workflows.cp2k.pdos_work_chain:PDOSWorkChain"
+"aim2dat.cp2k.partial_charges" = "aim2dat.aiida_workflows.cp2k.partial_charges_work_chain:PartialChargesWorkChain"
+"aim2dat.cp2k.planar_fields" = "aim2dat.aiida_workflows.cp2k.planar_fields_work_chain:PlanarFieldsWorkChain"
+"aim2dat.cp2k.cube" = "aim2dat.aiida_workflows.cp2k.cube_work_chain:CubeWorkChain"
+"aim2dat.cp2k.combined.surface_opt" = "aim2dat.aiida_workflows.cp2k.combined_work_chains:SurfaceOptWorkChain"
+"aim2dat.cp2k.combined.electronic_properties" = "aim2dat.aiida_workflows.cp2k.combined_work_chains:ElectronicPropertiesWorkChain"
+
+[tool.setuptools.packages.find]
+include = ["aim2dat*"]
+namespaces = false
+
+[tool.setuptools.dynamic]
+version = {attr = "aim2dat.__version__"}
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+python_files = "test_*.py"
+python_functions = "test_*"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
+
+[tool.black]
+line-length = 99
+exclude = '''
+/(
+\.git
+)/
+'''

@@ -1,0 +1,52 @@
+name: General tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:10
+        env:
+          POSTGRES_DB: test_aiida
+          POSTGRES_PASSWORD: ''
+          POSTGRES_HOST_AUTH_METHOD: trust
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+        - 5432:5432
+      rabbitmq:
+        image: rabbitmq:3.7-management
+        ports:
+        - 5672:5672
+        - 15672:15672
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install .[tests]
+    - name: Building documentation
+      env:
+        MP_API_KEY: ${{ secrets.MP_API_KEY }}
+        MP_OPENAPI_KEY: ${{ secrets.MP_OPENAPI_KEY }}
+      run: |
+        pytest --durations=25 --junitxml=report.xml --cov aim2dat

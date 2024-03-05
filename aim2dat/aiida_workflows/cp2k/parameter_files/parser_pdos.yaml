@@ -1,0 +1,99 @@
+%YAML 1.2
+---
+#PDOS parser parameters.
+header:
+- pattern: '^\#\s*Projected\s*DOS\s*for\s*atomic\s*kind\s*(.*?)\s*at\s*iteration\s*step\s*i\s*=\s*(\d+)?,\s*E\(Fermi\)\s*=\s*([-+]?[0-9]*\.?[0-9]*)?\s*a\.u\.$'
+  key:
+  - [kind]
+  - [step]
+  - [e_fermi]
+  type: [str, int, float]
+  append: [false, false, false]
+  regex: true
+blocks:
+- start: '^\#\s*MO\s*Eigenvalue\s*\[a.u.\]\s*Occupation\s*s$'
+  end: '^$'
+  max_length: -1
+  regex: true
+  patterns:
+  - pattern: ' '
+    key:
+    - [eigenvalue]
+    - [occupation]
+    - [s]
+    position: [1, 2, 3]
+    type: [float, float, float]
+    append: [true, true, true]
+    regex: false
+    repeat: true
+- start: '^\#\s*MO\s*Eigenvalue\s*\[a.u.\]\s*Occupation\s*s\s*py\s*pz\s*px$'
+  end: '^$'
+  max_length: -1
+  regex: true
+  patterns:
+  - pattern: ' '
+    key:
+    - [eigenvalue]
+    - [occupation]
+    - [s]
+    - [py]
+    - [pz]
+    - [px]
+    position: [1, 2, 3, 4, 5, 6]
+    type: [float, float, float, float, float, float]
+    append: [true, true, true, true, true, true]
+    regex: false
+    repeat: true
+- start: '^\#\s*MO\s*Eigenvalue\s*\[a.u.\]\s*Occupation\s*s\s*py\s*pz\s*px\s*d-2\s*d-1\s*d0\s*d\+1\s*d\+2$'
+  end: '^$'
+  max_length: -1
+  regex: true
+  patterns:
+  - pattern: ' '
+    key:
+    - [eigenvalue]
+    - [occupation]
+    - [s]
+    - [py]
+    - [pz]
+    - [px]
+    - [d-2]
+    - [d-1]
+    - [d0]
+    - [d+1]
+    - [d+2]
+    position: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    type: [float, float, float, float, float, float, float, float, float, float, float]
+    append: [true, true, true, true, true, true, true, true, true, true, true]
+    regex: false
+    repeat: true
+- start: '^\#\s*MO\s*Eigenvalue\s*\[a.u.\]\s*Occupation\s*s\s*py\s*pz\s*px\s*d-2\s*d-1\s*d0\s*d\+1\s*d\+2\s*f-3\s*f-2\s*f-1\s*f0\s*f\+1\s*f\+2\s*f\+3$'
+  end: '^$'
+  max_length: -1
+  regex: true
+  patterns:
+  - pattern: ' '
+    key:
+    - [eigenvalue]
+    - [occupation]
+    - [s]
+    - [py]
+    - [pz]
+    - [px]
+    - [d-2]
+    - [d-1]
+    - [d0]
+    - [d+1]
+    - [d+2]
+    - [f-3]
+    - [f-2]
+    - [f-1]
+    - [f0]
+    - [f+1]
+    - [f+2]
+    - [f+3]
+    position: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+    type: [float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float]
+    append: [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+    regex: false
+    repeat: true

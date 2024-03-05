@@ -1,0 +1,8 @@
+structures: "PBE_CSP_Cs-Te_crystal-preopt_wo_dup.h5"
+input_kwargs:
+  target_attribute: "stability"
+  train_size: 0.35
+  test_size: 0.52
+  exclude_labels: ['pyxtal_6c8ab87ee8314dd58c957f5bcb812ce9', 'pyxtal_97f547d13cf146fd989df8822ab8866f', 'pyxtal_19eadb74ad6142ea9bea4c9eb66cdf91', 'pyxtal_1d52fdce8d77413eafc3afabf3cadd3c']
+len_train: 118
+len_test: 176

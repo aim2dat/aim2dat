@@ -1,0 +1,46 @@
+ZIF_8_Br_comp:
+  mean_charge:
+    N: -1.1549978275
+    X: -0.021538707500000198
+    Zn: 1.1849837
+    conjugated_network: 1.8395749915000001
+  plot_label: Br
+  x_label: complex
+ZIF_8_Br_imi:
+  mean_charge:
+    N: -1.1289588
+    X: -0.023204050000000365
+    conjugated_network: 1.8493993880000001
+  plot_label: Br
+  x_label: imidazole
+ZIF_8_Br_struc:
+  mean_charge:
+    N: -1.17872952
+    X: -0.018389427500000128
+    Zn: 1.1937879000000002
+    conjugated_network: 1.3518657640833334
+  plot_label: Br
+  x_label: structure
+ZIF_8_Cl_comp:
+  mean_charge:
+    N: -1.15310983625
+    X: -0.18506859249999996
+    Zn: 1.1856871000000009
+    conjugated_network: 1.9978612723750002
+  plot_label: Cl
+  x_label: complex
+ZIF_8_Cl_imi:
+  mean_charge:
+    N: -1.105080895
+    X: -0.18282194000000018
+    conjugated_network: 1.9624365345
+  plot_label: Cl
+  x_label: imidazole
+ZIF_8_Cl_struc:
+  mean_charge:
+    N: -1.1769020649999997
+    X: -0.18815482833333333
+    Zn: 1.1963200999999994
+    conjugated_network: 1.5112964795000001
+  plot_label: Cl
+  x_label: structure

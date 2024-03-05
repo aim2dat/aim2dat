@@ -1,0 +1,10 @@
+structures: "PBE_CSP_Cs-Te_crystal-preopt_wo_dup.h5"
+input_kwargs:
+  target_attribute: "stability"
+  composition_bins: [-0.05, 0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95, 1.05]
+  train_size: 0.7
+  test_size: 0.3
+len_train: 239
+len_test: 103
+comp_fractions: 
+  Cs: [0.06140351, 0.11111111, 0.07602339, 0.10526316, 0.09356725, 0.10526316, 0.09649123, 0.08187135, 0.11695906, 0.10233918, 0.0497076]

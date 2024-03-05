@@ -1,0 +1,10 @@
+%YAML 1.2
+---
+elements: [N, C, H]
+pbc: [false, false, false]
+positions:
+- [-0.58,  5.0,  5.0]
+- [ 0.58,  5.0,  5.0]
+- [ 1.645, 5.0,  5.0]
+attributes:
+  point_group: $C_{\infty v}$

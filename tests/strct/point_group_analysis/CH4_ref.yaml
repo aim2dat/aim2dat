@@ -1,0 +1,50 @@
+%YAML 1.2
+---
+point_group: $T_d$
+symmetry_elements:
+- axis: [0.5773516889097668, 0.8164955770321354, 0.0]
+  n-fold: 2
+  label: $C_2$
+  type: rotation
+- axis: [0.577358633132538, -0.40822794937314605, 0.7071116956308414]
+  n-fold: 2
+  label: $C_2$
+  type: rotation
+- axis: [-0.5773049561946847, 0.4082915383401106, 0.7071188070422957]
+  n-fold: 2
+  label: $C_2$
+  type: rotation
+- axis: [0.3333547628956295, 0.4714065164116165, 0.8164866798297832]
+  n-fold: 3
+  label: $C_3$
+  type: rotation
+- axis: [-0.3333547628956295, -0.4714065164116165, 0.8164866798297832]
+  n-fold: 3
+  label: $C_3$
+  type: rotation
+- axis: [0.3333222946211113, -0.9428129442834974, 0.0]
+  n-fold: 3
+  label: $C_3$
+  type: rotation
+- axis: [1.0, 0.0, 0.0]
+  n-fold: 3
+  label: $C_3$
+  type: rotation
+- type: reflection
+  label: $\sigma$
+  n-vector: [0.8164802360046692, -0.5773733837074235, 0.0]
+- type: reflection
+  label: $\sigma$
+  n-vector: [0.8164901385823863, 0.2886621022525494, -0.5000180439952685]
+- type: reflection
+  label: $\sigma$
+  n-vector: [0.8164901385823863, 0.2886621022525494, 0.5000180439952685]
+- type: reflection
+  label: $\sigma$
+  n-vector: [0.0, 0.866021861761904, -0.5000061349128087]
+- type: reflection
+  label: $\sigma$
+  n-vector: [0.0, 0.866021861761904, 0.5000061349128087]
+- type: reflection
+  label: $\sigma$
+  n-vector: [0.0, 0.0, 1.0]

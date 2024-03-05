@@ -1,0 +1,190 @@
+%YAML 1.2
+---
+protocol:
+  title: cp2k-crystal-preopt
+  version: '3.1'
+  description: Proptimization workflow with reduced numerial settings intended to
+    be used with a reduced basis set.
+  dependencies:
+  - [aiida-core, '1.6', null]
+  parent_node_type: structure
+  parent_node_input:
+    find_scf_parameters: structural_p.structure
+    unit_cell_opt: structural_p.structure
+  tasks:
+    find_scf_parameters:
+      process: aim2dat.cp2k.find_scf_p
+      blacklist_inputs: [custom_scf_method]
+    unit_cell_opt:
+      process: aim2dat.cp2k.cell_opt
+      blacklist_inputs: [custom_scf_method, optimization_p.keep_angles, optimization_p.keep_symmetry]
+      dependencies:
+        find_scf_parameters:
+        - [scf_parameters, structural_p.scf_parameters]
+  general_input:
+    cp2k.parameters:
+      value:
+        GLOBAL: &id001 {PRINT_LEVEL: MEDIUM, PREFERRED_DIAG_LIBRARY: SCALAPACK, EXTENDED_FFT_LENGTHS: true}
+        FORCE_EVAL: &id002
+          METHOD: Quickstep
+          STRESS_TENSOR: ANALYTICAL
+          DFT:
+            MGRID: {}
+            POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+            BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT]
+            POTENTIAL_FILE_NAME: GTH_POTENTIALS
+            QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-12}
+            SCF: {EPS_SCF: 1e-06}
+            KPOINTS: {EPS_GEO: 1e-08, FULL_GRID: false, SYMMETRY: false}
+            XC: {}
+          SUBSYS:
+            CELL: {PERIODIC: XYZ}
+      aiida_node: true
+      tasks: [find_scf_parameters, unit_cell_opt]
+    numerical_p.kpoints_ref_dist: {value: 0.2, aiida_node: true, tasks: [find_scf_parameters, unit_cell_opt]}
+    factor_unocc_states: {value: 0.75, aiida_node: true, tasks: [find_scf_parameters, unit_cell_opt]}
+    enable_roks: {value: false, aiida_node: true, tasks: [find_scf_parameters, unit_cell_opt]}
+    scf_method: {value: density_mixing, aiida_node: true, tasks: [find_scf_parameters, unit_cell_opt]}
+    adjust_scf_parameters: {value: true, aiida_node: true, tasks: [unit_cell_opt]}
+    always_add_unocc_states: {value: true, aiida_node: true, tasks: [find_scf_parameters, unit_cell_opt]}
+    max_iterations: {value: 100, aiida_node: true, compare: false, tasks: [find_scf_parameters, unit_cell_opt]}
+    optimization_p.max_force: {value: 0.00048, aiida_node: true, tasks: [unit_cell_opt]}
+    optimization_p.rms_force: {value: 0.0003, aiida_node: true, tasks: [unit_cell_opt]}
+    optimization_p.max_dr: {value: 0.003, aiida_node: true, tasks: [unit_cell_opt]}
+    optimization_p.rms_dr: {value: 0.0015, aiida_node: true, tasks: [unit_cell_opt]}
+    optimization_p.pressure_tolerance: {value: 100.0, aiida_node: true, tasks: [unit_cell_opt]}
+    optimization_p.keep_space_group: {value: true, aiida_node: true, tasks: [unit_cell_opt]}
+    optimization_p.eps_symmetry: {value: 0.005, aiida_node: true, tasks: [unit_cell_opt]}
+    optimization_p.ref_cell_scaling_factor: {value: 1.5, aiida_node: true, tasks: [unit_cell_opt]}
+  user_input:
+    scf_extended_system: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
+      compare: true, tasks: [find_scf_parameters, unit_cell_opt]}
+    numerical_p.xc_functional: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
+      compare: true, tasks: [find_scf_parameters, unit_cell_opt]}
+    numerical_p.cutoff_values: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
+      compare: true, tasks: [find_scf_parameters, unit_cell_opt]}
+    numerical_p.basis_sets: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
+      compare: true, tasks: [find_scf_parameters, unit_cell_opt]}
+    numerical_p.pseudo_file: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
+      optional: true, compare: false, tasks: [find_scf_parameters, unit_cell_opt]}
+    numerical_p.basis_file: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
+      optional: true, compare: false, tasks: [find_scf_parameters, unit_cell_opt]}
+    cp2k.code: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true, compare: false, 
+      tasks: [find_scf_parameters, unit_cell_opt]}
+    cp2k.metadata: {validation: aim2dat.cp2k.find_scf_p, aiida_node: false,
+      unstored: true, optional: true, compare: false, tasks: [find_scf_parameters, unit_cell_opt]}
+    clean_workdir: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true, optional: true,
+      compare: false, tasks: [find_scf_parameters, unit_cell_opt]}
+  results:
+    scf_method_level:
+      task: find_scf_parameters
+      output_port: scf_parameters
+      retrieve_value: [method_level]
+    scf_parameter_level:
+      task: find_scf_parameters
+      output_port: scf_parameters
+      retrieve_value: [parameter_level]
+    scf_smearing_level:
+      task: find_scf_parameters
+      output_port: scf_parameters
+      retrieve_value: [smearing_level]
+    optimized_structure: {task: unit_cell_opt, output_port: cp2k.output_structure}
+    total_energy:
+      task: unit_cell_opt
+      output_port: cp2k.output_parameters
+      retrieve_value: [energy]
+      unit: Hartree
+    space_group:
+      task: unit_cell_opt
+      output_port: cp2k.output_parameters
+      retrieve_value: [spgr_info, sg_number]
+user_input:
+  scf_extended_system: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
+    compare: true, namespace: false, value: null, unstored: false, optional: false}
+  numerical_p.xc_functional: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
+    compare: true, namespace: false, value: null, unstored: false, optional: false}
+  numerical_p.cutoff_values: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
+    compare: true, namespace: false, value: null, unstored: false, optional: false}
+  numerical_p.basis_sets: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
+    compare: true, namespace: false, value: null, unstored: false, optional: false}
+  numerical_p.pseudo_file: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
+    optional: true, compare: false, namespace: false, value: null, unstored: false}
+  numerical_p.basis_file: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
+    optional: true, compare: false, namespace: false, value: null, unstored: false}
+  cp2k.code: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true, compare: false,
+    namespace: false, value: null, unstored: false, optional: false}
+  cp2k.metadata: {validation: aim2dat.cp2k.find_scf_p, aiida_node: false, unstored: true,
+    optional: true, compare: false, namespace: false, value: null}
+  clean_workdir: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true, optional: true,
+    compare: false, namespace: false, value: null, unstored: false}
+general_input:
+  cp2k.parameters:
+    value:
+      GLOBAL: *id001
+      FORCE_EVAL: *id002
+    aiida_node: true
+    namespace: false
+    unstored: false
+    compare: true
+    optional: false
+  numerical_p.kpoints_ref_dist: {value: 0.2, aiida_node: true, namespace: false, unstored: false,
+    compare: true, optional: false}
+  factor_unocc_states: {value: 0.75, aiida_node: true, namespace: false, unstored: false,
+    compare: true, optional: false}
+  enable_roks: {value: false, aiida_node: true, namespace: false, unstored: false,
+    compare: true, optional: false}
+  scf_method: {value: density_mixing, aiida_node: true, namespace: false, unstored: false,
+    compare: true, optional: false}
+  adjust_scf_parameters: {value: true, aiida_node: true, namespace: false, unstored: false,
+    compare: true, optional: false}
+  always_add_unocc_states: {value: true, aiida_node: true, namespace: false, unstored: false,
+    compare: true, optional: false}
+  max_iterations: {value: 100, aiida_node: true, compare: false, namespace: false,
+    unstored: false, optional: false}
+  optimization_p.max_force: {value: 0.00048, aiida_node: true, namespace: false, unstored: false,
+    compare: true, optional: false}
+  optimization_p.rms_force: {value: 0.0003, aiida_node: true, namespace: false, unstored: false,
+    compare: true, optional: false}
+  optimization_p.max_dr: {value: 0.003, aiida_node: true, namespace: false, unstored: false,
+    compare: true, optional: false}
+  optimization_p.rms_dr: {value: 0.0015, aiida_node: true, namespace: false, unstored: false,
+    compare: true, optional: false}
+  optimization_p.pressure_tolerance: {value: 100.0, aiida_node: true, namespace: false,
+    unstored: false, compare: true, optional: false}
+  optimization_p.keep_space_group: {value: true, aiida_node: true, namespace: false,
+    unstored: false, compare: true, optional: false}
+  optimization_p.eps_symmetry: {value: 0.005, aiida_node: true, namespace: false,
+    unstored: false, compare: true, optional: false}
+  optimization_p.ref_cell_scaling_factor: {value: 1.5, aiida_node: true, namespace: false,
+    unstored: false, compare: true, optional: false}
+Individual_input:
+  find_scf_parameters: {}
+  unit_cell_opt: {}
+tasks:
+  find_scf_parameters:
+    process: aim2dat.cp2k.find_scf_p
+    parent_node: structural_p.structure
+    inputs: [scf_extended_system, numerical_p.xc_functional,
+      numerical_p.cutoff_values, numerical_p.basis_sets, numerical_p.pseudo_file,
+      numerical_p.basis_file, cp2k.code, cp2k.metadata, clean_workdir, cp2k.parameters, 
+      numerical_p.kpoints_ref_dist, factor_unocc_states, enable_roks, scf_method,
+      always_add_unocc_states, max_iterations]
+    blacklist_inputs: [custom_scf_method]
+    dependencies: {}
+  unit_cell_opt:
+    process: aim2dat.cp2k.cell_opt
+    parent_node: structural_p.structure
+    inputs: [scf_extended_system, numerical_p.xc_functional,
+      numerical_p.cutoff_values, numerical_p.basis_sets, numerical_p.pseudo_file,
+      numerical_p.basis_file, cp2k.code, cp2k.metadata, clean_workdir, cp2k.parameters, 
+      numerical_p.kpoints_ref_dist, factor_unocc_states, enable_roks, scf_method,
+      adjust_scf_parameters, always_add_unocc_states, max_iterations, optimization_p.max_force,
+      optimization_p.rms_force, optimization_p.max_dr, optimization_p.rms_dr, optimization_p.pressure_tolerance,
+      optimization_p.keep_space_group, optimization_p.eps_symmetry, optimization_p.ref_cell_scaling_factor]
+    blacklist_inputs: [custom_scf_method, optimization_p.keep_angles, optimization_p.keep_symmetry]
+    dependencies:
+      find_scf_parameters:
+      - [scf_parameters, structural_p.scf_parameters]
+result_dict:
+  find_scf_parameters: [scf_method_level, scf_parameter_level, scf_smearing_level]
+  unit_cell_opt: [optimized_structure, total_energy, space_group]
