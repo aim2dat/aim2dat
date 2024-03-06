@@ -2,7 +2,7 @@
 aim2dat Documentation
 =====================
 
-The **A**utomated Ab-**I**nitio **M**aterials Modeling and **D**ata **A**nalysis **T**oolkit (``aim2dat``) is an open-source
+The Automated Ab-Initio Materials Modeling and Data Analysis Toolkit (``aim2dat``) is an open-source
 python library aimed to facilitate high-throughput studies based on density functional theory calculations.
 As such this package includes functionality to assist and automatize every step of the overall procedure,
 ranging data-mining and workflow management to post-processing routines and plotting features:
