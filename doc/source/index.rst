@@ -2,10 +2,10 @@
 aim2dat Documentation
 =====================
 
-aim2dat is an open-source python library aimed to facilitate high-throughput studies based on density
-functional theory calculations. As such this package includes functionality to assist and automatize
-every step of the overall procedure, ranging data-mining and workflow management to post-processing
-routines and plotting features:
+The **A**utomated Ab-**I**nitio **M**aterials Modeling and **D**ata **A**nalysis **T**oolkit (``aim2dat``) is an open-source
+python library aimed to facilitate high-throughput studies based on density functional theory calculations.
+As such this package includes functionality to assist and automatize every step of the overall procedure,
+ranging data-mining and workflow management to post-processing routines and plotting features:
 
 .. figure:: Images/high-throughput_general_workflow.svg
     :width: 800px

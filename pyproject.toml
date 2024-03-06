@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 dynamic = ["version"]
 name = "aim2dat"
-description = "Python library for pre-, post-processing and data management of ab-initio high-throughput workflows for computational materials science."
+description = "Automated Ab-Initio Materials Modeling and Data Analysis Toolkit: Python library for pre-, post-processing and data management of ab-initio high-throughput workflows for computational materials science."
 keywords = ["ab-initio", "dft", "high-throughput", "automated", "science", "data-analysis", "machine learning"]
 classifiers = [
     "Development Status :: 4 - Beta",
