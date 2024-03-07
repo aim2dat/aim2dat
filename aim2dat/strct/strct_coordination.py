@@ -154,9 +154,7 @@ def _calculate_statistical_quantities(structure, sites, stat_keys, is_optional):
     for el1, coord0 in zip(structure["elements"], sites):
         for el2 in structure._element_dict.keys():
             if el2 in coord0:
-                 temp_lists["nrs"].setdefault((el1, el2), []).append(coord0[el2])
-                else:
-                    temp_lists["nrs"][(el1, el2)] = [coord0[el2]]
+                temp_lists["nrs"].setdefault((el1, el2), []).append(coord0[el2])
         for neighbour in coord0["neighbours"]:
             for k0, optional in zip(stat_keys, is_optional):
                 value = neighbour.get(k0, 0.0) if optional else neighbour[k0]
