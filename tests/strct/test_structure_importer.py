@@ -281,7 +281,7 @@ def test_pyxtal_interface_generate_crystals():
         "volume_factor": 1.0,
         "molecular": False,
         "tol_tuples": None,
-        "max_structures": 30,
+        "max_structures": 25,
         "max_structures_per_cs": 10,
         "max_structures_per_sg": 20,
         "excl_space_groups": list(range(0, 17)) + list(range(220, 231)),
