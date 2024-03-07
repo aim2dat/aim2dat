@@ -134,8 +134,8 @@ def _create_site_dict(structure, site_idx, neighbours, weights=None):
         distances.append(float(distance))
 
     site_dict["total_cn"] = len(distances)
-    site_dict["min_dist"] = min(distances) if len(distances) > 0 else 0.0
-    site_dict["max_dist"] = max(distances) if len(distances) > 0 else 0.0
+    site_dict["min_dist"] = min(distances, default=0.0)
+    site_dict["max_dist"] = max(distances, default=0.0)
     site_dict["avg_dist"] = sum(distances) / len(distances) if len(distances) > 0 else 0.0
     return site_dict
 
