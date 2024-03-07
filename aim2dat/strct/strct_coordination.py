@@ -148,8 +148,7 @@ def _calculate_statistical_quantities(structure, sites, stat_keys, is_optional):
     def calc_stdev(values):
         if len(values) == 1:
             return 0.0
-        else:
-            return stdev(values)
+        return stdev(values)
 
     temp_lists = {k0: {} for k0 in stat_keys + ["nrs"]}
     for el1, coord0 in zip(structure["elements"], sites):
