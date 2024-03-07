@@ -160,10 +160,7 @@ def _calculate_statistical_quantities(structure, sites, stat_keys, is_optional):
         for neighbour in coord0["neighbours"]:
             for k0, optional in zip(stat_keys, is_optional):
                 value = neighbour.get(k0, 0.0) if optional else neighbour[k0]
-                if (el1, neighbour["element"]) in temp_lists[k0]:
-                    temp_lists[k0][(el1, neighbour["element"])].append(value)
-                else:
-                    temp_lists[k0][(el1, neighbour["element"])] = [value]
+                temp_lists[k0].setdefault((el1, neighbour["element"]), []).append(value)
 
     stat_functions = [("_avg", mean), ("_stdev", calc_stdev), ("_max", max), ("_min", min)]
     stat_dict = {}
