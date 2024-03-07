@@ -2,6 +2,14 @@
 Changelog
 =========
 
+Version 0.2.0
+=============
+
+**Fixes:**
+
+* ``utils.chem_formula.transform_str_to_dict`` supports now recurring elements and nested brackets (`PR #13 <https://github.com/aim2dat/aim2dat/pull/13>`_).
+
+
 Version 0.1.0
 =============
 
