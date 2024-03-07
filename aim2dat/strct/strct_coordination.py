@@ -127,7 +127,7 @@ def _create_site_dict(structure, site_idx, neighbours, weights=None):
             "distance": float(distance),
             "position": [float(pos) for pos in neigh_pos],
         }
-        if weights is not None and len(weights) > 0:
+        if weights:
             neigh_dict["weight"] = float(weights[idx])
         site_dict["neighbours"].append(neigh_dict)
         site_dict[neigh_dict["element"]] += 1
