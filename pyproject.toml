@@ -71,7 +71,7 @@ database_interfaces = [
     "boto3>=1.25",
 ]
 graphs = [
-    "nx>=2.7.1",
+    "networkx>=2.7.1",
     "graphviz>=0.19.1",
 ]
 ml = [
