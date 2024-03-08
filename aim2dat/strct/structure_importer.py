@@ -444,10 +444,6 @@ class StructureImporter(ConstraintsMixin):
                         continue
                     if self._apply_constraint_checks(entry, False):
                         structures.append_structure(entry)
-                    # structure = self._create_structure_dict(**entry)
-                    # if self._apply_preliminary_checks(label, structure, False):
-                    #     self._labels[label] = len(self._structures)
-                    #     self._structures.append(structure)
                 time.sleep(0.1)
         if provider == "optimade":
             provider += "-" + download_kwargs["database_id"]
@@ -462,10 +458,11 @@ class StructureImporter(ConstraintsMixin):
         formula_query_qrgs = getattr(backend_module, "_formula_query_args")
         queries = []
         formula_dict = utils_cf.transform_str_to_dict(formula_str)
-        unspecified_quantity = "-"
-        if any(quantity == unspecified_quantity for quantity in formula_dict.values()):
-            for length in range(len(formula_dict)):
-                for subset in itertools.combinations(formula_dict.keys(), length + 1):
+
+        if "-" in formula_str:
+            elements = formula_str.split("-")
+            for length in range(len(elements)):
+                for subset in itertools.combinations(elements, length + 1):
                     if length == 0 and not self.neglect_elemental_structures:
                         queries.append(el_phase_query_args(subset[0], **kwargs))
                     elif length > 0:
