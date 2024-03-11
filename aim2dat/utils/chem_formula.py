@@ -7,7 +7,16 @@ import math
 
 def transform_str_to_dict(formula_str):
     """
-    Create a dictionary from a formula string.
+    Create a dictionary from a formula string. The function supports round, squared and curly
+    brackets as well as recurring elements.
+
+    Examples
+    --------
+    >>> transform_str_to_dict('HOH')
+    {'H': 2.0, 'O': 1.0}
+
+    >>> transform_str_to_dict("H.5(CO)CH3{OH[CH]4}3.5")
+    {'C': 16.0, 'O': 4.5, 'H': 21.0}
 
     Parameters
     ----------
@@ -20,18 +29,55 @@ def transform_str_to_dict(formula_str):
         Chemical formula as dictionary, e.g. ``{'Fe' : 2.0, 'O' : 3.0}`` or
         ``{'H' : 2.0, 'O' : 1.0}``
     """
-    formula_dict = {}
-    regex = r"(?P<element>[A-Z][a-z]?)(?P<quantity>\d+|-)?"
+
+    def _add_to_dict(formula_dict, key, val):
+        if key in formula_dict:
+            formula_dict[key] += val
+        else:
+            formula_dict[key] = val
+
+    def _get_groups(formula_str):
+        grp_qty_pattern = re.compile(r"([\)\]\}](\d*(\.\d+)?))")
+        stack = []
+        groups = []
+        last_grp = 0
+        for idx, char in enumerate(formula_str):
+            if char in ("(", "[", "{"):
+                stack.append(idx)
+            elif char in (")", "]", "}"):
+                group_st = stack.pop()
+                if len(stack) > 0:
+                    continue
+                if len(groups) > 0 and last_grp < group_st:
+                    groups.append((last_grp + 1, group_st, 1.0))
+                match = grp_qty_pattern.match(formula_str, idx)
+                quantity = 1.0
+                last_grp = idx
+                if match.group(2) != "":
+                    quantity = float(match.group(2))
+                    last_grp = match.end(2)
+                groups.append((group_st + 1, idx, quantity))
+        if len(groups) > 0 and groups[0][0] != 1:
+            groups.append((0, groups[0][0] - 1, 1.0))
+        if len(groups) > 0 and last_grp != len(formula_str):
+            groups.append((last_grp, len(formula_str), 1.0))
+        return groups
 
     if isinstance(formula_str, str):
-        for match in re.finditer(regex, formula_str):
-            quantity = match["quantity"]
-            if not quantity:
-                quantity = 1.0
-            elif quantity.isdigit():
-                quantity = float(quantity)
+        formula_dict = {}
+        formula_str = formula_str.replace("@", "")
+        groups = _get_groups(formula_str)
+        if len(groups) == 0:
+            regex = r"(?P<element>[A-Z][a-z]?)(?P<quantity>\d*(\.\d+)?)?"
+            for match in re.finditer(regex, formula_str):
+                quantity = 1.0 if match["quantity"] == "" else float(match["quantity"])
+                _add_to_dict(formula_dict, match["element"], quantity)
+        else:
+            for group in groups:
+                group_dict = transform_str_to_dict(formula_str[group[0] : group[1]])
+                for key, val in group_dict.items():
+                    _add_to_dict(formula_dict, key, val * group[2])
 
-            formula_dict[match["element"]] = quantity
     elif isinstance(formula_str, dict):
         formula_dict = formula_str
     else:

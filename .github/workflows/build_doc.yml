@@ -50,13 +50,20 @@ jobs:
         MP_OPENAPI_KEY: ${{ secrets.MP_OPENAPI_KEY }}
       run: |
         cd doc/
-        make html
-    - name: Install SSH Key
-      uses: shimataro/ssh-key-action@v2
+        make clean html
+    - name: Init new repo in dist folder and commit generated files
+      run: |
+        cd doc/build/html/
+        git init
+        touch .nojekyll
+        git add -A
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m 'deploy'
+    - name: Force push to destination branch
+      uses: ad-m/github-push-action@v0.5.0
       with:
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        known_hosts: unnecessary
-    - name: Adding Known Hosts
-      run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-    - name: Deploy with scp
-      run: scp -o StrictHostKeyChecking=no -o PubkeyAcceptedKeyTypes=+ssh-rsa -o HostKeyAlgorithms=+ssh-rsa -O -r ./doc/build/html/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:./aim2dat
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: gh-pages
+        force: true
+        directory: ./doc/build/html

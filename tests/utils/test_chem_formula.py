@@ -37,6 +37,19 @@ def test_transformations(formula_dict, formula_str, formula_lat_str, formula_lis
 
 
 @pytest.mark.parametrize(
+    "formula_str, formula_dict",
+    [
+        ("HOH", {"H": 2.0, "O": 1.0}),
+        ("H.5(CO)CH3{OH[CH]4}3.5", {"C": 16.0, "O": 4.5, "H": 21.0}),
+        ("(OH)2CH34", {"O": 2.0, "H": 36.0, "C": 1.0}),
+    ],
+)
+def test_str_transformations(formula_str, formula_dict):
+    """Test specific formating of string representation."""
+    assert formula_dict == chem_f.transform_str_to_dict(formula_str)
+
+
+@pytest.mark.parametrize(
     "formula_dict, formula_red",
     [({"Li": 2, "C": 2.3, "O": 2.4}, {"Li": 1.0, "C": 1.15, "O": 1.2})],
 )
