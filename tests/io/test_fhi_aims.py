@@ -19,11 +19,11 @@ def test_errors():
     """Test errors."""
     with pytest.raises(ValueError) as error:
         read_band_structure(cwd + "empty_folder/")
-    assert str(error.value) == "No band structure files found."
+    assert str(error.value) == "No files with the correct naming scheme found."
 
     with pytest.raises(ValueError) as error:
         read_atom_proj_density_of_states(cwd + "empty_folder/")
-    assert str(error.value) == "No pDOS files found."
+    assert str(error.value) == "No files with the correct naming scheme found."
 
     with pytest.raises(ValueError) as error:
         read_band_structure(BAND_STRUCTURE_PATH + "no_soc", soc=True)

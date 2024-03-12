@@ -52,7 +52,7 @@ def test_read_atom_proj_density_of_states(system):
     # Test empty folder
     with pytest.raises(ValueError) as error:
         read_atom_proj_density_of_states(cwd + "empty_folder/")
-    assert str(error.value) == "No pDOS files found."
+    assert str(error.value) == "No files with the correct naming scheme found."
 
     # Test different systems:
     pdos_data = read_atom_proj_density_of_states(PDOS_PATH + system + "/")

@@ -7,8 +7,8 @@ import os
 import re
 
 # Internal library imports
-from aim2dat.io.auxiliary_functions import _extract_file_names
 from aim2dat.aiida_workflows.cp2k.parser_utils import RestartStructureParser, PDOSParser
+from aim2dat.io.decorators import read_multiple
 
 
 def read_band_structure(file_name):
@@ -71,6 +71,7 @@ def read_band_structure(file_name):
     }
 
 
+@read_multiple(r".*-(?P<spin>[A-Z]+)?_?k.*\.pdos$")
 def read_atom_proj_density_of_states(folder_path):
     """
     Read the atom projected density of states from CP2K.
@@ -85,24 +86,18 @@ def read_atom_proj_density_of_states(folder_path):
     pdos : dict
         Dictionary containing the projected density of states for each kind.
     """
-    if len(folder_path) > 0:
-        folder_path += "/"
-
-    pattern = re.compile(r"^[a-zA-Z0-9\.\_]*-([A-Z]*)?_*k\d+-\d+\.pdos$")
-    files = [
-        file for file in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, file))
-    ]
-    pdos_files, file_info = _extract_file_names(files, pattern)
-    if len(pdos_files) == 0:
-        raise ValueError("No pDOS files found.")
-
+    #TODO order pdos better..
+    indices = [(val, idx) for idx, val in enumerate(folder_path["file_name"])]
+    indices.sort(key=lambda point: point[0])
+    _, indices = zip(*indices)
     parser = PDOSParser()
-    for file_name, spin in zip(pdos_files, file_info):
-        file_content = open(folder_path + file_name, "r").read()
-        parser.parse_pdos(file_content, spin)
+    for idx in indices: #file_p, spin in zip(folder_path["file"], folder_path["spin"]):
+        file_content = open(folder_path["file"][idx], "r").read()
+        parser.parse_pdos(file_content, folder_path["spin"][idx])
     return parser.pdos
 
 
+@read_multiple(r".*-1\.restart$")
 def read_optimized_structure(folder_path):
     """
     Read optimized structures from 'restart'-files.
@@ -119,22 +114,16 @@ def read_optimized_structure(folder_path):
         dictionaries is returned. In case several calculations have been run in the same folder a
         nested dictionary is returned.
     """
-    pattern = re.compile(r"(^\S*)?-1\.restart$")
-    if len(folder_path) > 0:
-        folder_path += "/"
-    files = [
-        file for file in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, file))
-    ]
-    restart_files, file_info = _extract_file_names(files, pattern)
     structures = {}
-    for restart_file, f_info in zip(restart_files, file_info):
-        restart_content = open(folder_path + restart_file, "r").read()
+    for file_p, file_n in zip(folder_path["file"], folder_path["file_name"]):
+        proj = "-".join(file_n.split("-")[:-1])
+        restart_content = open(file_p, "r").read()
         str_parser = RestartStructureParser(restart_content)
         new_structures = str_parser.retrieve_output_structure()
         if len(new_structures) == 0:
             continue
         elif len(new_structures) == 1:
-            structures[f_info] = new_structures[0]
+            structures[proj] = new_structures[0]
         else:
-            structures[f_info] = new_structures
+            structures[proj] = new_structures
     return list(structures.values())[0] if len(structures.values()) == 1 else structures
