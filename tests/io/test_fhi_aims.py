@@ -10,7 +10,11 @@ import h5py
 
 # Internal library imports
 from aim2dat.io.yaml import load_yaml_file
-from aim2dat.io.fhi_aims import read_band_structure, read_atom_proj_density_of_states
+from aim2dat.io.fhi_aims import (
+    read_band_structure,
+    read_total_density_of_states,
+    read_atom_proj_density_of_states,
+)
 
 cwd = os.path.dirname(__file__) + "/"
 BAND_STRUCTURE_PATH = cwd + "fhi_aims_band_structure/"
@@ -53,6 +57,15 @@ def test_read_band_structure(nested_dict_comparison, system, soc):
     with h5py.File(BAND_STRUCTURE_PATH + system + ref_label + ".h5", "r") as fobj:
         for key in ["kpoints", "bands", "occupations"]:
             np.testing.assert_allclose(bands_data[key], fobj[key][:], atol=1.0e-5)
+
+
+def test_read_total_density_of_states():
+    """Test read_total_density_of_states function."""
+    tdos_data = read_total_density_of_states(PDOS_PATH + "Cs3Sb_soc/KS_DOS_total_raw.dat")
+    assert tdos_data["unit_x"] == "eV"
+    with h5py.File(PDOS_PATH + "Cs3Sb_soc/ref_tdos.h5", "r") as fobj:
+        for key in ["energy", "tdos"]:
+            np.testing.assert_allclose(tdos_data[key], fobj[key][:], atol=1.0e-5)
 
 
 @pytest.mark.parametrize(
