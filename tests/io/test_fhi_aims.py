@@ -5,6 +5,8 @@ import os
 
 # Third party library imports
 import pytest
+import numpy as np
+import h5py
 
 # Internal library imports
 from aim2dat.io.yaml import load_yaml_file
@@ -29,14 +31,14 @@ def test_errors():
         read_band_structure(BAND_STRUCTURE_PATH + "no_soc", soc=True)
     assert (
         str(error.value)
-        == "Spin-orbit coupling activated but the files don't have the right naming scheme."
+        == "Spin-orbit coupling activated but the files don't have the proper naming scheme."
     )
 
     with pytest.raises(ValueError) as error:
         read_atom_proj_density_of_states(PDOS_PATH + "no_soc", soc=True)
     assert (
         str(error.value)
-        == "Spin-orbit coupling activated but the files don't have the right naming scheme."
+        == "Spin-orbit coupling activated but the files don't have the proper naming scheme."
     )
 
 
@@ -44,11 +46,13 @@ def test_errors():
 def test_read_band_structure(nested_dict_comparison, system, soc):
     """Test read_band_structure function."""
     bands_data = read_band_structure(BAND_STRUCTURE_PATH + system + "/", soc=soc)
+    assert bands_data["unit_y"] == "eV"
     ref_label = "/ref"
     if soc:
         ref_label += "_soc"
-    bands_ref = dict(load_yaml_file(BAND_STRUCTURE_PATH + system + ref_label + ".yaml"))
-    nested_dict_comparison(bands_data, bands_ref)
+    with h5py.File(BAND_STRUCTURE_PATH + system + ref_label + ".h5", "r") as fobj:
+        for key in ["kpoints", "bands", "occupations"]:
+            np.testing.assert_allclose(bands_data[key], fobj[key][:], atol=1.0e-5)
 
 
 @pytest.mark.parametrize(
