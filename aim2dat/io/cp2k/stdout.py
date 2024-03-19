@@ -19,7 +19,7 @@ def read_stdout(file_name, parser_type="standard"):
 
     Returns
     -------
-    : dict
+    dict
         Dictionary containing the parsed values.
     """
     with custom_open(file_name, mode="r") as fobj:
