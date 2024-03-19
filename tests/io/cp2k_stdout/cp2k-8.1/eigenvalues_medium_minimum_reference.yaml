@@ -1,0 +1,10 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - []
+- [cp2k_version, 8.1]
+- [scf_converged, true]
+- [energy, -7.865880005723938]
+- [nwarnings, 2]
+- [energy_units, a.u.]
