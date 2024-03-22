@@ -73,10 +73,32 @@ def test_read_atom_proj_density_of_states(system):
             ), f"Values don't match for kind {kind} and orbital {orb_l0}."
 
 
-def test_read_optimized_structure():
+@pytest.mark.parametrize(
+    "restart_file,reference_file",
+    [
+        ("/geo_opt/aiida-1.restart", "/geo_opt/ref.yaml"),
+        ("/cell_opt/aiida-1.restart", "/cell_opt/ref.yaml"),
+        (
+            "/cell_opt_incomplete_numbers/aiida-1.restart",
+            "/cell_opt_incomplete_numbers/ref.yaml",
+        ),
+        ("/md-nvt/aiida-1.restart", "/md-nvt/ref.yaml"),
+    ],
+)
+def test_read_optimized_structure_single(restart_file, reference_file):
+    """
+    Test read_optimized_structure function for single calculations.
+    """
+    reference_values = list(load_yaml_file(STRUCTURES_PATH + reference_file))
+    structure = read_optimized_structure(STRUCTURES_PATH + restart_file)
+    for ref_value in reference_values:
+        assert structure[ref_value[0]] == ref_value[1]
+
+
+def test_read_optimized_structure_multiple():
     """Test read_optimized_structure function."""
-    structures = read_optimized_structure(STRUCTURES_PATH)
-    ref_structures = dict(load_yaml_file(STRUCTURES_PATH + "ref_structures.yaml"))
+    structures = read_optimized_structure(STRUCTURES_PATH + "multiple_structures/")
+    ref_structures = dict(load_yaml_file(STRUCTURES_PATH + "multiple_structures/ref.yaml"))
 
     for str_label, str1 in ref_structures.items():
         str0 = structures[str_label]
