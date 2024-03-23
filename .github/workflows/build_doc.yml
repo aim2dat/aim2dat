@@ -10,7 +10,7 @@ jobs:
       contents: write
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}
-      
+
     services:
       postgres:
         image: postgres:10
