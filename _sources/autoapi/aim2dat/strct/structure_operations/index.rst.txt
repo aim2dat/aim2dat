@@ -1,0 +1,600 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.structure_operations`
+============================================
+
+.. py:module:: aim2dat.strct.structure_operations
+
+.. autoapi-nested-parse::
+
+   Implements the StructureComparison and StructuresOperations classes to
+   analyze a collection of structures.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.structure_operations.StructureOperations
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.structure_operations.compare_structures
+   aim2dat.strct.structure_operations.structure_wrapper
+
+
+
+
+.. py:class:: StructureOperations(structures: aim2dat.strct.StructureCollection, append_to_coll: bool = True, output_format: str = 'dict', n_procs: int = 1, chunksize: int = 50, verbose: bool = True)
+
+
+   Bases: :py:obj:`aim2dat.strct.mixin.AnalysisMixin`, :py:obj:`aim2dat.strct.mixin.ManipulationMixin`
+
+   Serves as a wrapper to make the methods defined on a single
+   Structure object accessible for a StructureCollection.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`analysis_methods <aim2dat.strct.structure_operations.StructureOperations.analysis_methods>`
+        - `class` Return calculation methods.
+      * - :py:obj:`append_to_coll <aim2dat.strct.structure_operations.StructureOperations.append_to_coll>`
+        - Whether to append manipulated structures also to the internal ``StructureCollection``
+      * - :py:obj:`chunksize <aim2dat.strct.structure_operations.StructureOperations.chunksize>`
+        - Number of tasks handed to each process at once.
+      * - :py:obj:`manipulation_methods <aim2dat.strct.structure_operations.StructureOperations.manipulation_methods>`
+        - `class` Return manipulation methods.
+      * - :py:obj:`n_procs <aim2dat.strct.structure_operations.StructureOperations.n_procs>`
+        - Number of parallel processes.
+      * - :py:obj:`output_format <aim2dat.strct.structure_operations.StructureOperations.output_format>`
+        - Specify the output format of calculation methods. Supported options are ``'dict'``
+      * - :py:obj:`structures <aim2dat.strct.structure_operations.StructureOperations.structures>`
+        - Return the internal ``StructureCollection`` object.
+      * - :py:obj:`supported_output_formats <aim2dat.strct.structure_operations.StructureOperations.supported_output_formats>`
+        - Return the supported output formats.
+      * - :py:obj:`verbose <aim2dat.strct.structure_operations.StructureOperations.verbose>`
+        - Print progress bar.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`calculate_angle <aim2dat.strct.structure_operations.StructureOperations.calculate_angle>`\ (key, site_index1, site_index2, site_index3, backfold_positions)
+        - Calculate angle between three atoms.
+      * - :py:obj:`calculate_coordination <aim2dat.strct.structure_operations.StructureOperations.calculate_coordination>`\ (key, r_max, method, min_dist_delta, n_nearest_neighbours, econ_tolerance, econ_conv_threshold, voronoi_weight_type, voronoi_weight_threshold, okeeffe_weight_threshold)
+        - Calculate coordination environment of each atomic site.
+      * - :py:obj:`calculate_dihedral_angle <aim2dat.strct.structure_operations.StructureOperations.calculate_dihedral_angle>`\ (key, site_index1, site_index2, site_index3, site_index4, backfold_positions)
+        - Calculate dihedral angle between four atoms.
+      * - :py:obj:`calculate_distance <aim2dat.strct.structure_operations.StructureOperations.calculate_distance>`\ (key, site_index1, site_index2, backfold_positions, use_supercell, r_max)
+        - Calculate distance between two atoms.
+      * - :py:obj:`calculate_ffingerprint <aim2dat.strct.structure_operations.StructureOperations.calculate_ffingerprint>`\ (key, r_max, delta_bin, sigma, use_legacy_smearing, distinguish_kinds)
+        - Calculate f-fingerprint function for each element-pair and atomic site.
+      * - :py:obj:`calculate_stabilities <aim2dat.strct.structure_operations.StructureOperations.calculate_stabilities>`\ (unit, exclude_keys)
+        - Calculate the formation energies and stabilities of all structures.
+      * - :py:obj:`calculate_voronoi_tessellation <aim2dat.strct.structure_operations.StructureOperations.calculate_voronoi_tessellation>`\ (key, r_max)
+        - Calculate voronoi polyhedron for each atomic site.
+      * - :py:obj:`compare_sites_via_coordination <aim2dat.strct.structure_operations.StructureOperations.compare_sites_via_coordination>`\ (key1, key2, site_index1, site_index2, r_max, cn_method, min_dist_delta, n_nearest_neighbours, econ_tolerance, econ_conv_threshold, voronoi_weight_type, voronoi_weight_threshold, okeeffe_weight_threshold, distinguish_kinds, threshold)
+        - Compare two atomic sites based on their coordination and the distances to their neighbour
+      * - :py:obj:`compare_sites_via_ffingerprint <aim2dat.strct.structure_operations.StructureOperations.compare_sites_via_ffingerprint>`\ (key1, key2, site_index1, site_index2, r_max, delta_bin, sigma, use_weights, use_legacy_smearing, distinguish_kinds)
+        - Calculate similarity of two atom sites.
+      * - :py:obj:`compare_structures_via_comp_sym <aim2dat.strct.structure_operations.StructureOperations.compare_structures_via_comp_sym>`\ (key1, key2, symprec, angle_tolerance, hall_number)
+        - Compare two structures merely based on the composition and space group.
+      * - :py:obj:`compare_structures_via_direct_comp <aim2dat.strct.structure_operations.StructureOperations.compare_structures_via_direct_comp>`\ (key1, key2, symprec, angle_tolerance, hall_number, no_idealize, length_threshold, angle_threshold, position_threshold, distinguish_kinds)
+        - Compare structures by comparing lattice vectors, angles and scaled positions.
+      * - :py:obj:`compare_structures_via_ffingerprint <aim2dat.strct.structure_operations.StructureOperations.compare_structures_via_ffingerprint>`\ (key1, key2, r_max, delta_bin, sigma, use_weights, use_legacy_smearing, distinguish_kinds)
+        - Calculate similarity of two structures.
+      * - :py:obj:`copy <aim2dat.strct.structure_operations.StructureOperations.copy>`\ ()
+        - Return copy of ``StructureCollection`` object.
+      * - :py:obj:`delete_atoms <aim2dat.strct.structure_operations.StructureOperations.delete_atoms>`\ (key, elements, site_indices, change_label)
+        - Delete atoms by element, list of elements, site index  or list of site indices.
+      * - :py:obj:`determine_point_group <aim2dat.strct.structure_operations.StructureOperations.determine_point_group>`\ (key, threshold_distance, threshold_angle, threshold_inertia)
+        - Determine the point group of a molecule.
+      * - :py:obj:`determine_space_group <aim2dat.strct.structure_operations.StructureOperations.determine_space_group>`\ (key, symprec, angle_tolerance, hall_number, return_sym_operations, return_primitive_structure, return_standardized_structure, no_idealize)
+        - Determine the space group of the structure using spglib as backend.
+      * - :py:obj:`find_duplicates_via_comp_sym <aim2dat.strct.structure_operations.StructureOperations.find_duplicates_via_comp_sym>`\ (confined, remove_structures, symprec, angle_tolerance, hall_number)
+        - Find duplicate structures coimparing the composition and space group.
+      * - :py:obj:`find_duplicates_via_direct_comp <aim2dat.strct.structure_operations.StructureOperations.find_duplicates_via_direct_comp>`\ (confined, remove_structures, symprec, angle_tolerance, hall_number, no_idealize, length_threshold, angle_threshold, position_threshold, distinguish_kinds)
+        - Find duplicate structures comparing directly the lattice parameters and positions of the
+      * - :py:obj:`find_duplicates_via_ffingerprint <aim2dat.strct.structure_operations.StructureOperations.find_duplicates_via_ffingerprint>`\ (confined, remove_structures, threshold, r_max, delta_bin, sigma, use_weights, use_legacy_smearing, distinguish_kinds)
+        - Find duplicate structures using the FFingerprint method.
+      * - :py:obj:`find_eq_sites_via_coordination <aim2dat.strct.structure_operations.StructureOperations.find_eq_sites_via_coordination>`\ (key, r_max, cn_method, min_dist_delta, n_nearest_neighbours, econ_tolerance, econ_conv_threshold, voronoi_weight_type, voronoi_weight_threshold, okeeffe_weight_threshold, distinguish_kinds, threshold)
+        - Find equivalent sites by comparing the coordination of each site and its distance to the
+      * - :py:obj:`find_eq_sites_via_ffingerprint <aim2dat.strct.structure_operations.StructureOperations.find_eq_sites_via_ffingerprint>`\ (key, r_max, delta_bin, sigma, use_weights, use_legacy_smearing, distinguish_kinds, threshold)
+        - Find equivalent sites by comparing the F-Fingerprint of each site.
+      * - :py:obj:`perform_analysis <aim2dat.strct.structure_operations.StructureOperations.perform_analysis>`\ (key, method, kwargs)
+        - Perform structure analaysis using an external method.
+      * - :py:obj:`perform_manipulation <aim2dat.strct.structure_operations.StructureOperations.perform_manipulation>`\ (key, method, kwargs)
+        - Perform structure manipulation using an external method.
+      * - :py:obj:`scale_unit_cell <aim2dat.strct.structure_operations.StructureOperations.scale_unit_cell>`\ (key, scaling_factor, change_label)
+        - Scale unit cell of the structure.
+      * - :py:obj:`substitute_elements <aim2dat.strct.structure_operations.StructureOperations.substitute_elements>`\ (key, elements, radius_type, change_label)
+        - Substitute all atoms of one or several elements.
+
+
+
+   .. py:property:: analysis_methods
+      :type: list
+      :classmethod:
+
+      Return calculation methods.
+
+      :type: list
+
+   .. py:property:: append_to_coll
+      :type: bool
+
+      Whether to append manipulated structures also to the internal ``StructureCollection``
+      object.
+
+      :type: bool
+
+   .. py:property:: chunksize
+      :type: int
+
+      Number of tasks handed to each process at once.
+
+      :type: int
+
+   .. py:property:: manipulation_methods
+      :type: list
+      :classmethod:
+
+      Return manipulation methods.
+
+      :type: list
+
+   .. py:property:: n_procs
+      :type: int
+
+      Number of parallel processes.
+
+      :type: int
+
+   .. py:property:: output_format
+      :type: str
+
+      Specify the output format of calculation methods. Supported options are ``'dict'``
+      and ``'DataFrame'``.
+
+      :type: str
+
+   .. py:property:: structures
+      :type: aim2dat.strct.StructureCollection
+
+      Return the internal ``StructureCollection`` object.
+
+   .. py:property:: supported_output_formats
+      :type: List[str]
+
+      Return the supported output formats.
+
+   .. py:property:: verbose
+      :type: bool
+
+      Print progress bar.
+
+      :type: bool
+
+
+   .. py:method:: calculate_angle(key: Union[str, int, tuple, list] = None, site_index1: int = 0, site_index2: int = 1, site_index3: int = 2, backfold_positions: bool = True) -> float
+
+      Calculate angle between three atoms.
+
+      :Parameters: * **key** (*str, int, tuple or list*) -- Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
+                     keys of the underlying ``StructureCollection`` object.
+                   * **site_index1** (*int*) -- Index of the site.
+                   * **site_index2** (*int*) -- Index of the site.
+                   * **site_index3** (*int*) -- Index of the site.
+                   * **backfold_positions** (*bool*) -- Whether to backfold the atomic sites and return the smallest distance.
+
+      :returns: *float* -- Angle calculated via the vectors from atom 2 to atom 1 and atom 3.
+
+
+   .. py:method:: calculate_coordination(key: Union[str, int, tuple, list] = None, r_max: float = 10.0, method: str = 'minimum_distance', min_dist_delta: float = 0.1, n_nearest_neighbours: int = 5, econ_tolerance: float = 0.5, econ_conv_threshold: float = 0.001, voronoi_weight_type: float = 'rel_solid_angle', voronoi_weight_threshold: float = 0.5, okeeffe_weight_threshold: float = 0.5) -> dict
+
+      Calculate coordination environment of each atomic site.
+
+      :Parameters: * **key** (*str, int, tuple or list*) -- Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
+                     keys of the underlying ``StructureCollection`` object.
+                   * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                   * **method** (*str (optional)*) -- Method used to calculate the coordination environment. The default value is
+                     ``'minimum_distance'``.
+                   * **min_dist_delta** (*float (optional)*) -- Tolerance parameter that defines the relative distance from the nearest neighbour atom
+                     for the ``'minimum_distance'`` method.
+                   * **n_nearest_neighbours** (*int (optional)*) -- Number of neighbours that are considered coordinated for the ``'n_neighbours'``
+                     method.
+                   * **econ_tolerance** (*float (optional)*) -- Tolerance parameter for the econ method.
+                   * **econ_conv_threshold** (*float (optional)*) -- Convergence threshold for the econ method.
+                   * **voronoi_weight_type** (*str (optional)*) -- Weight type of the Voronoi facets. Supported options are ``'covalent_atomic_radius'``,
+                     ``'area'`` and ``'solid_angle'``. The prefix ``'rel_'`` specifies that the relative
+                     weights with respect to the maximum value of the polyhedron are calculated.
+                   * **voronoi_weight_threshold** (*float (optional)*) -- Weight threshold to consider a neighbouring atom coordinated.
+                   * **okeeffe_weight_threshold** (*float (optional)*) -- Threshold parameter to distinguish indirect and direct neighbour atoms for the
+                     ``'okeeffe'``.
+
+                     This parameter is depreciated and will be removed in a future version.
+                     The original results can be obtained by using the ``voronoi_weight_threshold``
+                     parameter and setting ``voronoi_weight_type`` to ``'rel_solid_angle'``.
+
+      :returns: *dict* -- Dictionary containing the coordination information of the structure.
+
+
+   .. py:method:: calculate_dihedral_angle(key: Union[str, int, tuple, list] = None, site_index1: int = 0, site_index2: int = 1, site_index3: int = 2, site_index4: int = 3, backfold_positions: bool = True) -> float
+
+      Calculate dihedral angle between four atoms.
+
+      :Parameters: * **key** (*str, int, tuple or list*) -- Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
+                     keys of the underlying ``StructureCollection`` object.
+                   * **site_index1** (*int*) -- Index of the site.
+                   * **site_index2** (*int*) -- Index of the site.
+                   * **site_index3** (*int*) -- Index of the site.
+                   * **site_index4** (*int*) -- Index of the site.
+                   * **backfold_positions** (*bool*) -- Whether to backfold the atomic sites and return the smallest distance.
+
+      :returns: *float* -- Dihedral angle.
+
+
+   .. py:method:: calculate_distance(key: Union[str, int, tuple, list] = None, site_index1: Union[int, List[int]] = 0, site_index2: Union[int, List[int]] = 1, backfold_positions: bool = True, use_supercell: bool = False, r_max: float = 7.5) -> Union[float, list]
+
+      Calculate distance between two atoms.
+
+      :Parameters: * **key** (*str, int, tuple or list*) -- Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
+                     keys of the underlying ``StructureCollection`` object.
+                   * **site_index1** (*int*) -- Index of the site.
+                   * **site_index2** (*int*) -- Index of the site.
+                   * **backfold_positions** (*bool*) -- Whether to backfold the atomic sites and return the smallest distance.
+                   * **use_supercell** (*bool*) -- User supercell to calculate all distances between the two atomic sites up to the
+                     radius ``r_max``.
+                   * **r_max** (*float*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+
+      :returns: *float* -- Distance between the two atoms or a list of distances (if ``use_super_cell`` is
+                set to ``True``).
+
+
+   .. py:method:: calculate_ffingerprint(key: Union[str, int, tuple, list] = None, r_max: float = 20.0, delta_bin: float = 0.005, sigma: float = 0.05, use_legacy_smearing: bool = False, distinguish_kinds: bool = False) -> Tuple[dict, dict]
+
+      Calculate f-fingerprint function for each element-pair and atomic site.
+
+      The calculation is based on equation (3) in :doi:`10.1063/1.3079326`.
+
+      :Parameters: * **key** (*str, int, tuple or list*) -- Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
+                     keys of the underlying ``StructureCollection`` object.
+                   * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                   * **delta_bin** (*float (optional)*) -- Bin size to descritize the function in angstrom.
+                   * **sigma** (*float (optional)*) -- Smearing parameter for the Gaussian function.
+                   * **use_legacy_smearing** (*bool*) -- Use the depreciated smearing method.
+                   * **distinguish_kinds** (*bool (optional)*) -- Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
+                     different elements if ``True``.
+
+      :returns: * **element_fingerprints** (*dict*) -- Dictionary containing all fingerprint functions of the structure summed over all atoms
+                  of the same element.
+                * **atomic_fingerprints** (*dict*) -- Dictionary containing all individual fingerprint functions for each atomic site.
+
+
+   .. py:method:: calculate_stabilities(unit: str = 'eV', exclude_keys: list = []) -> Tuple[list, list]
+
+      Calculate the formation energies and stabilities of all structures.
+
+      The stabilities are only valid for binary systems.
+
+      :Parameters: * **unit** (*str (optional)*) -- Energy unit.
+                   * **exclude_keys** (*list*) -- List of keys of structures that are not included in the detection of the convex hull.
+                     This means that the stability of these structures may have a negative sign.
+
+      :returns: * **formation_energies** (*list*) -- List of the formation energies of all structures.
+                * **stabilities** (*list*) -- List of the stabilities of all structures.
+
+
+   .. py:method:: calculate_voronoi_tessellation(key: Union[str, int, tuple, list] = None, r_max: float = 10.0) -> List[List[dict]]
+
+      Calculate voronoi polyhedron for each atomic site.
+
+      :Parameters: * **key** (*str, int, tuple or list*) -- Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
+                     keys of the underlying ``StructureCollection`` object.
+                   * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+
+      :returns: *list* -- List of voronoi details for each atomic site.
+
+
+   .. py:method:: compare_sites_via_coordination(key1: Union[str, int], key2: Union[str, int], site_index1: int, site_index2: int, r_max: float = 10.0, cn_method: str = 'minimum_distance', min_dist_delta: float = 0.1, n_nearest_neighbours: int = 5, econ_tolerance: float = 0.5, econ_conv_threshold: float = 0.001, voronoi_weight_type: float = 'rel_solid_angle', voronoi_weight_threshold: float = 0.5, okeeffe_weight_threshold: float = 0.5, distinguish_kinds: bool = False, threshold: float = 0.01)
+
+      Compare two atomic sites based on their coordination and the distances to their neighbour
+      atoms.
+
+      :Parameters: * **key1** (*str or int*) -- Index or label of the first structure.
+                   * **key2** (*str or int*) -- Index or label of the second structure.
+                   * **site_index1** (*int*) -- Index of the site.
+                   * **site_index2** (*int*) -- Index of the site.
+                   * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                   * **cn_method** (*str (optional)*) -- Method used to calculate the coordination environment.
+                   * **min_dist_delta** (*float (optional)*) -- Tolerance parameter that defines the relative distance from the nearest neighbour atom
+                     for the ``'minimum_distance'`` method.
+                   * **n_nearest_neighbours** (*int (optional)*) -- Number of neighbours that are considered coordinated for the ``'n_neighbours'``
+                     method.
+                   * **econ_tolerance** (*float (optional)*) -- Tolerance parameter for the econ method.
+                   * **econ_conv_threshold** (*float (optional)*) -- Convergence threshold for the econ method.
+                   * **voronoi_weight_type** (*str (optional)*) -- Weight type of the Voronoi facets. Supported options are ``'covalent_atomic_radius'``,
+                     ``'area'`` and ``'solid_angle'``. The prefix ``'rel_'`` specifies that the relative
+                     weights with respect to the maximum value of the polyhedron are calculated.
+                   * **voronoi_weight_threshold** (*float (optional)*) -- Weight threshold to consider a neighbouring atom coordinated.
+                   * **okeeffe_weight_threshold** (*float (optional)*) -- Threshold parameter to distinguish indirect and direct neighbour atoms for the
+                     ``'okeeffe'``.
+                   * **distinguish_kinds** (*bool (optional)*) -- Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
+                     different elements if ``True``.
+                   * **threshold** (*float (optional)*) -- Threshold to consider two sites equivalent.
+
+      :returns: *bool* -- Whether the two sites are equivalent or not.
+
+
+   .. py:method:: compare_sites_via_ffingerprint(key1: Union[str, int], key2: Union[str, int], site_index1: int, site_index2: int, r_max: float = 15.0, delta_bin: float = 0.005, sigma: float = 10.0, use_weights: bool = True, use_legacy_smearing: bool = False, distinguish_kinds: bool = False)
+
+      Calculate similarity of two atom sites.
+
+      The cosine-distance is used to compare the two structures.
+
+      :Parameters: * **key1** (*str or int*) -- Index or label of the first structure.
+                   * **key2** (*str or int*) -- Index or label of the second structure.
+                   * **site_index1** (*int*) -- Index of the site.
+                   * **site_index2** (*int*) -- Index of the site.
+                   * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                   * **delta_bin** (*float (optional)*) -- Bin size to descritize the function in angstrom.
+                   * **sigma** (*float (optional)*) -- Smearing parameter for the Gaussian function.
+                   * **use_weights** (*bool (optional)*) -- Whether to use importance weights for the element pairs.
+                   * **use_legacy_smearing** (*bool*) -- Use the depreciated smearing method.
+                   * **distinguish_kinds** (*bool (optional)*) -- Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
+                     different elements if ``True``.
+
+      :returns: **distance** (*float*) -- Measure for the similarity of the two sites.
+
+
+   .. py:method:: compare_structures_via_comp_sym(key1: Union[str, int], key2: Union[str, int], symprec: float = 0.005, angle_tolerance: float = -1.0, hall_number: int = 0) -> bool
+
+      Compare two structures merely based on the composition and space group.
+
+      :Parameters: * **key1** (*str or int*) -- Index or label of the first structure.
+                   * **key2** (*str or int*) -- Index or label of the second structure.
+                   * **symprec** (*float (optional)*) -- Tolerance parameter for spglib.
+                   * **angle_tolerance** (*float (optional)*) -- Tolerance parameter for spglib.
+                   * **hall_number** (*int (optional)*) -- The argument to constrain the space-group-type search only for the Hall symbol
+                     corresponding to it.
+
+      :returns: *bool* -- Returns ``True`` if the structures match and otherwise ``False``.
+
+
+   .. py:method:: compare_structures_via_direct_comp(key1: Union[str, int], key2: Union[str, int], symprec: float = 0.005, angle_tolerance: float = -1.0, hall_number: float = 0, no_idealize: bool = False, length_threshold: float = 0.08, angle_threshold: float = 0.03, position_threshold: float = 0.025, distinguish_kinds: bool = False) -> bool
+
+      Compare structures by comparing lattice vectors, angles and scaled positions.
+
+
+   .. py:method:: compare_structures_via_ffingerprint(key1: Union[str, int], key2: Union[str, int], r_max: float = 15.0, delta_bin: float = 0.005, sigma: float = 0.05, use_weights: bool = True, use_legacy_smearing: bool = False, distinguish_kinds: bool = False) -> float
+
+      Calculate similarity of two structures.
+
+      The cosine-distance is used to compare the two structures.
+
+      :Parameters: * **key1** (*str or int*) -- Index or label of the first structure.
+                   * **key2** (*str or int*) -- Index or label of the second structure.
+                   * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                   * **delta_bin** (*float (optional)*) -- Bin size to descritize the function in angstrom.
+                   * **sigma** (*float (optional)*) -- Smearing parameter for the Gaussian function.
+                   * **use_weights** (*bool (optional)*) -- Whether to use importance weights for the element pairs.
+                   * **use_legacy_smearing** (*bool*) -- Use the depreciated smearing method.
+                   * **distinguish_kinds** (*bool (optional)*) -- Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
+                     different elements if ``True``.
+
+      :returns: **distance** (*float*) -- Measure for the similarity of the two structures.
+
+
+   .. py:method:: copy() -> StructureOperations
+
+      Return copy of ``StructureCollection`` object.
+
+
+   .. py:method:: delete_atoms(key: Union[str, int, tuple, list] = None, elements: Union[str, List[str]] = [], site_indices: Union[int, List[int]] = [], change_label: bool = False) -> Union[aim2dat.strct.Structure, aim2dat.strct.StructureCollection]
+
+      Delete atoms by element, list of elements, site index  or list of site indices.
+
+      :Parameters: * **key** (*str, int, tuple or list*) -- Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
+                     keys of the underlying ``StructureCollection`` object.
+                   * **elements** (*str, list or tuple*) -- Element or tuple or list of  the elements to be deleted.
+                   * **site_indices** (*list or tuple*) -- Site index or tuple or list of site indices to be deleted.
+
+      :returns: *aim2dat.strct.Structure* -- Structure with deleted atoms.
+
+
+   .. py:method:: determine_point_group(key: Union[str, int, tuple, list] = None, threshold_distance: float = 0.1, threshold_angle: float = 1.0, threshold_inertia: float = 0.1) -> dict
+
+      Determine the point group of a molecule.
+
+      :Parameters: * **key** (*str, int, tuple or list*) -- Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
+                     keys of the underlying ``StructureCollection`` object.
+                   * **threshold_distance** (*float (optional)*) -- Tolerance parameter for distances.
+                   * **threshold_angle** (*float (optional)*) -- Tolerance parameter for angles.
+                   * **threshold_inertia** (*float (optional)*) -- Tolerance parameter for inertia.
+
+      :returns: *dict* -- Dictionary containing the point group and symmetry elements of the structure.
+
+
+   .. py:method:: determine_space_group(key: Union[str, int, tuple, list] = None, symprec: float = 0.005, angle_tolerance: float = -1.0, hall_number: int = 0, return_sym_operations: bool = False, return_primitive_structure: bool = False, return_standardized_structure: bool = False, no_idealize: bool = False) -> dict
+
+      Determine the space group of the structure using spglib as backend.
+
+      :Parameters: * **key** (*str, int, tuple or list*) -- Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
+                     keys of the underlying ``StructureCollection`` object.
+                   * **symprec** (*float (optional)*) -- Tolerance parameter for spglib
+                   * **angle_tolerance** (*float (optional)*) -- Tolerance parameter for spglib.
+                   * **hall_number** (*int (optional)*) -- The argument to constrain the space-group-type search only for the Hall symbol
+                     corresponding to it.
+                   * **return_sym_operations** (*bool (optional)*) -- Additionally, return all symmetry elements.
+                   * **return_primitive_structure** (*bool (optional)*) -- Whether to return the primitive standardized structure.
+                   * **return_standardized_structure** (*bool (optional)*) -- Whether to the non-primitive standardized structure.
+                   * **no_idealize** (*bool (optional)*) -- Whether to idealize unit cell vectors and angles.
+
+      :returns: *dict* -- Dictionary containing the internal space group number and labels.
+
+
+   .. py:method:: find_duplicates_via_comp_sym(confined: list = None, remove_structures: bool = False, symprec: float = 0.005, angle_tolerance: float = -1.0, hall_number: int = 0) -> List[Tuple[str]]
+
+      Find duplicate structures coimparing the composition and space group.
+
+      :Parameters: * **confined** (*list or None (optional)*) -- Confine comparison to a subset of the structure collection by giving a minimum and
+                     maximum index.
+                   * **remove_structures** (*bool (optional)*) -- Whether to remove the duplicate structures.
+                   * **symprec** (*float (optional)*) -- Tolerance parameter for spglib.
+                   * **angle_tolerance** (*float (optional)*) -- Tolerance parameter for spglib.
+                   * **hall_number** (*int (optional)*) -- The argument to constrain the space-group-type search only for the Hall symbol
+                     corresponding to it.
+
+      :returns: *list* -- List of tuples containing the indices of the found duplicate pairs.
+
+
+   .. py:method:: find_duplicates_via_direct_comp(confined: list = None, remove_structures: bool = False, symprec: float = 0.005, angle_tolerance: float = -1.0, hall_number: int = 0, no_idealize: bool = False, length_threshold: float = 0.08, angle_threshold: float = 0.03, position_threshold: float = 0.025, distinguish_kinds: bool = False) -> List[Tuple[str]]
+
+      Find duplicate structures comparing directly the lattice parameters and positions of the
+       standardized structures..
+
+      :Parameters: * **confined** (*list or None (optional)*) -- Confine comparison to a subset of the structure collection by giving a minimum and
+                     maximum index.
+                   * **remove_structures** (*bool (optional)*) -- Whether to remove the duplicate structures.
+                   * **symprec** (*float (optional)*) -- Tolerance parameter for spglib.
+                   * **angle_tolerance** (*float (optional)*) -- Tolerance parameter for spglib.
+                   * **hall_number** (*int (optional)*) -- The argument to constrain the space-group-type search only for the Hall symbol
+                     corresponding to it.
+
+      :returns: *list* -- List of tuples containing the indices of the found duplicate pairs.
+
+
+   .. py:method:: find_duplicates_via_ffingerprint(confined: list = None, remove_structures: bool = False, threshold: float = 0.001, r_max: float = 15.0, delta_bin: float = 0.005, sigma: float = 0.05, use_weights: bool = True, use_legacy_smearing: bool = False, distinguish_kinds: bool = False) -> List[Tuple[str]]
+
+      Find duplicate structures using the FFingerprint method.
+
+      :Parameters: * **confined** (*list or None (optional)*) -- Confine comparison to a subset of the structure collection by giving a minimum and
+                     maximum index.
+                   * **remove_structures** (*bool (optional)*) -- Whether to remove the duplicate structures.
+                   * **threshold** (*float (optional)*) -- Threshold of the FFingerprint to detect duplicate structures.
+                   * **r_max** (*float (optional)*) -- Maximum distance between two atoms used to construct the super cell.
+                   * **delta_bin** (*float (optional)*) -- Bin size to discretize the function in angstrom.
+                   * **sigma** (*float (optional)*) -- Smearing parameter for the Gaussian function.
+                   * **use_weights** (*bool (optional)*) -- Whether to use importance weights for the element pairs.
+                   * **use_legacy_smearing** (*bool*) -- Use the depreciated smearing method.
+                   * **distinguish_kinds** (*bool (optional)*) -- Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
+                     different elements if ``True``.
+
+      :returns: *list* -- List of tuples containing the indices of the found duplicate pairs.
+
+
+   .. py:method:: find_eq_sites_via_coordination(key: Union[str, int], r_max: float = 10.0, cn_method: str = 'minimum_distance', min_dist_delta: float = 0.1, n_nearest_neighbours: int = 5, econ_tolerance: float = 0.5, econ_conv_threshold: float = 0.001, voronoi_weight_type: float = 'rel_solid_angle', voronoi_weight_threshold: float = 0.5, okeeffe_weight_threshold: float = 0.5, distinguish_kinds: bool = False, threshold: float = 0.01)
+
+      Find equivalent sites by comparing the coordination of each site and its distance to the
+      neighbour atoms.
+
+      :Parameters: * **key** (*str or int*) -- Index or label of the structure.
+                   * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                   * **cn_method** (*str (optional)*) -- Method used to calculate the coordination environment.
+                   * **min_dist_delta** (*float (optional)*) -- Tolerance parameter that defines the relative distance from the nearest neighbour atom
+                     for the ``'minimum_distance'`` method.
+                   * **n_nearest_neighbours** (*int (optional)*) -- Number of neighbours that are considered coordinated for the ``'n_neighbours'``
+                     method.
+                   * **econ_tolerance** (*float (optional)*) -- Tolerance parameter for the econ method.
+                   * **econ_conv_threshold** (*float (optional)*) -- Convergence threshold for the econ method.
+                   * **okeeffe_weight_threshold** (*float (optional)*) -- Threshold parameter to distinguish indirect and direct neighbour atoms for the
+                     ``'okeeffe'``.
+                   * **distinguish_kinds** (*bool (optional)*) -- Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
+                     different elements if ``True``.
+                   * **threshold** (*float (optional)*) -- Threshold to consider two sites equivalent.
+
+      :returns: *dict* -- Dictionary grouping equivalent sites.
+
+
+   .. py:method:: find_eq_sites_via_ffingerprint(key: Union[str, int], r_max: float = 20.0, delta_bin: float = 0.005, sigma: float = 0.05, use_weights: bool = True, use_legacy_smearing: bool = False, distinguish_kinds: bool = False, threshold: float = 0.001)
+
+      Find equivalent sites by comparing the F-Fingerprint of each site.
+
+      :Parameters: * **key** (*str or int*) -- Index or label of the structure.
+                   * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                   * **delta_bin** (*float (optional)*) -- Bin size to descritize the function in angstrom.
+                   * **sigma** (*float (optional)*) -- Smearing parameter for the Gaussian function.
+                   * **use_weights** (*bool*) -- Whether to use importance weights for the element pairs.
+                   * **use_legacy_smearing** (*bool*) -- Use the depreciated smearing method.
+                   * **distinguish_kinds** (*bool (optional)*) -- Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
+                     different elements if ``True``.
+                   * **threshold** (*float (optional)*) -- Threshold to consider two sites equivalent.
+
+      :returns: *dict* -- Dictionary grouping equivalent sites.
+
+
+   .. py:method:: perform_analysis(key: Union[str, int, tuple, list], method: collections.abc.Callable, kwargs: dict = {})
+
+      Perform structure analaysis using an external method.
+
+      :Parameters: * **key** (*str, int, tuple or list*) -- Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
+                     keys of the underlying ``StructureCollection`` object.
+                   * **method** (*function*) -- Analysis function.
+                   * **kwargs** (*dict*) -- Arguments to be passed to the function.
+
+      :returns: *output* -- Output of the analysis.
+
+
+   .. py:method:: perform_manipulation(key: Union[str, int, tuple, list], method: collections.abc.Callable, kwargs: dict = {})
+
+      Perform structure manipulation using an external method.
+
+      :Parameters: * **key** (*str, int, tuple or list*) -- Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
+                     keys of the underlying ``StructureCollection`` object.
+                   * **method** (*function*) -- Function which manipulates the structure(s).
+                   * **kwargs** (*dict*) -- Arguments to be passed to the function.
+
+      :returns: * *aim2dat.strct.Structure or*
+                * *aim2dat.strct.StructureCollection* -- Manipulated structure(s).
+
+
+   .. py:method:: scale_unit_cell(key: Union[str, int, tuple, list] = None, scaling_factor: float = 1.0, change_label: bool = False) -> Union[aim2dat.strct.Structure, aim2dat.strct.StructureCollection]
+
+      Scale unit cell of the structure.
+
+      :Parameters: * **key** (*str, int, tuple or list*) -- Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
+                     keys of the underlying ``StructureCollection`` object.
+                   * **scaling_factor** (*float*) -- Scaling factor.
+
+      :returns: *aim2dat.strct.Structure* -- Structure with scaled unit cell.
+
+
+   .. py:method:: substitute_elements(key: Union[str, int, tuple, list] = None, elements: Union[List[Tuple[str]], List[Tuple[int]]] = [], radius_type: Union[str, None] = 'covalent', change_label: bool = False) -> Union[aim2dat.strct.Structure, aim2dat.strct.StructureCollection]
+
+      Substitute all atoms of one or several elements.
+
+      :Parameters: * **key** (*str, int, tuple or list*) -- Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
+                     keys of the underlying ``StructureCollection`` object.
+                   * **elements** (*list or tuple*) -- Tuple or list of tuples of the elements that are substituted.
+                   * **radius_type** (*str or None (optional)*) -- Radius type used to calculate the scaling factor for the unit cell. If set to ``None``
+                     no scaling is applied. The default value is ``covalent``.
+
+      :returns: *aim2dat.strct.Structure* -- Structure with substituted elements.
+
+
+
+.. py:function:: compare_structures(structures, compare_function, comp_kwargs, threshold)
+
+   Parallelize structure comparison methods via this wrapper function.
+
+
+.. py:function:: structure_wrapper(structure, method, kwargs, check_stored)
+
+   Parallelize structure analysis and manipulation methods via this wrapper function.
+
+

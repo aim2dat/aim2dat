@@ -1,0 +1,49 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.ext_analysis.fragmentation`
+==================================================
+
+.. py:module:: aim2dat.strct.ext_analysis.fragmentation
+
+.. autoapi-nested-parse::
+
+   Module to find bonded molecular fragments in an extended structure.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.ext_analysis.fragmentation.determine_molecular_fragments
+
+
+
+.. py:function:: determine_molecular_fragments(structure: aim2dat.strct.strct.Structure, exclude_elements: List[str] = [], end_point_elements: List[str] = [], r_max: float = 20.0, cn_method: str = 'minimum_distance', min_dist_delta: float = 0.1, n_nearest_neighbours: int = 5, econ_tolerance: float = 0.5, econ_conv_threshold: float = 0.001, voronoi_weight_type: float = 'rel_solid_angle', voronoi_weight_threshold: float = 0.5, okeeffe_weight_threshold: float = 0.5)
+
+   Find molecular fragments in a larger molecule/cluster of periodic crystal.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **exclude_elements** (*list*) -- List of elements that are excluded from the search.
+                * **end_point_elements** (*list*) -- List of elements that serve as an end point for a fragment.
+                * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                * **cn_method** (*str (optional)*) -- Method used to calculate the coordination environment.
+                * **min_dist_delta** (*float (optional)*) -- Tolerance parameter that defines the relative distance from the nearest neighbour atom
+                  for the ``'minimum_distance'`` method.
+                * **n_nearest_neighbours** (*int (optional)*) -- Number of neighbours that are considered coordinated for the ``'n_neighbours'``
+                  method.
+                * **econ_tolerance** (*float (optional)*) -- Tolerance parameter for the econ method.
+                * **econ_conv_threshold** (*float (optional)*) -- Convergence threshold for the econ method.
+                * **voronoi_weight_type** (*str (optional)*) -- Weight type of the Voronoi facets. Supported options are ``'covalent_atomic_radius'``,
+                  ``'area'`` and ``'solid_angle'``. The prefix ``'rel_'`` specifies that the relative
+                  weights with respect to the maximum value of the polyhedron are calculated.
+                * **voronoi_weight_threshold** (*float (optional)*) -- Weight threshold to consider a neighbouring atom coordinated.
+
+   :returns: *list* -- List of fragments.
+
+

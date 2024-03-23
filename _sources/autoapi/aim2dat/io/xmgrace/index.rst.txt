@@ -1,0 +1,53 @@
+:py:mod:`aim2dat.io.xmgrace`
+============================
+
+.. py:module:: aim2dat.io.xmgrace
+
+.. autoapi-nested-parse::
+
+   Functions to read plot-files of xmgrace.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.io.xmgrace.read_band_structure
+   aim2dat.io.xmgrace.read_xmgrace_file
+
+
+
+.. py:function:: read_band_structure(file_path, kpoints)
+
+   Read xmgrace band structure file.
+
+   :Parameters: * **file_path** (*str*) -- Path to the xmgrace file.
+                * **kpoints** (*list*) -- List of tuples containing the label and the k-point.
+
+   :returns: **band_structures** (*list*) -- List of band structures.
+
+
+.. py:function:: read_xmgrace_file(file_path)
+
+   Read xmgrace plot filies.
+
+   Up to now the functionality is very limited. xy-data is read and grouped by the line-color.
+
+   .. rubric:: Notes
+
+   TODO: Increase functionality and generality.
+
+   :Parameters: **file_path** (*str*) -- Path to the xmgrace file.
+
+   :returns: * **x_values** (*list*) -- Nested list of the x-values.
+             * **y_values** (*list*) -- Nested list of the y-values.
+             * **tick_labels** (*tuple*) -- Tuple of dictionaries containing the position on the x-axis ("pos") and the label
+               ("label").
+
+

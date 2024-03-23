@@ -1,0 +1,371 @@
+:py:mod:`aim2dat.fct`
+=====================
+
+.. py:module:: aim2dat.fct
+
+.. autoapi-nested-parse::
+
+   Modules to analyze and compare functions (e.g. DOS or spectra).
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   discretization/index.rst
+   fingerprint/index.rst
+   function_comparison/index.rst
+   hull/index.rst
+   smearing/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.fct.DiscretizedAxis
+   aim2dat.fct.DiscretizedGrid
+   aim2dat.fct.FunctionAnalysis
+   aim2dat.fct.FunctionDiscretizationFingerprint
+
+
+
+
+
+.. py:class:: DiscretizedAxis(axis_type, **kwargs)
+
+
+   Class to create an axis to discretize a 1d function i.e. a 2d plot
+   in a grid. Different methods for the discretization are available.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`T <aim2dat.fct.DiscretizedAxis.T>`
+        - `x --> y` or `y --> x`.
+      * - :py:obj:`axis <aim2dat.fct.DiscretizedAxis.axis>`
+        - Axis array. Contains the discrete values.
+      * - :py:obj:`axis_type <aim2dat.fct.DiscretizedAxis.axis_type>`
+        - Specify whether this axis should be used as `x` or `y` axis in a grid.
+      * - :py:obj:`discretization_method <aim2dat.fct.DiscretizedAxis.discretization_method>`
+        - Discretize the specified range.
+      * - :py:obj:`is_empty <aim2dat.fct.DiscretizedAxis.is_empty>`
+        - Check whether the axis is empty.
+      * - :py:obj:`shape <aim2dat.fct.DiscretizedAxis.shape>`
+        - Tuple specifying the dimensions of the axis (like numpy).
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`discretize_axis <aim2dat.fct.DiscretizedAxis.discretize_axis>`\ (\*\*kwargs)
+        - Perform the discretization of the specified range.
+      * - :py:obj:`transpose <aim2dat.fct.DiscretizedAxis.transpose>`\ ()
+        - Change the `axis_type`: `x --> y` or `y --> x`.
+
+
+
+   .. py:property:: T
+      :type: DiscretizedAxis
+
+      `x --> y` or `y --> x`.
+
+      :returns: *DiscretizedAxis* -- Transposed axis.
+
+      :type: Change the `axis_type`
+
+   .. py:property:: axis
+      :type: numpy.array
+
+      Axis array. Contains the discrete values.
+
+      :returns: *np.array* -- The discretized range.
+
+   .. py:property:: axis_type
+      :type: str
+
+      Specify whether this axis should be used as `x` or `y` axis in a grid.
+
+      :returns: *str* -- indicating whether this axis should be used as `x` or `y`
+                axis in case of a merge into a grid.
+
+      :raises ValueError: The `axis_type` attribute needs to be specified
+
+   .. py:property:: discretization_method
+      :type: Callable
+
+      Discretize the specified range.
+      Can be chosen via a string, accepting the methods specified in
+      `_available_discretization_methods` or by passing a callable
+      function.
+
+      :returns: *Callable* -- Method to discretize the axis.
+
+   .. py:property:: is_empty
+      :type: bool
+
+      Check whether the axis is empty.
+
+      :returns: *bool* -- Whether the axis is empty.
+
+   .. py:property:: shape
+      :type: tuple
+
+      Tuple specifying the dimensions of the axis (like numpy).
+
+      :returns: *tuple* -- The shape of the axis.
+
+
+   .. py:method:: discretize_axis(**kwargs) -> DiscretizedAxis
+
+      Perform the discretization of the specified range.
+
+      :returns: *DiscretizedAxis*
+
+
+   .. py:method:: transpose() -> DiscretizedAxis
+
+      Change the `axis_type`: `x --> y` or `y --> x`.
+
+      :returns: *DiscretizedAxis* -- Transposed axis.
+
+
+
+
+.. py:class:: DiscretizedGrid(**kwargs)
+
+
+   Class to create a grid to discretize a 1d function i.e. a 2d plot.
+
+   Use the `plot_grid` method to visualize the created grid.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`grid <aim2dat.fct.DiscretizedGrid.grid>`
+        - Return the internal grid as a list of lists.
+      * - :py:obj:`is_empty <aim2dat.fct.DiscretizedGrid.is_empty>`
+        - Check whether the axis is empty.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`create_grid <aim2dat.fct.DiscretizedGrid.create_grid>`\ ()
+        - Create the internal grid which is based on a list of lists.
+      * - :py:obj:`plot_grid <aim2dat.fct.DiscretizedGrid.plot_grid>`\ ()
+        - Plot the grid.
+
+
+
+   .. py:property:: grid
+      :type: list
+
+      Return the internal grid as a list of lists.
+
+      :returns: *type* -- list: List of lists representing the x-values and discretized y-values.
+
+   .. py:property:: is_empty
+      :type: bool
+
+      Check whether the axis is empty.
+
+      :returns: *bool* -- Whether the axis is empty.
+
+
+   .. py:method:: create_grid() -> DiscretizedGrid
+
+      Create the internal grid which is based on a list of lists.
+      Each list contains the energy-value (x) as the first argument and the
+      DOS-values (y) as a list in the second argument.
+
+      :returns: *DiscretizedGrid* -- Discretized grid.
+
+
+   .. py:method:: plot_grid()
+
+      Plot the grid.
+
+
+
+
+.. py:class:: FunctionAnalysis(**kwargs)
+
+
+   Class to analyze and compare functions.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`allowed_distance_methods <aim2dat.fct.FunctionAnalysis.allowed_distance_methods>`
+        - Return allowed distance methods.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`calculate_correlation <aim2dat.fct.FunctionAnalysis.calculate_correlation>`\ (label1, label2)
+        - Calculate the pearson-correlation between the values of two functions.
+      * - :py:obj:`calculate_discrete_fingerprint <aim2dat.fct.FunctionAnalysis.calculate_discrete_fingerprint>`\ (label, grid)
+        - Calculate a discretized fingerprint of a function (:doi:`10.1038/s41597-022-01754-z`).
+      * - :py:obj:`calculate_distance <aim2dat.fct.FunctionAnalysis.calculate_distance>`\ (label1, label2, method)
+        - Calculate the distance between the values of two functions.
+      * - :py:obj:`compare_areas <aim2dat.fct.FunctionAnalysis.compare_areas>`\ (label1, label2)
+        - Compare the enclosed areas of two functions.
+      * - :py:obj:`compare_functions_by_discrete_fingerprint <aim2dat.fct.FunctionAnalysis.compare_functions_by_discrete_fingerprint>`\ (label1, label2, grid)
+        - Compare two functions based on a discretized fingerprint
+      * - :py:obj:`import_data <aim2dat.fct.FunctionAnalysis.import_data>`\ (data_label, x_values, y_values)
+        - Import data into the internal memory.
+
+
+
+   .. py:property:: allowed_distance_methods
+      :type: list
+
+      Return allowed distance methods.
+
+
+   .. py:method:: calculate_correlation(label1: str, label2: str) -> float
+
+      Calculate the pearson-correlation between the values of two functions.
+
+      :Parameters: * **label_1** (*str*) -- Label of the first dataset.
+                   * **label_2** (*str*) -- Label of the second dataset.
+
+      :returns: *float* -- The correlation.
+
+
+   .. py:method:: calculate_discrete_fingerprint(label: str, grid: aim2dat.fct.discretization.DiscretizedGrid) -> numpy.array
+
+      Calculate a discretized fingerprint of a function (:doi:`10.1038/s41597-022-01754-z`).
+
+      :Parameters: * **label** (*str*) -- Label of the dataset.
+                   * **grid** (*DiscretizedGrid*) -- The grid to discretize the function.
+
+      :returns: *np.array* -- Discretized fingerprint.
+
+
+   .. py:method:: calculate_distance(label1: str, label2: str, method: str = 'euclidian') -> float
+
+      Calculate the distance between the values of two functions.
+
+      :Parameters: * **label1** (*str*) -- Label of the first dataset.
+                   * **label2** (*str*) -- Label of the second dataset.
+                   * **method** (*str*) -- The metric to calculate the distance. Defaults to "euclidian".
+
+      :returns: *float* -- Abs. error
+
+
+   .. py:method:: compare_areas(label1: str, label2: str) -> float
+
+      Compare the enclosed areas of two functions.
+
+      :Parameters: * **label1** (*str*) -- Label of the first dataset.
+                   * **label2** (*str*) -- Label of the second dataset.
+
+      :returns: *float* -- The ratio of the areas. (A1 / A2)
+
+
+   .. py:method:: compare_functions_by_discrete_fingerprint(label1: str, label2: str, grid: aim2dat.fct.discretization.DiscretizedGrid) -> float
+
+      Compare two functions based on a discretized fingerprint
+      (:doi:`10.1038/s41597-022-01754-z`).
+
+      :Parameters: * **label1** (*str*) -- Label of the first dataset.
+                   * **label2** (*str*) -- Label of the second dataset.
+                   * **grid** (*DiscretizedGrid*) -- The grid to discretize the function.
+
+      :returns: *float* -- Similarity.
+
+
+   .. py:method:: import_data(data_label: str, x_values: numpy.array, y_values: numpy.array)
+
+      Import data into the internal memory.
+
+      :Parameters: * **data_label** (*str*) -- Label for the internal memory.
+                   * **x_values** (*np.array*) -- x-values of the function.
+                   * **y_values** (*np.array*) -- y-values of the function.
+
+
+
+
+.. py:class:: FunctionDiscretizationFingerprint(grid, **kwargs)
+
+
+   Fingerprint for functions based on the DOS-Fingerprint presented in
+   :doi:`10.1038/s41597-022-01754-z`.
+
+
+   .. rubric:: Overview
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`calculate_fingerprint <aim2dat.fct.FunctionDiscretizationFingerprint.calculate_fingerprint>`\ (x_values, y_values, label)
+        - Calculate the fingerprint.
+      * - :py:obj:`compare_fingerprints <aim2dat.fct.FunctionDiscretizationFingerprint.compare_fingerprints>`\ (label_1, label_2)
+        - Compare two fingerprints that are stored in the internal memory.
+      * - :py:obj:`plot_fingerprint <aim2dat.fct.FunctionDiscretizationFingerprint.plot_fingerprint>`\ (x_values, y_values)
+        - Plot the discretized function and the corresponding grid.
+
+
+
+
+   .. py:method:: calculate_fingerprint(x_values: numpy.array, y_values: numpy.array, label: str = None) -> numpy.array
+
+      Calculate the fingerprint.
+
+      :Parameters: * **x_values** (*np.array*) -- x-values of the function.
+                   * **y_values** (*np.array*) -- y-values of the function. In case it's a 2D-array, each row will
+                     be interpreted as a dataset and the fingerprint is calculated
+                     by concatenating the individual fingerprints.
+                   * **label** (*str*) -- Label for the internal memory. Defaults to None.
+
+      :returns: *np.array* -- The discretized fingerprint.
+
+
+   .. py:method:: compare_fingerprints(label_1: str, label_2: str) -> float
+
+      Compare two fingerprints that are stored in the internal memory.
+
+      :Parameters: * **label_1** (*str*) -- Label of the first fingerprint.
+                   * **label_2** (*str*) -- Label of the second fingerprint.
+
+      :returns: *float* -- Similarity measure.
+
+
+   .. py:method:: plot_fingerprint(x_values: numpy.array, y_values: numpy.array) -> matplotlib.pyplot.Figure
+
+      Plot the discretized function and the corresponding grid.
+
+      :Parameters: * **x_values** (*np.array*) -- x-values of the function.
+                   * **y_values** (*np.array*) -- y-values of the function.
+
+      :returns: *plt.Figure* -- Plot of the discretized function.
+
+
+

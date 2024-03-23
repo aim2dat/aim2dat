@@ -1,0 +1,141 @@
+:py:mod:`aim2dat.ml.cell_grid_search`
+=====================================
+
+.. py:module:: aim2dat.ml.cell_grid_search
+
+.. autoapi-nested-parse::
+
+   Methods to fit the cell parameters of crystalline materials.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.ml.cell_grid_search.CellGridSearch
+
+
+
+
+
+.. py:class:: CellGridSearch(length_scaling_factors=[0.8, 1.0, 1.2], angle_scaling_factors=[0.9, 1.0, 1.1], symprec=0.005, angle_tolerance=-1.0, hall_number=0, ffprint_r_max=10.0, ffprint_delta_bin=0.005, ffprint_sigma=0.05, ffprint_use_weights=True, ffprint_distinguish_kinds=False, target_value=0.0)
+
+
+   Class to fit the cell parameters of an initial structure to a final structure using a
+   brute-force grid search approach. The space group is maintained during the fitting process.
+
+   :ivar length_scaling_factors: Scaling factors for the cell lengths.
+   :vartype length_scaling_factors: list
+   :ivar angle_scaling_factors: Scaling factors for the cell angles.
+   :vartype angle_scaling_factors: list
+   :ivar symprec: Tolerance for spglib and length and angle comparison.
+   :vartype symprec: float
+   :ivar angle_tolerance: Tolerance parameter for spglib.
+   :vartype angle_tolerance: float
+   :ivar hall_number: The argument to constrain the space-group-type search only for the Hall symbol
+                      corresponding to it.
+   :vartype hall_number: int (optional)
+   :ivar ffprint_r_max: Cut-off value for the maximum distance between two atoms.
+   :vartype ffprint_r_max: float
+   :ivar ffprint_delta_bin: Bin size to descritize the function.
+   :vartype ffprint_delta_bin: float (optional)
+   :ivar ffprint_sigma: Smearing parameter for the Gaussian function.
+   :vartype ffprint_sigma: float (optional)
+   :ivar ffprint_use_weights: Whether to use importance weights for the element pairs.
+   :vartype ffprint_use_weights: bool (optional)
+   :ivar ffprint_distinguish_kinds: Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
+                                    different elements if ``True``.
+   :vartype ffprint_distinguish_kinds: bool (optional)
+   :ivar target_value: Target value used to calculate score if a model is set via the ``set_model`` function.
+
+   :vartype target_value: float (optional)
+
+
+   .. rubric:: Overview
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`fit <aim2dat.ml.cell_grid_search.CellGridSearch.fit>`\ (search_space)
+        - Fit the initial to the final structure by varying the cell parameters.
+      * - :py:obj:`get_optimized_structure <aim2dat.ml.cell_grid_search.CellGridSearch.get_optimized_structure>`\ ()
+        - Get optimized structure with the lowest score.
+      * - :py:obj:`return_initial_score <aim2dat.ml.cell_grid_search.CellGridSearch.return_initial_score>`\ ()
+        - Return score of the initial structure.
+      * - :py:obj:`return_search_space <aim2dat.ml.cell_grid_search.CellGridSearch.return_search_space>`\ ()
+        - Return list of parameter sets that are varied to fit the initial to the final structure.
+      * - :py:obj:`set_initial_structure <aim2dat.ml.cell_grid_search.CellGridSearch.set_initial_structure>`\ (structure)
+        - Set initial crystal structure.
+      * - :py:obj:`set_model <aim2dat.ml.cell_grid_search.CellGridSearch.set_model>`\ (model, function_name, single, transformer)
+        - Set scikit-learn model to predict the target value.
+      * - :py:obj:`set_target_structure <aim2dat.ml.cell_grid_search.CellGridSearch.set_target_structure>`\ (structure)
+        - Set target crystal structure.
+
+
+
+
+   .. py:method:: fit(search_space=None)
+
+      Fit the initial to the final structure by varying the cell parameters.
+
+      :Parameters: **search_space** (*list or None*) -- Defines the cell parameter variations. If set to ``None`` the parameters are obtained
+                   via the ``return_search_space``-function.
+
+      :returns: * **max_score** (*float*) -- Score of the best match.
+                * **max_params** (*list*) -- Parameters that give the best match.
+
+
+   .. py:method:: get_optimized_structure()
+
+      Get optimized structure with the lowest score.
+
+      :returns: *aim2dat.strct.Structure* -- Optimized structure.
+
+
+   .. py:method:: return_initial_score()
+
+      Return score of the initial structure.
+
+      :returns: *float* -- Score of the initial structure.
+
+
+   .. py:method:: return_search_space()
+
+      Return list of parameter sets that are varied to fit the initial to the final structure.
+
+      :returns: *list* -- List of parameter sets that are varied.
+
+
+   .. py:method:: set_initial_structure(structure)
+
+      Set initial crystal structure.
+
+      :Parameters: **structure** (*aim2dat.strct.Structure*) -- Initial structure.
+
+
+   .. py:method:: set_model(model, function_name='predict', single=False, transformer=None)
+
+      Set scikit-learn model to predict the target value.
+
+      :Parameters: * **model** -- Object that takes structures or features as input to predicts a target value.
+                   * **function_name** (*str (optional)*) -- Function name to retrieve the property prediction.
+                   * **single** (*bool (optional)*) -- Whether a single structure/features or a list of structures/features is predicted at
+                     once.
+                   * **transformer** (*aim2dat.ml.transformers (optional)*) -- Structure transformer.
+
+
+   .. py:method:: set_target_structure(structure)
+
+      Set target crystal structure.
+
+      :Parameters: **structure** (*aim2dat.strct.Structure*) -- Target structure.
+
+
+

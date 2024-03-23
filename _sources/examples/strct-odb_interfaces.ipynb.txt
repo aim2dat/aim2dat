@@ -1,0 +1,480 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "521ee30b",
+   "metadata": {},
+   "source": [
+    "# Querying the structure pool for the Cs-Te binary system\n",
+    "\n",
+    "_This example is reproducing the steps to create the initial structure pool for the high-throughput calculations published here: [doi:10.1063/5.0082710](https://doi.org/10.1063/5.0082710)._\n",
+    "\n",
+    "As an initial data pool of crystal structures we use the [Materials Project (MP)](https://materialsproject.org) database and the [Open Quantum Materials database (OQMD)](https://oqmd.org/) that can be readily interfaced using the ``StructureImporter`` class of the library:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9bbc0845",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.strct import StructureImporter\n",
+    "\n",
+    "strct_imp = StructureImporter()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4cf3752a",
+   "metadata": {},
+   "source": [
+    "## Querying crystals from Materials Project and Open Quantum Materials Database\n",
+    "\n",
+    "The first argument for the queries consists of the chemical compositions specified via the string `'Cs-Te'`.\n",
+    "\n",
+    "As for the MP database we query the initial structures (specified via the keyword `structure_type`) since these structures still have all symmetries. Additionally, an individual API key has to be passed to the function which can be requested at the MP webpage.\n",
+    "\n",
+    "**Update:** The original interface to materials project via the pymatgen library is depreciated and will be removed soon. It is advised to use the open-api by setting the keyword argument ``use_openapi`` to ``True``."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c5837c80",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import os\n",
+    "\n",
+    "strct_imp.import_from_mp(\n",
+    "    \"Cs-Te\", os.environ[\"MP_API_KEY\"], structure_type=\"initial\", use_openapi=False\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ad0c7804",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_imp.import_from_oqmd(\"Cs-Te\", query_limit=1000)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0ea3316c",
+   "metadata": {},
+   "source": [
+    "The downloaded crystals are stored in a ``StructureCollection`` object which can be accessed via the ``structures`` property. We can check the number of imported structures via `len` or by printing the object:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4790b66b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "len(strct_imp.structures)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c110c521",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(strct_imp)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f7548039",
+   "metadata": {},
+   "source": [
+    "Since we have been querying data from two different databases we might also want to check whether there are crystals shared by both databases.\n",
+    "In this case we use the F-fingerprint (<a href=\"https://doi.org/10.1063/1.3079326\" target=\"_blank\">doi:10.1063/1.3079326</a>) to identify duplicate structures. The function to indentify duplicate structures is implemented in the ``StructureOperations`` class.\n",
+    "\n",
+    "We can simply pass the ``StructureCollection``](aiida_scripts.structure_analysis.StructureCollection) object from the ``StructureImporter`` to the ``StructureOperations`` object upon initialization:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "16079f09",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.strct import StructureOperations\n",
+    "\n",
+    "strct_op = StructureOperations(structures=strct_imp.structures)\n",
+    "strct_op.n_procs = 2\n",
+    "strct_op.cunksize = 500\n",
+    "strct_op.verbose = False"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "aa7d9d39",
+   "metadata": {},
+   "source": [
+    "We use the ``find_duplicates_via_ffingerprint`` function to identify duplicate crystals, the function returns the labels of duplicate pairs and removes the first member of the pair from the ``StructureCollection`` object if `remove_structures` is set to `True`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "fbf29006",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_op.find_duplicates_via_ffingerprint(\n",
+    "    remove_structures=True, \n",
+    "    threshold=0.001, \n",
+    "    r_max=15.0, \n",
+    "    delta_bin=0.005, \n",
+    "    sigma=10.0\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "71202b25",
+   "metadata": {},
+   "source": [
+    "Once again we can check the final number of structures:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "df2d7b61",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "len(strct_op.structures)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "65f5884c",
+   "metadata": {},
+   "source": [
+    "## Analysing the initial dataset\n",
+    "\n",
+    "Having the duplicate structures removed we can split the dataset based on the crystal's source database:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "02430689",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "structures_mp = strct_op.structures[:32]\n",
+    "structures_oqmd = strct_op.structures[32:]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3847839a",
+   "metadata": {},
+   "source": [
+    "We can get a better overview of on the crystals by exporting the data into a pandas dataframe for better visualization:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "046b9cb9",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_mp = structures_mp.create_pandas_df(\n",
+    "    exclude_columns=[\"functional\", \"icsd_ids\", \"magnetic_moment\", \"direct_band_gap\"]\n",
+    ")\n",
+    "df_mp"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "a9656209",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_oqmd = structures_oqmd.create_pandas_df(\n",
+    "    exclude_columns=[\"functional\", \"icsd_ids\", \"magnetic_moment\", \"direct_band_gap\"]\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "bd766f66",
+   "metadata": {},
+   "source": [
+    "The dataset can be analyzed in more detail using the ``PhasePlot`` object from the ``plot`` sub-package of the library:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "1f9da282",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.plots import PhasePlot"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "fc2fc4cb",
+   "metadata": {},
+   "source": [
+    "Here we use the matplotlib-library to create the plots, interactive plots can also be generated by changing the ``backend`` to `\"plotly\"`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "403c8e7c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "phase_diagram = PhasePlot()\n",
+    "phase_diagram.ratio = (9, 4.5)\n",
+    "phase_diagram.show_crystal_system = True\n",
+    "phase_diagram.show_legend = True\n",
+    "phase_diagram.legend_bbox_to_anchor = (1.35, 1.0)\n",
+    "phase_diagram.backend = \"matplotlib\""
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e5678181",
+   "metadata": {},
+   "source": [
+    "Chemical composition and formation energies can be readily parsed from the pandas data frames:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "647bde08",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "phase_diagram.import_from_pandas_df(\"MP\", df_mp)\n",
+    "phase_diagram.import_from_pandas_df(\"OQMD\", df_oqmd)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "517963b8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "phase_diagram.plot_type = \"scatter\"\n",
+    "phase_diagram.plot_property = \"formation_energy\"\n",
+    "phase_diagram.plot([\"MP\", \"OQMD\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "139f0322",
+   "metadata": {},
+   "source": [
+    "The stability is defined as the vertical distance of a phase with respect to the convex hull:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "2f6a8fa1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "phase_diagram.plot_property = \"stability\"\n",
+    "phase_diagram.show_convex_hull = False\n",
+    "phase_diagram.plot([\"MP\", \"OQMD\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3438b72d",
+   "metadata": {},
+   "source": [
+    "To analyze the distribution of the phases in their chemical configuration space we can plot a histogram of the total number of phases per concentration interval and crystal system:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3d857147",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "phase_diagram.plot_type = \"numbers\"\n",
+    "phase_diagram.y_label = \"Nr. of crystals\"\n",
+    "phase_diagram.plot([\"MP\", \"OQMD\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "9874e890",
+   "metadata": {},
+   "source": [
+    "## Exploiting chemical similarity to increase the structure pool\n",
+    "\n",
+    "From the last plot it is noticeable that more than two thirds of the structures actually represent elemental phases.\n",
+    "This imbalance is due to the fact that most structures in online databases have been determined experimentally.\n",
+    "Thus, we often find that the chemical space (in this case the mixed phases) relevant is under-represented in the dataset because it is easier to experimentally analyze \"simple\" compounds.\n",
+    "\n",
+    "One way to counteract this trend is to make use of the chemical similarity of cations or anions and also query structures containing of ions having the same oxidation state as the target system. The ions can then be replaced in a second step, thus obtaining a larger variety of structures.\n",
+    "To do so, we import new structures once again.\n",
+    "However, this time we exclude elemental phases straight-away by setting the corresponding constraint:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "eb5f502d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_imp = StructureImporter()\n",
+    "strct_imp.neglect_elemental_structures = True"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "134ddbd2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_imp.import_from_mp(\n",
+    "    [\"K-Te\", \"Rb-Te\", \"K-Se\", \"Rb-Se\", \"Cs-Se\", \"K-Po\", \"Rb-Po\", \"Cs-Po\"],\n",
+    "    os.environ[\"MP_API_KEY\"],\n",
+    "    structure_type=\"initial\",\n",
+    "    use_openapi=False,\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b922b07c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_imp.import_from_oqmd(\n",
+    "    [\"K-Te\", \"Rb-Te\", \"K-Se\", \"Rb-Se\", \"Cs-Se\", \"K-Po\", \"Rb-Po\", \"Cs-Po\"], query_limit=1000\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "67ab507f",
+   "metadata": {},
+   "source": [
+    "Now we can substitute the elements in ``StructureOperations`` object accordingly:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "bee10e39",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_op.structures = strct_imp.structures\n",
+    "structures_subst = strct_op.substitute_elements(\n",
+    "    strct_op.structures.labels,\n",
+    "    [(\"K\", \"Cs\"), (\"Rb\", \"Cs\"), (\"Se\", \"Te\"), (\"Po\", \"Te\")],\n",
+    "    change_label=True,\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "408e3c73",
+   "metadata": {},
+   "source": [
+    "Since we have now probably have quite a few duplicate structures we will try to remove them. This time, however, we use a less strict method to filter out structures that are likely to be duplicates of others using merely the composition and the space group as criteria.\n",
+    "\n",
+    "**Note:** In order to reduce the run time, we only take the first 50 crystals for this example.\n",
+    "\n",
+    "We can choose to restrict the method merely on the newly imported structures where we substituted the elements by using the `confined` keyword, thus keeping all the previous phases in our dataset and applying the tight constraint only on the newly created phases:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f5dc4df5",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_op.structures = structures_mp + structures_oqmd + structures_subst[:50]\n",
+    "strct_op.find_duplicates_via_comp_sym(remove_structures=True, confined=(133, 133 + 50))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "14f125b4",
+   "metadata": {},
+   "source": [
+    "And now we can add the new structures to our plot object:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "6639b18a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "subst_structures = strct_op.structures[133:]\n",
+    "df_subst = subst_structures.create_pandas_df(\n",
+    "    exclude_columns=[\"functional\", \"icsd_ids\", \"magnetic_moment\", \"direct_band_gap\"]\n",
+    ")\n",
+    "phase_diagram.import_from_pandas_df(\"subst. structures\", df_subst)\n",
+    "phase_diagram.plot([\"MP\", \"OQMD\", \"subst. structures\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "26da6083",
+   "metadata": {},
+   "source": [
+    "We can clearly see that the number of mixed phases is larger in the new data pool."
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.13"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

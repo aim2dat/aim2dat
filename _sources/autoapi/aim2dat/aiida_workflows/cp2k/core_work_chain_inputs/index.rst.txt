@@ -1,0 +1,18 @@
+:py:mod:`aim2dat.aiida_workflows.cp2k.core_work_chain_inputs`
+=============================================================
+
+.. py:module:: aim2dat.aiida_workflows.cp2k.core_work_chain_inputs
+
+.. autoapi-nested-parse::
+
+   Functions that create or update input parameters for the cp2k core work chains.
+
+
+
+Module Contents
+---------------
+
+.. py:data:: cwd
+
+   
+

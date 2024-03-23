@@ -1,0 +1,529 @@
+:py:mod:`aim2dat.aiida_data.gaussian_cube_data`
+===============================================
+
+.. py:module:: aim2dat.aiida_data.gaussian_cube_data
+
+.. autoapi-nested-parse::
+
+   AiiDA data classes for gaussian cube files.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData
+
+
+
+
+
+.. py:class:: GaussianCubeData(**kwargs)
+
+
+   Bases: :py:obj:`aiida.orm.Data`
+
+   AiiDA data object to store gaussian cube files.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`atomic_charges <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.atomic_charges>`
+        - Return the atomic charges.
+      * - :py:obj:`atomic_numbers <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.atomic_numbers>`
+        - Return the atomic numbers.
+      * - :py:obj:`atomic_positions <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.atomic_positions>`
+        - Return the atomic positions (in bohr).
+      * - :py:obj:`backend <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.backend>`
+        - Get the backend for this entity
+      * - :py:obj:`backend_entity <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.backend_entity>`
+        - Get the implementing class for this object
+      * - :py:obj:`cell <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.cell>`
+        - Return the cell.
+      * - :py:obj:`comment <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.comment>`
+        - Return the second line of the cube file.
+      * - :py:obj:`computer <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.computer>`
+        - Return the computer of this node.
+      * - :py:obj:`creator <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.creator>`
+        - Return the creator of this node or None if it does not exist.
+      * - :py:obj:`ctime <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.ctime>`
+        - Return the node ctime.
+      * - :py:obj:`description <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.description>`
+        - Return the node description.
+      * - :py:obj:`dset_ids <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.dset_ids>`
+        - Return the data set identifiers.
+      * - :py:obj:`id <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.id>`
+        - Return the id for this entity.
+      * - :py:obj:`is_stored <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.is_stored>`
+        - Return whether the entity is stored.
+      * - :py:obj:`is_valid_cache <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.is_valid_cache>`
+        - Hook to exclude certain ``Node`` classes from being considered a valid cache.
+      * - :py:obj:`label <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.label>`
+        - Return the node label.
+      * - :py:obj:`logger <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.logger>`
+        - Return the logger configured for this Node.
+      * - :py:obj:`mtime <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.mtime>`
+        - Return the node mtime.
+      * - :py:obj:`node_type <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.node_type>`
+        - Return the node type.
+      * - :py:obj:`origin <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.origin>`
+        - Return the origin of the data.
+      * - :py:obj:`pk <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.pk>`
+        - Return the primary key for this entity.
+      * - :py:obj:`process_type <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.process_type>`
+        - Return the node process type.
+      * - :py:obj:`shape <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.shape>`
+        - Return the number of points in each direction.
+      * - :py:obj:`source <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.source>`
+        - Gets the dictionary describing the source of Data object. Possible fields:
+      * - :py:obj:`title <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.title>`
+        - Return the title of the cube file.
+      * - :py:obj:`user <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.user>`
+        - Return the user of this node.
+      * - :py:obj:`uuid <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.uuid>`
+        - Return the node UUID.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`Collection <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.Collection>`\ ()
+        - Return the collection type for this class.
+      * - :py:obj:`base <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.base>`\ ()
+        - Return the node base namespace.
+      * - :py:obj:`class_node_type <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.class_node_type>`\ ()
+        - Returns the node type of this node (sub) class.
+      * - :py:obj:`clone <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.clone>`\ ()
+        - Create a clone of the Data node.
+      * - :py:obj:`collection <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.collection>`\ ()
+        - Get a collection for objects of this type, with the default backend.
+      * - :py:obj:`convert <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.convert>`\ (object_format, \*args)
+        - Convert the AiiDA StructureData into another python object
+      * - :py:obj:`entry_point <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.entry_point>`\ ()
+        - Return the entry point associated this node class.
+      * - :py:obj:`export <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.export>`\ (path, fileformat, overwrite, \*\*kwargs)
+        - Save a Data object to a file.
+      * - :py:obj:`get <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.get>`\ (\*\*kwargs)
+        - `class` Get an entity of the collection matching the given filters.
+      * - :py:obj:`get_collection <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.get_collection>`\ (backend)
+        - `class` Get a collection for objects of this type for a given backend.
+      * - :py:obj:`get_content <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.get_content>`\ ()
+        - Get content of the cube file.
+      * - :py:obj:`get_cube_data <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.get_cube_data>`\ ()
+        - Get cube data points.
+      * - :py:obj:`get_description <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.get_description>`\ ()
+        - Return a string with a description of the node.
+      * - :py:obj:`get_export_formats <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.get_export_formats>`\ ()
+        - `class` Get the list of valid export format strings
+      * - :py:obj:`get_structure <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.get_structure>`\ (unit)
+        - Get underlying structure.
+      * - :py:obj:`importfile <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.importfile>`\ (fname, fileformat)
+        - Populate a Data object from a file.
+      * - :py:obj:`importstring <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.importstring>`\ (inputstring, fileformat, \*\*kwargs)
+        - Converts a Data object to other text format.
+      * - :py:obj:`initialize <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.initialize>`\ ()
+        - Initialize instance attributes.
+      * - :py:obj:`objects <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.objects>`\ ()
+        - Get a collection for objects of this type, with the default backend.
+      * - :py:obj:`open_cube <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.open_cube>`\ (path)
+        - Open cube file.
+      * - :py:obj:`set_from_file <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.set_from_file>`\ (file_obj)
+        - `class` Set information from existing cube file.
+      * - :py:obj:`set_source <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.set_source>`\ (source)
+        - Sets the dictionary describing the source of Data object.
+      * - :py:obj:`store <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.store>`\ ()
+        - Store the node in the database while saving its attributes and repository directory.
+      * - :py:obj:`store_all <aim2dat.aiida_data.gaussian_cube_data.GaussianCubeData.store_all>`\ ()
+        - Store the node, together with all input links.
+
+
+
+   .. py:property:: atomic_charges
+
+      Return the atomic charges.
+
+      :type: list
+
+   .. py:property:: atomic_numbers
+
+      Return the atomic numbers.
+
+      :type: list
+
+   .. py:property:: atomic_positions
+
+      Return the atomic positions (in bohr).
+
+      :type: list
+
+   .. py:property:: backend
+      :type: aiida.orm.implementation.StorageBackend
+
+      Get the backend for this entity
+
+   .. py:property:: backend_entity
+      :type: BackendEntityType
+
+      Get the implementing class for this object
+
+   .. py:property:: cell
+
+      Return the cell.
+
+      :type: list
+
+   .. py:property:: comment
+
+      Return the second line of the cube file.
+
+      :type: list
+
+   .. py:property:: computer
+      :type: Optional[aiida.orm.computers.Computer]
+
+      Return the computer of this node.
+
+   .. py:property:: creator
+
+      Return the creator of this node or None if it does not exist.
+
+      :return: the creating node or None
+
+   .. py:property:: ctime
+      :type: datetime.datetime
+
+      Return the node ctime.
+
+      :return: the ctime
+
+   .. py:property:: description
+      :type: str
+
+      Return the node description.
+
+      :return: the description
+
+   .. py:property:: dset_ids
+
+      Return the data set identifiers.
+
+      :type: list
+
+   .. py:property:: id
+      :type: int | None
+
+      Return the id for this entity.
+
+      This identifier is guaranteed to be unique amongst entities of the same type for a single backend instance.
+
+      .. deprecated: Will be removed in v3, use `pk` instead.
+
+      :return: the entity's id
+
+   .. py:property:: is_stored
+      :type: bool
+
+      Return whether the entity is stored.
+
+   .. py:property:: is_valid_cache
+      :type: bool
+
+      Hook to exclude certain ``Node`` classes from being considered a valid cache.
+
+      The base class assumes that all node instances are valid to cache from, unless the ``_VALID_CACHE_KEY`` extra
+      has been set to ``False`` explicitly. Subclasses can override this property with more specific logic, but should
+      probably also consider the value returned by this base class.
+
+   .. py:property:: label
+      :type: str
+
+      Return the node label.
+
+      :return: the label
+
+   .. py:property:: logger
+      :type: Optional[logging.Logger]
+
+      Return the logger configured for this Node.
+
+      :return: Logger object
+
+   .. py:property:: mtime
+      :type: datetime.datetime
+
+      Return the node mtime.
+
+      :return: the mtime
+
+   .. py:property:: node_type
+      :type: str
+
+      Return the node type.
+
+      :return: the node type
+
+   .. py:property:: origin
+
+      Return the origin of the data.
+
+      :type: list
+
+   .. py:property:: pk
+      :type: int | None
+
+      Return the primary key for this entity.
+
+      This identifier is guaranteed to be unique amongst entities of the same type for a single backend instance.
+
+      :return: the entity's principal key
+
+   .. py:property:: process_type
+      :type: Optional[str]
+
+      Return the node process type.
+
+      :return: the process type
+
+   .. py:property:: shape
+
+      Return the number of points in each direction.
+
+      :type: list
+
+   .. py:property:: source
+
+      Gets the dictionary describing the source of Data object. Possible fields:
+
+      * **db_name**: name of the source database.
+      * **db_uri**: URI of the source database.
+      * **uri**: URI of the object's source. Should be a permanent link.
+      * **id**: object's source identifier in the source database.
+      * **version**: version of the object's source.
+      * **extras**: a dictionary with other fields for source description.
+      * **source_md5**: MD5 checksum of object's source.
+      * **description**: human-readable free form description of the object's source.
+      * **license**: a string with a type of license.
+
+      .. note:: some limitations for setting the data source exist, see ``_validate`` method.
+
+      :return: dictionary describing the source of Data object.
+
+   .. py:property:: title
+
+      Return the title of the cube file.
+
+      :type: list
+
+   .. py:property:: user
+      :type: aiida.orm.users.User
+
+      Return the user of this node.
+
+   .. py:property:: uuid
+      :type: str
+
+      Return the node UUID.
+
+      :return: the string representation of the UUID
+
+
+   .. py:method:: Collection()
+
+      Return the collection type for this class.
+
+      This used to be a class argument with the value ``NodeCollection``. The argument is deprecated and this property
+      is here for backwards compatibility to print the deprecation warning.
+
+
+   .. py:method:: base() -> NodeBase
+
+      Return the node base namespace.
+
+
+   .. py:method:: class_node_type() -> str
+
+      Returns the node type of this node (sub) class.
+
+
+   .. py:method:: clone()
+
+      Create a clone of the Data node.
+
+      :returns: an unstored clone of this Data node
+
+
+   .. py:method:: collection() -> CollectionType
+
+      Get a collection for objects of this type, with the default backend.
+
+      :return: an object that can be used to access entities of this type
+
+
+   .. py:method:: convert(object_format=None, *args)
+
+      Convert the AiiDA StructureData into another python object
+
+      :param object_format: Specify the output format
+
+
+   .. py:method:: entry_point() -> Optional[importlib_metadata.EntryPoint]
+
+      Return the entry point associated this node class.
+
+      :return: the associated entry point or ``None`` if it isn't known.
+
+
+   .. py:method:: export(path, fileformat=None, overwrite=False, **kwargs)
+
+      Save a Data object to a file.
+
+      :param fname: string with file name. Can be an absolute or relative path.
+      :param fileformat: kind of format to use for the export. If not present,
+          it will try to use the extension of the file name.
+      :param overwrite: if set to True, overwrites file found at path. Default=False
+      :param kwargs: additional parameters to be passed to the
+          _exportcontent method
+      :return: the list of files created
+
+
+   .. py:method:: get(**kwargs)
+      :classmethod:
+
+      Get an entity of the collection matching the given filters.
+
+      .. deprecated: Will be removed in v3, use `Entity.collection.get` instead.
+
+
+
+   .. py:method:: get_collection(backend: aiida.orm.implementation.StorageBackend)
+      :classmethod:
+
+      Get a collection for objects of this type for a given backend.
+
+      .. note:: Use the ``collection`` class property instead if the currently loaded backend or backend of the
+          default profile should be used.
+
+      :param backend: The backend of the collection to use.
+      :return: A collection object that can be used to access entities of this type.
+
+
+   .. py:method:: get_content()
+
+      Get content of the cube file.
+
+      :returns: *str* -- File conent as string.
+
+
+   .. py:method:: get_cube_data()
+
+      Get cube data points.
+
+      :returns: *np.array* -- Data of the cube file.
+
+
+   .. py:method:: get_description() -> str
+
+      Return a string with a description of the node.
+
+      :return: a description string
+
+
+   .. py:method:: get_export_formats()
+      :classmethod:
+
+      Get the list of valid export format strings
+
+      :return: a list of valid formats
+
+
+   .. py:method:: get_structure(unit='angstrom')
+
+      Get underlying structure.
+
+      :Parameters: **unit** (*str*) -- Length unit.
+
+
+   .. py:method:: importfile(fname, fileformat=None)
+
+      Populate a Data object from a file.
+
+      :param fname: string with file name. Can be an absolute or relative path.
+      :param fileformat: kind of format to use for the export. If not present,
+          it will try to use the extension of the file name.
+
+
+   .. py:method:: importstring(inputstring, fileformat, **kwargs)
+
+      Converts a Data object to other text format.
+
+      :param fileformat: a string (the extension) to describe the file format.
+      :returns: a string with the structure description.
+
+
+   .. py:method:: initialize() -> None
+
+      Initialize instance attributes.
+
+      This will be called after the constructor is called or an entity is created from an existing backend entity.
+
+
+   .. py:method:: objects() -> CollectionType
+
+      Get a collection for objects of this type, with the default backend.
+
+      .. deprecated:: This will be removed in v3, use ``collection`` instead.
+
+      :return: an object that can be used to access entities of this type
+
+
+   .. py:method:: open_cube(path=None)
+
+      Open cube file.
+
+      :Parameters: **path** (*str or None*) -- Path to the cube file.
+
+      :returns: *A file handle.*
+
+
+   .. py:method:: set_from_file(file_obj)
+      :classmethod:
+
+      Set information from existing cube file.
+
+      :returns: *GaussianCubeData* -- Data object containing the information from the file.
+
+
+   .. py:method:: set_source(source)
+
+      Sets the dictionary describing the source of Data object.
+
+
+   .. py:method:: store() -> Node
+
+      Store the node in the database while saving its attributes and repository directory.
+
+      After being called attributes cannot be changed anymore! Instead, extras can be changed only AFTER calling
+      this store() function.
+
+      :note: After successful storage, those links that are in the cache, and for which also the parent node is
+          already stored, will be automatically stored. The others will remain unstored.
+
+
+   .. py:method:: store_all() -> Node
+
+      Store the node, together with all input links.
+
+      Unstored nodes from cached incoming linkswill also be stored.
+
+
+

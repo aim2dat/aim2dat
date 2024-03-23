@@ -1,0 +1,1981 @@
+:py:mod:`aim2dat.ml.transformers`
+=================================
+
+.. py:module:: aim2dat.ml.transformers
+
+.. autoapi-nested-parse::
+
+   Scikit learn Transformer classes extracting features from crystals or molecules.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.ml.transformers.StructureACSFTransformer
+   aim2dat.ml.transformers.StructureChemOrderTransformer
+   aim2dat.ml.transformers.StructureCompositionTransformer
+   aim2dat.ml.transformers.StructureCoordinationTransformer
+   aim2dat.ml.transformers.StructureDensityTransformer
+   aim2dat.ml.transformers.StructureFFPrintTransformer
+   aim2dat.ml.transformers.StructureMBTRTransformer
+   aim2dat.ml.transformers.StructureMatrixTransformer
+   aim2dat.ml.transformers.StructurePRDFTransformer
+   aim2dat.ml.transformers.StructureSOAPTransformer
+
+
+
+
+
+.. py:class:: StructureACSFTransformer(r_cut=7.5, g2_params=None, g3_params=None, g4_params=None, g5_params=None, elements=None, periodic=False, sparse=False, dscribe_n_jobs=1, dscribe_only_physical_cores=False, n_procs=1, chunksize=50, verbose=True)
+
+
+   Bases: :py:obj:`_BaseDscribeTransformer`
+
+   Extract ACSF descriptor as defined in :doi:`10.1063/1.3553717`. This transformer class is
+   based on the implementations of the dscribe python package.
+
+   :ivar r_cut: Cutoff value.
+   :vartype r_cut: float
+   :ivar g2_params: List of pairs of eta and R_s values for the G^2 functions.
+   :vartype g2_params: np.array
+   :ivar g3_params: List of kappa values for the G^3 functions.
+   :vartype g3_params: np.array
+   :ivar g4_params: List of triplets of eta, zeta and lambda values for G^4 functions.
+   :vartype g4_params: np.array
+   :ivar g5_params: List of triplets of eta, zeta and lambda values for G^5 functions.
+   :vartype g5_params: np.array
+   :ivar elements: List of atomic numbers or chemical symbols.
+   :vartype elements: list
+   :ivar periodic: Whether to consider periodic boundary conditions.
+   :vartype periodic: bool
+   :ivar sparse: Whether to return a sparse matrix or a dense array.
+   :vartype sparse: bool
+   :ivar dscribe_n_jobs: Number of jobs used by dscribe to calculate the interaction matrix.
+   :vartype dscribe_n_jobs: int
+   :ivar dscribe_only_physical_cores: Whether to only use physicsl cores.
+   :vartype dscribe_only_physical_cores: bool
+   :ivar n_procs: Number of parallel processes.
+   :vartype n_procs: int (optional)
+   :ivar chunksize: Number of structures handed to each process at once.
+   :vartype chunksize: int (optional)
+   :ivar verbose: Whether to print a progress bar.
+
+   :vartype verbose: bool (optional)
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`precomputed_properties <aim2dat.ml.transformers.StructureACSFTransformer.precomputed_properties>`
+        - Precomputed properties given as list of tuples consisting of input parameters and
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_precomputed_properties <aim2dat.ml.transformers.StructureACSFTransformer.add_precomputed_properties>`\ (parameters, structure_operations)
+        - Add precomputed properties.
+      * - :py:obj:`clear_precomputed_properties <aim2dat.ml.transformers.StructureACSFTransformer.clear_precomputed_properties>`\ ()
+        - Clear all precomputed properties.
+      * - :py:obj:`fit <aim2dat.ml.transformers.StructureACSFTransformer.fit>`\ (X, y)
+        - Fit function that determines the number of features.
+      * - :py:obj:`fit_transform <aim2dat.ml.transformers.StructureACSFTransformer.fit_transform>`\ (X, y, \*\*fit_params)
+        - Fit to data, then transform it.
+      * - :py:obj:`get_feature_names_out <aim2dat.ml.transformers.StructureACSFTransformer.get_feature_names_out>`\ (input_features)
+        - Get feature names.
+      * - :py:obj:`get_metadata_routing <aim2dat.ml.transformers.StructureACSFTransformer.get_metadata_routing>`\ ()
+        - Get metadata routing of this object.
+      * - :py:obj:`get_params <aim2dat.ml.transformers.StructureACSFTransformer.get_params>`\ (deep)
+        - Get parameters for this estimator.
+      * - :py:obj:`precompute_parameter_space <aim2dat.ml.transformers.StructureACSFTransformer.precompute_parameter_space>`\ (param_grid, X)
+        - Precompute and store structural properties to be reused later e.g. for a grid search.
+      * - :py:obj:`set_output <aim2dat.ml.transformers.StructureACSFTransformer.set_output>`\ (\*None, transform)
+        - Set output container.
+      * - :py:obj:`set_params <aim2dat.ml.transformers.StructureACSFTransformer.set_params>`\ (\*\*params)
+        - Set the parameters of this estimator.
+      * - :py:obj:`transform <aim2dat.ml.transformers.StructureACSFTransformer.transform>`\ (X)
+        - Transform structures to features.
+
+
+
+   .. py:property:: precomputed_properties
+
+      Precomputed properties given as list of tuples consisting of input parameters and
+      StructureOperations object.
+
+      :type: list
+
+
+   .. py:method:: add_precomputed_properties(parameters, structure_operations)
+
+      Add precomputed properties.
+
+      :Parameters: * **parameters** (*dict*) -- Dictionary of input parameters.
+                   * **structure_operations** (*StructureOperations*) -- StructureOperations object storing the properties according to the input parameters.
+
+
+   .. py:method:: clear_precomputed_properties()
+
+      Clear all precomputed properties.
+
+
+   .. py:method:: fit(X, y=None)
+
+      Fit function that determines the number of features.
+
+      :Parameters: * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+                   * **y** (*list (optional)*) -- list of target property.
+
+      :returns: *self* -- Transformer object.
+
+
+   .. py:method:: fit_transform(X, y=None, **fit_params)
+
+      Fit to data, then transform it.
+
+      Fits transformer to `X` and `y` with optional parameters `fit_params`
+      and returns a transformed version of `X`.
+
+      :Parameters: * **X** (*array-like of shape (n_samples, n_features)*) -- Input samples.
+                   * **y** (*array-like of shape (n_samples,) or (n_samples, n_outputs),                 default=None*) -- Target values (None for unsupervised transformations).
+                   * **\*\*fit_params** (*dict*) -- Additional fit parameters.
+
+      :returns: **X_new** (*ndarray array of shape (n_samples, n_features_new)*) -- Transformed array.
+
+
+   .. py:method:: get_feature_names_out(input_features=None)
+
+      Get feature names.
+
+
+   .. py:method:: get_metadata_routing()
+
+      Get metadata routing of this object.
+
+      Please check :ref:`User Guide <metadata_routing>` on how the routing
+      mechanism works.
+
+      :returns: **routing** (*MetadataRequest*) -- A :class:`~sklearn.utils.metadata_routing.MetadataRequest` encapsulating
+                routing information.
+
+
+   .. py:method:: get_params(deep=True)
+
+      Get parameters for this estimator.
+
+      :Parameters: **deep** (*bool, default=True*) -- If True, will return the parameters for this estimator and
+                   contained subobjects that are estimators.
+
+      :returns: **params** (*dict*) -- Parameter names mapped to their values.
+
+
+   .. py:method:: precompute_parameter_space(param_grid, X)
+
+      Precompute and store structural properties to be reused later e.g. for a grid search.
+
+      :Parameters: * **param_grid** (*list or dict*) -- Dictionary or list of dictionaries of input parameters.
+                   * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+
+   .. py:method:: set_output(*, transform=None)
+
+      Set output container.
+
+      See :ref:`sphx_glr_auto_examples_miscellaneous_plot_set_output.py`
+      for an example on how to use the API.
+
+      :Parameters: **transform** (*{"default", "pandas"}, default=None*) -- Configure output of `transform` and `fit_transform`.
+
+                   - `"default"`: Default output format of a transformer
+                   - `"pandas"`: DataFrame output
+                   - `"polars"`: Polars output
+                   - `None`: Transform configuration is unchanged
+
+                   .. versionadded:: 1.4
+                       `"polars"` option was added.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: set_params(**params)
+
+      Set the parameters of this estimator.
+
+      The method works on simple estimators as well as on nested objects
+      (such as :class:`~sklearn.pipeline.Pipeline`). The latter have
+      parameters of the form ``<component>__<parameter>`` so that it's
+      possible to update each component of a nested object.
+
+      :Parameters: **\*\*params** (*dict*) -- Estimator parameters.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: transform(X)
+
+      Transform structures to features.
+
+      :Parameters: **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+      :returns: *numpy.array* -- Nested array of features.
+
+
+
+
+.. py:class:: StructureChemOrderTransformer(r_max=15.0, max_shells=3, n_procs=1, chunksize=50, verbose=True)
+
+
+   Bases: :py:obj:`_BaseStructureTransformer`
+
+   Extract Warren Cowley like order parameters for each element as defined in
+   :doi:`10.1103/PhysRevB.96.024104`.
+
+   :ivar r_max: Cut-off value for the maximum distance between two atoms in angstrom.
+   :vartype r_max: float (optional)
+   :ivar max_shells: Number of neighbour shells that are evaluated.
+   :vartype max_shells: int (optional)
+   :ivar n_procs: Number of parallel processes.
+   :vartype n_procs: int (optional)
+   :ivar chunksize: Number of structures handed to each process at once.
+   :vartype chunksize: int (optional)
+   :ivar verbose: Whether to print a progress bar.
+
+   :vartype verbose: bool (optional)
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`precomputed_properties <aim2dat.ml.transformers.StructureChemOrderTransformer.precomputed_properties>`
+        - Precomputed properties given as list of tuples consisting of input parameters and
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_precomputed_properties <aim2dat.ml.transformers.StructureChemOrderTransformer.add_precomputed_properties>`\ (parameters, structure_operations)
+        - Add precomputed properties.
+      * - :py:obj:`clear_precomputed_properties <aim2dat.ml.transformers.StructureChemOrderTransformer.clear_precomputed_properties>`\ ()
+        - Clear all precomputed properties.
+      * - :py:obj:`fit <aim2dat.ml.transformers.StructureChemOrderTransformer.fit>`\ (X, y)
+        - Fit function that determines the number of features.
+      * - :py:obj:`fit_transform <aim2dat.ml.transformers.StructureChemOrderTransformer.fit_transform>`\ (X, y, \*\*fit_params)
+        - Fit to data, then transform it.
+      * - :py:obj:`get_feature_names_out <aim2dat.ml.transformers.StructureChemOrderTransformer.get_feature_names_out>`\ (input_features)
+        - Get feature names.
+      * - :py:obj:`get_metadata_routing <aim2dat.ml.transformers.StructureChemOrderTransformer.get_metadata_routing>`\ ()
+        - Get metadata routing of this object.
+      * - :py:obj:`get_params <aim2dat.ml.transformers.StructureChemOrderTransformer.get_params>`\ (deep)
+        - Get parameters for this estimator.
+      * - :py:obj:`precompute_parameter_space <aim2dat.ml.transformers.StructureChemOrderTransformer.precompute_parameter_space>`\ (param_grid, X)
+        - Precompute and store structural properties to be reused later e.g. for a grid search.
+      * - :py:obj:`set_output <aim2dat.ml.transformers.StructureChemOrderTransformer.set_output>`\ (\*None, transform)
+        - Set output container.
+      * - :py:obj:`set_params <aim2dat.ml.transformers.StructureChemOrderTransformer.set_params>`\ (\*\*params)
+        - Set the parameters of this estimator.
+      * - :py:obj:`transform <aim2dat.ml.transformers.StructureChemOrderTransformer.transform>`\ (X)
+        - Transform structures to features.
+
+
+
+   .. py:property:: precomputed_properties
+
+      Precomputed properties given as list of tuples consisting of input parameters and
+      StructureOperations object.
+
+      :type: list
+
+
+   .. py:method:: add_precomputed_properties(parameters, structure_operations)
+
+      Add precomputed properties.
+
+      :Parameters: * **parameters** (*dict*) -- Dictionary of input parameters.
+                   * **structure_operations** (*StructureOperations*) -- StructureOperations object storing the properties according to the input parameters.
+
+
+   .. py:method:: clear_precomputed_properties()
+
+      Clear all precomputed properties.
+
+
+   .. py:method:: fit(X, y=None)
+
+      Fit function that determines the number of features.
+
+      :Parameters: * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+                   * **y** (*list (optional)*) -- list of target property.
+
+      :returns: *self* -- Transformer object.
+
+
+   .. py:method:: fit_transform(X, y=None, **fit_params)
+
+      Fit to data, then transform it.
+
+      Fits transformer to `X` and `y` with optional parameters `fit_params`
+      and returns a transformed version of `X`.
+
+      :Parameters: * **X** (*array-like of shape (n_samples, n_features)*) -- Input samples.
+                   * **y** (*array-like of shape (n_samples,) or (n_samples, n_outputs),                 default=None*) -- Target values (None for unsupervised transformations).
+                   * **\*\*fit_params** (*dict*) -- Additional fit parameters.
+
+      :returns: **X_new** (*ndarray array of shape (n_samples, n_features_new)*) -- Transformed array.
+
+
+   .. py:method:: get_feature_names_out(input_features=None)
+
+      Get feature names.
+
+
+   .. py:method:: get_metadata_routing()
+
+      Get metadata routing of this object.
+
+      Please check :ref:`User Guide <metadata_routing>` on how the routing
+      mechanism works.
+
+      :returns: **routing** (*MetadataRequest*) -- A :class:`~sklearn.utils.metadata_routing.MetadataRequest` encapsulating
+                routing information.
+
+
+   .. py:method:: get_params(deep=True)
+
+      Get parameters for this estimator.
+
+      :Parameters: **deep** (*bool, default=True*) -- If True, will return the parameters for this estimator and
+                   contained subobjects that are estimators.
+
+      :returns: **params** (*dict*) -- Parameter names mapped to their values.
+
+
+   .. py:method:: precompute_parameter_space(param_grid, X)
+
+      Precompute and store structural properties to be reused later e.g. for a grid search.
+
+      :Parameters: * **param_grid** (*list or dict*) -- Dictionary or list of dictionaries of input parameters.
+                   * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+
+   .. py:method:: set_output(*, transform=None)
+
+      Set output container.
+
+      See :ref:`sphx_glr_auto_examples_miscellaneous_plot_set_output.py`
+      for an example on how to use the API.
+
+      :Parameters: **transform** (*{"default", "pandas"}, default=None*) -- Configure output of `transform` and `fit_transform`.
+
+                   - `"default"`: Default output format of a transformer
+                   - `"pandas"`: DataFrame output
+                   - `"polars"`: Polars output
+                   - `None`: Transform configuration is unchanged
+
+                   .. versionadded:: 1.4
+                       `"polars"` option was added.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: set_params(**params)
+
+      Set the parameters of this estimator.
+
+      The method works on simple estimators as well as on nested objects
+      (such as :class:`~sklearn.pipeline.Pipeline`). The latter have
+      parameters of the form ``<component>__<parameter>`` so that it's
+      possible to update each component of a nested object.
+
+      :Parameters: **\*\*params** (*dict*) -- Estimator parameters.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: transform(X)
+
+      Transform structures to features.
+
+      :Parameters: **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+      :returns: *numpy.array* -- Nested array of features.
+
+
+
+
+.. py:class:: StructureCompositionTransformer(distinguish_kinds=False, n_procs=1, chunksize=50, verbose=True)
+
+
+   Bases: :py:obj:`_BaseStructureTransformer`
+
+   Extract fractional concentrations of elements or kinds.
+
+   :ivar distinguish_kinds: Whether to use kinds instead of elements.
+   :vartype distinguish_kinds: bool (optional)
+   :ivar n_procs: Number of parallel processes.
+   :vartype n_procs: int (optional)
+   :ivar chunksize: Number of structures handed to each process at once.
+   :vartype chunksize: int (optional)
+   :ivar verbose: Whether to print a progress bar.
+
+   :vartype verbose: bool (optional)
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`precomputed_properties <aim2dat.ml.transformers.StructureCompositionTransformer.precomputed_properties>`
+        - Precomputed properties given as list of tuples consisting of input parameters and
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_precomputed_properties <aim2dat.ml.transformers.StructureCompositionTransformer.add_precomputed_properties>`\ (parameters, structure_operations)
+        - Add precomputed properties.
+      * - :py:obj:`clear_precomputed_properties <aim2dat.ml.transformers.StructureCompositionTransformer.clear_precomputed_properties>`\ ()
+        - Clear all precomputed properties.
+      * - :py:obj:`fit <aim2dat.ml.transformers.StructureCompositionTransformer.fit>`\ (X, y)
+        - Fit function that determines the number of features.
+      * - :py:obj:`fit_transform <aim2dat.ml.transformers.StructureCompositionTransformer.fit_transform>`\ (X, y, \*\*fit_params)
+        - Fit to data, then transform it.
+      * - :py:obj:`get_feature_names_out <aim2dat.ml.transformers.StructureCompositionTransformer.get_feature_names_out>`\ (input_features)
+        - Get feature names.
+      * - :py:obj:`get_metadata_routing <aim2dat.ml.transformers.StructureCompositionTransformer.get_metadata_routing>`\ ()
+        - Get metadata routing of this object.
+      * - :py:obj:`get_params <aim2dat.ml.transformers.StructureCompositionTransformer.get_params>`\ (deep)
+        - Get parameters for this estimator.
+      * - :py:obj:`precompute_parameter_space <aim2dat.ml.transformers.StructureCompositionTransformer.precompute_parameter_space>`\ (param_grid, X)
+        - Precompute and store structural properties to be reused later e.g. for a grid search.
+      * - :py:obj:`set_output <aim2dat.ml.transformers.StructureCompositionTransformer.set_output>`\ (\*None, transform)
+        - Set output container.
+      * - :py:obj:`set_params <aim2dat.ml.transformers.StructureCompositionTransformer.set_params>`\ (\*\*params)
+        - Set the parameters of this estimator.
+      * - :py:obj:`transform <aim2dat.ml.transformers.StructureCompositionTransformer.transform>`\ (X)
+        - Transform structures to features.
+
+
+
+   .. py:property:: precomputed_properties
+
+      Precomputed properties given as list of tuples consisting of input parameters and
+      StructureOperations object.
+
+      :type: list
+
+
+   .. py:method:: add_precomputed_properties(parameters, structure_operations)
+
+      Add precomputed properties.
+
+      :Parameters: * **parameters** (*dict*) -- Dictionary of input parameters.
+                   * **structure_operations** (*StructureOperations*) -- StructureOperations object storing the properties according to the input parameters.
+
+
+   .. py:method:: clear_precomputed_properties()
+
+      Clear all precomputed properties.
+
+
+   .. py:method:: fit(X, y=None)
+
+      Fit function that determines the number of features.
+
+      :Parameters: * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+                   * **y** (*list (optional)*) -- list of target property.
+
+      :returns: *self* -- Transformer object.
+
+
+   .. py:method:: fit_transform(X, y=None, **fit_params)
+
+      Fit to data, then transform it.
+
+      Fits transformer to `X` and `y` with optional parameters `fit_params`
+      and returns a transformed version of `X`.
+
+      :Parameters: * **X** (*array-like of shape (n_samples, n_features)*) -- Input samples.
+                   * **y** (*array-like of shape (n_samples,) or (n_samples, n_outputs),                 default=None*) -- Target values (None for unsupervised transformations).
+                   * **\*\*fit_params** (*dict*) -- Additional fit parameters.
+
+      :returns: **X_new** (*ndarray array of shape (n_samples, n_features_new)*) -- Transformed array.
+
+
+   .. py:method:: get_feature_names_out(input_features=None)
+
+      Get feature names.
+
+
+   .. py:method:: get_metadata_routing()
+
+      Get metadata routing of this object.
+
+      Please check :ref:`User Guide <metadata_routing>` on how the routing
+      mechanism works.
+
+      :returns: **routing** (*MetadataRequest*) -- A :class:`~sklearn.utils.metadata_routing.MetadataRequest` encapsulating
+                routing information.
+
+
+   .. py:method:: get_params(deep=True)
+
+      Get parameters for this estimator.
+
+      :Parameters: **deep** (*bool, default=True*) -- If True, will return the parameters for this estimator and
+                   contained subobjects that are estimators.
+
+      :returns: **params** (*dict*) -- Parameter names mapped to their values.
+
+
+   .. py:method:: precompute_parameter_space(param_grid, X)
+
+      Precompute and store structural properties to be reused later e.g. for a grid search.
+
+      :Parameters: * **param_grid** (*list or dict*) -- Dictionary or list of dictionaries of input parameters.
+                   * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+
+   .. py:method:: set_output(*, transform=None)
+
+      Set output container.
+
+      See :ref:`sphx_glr_auto_examples_miscellaneous_plot_set_output.py`
+      for an example on how to use the API.
+
+      :Parameters: **transform** (*{"default", "pandas"}, default=None*) -- Configure output of `transform` and `fit_transform`.
+
+                   - `"default"`: Default output format of a transformer
+                   - `"pandas"`: DataFrame output
+                   - `"polars"`: Polars output
+                   - `None`: Transform configuration is unchanged
+
+                   .. versionadded:: 1.4
+                       `"polars"` option was added.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: set_params(**params)
+
+      Set the parameters of this estimator.
+
+      The method works on simple estimators as well as on nested objects
+      (such as :class:`~sklearn.pipeline.Pipeline`). The latter have
+      parameters of the form ``<component>__<parameter>`` so that it's
+      possible to update each component of a nested object.
+
+      :Parameters: **\*\*params** (*dict*) -- Estimator parameters.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: transform(X)
+
+      Transform structures to features.
+
+      :Parameters: **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+      :returns: *numpy.array* -- Nested array of features.
+
+
+
+
+.. py:class:: StructureCoordinationTransformer(r_max=15.0, method='minimum_distance', min_dist_delta=0.1, n_nearest_neighbours=5, econ_tolerance=0.5, econ_conv_threshold=0.001, voronoi_weight_type='rel_solid_angle', voronoi_weight_threshold=0.5, feature_types=('nrs_avg', 'nrs_stdev', 'nrs_max', 'nrs_min', 'distance_avg', 'distance_stdev', 'distance_max', 'distance_min'), n_procs=1, chunksize=50, verbose=True)
+
+
+   Bases: :py:obj:`_BaseStructureTransformer`
+
+   Extract coordination numbers and distances between elements or kinds.
+
+   :ivar r_max: Cut-off value for the maximum distance between two atoms in angstrom.
+   :vartype r_max: float (optional)
+   :ivar method: Method used to calculate the coordination environment. The default value is
+                 ``'minimum_distance'``.
+   :vartype method: str (optional)
+   :ivar min_dist_delta: Tolerance parameter that defines the relative distance from the nearest neighbour atom
+                         for the ``'minimum_distance'`` method.
+   :vartype min_dist_delta: float (optional)
+   :ivar n_nearest_neighbours: Number of neighbours that are considered coordinated for the ``'n_neighbours'``
+                               method.
+   :vartype n_nearest_neighbours: int (optional)
+   :ivar econ_tolerance: Tolerance parameter for the econ method.
+   :vartype econ_tolerance: float (optional)
+   :ivar econ_conv_threshold: Convergence threshold for the econ method.
+   :vartype econ_conv_threshold: float (optional)
+   :ivar okeeffe_weight_threshold: Threshold parameter to distinguish indirect and direct neighbour atoms for the
+                                   ``'okeeffe'``.
+   :vartype okeeffe_weight_threshold: float (optional)
+   :ivar feature_types: Tuple of features that are extracted. Supported options are: ``'nrs_avg'``,
+                        ``'nrs_stdev'``, ``'nrs_max'``, ``'nrs_min'``, ``'distance_avg'``,
+                        ``'distance_stdev'``, ``'distance_max'`` and ``'distance_min'``.
+   :vartype feature_types: tuple or str (optional)
+   :ivar n_procs: Number of parallel processes.
+   :vartype n_procs: int (optional)
+   :ivar chunksize: Number of structures handed to each process at once.
+   :vartype chunksize: int (optional)
+   :ivar verbose: Whether to print a progress bar.
+
+   :vartype verbose: bool (optional)
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`feature_types <aim2dat.ml.transformers.StructureCoordinationTransformer.feature_types>`
+        - Feature types that are included.
+      * - :py:obj:`precomputed_properties <aim2dat.ml.transformers.StructureCoordinationTransformer.precomputed_properties>`
+        - Precomputed properties given as list of tuples consisting of input parameters and
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_precomputed_properties <aim2dat.ml.transformers.StructureCoordinationTransformer.add_precomputed_properties>`\ (parameters, structure_operations)
+        - Add precomputed properties.
+      * - :py:obj:`clear_precomputed_properties <aim2dat.ml.transformers.StructureCoordinationTransformer.clear_precomputed_properties>`\ ()
+        - Clear all precomputed properties.
+      * - :py:obj:`fit <aim2dat.ml.transformers.StructureCoordinationTransformer.fit>`\ (X, y)
+        - Fit function that determines the number of features.
+      * - :py:obj:`fit_transform <aim2dat.ml.transformers.StructureCoordinationTransformer.fit_transform>`\ (X, y, \*\*fit_params)
+        - Fit to data, then transform it.
+      * - :py:obj:`get_feature_names_out <aim2dat.ml.transformers.StructureCoordinationTransformer.get_feature_names_out>`\ (input_features)
+        - Get feature names.
+      * - :py:obj:`get_metadata_routing <aim2dat.ml.transformers.StructureCoordinationTransformer.get_metadata_routing>`\ ()
+        - Get metadata routing of this object.
+      * - :py:obj:`get_params <aim2dat.ml.transformers.StructureCoordinationTransformer.get_params>`\ (deep)
+        - Get parameters for this estimator.
+      * - :py:obj:`precompute_parameter_space <aim2dat.ml.transformers.StructureCoordinationTransformer.precompute_parameter_space>`\ (param_grid, X)
+        - Precompute and store structural properties to be reused later e.g. for a grid search.
+      * - :py:obj:`set_output <aim2dat.ml.transformers.StructureCoordinationTransformer.set_output>`\ (\*None, transform)
+        - Set output container.
+      * - :py:obj:`set_params <aim2dat.ml.transformers.StructureCoordinationTransformer.set_params>`\ (\*\*params)
+        - Set the parameters of this estimator.
+      * - :py:obj:`transform <aim2dat.ml.transformers.StructureCoordinationTransformer.transform>`\ (X)
+        - Transform structures to features.
+
+
+
+   .. py:property:: feature_types
+
+      Feature types that are included.
+
+      :type: tuple or str
+
+   .. py:property:: precomputed_properties
+
+      Precomputed properties given as list of tuples consisting of input parameters and
+      StructureOperations object.
+
+      :type: list
+
+
+   .. py:method:: add_precomputed_properties(parameters, structure_operations)
+
+      Add precomputed properties.
+
+      :Parameters: * **parameters** (*dict*) -- Dictionary of input parameters.
+                   * **structure_operations** (*StructureOperations*) -- StructureOperations object storing the properties according to the input parameters.
+
+
+   .. py:method:: clear_precomputed_properties()
+
+      Clear all precomputed properties.
+
+
+   .. py:method:: fit(X, y=None)
+
+      Fit function that determines the number of features.
+
+      :Parameters: * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+                   * **y** (*list (optional)*) -- list of target property.
+
+      :returns: *self* -- Transformer object.
+
+
+   .. py:method:: fit_transform(X, y=None, **fit_params)
+
+      Fit to data, then transform it.
+
+      Fits transformer to `X` and `y` with optional parameters `fit_params`
+      and returns a transformed version of `X`.
+
+      :Parameters: * **X** (*array-like of shape (n_samples, n_features)*) -- Input samples.
+                   * **y** (*array-like of shape (n_samples,) or (n_samples, n_outputs),                 default=None*) -- Target values (None for unsupervised transformations).
+                   * **\*\*fit_params** (*dict*) -- Additional fit parameters.
+
+      :returns: **X_new** (*ndarray array of shape (n_samples, n_features_new)*) -- Transformed array.
+
+
+   .. py:method:: get_feature_names_out(input_features=None)
+
+      Get feature names.
+
+
+   .. py:method:: get_metadata_routing()
+
+      Get metadata routing of this object.
+
+      Please check :ref:`User Guide <metadata_routing>` on how the routing
+      mechanism works.
+
+      :returns: **routing** (*MetadataRequest*) -- A :class:`~sklearn.utils.metadata_routing.MetadataRequest` encapsulating
+                routing information.
+
+
+   .. py:method:: get_params(deep=True)
+
+      Get parameters for this estimator.
+
+      :Parameters: **deep** (*bool, default=True*) -- If True, will return the parameters for this estimator and
+                   contained subobjects that are estimators.
+
+      :returns: **params** (*dict*) -- Parameter names mapped to their values.
+
+
+   .. py:method:: precompute_parameter_space(param_grid, X)
+
+      Precompute and store structural properties to be reused later e.g. for a grid search.
+
+      :Parameters: * **param_grid** (*list or dict*) -- Dictionary or list of dictionaries of input parameters.
+                   * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+
+   .. py:method:: set_output(*, transform=None)
+
+      Set output container.
+
+      See :ref:`sphx_glr_auto_examples_miscellaneous_plot_set_output.py`
+      for an example on how to use the API.
+
+      :Parameters: **transform** (*{"default", "pandas"}, default=None*) -- Configure output of `transform` and `fit_transform`.
+
+                   - `"default"`: Default output format of a transformer
+                   - `"pandas"`: DataFrame output
+                   - `"polars"`: Polars output
+                   - `None`: Transform configuration is unchanged
+
+                   .. versionadded:: 1.4
+                       `"polars"` option was added.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: set_params(**params)
+
+      Set the parameters of this estimator.
+
+      The method works on simple estimators as well as on nested objects
+      (such as :class:`~sklearn.pipeline.Pipeline`). The latter have
+      parameters of the form ``<component>__<parameter>`` so that it's
+      possible to update each component of a nested object.
+
+      :Parameters: **\*\*params** (*dict*) -- Estimator parameters.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: transform(X)
+
+      Transform structures to features.
+
+      :Parameters: **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+      :returns: *numpy.array* -- Nested array of features.
+
+
+
+
+.. py:class:: StructureDensityTransformer(distinguish_kinds=False, n_procs=1, chunksize=50, verbose=True)
+
+
+   Bases: :py:obj:`_BaseStructureTransformer`
+
+   Extract density of each element or kind.
+
+   :ivar distinguish_kinds: Whether to use kinds instead of elements.
+   :vartype distinguish_kinds: bool (optional)
+   :ivar n_procs: Number of parallel processes.
+   :vartype n_procs: int (optional)
+   :ivar chunksize: Number of structures handed to each process at once.
+   :vartype chunksize: int (optional)
+   :ivar verbose: Whether to print a progress bar.
+
+   :vartype verbose: bool (optional)
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`precomputed_properties <aim2dat.ml.transformers.StructureDensityTransformer.precomputed_properties>`
+        - Precomputed properties given as list of tuples consisting of input parameters and
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_precomputed_properties <aim2dat.ml.transformers.StructureDensityTransformer.add_precomputed_properties>`\ (parameters, structure_operations)
+        - Add precomputed properties.
+      * - :py:obj:`clear_precomputed_properties <aim2dat.ml.transformers.StructureDensityTransformer.clear_precomputed_properties>`\ ()
+        - Clear all precomputed properties.
+      * - :py:obj:`fit <aim2dat.ml.transformers.StructureDensityTransformer.fit>`\ (X, y)
+        - Fit function that determines the number of features.
+      * - :py:obj:`fit_transform <aim2dat.ml.transformers.StructureDensityTransformer.fit_transform>`\ (X, y, \*\*fit_params)
+        - Fit to data, then transform it.
+      * - :py:obj:`get_feature_names_out <aim2dat.ml.transformers.StructureDensityTransformer.get_feature_names_out>`\ (input_features)
+        - Get feature names.
+      * - :py:obj:`get_metadata_routing <aim2dat.ml.transformers.StructureDensityTransformer.get_metadata_routing>`\ ()
+        - Get metadata routing of this object.
+      * - :py:obj:`get_params <aim2dat.ml.transformers.StructureDensityTransformer.get_params>`\ (deep)
+        - Get parameters for this estimator.
+      * - :py:obj:`precompute_parameter_space <aim2dat.ml.transformers.StructureDensityTransformer.precompute_parameter_space>`\ (param_grid, X)
+        - Precompute and store structural properties to be reused later e.g. for a grid search.
+      * - :py:obj:`set_output <aim2dat.ml.transformers.StructureDensityTransformer.set_output>`\ (\*None, transform)
+        - Set output container.
+      * - :py:obj:`set_params <aim2dat.ml.transformers.StructureDensityTransformer.set_params>`\ (\*\*params)
+        - Set the parameters of this estimator.
+      * - :py:obj:`transform <aim2dat.ml.transformers.StructureDensityTransformer.transform>`\ (X)
+        - Transform structures to features.
+
+
+
+   .. py:property:: precomputed_properties
+
+      Precomputed properties given as list of tuples consisting of input parameters and
+      StructureOperations object.
+
+      :type: list
+
+
+   .. py:method:: add_precomputed_properties(parameters, structure_operations)
+
+      Add precomputed properties.
+
+      :Parameters: * **parameters** (*dict*) -- Dictionary of input parameters.
+                   * **structure_operations** (*StructureOperations*) -- StructureOperations object storing the properties according to the input parameters.
+
+
+   .. py:method:: clear_precomputed_properties()
+
+      Clear all precomputed properties.
+
+
+   .. py:method:: fit(X, y=None)
+
+      Fit function that determines the number of features.
+
+      :Parameters: * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+                   * **y** (*list (optional)*) -- list of target property.
+
+      :returns: *self* -- Transformer object.
+
+
+   .. py:method:: fit_transform(X, y=None, **fit_params)
+
+      Fit to data, then transform it.
+
+      Fits transformer to `X` and `y` with optional parameters `fit_params`
+      and returns a transformed version of `X`.
+
+      :Parameters: * **X** (*array-like of shape (n_samples, n_features)*) -- Input samples.
+                   * **y** (*array-like of shape (n_samples,) or (n_samples, n_outputs),                 default=None*) -- Target values (None for unsupervised transformations).
+                   * **\*\*fit_params** (*dict*) -- Additional fit parameters.
+
+      :returns: **X_new** (*ndarray array of shape (n_samples, n_features_new)*) -- Transformed array.
+
+
+   .. py:method:: get_feature_names_out(input_features=None)
+
+      Get feature names.
+
+
+   .. py:method:: get_metadata_routing()
+
+      Get metadata routing of this object.
+
+      Please check :ref:`User Guide <metadata_routing>` on how the routing
+      mechanism works.
+
+      :returns: **routing** (*MetadataRequest*) -- A :class:`~sklearn.utils.metadata_routing.MetadataRequest` encapsulating
+                routing information.
+
+
+   .. py:method:: get_params(deep=True)
+
+      Get parameters for this estimator.
+
+      :Parameters: **deep** (*bool, default=True*) -- If True, will return the parameters for this estimator and
+                   contained subobjects that are estimators.
+
+      :returns: **params** (*dict*) -- Parameter names mapped to their values.
+
+
+   .. py:method:: precompute_parameter_space(param_grid, X)
+
+      Precompute and store structural properties to be reused later e.g. for a grid search.
+
+      :Parameters: * **param_grid** (*list or dict*) -- Dictionary or list of dictionaries of input parameters.
+                   * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+
+   .. py:method:: set_output(*, transform=None)
+
+      Set output container.
+
+      See :ref:`sphx_glr_auto_examples_miscellaneous_plot_set_output.py`
+      for an example on how to use the API.
+
+      :Parameters: **transform** (*{"default", "pandas"}, default=None*) -- Configure output of `transform` and `fit_transform`.
+
+                   - `"default"`: Default output format of a transformer
+                   - `"pandas"`: DataFrame output
+                   - `"polars"`: Polars output
+                   - `None`: Transform configuration is unchanged
+
+                   .. versionadded:: 1.4
+                       `"polars"` option was added.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: set_params(**params)
+
+      Set the parameters of this estimator.
+
+      The method works on simple estimators as well as on nested objects
+      (such as :class:`~sklearn.pipeline.Pipeline`). The latter have
+      parameters of the form ``<component>__<parameter>`` so that it's
+      possible to update each component of a nested object.
+
+      :Parameters: **\*\*params** (*dict*) -- Estimator parameters.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: transform(X)
+
+      Transform structures to features.
+
+      :Parameters: **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+      :returns: *numpy.array* -- Nested array of features.
+
+
+
+
+.. py:class:: StructureFFPrintTransformer(r_max=15.0, delta_bin=0.005, sigma=10.0, distinguish_kinds=False, add_header=False, use_weights=False, n_procs=1, chunksize=50, verbose=True)
+
+
+   Bases: :py:obj:`_BaseStructureTransformer`
+
+   Extract the F-fingerprint for each element-pair as defined in
+   :doi:`10.1103/PhysRevB.96.024104`.
+
+   :ivar r_max: Cut-off value for the maximum distance between two atoms in angstrom.
+   :vartype r_max: float (optional)
+   :ivar delta_bin: Bin size to descritize the function in angstrom.
+   :vartype delta_bin: float (optional)
+   :ivar sigma: Smearing parameter for the Gaussian function.
+   :vartype sigma: float (optional)
+   :ivar distinguish_kinds: Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
+                            different elements if ``True``.
+   :vartype distinguish_kinds: bool (optional)
+   :ivar add_header: Add leading entries that describe the weights and composition for the ffprint kernels.
+   :vartype add_header: bool
+   :ivar n_procs: Number of parallel processes.
+   :vartype n_procs: int (optional)
+   :ivar chunksize: Number of structures handed to each process at once.
+   :vartype chunksize: int (optional)
+   :ivar verbose: Whether to print a progress bar.
+
+   :vartype verbose: bool (optional)
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`precomputed_properties <aim2dat.ml.transformers.StructureFFPrintTransformer.precomputed_properties>`
+        - Precomputed properties given as list of tuples consisting of input parameters and
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_precomputed_properties <aim2dat.ml.transformers.StructureFFPrintTransformer.add_precomputed_properties>`\ (parameters, structure_operations)
+        - Add precomputed properties.
+      * - :py:obj:`clear_precomputed_properties <aim2dat.ml.transformers.StructureFFPrintTransformer.clear_precomputed_properties>`\ ()
+        - Clear all precomputed properties.
+      * - :py:obj:`fit <aim2dat.ml.transformers.StructureFFPrintTransformer.fit>`\ (X, y)
+        - Fit function that determines the number of features.
+      * - :py:obj:`fit_transform <aim2dat.ml.transformers.StructureFFPrintTransformer.fit_transform>`\ (X, y, \*\*fit_params)
+        - Fit to data, then transform it.
+      * - :py:obj:`get_feature_names_out <aim2dat.ml.transformers.StructureFFPrintTransformer.get_feature_names_out>`\ (input_features)
+        - Get feature names.
+      * - :py:obj:`get_metadata_routing <aim2dat.ml.transformers.StructureFFPrintTransformer.get_metadata_routing>`\ ()
+        - Get metadata routing of this object.
+      * - :py:obj:`get_params <aim2dat.ml.transformers.StructureFFPrintTransformer.get_params>`\ (deep)
+        - Get parameters for this estimator.
+      * - :py:obj:`precompute_parameter_space <aim2dat.ml.transformers.StructureFFPrintTransformer.precompute_parameter_space>`\ (param_grid, X)
+        - Precompute and store structural properties to be reused later e.g. for a grid search.
+      * - :py:obj:`set_output <aim2dat.ml.transformers.StructureFFPrintTransformer.set_output>`\ (\*None, transform)
+        - Set output container.
+      * - :py:obj:`set_params <aim2dat.ml.transformers.StructureFFPrintTransformer.set_params>`\ (\*\*params)
+        - Set the parameters of this estimator.
+      * - :py:obj:`transform <aim2dat.ml.transformers.StructureFFPrintTransformer.transform>`\ (X)
+        - Transform structures to features.
+
+
+
+   .. py:property:: precomputed_properties
+
+      Precomputed properties given as list of tuples consisting of input parameters and
+      StructureOperations object.
+
+      :type: list
+
+
+   .. py:method:: add_precomputed_properties(parameters, structure_operations)
+
+      Add precomputed properties.
+
+      :Parameters: * **parameters** (*dict*) -- Dictionary of input parameters.
+                   * **structure_operations** (*StructureOperations*) -- StructureOperations object storing the properties according to the input parameters.
+
+
+   .. py:method:: clear_precomputed_properties()
+
+      Clear all precomputed properties.
+
+
+   .. py:method:: fit(X, y=None)
+
+      Fit function that determines the number of features.
+
+      :Parameters: * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+                   * **y** (*list (optional)*) -- list of target property.
+
+      :returns: *self* -- Transformer object.
+
+
+   .. py:method:: fit_transform(X, y=None, **fit_params)
+
+      Fit to data, then transform it.
+
+      Fits transformer to `X` and `y` with optional parameters `fit_params`
+      and returns a transformed version of `X`.
+
+      :Parameters: * **X** (*array-like of shape (n_samples, n_features)*) -- Input samples.
+                   * **y** (*array-like of shape (n_samples,) or (n_samples, n_outputs),                 default=None*) -- Target values (None for unsupervised transformations).
+                   * **\*\*fit_params** (*dict*) -- Additional fit parameters.
+
+      :returns: **X_new** (*ndarray array of shape (n_samples, n_features_new)*) -- Transformed array.
+
+
+   .. py:method:: get_feature_names_out(input_features=None)
+
+      Get feature names.
+
+
+   .. py:method:: get_metadata_routing()
+
+      Get metadata routing of this object.
+
+      Please check :ref:`User Guide <metadata_routing>` on how the routing
+      mechanism works.
+
+      :returns: **routing** (*MetadataRequest*) -- A :class:`~sklearn.utils.metadata_routing.MetadataRequest` encapsulating
+                routing information.
+
+
+   .. py:method:: get_params(deep=True)
+
+      Get parameters for this estimator.
+
+      :Parameters: **deep** (*bool, default=True*) -- If True, will return the parameters for this estimator and
+                   contained subobjects that are estimators.
+
+      :returns: **params** (*dict*) -- Parameter names mapped to their values.
+
+
+   .. py:method:: precompute_parameter_space(param_grid, X)
+
+      Precompute and store structural properties to be reused later e.g. for a grid search.
+
+      :Parameters: * **param_grid** (*list or dict*) -- Dictionary or list of dictionaries of input parameters.
+                   * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+
+   .. py:method:: set_output(*, transform=None)
+
+      Set output container.
+
+      See :ref:`sphx_glr_auto_examples_miscellaneous_plot_set_output.py`
+      for an example on how to use the API.
+
+      :Parameters: **transform** (*{"default", "pandas"}, default=None*) -- Configure output of `transform` and `fit_transform`.
+
+                   - `"default"`: Default output format of a transformer
+                   - `"pandas"`: DataFrame output
+                   - `"polars"`: Polars output
+                   - `None`: Transform configuration is unchanged
+
+                   .. versionadded:: 1.4
+                       `"polars"` option was added.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: set_params(**params)
+
+      Set the parameters of this estimator.
+
+      The method works on simple estimators as well as on nested objects
+      (such as :class:`~sklearn.pipeline.Pipeline`). The latter have
+      parameters of the form ``<component>__<parameter>`` so that it's
+      possible to update each component of a nested object.
+
+      :Parameters: **\*\*params** (*dict*) -- Estimator parameters.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: transform(X)
+
+      Transform structures to features.
+
+      :Parameters: **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+      :returns: *numpy.array* -- Nested array of features.
+
+
+
+
+.. py:class:: StructureMBTRTransformer(geometry={'function': 'inverse_distance'}, grid={'min': 0, 'max': 1, 'n': 100, 'sigma': 0.1}, weighting={'function': 'exp', 'scale': 1.0, 'threshold': 0.001}, normalize_gaussians=True, normalization='l2', elements=None, periodic=False, sparse=False, dscribe_n_jobs=1, dscribe_only_physical_cores=False, n_procs=1, chunksize=50, verbose=True)
+
+
+   Bases: :py:obj:`_BaseDscribeTransformer`
+
+   Extract MBTR descriptor as defined in :doi:`10.1088/2632-2153/aca005`. This transformer class
+   is based on the implementations of the dscribe python package.
+
+   :ivar geometry: Setup the geometry function.
+   :vartype geometry: dict
+   :ivar grid: Setup the discretization grid.
+   :vartype grid: dict
+   :ivar weighting: Setup the weighting function and its parameters.
+   :vartype weighting: dict
+   :ivar normalize_gaussians: Whether to normalize the gaussians to an area of 1.
+   :vartype normalize_gaussians: bool
+   :ivar normalization: Method for normalizing. Supported options are ``'none'``, ``'l2'``, ``'n_atoms'``,
+                        ``'valle_oganov'``.
+   :vartype normalization: str
+   :ivar elements: List of atomic numbers or chemical symbols.
+   :vartype elements: list
+   :ivar periodic: Whether to consider periodic boundary conditions.
+   :vartype periodic: bool
+   :ivar sparse: Whether to return a sparse matrix or a dense array.
+   :vartype sparse: bool
+   :ivar dscribe_n_jobs: Number of jobs used by dscribe to calculate the interaction matrix.
+   :vartype dscribe_n_jobs: int
+   :ivar dscribe_only_physical_cores: Whether to only use physicsl cores.
+   :vartype dscribe_only_physical_cores: bool
+   :ivar n_procs: Number of parallel processes.
+   :vartype n_procs: int (optional)
+   :ivar chunksize: Number of structures handed to each process at once.
+   :vartype chunksize: int (optional)
+   :ivar verbose: Whether to print a progress bar.
+
+   :vartype verbose: bool (optional)
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`precomputed_properties <aim2dat.ml.transformers.StructureMBTRTransformer.precomputed_properties>`
+        - Precomputed properties given as list of tuples consisting of input parameters and
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_precomputed_properties <aim2dat.ml.transformers.StructureMBTRTransformer.add_precomputed_properties>`\ (parameters, structure_operations)
+        - Add precomputed properties.
+      * - :py:obj:`clear_precomputed_properties <aim2dat.ml.transformers.StructureMBTRTransformer.clear_precomputed_properties>`\ ()
+        - Clear all precomputed properties.
+      * - :py:obj:`fit <aim2dat.ml.transformers.StructureMBTRTransformer.fit>`\ (X, y)
+        - Fit function that determines the number of features.
+      * - :py:obj:`fit_transform <aim2dat.ml.transformers.StructureMBTRTransformer.fit_transform>`\ (X, y, \*\*fit_params)
+        - Fit to data, then transform it.
+      * - :py:obj:`get_feature_names_out <aim2dat.ml.transformers.StructureMBTRTransformer.get_feature_names_out>`\ (input_features)
+        - Get feature names.
+      * - :py:obj:`get_metadata_routing <aim2dat.ml.transformers.StructureMBTRTransformer.get_metadata_routing>`\ ()
+        - Get metadata routing of this object.
+      * - :py:obj:`get_params <aim2dat.ml.transformers.StructureMBTRTransformer.get_params>`\ (deep)
+        - Get parameters for this estimator.
+      * - :py:obj:`precompute_parameter_space <aim2dat.ml.transformers.StructureMBTRTransformer.precompute_parameter_space>`\ (param_grid, X)
+        - Precompute and store structural properties to be reused later e.g. for a grid search.
+      * - :py:obj:`set_output <aim2dat.ml.transformers.StructureMBTRTransformer.set_output>`\ (\*None, transform)
+        - Set output container.
+      * - :py:obj:`set_params <aim2dat.ml.transformers.StructureMBTRTransformer.set_params>`\ (\*\*params)
+        - Set the parameters of this estimator.
+      * - :py:obj:`transform <aim2dat.ml.transformers.StructureMBTRTransformer.transform>`\ (X)
+        - Transform structures to features.
+
+
+
+   .. py:property:: precomputed_properties
+
+      Precomputed properties given as list of tuples consisting of input parameters and
+      StructureOperations object.
+
+      :type: list
+
+
+   .. py:method:: add_precomputed_properties(parameters, structure_operations)
+
+      Add precomputed properties.
+
+      :Parameters: * **parameters** (*dict*) -- Dictionary of input parameters.
+                   * **structure_operations** (*StructureOperations*) -- StructureOperations object storing the properties according to the input parameters.
+
+
+   .. py:method:: clear_precomputed_properties()
+
+      Clear all precomputed properties.
+
+
+   .. py:method:: fit(X, y=None)
+
+      Fit function that determines the number of features.
+
+      :Parameters: * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+                   * **y** (*list (optional)*) -- list of target property.
+
+      :returns: *self* -- Transformer object.
+
+
+   .. py:method:: fit_transform(X, y=None, **fit_params)
+
+      Fit to data, then transform it.
+
+      Fits transformer to `X` and `y` with optional parameters `fit_params`
+      and returns a transformed version of `X`.
+
+      :Parameters: * **X** (*array-like of shape (n_samples, n_features)*) -- Input samples.
+                   * **y** (*array-like of shape (n_samples,) or (n_samples, n_outputs),                 default=None*) -- Target values (None for unsupervised transformations).
+                   * **\*\*fit_params** (*dict*) -- Additional fit parameters.
+
+      :returns: **X_new** (*ndarray array of shape (n_samples, n_features_new)*) -- Transformed array.
+
+
+   .. py:method:: get_feature_names_out(input_features=None)
+
+      Get feature names.
+
+
+   .. py:method:: get_metadata_routing()
+
+      Get metadata routing of this object.
+
+      Please check :ref:`User Guide <metadata_routing>` on how the routing
+      mechanism works.
+
+      :returns: **routing** (*MetadataRequest*) -- A :class:`~sklearn.utils.metadata_routing.MetadataRequest` encapsulating
+                routing information.
+
+
+   .. py:method:: get_params(deep=True)
+
+      Get parameters for this estimator.
+
+      :Parameters: **deep** (*bool, default=True*) -- If True, will return the parameters for this estimator and
+                   contained subobjects that are estimators.
+
+      :returns: **params** (*dict*) -- Parameter names mapped to their values.
+
+
+   .. py:method:: precompute_parameter_space(param_grid, X)
+
+      Precompute and store structural properties to be reused later e.g. for a grid search.
+
+      :Parameters: * **param_grid** (*list or dict*) -- Dictionary or list of dictionaries of input parameters.
+                   * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+
+   .. py:method:: set_output(*, transform=None)
+
+      Set output container.
+
+      See :ref:`sphx_glr_auto_examples_miscellaneous_plot_set_output.py`
+      for an example on how to use the API.
+
+      :Parameters: **transform** (*{"default", "pandas"}, default=None*) -- Configure output of `transform` and `fit_transform`.
+
+                   - `"default"`: Default output format of a transformer
+                   - `"pandas"`: DataFrame output
+                   - `"polars"`: Polars output
+                   - `None`: Transform configuration is unchanged
+
+                   .. versionadded:: 1.4
+                       `"polars"` option was added.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: set_params(**params)
+
+      Set the parameters of this estimator.
+
+      The method works on simple estimators as well as on nested objects
+      (such as :class:`~sklearn.pipeline.Pipeline`). The latter have
+      parameters of the form ``<component>__<parameter>`` so that it's
+      possible to update each component of a nested object.
+
+      :Parameters: **\*\*params** (*dict*) -- Estimator parameters.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: transform(X)
+
+      Transform structures to features.
+
+      :Parameters: **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+      :returns: *numpy.array* -- Nested array of features.
+
+
+
+
+.. py:class:: StructureMatrixTransformer(matrix_type='coulomb', n_atoms_max=None, enforce_real=False, permutation='eigenspectrum', sigma=None, seed=None, sparse=False, ewald_accuracy=1e-05, ewald_w=1, ewald_r_cut=None, ewald_g_cut=None, ewald_a=None, dscribe_n_jobs=1, dscribe_only_physical_cores=False, n_procs=1, chunksize=50, verbose=True)
+
+
+   Bases: :py:obj:`_BaseStructureTransformer`
+
+   Extract features based on interaction matrices as defined in :doi:`10.1002/qua.24917`.
+   This transformer class is based on the implementations of the dscribe python package.
+
+   :ivar matrix_type: Matrix type. Supported options are ``'coulomb'``, ``'ewald_sum'`` or ``'sine'``.
+   :vartype matrix_type: str
+   :ivar permutation: Defines the output format. Options are: ``'none'``, ``'sorted_l2'``, ``'eigenspectrum'``
+                      or ``'random'``.
+   :vartype permutation: str
+   :ivar sigma: Standar deviation of the Gaussian distributed noise when using ``'random'`` for
+                ``permutation``.
+   :vartype sigma: float
+   :ivar seed: Seed for the random numbers in case ``'random'`` is chosen for the ``permutation``
+               attibute.
+   :vartype seed: int
+   :ivar sparse: Whether to return a sparse matrix or a dense 1D array.
+   :vartype sparse: bool
+   :ivar ewald_accuracy: Accuracy threshold for the Ewald sum.
+   :vartype ewald_accuracy: float
+   :ivar ewald_w: Weight parameter.
+   :vartype ewald_w: int
+   :ivar ewald_r_cut: Real space cutoff parameter.
+   :vartype ewald_r_cut: float or None
+   :ivar ewald_g_cut: Reciprocal space cutoff parameter.
+   :vartype ewald_g_cut: float or None
+   :ivar ewald_a: Parameter controlling the width of the Gaussian functions.
+   :vartype ewald_a: float or None
+   :ivar dscribe_n_jobs: Number of jobs used by dscribe to calculate the interaction matrix.
+   :vartype dscribe_n_jobs: int
+   :ivar dscribe_only_physical_cores: Whether to only use physicsl cores.
+   :vartype dscribe_only_physical_cores: bool
+   :ivar n_procs: Number of parallel processes.
+   :vartype n_procs: int (optional)
+   :ivar chunksize: Number of structures handed to each process at once.
+   :vartype chunksize: int (optional)
+   :ivar verbose: Whether to print a progress bar.
+
+   :vartype verbose: bool (optional)
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`precomputed_properties <aim2dat.ml.transformers.StructureMatrixTransformer.precomputed_properties>`
+        - Precomputed properties given as list of tuples consisting of input parameters and
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_precomputed_properties <aim2dat.ml.transformers.StructureMatrixTransformer.add_precomputed_properties>`\ (parameters, structure_operations)
+        - Add precomputed properties.
+      * - :py:obj:`clear_precomputed_properties <aim2dat.ml.transformers.StructureMatrixTransformer.clear_precomputed_properties>`\ ()
+        - Clear all precomputed properties.
+      * - :py:obj:`fit <aim2dat.ml.transformers.StructureMatrixTransformer.fit>`\ (X, y)
+        - Fit function that determines the number of features.
+      * - :py:obj:`fit_transform <aim2dat.ml.transformers.StructureMatrixTransformer.fit_transform>`\ (X, y, \*\*fit_params)
+        - Fit to data, then transform it.
+      * - :py:obj:`get_feature_names_out <aim2dat.ml.transformers.StructureMatrixTransformer.get_feature_names_out>`\ (input_features)
+        - Get feature names.
+      * - :py:obj:`get_metadata_routing <aim2dat.ml.transformers.StructureMatrixTransformer.get_metadata_routing>`\ ()
+        - Get metadata routing of this object.
+      * - :py:obj:`get_params <aim2dat.ml.transformers.StructureMatrixTransformer.get_params>`\ (deep)
+        - Get parameters for this estimator.
+      * - :py:obj:`precompute_parameter_space <aim2dat.ml.transformers.StructureMatrixTransformer.precompute_parameter_space>`\ (param_grid, X)
+        - Precompute and store structural properties to be reused later e.g. for a grid search.
+      * - :py:obj:`set_output <aim2dat.ml.transformers.StructureMatrixTransformer.set_output>`\ (\*None, transform)
+        - Set output container.
+      * - :py:obj:`set_params <aim2dat.ml.transformers.StructureMatrixTransformer.set_params>`\ (\*\*params)
+        - Set the parameters of this estimator.
+      * - :py:obj:`transform <aim2dat.ml.transformers.StructureMatrixTransformer.transform>`\ (X)
+        - Transform structures to features.
+
+
+
+   .. py:property:: precomputed_properties
+
+      Precomputed properties given as list of tuples consisting of input parameters and
+      StructureOperations object.
+
+      :type: list
+
+
+   .. py:method:: add_precomputed_properties(parameters, structure_operations)
+
+      Add precomputed properties.
+
+      :Parameters: * **parameters** (*dict*) -- Dictionary of input parameters.
+                   * **structure_operations** (*StructureOperations*) -- StructureOperations object storing the properties according to the input parameters.
+
+
+   .. py:method:: clear_precomputed_properties()
+
+      Clear all precomputed properties.
+
+
+   .. py:method:: fit(X, y=None)
+
+      Fit function that determines the number of features.
+
+      :Parameters: * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+                   * **y** (*list (optional)*) -- list of target property.
+
+      :returns: *self* -- Transformer object.
+
+
+   .. py:method:: fit_transform(X, y=None, **fit_params)
+
+      Fit to data, then transform it.
+
+      Fits transformer to `X` and `y` with optional parameters `fit_params`
+      and returns a transformed version of `X`.
+
+      :Parameters: * **X** (*array-like of shape (n_samples, n_features)*) -- Input samples.
+                   * **y** (*array-like of shape (n_samples,) or (n_samples, n_outputs),                 default=None*) -- Target values (None for unsupervised transformations).
+                   * **\*\*fit_params** (*dict*) -- Additional fit parameters.
+
+      :returns: **X_new** (*ndarray array of shape (n_samples, n_features_new)*) -- Transformed array.
+
+
+   .. py:method:: get_feature_names_out(input_features=None)
+
+      Get feature names.
+
+
+   .. py:method:: get_metadata_routing()
+
+      Get metadata routing of this object.
+
+      Please check :ref:`User Guide <metadata_routing>` on how the routing
+      mechanism works.
+
+      :returns: **routing** (*MetadataRequest*) -- A :class:`~sklearn.utils.metadata_routing.MetadataRequest` encapsulating
+                routing information.
+
+
+   .. py:method:: get_params(deep=True)
+
+      Get parameters for this estimator.
+
+      :Parameters: **deep** (*bool, default=True*) -- If True, will return the parameters for this estimator and
+                   contained subobjects that are estimators.
+
+      :returns: **params** (*dict*) -- Parameter names mapped to their values.
+
+
+   .. py:method:: precompute_parameter_space(param_grid, X)
+
+      Precompute and store structural properties to be reused later e.g. for a grid search.
+
+      :Parameters: * **param_grid** (*list or dict*) -- Dictionary or list of dictionaries of input parameters.
+                   * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+
+   .. py:method:: set_output(*, transform=None)
+
+      Set output container.
+
+      See :ref:`sphx_glr_auto_examples_miscellaneous_plot_set_output.py`
+      for an example on how to use the API.
+
+      :Parameters: **transform** (*{"default", "pandas"}, default=None*) -- Configure output of `transform` and `fit_transform`.
+
+                   - `"default"`: Default output format of a transformer
+                   - `"pandas"`: DataFrame output
+                   - `"polars"`: Polars output
+                   - `None`: Transform configuration is unchanged
+
+                   .. versionadded:: 1.4
+                       `"polars"` option was added.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: set_params(**params)
+
+      Set the parameters of this estimator.
+
+      The method works on simple estimators as well as on nested objects
+      (such as :class:`~sklearn.pipeline.Pipeline`). The latter have
+      parameters of the form ``<component>__<parameter>`` so that it's
+      possible to update each component of a nested object.
+
+      :Parameters: **\*\*params** (*dict*) -- Estimator parameters.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: transform(X)
+
+      Transform structures to features.
+
+      :Parameters: **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+      :returns: *numpy.array* -- Nested array of features.
+
+
+
+
+.. py:class:: StructurePRDFTransformer(r_max=15.0, delta_bin=0.005, distinguish_kinds=False, n_procs=1, chunksize=50, verbose=True)
+
+
+   Bases: :py:obj:`_BaseStructureTransformer`
+
+   Extract the partial radial distribution function for each element-pair as defined in
+   :doi:`10.1103/PhysRevB.89.205118`.
+
+   :ivar r_max: Cut-off value for the maximum distance between two atoms in angstrom.
+   :vartype r_max: float (optional)
+   :ivar delta_bin: Bin size to descritize the function in angstrom.
+   :vartype delta_bin: float (optional)
+   :ivar distinguish_kinds: Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
+                            different elements if ``True``.
+   :vartype distinguish_kinds: bool (optional)
+   :ivar n_procs: Number of parallel processes.
+   :vartype n_procs: int (optional)
+   :ivar chunksize: Number of structures handed to each process at once.
+   :vartype chunksize: int (optional)
+   :ivar verbose: Whether to print a progress bar.
+
+   :vartype verbose: bool (optional)
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`precomputed_properties <aim2dat.ml.transformers.StructurePRDFTransformer.precomputed_properties>`
+        - Precomputed properties given as list of tuples consisting of input parameters and
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_precomputed_properties <aim2dat.ml.transformers.StructurePRDFTransformer.add_precomputed_properties>`\ (parameters, structure_operations)
+        - Add precomputed properties.
+      * - :py:obj:`clear_precomputed_properties <aim2dat.ml.transformers.StructurePRDFTransformer.clear_precomputed_properties>`\ ()
+        - Clear all precomputed properties.
+      * - :py:obj:`fit <aim2dat.ml.transformers.StructurePRDFTransformer.fit>`\ (X, y)
+        - Fit function that determines the number of features.
+      * - :py:obj:`fit_transform <aim2dat.ml.transformers.StructurePRDFTransformer.fit_transform>`\ (X, y, \*\*fit_params)
+        - Fit to data, then transform it.
+      * - :py:obj:`get_feature_names_out <aim2dat.ml.transformers.StructurePRDFTransformer.get_feature_names_out>`\ (input_features)
+        - Get feature names.
+      * - :py:obj:`get_metadata_routing <aim2dat.ml.transformers.StructurePRDFTransformer.get_metadata_routing>`\ ()
+        - Get metadata routing of this object.
+      * - :py:obj:`get_params <aim2dat.ml.transformers.StructurePRDFTransformer.get_params>`\ (deep)
+        - Get parameters for this estimator.
+      * - :py:obj:`precompute_parameter_space <aim2dat.ml.transformers.StructurePRDFTransformer.precompute_parameter_space>`\ (param_grid, X)
+        - Precompute and store structural properties to be reused later e.g. for a grid search.
+      * - :py:obj:`set_output <aim2dat.ml.transformers.StructurePRDFTransformer.set_output>`\ (\*None, transform)
+        - Set output container.
+      * - :py:obj:`set_params <aim2dat.ml.transformers.StructurePRDFTransformer.set_params>`\ (\*\*params)
+        - Set the parameters of this estimator.
+      * - :py:obj:`transform <aim2dat.ml.transformers.StructurePRDFTransformer.transform>`\ (X)
+        - Transform structures to features.
+
+
+
+   .. py:property:: precomputed_properties
+
+      Precomputed properties given as list of tuples consisting of input parameters and
+      StructureOperations object.
+
+      :type: list
+
+
+   .. py:method:: add_precomputed_properties(parameters, structure_operations)
+
+      Add precomputed properties.
+
+      :Parameters: * **parameters** (*dict*) -- Dictionary of input parameters.
+                   * **structure_operations** (*StructureOperations*) -- StructureOperations object storing the properties according to the input parameters.
+
+
+   .. py:method:: clear_precomputed_properties()
+
+      Clear all precomputed properties.
+
+
+   .. py:method:: fit(X, y=None)
+
+      Fit function that determines the number of features.
+
+      :Parameters: * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+                   * **y** (*list (optional)*) -- list of target property.
+
+      :returns: *self* -- Transformer object.
+
+
+   .. py:method:: fit_transform(X, y=None, **fit_params)
+
+      Fit to data, then transform it.
+
+      Fits transformer to `X` and `y` with optional parameters `fit_params`
+      and returns a transformed version of `X`.
+
+      :Parameters: * **X** (*array-like of shape (n_samples, n_features)*) -- Input samples.
+                   * **y** (*array-like of shape (n_samples,) or (n_samples, n_outputs),                 default=None*) -- Target values (None for unsupervised transformations).
+                   * **\*\*fit_params** (*dict*) -- Additional fit parameters.
+
+      :returns: **X_new** (*ndarray array of shape (n_samples, n_features_new)*) -- Transformed array.
+
+
+   .. py:method:: get_feature_names_out(input_features=None)
+
+      Get feature names.
+
+
+   .. py:method:: get_metadata_routing()
+
+      Get metadata routing of this object.
+
+      Please check :ref:`User Guide <metadata_routing>` on how the routing
+      mechanism works.
+
+      :returns: **routing** (*MetadataRequest*) -- A :class:`~sklearn.utils.metadata_routing.MetadataRequest` encapsulating
+                routing information.
+
+
+   .. py:method:: get_params(deep=True)
+
+      Get parameters for this estimator.
+
+      :Parameters: **deep** (*bool, default=True*) -- If True, will return the parameters for this estimator and
+                   contained subobjects that are estimators.
+
+      :returns: **params** (*dict*) -- Parameter names mapped to their values.
+
+
+   .. py:method:: precompute_parameter_space(param_grid, X)
+
+      Precompute and store structural properties to be reused later e.g. for a grid search.
+
+      :Parameters: * **param_grid** (*list or dict*) -- Dictionary or list of dictionaries of input parameters.
+                   * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+
+   .. py:method:: set_output(*, transform=None)
+
+      Set output container.
+
+      See :ref:`sphx_glr_auto_examples_miscellaneous_plot_set_output.py`
+      for an example on how to use the API.
+
+      :Parameters: **transform** (*{"default", "pandas"}, default=None*) -- Configure output of `transform` and `fit_transform`.
+
+                   - `"default"`: Default output format of a transformer
+                   - `"pandas"`: DataFrame output
+                   - `"polars"`: Polars output
+                   - `None`: Transform configuration is unchanged
+
+                   .. versionadded:: 1.4
+                       `"polars"` option was added.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: set_params(**params)
+
+      Set the parameters of this estimator.
+
+      The method works on simple estimators as well as on nested objects
+      (such as :class:`~sklearn.pipeline.Pipeline`). The latter have
+      parameters of the form ``<component>__<parameter>`` so that it's
+      possible to update each component of a nested object.
+
+      :Parameters: **\*\*params** (*dict*) -- Estimator parameters.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: transform(X)
+
+      Transform structures to features.
+
+      :Parameters: **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+      :returns: *numpy.array* -- Nested array of features.
+
+
+
+
+.. py:class:: StructureSOAPTransformer(r_cut=7.5, n_max=8, l_max=6, sigma=1.0, rbf='gto', weighting=None, compression={'mode': 'off', 'species_weighting': None}, average='off', elements=None, periodic=False, sparse=False, dscribe_n_jobs=1, dscribe_only_physical_cores=False, n_procs=1, chunksize=50, verbose=True)
+
+
+   Bases: :py:obj:`_BaseDscribeTransformer`
+
+   Extract SOAP descriptor as defined in :doi:`10.1103/PhysRevB.87.184115`. This transformer
+   class is based on the implementations of the dscribe python package.
+
+   :ivar r_cut: Cutoff value.
+   :vartype r_cut: float
+   :ivar n_max: The number of radial basis functions.
+   :vartype n_max: int
+   :ivar l_max: The maximum degree of spherical harmonics.
+   :vartype l_max: int
+   :ivar sigma: The standard deviation of the gaussians.
+   :vartype sigma: float
+   :ivar rbf: The radial basis functions to use. Supported options are: ``'gto'`` or ``'polynomial'``.
+   :vartype rbf: str
+   :ivar weighting: Contains the options which control the weighting of the atomic density.
+   :vartype weighting: dict
+   :ivar compression: Feature compression options.
+   :vartype compression: dict
+   :ivar average: The averaging mode over the centers of interest. Supported options are: ``'off'``,
+                  ``'inner'`` or ``'outer'``.
+   :vartype average: str
+   :ivar elements: List of atomic numbers or chemical symbols.
+   :vartype elements: list
+   :ivar periodic: Whether to consider periodic boundary conditions.
+   :vartype periodic: bool
+   :ivar sparse: Whether to return a sparse matrix or a dense array.
+   :vartype sparse: bool
+   :ivar dscribe_n_jobs: Number of jobs used by dscribe to calculate the interaction matrix.
+   :vartype dscribe_n_jobs: int
+   :ivar dscribe_only_physical_cores: Whether to only use physicsl cores.
+   :vartype dscribe_only_physical_cores: bool
+   :ivar n_procs: Number of parallel processes.
+   :vartype n_procs: int (optional)
+   :ivar chunksize: Number of structures handed to each process at once.
+   :vartype chunksize: int (optional)
+   :ivar verbose: Whether to print a progress bar.
+
+   :vartype verbose: bool (optional)
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`precomputed_properties <aim2dat.ml.transformers.StructureSOAPTransformer.precomputed_properties>`
+        - Precomputed properties given as list of tuples consisting of input parameters and
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_precomputed_properties <aim2dat.ml.transformers.StructureSOAPTransformer.add_precomputed_properties>`\ (parameters, structure_operations)
+        - Add precomputed properties.
+      * - :py:obj:`clear_precomputed_properties <aim2dat.ml.transformers.StructureSOAPTransformer.clear_precomputed_properties>`\ ()
+        - Clear all precomputed properties.
+      * - :py:obj:`fit <aim2dat.ml.transformers.StructureSOAPTransformer.fit>`\ (X, y)
+        - Fit function that determines the number of features.
+      * - :py:obj:`fit_transform <aim2dat.ml.transformers.StructureSOAPTransformer.fit_transform>`\ (X, y, \*\*fit_params)
+        - Fit to data, then transform it.
+      * - :py:obj:`get_feature_names_out <aim2dat.ml.transformers.StructureSOAPTransformer.get_feature_names_out>`\ (input_features)
+        - Get feature names.
+      * - :py:obj:`get_metadata_routing <aim2dat.ml.transformers.StructureSOAPTransformer.get_metadata_routing>`\ ()
+        - Get metadata routing of this object.
+      * - :py:obj:`get_params <aim2dat.ml.transformers.StructureSOAPTransformer.get_params>`\ (deep)
+        - Get parameters for this estimator.
+      * - :py:obj:`precompute_parameter_space <aim2dat.ml.transformers.StructureSOAPTransformer.precompute_parameter_space>`\ (param_grid, X)
+        - Precompute and store structural properties to be reused later e.g. for a grid search.
+      * - :py:obj:`set_output <aim2dat.ml.transformers.StructureSOAPTransformer.set_output>`\ (\*None, transform)
+        - Set output container.
+      * - :py:obj:`set_params <aim2dat.ml.transformers.StructureSOAPTransformer.set_params>`\ (\*\*params)
+        - Set the parameters of this estimator.
+      * - :py:obj:`transform <aim2dat.ml.transformers.StructureSOAPTransformer.transform>`\ (X)
+        - Transform structures to features.
+
+
+
+   .. py:property:: precomputed_properties
+
+      Precomputed properties given as list of tuples consisting of input parameters and
+      StructureOperations object.
+
+      :type: list
+
+
+   .. py:method:: add_precomputed_properties(parameters, structure_operations)
+
+      Add precomputed properties.
+
+      :Parameters: * **parameters** (*dict*) -- Dictionary of input parameters.
+                   * **structure_operations** (*StructureOperations*) -- StructureOperations object storing the properties according to the input parameters.
+
+
+   .. py:method:: clear_precomputed_properties()
+
+      Clear all precomputed properties.
+
+
+   .. py:method:: fit(X, y=None)
+
+      Fit function that determines the number of features.
+
+      :Parameters: * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+                   * **y** (*list (optional)*) -- list of target property.
+
+      :returns: *self* -- Transformer object.
+
+
+   .. py:method:: fit_transform(X, y=None, **fit_params)
+
+      Fit to data, then transform it.
+
+      Fits transformer to `X` and `y` with optional parameters `fit_params`
+      and returns a transformed version of `X`.
+
+      :Parameters: * **X** (*array-like of shape (n_samples, n_features)*) -- Input samples.
+                   * **y** (*array-like of shape (n_samples,) or (n_samples, n_outputs),                 default=None*) -- Target values (None for unsupervised transformations).
+                   * **\*\*fit_params** (*dict*) -- Additional fit parameters.
+
+      :returns: **X_new** (*ndarray array of shape (n_samples, n_features_new)*) -- Transformed array.
+
+
+   .. py:method:: get_feature_names_out(input_features=None)
+
+      Get feature names.
+
+
+   .. py:method:: get_metadata_routing()
+
+      Get metadata routing of this object.
+
+      Please check :ref:`User Guide <metadata_routing>` on how the routing
+      mechanism works.
+
+      :returns: **routing** (*MetadataRequest*) -- A :class:`~sklearn.utils.metadata_routing.MetadataRequest` encapsulating
+                routing information.
+
+
+   .. py:method:: get_params(deep=True)
+
+      Get parameters for this estimator.
+
+      :Parameters: **deep** (*bool, default=True*) -- If True, will return the parameters for this estimator and
+                   contained subobjects that are estimators.
+
+      :returns: **params** (*dict*) -- Parameter names mapped to their values.
+
+
+   .. py:method:: precompute_parameter_space(param_grid, X)
+
+      Precompute and store structural properties to be reused later e.g. for a grid search.
+
+      :Parameters: * **param_grid** (*list or dict*) -- Dictionary or list of dictionaries of input parameters.
+                   * **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+
+   .. py:method:: set_output(*, transform=None)
+
+      Set output container.
+
+      See :ref:`sphx_glr_auto_examples_miscellaneous_plot_set_output.py`
+      for an example on how to use the API.
+
+      :Parameters: **transform** (*{"default", "pandas"}, default=None*) -- Configure output of `transform` and `fit_transform`.
+
+                   - `"default"`: Default output format of a transformer
+                   - `"pandas"`: DataFrame output
+                   - `"polars"`: Polars output
+                   - `None`: Transform configuration is unchanged
+
+                   .. versionadded:: 1.4
+                       `"polars"` option was added.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: set_params(**params)
+
+      Set the parameters of this estimator.
+
+      The method works on simple estimators as well as on nested objects
+      (such as :class:`~sklearn.pipeline.Pipeline`). The latter have
+      parameters of the form ``<component>__<parameter>`` so that it's
+      possible to update each component of a nested object.
+
+      :Parameters: **\*\*params** (*dict*) -- Estimator parameters.
+
+      :returns: **self** (*estimator instance*) -- Estimator instance.
+
+
+   .. py:method:: transform(X)
+
+      Transform structures to features.
+
+      :Parameters: **X** (*list or aim2dat.strct.StructureCollection*) -- List of structures or StructureCollection.
+
+      :returns: *numpy.array* -- Nested array of features.
+
+
+

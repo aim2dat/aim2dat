@@ -1,0 +1,311 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.structure_collection`
+============================================
+
+.. py:module:: aim2dat.strct.structure_collection
+
+.. autoapi-nested-parse::
+
+   Module implementing the StructureCollection class to handle a set of molecular or
+   crystalline structures.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.structure_collection.StructureCollection
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.structure_collection.aiida
+   aim2dat.strct.structure_collection.pymatgen
+
+
+
+.. py:class:: StructureCollection(structures: Union[list, None] = None)
+
+
+   The StructureCollection class is a container for one or multiple atomic structures. It
+   implements several ``import_*`` and ``append_*`` functions to add new data to the object.
+
+   :Parameters: **structures** (*list*) -- List of ``Structure`` or dict objects.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`labels <aim2dat.strct.structure_collection.StructureCollection.labels>`
+        - Labels assigened to the structures.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`append <aim2dat.strct.structure_collection.StructureCollection.append>`\ (label, elements, positions, pbc, cell, is_cartesian, wrap, kinds, attributes, extras)
+        - Append structure.
+      * - :py:obj:`append_from_aiida_structuredata <aim2dat.strct.structure_collection.StructureCollection.append_from_aiida_structuredata>`\ (aiida_node, use_uuid, label)
+        - Append structure from aiida structuredata.
+      * - :py:obj:`append_from_ase_atoms <aim2dat.strct.structure_collection.StructureCollection.append_from_ase_atoms>`\ (label, ase_atoms, attributes)
+        - Append structure from ase atoms object.
+      * - :py:obj:`append_from_file <aim2dat.strct.structure_collection.StructureCollection.append_from_file>`\ (label, file_path, attributes)
+        - Append structure from file using the ase read-function.
+      * - :py:obj:`append_from_pymatgen_structure <aim2dat.strct.structure_collection.StructureCollection.append_from_pymatgen_structure>`\ (label, pymatgen_structure, attributes)
+        - Append structure from pymatgen structure or molecule object.
+      * - :py:obj:`append_structure <aim2dat.strct.structure_collection.StructureCollection.append_structure>`\ (structure, label)
+        - Append ``Structure`` object to collection. The label of the structure needs to be
+      * - :py:obj:`copy <aim2dat.strct.structure_collection.StructureCollection.copy>`\ ()
+        - Return copy of ``StructureCollection`` object.
+      * - :py:obj:`create_pandas_df <aim2dat.strct.structure_collection.StructureCollection.create_pandas_df>`\ (exclude_columns)
+        - Create a pandas data frame of the object.
+      * - :py:obj:`duplicate_structure <aim2dat.strct.structure_collection.StructureCollection.duplicate_structure>`\ (key, new_label)
+        - Duplicate structure.
+      * - :py:obj:`get_all_attribute_keys <aim2dat.strct.structure_collection.StructureCollection.get_all_attribute_keys>`\ ()
+        - Get all attribute keys.
+      * - :py:obj:`get_all_elements <aim2dat.strct.structure_collection.StructureCollection.get_all_elements>`\ ()
+        - Get the element symbols of all structures.
+      * - :py:obj:`get_all_kinds <aim2dat.strct.structure_collection.StructureCollection.get_all_kinds>`\ ()
+        - Get the kind strings of all structures.
+      * - :py:obj:`get_all_structures <aim2dat.strct.structure_collection.StructureCollection.get_all_structures>`\ ()
+        - Return a list of all structures.
+      * - :py:obj:`get_structure <aim2dat.strct.structure_collection.StructureCollection.get_structure>`\ (key, return_index_label)
+        - Get structure by key.
+      * - :py:obj:`import_from_aiida_db <aim2dat.strct.structure_collection.StructureCollection.import_from_aiida_db>`\ (group_label, use_uuid, raise_error)
+        - Import from the AiiDA database.
+      * - :py:obj:`import_from_hdf5_file <aim2dat.strct.structure_collection.StructureCollection.import_from_hdf5_file>`\ (file_path, raise_error)
+        - Import from hdf5-file. Calculated extras are not yet supported.
+      * - :py:obj:`import_from_pandas_df <aim2dat.strct.structure_collection.StructureCollection.import_from_pandas_df>`\ (data_frame, structure_column, exclude_columns, use_uuid, raise_error)
+        - Import from pandas data frame.
+      * - :py:obj:`index <aim2dat.strct.structure_collection.StructureCollection.index>`\ (label)
+        - Return index of label. If the label is not present, ``None`` is returned.
+      * - :py:obj:`items <aim2dat.strct.structure_collection.StructureCollection.items>`\ ()
+        - Return a list of label, value tuples.
+      * - :py:obj:`pop <aim2dat.strct.structure_collection.StructureCollection.pop>`\ (key)
+        - Pop structure.
+      * - :py:obj:`store_in_aiida_db <aim2dat.strct.structure_collection.StructureCollection.store_in_aiida_db>`\ (group_label, group_description)
+        - Store structures into the AiiDA-database.
+      * - :py:obj:`store_in_hdf5_file <aim2dat.strct.structure_collection.StructureCollection.store_in_hdf5_file>`\ (file_path)
+        - Store structures in hdf5-file. Calculated extras are not yet supported.
+
+
+
+   .. py:property:: labels
+      :type: List[str]
+
+      Labels assigened to the structures.
+
+
+   .. py:method:: append(label: str, elements: list, positions: list, pbc: list, cell: list = None, is_cartesian: bool = True, wrap: bool = False, kinds: list = None, attributes: dict = None, extras: dict = None)
+
+      Append structure.
+
+      :Parameters: * **label** (*str*) -- String used to identify the structure.
+                   * **elements** (*list*) -- List of element symbols or their atomic numbers.
+                   * **positions** (*list*) -- List of the atomic positions, either cartesian or scaled coordinates.
+                   * **pbc** (*list or bool*) -- Periodic boundary conditions.
+                   * **cell** (*list or np.array*) -- Nested 3x3 list of the cell vectors.
+                   * **is_cartesian** (*bool (optional)*) -- Whether the coordinates are cartesian or scaled.
+                   * **wrap** (*bool (optional)*) -- Wrap atomic positions back into the unit cell.
+                   * **kinds** (*list*) -- List of kind names (this allows custom kinds like Ni0, Ni1, ...). If None,
+                     the elements will be used as the kind names.
+                   * **attributes** (*dict*) -- Additional information about the structure.
+                   * **extras** (*dict*) -- Extras of the structure.
+
+
+   .. py:method:: append_from_aiida_structuredata(aiida_node: Union[int, str, aiida.orm.StructureData], use_uuid: bool = False, label: str = None)
+
+      Append structure from aiida structuredata.
+
+      :Parameters: * **aiida_node** (*int, str or aiida.orm.StructureData*) -- Primary key, UUID or AiiDA structure node.
+                   * **use_uuid** (*bool (optional)*) -- Whether to use the uuid (str) to represent AiiDA nodes instead of the primary key
+                     (int).
+                   * **label** (*str*) -- String used to identify the structure. Overwrites ``label`` property of the structure.
+
+
+   .. py:method:: append_from_ase_atoms(label: str, ase_atoms: ase.Atoms, attributes: dict = None)
+
+      Append structure from ase atoms object.
+
+      :Parameters: * **label** (*str*) -- String used to identify the structure.
+                   * **ase_atoms** (*ase.Atoms*) -- ase Atoms object.
+                   * **attributes** (*dict*) -- Additional information about the structure.
+
+
+   .. py:method:: append_from_file(label: str, file_path: str, attributes: dict = None)
+
+      Append structure from file using the ase read-function.
+
+      :Parameters: * **label** (*str*) -- String used to identify the structure.
+                   * **file_path** (*str*) -- File path.
+                   * **attributes** (*dict*) -- Additional information about the structure.
+
+
+   .. py:method:: append_from_pymatgen_structure(label: str, pymatgen_structure: Union[pymatgen.core.Molecule, pymatgen.core.Structure], attributes: dict = None)
+
+      Append structure from pymatgen structure or molecule object.
+
+      :Parameters: * **label** (*str*) -- String used to identify the structure.
+                   * **pymatgen_structure** (*pymatgen.core.Structure or pymatgen.core.Molecule*) -- pymatgen structure or molecule object.
+                   * **attributes** (*dict*) -- Additional information about the structure.
+
+
+   .. py:method:: append_structure(structure: aim2dat.strct.strct.Structure, label: str = None)
+
+      Append ``Structure`` object to collection. The label of the structure needs to be
+      either given via the structures's property or as keyword argument.
+
+      :Parameters: * **structure** (*Structure*) -- Structure object.
+                   * **label** (*str (optional)*) -- String used to identify the structure. Overwrites ``label`` property of the structure.
+
+
+   .. py:method:: copy() -> StructureCollection
+
+      Return copy of ``StructureCollection`` object.
+
+
+   .. py:method:: create_pandas_df(exclude_columns: list = []) -> pandas.DataFrame
+
+      Create a pandas data frame of the object.
+
+      :Parameters: **exclude_columns** (*list (optional)*) -- Columns that are not shown in the pandas data frame.
+
+      :returns: *pandas.DataFrame* -- Pandas data frame.
+
+
+   .. py:method:: duplicate_structure(key: Union[str, int], new_label: str)
+
+      Duplicate structure.
+
+      :Parameters: * **key** (*str or int*) -- Key of the structure.
+                   * **new_label** (*str*) -- Label of the copied structure.
+
+
+   .. py:method:: get_all_attribute_keys() -> list
+
+      Get all attribute keys.
+
+      :returns: *list* -- All attribute keys.
+
+
+   .. py:method:: get_all_elements() -> List[str]
+
+      Get the element symbols of all structures.
+
+      :returns: *list* -- List of all element symbols .
+
+
+   .. py:method:: get_all_kinds() -> list
+
+      Get the kind strings of all structures.
+
+      :returns: *list* -- List of all kinds.
+
+
+   .. py:method:: get_all_structures() -> List[aim2dat.strct.strct.Structure]
+
+      Return a list of all structures.
+
+      :returns: *list* -- List of all structures stored in the object.
+
+
+   .. py:method:: get_structure(key: Union[str, int], return_index_label: bool = False) -> aim2dat.strct.strct.Structure
+
+      Get structure by key.
+
+      :Parameters: **key** (*str or int*) -- Key of the structure.
+
+      :returns: *Structure* -- structure.
+
+
+   .. py:method:: import_from_aiida_db(group_label: str = None, use_uuid: bool = False, raise_error: bool = True)
+
+      Import from the AiiDA database.
+
+      :Parameters: * **group_label** (*str or list (optional)*) -- Constrains query to structures that are member of the group(s).
+                   * **use_uuid** (*bool (optional)*) -- Whether to use the uuid (str) to represent AiiDA nodes instead of the primary key
+                     (int).
+                   * **raise_error** (*bool (optional)*) -- Whether to raise an error if one of the constraints is not met.
+
+
+   .. py:method:: import_from_hdf5_file(file_path: str, raise_error: bool = True)
+
+      Import from hdf5-file. Calculated extras are not yet supported.
+
+      :Parameters: * **file_path** (*str*) -- File path.
+                   * **raise_error** (*bool (optional)*) -- Whether to raise an error if one of the constraints is not met.
+
+
+   .. py:method:: import_from_pandas_df(data_frame: pandas.DataFrame, structure_column: str = 'optimized_structure', exclude_columns: list = [], use_uuid: bool = False, raise_error: bool = True)
+
+      Import from pandas data frame.
+
+      :Parameters: * **data_frame** (*pd.DataFrame*) -- Pandas data frame containing at least one column with the AiiDA structure nodes.
+                   * **structure_column** (*str (optional)*) -- Column containing AiiDA structure nodes used to determine structural and compositional
+                     properties. The default value is ``'optimized_structure'``.
+                   * **exclude_columns** (*list (optional)*) -- Columns of the data frame that are excluded. The default value is ``[]``.
+                   * **use_uuid** (*bool (optional)*) -- Whether to use the uuid (str) to represent AiiDA nodes instead of the primary key
+                     (int).
+                   * **raise_error** (*bool (optional)*) -- Whether to raise an error if one of the constraints is not met.
+
+
+   .. py:method:: index(label: str)
+
+      Return index of label. If the label is not present, ``None`` is returned.
+
+      :Parameters: **str** -- Label of the structure.
+
+
+   .. py:method:: items() -> List[Tuple[str, aim2dat.strct.strct.Structure]]
+
+      Return a list of label, value tuples.
+
+
+   .. py:method:: pop(key: Union[str, int]) -> aim2dat.strct.strct.Structure
+
+      Pop structure.
+
+      :Parameters: **str** -- Key of the structure.
+
+
+   .. py:method:: store_in_aiida_db(group_label: str = None, group_description: str = None)
+
+      Store structures into the AiiDA-database.
+
+      :Parameters: * **group_label** (*str (optional)*) -- Label of the AiiDA group.
+                   * **group_description** (*str (optional)*) -- Description of the AiiDA group.
+
+      :returns: *list* -- List containing dictionary of all structure nodes.
+
+
+   .. py:method:: store_in_hdf5_file(file_path: str)
+
+      Store structures in hdf5-file. Calculated extras are not yet supported.
+
+      :Parameters: **file_path** (*str*) -- File path.
+
+
+
+.. py:data:: aiida
+
+   
+
+.. py:data:: pymatgen
+
+   
+

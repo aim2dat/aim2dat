@@ -1,0 +1,19 @@
+:py:mod:`aim2dat.ext_interfaces.spglib`
+=======================================
+
+.. py:module:: aim2dat.ext_interfaces.spglib
+
+.. autoapi-nested-parse::
+
+   Wrapper functions for spglib.
+
+
+
+Module Contents
+---------------
+
+.. py:data:: CENTROSYMMETRIC_PG
+   :value: ['-1', '2/m', 'mmm', '4/m', '4/mmm', '-3', '-3m', '6/m', '6/mmm', 'm-3', 'm-3m']
+
+   
+

@@ -1,0 +1,29 @@
+:py:mod:`aim2dat.strct.ext_analysis.decorator`
+==============================================
+
+.. py:module:: aim2dat.strct.ext_analysis.decorator
+
+.. autoapi-nested-parse::
+
+   Decorator for analysis methods that are not hosted in the Structure and StructureOperations class.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.ext_analysis.decorator.external_analysis_method
+
+
+
+.. py:function:: external_analysis_method(func)
+
+   Decorate external analysis methods.
+
+

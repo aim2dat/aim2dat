@@ -1,0 +1,134 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.ext_analysis.dscribe_descriptors`
+========================================================
+
+.. py:module:: aim2dat.strct.ext_analysis.dscribe_descriptors
+
+.. autoapi-nested-parse::
+
+   Wrappers for dscribe descriptors.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.ext_analysis.dscribe_descriptors.calculate_acsf_descriptor
+   aim2dat.strct.ext_analysis.dscribe_descriptors.calculate_interaction_matrix
+   aim2dat.strct.ext_analysis.dscribe_descriptors.calculate_mbtr_descriptor
+   aim2dat.strct.ext_analysis.dscribe_descriptors.calculate_soap_descriptor
+
+
+
+.. py:function:: calculate_acsf_descriptor(structure: aim2dat.strct.strct.Structure, r_cut: float = 7.5, g2_params: list = None, g3_params: list = None, g4_params: list = None, g5_params: list = None, elements: list = None, periodic: bool = False, sparse: bool = False, dscribe_n_jobs: int = 1, dscribe_only_physical_cores: bool = False) -> List[float]
+
+   Calculate ACSF descriptor as defined in :doi:`10.1063/1.3553717`. This method is
+   based on the implementations of the dscribe python package.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **r_cut** (*float*) -- Cutoff value.
+                * **g2_params** (*np.array*) -- List of pairs of eta and R_s values for the G^2 functions.
+                * **g3_params** (*np.array*) -- List of kappa values for the G^3 functions.
+                * **g4_params** (*np.array*) -- List of triplets of eta, zeta and lambda values for G^4 functions.
+                * **g5_params** (*np.array*) -- List of triplets of eta, zeta and lambda values for G^5 functions.
+                * **elements** (*list*) -- List of atomic numbers or chemical symbols.
+                * **periodic** (*bool*) -- Whether to consider periodic boundary conditions.
+                * **sparse** (*bool*) -- Whether to return a sparse matrix or a dense array.
+                * **dscribe_n_jobs** (*int*) -- Number of jobs used by dscribe to calculate the interaction matrix.
+                * **dscribe_only_physical_cores** (*bool*) -- Whether to only use physicsl cores.
+
+   :returns: *list* -- ACSF descriptor.
+
+
+.. py:function:: calculate_interaction_matrix(structure: aim2dat.strct.strct.Structure, matrix_type: str = 'coulomb', n_atoms_max: int = None, enforce_real: bool = False, permutation: str = 'eigenspectrum', sigma: float = None, seed: int = None, sparse: bool = False, ewald_accuracy: float = 1e-05, ewald_w: int = 1, ewald_r_cut: float = None, ewald_g_cut: float = None, ewald_a: float = None, dscribe_n_jobs: int = 1, dscribe_only_physical_cores: bool = False) -> list
+
+   Calculate interaction matrices as defined in :doi:`10.1002/qua.24917`.
+   This method is based on the implementations of the dscribe python package.
+
+   :ivar structure: Structure object.
+   :vartype structure: aim2dat.strct.Structure
+   :ivar matrix_type: Matrix type. Supported options are ``'coulomb'``, ``'ewald_sum'`` or ``'sine'``.
+   :vartype matrix_type: str
+   :ivar permutation: Defines the output format. Options are: ``'none'``, ``'sorted_l2'``,
+                      ``'eigenspectrum'`` or ``'random'``.
+   :vartype permutation: str
+   :ivar sigma: Standar deviation of the Gaussian distributed noise when using ``'random'`` for
+                ``permutation``.
+   :vartype sigma: float
+   :ivar seed: Seed for the random numbers in case ``'random'`` is chosen for the ``permutation``
+               attibute.
+   :vartype seed: int
+   :ivar sparse: Whether to return a sparse matrix or a dense 1D array.
+   :vartype sparse: bool
+   :ivar ewald_accuracy: Accuracy threshold for the Ewald sum.
+   :vartype ewald_accuracy: float
+   :ivar ewald_w: Weight parameter.
+   :vartype ewald_w: int
+   :ivar ewald_r_cut: Real space cutoff parameter.
+   :vartype ewald_r_cut: float or None
+   :ivar ewald_g_cut: Reciprocal space cutoff parameter.
+   :vartype ewald_g_cut: float or None
+   :ivar ewald_a: Parameter controlling the width of the Gaussian functions.
+   :vartype ewald_a: float or None
+   :ivar dscribe_n_jobs: Number of jobs used by dscribe to calculate the interaction matrix.
+   :vartype dscribe_n_jobs: int
+   :ivar dscribe_only_physical_cores: Whether to only use physicsl cores.
+
+   :vartype dscribe_only_physical_cores: bool
+
+   :returns: *list* -- Interaction matrix descriptor.
+
+
+.. py:function:: calculate_mbtr_descriptor(structure: aim2dat.strct.strct.Structure, geometry: dict = {'function': 'inverse_distance'}, grid: dict = {'min': 0, 'max': 1, 'n': 100, 'sigma': 0.1}, weighting: dict = {'function': 'exp', 'scale': 1.0, 'threshold': 0.001}, normalize_gaussians: bool = True, normalization: str = 'l2', elements: list = None, periodic: bool = False, sparse: bool = False, dscribe_n_jobs: int = 1, dscribe_only_physical_cores: bool = False) -> List[float]
+
+   Calculate MBTR descriptor as defined in :doi:`10.1088/2632-2153/aca005`. This method
+   is based on the implementations of the dscribe python package.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **geometry** (*dict*) -- Setup the geometry function.
+                * **grid** (*dict*) -- Setup the discretization grid.
+                * **weighting** (*dict*) -- Setup the weighting function and its parameters.
+                * **normalize_gaussians** (*bool*) -- Whether to normalize the gaussians to an area of 1.
+                * **normalization** (*str*) -- Method for normalizing. Supported options are ``'none'``, ``'l2'``, ``'n_atoms'``,
+                  ``'valle_oganov'``.
+                * **elements** (*list*) -- List of atomic numbers or chemical symbols.
+                * **periodic** (*bool*) -- Whether to consider periodic boundary conditions.
+                * **sparse** (*bool*) -- Whether to return a sparse matrix or a dense array.
+                * **dscribe_n_jobs** (*int*) -- Number of jobs used by dscribe to calculate the interaction matrix.
+                * **dscribe_only_physical_cores** (*bool*) -- Whether to only use physicsl cores.
+
+   :returns: *list* -- MBTR descriptor.
+
+
+.. py:function:: calculate_soap_descriptor(structure: aim2dat.strct.strct.Structure, r_cut: float = 7.5, n_max: list = 8, l_max: list = 6, sigma: float = 1.0, rbf: str = 'gto', weighting: dict = None, compression: dict = {'mode': 'off', 'species_weighting': None}, average: str = 'off', elements: list = None, periodic: bool = False, sparse: bool = False, dscribe_n_jobs: int = 1, dscribe_only_physical_cores: bool = False) -> List[float]
+
+   Calculate SOAP descriptor as defined in :doi:`10.1103/PhysRevB.87.184115`. This method
+    is based on the implementations of the dscribe python package.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **r_cut** (*float*) -- Cutoff value.
+                * **n_max** (*int*) -- The number of radial basis functions.
+                * **l_max** (*int*) -- The maximum degree of spherical harmonics.
+                * **sigma** (*float*) -- The standard deviation of the gaussians.
+                * **rbf** (*str*) -- The radial basis functions to use. Supported options are: ``'gto'`` or
+                  ``'polynomial'``.
+                * **weighting** (*dict*) -- Contains the options which control the weighting of the atomic density.
+                * **compression** (*dict*) -- Feature compression options.
+                * **average** (*str*) -- The averaging mode over the centers of interest. Supported options are: ``'off'``,
+                  ``'inner'`` or ``'outer'``.
+                * **elements** (*list*) -- List of atomic numbers or chemical symbols.
+                * **periodic** (*bool*) -- Whether to consider periodic boundary conditions.
+                * **sparse** (*bool*) -- Whether to return a sparse matrix or a dense array.
+                * **dscribe_n_jobs** (*int*) -- Number of jobs used by dscribe to calculate the interaction matrix.
+                * **dscribe_only_physical_cores** (*bool*) -- Whether to only use physicsl cores.
+
+   :returns: *list* -- SOAP descriptor.
+
+

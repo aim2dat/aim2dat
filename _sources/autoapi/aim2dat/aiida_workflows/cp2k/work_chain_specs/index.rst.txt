@@ -1,0 +1,59 @@
+:py:mod:`aim2dat.aiida_workflows.cp2k.work_chain_specs`
+=======================================================
+
+.. py:module:: aim2dat.aiida_workflows.cp2k.work_chain_specs
+
+.. autoapi-nested-parse::
+
+   General input parameters and exit codes for the CP2K work chains.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.cp2k.work_chain_specs.core_work_chain_exit_codes
+   aim2dat.aiida_workflows.cp2k.work_chain_specs.numerical_p_specs
+   aim2dat.aiida_workflows.cp2k.work_chain_specs.seekpath_p_specs
+   aim2dat.aiida_workflows.cp2k.work_chain_specs.structural_p_specs
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.cp2k.work_chain_specs.Cp2kCalculation
+
+
+.. py:function:: core_work_chain_exit_codes(spec)
+
+   Exit codes for the CP2K core work chains.
+
+
+.. py:function:: numerical_p_specs(spec, required=False)
+
+   Numerical input parameters.
+
+
+.. py:function:: seekpath_p_specs(spec)
+
+   Input parameters for seekpath.
+
+
+.. py:function:: structural_p_specs(spec)
+
+   Structural input parameters.
+
+
+.. py:data:: Cp2kCalculation
+
+   
+

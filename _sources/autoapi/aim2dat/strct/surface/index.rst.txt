@@ -1,0 +1,125 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.surface`
+===============================
+
+.. py:module:: aim2dat.strct.surface
+
+.. autoapi-nested-parse::
+
+   Module implementing a class to generate surfaces.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.surface.SurfaceGeneration
+
+
+
+
+
+.. py:class:: SurfaceGeneration(structure: aim2dat.strct.strct.Structure)
+
+
+   Generates a surfaces and surface slabs based on a bulk crystal structure.
+
+
+   .. rubric:: Overview
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`create_surface <aim2dat.strct.surface.SurfaceGeneration.create_surface>`\ (miller_indices, termination, tolerance, symprec, angle_tolerance, hall_number)
+        - Create surface from a bulk crystal structure.
+      * - :py:obj:`generate_surface_slabs <aim2dat.strct.surface.SurfaceGeneration.generate_surface_slabs>`\ (miller_indices, nr_layers, periodic, vacuum, vacuum_factor, symmetrize, tolerance, symprec, angle_tolerance, hall_number)
+        - Generate surface slabs with all terminations for a certain direction given by its
+      * - :py:obj:`store_surfaces_in_aiida_db <aim2dat.strct.surface.SurfaceGeneration.store_surfaces_in_aiida_db>`\ (miller_indices, tolerance, symprec, angle_tolerance, hall_number, group_label, group_description)
+        - Store surfaces into the AiiDA-database.
+      * - :py:obj:`to_aiida_surfacedata <aim2dat.strct.surface.SurfaceGeneration.to_aiida_surfacedata>`\ (miller_indices, termination, tolerance, symprec, angle_tolerance, hall_number)
+        - Create surface from a bulk crystal structure.
+
+
+
+
+   .. py:method:: create_surface(miller_indices: Union[Tuple[int], List[int]] = (1, 0, 0), termination: int = 1, tolerance: float = 0.005, symprec: float = 0.005, angle_tolerance: float = -1.0, hall_number: int = 0) -> dict
+
+      Create surface from a bulk crystal structure.
+
+      :Parameters: * **miller_indices** (*list or tuple (optional)*) -- Miller indices of the surface. The default value is ``(1, 0, 0)``.
+                   * **termination** (*int (optional)*) -- Determine termination of the surface.
+                   * **tolerance** (*float (optional)*) -- Numerical tolerance. The default value is ``0.005``.
+                   * **symprec** (*float (optional)*) -- Tolerance parameter for spglib. The default value is ``0.005``.
+                   * **angle_tolerance** (*float (optional)*) -- Tolerance parameter for spglib. The default value is ``-1.0``.
+                   * **hall_number** (*int (optional)*) -- The argument to constrain the space-group-type search only for the Hall symbol
+                     corresponding to it. The default number is ``0``.
+
+      :returns: *dict* -- Dictionary containing the surface data.
+
+
+   .. py:method:: generate_surface_slabs(miller_indices: Union[Tuple[int], List[int]] = (1, 0, 0), nr_layers: int = 5, periodic: bool = False, vacuum: float = 10.0, vacuum_factor: float = 0.0, symmetrize: bool = True, tolerance: float = 0.01, symprec: float = 0.005, angle_tolerance: float = -1.0, hall_number: int = 0) -> Union[aim2dat.strct.structure_collection.StructureCollection, None]
+
+      Generate surface slabs with all terminations for a certain direction given by its
+      miller indices.
+
+      :Parameters: * **miller_indices** (*list or tuple (optional)*) -- Miller indices of the surface. The default value is ``(1, 0, 0)``.
+                   * **nr_layers** (*int (optional)*) -- Number of repititions of the underlying periodic surface cell. The default
+                     value is ``5``.
+                   * **periodic** (*bool (optional)*) -- Whether to apply periodic boundary conditions in the direction normal to the
+                     surface plane. The default value is ``False``.
+                   * **vacuum** (*float (optional)*) -- Vacuum space added at the top and bottom of the slab. The default value
+                     is ``10.0``.
+                   * **vacuum_factor** (*float (optional)*) -- Alternatively to the ``vacuum``-parameter the amount of vacuum can be set as a
+                     multiple of the slab size. The method is only applied if the parameter is
+                     larger than zero. The default value is ``0.0``.
+                   * **symmetrize** (*bool (optional)*) -- Create slabs that have the same termination on both sides. The default value
+                     is ``True``.
+                   * **tolerance** (*float (optional)*) -- Numerical tolerance. The default value is ``0.005``.
+                   * **symprec** (*float (optional)*) -- Tolerance parameter for spglib. The default value is ``0.005``.
+                   * **angle_tolerance** (*float (optional)*) -- Tolerance parameter for spglib. The default value is ``-1.0``.
+                   * **hall_number** (*int (optional)*) -- The argument to constrain the space-group-type search only for the Hall symbol
+                     corresponding to it. The default number is ``0``.
+
+      :returns: *StructureCollection* -- Collection of the generated surface slabs.
+
+
+   .. py:method:: store_surfaces_in_aiida_db(miller_indices: Tuple[int] = (1, 0, 0), tolerance: float = 0.005, symprec: float = 0.005, angle_tolerance: float = -1.0, hall_number: int = 0, group_label: str = None, group_description: str = None)
+
+      Store surfaces into the AiiDA-database.
+
+      :Parameters: * **miller_indices** (*list or tuple (optional)*) -- Miller indices of the surface. The default value is ``(1, 0, 0)``.
+                   * **tolerance** (*float (optional)*) -- Numerical tolerance. The default value is ``0.005``.
+                   * **symprec** (*float (optional)*) -- Tolerance parameter for spglib. The default value is ``0.005``.
+                   * **angle_tolerance** (*float (optional)*) -- Tolerance parameter for spglib. The default value is ``-1.0``.
+                   * **hall_number** (*int (optional)*) -- The argument to constrain the space-group-type search only for the Hall symbol
+                     corresponding to it. The default number is ``0``.
+                   * **group_label** (*str (optional)*) -- Label of the AiiDA group.
+                   * **group_description** (*str (optional)*) -- Description of the AiiDA group.
+
+      :returns: *list* -- List containing dictionary of all surface nodes.
+
+
+   .. py:method:: to_aiida_surfacedata(miller_indices: Union[Tuple[int], List[int]] = (1, 0, 0), termination: int = 1, tolerance: float = 0.005, symprec: float = 0.005, angle_tolerance: float = -1.0, hall_number: int = 0)
+
+      Create surface from a bulk crystal structure.
+
+      :Parameters: * **miller_indices** (*list or tuple (optional)*) -- Miller indices of the surface. The default value is ``(1, 0, 0)``.
+                   * **termination** (*int (optional)*) -- Determine termination of the surface.
+                   * **tolerance** (*float (optional)*) -- Numerical tolerance. The default value is ``0.005``.
+                   * **symprec** (*float (optional)*) -- Tolerance parameter for spglib. The default value is ``0.005``.
+                   * **angle_tolerance** (*float (optional)*) -- Tolerance parameter for spglib. The default value is ``-1.0``.
+                   * **hall_number** (*int (optional)*) -- The argument to constrain the space-group-type search only for the Hall symbol
+                     corresponding to it. The default number is ``0``.
+
+      :returns: *SurfaceData* -- AiiDA surface data node.
+
+
+

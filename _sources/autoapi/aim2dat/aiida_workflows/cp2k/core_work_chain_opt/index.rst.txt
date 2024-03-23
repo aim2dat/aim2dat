@@ -1,0 +1,18 @@
+:py:mod:`aim2dat.aiida_workflows.cp2k.core_work_chain_opt`
+==========================================================
+
+.. py:module:: aim2dat.aiida_workflows.cp2k.core_work_chain_opt
+
+.. autoapi-nested-parse::
+
+   Function for the optimization workflows.
+
+
+
+Module Contents
+---------------
+
+.. py:data:: cwd
+
+   
+

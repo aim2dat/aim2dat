@@ -1,0 +1,473 @@
+{
+ "cells": [
+  {
+   "cell_type": "raw",
+   "id": "ca70229d",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "========================================\n",
+    "Representation of molecules and crystals\n",
+    "========================================\n",
+    "\n",
+    "The :class:`Structure <aim2dat.strct.Structure>` class is designed to contain all necessary details of a molecular or crystalline structure. Moreover, it contains all methods that operate on a single structure, e.g. order parameters or the distance between atoms, and methods to manipulate the :class:`Structure <aim2dat.strct.Structure>` object, e.g. deleting atoms or scaling the structrue's unit cell. In case of the manipulation methods, a new :class:`Structure <aim2dat.strct.Structure>` instance will be returned and the initial :class:`Structure <aim2dat.strct.Structure>` object remains unchanged.\n",
+    "\n",
+    "Initialization of the object\n",
+    "============================\n",
+    "\n",
+    "A structure is defined by its periodic boundary condition (:attr:`pbc <aim2dat.strct.Structure.pbc>`) and two lists with the length equal to the number of atoms:\n",
+    "\n",
+    "* :attr:`elements <aim2dat.strct.Structure.elements>` contains the element symbol or number of each atom.\n",
+    "* :attr:`positions <aim2dat.strct.Structure.positions>` contains the cartesian coordinates (list or tuple of three numbers) of each atom.\n",
+    "\n",
+    "The periodic boundary conditions can be given as single boolean or a list of 3 booleans for mixed periodic and non-periodic boundary conditions.\n",
+    "If :attr:`pbc <aim2dat.strct.Structure.pbc>` is set to `True` for one or more directions a cell needs to be specified as well via a 3 times 3 nested list.\n",
+    "If :attr:`cell <aim2dat.strct.Structure.cell>` is given, the positions can also be passed on as scaled coordinates by setting the ``is_cartesian`` key to ``False`` or wrapped back into the unit cell by setting ``wrap`` to ``True``.\n",
+    "\n",
+    "The :class:`Structure <aim2dat.strct.Structure>` object is created by passing the information at the initialization of the class:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "310a9474",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.strct import Structure\n",
+    "\n",
+    "strct_molecule = Structure(\n",
+    "    elements=[\"N\", \"H\", 1, 1],\n",
+    "    positions=[\n",
+    "        [0.000000, 0.000000, 0.000000],\n",
+    "        [0.000000, 0.000000, 1.008000],\n",
+    "        [0.950353, 0.000000, -0.336000],\n",
+    "        [-0.475176, -0.823029, -0.336000],\n",
+    "    ],\n",
+    "    pbc=False,\n",
+    ")\n",
+    "\n",
+    "strct_crystal = Structure(\n",
+    "    elements=[\"Ga\", \"As\"],\n",
+    "    positions=[\n",
+    "        [0.0, 0.0, 0.0],\n",
+    "        [1.75, 1.75, 1.75],\n",
+    "    ],\n",
+    "    cell=[\n",
+    "        [0.0, 4.066, 4.0660001],\n",
+    "        [4.066, 0.0, 4.066],\n",
+    "        [4.066, 4.066, 0.0],\n",
+    "    ],\n",
+    "    is_cartesian=False,\n",
+    "    wrap=True,\n",
+    "    pbc=[True, True, True],\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "7b101b2e",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The following additional properties can be specified during the instance creation:\n",
+    "\n",
+    "* :attr:`cell <aim2dat.strct.Structure.cell>` defines the unit cell for periodic structures.\n",
+    "* ``is_cartesian`` specifies whether the given coordinates (:attr:`positions <aim2dat.strct.Structure.positions>`) are cartesian or scaled by the :attr:`cell <aim2dat.strct.Structure.cell>` vectors.\n",
+    "* :attr:`kinds <aim2dat.strct.Structure.kinds>` can be assigned to distinguish atoms of the same element but with different properties (e.g. spin-up and spin-down in magnetic materials). It expects a list with the same length as :attr:`elements <aim2dat.strct.Structure.elements>` and :attr:`positions <aim2dat.strct.Structure.positions>`.\n",
+    "* :attr:`attributes <aim2dat.strct.Structure.attributes>` stores a dictionary of different structural properties or can contain additional information about the structure.\n",
+    "* :attr:`extras <aim2dat.strct.Structure.extras>` contains a dictionary with extensive calculation results, e.g. a partial radial distribution function.\n",
+    "* :attr:`label <aim2dat.strct.Structure.label>` is a string and used as a key or identifier in the :class:`StructureCollection <aim2dat.strct.StructureCollection>` object.\n",
+    "\n",
+    "An overview of the set properties is given by using the string-representation of the object:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "32694065",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(strct_crystal)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "4b2b2801",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Interface to other packages\n",
+    "===========================\n",
+    "\n",
+    "A :class:`Structure <aim2dat.strct.Structure>` object can also be directly created via the import-methods with prefix ``from_*``. A list of all methods can be given via the :attr:`import_methods <aim2dat.strct.Structure.import_methods>` property:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "23186262",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Structure.import_methods"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "0bc13c8f",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "As an example we create an ase `Atoms` object (more details are given in the |ase_doc| and use the corresponding import method to initiate the :class:`Structure <aim2dat.strct.Structure>` object:\n",
+    "\n",
+    ".. |ase_doc| raw:: html\n",
+    "\n",
+    "   <a href=\"https://wiki.fysik.dtu.dk/ase/\" target=\"_blank\">ASE documentation</a>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f93d5961",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from ase.spacegroup import crystal\n",
+    "\n",
+    "a = 4.066 * 2.0\n",
+    "GaAs_conv = crystal(\n",
+    "    (\"Ga\", \"As\"),\n",
+    "    basis=((0.0, 0.0, 0.0), (0.75, 0.75, 0.75)),\n",
+    "    spacegroup=216,\n",
+    "    cellpar=[a, a, a, 90, 90, 90],\n",
+    "    primitive_cell=False,\n",
+    ")\n",
+    "\n",
+    "strct_crystal_conv = Structure.from_ase_atoms(GaAs_conv, label=\"GaAs_crystal\")\n",
+    "print(strct_crystal_conv)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "4152ac9d",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "In a similar way a :class:`Structure <aim2dat.strct.Structure>` can be exported into the representing python objects of other python packages or written into a file (using the |ase_page| package as backend). A list of all methods is given via the :attr:`export_methods <aim2dat.strct.Structure.export_methods>`:\n",
+    "\n",
+    ".. |ase_page| raw:: html\n",
+    "\n",
+    "   <a href=\"https://wiki.fysik.dtu.dk/ase/\" target=\"_blank\">ASE</a>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "675415fc",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "Structure.export_methods"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "061905c4",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "For example, a file is created using the :attr:`to_file <aim2dat.strct.Structure.to_file>` method:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9aba4f8b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_crystal_conv.to_file(\"GaAs_crystal.xsf\")"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "91b3a3c5",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Structural analysis methods\n",
+    "===========================\n",
+    "\n",
+    "The :class:`Structure <aim2dat.strct.Structure>` class also offers a few methods to analyse the structure.\n",
+    "A list is given via the :attr:`analysis_methods <aim2dat.strct.Structure.analysis_methods>` property:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "fb01f8b5",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_molecule.analysis_methods"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "acacca3e-486d-4ddb-8250-ecf69e659ebc",
+   "metadata": {},
+   "source": [
+    "By calling the function the analysis is performed and the results returned. As an example we determine the space group of the crystal using the <a href=\"https://spglib.readthedocs.io/en/latest/\" target=\"_blank\">spglib</a> package as backend:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "14d738a4-6c4d-4475-a4e0-9bd7d616505c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_crystal.determine_space_group()"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "d511c130",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The analysis methods store two different kind of output data:\n",
+    "\n",
+    "* If the property :attr:`store_calculated_properties <aim2dat.strct.Structure.store_calculated_properties>` is set to ``True`` a full set of the data is stored in the :attr:`extras <aim2dat.strct.Structure.extras>` property and returned by the function. \n",
+    "* A representative subset of the data is stored in the :attr:`attributes <aim2dat.strct.Structure.attributes>` property."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9cc98d7b-1ab3-4edd-b15f-650eed928d74",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(\"Attribute:\", strct_crystal.attributes[\"space_group\"])\n",
+    "print(\"Extra:\", strct_crystal.extras[\"space_group\"])"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "0d40b870",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "In case the same analysis function of the instance with the same parameters is called again the stored data in the :attr:`extras <aim2dat.strct.Structure.extras>` property is returned instead of performing the same analysis again. \n",
+    "This feature is very handy but also demands sufficient memory capacities, it can be switched on and off via the :attr:`store_calculated_properties <aim2dat.strct.Structure.store_calculated_properties>` property."
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "899601e0",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Manipulating structures\n",
+    "=======================\n",
+    "\n",
+    "Another set of methods implemented in the :class:`Structure <aim2dat.strct.Structure>` class act on the structure itself:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f1db7001-aaba-425b-8b4d-9d993a558e5e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_molecule.manipulation_methods"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "26d1232b",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The function returns a new :class:`Structure <aim2dat.strct.Structure>` in case structural changes are induces otherwise the initial :class:`Structure <aim2dat.strct.Structure>` object is returned. E.g. if \"Ga\" should be exchanged with \"Al\" we can simply call the :attr:`substitute_elements<aim2dat.strct.Structure.substitute_elements>` function and obtain a new :class:`Structure <aim2dat.strct.Structure>` object:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "519e879e-53e2-407f-a78e-5f4f2a989616",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_crystal_AsAl = strct_crystal_conv.substitute_elements(elements=[\"Ga\", \"Al\"])\n",
+    "print(strct_crystal_AsAl)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "863b4378-e895-4d0f-a8c7-5cfbe9299731",
+   "metadata": {},
+   "source": [
+    "If the element is not part of the structure, no substitution can be conducted and the original object is returned"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f77a174b-ca23-417c-a463-97620041020f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_crystal_GaAs = strct_crystal_conv.substitute_elements(elements=[\"C\", \"Al\"])\n",
+    "print(\n",
+    "    \"Both structure objects have the same id and remain unchanged:\",\n",
+    "    id(strct_crystal_GaAs) == id(strct_crystal_conv),\n",
+    ")\n",
+    "print(strct_crystal_GaAs)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "46b3b8dc",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "External analysis and manipulation methods\n",
+    "==========================================\n",
+    "\n",
+    "In addition to the methods implemented in the :class:`Structure <aim2dat.strct.Structure>` class less frequenetly used methods are implemented as functions in the :mod:`ext_analysis <aim2dat.strct.ext_analysis>` and :mod:`ext_manipulation <aim2dat.strct.ext_manipulation>` modules.\n",
+    "To use these methods the :class:`Structure <aim2dat.strct.Structure>` object is passed as the first argument:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f6d4604a-b409-432e-a381-aef5c6d8b906",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.strct.ext_analysis import calculate_prdf\n",
+    "\n",
+    "prdf = calculate_prdf(strct_crystal_GaAs, r_max=7.5)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "2bece310",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The calculated properties are still stored within the :class:`Structure <aim2dat.strct.Structure>` object if the :attr:`store_calculated_properties <aim2dat.strct.Structure.store_calculated_properties>` is set to ``True``:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "091796b5-5c33-46eb-8666-5328ad067ea4",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_crystal_GaAs.extras.keys()"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "69ec066d",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "It is also possible to define individual _analysis_ or _manipulation_ methods by using the corresponding decorators :meth:`external_analysis_method <aim2dat.strct.ext_analysis.decorator.external_analysis_method>` and :meth:`external_manipulation_method <aim2dat.strct.ext_manipulation.decorator.external_manipulation_method>`, respectively.\n",
+    "\n",
+    "For both, `analysis` and `manipulation` methods, the first argument needs to be the :class:`Structure <aim2dat.strct.Structure>` object.\n",
+    "The output for the `analysis` methods needs to be a tuple with a length of two consisting of calculated attributes and extras.\n",
+    "The `manipulation` methods need to return a dictionary with the keyword arguments to initialize a Structure object if a manipulation is performed and otherwise ``Ǹone``.\n",
+    "\n",
+    "The function ``calculate_n_element`` presented below presents an example for an external analysis method.\n",
+    "It determines how many atoms of a specific element are present in the :class:`Structure <aim2dat.strct.Structure>` and returns it in :attr:`extras <aim2dat.strct.Structure.extras>`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ef480ea2-d814-4fe3-8fd4-e2db953ad4ee",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.strct.ext_analysis.decorator import external_analysis_method\n",
+    "from aim2dat.utils.element_properties import get_element_symbol\n",
+    "\n",
+    "\n",
+    "@external_analysis_method\n",
+    "def determine_n_element(structure, element=\"H\"):\n",
+    "    element = get_element_symbol(element)\n",
+    "    if element in structure.chem_formula:\n",
+    "        return (None, structure.chem_formula[element])\n",
+    "    else:\n",
+    "        return (None, 0)\n",
+    "\n",
+    "\n",
+    "determine_n_element(strct_crystal_GaAs, \"Ga\")\n",
+    "strct_crystal_GaAs.extras[\"n_element\"]"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "7ad82f9a",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Related examples\n",
+    "================\n",
+    "\n",
+    "* :doc:`Calculating the coordination numbers for different atomic sites <examples/strct-coordination_number_analysis>`\n",
+    "* :doc:`Calculating the F-Fingerprint to compare crystal structures <examples/strct-partial_rdf>`\n",
+    "\n",
+    "Related API instances\n",
+    "=====================\n",
+    "\n",
+    "* :class:`Structure <aim2dat.strct.Structure>`"
+   ]
+  }
+ ],
+ "metadata": {
+  "celltoolbar": "Raw Cell Format",
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.13"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

@@ -1,0 +1,11 @@
+:py:mod:`aim2dat.aiida_workflows.critic2.parser_utils`
+======================================================
+
+.. py:module:: aim2dat.aiida_workflows.critic2.parser_utils
+
+.. autoapi-nested-parse::
+
+   Auxiliary functions for the critic2 parser and io functions.
+
+
+

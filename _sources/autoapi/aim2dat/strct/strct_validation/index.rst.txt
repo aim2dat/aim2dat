@@ -1,0 +1,13 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.strct_validation`
+========================================
+
+.. py:module:: aim2dat.strct.strct_validation
+
+.. autoapi-nested-parse::
+
+   Validate structure input parameters.
+
+
+

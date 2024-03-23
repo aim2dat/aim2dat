@@ -1,0 +1,22 @@
+:py:mod:`aim2dat.ext_interfaces.pyxtal`
+=======================================
+
+.. py:module:: aim2dat.ext_interfaces.pyxtal
+
+.. autoapi-nested-parse::
+
+   Interface to the PyXtaL python package.
+
+
+
+Module Contents
+---------------
+
+.. py:data:: NR_OF_SPACE_GROUPS
+
+   
+
+.. py:data:: SPACE_GROUP_LIMITS
+
+   
+

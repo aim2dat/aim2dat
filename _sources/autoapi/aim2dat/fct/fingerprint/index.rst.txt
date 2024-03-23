@@ -1,0 +1,83 @@
+:py:mod:`aim2dat.fct.fingerprint`
+=================================
+
+.. py:module:: aim2dat.fct.fingerprint
+
+.. autoapi-nested-parse::
+
+   Module to compute a fingerprint for spectra.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.fct.fingerprint.FunctionDiscretizationFingerprint
+
+
+
+
+
+.. py:class:: FunctionDiscretizationFingerprint(grid, **kwargs)
+
+
+   Fingerprint for functions based on the DOS-Fingerprint presented in
+   :doi:`10.1038/s41597-022-01754-z`.
+
+
+   .. rubric:: Overview
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`calculate_fingerprint <aim2dat.fct.fingerprint.FunctionDiscretizationFingerprint.calculate_fingerprint>`\ (x_values, y_values, label)
+        - Calculate the fingerprint.
+      * - :py:obj:`compare_fingerprints <aim2dat.fct.fingerprint.FunctionDiscretizationFingerprint.compare_fingerprints>`\ (label_1, label_2)
+        - Compare two fingerprints that are stored in the internal memory.
+      * - :py:obj:`plot_fingerprint <aim2dat.fct.fingerprint.FunctionDiscretizationFingerprint.plot_fingerprint>`\ (x_values, y_values)
+        - Plot the discretized function and the corresponding grid.
+
+
+
+
+   .. py:method:: calculate_fingerprint(x_values: numpy.array, y_values: numpy.array, label: str = None) -> numpy.array
+
+      Calculate the fingerprint.
+
+      :Parameters: * **x_values** (*np.array*) -- x-values of the function.
+                   * **y_values** (*np.array*) -- y-values of the function. In case it's a 2D-array, each row will
+                     be interpreted as a dataset and the fingerprint is calculated
+                     by concatenating the individual fingerprints.
+                   * **label** (*str*) -- Label for the internal memory. Defaults to None.
+
+      :returns: *np.array* -- The discretized fingerprint.
+
+
+   .. py:method:: compare_fingerprints(label_1: str, label_2: str) -> float
+
+      Compare two fingerprints that are stored in the internal memory.
+
+      :Parameters: * **label_1** (*str*) -- Label of the first fingerprint.
+                   * **label_2** (*str*) -- Label of the second fingerprint.
+
+      :returns: *float* -- Similarity measure.
+
+
+   .. py:method:: plot_fingerprint(x_values: numpy.array, y_values: numpy.array) -> matplotlib.pyplot.Figure
+
+      Plot the discretized function and the corresponding grid.
+
+      :Parameters: * **x_values** (*np.array*) -- x-values of the function.
+                   * **y_values** (*np.array*) -- y-values of the function.
+
+      :returns: *plt.Figure* -- Plot of the discretized function.
+
+
+

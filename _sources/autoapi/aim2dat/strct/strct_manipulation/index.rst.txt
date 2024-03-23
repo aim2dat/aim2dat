@@ -1,0 +1,55 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.strct_manipulation`
+==========================================
+
+.. py:module:: aim2dat.strct.strct_manipulation
+
+.. autoapi-nested-parse::
+
+   Module that implements functions to change molecular or crystalline structures.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.strct_manipulation.delete_atoms
+   aim2dat.strct.strct_manipulation.scale_unit_cell
+   aim2dat.strct.strct_manipulation.substitute_elements
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.strct_manipulation.cwd
+
+
+.. py:function:: delete_atoms(structure: aim2dat.strct.strct.Structure, elements: Union[str, List[str]], site_indices: Union[int, List[int]], change_label: bool) -> aim2dat.strct.strct.Structure
+
+   Delete atoms.
+
+
+.. py:function:: scale_unit_cell(structure: aim2dat.strct.strct.Structure, scaling_factor: float, change_label: bool) -> aim2dat.strct.strct.Structure
+
+   Scale unit cell of the structure.
+
+
+.. py:function:: substitute_elements(structure: aim2dat.strct.strct.Structure, elements: List[Tuple[Union[str, int]]], radius_type: Union[str, None], change_label: bool) -> Tuple[aim2dat.strct.strct.Structure, str]
+
+   Substitute all atoms of the same element by another element.
+
+
+.. py:data:: cwd
+
+   
+

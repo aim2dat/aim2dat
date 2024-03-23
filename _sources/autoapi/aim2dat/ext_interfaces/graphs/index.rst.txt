@@ -1,0 +1,11 @@
+:py:mod:`aim2dat.ext_interfaces.graphs`
+=======================================
+
+.. py:module:: aim2dat.ext_interfaces.graphs
+
+.. autoapi-nested-parse::
+
+   Interface to networkx and graphviz to create graphs based on the coordination.
+
+
+

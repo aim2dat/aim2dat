@@ -1,0 +1,24 @@
+:orphan:
+
+:py:mod:`aim2dat.aiida_workflows.enumlib`
+=========================================
+
+.. py:module:: aim2dat.aiida_workflows.enumlib
+
+.. autoapi-nested-parse::
+
+   AiiDA framework for the software package enumlib.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   enum_calcjob/index.rst
+   enum_parsers/index.rst
+   utils/index.rst
+
+

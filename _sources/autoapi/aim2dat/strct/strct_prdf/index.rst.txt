@@ -1,0 +1,31 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.strct_prdf`
+==================================
+
+.. py:module:: aim2dat.strct.strct_prdf
+
+.. autoapi-nested-parse::
+
+   Module to calculate  atomic fingerprints.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.strct_prdf.calculate_ffingerprint
+
+
+
+.. py:function:: calculate_ffingerprint(structure, r_max, delta_bin, sigma, use_legacy_smearing, distinguish_kinds)
+
+   Calculate f-fingerprint.
+
+

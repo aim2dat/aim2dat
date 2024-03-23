@@ -1,0 +1,59 @@
+:py:mod:`aim2dat.utils.space_groups`
+====================================
+
+.. py:module:: aim2dat.utils.space_groups
+
+.. autoapi-nested-parse::
+
+   Module containing functions to parse space groups and to get information on the lattice.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.utils.space_groups.get_crystal_system
+   aim2dat.utils.space_groups.get_lattice_type
+   aim2dat.utils.space_groups.transform_to_nr
+   aim2dat.utils.space_groups.transform_to_str
+
+
+
+.. py:function:: get_crystal_system(space_group)
+
+   Return the crystal system of a space group given by a string or number.
+
+   :Parameters: **space_group** (*int or str*) -- Space group of the crystal.
+
+   :returns: **crystal_system** (*str*) -- The crystal system of the space group, e.g. 'tetragonal'.
+
+
+.. py:function:: get_lattice_type(space_group)
+
+   Return the crystal system of a space group given by a string or number.
+
+
+.. py:function:: transform_to_nr(space_group)
+
+   Parse the space group into the corresponding number (if necessary).
+
+   :Parameters: **space_group** (*int or str*) -- Space group of the crystal.
+
+   :returns: **sg_num** (*int*) -- Number of the space group.
+
+
+.. py:function:: transform_to_str(space_group)
+
+   Parse the space group from its number to the symbol.
+
+   :Parameters: **space_group** (*int or str*) -- Space group of the crystal.
+
+   :returns: **sg_str** (*str*) -- Symbol of the space group.
+
+

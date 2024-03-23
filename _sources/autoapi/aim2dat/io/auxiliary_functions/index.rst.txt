@@ -1,0 +1,13 @@
+:orphan:
+
+:py:mod:`aim2dat.io.auxiliary_functions`
+========================================
+
+.. py:module:: aim2dat.io.auxiliary_functions
+
+.. autoapi-nested-parse::
+
+   Auxiliary functions for io-functions.
+
+
+

@@ -1,0 +1,128 @@
+:py:mod:`aim2dat.aiida_workflows.utils`
+=======================================
+
+.. py:module:: aim2dat.aiida_workflows.utils
+
+.. autoapi-nested-parse::
+
+   Common functions used by several work chains.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.utils.concatenate_workflow_results
+   aim2dat.aiida_workflows.utils.create_aiida_node
+   aim2dat.aiida_workflows.utils.create_surface_slab
+   aim2dat.aiida_workflows.utils.dict_create_tree
+   aim2dat.aiida_workflows.utils.dict_merge
+   aim2dat.aiida_workflows.utils.dict_retrieve_parameter
+   aim2dat.aiida_workflows.utils.dict_set_parameter
+   aim2dat.aiida_workflows.utils.get_results_cp2k_legacy_wc
+   aim2dat.aiida_workflows.utils.obtain_value_from_aiida_node
+   aim2dat.aiida_workflows.utils.seekpath_structure_analysis
+   aim2dat.aiida_workflows.utils.workflow_queue
+
+
+
+.. py:function:: concatenate_workflow_results(workflow_results1, workflow_results2, map_result1='optimized_structure', map_result2='parent_node')
+
+   Concatenate two results pandas data frames.
+
+   :Parameters: * **workflow_results1** (*pandas.DataFrame*) -- Pandas data frame of the first workflow.
+                * **workflow_results2** (*pandas.DataFrame*) -- Pandas data frame of the second workflow.
+                * **map_result1** (*str (optional)*) -- Result used to connect the two workflows.
+                * **map_result2** (*str (optional)*) -- Result used to connect the two workflows.
+
+   :returns: *pandas.DataFrame* -- New pandas data frame representing results from both workflows.
+
+
+.. py:function:: create_aiida_node(value, node_type=None)
+
+   Create AiiDA data node from standard python variable.
+
+   :Parameters: * **value** (*variable*) -- Input variable.
+                * **node_type** (*str (optional)*) -- AiiDA node type. The default value is ``None``.
+
+   :returns: **aiida_node** (*variable*) -- AiiDA data node.
+
+
+.. py:function:: create_surface_slab(surface, nr_layers, parameters)
+
+   Create surface slab from surface data.
+
+
+.. py:function:: dict_create_tree(dictionary, parameter_tree)
+
+   Create a nested dictionary.
+
+   :Parameters: * **dictionary** (*dict*) -- Input dictionary.
+                * **parameter_tree** (*list*) -- List of dictionary key words.
+
+
+.. py:function:: dict_merge(a, b, path=None)
+
+   Merge two dictionaries.
+
+
+.. py:function:: dict_retrieve_parameter(dictionary, parameter_tree)
+
+   Retrieve value from nested dictionary.
+
+   :Parameters: * **dictionary** (*dict*) -- Input dictionary.
+                * **parameter_tree** (*list*) -- List of dictionary key words.
+
+   :returns: *value* -- The value of the parameter or ``None`` if the key word cound not be found.
+
+
+.. py:function:: dict_set_parameter(dictionary, parameter_tree, value)
+
+   Set parameter in a nested dictionary.
+
+   :Parameters: * **dictionary** (*dict*) -- Input dictionary.
+                * **parameter_tree** (*list*) -- List of dictionary key words.
+                * **value** (*str, float or int*) -- Value of the parameter.
+
+   :returns: **dictionary** (*dict*) -- Output dictionary.
+
+
+.. py:function:: get_results_cp2k_legacy_wc(aiida_group_labels)
+
+   Get results from the depreciated ElectronicProperties work chain.
+
+   :Parameters: **aiida_group_labels** (*str or list*) -- AiiDA group label or list of labels.
+
+   :returns: *pandas.DataFrame* -- Data frame containing the results of the workflow.
+
+
+.. py:function:: obtain_value_from_aiida_node(aiida_node)
+
+   Obtain value from AiiDA data node.
+
+   :Parameters: **aiida_node** (*aiida.node*) -- AiiDA data node.
+
+   :returns: **value** (*variable*) -- Content of the node.
+
+
+.. py:function:: seekpath_structure_analysis(structure, parameters)
+
+   Wrap the seekpath function to be used as a calcfunction.
+
+
+.. py:function:: workflow_queue(maxrun_workflows, running_workflows_list, waiting_time=10.0)
+
+   Helper-function to control the number of workchains run simultaneously. The function is
+   called in a loop after the workchain has been submitted.
+
+   :Parameters: * **maxrun_workflows** (*int*) -- Maximum number of workchains run in parallel.
+                * **running_workflows_list** (*list*) -- List of workchain-nodes that have been started.
+                * **waiting_time** (*float (optional)*) -- Time to wait between submissions in minutes. The default value is ``10.0``.
+
+

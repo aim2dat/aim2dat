@@ -1,0 +1,47 @@
+:py:mod:`aim2dat.aiida_workflows.cp2k.el_properties_utils`
+==========================================================
+
+.. py:module:: aim2dat.aiida_workflows.cp2k.el_properties_utils
+
+.. autoapi-nested-parse::
+
+   Auxiliary functions for the ElectronicPropertiesWorkChain.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.cp2k.el_properties_utils.elprop_setup
+   aim2dat.aiida_workflows.cp2k.el_properties_utils.set_ctx_parameters_from_protocol
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.cp2k.el_properties_utils.cwd
+
+
+.. py:function:: elprop_setup(ctx, inputs)
+
+   Set up calculation parameters.
+
+
+.. py:function:: set_ctx_parameters_from_protocol(ctx, inputs, protocol_dict, general_parameters, task_label)
+
+   Set ctx parameters from protocol.
+
+
+.. py:data:: cwd
+
+   
+

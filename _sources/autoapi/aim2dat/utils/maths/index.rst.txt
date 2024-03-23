@@ -1,0 +1,105 @@
+:py:mod:`aim2dat.utils.maths`
+=============================
+
+.. py:module:: aim2dat.utils.maths
+
+.. autoapi-nested-parse::
+
+   Module that contains custom mathematical functions.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.utils.maths.calc_angle
+   aim2dat.utils.maths.calc_circular_segment_area
+   aim2dat.utils.maths.calc_plane_equation
+   aim2dat.utils.maths.calc_polygon_area
+   aim2dat.utils.maths.calc_reflection_matrix
+   aim2dat.utils.maths.calc_solid_angle
+   aim2dat.utils.maths.gaussian_function
+
+
+
+.. py:function:: calc_angle(vector1, vector2)
+
+   Calculate the angle between two vectors.
+
+   :Parameters: * **vector1** (*list*) -- List containing three numbers.
+                * **vector2** (*list*) -- List containing three numbers.
+
+   :returns: **angle** (*float*) -- Angle in radian.
+
+
+.. py:function:: calc_circular_segment_area(radius, distance)
+
+   Calculate the circular segment.
+
+   See: https://en.wikipedia.org/wiki/Circular_segment.
+
+   :Parameters: * **radius** (*float*) -- Radius of the circle.
+                * **distance** (*float*) -- Distance of the segment from the circle center.
+
+   :returns: **segment_area** (*float*) -- Area of the segment.
+
+
+.. py:function:: calc_plane_equation(point1, point2, point3)
+
+   Calculate the plane from 3 given points in the form ``a*x + b*y + c*z = d``.
+
+   :Parameters: * **point1** (*list or np.array*) -- Point in 3-dimensional space.
+                * **point2** (*list or np.array*) -- Point in 3-dimensional space.
+                * **point3** (*list or np.array*) -- Point in 3-dimensional space.
+
+   :returns: * **a** (*float*) -- plane parameter.
+             * **b** (*float*) -- plane parameter.
+             * **c** (*float*) -- plane parameter.
+             * **d** (*float*) -- plane parameter.
+
+
+.. py:function:: calc_polygon_area(vertices)
+
+   Calculate the area of a polygon.
+
+   :Parameters: **vertices** (*list or np.array*) -- (n x 3) list of the vertices.
+
+   :returns: **area** (*float*) -- Area of the polygon.
+
+
+.. py:function:: calc_reflection_matrix(n_vector)
+
+   Calculate the 3d reflection matrix normal to the input vector.
+
+   :Parameters: **n_vector** (*list or np.array*) -- Normal vector of the reflection plane.
+
+   :returns: *np.array* -- Reflection matrix.
+
+
+.. py:function:: calc_solid_angle(center, points)
+
+   Calculate the solid angle between a center point and points that span a polyhedron.
+
+   :Parameters: * **center** (*list*) -- Center point.
+                * **points** (*list*) -- Nested list of points.
+
+   :returns: **solid_angle** (*float*) -- Solid angle of the polyhedron.
+
+
+.. py:function:: gaussian_function(x, mu, sigma)
+
+   Calculate the Gaussian function with a certain sigma-value.
+
+   :Parameters: * **x** (*float*) -- x value for which the y value is calculated.
+                * **mu** (*float*) -- Expected value.
+                * **sigma** (*float*) -- Variance.
+
+   :returns: **y** (*float*) -- y value.
+
+

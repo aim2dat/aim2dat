@@ -1,0 +1,113 @@
+:py:mod:`aim2dat.utils.element_properties`
+==========================================
+
+.. py:module:: aim2dat.utils.element_properties
+
+.. autoapi-nested-parse::
+
+   Module to retrieve physical and chemical properties of elements.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.utils.element_properties.get_atomic_mass
+   aim2dat.utils.element_properties.get_atomic_number
+   aim2dat.utils.element_properties.get_atomic_radius
+   aim2dat.utils.element_properties.get_electronegativity
+   aim2dat.utils.element_properties.get_element_groups
+   aim2dat.utils.element_properties.get_element_symbol
+   aim2dat.utils.element_properties.get_group
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.utils.element_properties.element_groups
+   aim2dat.utils.element_properties.element_groups
+
+
+.. py:function:: get_atomic_mass(element)
+
+   Return atomic mass of the element from the atomic number, element symbol or name.
+
+   :Parameters: **element** (*str or int*) -- Atomic number, name or symbol of the element.
+
+   :returns: **element_number** (*int*) -- Atomic number of the element.
+
+
+.. py:function:: get_atomic_number(element)
+
+   Return atomic number of the element from element symbol or name.
+
+   :Parameters: **element** (*str or int*) -- Atomic number, name or symbol of the element.
+
+   :returns: *int* -- Atomic number of the element.
+
+
+.. py:function:: get_atomic_radius(element, radius_type='covalent')
+
+   Return the covalent or van der Waals radius of the element (imported from ase).
+
+   :Parameters: * **element** (*str or int*) -- Atomic number, name or symbol of the element.
+                * **radius_type** (*str (optional)*) -- Radius type. Valid options are 'covalent' or 'vdw'.
+
+   :returns: **radius** (*float*) -- Atomic radius of the element.
+
+
+.. py:function:: get_electronegativity(element, scale='pauling')
+
+   Return the electronegativity of the element.
+
+   :Parameters: * **element** (*str or int*) -- Atomic number, name or symbol of the element.
+                * **scale** (*str (optional)*) -- Electronegativity scale. Supported values are ``'pauling'`` and ``'allen'``.
+
+   :returns: **electronegativity** (*float or None*) -- Electronegativity of the element.
+
+
+.. py:function:: get_element_groups(element)
+
+   Return groups that contain the element from the atomic number, element symbol or name.
+
+   :Parameters: **element** (*str or int*) -- Atomic number, name or symbol of the element.
+
+   :returns: **groups** (*set*) -- Set of groups.
+
+
+.. py:function:: get_element_symbol(element)
+
+   Return symbol of the element from element number or name.
+
+   :Parameters: **element** (*str or int*) -- Atomic number, name or symbol of the element.
+
+   :returns: *str* -- Symbol of the element.
+
+
+.. py:function:: get_group(group_label)
+
+   Return all elements in the group.
+
+   :Parameters: **group_label** (*str*) -- Group label.
+
+   :returns: **elements** (*set*) -- Set of element symbols..
+
+
+.. py:data:: element_groups
+   :value: []
+
+   
+
+.. py:data:: element_groups
+
+   
+

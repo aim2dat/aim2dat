@@ -1,0 +1,31 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.strct_coordination`
+==========================================
+
+.. py:module:: aim2dat.strct.strct_coordination
+
+.. autoapi-nested-parse::
+
+   Module to calculate the coordination number of atomic sites.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.strct_coordination.calculate_coordination
+
+
+
+.. py:function:: calculate_coordination(structure, r_max: float, method: str, min_dist_delta: float, n_nearest_neighbours: int, econ_tolerance: float, econ_conv_threshold: float, voronoi_weight_type: str, voronoi_weight_threshold: float, okeeffe_weight_threshold: float)
+
+   Calculate the coordination of all sites.
+
+

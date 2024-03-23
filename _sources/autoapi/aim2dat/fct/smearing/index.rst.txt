@@ -1,0 +1,49 @@
+:py:mod:`aim2dat.fct.smearing`
+==============================
+
+.. py:module:: aim2dat.fct.smearing
+
+.. autoapi-nested-parse::
+
+   Module to implement different smearing methods.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.fct.smearing.apply_smearing
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.fct.smearing.AVAILABLE_SMEARING_METHODS
+
+
+.. py:function:: apply_smearing(y: numpy.array, sigma: float = 0.5, radius: int = None, method: str = 'gaussian') -> numpy.array
+
+   Apply smearing to a dataset. Different smearing methods can be specified.
+
+   :Parameters: * **y** (*np.array*) -- y-values of dataset.
+                * **sigma** (*float*) -- Scale parameter. Defaults to 0.05.
+                * **radius** (*int*) -- Radius of the kernel.
+                * **method** (*str*) -- String to specify smearing method, see AVAILABLE_SMEARING_METHODS.
+                  Defaults to 'gaussian'.
+
+   :returns: *np.array* -- Smeared y-values.
+
+
+.. py:data:: AVAILABLE_SMEARING_METHODS
+
+   
+

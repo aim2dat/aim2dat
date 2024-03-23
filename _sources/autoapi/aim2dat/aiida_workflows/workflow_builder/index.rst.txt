@@ -1,0 +1,503 @@
+:py:mod:`aim2dat.aiida_workflows.workflow_builder`
+==================================================
+
+.. py:module:: aim2dat.aiida_workflows.workflow_builder
+
+.. autoapi-nested-parse::
+
+   WorkflowBuilder and auxiliary functions.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder
+   aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.workflow_builder.AiidaCode
+
+
+
+.. py:exception:: WorkflowProtocolError
+
+
+   Bases: :py:obj:`Exception`
+
+   Error for incomplete or inconsistent workflow protocols.
+
+   
+   .. py:class:: args
+
+
+
+
+
+   .. rubric:: Overview
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`with_traceback <aim2dat.aiida_workflows.workflow_builder.WorkflowProtocolError.with_traceback>`\ ()
+        - Exception.with_traceback(tb) --
+
+
+
+
+   .. py:method:: with_traceback()
+
+      Exception.with_traceback(tb) --
+      set self.__traceback__ to tb and return self.
+
+
+
+
+.. py:class:: MultipleWorkflowBuilder(aiida_group=None, protocol=None, graph_attributes={'graph_attr': {'size': '10!,6'}}, use_uuid=False)
+
+
+   Bases: :py:obj:`_BaseWorkflowBuilder`
+
+   Workflow builder that can manage a worklfow for several parent nodes at once.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`aiida_group <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.aiida_group>`
+        - Only consider processes in the AiiDA group.
+      * - :py:obj:`graph_attributes <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.graph_attributes>`
+        - Graphiz graph attributes for the provenance graph.
+      * - :py:obj:`protocol <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.protocol>`
+        - Protocol used for the workflow.
+      * - :py:obj:`task_queue <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.task_queue>`
+        - Return the task queue.
+      * - :py:obj:`tasks <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.tasks>`
+        - Return all tasks of the workflow.
+      * - :py:obj:`use_uuid <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.use_uuid>`
+        - Whether to use the uuid (str) to represent AiiDA nodes instead of the primary key
+      * - :py:obj:`user_input <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.user_input>`
+        - Input parameters set by the user.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_parent_node <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.add_parent_node>`\ (parent_node)
+        - Add new parent node.
+      * - :py:obj:`add_to_task_queue <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.add_to_task_queue>`\ (task_label, run_type)
+        - Add a task to the task queue.
+      * - :py:obj:`adopt_input_nodes_from_workflow <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.adopt_input_nodes_from_workflow>`\ (parent_node)
+        - Import input parameters for the workflow based on another parent node.
+      * - :py:obj:`execute_task_queue <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.execute_task_queue>`\ (interval, node_ids)
+        - Execute a series of AiiDA processes for several tasks consecutively for all parent nodes
+      * - :py:obj:`from_file <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.from_file>`\ (file_name)
+        - `class` \-
+      * - :py:obj:`generate_inputs <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.generate_inputs>`\ (parent_node, task)
+        - Generate a dictionary or builder for a certain task of the workflow for a specific parent
+      * - :py:obj:`generate_provenance_graph <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.generate_provenance_graph>`\ (parent_node_index)
+        - Generate provenance graph of the workflow.
+      * - :py:obj:`import_parent_nodes_from_aiida_db <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.import_parent_nodes_from_aiida_db>`\ (group_labels)
+        - Import parent nodes from the AiiDA database.
+      * - :py:obj:`import_parent_nodes_from_pandas_df <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.import_parent_nodes_from_pandas_df>`\ (data_frame, parent_node)
+        - Extract parent nodes from a pandas data frame. The data frame needs to have a column
+      * - :py:obj:`reset_task_queue <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.reset_task_queue>`\ ()
+        - Reset the task queue.
+      * - :py:obj:`return_process_nodes <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.return_process_nodes>`\ ()
+        - Return a pandas data frame containing the process nodes of all completed tasks.
+      * - :py:obj:`return_results <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.return_results>`\ (include, exclude)
+        - Return a pandas data frame containing the calculated results of all completed tasks.
+      * - :py:obj:`return_runtimes <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.return_runtimes>`\ (unit)
+        - Return a pandas data frame containing the runtimes of all completed tasks.
+      * - :py:obj:`return_workflow_states <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.return_workflow_states>`\ (unformatted)
+        - Return a pandas data frame containing the current state of  workflow.
+      * - :py:obj:`run_task <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.run_task>`\ (task_label, interval, node_ids)
+        - Run the AiiDA processes of the task for all parent nodes.
+      * - :py:obj:`set_user_input <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.set_user_input>`\ (input_port, value)
+        - Set a user input parameter of the workflow for all parent nodes.
+      * - :py:obj:`submit_task <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.submit_task>`\ (task_label, interval, node_ids)
+        - Submit the AiiDA processes of the task for all parent nodes.
+      * - :py:obj:`to_file <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder.to_file>`\ (file_name)
+        - \-
+
+
+
+   .. py:property:: aiida_group
+
+      Only consider processes in the AiiDA group.
+
+      :type: str or aiida.orm.Group
+
+   .. py:property:: graph_attributes
+
+      Graphiz graph attributes for the provenance graph.
+
+   .. py:property:: protocol
+
+      Protocol used for the workflow.
+
+   .. py:property:: task_queue
+
+      Return the task queue.
+
+   .. py:property:: tasks
+
+      Return all tasks of the workflow.
+
+   .. py:property:: use_uuid
+
+      Whether to use the uuid (str) to represent AiiDA nodes instead of the primary key
+      (int).
+
+      :type: bool
+
+   .. py:property:: user_input
+
+      Input parameters set by the user.
+
+
+   .. py:method:: add_parent_node(parent_node)
+
+      Add new parent node.
+
+      :Parameters: **parent_node** (*aiida.orm.Node*)
+
+
+   .. py:method:: add_to_task_queue(task_label, run_type='run')
+
+      Add a task to the task queue.
+
+      :Parameters: * **task_label** (*str*) -- Label of the task.
+                   * **run_type** (*str (optional)*) -- Run type of the process, either ``run`` or ``submit``. The default value is ``run``.
+
+
+   .. py:method:: adopt_input_nodes_from_workflow(parent_node)
+
+      Import input parameters for the workflow based on another parent node.
+
+      :Parameters: **parent_node** (*aiida.node*) -- Parent AiiDA node.
+
+
+   .. py:method:: execute_task_queue(interval=None, node_ids=None)
+
+      Execute a series of AiiDA processes for several tasks consecutively for all parent nodes
+      as defined in the ``task_queue`` attribute.
+
+      :Parameters: * **interval** (*tuple (optional)*) -- Lower and upper bound of the interval of workflows that are executed. ``None`` to run
+                     all workflows. The default value is ``None``.
+                   * **node_ids** (*list (optional)*) -- List of primary keys or uuids of the parent nodes of the workflows that are started.
+                     ``None`` to run all workflows.
+
+
+   .. py:method:: from_file(file_name='workflow.yaml')
+      :classmethod:
+
+
+   .. py:method:: generate_inputs(parent_node, task)
+
+      Generate a dictionary or builder for a certain task of the workflow for a specific parent
+      node.
+
+      :Parameters: * **parent_node** (*aiida.orm.node or str or int*) -- Uuid, primary key or the AiiDA node itself.
+                   * **task** (*str*) -- Task label.
+
+
+   .. py:method:: generate_provenance_graph(parent_node_index)
+
+      Generate provenance graph of the workflow.
+
+      :returns: *aiida.tools.visualization.graph.Graph* -- Provenance graph.
+
+
+   .. py:method:: import_parent_nodes_from_aiida_db(group_labels)
+
+      Import parent nodes from the AiiDA database.
+
+      :Parameters: **group_labels** (*str or list*) -- AiiDA group label or list of group labels.
+
+
+   .. py:method:: import_parent_nodes_from_pandas_df(data_frame, parent_node='structure_node')
+
+      Extract parent nodes from a pandas data frame. The data frame needs to have a column
+      called 'aiida_uuid' with the universally unique identifier (uuid) of the nodes.
+
+      :Parameters: * **data_frame** (*pandas.DataFrame*) -- Pandas data frame containing the uuids, primary keys of the AiiDA nodes or the AiiDA
+                     nodes themselves.
+                   * **parent_node** (*str (optional)*) -- Label of the column containing the parent nodes for the workflow. The default value is
+                     ``'structure_node'``.
+
+
+   .. py:method:: reset_task_queue()
+
+      Reset the task queue.
+
+
+   .. py:method:: return_process_nodes()
+
+      Return a pandas data frame containing the process nodes of all completed tasks.
+
+      :returns: *pandas.DataFrame* -- Pandas data frame.
+
+
+   .. py:method:: return_results(include='all', exclude=[])
+
+      Return a pandas data frame containing the calculated results of all completed tasks.
+
+      :Parameters: * **include** (*list or str (optional)*) -- List of results that are included in the pandas data frame. The value ``'all'``
+                     returns all results. The default value is ``'all'``.
+                   * **exclude** (*list (optional)*) -- List of results that are excluded in the pandas data frame. The default value is
+                     ``[]``.
+
+      :returns: *pandas.DataFrame* -- Pandas data frame.
+
+
+   .. py:method:: return_runtimes(unit=None)
+
+      Return a pandas data frame containing the runtimes of all completed tasks.
+
+      :returns: *pandas.DataFrame* -- Pandas data frame.
+
+
+   .. py:method:: return_workflow_states(unformatted=False)
+
+      Return a pandas data frame containing the current state of  workflow.
+
+      Paramters
+      ---------
+      unformatted : bool (optional)
+          If set to ``True`` an unformatted pandas.DataFrame object is returned otherwise a
+          pandas.Styler object is returned.
+
+      :returns: *pandas.DataFrame or pandas.Styler* -- Pandas data frame.
+
+
+   .. py:method:: run_task(task_label, interval=None, node_ids=None)
+
+      Run the AiiDA processes of the task for all parent nodes.
+
+      :Parameters: * **task_label** (*str*) -- Label of the workflow task.
+                   * **interval** (*tuple (optional)*) -- Lower and upper bound of the interval of workflows that are submitted. ``None`` to run
+                     all workflows. The default value is ``None``.
+                   * **node_ids** (*list (optional)*) -- List of primary keys or uuids of the parent nodes of the workflows that are submitted.
+                     ``None`` to run all workflows.
+
+
+   .. py:method:: set_user_input(input_port, value)
+
+      Set a user input parameter of the workflow for all parent nodes.
+
+      :Parameters: * **input_port** (*str*) -- Input port of the Parameter.
+                   * **value** (*variable*) -- Value of the input parameter.
+
+
+   .. py:method:: submit_task(task_label, interval=None, node_ids=None)
+
+      Submit the AiiDA processes of the task for all parent nodes.
+
+      :Parameters: * **task_label** (*str*) -- Label of the workflow task.
+                   * **interval** (*tuple (optional)*) -- Lower and upper bound of the interval of workflows that are submitted. ``None`` to run
+                     all workflows. The default value is ``None``.
+                   * **node_ids** (*list (optional)*) -- List of primary keys or uuids of the parent nodes of the workflows that are submitted.
+                     ``None`` to run all workflows.
+
+
+   .. py:method:: to_file(file_name='workflow.yaml')
+
+
+
+
+.. py:class:: WorkflowBuilder(parent_node=None, protocol=None, graph_attributes={'graph_attr': {'size': '10!,6'}}, use_uuid=False)
+
+
+   Bases: :py:obj:`_BaseWorkflowBuilder`
+
+   Class to manage complex AiiDA workflows.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`aiida_group <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.aiida_group>`
+        - Only consider processes in the AiiDA group.
+      * - :py:obj:`completed_tasks <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.completed_tasks>`
+        - Completed tasks.
+      * - :py:obj:`failed_tasks <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.failed_tasks>`
+        - Failed tasks.
+      * - :py:obj:`parent_node <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.parent_node>`
+        - Parent AiiDA node.
+      * - :py:obj:`protocol <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.protocol>`
+        - Protocol used for the workflow.
+      * - :py:obj:`results <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.results>`
+        - Results of the workflow.
+      * - :py:obj:`running_tasks <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.running_tasks>`
+        - Tasks which have not yet finished.
+      * - :py:obj:`tasks <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.tasks>`
+        - Return all tasks of the workflow.
+      * - :py:obj:`use_uuid <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.use_uuid>`
+        - Whether to use the uuid (str) to represent AiiDA nodes instead of the primary key
+      * - :py:obj:`user_input <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.user_input>`
+        - Input parameters set by the user.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`adopt_input_nodes_from_workflow <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.adopt_input_nodes_from_workflow>`\ (parent_node)
+        - Import input parameters for the workflow based on another parent node.
+      * - :py:obj:`determine_workflow_state <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.determine_workflow_state>`\ ()
+        - Determine which tasks of the workflow have been completed and which ones can be started
+      * - :py:obj:`from_file <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.from_file>`\ (file_name)
+        - `class` \-
+      * - :py:obj:`generate_inputs <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.generate_inputs>`\ (task)
+        - Generate a builder for an AiiDA work chain or calculation job.
+      * - :py:obj:`generate_provenance_graph <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.generate_provenance_graph>`\ ()
+        - Generate provenance graph of the workflow.
+      * - :py:obj:`run_task <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.run_task>`\ (task)
+        - Run the underlying AiiDA process of the task.
+      * - :py:obj:`set_user_input <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.set_user_input>`\ (input_port, value)
+        - Set user input parameters of the workflow.
+      * - :py:obj:`submit_task <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.submit_task>`\ (task)
+        - Submit the underlying AiiDA process of the task.
+      * - :py:obj:`to_file <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder.to_file>`\ (file_name)
+        - \-
+
+
+
+   .. py:property:: aiida_group
+
+      Only consider processes in the AiiDA group.
+
+      :type: str or aiida.orm.Group
+
+   .. py:property:: completed_tasks
+
+      Completed tasks.
+
+   .. py:property:: failed_tasks
+
+      Failed tasks.
+
+   .. py:property:: parent_node
+
+      Parent AiiDA node.
+
+   .. py:property:: protocol
+
+      Protocol used for the workflow.
+
+   .. py:property:: results
+
+      Results of the workflow.
+
+   .. py:property:: running_tasks
+
+      Tasks which have not yet finished.
+
+   .. py:property:: tasks
+
+      Return all tasks of the workflow.
+
+   .. py:property:: use_uuid
+
+      Whether to use the uuid (str) to represent AiiDA nodes instead of the primary key
+      (int).
+
+      :type: bool
+
+   .. py:property:: user_input
+
+      Input parameters set by the user.
+
+
+   .. py:method:: adopt_input_nodes_from_workflow(parent_node)
+
+      Import input parameters for the workflow based on another parent node.
+
+      :Parameters: **parent_node** (*aiida.node*) -- Parent AiiDA node.
+
+
+   .. py:method:: determine_workflow_state()
+
+      Determine which tasks of the workflow have been completed and which ones can be started
+      next.
+
+
+   .. py:method:: from_file(file_name='workflow.yaml')
+      :classmethod:
+
+
+   .. py:method:: generate_inputs(task)
+
+      Generate a builder for an AiiDA work chain or calculation job.
+
+      :Parameters: **task** (*str*) -- Workflow task.
+
+      :returns: **builder** (*aiida.work_chain or dict*) -- If the underlying AiiDA process is a work chain the builder of the work chain is
+                returnedBuilder, otherwise a dictionary of the input parameters and the process is
+                returned.
+
+
+   .. py:method:: generate_provenance_graph()
+
+      Generate provenance graph of the workflow.
+
+      :returns: *aiida.tools.visualization.graph.Graph* -- Provenance graph.
+
+
+   .. py:method:: run_task(task)
+
+      Run the underlying AiiDA process of the task.
+
+      :Parameters: **task** (*str*) -- Workflow task.
+
+      :returns: * **proc_node** (*aiida.node*) -- AiiDA process node.
+                * **result** (*aiida.node*) -- Results of the AiiDA process.
+
+
+   .. py:method:: set_user_input(input_port, value)
+
+      Set user input parameters of the workflow.
+
+      :Parameters: * **input_port** (*str*) -- Input port of the parameter.
+                   * **value** -- Value.
+
+
+   .. py:method:: submit_task(task)
+
+      Submit the underlying AiiDA process of the task.
+
+      :Parameters: **task** (*str*) -- Workflow task.
+
+      :returns: **proc_node** (*aiida.node*) -- AiiDA process node.
+
+
+   .. py:method:: to_file(file_name='workflow.yaml')
+
+
+
+.. py:data:: AiidaCode
+
+   
+

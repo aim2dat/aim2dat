@@ -1,0 +1,11 @@
+:py:mod:`aim2dat.ext_interfaces.seekpath`
+=========================================
+
+.. py:module:: aim2dat.ext_interfaces.seekpath
+
+.. autoapi-nested-parse::
+
+   Interface to the seekpath library.
+
+
+

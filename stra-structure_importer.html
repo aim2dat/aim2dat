@@ -1,0 +1,3017 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="">
+    
+    
+      
+        <title>Interfaces to online databases and random crystal generation - aim2dat  documentation</title>
+      
+    
+    
+      
+        
+        
+      
+      
+
+    
+    
+    
+      
+    
+        <link rel="stylesheet" type="text/css" href="_static/sphinx_immaterial_theme.c145f3631d897b861.min.css?v=b0f86f06" />
+        <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=eafc0fe6" />
+        <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+        <link rel="stylesheet" type="text/css" href="_static/contentui.css" />
+        <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="blue">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#Adding-constraints" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="aim2dat  documentation" class="md-header__button md-logo" aria-label="aim2dat  documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            aim2dat  documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Interfaces to online databases and random crystal generation
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/aim2dat/aim2dat" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    aim2dat
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="installation.html" class="md-tabs__link">
+      <span class="md-ellipsis">Installation</span>
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  <li class="md-tabs__item">
+    <a href="user_guide.html" class="md-tabs__link md-tabs__link--active">
+      <span class="md-ellipsis">User Guide</span>
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="examples.html" class="md-tabs__link">
+      <span class="md-ellipsis">Examples</span>
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="autoapi/aim2dat/index.html" class="md-tabs__link">
+      <span class="md-ellipsis">Python API</span>
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="api-aiida_processes.html" class="md-tabs__link">
+      <span class="md-ellipsis">Aii<wbr>DA Processes</span>
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="changelog.html" class="md-tabs__link">
+      <span class="md-ellipsis">Changelog</span>
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="aim2dat  documentation" class="md-nav__button md-logo" aria-label="aim2dat  documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    aim2dat  documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/aim2dat/aim2dat" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    aim2dat
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          <span class="md-ellipsis">Installation</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Installation" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Installation</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_1" type="checkbox" id="__nav_1_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="installation.html"><span title="/installation.rst (reference label)" class="md-ellipsis">Overview and Package Dependencies</span></a>
+          
+            <label for="__nav_1_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Overview and Package Dependencies" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/installation.rst (reference label)" class="md-ellipsis">Overview and Package Dependencies</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="inst_windows.html" class="md-nav__link">
+        <span title="/inst_windows.rst (reference label)" class="md-ellipsis">Windows operating systems</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="inst_linux.html" class="md-nav__link">
+        <span title="/inst_linux.rst (reference label)" class="md-ellipsis">Linux operating systems</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          <span class="md-ellipsis">User Guide</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="User Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">User Guide</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="user_guide.html" class="md-nav__link">
+        <span title="/user_guide.rst (reference label)" class="md-ellipsis">Overview</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" checked>
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="stra-overview.html"><span title="/stra-overview.rst (reference label)" class="md-ellipsis">Structural Analysis</span></a>
+          
+            <label for="__nav_2_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Structural Analysis" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/stra-overview.rst (reference label)" class="md-ellipsis">Structural Analysis</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="stra-structure.html" class="md-nav__link">
+        <span title="/stra-structure.ipynb (reference label)" class="md-ellipsis">Representation of molecules and crystals</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="stra-multiple_structures.html" class="md-nav__link">
+        <span title="/stra-multiple_structures.ipynb (reference label)" class="md-ellipsis">Handling multiple structures at once</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          <span title="/stra-structure_importer.ipynb (reference label)" class="md-ellipsis">Interfaces to online databases and random crystal generation</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        <span title="/stra-structure_importer.ipynb (reference label)" class="md-ellipsis">Interfaces to online databases and random crystal generation</span>
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Adding-constraints" class="md-nav__link">
+    <span title="/stra-structure_importer.ipynb#adding-constraints (reference label)" class="md-ellipsis">Adding constraints</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Generating-random-crystal-structure-interfacing-the-PyXtaL-package" class="md-nav__link">
+    <span title="/stra-structure_importer.ipynb#generating-random-crystal-structure-interfacing-the-pyxtal-package (reference label)" class="md-ellipsis">Generating random crystal structure interfacing the Py<wbr>Xta<wbr>L package</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Related-examples" class="md-nav__link">
+    <span title="/stra-structure_importer.ipynb#related-examples (reference label)" class="md-ellipsis">Related examples</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Related-API-instances" class="md-nav__link">
+    <span title="/stra-structure_importer.ipynb#related-api-instances (reference label)" class="md-ellipsis">Related API instances</span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="stra-surfaces.html" class="md-nav__link">
+        <span title="/stra-surfaces.ipynb (reference label)" class="md-ellipsis">Creating surfaces from bulk crystals</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="htw-overview.html"><span title="/htw-overview.rst (reference label)" class="md-ellipsis">High-<wbr>throughput Workflows</span></a>
+          
+            <label for="__nav_2_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="High-throughput Workflows" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/htw-overview.rst (reference label)" class="md-ellipsis">High-<wbr>throughput Workflows</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="htw-workflow_builders.html" class="md-nav__link">
+        <span title="/htw-workflow_builders.ipynb (reference label)" class="md-ellipsis">Handling complex workflows using the workflow builders</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="htw-cp2k_calculations.html" class="md-nav__link">
+        <span title="/htw-cp2k_calculations.ipynb (reference label)" class="md-ellipsis">Running high-<wbr>throughput calculations using CP2K</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="plots-overview.html"><span title="/plots-overview.rst (reference label)" class="md-ellipsis">Plots</span></a>
+          
+            <label for="__nav_2_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Plots" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/plots-overview.rst (reference label)" class="md-ellipsis">Plots</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plots-simple_plot.html" class="md-nav__link">
+        <span title="/plots-simple_plot.ipynb (reference label)" class="md-ellipsis">Plotting with the Simple<wbr>Plot class</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plots-properties_and_functions.html" class="md-nav__link">
+        <span title="/plots-properties_and_functions.ipynb (reference label)" class="md-ellipsis">Common features</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plots-subplots.html" class="md-nav__link">
+        <span title="/plots-subplots.ipynb (reference label)" class="md-ellipsis">Subplots and grids</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fa-overview.html" class="md-nav__link">
+        <span title="/fa-overview.ipynb (reference label)" class="md-ellipsis">Function Analysis</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="ml-overview.html"><span title="/ml-overview.ipynb (reference label)" class="md-ellipsis">Machine Learning</span></a>
+          
+            <label for="__nav_2_6">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Machine Learning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/ml-overview.ipynb (reference label)" class="md-ellipsis">Machine Learning</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ml-scikit_learn.html" class="md-nav__link">
+        <span title="/ml-scikit_learn.rst (reference label)" class="md-ellipsis">Scikit-<wbr>learn integration</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          <span class="md-ellipsis">Examples</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Examples" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Examples</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="examples.html"><span title="/examples.rst (reference label)" class="md-ellipsis">Example List</span></a>
+          
+            <label for="__nav_3_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Example List" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/examples.rst (reference label)" class="md-ellipsis">Example List</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/fct-discretization.html" class="md-nav__link">
+        <span title="/examples/fct-discretization.ipynb (reference label)" class="md-ellipsis">Creating a discretized grid to analyse functions</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/fct-fingerprint_comparison.html" class="md-nav__link">
+        <span title="/examples/fct-fingerprint_comparison.ipynb (reference label)" class="md-ellipsis">Comparing two functions on a discretized grid</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/plots-band_structure_and_pdos_cp2k.html" class="md-nav__link">
+        <span title="/examples/plots-band_structure_and_pdos_cp2k.ipynb (reference label)" class="md-ellipsis">Plotting the band structure and projected density of states <wbr>(p<wbr>DOS) from CP2K output-<wbr>files</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/plots-band_structure_and_pdos_fhi-aims.html" class="md-nav__link">
+        <span title="/examples/plots-band_structure_and_pdos_fhi-aims.ipynb (reference label)" class="md-ellipsis">Plotting the band structure and projected density of states <wbr>(p<wbr>DOS) from FHI-<wbr>aims output files</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/plots-band_structure_and_pdos_phonopy.html" class="md-nav__link">
+        <span title="/examples/plots-band_structure_and_pdos_phonopy.ipynb (reference label)" class="md-ellipsis">Plotting the band structure, projected density of states <wbr>(p<wbr>DOS) and thermal properties from phonopy output-<wbr>files</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/plots-band_structure_and_pdos_qe.html" class="md-nav__link">
+        <span title="/examples/plots-band_structure_and_pdos_qe.ipynb (reference label)" class="md-ellipsis">Plotting the band structure and projected density of states <wbr>(p<wbr>DOS) from Quantum ESPRESSO output-<wbr>files</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/plots-band_structure_materials_project.html" class="md-nav__link">
+        <span title="/examples/plots-band_structure_materials_project.ipynb (reference label)" class="md-ellipsis">Plotting the band structure and projected density of states <wbr>(p<wbr>DOS) from Materials Project</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/plots-partial_charges_critic2.html" class="md-nav__link">
+        <span title="/examples/plots-partial_charges_critic2.ipynb (reference label)" class="md-ellipsis">Plotting atomic partial charges from Critic2 output-<wbr>files</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/plots-planar_fields_critic2.html" class="md-nav__link">
+        <span title="/examples/plots-planar_fields_critic2.ipynb (reference label)" class="md-ellipsis">Plotting planar fields from Critic2 output files</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/plots-simple_plot.html" class="md-nav__link">
+        <span title="/examples/plots-simple_plot.ipynb (reference label)" class="md-ellipsis">Using the Simple<wbr>Plot class as a flexible plotting framework</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/plots-spectroscopy.html" class="md-nav__link">
+        <span title="/examples/plots-spectroscopy.ipynb (reference label)" class="md-ellipsis">How to use the plots package to plot a x-<wbr>ray absorption spectrum</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/strct-coordination_number_analysis.html" class="md-nav__link">
+        <span title="/examples/strct-coordination_number_analysis.ipynb (reference label)" class="md-ellipsis">Calculating the coordination numbers for different atomic sites</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/strct-odb_interfaces.html" class="md-nav__link">
+        <span title="/examples/strct-odb_interfaces.ipynb (reference label)" class="md-ellipsis">Querying the structure pool for the Cs-<wbr>Te binary system</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="examples/strct-partial_rdf.html" class="md-nav__link">
+        <span title="/examples/strct-partial_rdf.ipynb (reference label)" class="md-ellipsis">Calculating the F-<wbr>Fingerprint to compare crystal structures</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          <span class="md-ellipsis">Python API</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Python API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Python API</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/index.html"><span title="/autoapi/aim2dat/index.rst (reference label)" class="md-ellipsis">aim2dat</span></a>
+          
+            <label for="__nav_4_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/index.rst (reference label)" class="md-ellipsis">aim2dat</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1" type="checkbox" id="__nav_4_1_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/index.html#subpackages"><span title="/autoapi/aim2dat/index.rst#subpackages (reference label)" class="md-ellipsis">Subpackages</span></a>
+          
+            <label for="__nav_4_1_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Subpackages" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/index.rst#subpackages (reference label)" class="md-ellipsis">Subpackages</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_1" type="checkbox" id="__nav_4_1_1_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/aiida_data/index.html"><span title="/autoapi/aim2dat/aiida_data/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>data</span></a>
+          
+            <label for="__nav_4_1_1_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.aiida_data" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/aiida_data/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>data</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_1_1" type="checkbox" id="__nav_4_1_1_1_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/aiida_data/index.html#submodules"><span title="/autoapi/aim2dat/aiida_data/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_1_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_1_1_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/aiida_data/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/aiida_data/gaussian_cube_data/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/aiida_data/gaussian_cube_data/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>data.<wbr>gaussian_<wbr>cube_<wbr>data</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/aiida_data/surface_data/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/aiida_data/surface_data/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>data.<wbr>surface_<wbr>data</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_2" type="checkbox" id="__nav_4_1_1_2" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/aiida_workflows/index.html"><span title="/autoapi/aim2dat/aiida_workflows/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>workflows</span></a>
+          
+            <label for="__nav_4_1_1_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.aiida_workflows" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/aiida_workflows/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>workflows</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_2_1" type="checkbox" id="__nav_4_1_1_2_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/aiida_workflows/index.html#submodules"><span title="/autoapi/aim2dat/aiida_workflows/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_2_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_1_1_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/aiida_workflows/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/aiida_workflows/utils/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/aiida_workflows/utils/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>workflows.<wbr>utils</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/aiida_workflows/workflow_builder/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/aiida_workflows/workflow_builder/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>workflows.<wbr>workflow_<wbr>builder</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_3" type="checkbox" id="__nav_4_1_1_3" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/fct/index.html"><span title="/autoapi/aim2dat/fct/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>fct</span></a>
+          
+            <label for="__nav_4_1_1_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.fct" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_1_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/fct/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>fct</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_3_1" type="checkbox" id="__nav_4_1_1_3_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/fct/index.html#submodules"><span title="/autoapi/aim2dat/fct/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_3_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_1_1_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/fct/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/fct/discretization/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/fct/discretization/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>fct.<wbr>discretization</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/fct/fingerprint/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/fct/fingerprint/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>fct.<wbr>fingerprint</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/fct/function_comparison/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/fct/function_comparison/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>fct.<wbr>function_<wbr>comparison</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/fct/hull/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/fct/hull/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>fct.<wbr>hull</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/fct/smearing/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/fct/smearing/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>fct.<wbr>smearing</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_4" type="checkbox" id="__nav_4_1_1_4" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/io/index.html"><span title="/autoapi/aim2dat/io/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io</span></a>
+          
+            <label for="__nav_4_1_1_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.io" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_1_4">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/io/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_4_1" type="checkbox" id="__nav_4_1_1_4_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/io/index.html#submodules"><span title="/autoapi/aim2dat/io/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_4_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_1_1_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/io/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/io/cp2k/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/io/cp2k/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io.<wbr>cp2k</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/io/critic2/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/io/critic2/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io.<wbr>critic2</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/io/fhi_aims/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/io/fhi_aims/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io.<wbr>fhi_<wbr>aims</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/io/phonopy/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/io/phonopy/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io.<wbr>phonopy</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/io/qe/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/io/qe/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io.<wbr>qe</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/io/xmgrace/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/io/xmgrace/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io.<wbr>xmgrace</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/io/yaml/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/io/yaml/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io.<wbr>yaml</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_5" type="checkbox" id="__nav_4_1_1_5" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/ml/index.html"><span title="/autoapi/aim2dat/ml/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>ml</span></a>
+          
+            <label for="__nav_4_1_1_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.ml" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_1_5">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/ml/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>ml</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_5_1" type="checkbox" id="__nav_4_1_1_5_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/ml/index.html#submodules"><span title="/autoapi/aim2dat/ml/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_5_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_1_1_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/ml/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/ml/cell_grid_search/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/ml/cell_grid_search/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>ml.<wbr>cell_<wbr>grid_<wbr>search</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/ml/kernels/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/ml/kernels/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>ml.<wbr>kernels</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/ml/metrics/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/ml/metrics/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>ml.<wbr>metrics</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/ml/transformers/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/ml/transformers/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>ml.<wbr>transformers</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/ml/utils/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/ml/utils/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>ml.<wbr>utils</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/plots/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/plots/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>plots</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_7" type="checkbox" id="__nav_4_1_1_7" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/strct/index.html"><span title="/autoapi/aim2dat/strct/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct</span></a>
+          
+            <label for="__nav_4_1_1_7">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.strct" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_1_7">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/strct/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_7_1" type="checkbox" id="__nav_4_1_1_7_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/strct/index.html#subpackages"><span title="/autoapi/aim2dat/strct/index.rst#subpackages (reference label)" class="md-ellipsis">Subpackages</span></a>
+          
+            <label for="__nav_4_1_1_7_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Subpackages" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_1_1_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/strct/index.rst#subpackages (reference label)" class="md-ellipsis">Subpackages</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_7_1_1" type="checkbox" id="__nav_4_1_1_7_1_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/strct/ext_analysis/index.html"><span title="/autoapi/aim2dat/strct/ext_analysis/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct.<wbr>ext_<wbr>analysis</span></a>
+          
+            <label for="__nav_4_1_1_7_1_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.strct.ext_analysis" data-md-level="6">
+        <label class="md-nav__title" for="__nav_4_1_1_7_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/strct/ext_analysis/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct.<wbr>ext_<wbr>analysis</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_7_1_1_1" type="checkbox" id="__nav_4_1_1_7_1_1_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/strct/ext_analysis/index.html#submodules"><span title="/autoapi/aim2dat/strct/ext_analysis/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_7_1_1_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="7">
+        <label class="md-nav__title" for="__nav_4_1_1_7_1_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/strct/ext_analysis/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/strct/ext_analysis/decorator/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/strct/ext_analysis/decorator/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct.<wbr>ext_<wbr>analysis.<wbr>decorator</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_7_1_2" type="checkbox" id="__nav_4_1_1_7_1_2" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/strct/ext_manipulation/index.html"><span title="/autoapi/aim2dat/strct/ext_manipulation/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct.<wbr>ext_<wbr>manipulation</span></a>
+          
+            <label for="__nav_4_1_1_7_1_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.strct.ext_manipulation" data-md-level="6">
+        <label class="md-nav__title" for="__nav_4_1_1_7_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/strct/ext_manipulation/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct.<wbr>ext_<wbr>manipulation</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_7_1_2_1" type="checkbox" id="__nav_4_1_1_7_1_2_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/strct/ext_manipulation/index.html#submodules"><span title="/autoapi/aim2dat/strct/ext_manipulation/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_7_1_2_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="7">
+        <label class="md-nav__title" for="__nav_4_1_1_7_1_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/strct/ext_manipulation/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/strct/ext_manipulation/decorator/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/strct/ext_manipulation/decorator/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct.<wbr>ext_<wbr>manipulation.<wbr>decorator</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_8" type="checkbox" id="__nav_4_1_1_8" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/utils/index.html"><span title="/autoapi/aim2dat/utils/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>utils</span></a>
+          
+            <label for="__nav_4_1_1_8">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.utils" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_1_8">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/utils/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>utils</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_8_1" type="checkbox" id="__nav_4_1_1_8_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="autoapi/aim2dat/utils/index.html#submodules"><span title="/autoapi/aim2dat/utils/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_8_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_1_1_8_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/utils/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/utils/chem_formula/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/utils/chem_formula/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>utils.<wbr>chem_<wbr>formula</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/utils/element_properties/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/utils/element_properties/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>utils.<wbr>element_<wbr>properties</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/utils/maths/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/utils/maths/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>utils.<wbr>maths</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/utils/space_groups/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/utils/space_groups/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>utils.<wbr>space_<wbr>groups</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="autoapi/aim2dat/utils/units/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/utils/units/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>utils.<wbr>units</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          <span class="md-ellipsis">Aii<wbr>DA Processes</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="AiiDA Processes" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Aii<wbr>DA Processes</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="api-aiida_processes.html" class="md-nav__link">
+        <span title="/api-aiida_processes.rst (reference label)" class="md-ellipsis">Aii<wbr>DA Processes</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          <span class="md-ellipsis">Changelog</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Changelog" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Changelog</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="changelog.html" class="md-nav__link">
+        <span title="/changelog.rst (reference label)" class="md-ellipsis">Changelog</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#Adding-constraints" class="md-nav__link">
+    <span title="/stra-structure_importer.ipynb#adding-constraints (reference label)" class="md-ellipsis">Adding constraints</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Generating-random-crystal-structure-interfacing-the-PyXtaL-package" class="md-nav__link">
+    <span title="/stra-structure_importer.ipynb#generating-random-crystal-structure-interfacing-the-pyxtal-package (reference label)" class="md-ellipsis">Generating random crystal structure interfacing the Py<wbr>Xta<wbr>L package</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Related-examples" class="md-nav__link">
+    <span title="/stra-structure_importer.ipynb#related-examples (reference label)" class="md-ellipsis">Related examples</span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#Related-API-instances" class="md-nav__link">
+    <span title="/stra-structure_importer.ipynb#related-api-instances (reference label)" class="md-ellipsis">Related API instances</span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                  
+
+
+<h1 id="Interfaces-to-online-databases-and-random-crystal-generation">Interfaces to online databases and random crystal generation<a class="headerlink" href="#Interfaces-to-online-databases-and-random-crystal-generation" title="Link to this heading">¶</a></h1>
+<p>The <a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureImporter" title="aim2dat.strct.StructureImporter (Python class) — Bases: aim2dat.strct.mixin.ConstraintsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">StructureImporter</span></code></a> class has the purpose to produce structure pools which can be further analysed or used as input for high-throughput workflows straightaway.
+As such the class offers interfaces to several online databases as well as to the <a href="https://pyxtal.readthedocs.io/" target="_blank">PyXtaL</a> python package to randomly generate crystal structures.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">aim2dat.strct</span> <span class="kn">import</span> <span class="n">StructureImporter</span>
+
+<span class="n">strct_imp</span> <span class="o">=</span> <span class="n">StructureImporter</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<p>Interfaces to the following databases are currently supported:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureImporter.import_from_mp" title="aim2dat.strct.StructureImporter.import_from_mp (Python method) — Import structures from the crystal database Materials Project using the pymatgen interface."><code class="xref py py-meth docutils literal notranslate"><span class="pre">import_from_mp</span></code></a> and <a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureImporter.append_from_mp_by_id" title="aim2dat.strct.StructureImporter.append_from_mp_by_id (Python method) — Append structure via the database-id."><code class="xref py py-meth docutils literal notranslate"><span class="pre">append_from_mp_by_id</span></code></a> query structures from the <a href="https://materialsproject.org/" target="_blank">materials project (MP)</a>.</p></li>
+<li><p><a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureImporter.import_from_oqmd" title="aim2dat.strct.StructureImporter.import_from_oqmd (Python method) — Import from the open quantum materials database."><code class="xref py py-meth docutils literal notranslate"><span class="pre">import_from_oqmd</span></code></a> queries structure from the  <a href="https://oqmd.org/" target="_blank">open quantum materials database (OQMD)</a>.</p></li>
+<li><p><a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureImporter.import_from_optimade" title="aim2dat.strct.StructureImporter.import_from_optimade (Python method) — Import crystal structures using the optimade-API."><code class="xref py py-meth docutils literal notranslate"><span class="pre">import_from_optimade</span></code></a> connects to several databases via the <a href="https://optimade.org/" target="_blank">optimade interface</a>.</p></li>
+</ul>
+<p>Crystals can be imported by using the implemented <code class="docutils literal notranslate"><span class="pre">import_*</span></code> or <code class="docutils literal notranslate"><span class="pre">append_*</span></code> functions and giving the chemical formula for a specific stoichiometry or an element set as input parameter:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">Cs2Te_structures</span> <span class="o">=</span> <span class="n">strct_imp</span><span class="o">.</span><span class="n">import_from_oqmd</span><span class="p">(</span><span class="s2">&quot;Cs2Te&quot;</span><span class="p">)</span>
+<span class="n">NaSb_structures</span> <span class="o">=</span> <span class="n">strct_imp</span><span class="o">.</span><span class="n">import_from_oqmd</span><span class="p">(</span><span class="s2">&quot;Cs-Sb&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<p>The imported structures of the query are returned as a <a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureCollection" title="aim2dat.strct.StructureCollection (Python class) — The StructureCollection class is a container for one or multiple atomic structures. It implements several import_* and append_* functions to add new data to the object."><code class="xref py py-class docutils literal notranslate"><span class="pre">StructureCollection</span></code></a> object but also added to an internal  <a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureCollection" title="aim2dat.strct.StructureCollection (Python class) — The StructureCollection class is a container for one or multiple atomic structures. It implements several import_* and append_* functions to add new data to the object."><code class="xref py py-class docutils literal notranslate"><span class="pre">StructureCollection</span></code></a> object within the <a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureImporter" title="aim2dat.strct.StructureImporter (Python class) — Bases: aim2dat.strct.mixin.ConstraintsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">StructureImporter</span></code></a> class that can accessed via the <a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureImporter.structures" title="aim2dat.strct.StructureImporter.structures (Python property) — Return the internal StructureCollection object."><code class="xref py py-attr docutils literal notranslate"><span class="pre">structures</span></code></a> property:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">strct_imp</span><span class="o">.</span><span class="n">structures</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+----------------------------------------------------------------------
+------------------------ Structure Collection ------------------------
+----------------------------------------------------------------------
+
+ - Number of structures: 116
+ - Elements: Cs-Sb-Te
+
+                              Structures
+  - OQMD_6763           Cs8Te4              [True  True  True ]
+  - OQMD_1239241        Cs4Te2              [True  True  True ]
+  - OQMD_1343671        Cs2Te               [True  True  True ]
+  - OQMD_1343380        Cs4Te2              [True  True  True ]
+  - OQMD_1473530        Cs2Te               [True  True  True ]
+  ...
+  - OQMD_1343518        Cs18Sb6             [True  True  True ]
+  - OQMD_1339303        Cs12Sb4             [True  True  True ]
+  - OQMD_1521868        Cs6Sb2              [True  True  True ]
+  - OQMD_1376097        Cs5Sb4              [True  True  True ]
+  - OQMD_650085         Cs20Sb32            [True  True  True ]
+----------------------------------------------------------------------
+</pre></div></div>
+</div>
+<p>An overview of all imported structures is given by the string representation of the class:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[4]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">strct_imp</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+----------------------------------------------------------------------
+------------------------ Structure Collection ------------------------
+----------------------------------------------------------------------
+
+                         Imported from: oqmd
+   - Number of structures: 116
+   - Elements: Cs-Sb-Te
+
+----------------------------------------------------------------------
+
+                     Chemical element constraints
+   Neglecting elemental structures: False
+
+                     Chemical formula constraints
+   Not set.
+
+                        Attribute constraints
+   Not set.
+
+----------------------------------------------------------------------
+</pre></div></div>
+</div>
+<h2 id="Adding-constraints">Adding constraints<a class="headerlink" href="#Adding-constraints" title="Link to this heading">¶</a></h2>
+<p>As you may have noticed in the string representation of the object, one can apply constraintsto the structures that are imported.
+Before a new structure is imported all of the set constraints are checked and only structures that abide all constraints are added.</p>
+<p>New constraints can be set via the functions:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureImporter.add_chem_formula_constraint" title="aim2dat.strct.StructureImporter.add_chem_formula_constraint (Python method) — Add a chemical formula as a constraint."><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_chem_formula_constraint</span></code></a></p></li>
+<li><p><a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureImporter.set_concentration_constraint" title="aim2dat.strct.StructureImporter.set_concentration_constraint (Python method) — Set a constraint on the concentration of an element in the structure."><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_concentration_constraint</span></code></a></p></li>
+<li><p><a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureImporter.set_attribute_constraint" title="aim2dat.strct.StructureImporter.set_attribute_constraint (Python method) — Set a constraint on attributes."><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_attribute_constraint</span></code></a></p></li>
+</ul>
+<p>Additionally, the <a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureImporter.neglect_elemental_structures" title="aim2dat.strct.StructureImporter.neglect_elemental_structures (Python property) — Whether to neglect elemental phases."><code class="xref py py-attr docutils literal notranslate"><span class="pre">neglect_elemental_structures</span></code></a> property can be set to prevent importing structures merely consisting of one element.</p>
+<p>As an example, we set a constraint on the chemical formula:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[5]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">strct_imp</span><span class="o">.</span><span class="n">add_chem_formula_constraint</span><span class="p">(</span><span class="s2">&quot;Na3Sb&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<p>Looking at the string representation, we find the new constraint listed with the additional information that the formula is ‘reduced’. This means that also multiple of the formula, e.g. structures with the formula ‘Na6Sb2’ are allowed as well.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[6]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="nb">print</span><span class="p">(</span><span class="n">strct_imp</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+----------------------------------------------------------------------
+------------------------ Structure Collection ------------------------
+----------------------------------------------------------------------
+
+                         Imported from: oqmd
+   - Number of structures: 116
+   - Elements: Cs-Sb-Te
+
+----------------------------------------------------------------------
+
+                     Chemical element constraints
+   Neglecting elemental structures: False
+
+                     Chemical formula constraints
+   - Na3Sb (reduced)
+
+                        Attribute constraints
+   Not set.
+
+----------------------------------------------------------------------
+</pre></div></div>
+</div>
+<p>In order to only allow structures with a specific composition, we can set the keyword argument <code class="docutils literal notranslate"><span class="pre">reduced_formula</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[7]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">strct_imp</span><span class="o">.</span><span class="n">add_chem_formula_constraint</span><span class="p">(</span><span class="s2">&quot;Na2Sb2&quot;</span><span class="p">,</span> <span class="n">reduced_formula</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">strct_imp</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+----------------------------------------------------------------------
+------------------------ Structure Collection ------------------------
+----------------------------------------------------------------------
+
+                         Imported from: oqmd
+   - Number of structures: 116
+   - Elements: Cs-Sb-Te
+
+----------------------------------------------------------------------
+
+                     Chemical element constraints
+   Neglecting elemental structures: False
+
+                     Chemical formula constraints
+   - Na3Sb (reduced)
+   - Na2Sb2
+
+                        Attribute constraints
+   Not set.
+
+----------------------------------------------------------------------
+</pre></div></div>
+</div>
+<p>If we now import the binary system ‘Na-Sb’ from the open quantum materials database, we will only receive crystals with the composition ‘Na2Sb2’ or with a Na:Sb ratio of 3:1:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[8]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">structures_NaSb</span> <span class="o">=</span> <span class="n">strct_imp</span><span class="o">.</span><span class="n">import_from_oqmd</span><span class="p">(</span><span class="s2">&quot;Na-Sb&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">structures_NaSb</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+OQMD_8534 - Chem. formula constraint: Na doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_8535 - Chem. formula constraint: Na2 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_30779 - Chem. formula constraint: Na3 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1214546 - Chem. formula constraint: Na doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1214635 - Chem. formula constraint: Na doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1214724 - Chem. formula constraint: Na4 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1214813 - Chem. formula constraint: Na29 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1214902 - Chem. formula constraint: Na20 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1214991 - Chem. formula constraint: Na8 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1215080 - Chem. formula constraint: Na4 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1215169 - Chem. formula constraint: Na doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1215258 - Chem. formula constraint: Na2 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1215347 - Chem. formula constraint: Na2 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1215437 - Chem. formula constraint: Na4 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1215526 - Chem. formula constraint: Na2 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1215615 - Chem. formula constraint: Na2 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1215704 - Chem. formula constraint: Na doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1215793 - Chem. formula constraint: Na2 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1215882 - Chem. formula constraint: Na3 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1215971 - Chem. formula constraint: Na4 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1216063 - Chem. formula constraint: Na3 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1277928 - Chem. formula constraint: Na28 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_2030325 - Chem. formula constraint: Na doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_2030329 - Chem. formula constraint: Na4 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_2015716 - Chem. formula constraint: Na8 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_2030326 - Chem. formula constraint: Na8 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_2054101 - Chem. formula constraint: Na48 doesn&#39;t match with Na3Sb, Na2Sb2.
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Entry for OQMD_31044 already imported.
+Entry for OQMD_9214 already imported.
+Entry for OQMD_18780 already imported.
+Entry for OQMD_9672 already imported.
+Entry for OQMD_9221 already imported.
+Entry for OQMD_18986 already imported.
+Entry for OQMD_51014 already imported.
+Entry for OQMD_92588 already imported.
+Entry for OQMD_670516 already imported.
+Entry for OQMD_1215725 already imported.
+Entry for OQMD_676194 already imported.
+Entry for OQMD_1214567 already imported.
+Entry for OQMD_1214656 already imported.
+Entry for OQMD_1214745 already imported.
+Entry for OQMD_1214834 already imported.
+Entry for OQMD_1214923 already imported.
+Entry for OQMD_1215012 already imported.
+Entry for OQMD_1215101 already imported.
+Entry for OQMD_1215190 already imported.
+Entry for OQMD_1215279 already imported.
+Entry for OQMD_1215368 already imported.
+Entry for OQMD_1215458 already imported.
+Entry for OQMD_1215547 already imported.
+Entry for OQMD_1215636 already imported.
+Entry for OQMD_1215814 already imported.
+Entry for OQMD_1215903 already imported.
+Entry for OQMD_1215992 already imported.
+Entry for OQMD_1216084 already imported.
+Entry for OQMD_676462 already imported.
+Entry for OQMD_1277930 already imported.
+Entry for OQMD_1280366 already imported.
+Entry for OQMD_1522240 already imported.
+Entry for OQMD_1787572 already imported.
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+OQMD_306088 - Chem. formula constraint: NaSb doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_327172 - Chem. formula constraint: NaSb doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_337630 - Chem. formula constraint: NaSb doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_5018 - Chem. formula constraint: Na8Sb8 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1105273 - Chem. formula constraint: NaSb doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1108400 - Chem. formula constraint: Na4Sb4 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1223474 - Chem. formula constraint: NaSb doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1230445 - Chem. formula constraint: NaSb doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1798866 - Chem. formula constraint: Na8Sb8 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1240145 - Chem. formula constraint: Na2Sb4 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1280912 - Chem. formula constraint: Na4Sb8 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1435987 - Chem. formula constraint: Na2Sb4 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1592744 - Chem. formula constraint: Na2Sb4 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_302790 - Chem. formula constraint: NaSb3 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_313332 - Chem. formula constraint: NaSb3 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_321867 - Chem. formula constraint: Na2Sb6 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_346353 - Chem. formula constraint: NaSb3 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1277608 - Chem. formula constraint: Na2Sb6 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1798772 - Chem. formula constraint: NaSb3 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1438117 - Chem. formula constraint: Na4Sb20 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1603356 - Chem. formula constraint: NaSb5 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1240146 - Chem. formula constraint: Na4Sb2 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1589918 - Chem. formula constraint: Na4Sb2 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1340253 - Chem. formula constraint: Na6Sb4 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1340156 - Chem. formula constraint: Na8Sb6 doesn&#39;t match with Na3Sb, Na2Sb2.
+OQMD_1339841 - Chem. formula constraint: Na5Sb4 doesn&#39;t match with Na3Sb, Na2Sb2.
+----------------------------------------------------------------------
+------------------------ Structure Collection ------------------------
+----------------------------------------------------------------------
+
+ - Number of structures: 6
+ - Elements: Na-Sb
+
+                              Structures
+  - OQMD_5156           Na6Sb2              [True  True  True ]
+  - OQMD_300783         Na3Sb               [True  True  True ]
+  - OQMD_311325         Na3Sb               [True  True  True ]
+  - OQMD_323874         Na6Sb2              [True  True  True ]
+  - OQMD_348360         Na3Sb               [True  True  True ]
+  - OQMD_2030774        Na3Sb               [True  True  True ]
+----------------------------------------------------------------------
+</pre></div></div>
+</div>
+<p>All constraints can be removed via the function <a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureImporter.remove_constraints" title="aim2dat.strct.StructureImporter.remove_constraints (Python method) — Remove all constraints."><code class="xref py py-attr docutils literal notranslate"><span class="pre">remove_constraints</span></code></a>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[9]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">strct_imp</span><span class="o">.</span><span class="n">remove_constraints</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">strct_imp</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+----------------------------------------------------------------------
+------------------------ Structure Collection ------------------------
+----------------------------------------------------------------------
+
+                         Imported from: oqmd
+   - Number of structures: 122
+   - Elements: Cs-Na-Sb-Te
+
+----------------------------------------------------------------------
+
+                     Chemical element constraints
+   Neglecting elemental structures: False
+
+                     Chemical formula constraints
+   Not set.
+
+                        Attribute constraints
+   Not set.
+
+----------------------------------------------------------------------
+</pre></div></div>
+</div>
+<h2 id="Generating-random-crystal-structure-interfacing-the-PyXtaL-package">Generating random crystal structure interfacing the PyXtaL package<a class="headerlink" href="#Generating-random-crystal-structure-interfacing-the-PyXtaL-package" title="Link to this heading">¶</a></h2>
+<p>In addition to the interfaces to online databases the <a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureImporter" title="aim2dat.strct.StructureImporter (Python class) — Bases: aim2dat.strct.mixin.ConstraintsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">StructureImporter</span></code></a> can also generate random crystal structures with a certain composition by making use of the <a href="https://pyxtal.readthedocs.io/" target="_blank">PyXtaL</a> python package.</p>
+<p>To do so the function <a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureImporter.generate_random_crystals" title="aim2dat.strct.StructureImporter.generate_random_crystals (Python method) — Generate random crystals using the PyXtaL library."><code class="xref py py-meth docutils literal notranslate"><span class="pre">generate_random_crystals</span></code></a> is used:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[10]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">random_crystals</span> <span class="o">=</span> <span class="n">strct_imp</span><span class="o">.</span><span class="n">generate_random_crystals</span><span class="p">(</span><span class="s2">&quot;Cs2Te&quot;</span><span class="p">,</span> <span class="n">max_structures</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">random_crystals</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+----------------------------------------------------------------------
+------------------------ Structure Collection ------------------------
+----------------------------------------------------------------------
+
+ - Number of structures: 3
+ - Elements: Cs-Te
+
+                              Structures
+  - pyxtal_6746c3f3cf794990a93e105ee1613732 Cs4Te2              [True  True  True ]
+  - pyxtal_e3f58370b43541bca657a40e4f129972 Cs16Te8             [True  True  True ]
+  - pyxtal_2cb2d02798334b1e8977fd1d9a0eb6ee Cs14Te7             [True  True  True ]
+----------------------------------------------------------------------
+</pre></div></div>
+</div>
+<h2 id="Related-examples">Related examples<a class="headerlink" href="#Related-examples" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="examples/strct-odb_interfaces.html"><span class="doc">Querying crystals from online databases</span></a></p></li>
+</ul>
+<h2 id="Related-API-instances">Related API instances<a class="headerlink" href="#Related-API-instances" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="autoapi/aim2dat/strct/index.html#aim2dat.strct.StructureImporter" title="aim2dat.strct.StructureImporter (Python class) — Bases: aim2dat.strct.mixin.ConstraintsMixin"><code class="xref py py-class docutils literal notranslate"><span class="pre">StructureImporter</span></code></a></p></li>
+</ul>
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="stra-multiple_structures.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Handling multiple structures at once" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Handling multiple structures at once
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="stra-surfaces.html" class="md-footer__link md-footer__link--next" aria-label="Next: Creating surfaces from bulk crystals" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Creating surfaces from bulk crystals
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, aim2dat developers.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    7.2.6.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": ".", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+      
+        <script src="_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="_static/design-tabs.js?v=36754332"></script>
+        <script src="_static/contentui.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>

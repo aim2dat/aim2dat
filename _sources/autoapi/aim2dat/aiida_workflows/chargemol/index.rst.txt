@@ -1,0 +1,23 @@
+:orphan:
+
+:py:mod:`aim2dat.aiida_workflows.chargemol`
+===========================================
+
+.. py:module:: aim2dat.aiida_workflows.chargemol
+
+.. autoapi-nested-parse::
+
+   AiiDA framework for the software package chargemol.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   calcjobs/index.rst
+   parsers/index.rst
+
+

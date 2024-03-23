@@ -1,0 +1,11 @@
+:py:mod:`aim2dat.ext_interfaces.optimade`
+=========================================
+
+.. py:module:: aim2dat.ext_interfaces.optimade
+
+.. autoapi-nested-parse::
+
+   Interface to the optimade interface to query structures from online databases.
+
+
+

@@ -1,0 +1,29 @@
+:py:mod:`aim2dat.strct.ext_manipulation.decorator`
+==================================================
+
+.. py:module:: aim2dat.strct.ext_manipulation.decorator
+
+.. autoapi-nested-parse::
+
+   Decorator for manipulation methods.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.ext_manipulation.decorator.external_manipulation_method
+
+
+
+.. py:function:: external_manipulation_method(func)
+
+   Decorate external manipulation methods.
+
+

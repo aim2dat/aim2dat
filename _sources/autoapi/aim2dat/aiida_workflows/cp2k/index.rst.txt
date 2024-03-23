@@ -1,0 +1,42 @@
+:orphan:
+
+:py:mod:`aim2dat.aiida_workflows.cp2k`
+======================================
+
+.. py:module:: aim2dat.aiida_workflows.cp2k
+
+.. autoapi-nested-parse::
+
+   AiiDA framework for the software package CP2K.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   auxiliary_functions/index.rst
+   band_structure_work_chain/index.rst
+   calcjobs/index.rst
+   cell_opt_work_chain/index.rst
+   combined_work_chains/index.rst
+   core_work_chain_handlers/index.rst
+   core_work_chain_inputs/index.rst
+   core_work_chain_opt/index.rst
+   core_work_chain_scf/index.rst
+   cube_work_chain/index.rst
+   eigenvalues_work_chain/index.rst
+   el_properties_utils/index.rst
+   find_scf_p_work_chain/index.rst
+   geo_opt_work_chain/index.rst
+   parser_utils/index.rst
+   parsers/index.rst
+   partial_charges_work_chain/index.rst
+   pdos_work_chain/index.rst
+   planar_fields_work_chain/index.rst
+   surface_opt_utils/index.rst
+   work_chain_specs/index.rst
+
+

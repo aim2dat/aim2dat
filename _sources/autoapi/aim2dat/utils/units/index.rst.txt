@@ -1,0 +1,270 @@
+:py:mod:`aim2dat.utils.units`
+=============================
+
+.. py:module:: aim2dat.utils.units
+
+.. autoapi-nested-parse::
+
+   Module containing units and unit conversions.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.utils.units.Energy
+   aim2dat.utils.units.Frequency
+   aim2dat.utils.units.Length
+   aim2dat.utils.units.UnitConverter
+   aim2dat.utils.units.Wavevector
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.utils.units.energy
+   aim2dat.utils.units.frequency
+   aim2dat.utils.units.length
+   aim2dat.utils.units.wavevector
+
+
+
+.. py:class:: Energy
+
+
+   Bases: :py:obj:`_BaseQuantity`
+
+   Energy units based on the ase library. eV is set to ``1.0``.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`available_units <aim2dat.utils.units.Energy.available_units>`
+        - List of all available units.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`get_unit <aim2dat.utils.units.Energy.get_unit>`\ (unit)
+        - Return the value of the unit.
+
+
+
+   .. py:property:: available_units
+
+      List of all available units.
+
+
+   .. py:method:: get_unit(unit)
+
+      Return the value of the unit.
+
+      :Parameters: **unit** (*str*) -- Physical unit.
+
+      :returns: **value** (*float*) -- Value of the unit.
+
+
+
+
+.. py:class:: Frequency
+
+
+   Bases: :py:obj:`_BaseQuantity`
+
+   Frequency units based on the ase library.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`available_units <aim2dat.utils.units.Frequency.available_units>`
+        - List of all available units.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`get_unit <aim2dat.utils.units.Frequency.get_unit>`\ (unit)
+        - Return the value of the unit.
+
+
+
+   .. py:property:: available_units
+
+      List of all available units.
+
+
+   .. py:method:: get_unit(unit)
+
+      Return the value of the unit.
+
+      :Parameters: **unit** (*str*) -- Physical unit.
+
+      :returns: **value** (*float*) -- Value of the unit.
+
+
+
+
+.. py:class:: Length
+
+
+   Bases: :py:obj:`_BaseQuantity`
+
+   Length units based on the ase library. Angstrom is set to ``1.0``.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`available_units <aim2dat.utils.units.Length.available_units>`
+        - List of all available units.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`get_unit <aim2dat.utils.units.Length.get_unit>`\ (unit)
+        - Return the value of the unit.
+
+
+
+   .. py:property:: available_units
+
+      List of all available units.
+
+
+   .. py:method:: get_unit(unit)
+
+      Return the value of the unit.
+
+      :Parameters: **unit** (*str*) -- Physical unit.
+
+      :returns: **value** (*float*) -- Value of the unit.
+
+
+
+
+.. py:class:: UnitConverter
+
+
+   Bases: :py:obj:`_BaseUnitConverter`
+
+   Convert units used in spectroscopy.
+
+
+   .. rubric:: Overview
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`convert_units <aim2dat.utils.units.UnitConverter.convert_units>`\ (value, unit_1, unit_2)
+        - `class` Convert one unit into another.
+
+
+   .. py:attribute:: available_units
+
+      
+
+   .. py:attribute:: plot_labels
+
+      
+
+
+
+   .. py:method:: convert_units(value, unit_1, unit_2)
+      :classmethod:
+
+      Convert one unit into another.
+
+      :Parameters: * **value** (*float*) -- Input value.
+                   * **unit_1** (*str*) -- Physical unit of the input value.
+                   * **unit_2** (*str*) -- Physical unit to be converted into.
+
+      :returns: **processed_data** (*float*) -- Output value.
+
+
+
+
+.. py:class:: Wavevector
+
+
+   Bases: :py:obj:`_BaseQuantity`
+
+   Wavevector units based on the ase library. Angstrom-1 is set to ``1.0``.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`available_units <aim2dat.utils.units.Wavevector.available_units>`
+        - List of all available units.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`get_unit <aim2dat.utils.units.Wavevector.get_unit>`\ (unit)
+        - Return the value of the unit.
+
+
+
+   .. py:property:: available_units
+
+      List of all available units.
+
+
+   .. py:method:: get_unit(unit)
+
+      Return the value of the unit.
+
+      :Parameters: **unit** (*str*) -- Physical unit.
+
+      :returns: **value** (*float*) -- Value of the unit.
+
+
+
+.. py:data:: energy
+
+   
+
+.. py:data:: frequency
+
+   
+
+.. py:data:: length
+
+   
+
+.. py:data:: wavevector
+
+   
+

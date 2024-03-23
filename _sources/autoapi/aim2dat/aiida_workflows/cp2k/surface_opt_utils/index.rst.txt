@@ -1,0 +1,60 @@
+:py:mod:`aim2dat.aiida_workflows.cp2k.surface_opt_utils`
+========================================================
+
+.. py:module:: aim2dat.aiida_workflows.cp2k.surface_opt_utils
+
+.. autoapi-nested-parse::
+
+   Auxiliary functions for the SurfaceOptWorkChain.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.cp2k.surface_opt_utils.surfopt_setup
+   aim2dat.aiida_workflows.cp2k.surface_opt_utils.surfopt_should_run_add_calc
+   aim2dat.aiida_workflows.cp2k.surface_opt_utils.surfopt_should_run_slab_conv
+   aim2dat.aiida_workflows.cp2k.surface_opt_utils.update_surf_slab
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.cp2k.surface_opt_utils.create_surface_slab
+
+
+.. py:function:: surfopt_setup(ctx, inputs)
+
+   Define initial parameters.
+
+
+.. py:function:: surfopt_should_run_add_calc(ctx, inputs)
+
+   Check whether additional calculations are run after the slab size is converged.
+
+
+.. py:function:: surfopt_should_run_slab_conv(ctx, inputs)
+
+   Check whether the convergence criteria is fulfilled and the slab size is not
+   exceeding the maximum slab size.
+
+
+.. py:function:: update_surf_slab(ctx, inputs)
+
+   Update surface slab.
+
+
+.. py:data:: create_surface_slab
+
+   
+

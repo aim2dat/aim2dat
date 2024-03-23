@@ -1,0 +1,43 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.strct_misc`
+==================================
+
+.. py:module:: aim2dat.strct.strct_misc
+
+.. autoapi-nested-parse::
+
+   Miscellaneous functions for the StructureCollection class.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.strct_misc.calculate_angle
+   aim2dat.strct.strct_misc.calculate_dihedral_angle
+   aim2dat.strct.strct_misc.calculate_distance
+
+
+
+.. py:function:: calculate_angle(structure, site_index1, site_index2, site_index3, backfold_positions)
+
+   Calculate angle between three atomic positions.
+
+
+.. py:function:: calculate_dihedral_angle(structure, site_index1, site_index2, site_index3, site_index4, backfold_positions)
+
+   Calculate dihedral angle between four atomic positions.
+
+
+.. py:function:: calculate_distance(structure, site_index1, site_index2, backfold_positions, use_supercell, r_max)
+
+   Calculate distance.
+
+

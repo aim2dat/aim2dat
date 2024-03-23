@@ -1,0 +1,613 @@
+:orphan:
+
+:py:mod:`aim2dat.plots.spectroscopy`
+====================================
+
+.. py:module:: aim2dat.plots.spectroscopy
+
+.. autoapi-nested-parse::
+
+   Module to plot spectroscopy data.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.plots.spectroscopy.SpectrumPlot
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.plots.spectroscopy.Spectrum
+
+
+
+
+.. py:class:: SpectrumPlot(detect_peaks=False, smooth_spectra=False, plot_original_spectra=False, plot_unit_x='eV', **kwargs)
+
+
+   Bases: :py:obj:`aim2dat.plots.base_plot._BasePlot`, :py:obj:`aim2dat.plots.base_mixin._VLineMixin`, :py:obj:`aim2dat.plots.base_mixin._PeakDetectionMixin`, :py:obj:`aim2dat.plots.base_mixin._SmearingMixin`
+
+   Plot x-ray absorption spectra.
+
+   :ivar detect_peaks: Whether to detect peaks of the spectra.
+   :vartype detect_peaks: bool
+   :ivar smooth_spectra: Whether to broaden the spectra.
+   :vartype smooth_spectra: bool
+   :ivar plot_original_spectra: Whether to plot the original spectra (in addition to the broadened spectra).
+   :vartype plot_original_spectra: bool
+   :ivar plot_unit_x: Unit of the x-values. Imported spectra are transformed to the corresponding unit if the
+                      unit of the imported data set is given.
+
+   :vartype plot_unit_x: str
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`backend <aim2dat.plots.spectroscopy.SpectrumPlot.backend>`
+        - used backend library to plot the data. Supported values are ``"matplotlib"`` and
+      * - :py:obj:`custom_alpha <aim2dat.plots.spectroscopy.SpectrumPlot.custom_alpha>`
+        - Alpha value(s) controlling the opacity of plot elements.
+      * - :py:obj:`custom_colors <aim2dat.plots.spectroscopy.SpectrumPlot.custom_colors>`
+        - Colors used in the plot.
+      * - :py:obj:`custom_linestyles <aim2dat.plots.spectroscopy.SpectrumPlot.custom_linestyles>`
+        - Line styles used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_linewidths <aim2dat.plots.spectroscopy.SpectrumPlot.custom_linewidths>`
+        - Line widths used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_markers <aim2dat.plots.spectroscopy.SpectrumPlot.custom_markers>`
+        - Marker types used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_xticklabels <aim2dat.plots.spectroscopy.SpectrumPlot.custom_xticklabels>`
+        - List of labels for the ticks on the x-axis.
+      * - :py:obj:`custom_xticks <aim2dat.plots.spectroscopy.SpectrumPlot.custom_xticks>`
+        - List of values to set ticks on the x-axis.
+      * - :py:obj:`custom_yticklabels <aim2dat.plots.spectroscopy.SpectrumPlot.custom_yticklabels>`
+        - List of labels for the ticks on the y-axis.
+      * - :py:obj:`custom_yticks <aim2dat.plots.spectroscopy.SpectrumPlot.custom_yticks>`
+        - List of values to set ticks on the y-axis.
+      * - :py:obj:`data_labels <aim2dat.plots.spectroscopy.SpectrumPlot.data_labels>`
+        - List of labels for all data sets.
+      * - :py:obj:`equal_aspect_ratio <aim2dat.plots.spectroscopy.SpectrumPlot.equal_aspect_ratio>`
+        - Set equal aspect ratio of the plot(s).
+      * - :py:obj:`legend_bbox_to_anchor <aim2dat.plots.spectroscopy.SpectrumPlot.legend_bbox_to_anchor>`
+        - Shift between box and anchor. The default value is ``(1, 1)``.
+      * - :py:obj:`legend_loc <aim2dat.plots.spectroscopy.SpectrumPlot.legend_loc>`
+        - Location of the legend. The default value is ``1``.
+      * - :py:obj:`legend_ncol <aim2dat.plots.spectroscopy.SpectrumPlot.legend_ncol>`
+        - Columns of the legend (only supported for the matplotlib backend).
+      * - :py:obj:`legend_sort_entries <aim2dat.plots.spectroscopy.SpectrumPlot.legend_sort_entries>`
+        - Sort entries of the legend.
+      * - :py:obj:`peak_color <aim2dat.plots.spectroscopy.SpectrumPlot.peak_color>`
+        - \-
+      * - :py:obj:`peak_distance <aim2dat.plots.spectroscopy.SpectrumPlot.peak_distance>`
+        - \-
+      * - :py:obj:`peak_height <aim2dat.plots.spectroscopy.SpectrumPlot.peak_height>`
+        - \-
+      * - :py:obj:`peak_line_style <aim2dat.plots.spectroscopy.SpectrumPlot.peak_line_style>`
+        - \-
+      * - :py:obj:`peak_max_factor <aim2dat.plots.spectroscopy.SpectrumPlot.peak_max_factor>`
+        - \-
+      * - :py:obj:`peak_plateau_size <aim2dat.plots.spectroscopy.SpectrumPlot.peak_plateau_size>`
+        - \-
+      * - :py:obj:`peak_prominence <aim2dat.plots.spectroscopy.SpectrumPlot.peak_prominence>`
+        - \-
+      * - :py:obj:`peak_rel_height <aim2dat.plots.spectroscopy.SpectrumPlot.peak_rel_height>`
+        - \-
+      * - :py:obj:`peak_threshold <aim2dat.plots.spectroscopy.SpectrumPlot.peak_threshold>`
+        - \-
+      * - :py:obj:`peak_width <aim2dat.plots.spectroscopy.SpectrumPlot.peak_width>`
+        - \-
+      * - :py:obj:`peak_wlen <aim2dat.plots.spectroscopy.SpectrumPlot.peak_wlen>`
+        - \-
+      * - :py:obj:`peak_y_min <aim2dat.plots.spectroscopy.SpectrumPlot.peak_y_min>`
+        - \-
+      * - :py:obj:`peaks <aim2dat.plots.spectroscopy.SpectrumPlot.peaks>`
+        - \-
+      * - :py:obj:`plot_grid <aim2dat.plots.spectroscopy.SpectrumPlot.plot_grid>`
+        - Whether to draw a grid in the plot. The default value is ``False``.
+      * - :py:obj:`plot_unit_x <aim2dat.plots.spectroscopy.SpectrumPlot.plot_unit_x>`
+        - Set unit of x-axis.
+      * - :py:obj:`ratio <aim2dat.plots.spectroscopy.SpectrumPlot.ratio>`
+        - Length-to-width ratio of the plot given as a tuple of two numbers.
+      * - :py:obj:`show_colorbar <aim2dat.plots.spectroscopy.SpectrumPlot.show_colorbar>`
+        - Show colorbar (not supported by all plots).
+      * - :py:obj:`show_grid <aim2dat.plots.spectroscopy.SpectrumPlot.show_grid>`
+        - Whether to draw a grid in the plot. The default value is ``False``.
+      * - :py:obj:`show_legend <aim2dat.plots.spectroscopy.SpectrumPlot.show_legend>`
+        - Show legend. The default value is ``False``.
+      * - :py:obj:`show_plot <aim2dat.plots.spectroscopy.SpectrumPlot.show_plot>`
+        - Show plot. The default value is ``False``.
+      * - :py:obj:`smearing_delta <aim2dat.plots.spectroscopy.SpectrumPlot.smearing_delta>`
+        - Spacing between two values. If set to ``None`` the original function is
+      * - :py:obj:`smearing_method <aim2dat.plots.spectroscopy.SpectrumPlot.smearing_method>`
+        - Method used to smear out the functions. Supported options are ``'gaussian'`` and
+      * - :py:obj:`smearing_sigma <aim2dat.plots.spectroscopy.SpectrumPlot.smearing_sigma>`
+        - Sigma value of the smearing distribution.
+      * - :py:obj:`store_path <aim2dat.plots.spectroscopy.SpectrumPlot.store_path>`
+        - Path of the folder to store the plot. The default value is ``./``.
+      * - :py:obj:`store_plot <aim2dat.plots.spectroscopy.SpectrumPlot.store_plot>`
+        - Store plot. The default value is ``False``.
+      * - :py:obj:`style_sheet <aim2dat.plots.spectroscopy.SpectrumPlot.style_sheet>`
+        - Custom matplotlib style sheet.
+      * - :py:obj:`subplot_adjust <aim2dat.plots.spectroscopy.SpectrumPlot.subplot_adjust>`
+        - Keyword arguments for the matplotlib ``subplots_adjust`` function.
+      * - :py:obj:`subplot_gridspec <aim2dat.plots.spectroscopy.SpectrumPlot.subplot_gridspec>`
+        - Grid spec values.
+      * - :py:obj:`subplot_hspace <aim2dat.plots.spectroscopy.SpectrumPlot.subplot_hspace>`
+        - Vertical spacing between the subplots.
+      * - :py:obj:`subplot_ncols <aim2dat.plots.spectroscopy.SpectrumPlot.subplot_ncols>`
+        - Number of columns. The default value is ``1``.
+      * - :py:obj:`subplot_nrows <aim2dat.plots.spectroscopy.SpectrumPlot.subplot_nrows>`
+        - Number of rows. The default value is ``2``.
+      * - :py:obj:`subplot_share_colorbar <aim2dat.plots.spectroscopy.SpectrumPlot.subplot_share_colorbar>`
+        - Use one common colorbar for all subplots.
+      * - :py:obj:`subplot_share_legend <aim2dat.plots.spectroscopy.SpectrumPlot.subplot_share_legend>`
+        - Merge legend items of all subplots.
+      * - :py:obj:`subplot_sharex <aim2dat.plots.spectroscopy.SpectrumPlot.subplot_sharex>`
+        - Share the x-axis of subplots located in the same column.
+      * - :py:obj:`subplot_sharey <aim2dat.plots.spectroscopy.SpectrumPlot.subplot_sharey>`
+        - Share the y-axis of subplots located in the same row.
+      * - :py:obj:`subplot_sup_title <aim2dat.plots.spectroscopy.SpectrumPlot.subplot_sup_title>`
+        - Title of the whole figure.
+      * - :py:obj:`subplot_sup_x_label <aim2dat.plots.spectroscopy.SpectrumPlot.subplot_sup_x_label>`
+        - x-label of the whole figure.
+      * - :py:obj:`subplot_sup_y_label <aim2dat.plots.spectroscopy.SpectrumPlot.subplot_sup_y_label>`
+        - y-label of the whole figure.
+      * - :py:obj:`subplot_tight_layout <aim2dat.plots.spectroscopy.SpectrumPlot.subplot_tight_layout>`
+        - Tight layout of plot. The default value is ``False``.
+      * - :py:obj:`subplot_wspace <aim2dat.plots.spectroscopy.SpectrumPlot.subplot_wspace>`
+        - Horizontal spacing between the subplots.
+      * - :py:obj:`x_label <aim2dat.plots.spectroscopy.SpectrumPlot.x_label>`
+        - Label of the x-axis. If ``None`` is given no label will be shown. The
+      * - :py:obj:`x_range <aim2dat.plots.spectroscopy.SpectrumPlot.x_range>`
+        - Range of the x-axis. The default value is ``None``.
+      * - :py:obj:`y_label <aim2dat.plots.spectroscopy.SpectrumPlot.y_label>`
+        - Label of the y-axis. If ``None`` is given no label will be shown. The
+      * - :py:obj:`y_range <aim2dat.plots.spectroscopy.SpectrumPlot.y_range>`
+        - Range of the y-axis. The default value is ``None``.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_vline <aim2dat.plots.spectroscopy.SpectrumPlot.add_vline>`\ (x, y_min, y_max, color, line_style, scaled, foreground, subplot_assignment, data_label)
+        - Add a vertical line to the plot.
+      * - :py:obj:`auto_set_axis_properties <aim2dat.plots.spectroscopy.SpectrumPlot.auto_set_axis_properties>`\ (set_x_label, set_y_label)
+        - Whether the axis labels and other axis properties are auto-generated.
+      * - :py:obj:`create_default_gridspec <aim2dat.plots.spectroscopy.SpectrumPlot.create_default_gridspec>`\ (nrows, ncols, nplots, heights, widths, center_last_row)
+        - Create default grid for multiple plots.
+      * - :py:obj:`import_spectrum <aim2dat.plots.spectroscopy.SpectrumPlot.import_spectrum>`\ (data_label, x_values, y_values, unit_x)
+        - Import spectrum.
+      * - :py:obj:`plot <aim2dat.plots.spectroscopy.SpectrumPlot.plot>`\ (data_labels, plot_title, plot_name, subplot_assignment)
+        - Plot the data sets.
+      * - :py:obj:`remove_additional_plot_elements <aim2dat.plots.spectroscopy.SpectrumPlot.remove_additional_plot_elements>`\ ()
+        - Remove all added plot elements.
+      * - :py:obj:`reset_gridspec <aim2dat.plots.spectroscopy.SpectrumPlot.reset_gridspec>`\ ()
+        - Reset gridspec settings.
+      * - :py:obj:`return_data_labels <aim2dat.plots.spectroscopy.SpectrumPlot.return_data_labels>`\ ()
+        - Return the labels of all data sets.
+
+
+
+   .. py:property:: backend
+
+      used backend library to plot the data. Supported values are ``"matplotlib"`` and
+      ``"plotly"``.
+
+      :type: str
+
+   .. py:property:: custom_alpha
+
+      Alpha value(s) controlling the opacity of plot elements.
+
+      :type: float, list or tuple
+
+   .. py:property:: custom_colors
+
+      Colors used in the plot.
+
+      :type: list or tuple
+
+   .. py:property:: custom_linestyles
+
+      Line styles used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_linewidths
+
+      Line widths used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_markers
+
+      Marker types used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_xticklabels
+
+      List of labels for the ticks on the x-axis.
+
+      :type: list
+
+   .. py:property:: custom_xticks
+
+      List of values to set ticks on the x-axis.
+
+      :type: list
+
+   .. py:property:: custom_yticklabels
+
+      List of labels for the ticks on the y-axis.
+
+      :type: list
+
+   .. py:property:: custom_yticks
+
+      List of values to set ticks on the y-axis.
+
+      :type: list
+
+   .. py:property:: data_labels
+
+      List of labels for all data sets.
+
+      :type: list
+
+   .. py:property:: equal_aspect_ratio
+
+      Set equal aspect ratio of the plot(s).
+
+      :type: bool
+
+   .. py:property:: legend_bbox_to_anchor
+
+      Shift between box and anchor. The default value is ``(1, 1)``.
+
+      :type: tuple or list
+
+   .. py:property:: legend_loc
+
+      Location of the legend. The default value is ``1``.
+
+      :type: int
+
+   .. py:property:: legend_ncol
+
+      Columns of the legend (only supported for the matplotlib backend).
+
+      :type: int
+
+   .. py:property:: legend_sort_entries
+
+      Sort entries of the legend.
+
+      :type: bool
+
+   .. py:property:: peak_color
+
+
+   .. py:property:: peak_distance
+
+
+   .. py:property:: peak_height
+
+
+   .. py:property:: peak_line_style
+
+
+   .. py:property:: peak_max_factor
+
+
+   .. py:property:: peak_plateau_size
+
+
+   .. py:property:: peak_prominence
+
+
+   .. py:property:: peak_rel_height
+
+
+   .. py:property:: peak_threshold
+
+
+   .. py:property:: peak_width
+
+
+   .. py:property:: peak_wlen
+
+
+   .. py:property:: peak_y_min
+
+
+   .. py:property:: peaks
+
+
+   .. py:property:: plot_grid
+
+      Whether to draw a grid in the plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: plot_unit_x
+
+      Set unit of x-axis.
+
+   .. py:property:: ratio
+
+      Length-to-width ratio of the plot given as a tuple of two numbers.
+
+      :type: tuple or list
+
+   .. py:property:: show_colorbar
+
+      Show colorbar (not supported by all plots).
+
+      :type: bool
+
+   .. py:property:: show_grid
+
+      Whether to draw a grid in the plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: show_legend
+
+      Show legend. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: show_plot
+
+      Show plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: smearing_delta
+
+      Spacing between two values. If set to ``None`` the original function is
+      used.
+
+      :type: float or None
+
+   .. py:property:: smearing_method
+
+      Method used to smear out the functions. Supported options are ``'gaussian'`` and
+      ``'lorentzian'``.
+
+      :type: str
+
+   .. py:property:: smearing_sigma
+
+      Sigma value of the smearing distribution.
+
+      :type: float
+
+   .. py:property:: store_path
+
+      Path of the folder to store the plot. The default value is ``./``.
+
+      :type: str
+
+   .. py:property:: store_plot
+
+      Store plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: style_sheet
+
+      Custom matplotlib style sheet.
+
+      :type: str
+
+   .. py:property:: subplot_adjust
+
+      Keyword arguments for the matplotlib ``subplots_adjust`` function.
+
+      :type: dict
+
+   .. py:property:: subplot_gridspec
+
+      Grid spec values.
+
+      :type: list or tuple
+
+   .. py:property:: subplot_hspace
+
+      Vertical spacing between the subplots.
+
+      :type: float
+
+   .. py:property:: subplot_ncols
+
+      Number of columns. The default value is ``1``.
+
+      :type: int
+
+   .. py:property:: subplot_nrows
+
+      Number of rows. The default value is ``2``.
+
+      :type: int
+
+   .. py:property:: subplot_share_colorbar
+
+      Use one common colorbar for all subplots.
+
+      :type: bool
+
+   .. py:property:: subplot_share_legend
+
+      Merge legend items of all subplots.
+
+      :type: bool
+
+   .. py:property:: subplot_sharex
+
+      Share the x-axis of subplots located in the same column.
+
+      :type: bool
+
+   .. py:property:: subplot_sharey
+
+      Share the y-axis of subplots located in the same row.
+
+      :type: bool
+
+   .. py:property:: subplot_sup_title
+
+      Title of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_sup_x_label
+
+      x-label of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_sup_y_label
+
+      y-label of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_tight_layout
+
+      Tight layout of plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: subplot_wspace
+
+      Horizontal spacing between the subplots.
+
+      :type: float
+
+   .. py:property:: x_label
+
+      Label of the x-axis. If ``None`` is given no label will be shown. The
+      default value is ``None``.
+
+      :type: str or None
+
+   .. py:property:: x_range
+
+      Range of the x-axis. The default value is ``None``.
+
+      :type: tuple or list
+
+   .. py:property:: y_label
+
+      Label of the y-axis. If ``None`` is given no label will be shown. The
+      default value is ``None``.
+
+      :type: str or None
+
+   .. py:property:: y_range
+
+      Range of the y-axis. The default value is ``None``.
+
+      :type: tuple or list
+
+
+   .. py:method:: add_vline(x, y_min, y_max, color=None, line_style=None, scaled=False, foreground=False, subplot_assignment=None, data_label=None)
+
+      Add a vertical line to the plot.
+
+      :Parameters: * **x** (*float*) -- x-position of the line.
+                   * **y_min** (*float*) -- Bottom y-position of the line.
+                   * **y_max** (*float*) -- Top y-position of the line.
+                   * **color** (*str or None*) -- Color of the line.
+                   * **line_style** (*str or None*) -- Line style of the line.
+                   * **scaled** (*bool*) -- Whether the input is given in scaled positions.
+                   * **foreground** (*bool*) -- Whether to plot the line in front of the other elements.
+                   * **subplot_assignment** (*list or None*) -- Assignment of the line to individual subplots.
+
+
+   .. py:method:: auto_set_axis_properties(set_x_label=True, set_y_label=True)
+
+      Whether the axis labels and other axis properties are auto-generated.
+
+      :Parameters: * **set_x_label** (*bool*) -- Set x-axis label automatically.
+                   * **set_y_label** (*bool*) -- Set y-axis label automatically.
+
+
+   .. py:method:: create_default_gridspec(nrows, ncols, nplots, heights=1, widths=1, center_last_row=True)
+
+      Create default grid for multiple plots.
+
+      :Parameters: * **nrows** (*Int*) -- Number of rows.
+                   * **ncols** (*int*) -- Number columns.
+                   * **nplots** (*int*) -- Number of subplots.
+                   * **heights** (*int (optional)*) -- Height of subplots.
+                   * **widths** (*int (optional)*) -- Width of subplots.
+                   * **center_last_row** (*bool (optional)*) -- Center the plots of the last row.
+
+
+   .. py:method:: import_spectrum(data_label, x_values, y_values, unit_x)
+
+      Import spectrum.
+
+      :Parameters: * **data_label** (*str*) -- Internal label of the data set.
+                   * **x_values** (*list*) -- x-values of the spectrum.
+                   * **y_values** (*list*) -- y-values of the spectrum.
+                   * **unit_x** (*str*) -- Unit of the x-values.
+
+
+   .. py:method:: plot(data_labels, plot_title=None, plot_name='plot.png', subplot_assignment=None)
+
+      Plot the data sets.
+
+      :Parameters: * **data_labels** (*list or str*) -- List of data labels of the data sets that are plotted or
+                     in case only one data set is plotted a string.
+                   * **plot_title** (*list or str (optional)*) -- Title of the plots or subplots.
+                   * **plot_name** (*str (optional)*) -- The file name of the plot.
+                   * **subplot_assignment** (*list or None (optional)*) -- Assignment of the data sets to individual subplots.
+
+      :returns: **fig** (*matplotlib.pyplot.figure or plotly.graph_objects.Figure*) -- Figure object of the plot.
+
+
+   .. py:method:: remove_additional_plot_elements()
+
+      Remove all added plot elements.
+
+
+   .. py:method:: reset_gridspec()
+
+      Reset gridspec settings.
+
+
+   .. py:method:: return_data_labels()
+
+      Return the labels of all data sets.
+
+      :returns: **data_labels** (*list*) -- List of the labels of all data sets.
+
+
+
+.. py:function:: Spectrum(*args, **kwargs)
+
+   Depreciated Spectrum class.
+
+

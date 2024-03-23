@@ -1,0 +1,53 @@
+:py:mod:`aim2dat.ext_interfaces.dscribe`
+========================================
+
+.. py:module:: aim2dat.ext_interfaces.dscribe
+
+.. autoapi-nested-parse::
+
+   Interface module for the dscribe python package.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.ext_interfaces.dscribe.calc_acsf_descriptor
+   aim2dat.ext_interfaces.dscribe.calc_interaction_matrix
+   aim2dat.ext_interfaces.dscribe.calc_mbtr_descriptor
+   aim2dat.ext_interfaces.dscribe.calc_soap_descriptor
+   aim2dat.ext_interfaces.dscribe.return_descriptor
+
+
+
+.. py:function:: calc_acsf_descriptor(structure, r_cut, g2_params, g3_params, g4_params, g5_params, elements, periodic, sparse, dscribe_n_jobs, dscribe_only_physical_cores)
+
+   Calculate ACSF descriptor.
+
+
+.. py:function:: calc_interaction_matrix(structure, matrix_type, n_atoms_max, enforce_real, permutation, sigma, seed, sparse, ewald_accuracy, ewald_w, ewald_r_cut, ewald_g_cut, ewald_a, dscribe_n_jobs, dscribe_only_physical_cores)
+
+   Calcualte interaction matrix.
+
+
+.. py:function:: calc_mbtr_descriptor(structure, geometry, grid, weighting, normalize_gaussians, normalization, elements, periodic, sparse, dscribe_n_jobs, dscribe_only_physical_cores)
+
+   Calculate MBTR descriptor.
+
+
+.. py:function:: calc_soap_descriptor(structure, r_cut, n_max, l_max, sigma, rbf, weighting, compression, average, elements, periodic, sparse, dscribe_n_jobs, dscribe_only_physical_cores)
+
+   Calculate SOAP descriptor.
+
+
+.. py:function:: return_descriptor(obj, structure, dscribe_n_jobs, dscribe_only_physical_cores)
+
+   Return output from SOAP, MBTR or ACSF descriptor.
+
+

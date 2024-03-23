@@ -1,0 +1,546 @@
+:orphan:
+
+:py:mod:`aim2dat.plots.phase`
+=============================
+
+.. py:module:: aim2dat.plots.phase
+
+.. autoapi-nested-parse::
+
+   Module plotting quantities with respect to the chemical composition.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.plots.phase.PhasePlot
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.plots.phase.PhaseDiagram
+
+
+
+
+.. py:class:: PhasePlot(plot_type='scatter', plot_property='formation_energy', show_crystal_system=False, show_convex_hull=True, show_lower_hull=False, show_upper_hull=False, top_labels=[], hist_bin_size=0.1, **kwargs)
+
+
+   Bases: :py:obj:`aim2dat.plots.base_plot._BasePlot`
+
+   Plot the formation energy of binary and ternary material systems.
+
+   :ivar show_convex_hull: Whether to calculate and show the convex hull in the plot.
+
+   :vartype show_convex_hull: bool
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`backend <aim2dat.plots.phase.PhasePlot.backend>`
+        - used backend library to plot the data. Supported values are ``"matplotlib"`` and
+      * - :py:obj:`custom_alpha <aim2dat.plots.phase.PhasePlot.custom_alpha>`
+        - Alpha value(s) controlling the opacity of plot elements.
+      * - :py:obj:`custom_colors <aim2dat.plots.phase.PhasePlot.custom_colors>`
+        - Colors used in the plot.
+      * - :py:obj:`custom_linestyles <aim2dat.plots.phase.PhasePlot.custom_linestyles>`
+        - Line styles used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_linewidths <aim2dat.plots.phase.PhasePlot.custom_linewidths>`
+        - Line widths used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_markers <aim2dat.plots.phase.PhasePlot.custom_markers>`
+        - Marker types used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_xticklabels <aim2dat.plots.phase.PhasePlot.custom_xticklabels>`
+        - List of labels for the ticks on the x-axis.
+      * - :py:obj:`custom_xticks <aim2dat.plots.phase.PhasePlot.custom_xticks>`
+        - List of values to set ticks on the x-axis.
+      * - :py:obj:`custom_yticklabels <aim2dat.plots.phase.PhasePlot.custom_yticklabels>`
+        - List of labels for the ticks on the y-axis.
+      * - :py:obj:`custom_yticks <aim2dat.plots.phase.PhasePlot.custom_yticks>`
+        - List of values to set ticks on the y-axis.
+      * - :py:obj:`data_labels <aim2dat.plots.phase.PhasePlot.data_labels>`
+        - List of labels for all data sets.
+      * - :py:obj:`elements <aim2dat.plots.phase.PhasePlot.elements>`
+        - List of elements that are included in the plot. If set to ``None`` all elements
+      * - :py:obj:`equal_aspect_ratio <aim2dat.plots.phase.PhasePlot.equal_aspect_ratio>`
+        - Set equal aspect ratio of the plot(s).
+      * - :py:obj:`legend_bbox_to_anchor <aim2dat.plots.phase.PhasePlot.legend_bbox_to_anchor>`
+        - Shift between box and anchor. The default value is ``(1, 1)``.
+      * - :py:obj:`legend_loc <aim2dat.plots.phase.PhasePlot.legend_loc>`
+        - Location of the legend. The default value is ``1``.
+      * - :py:obj:`legend_ncol <aim2dat.plots.phase.PhasePlot.legend_ncol>`
+        - Columns of the legend (only supported for the matplotlib backend).
+      * - :py:obj:`legend_sort_entries <aim2dat.plots.phase.PhasePlot.legend_sort_entries>`
+        - Sort entries of the legend.
+      * - :py:obj:`plot_grid <aim2dat.plots.phase.PhasePlot.plot_grid>`
+        - Whether to draw a grid in the plot. The default value is ``False``.
+      * - :py:obj:`plot_type <aim2dat.plots.phase.PhasePlot.plot_type>`
+        - ``'formation_energy'``, ``'stability'``,
+      * - :py:obj:`ratio <aim2dat.plots.phase.PhasePlot.ratio>`
+        - Length-to-width ratio of the plot given as a tuple of two numbers.
+      * - :py:obj:`show_colorbar <aim2dat.plots.phase.PhasePlot.show_colorbar>`
+        - Show colorbar (not supported by all plots).
+      * - :py:obj:`show_crystal_system <aim2dat.plots.phase.PhasePlot.show_crystal_system>`
+        - Show crystal system of the phases.
+      * - :py:obj:`show_grid <aim2dat.plots.phase.PhasePlot.show_grid>`
+        - Whether to draw a grid in the plot. The default value is ``False``.
+      * - :py:obj:`show_legend <aim2dat.plots.phase.PhasePlot.show_legend>`
+        - Show legend. The default value is ``False``.
+      * - :py:obj:`show_plot <aim2dat.plots.phase.PhasePlot.show_plot>`
+        - Show plot. The default value is ``False``.
+      * - :py:obj:`store_path <aim2dat.plots.phase.PhasePlot.store_path>`
+        - Path of the folder to store the plot. The default value is ``./``.
+      * - :py:obj:`store_plot <aim2dat.plots.phase.PhasePlot.store_plot>`
+        - Store plot. The default value is ``False``.
+      * - :py:obj:`style_sheet <aim2dat.plots.phase.PhasePlot.style_sheet>`
+        - Custom matplotlib style sheet.
+      * - :py:obj:`subplot_adjust <aim2dat.plots.phase.PhasePlot.subplot_adjust>`
+        - Keyword arguments for the matplotlib ``subplots_adjust`` function.
+      * - :py:obj:`subplot_gridspec <aim2dat.plots.phase.PhasePlot.subplot_gridspec>`
+        - Grid spec values.
+      * - :py:obj:`subplot_hspace <aim2dat.plots.phase.PhasePlot.subplot_hspace>`
+        - Vertical spacing between the subplots.
+      * - :py:obj:`subplot_ncols <aim2dat.plots.phase.PhasePlot.subplot_ncols>`
+        - Number of columns. The default value is ``1``.
+      * - :py:obj:`subplot_nrows <aim2dat.plots.phase.PhasePlot.subplot_nrows>`
+        - Number of rows. The default value is ``2``.
+      * - :py:obj:`subplot_share_colorbar <aim2dat.plots.phase.PhasePlot.subplot_share_colorbar>`
+        - Use one common colorbar for all subplots.
+      * - :py:obj:`subplot_share_legend <aim2dat.plots.phase.PhasePlot.subplot_share_legend>`
+        - Merge legend items of all subplots.
+      * - :py:obj:`subplot_sharex <aim2dat.plots.phase.PhasePlot.subplot_sharex>`
+        - Share the x-axis of subplots located in the same column.
+      * - :py:obj:`subplot_sharey <aim2dat.plots.phase.PhasePlot.subplot_sharey>`
+        - Share the y-axis of subplots located in the same row.
+      * - :py:obj:`subplot_sup_title <aim2dat.plots.phase.PhasePlot.subplot_sup_title>`
+        - Title of the whole figure.
+      * - :py:obj:`subplot_sup_x_label <aim2dat.plots.phase.PhasePlot.subplot_sup_x_label>`
+        - x-label of the whole figure.
+      * - :py:obj:`subplot_sup_y_label <aim2dat.plots.phase.PhasePlot.subplot_sup_y_label>`
+        - y-label of the whole figure.
+      * - :py:obj:`subplot_tight_layout <aim2dat.plots.phase.PhasePlot.subplot_tight_layout>`
+        - Tight layout of plot. The default value is ``False``.
+      * - :py:obj:`subplot_wspace <aim2dat.plots.phase.PhasePlot.subplot_wspace>`
+        - Horizontal spacing between the subplots.
+      * - :py:obj:`top_labels <aim2dat.plots.phase.PhasePlot.top_labels>`
+        - Chemical formulas that are shown as labels in the plot.
+      * - :py:obj:`x_label <aim2dat.plots.phase.PhasePlot.x_label>`
+        - Label of the x-axis. If ``None`` is given no label will be shown. The
+      * - :py:obj:`x_range <aim2dat.plots.phase.PhasePlot.x_range>`
+        - Range of the x-axis. The default value is ``None``.
+      * - :py:obj:`y_label <aim2dat.plots.phase.PhasePlot.y_label>`
+        - Label of the y-axis. If ``None`` is given no label will be shown. The
+      * - :py:obj:`y_range <aim2dat.plots.phase.PhasePlot.y_range>`
+        - Range of the y-axis. The default value is ``None``.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_data_point <aim2dat.plots.phase.PhasePlot.add_data_point>`\ (data_label, formula, formation_energy, stability, unit, space_group, attributes)
+        - Add datapoint to the dataset.
+      * - :py:obj:`auto_set_axis_properties <aim2dat.plots.phase.PhasePlot.auto_set_axis_properties>`\ (set_x_label, set_y_label)
+        - Whether the axis labels and other axis properties are auto-generated.
+      * - :py:obj:`create_default_gridspec <aim2dat.plots.phase.PhasePlot.create_default_gridspec>`\ (nrows, ncols, nplots, heights, widths, center_last_row)
+        - Create default grid for multiple plots.
+      * - :py:obj:`import_from_pandas_df <aim2dat.plots.phase.PhasePlot.import_from_pandas_df>`\ (data_label, data_frame, structure_column)
+        - Import data from pandas data frame.
+      * - :py:obj:`import_from_structure_collection <aim2dat.plots.phase.PhasePlot.import_from_structure_collection>`\ (data_label, structure_collection)
+        - Import data from a StructureCollection object.
+      * - :py:obj:`plot <aim2dat.plots.phase.PhasePlot.plot>`\ (data_labels, plot_title, plot_name, subplot_assignment)
+        - Plot the data sets.
+      * - :py:obj:`reset_gridspec <aim2dat.plots.phase.PhasePlot.reset_gridspec>`\ ()
+        - Reset gridspec settings.
+      * - :py:obj:`return_data_labels <aim2dat.plots.phase.PhasePlot.return_data_labels>`\ ()
+        - Return the labels of all data sets.
+
+
+
+   .. py:property:: backend
+
+      used backend library to plot the data. Supported values are ``"matplotlib"`` and
+      ``"plotly"``.
+
+      :type: str
+
+   .. py:property:: custom_alpha
+
+      Alpha value(s) controlling the opacity of plot elements.
+
+      :type: float, list or tuple
+
+   .. py:property:: custom_colors
+
+      Colors used in the plot.
+
+      :type: list or tuple
+
+   .. py:property:: custom_linestyles
+
+      Line styles used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_linewidths
+
+      Line widths used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_markers
+
+      Marker types used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_xticklabels
+
+      List of labels for the ticks on the x-axis.
+
+      :type: list
+
+   .. py:property:: custom_xticks
+
+      List of values to set ticks on the x-axis.
+
+      :type: list
+
+   .. py:property:: custom_yticklabels
+
+      List of labels for the ticks on the y-axis.
+
+      :type: list
+
+   .. py:property:: custom_yticks
+
+      List of values to set ticks on the y-axis.
+
+      :type: list
+
+   .. py:property:: data_labels
+
+      List of labels for all data sets.
+
+      :type: list
+
+   .. py:property:: elements
+
+      List of elements that are included in the plot. If set to ``None`` all elements
+      are included.
+
+      :type: list
+
+   .. py:property:: equal_aspect_ratio
+
+      Set equal aspect ratio of the plot(s).
+
+      :type: bool
+
+   .. py:property:: legend_bbox_to_anchor
+
+      Shift between box and anchor. The default value is ``(1, 1)``.
+
+      :type: tuple or list
+
+   .. py:property:: legend_loc
+
+      Location of the legend. The default value is ``1``.
+
+      :type: int
+
+   .. py:property:: legend_ncol
+
+      Columns of the legend (only supported for the matplotlib backend).
+
+      :type: int
+
+   .. py:property:: legend_sort_entries
+
+      Sort entries of the legend.
+
+      :type: bool
+
+   .. py:property:: plot_grid
+
+      Whether to draw a grid in the plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: plot_type
+
+      ``'formation_energy'``, ``'stability'``,
+      ``'band_gap'``, ``'direct_band_gap'`` and ``'numbers'``.
+
+      :type: Specify plot type. Supported options are
+
+   .. py:property:: ratio
+
+      Length-to-width ratio of the plot given as a tuple of two numbers.
+
+      :type: tuple or list
+
+   .. py:property:: show_colorbar
+
+      Show colorbar (not supported by all plots).
+
+      :type: bool
+
+   .. py:property:: show_crystal_system
+
+      Show crystal system of the phases.
+
+   .. py:property:: show_grid
+
+      Whether to draw a grid in the plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: show_legend
+
+      Show legend. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: show_plot
+
+      Show plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: store_path
+
+      Path of the folder to store the plot. The default value is ``./``.
+
+      :type: str
+
+   .. py:property:: store_plot
+
+      Store plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: style_sheet
+
+      Custom matplotlib style sheet.
+
+      :type: str
+
+   .. py:property:: subplot_adjust
+
+      Keyword arguments for the matplotlib ``subplots_adjust`` function.
+
+      :type: dict
+
+   .. py:property:: subplot_gridspec
+
+      Grid spec values.
+
+      :type: list or tuple
+
+   .. py:property:: subplot_hspace
+
+      Vertical spacing between the subplots.
+
+      :type: float
+
+   .. py:property:: subplot_ncols
+
+      Number of columns. The default value is ``1``.
+
+      :type: int
+
+   .. py:property:: subplot_nrows
+
+      Number of rows. The default value is ``2``.
+
+      :type: int
+
+   .. py:property:: subplot_share_colorbar
+
+      Use one common colorbar for all subplots.
+
+      :type: bool
+
+   .. py:property:: subplot_share_legend
+
+      Merge legend items of all subplots.
+
+      :type: bool
+
+   .. py:property:: subplot_sharex
+
+      Share the x-axis of subplots located in the same column.
+
+      :type: bool
+
+   .. py:property:: subplot_sharey
+
+      Share the y-axis of subplots located in the same row.
+
+      :type: bool
+
+   .. py:property:: subplot_sup_title
+
+      Title of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_sup_x_label
+
+      x-label of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_sup_y_label
+
+      y-label of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_tight_layout
+
+      Tight layout of plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: subplot_wspace
+
+      Horizontal spacing between the subplots.
+
+      :type: float
+
+   .. py:property:: top_labels
+
+      Chemical formulas that are shown as labels in the plot.
+
+      :type: list or str or dict
+
+   .. py:property:: x_label
+
+      Label of the x-axis. If ``None`` is given no label will be shown. The
+      default value is ``None``.
+
+      :type: str or None
+
+   .. py:property:: x_range
+
+      Range of the x-axis. The default value is ``None``.
+
+      :type: tuple or list
+
+   .. py:property:: y_label
+
+      Label of the y-axis. If ``None`` is given no label will be shown. The
+      default value is ``None``.
+
+      :type: str or None
+
+   .. py:property:: y_range
+
+      Range of the y-axis. The default value is ``None``.
+
+      :type: tuple or list
+
+
+   .. py:method:: add_data_point(data_label, formula, formation_energy=None, stability=None, unit=None, space_group=None, attributes=None)
+
+      Add datapoint to the dataset.
+
+      If the ``data_label`` does not exist, a new data set with label ``data_label`` is created.
+
+      :Parameters: * **data_label** (*str*) -- Internal label used to plot and compare multiple data sets.
+                   * **formula** (*dict*) -- Chemical formula of the material, e.g. ``{'Cs': 1, 'Sb': 2}``.
+                   * **formation_energy** (*float (optional)*) -- Formation energy of the material.
+                   * **stability** (*float (optional)*) -- Stability of the material.
+                   * **unit** (*str (optional)*) -- Unit of the formation energy and stability.
+                   * **space_group** (*str or int (optional)*) -- Space group of the material, as symbol or number. The default value is ``None``.
+                   * **attributes** (*dict (optional)*) -- Additional attributes of the material that can be plotted.
+
+
+   .. py:method:: auto_set_axis_properties(set_x_label=True, set_y_label=True)
+
+      Whether the axis labels and other axis properties are auto-generated.
+
+      :Parameters: * **set_x_label** (*bool*) -- Set x-axis label automatically.
+                   * **set_y_label** (*bool*) -- Set y-axis label automatically.
+
+
+   .. py:method:: create_default_gridspec(nrows, ncols, nplots, heights=1, widths=1, center_last_row=True)
+
+      Create default grid for multiple plots.
+
+      :Parameters: * **nrows** (*Int*) -- Number of rows.
+                   * **ncols** (*int*) -- Number columns.
+                   * **nplots** (*int*) -- Number of subplots.
+                   * **heights** (*int (optional)*) -- Height of subplots.
+                   * **widths** (*int (optional)*) -- Width of subplots.
+                   * **center_last_row** (*bool (optional)*) -- Center the plots of the last row.
+
+
+   .. py:method:: import_from_pandas_df(data_label, data_frame, structure_column='optimized_structure')
+
+      Import data from pandas data frame.
+
+      :Parameters: * **data_label** (*str*) -- Internal label used to plot and compare multiple data sets.
+                   * **data_frame** (*pandas.DataFrame*) -- Pandas data frame containing the total energy or formation energy and the structural
+                     details.
+                   * **structure_column** (*str (optional)*) -- Column containing AiiDA structure nodes used to determine structural and compositional
+                     properties. The default value is ``'optimized_structure'``.
+
+
+   .. py:method:: import_from_structure_collection(data_label, structure_collection)
+
+      Import data from a StructureCollection object.
+
+      :Parameters: * **data_label** (*str*) -- Internal label used to plot and compare multiple data sets.
+                   * **structure_collection** (*aim2dat.strct.StructureCollection*) -- Instance of StructureCollection containing all structures.
+
+
+   .. py:method:: plot(data_labels, plot_title=None, plot_name='plot.png', subplot_assignment=None)
+
+      Plot the data sets.
+
+      :Parameters: * **data_labels** (*list or str*) -- List of data labels of the data sets that are plotted or
+                     in case only one data set is plotted a string.
+                   * **plot_title** (*list or str (optional)*) -- Title of the plots or subplots.
+                   * **plot_name** (*str (optional)*) -- The file name of the plot.
+                   * **subplot_assignment** (*list or None (optional)*) -- Assignment of the data sets to individual subplots.
+
+      :returns: **fig** (*matplotlib.pyplot.figure or plotly.graph_objects.Figure*) -- Figure object of the plot.
+
+
+   .. py:method:: reset_gridspec()
+
+      Reset gridspec settings.
+
+
+   .. py:method:: return_data_labels()
+
+      Return the labels of all data sets.
+
+      :returns: **data_labels** (*list*) -- List of the labels of all data sets.
+
+
+
+.. py:function:: PhaseDiagram(*args, **kwargs)
+
+   Depreciated PhaseDiagram class.
+
+

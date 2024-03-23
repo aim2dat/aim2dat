@@ -1,0 +1,31 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.strct_point_groups`
+==========================================
+
+.. py:module:: aim2dat.strct.strct_point_groups
+
+.. autoapi-nested-parse::
+
+   Analyse the symmetry of moelecules.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.strct_point_groups.determine_point_group
+
+
+
+.. py:function:: determine_point_group(structure, threshold_distance, threshold_angle, threshold_inertia)
+
+   Determine point group.
+
+

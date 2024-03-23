@@ -1,0 +1,31 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.strct_space_groups`
+==========================================
+
+.. py:module:: aim2dat.strct.strct_space_groups
+
+.. autoapi-nested-parse::
+
+   Space group analysis module.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.strct_space_groups.determine_space_group
+
+
+
+.. py:function:: determine_space_group(*args, **kwargs)
+
+   Determine space group.
+
+

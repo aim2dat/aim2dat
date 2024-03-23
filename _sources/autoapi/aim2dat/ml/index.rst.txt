@@ -1,0 +1,24 @@
+:py:mod:`aim2dat.ml`
+====================
+
+.. py:module:: aim2dat.ml
+
+.. autoapi-nested-parse::
+
+   Functions and classes to process data for machine learning.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   cell_grid_search/index.rst
+   kernels/index.rst
+   metrics/index.rst
+   transformers/index.rst
+   utils/index.rst
+
+

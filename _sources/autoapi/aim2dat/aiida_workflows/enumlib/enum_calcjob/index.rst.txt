@@ -1,0 +1,640 @@
+:py:mod:`aim2dat.aiida_workflows.enumlib.enum_calcjob`
+======================================================
+
+.. py:module:: aim2dat.aiida_workflows.enumlib.enum_calcjob
+
+.. autoapi-nested-parse::
+
+   Calcjob for the enumlib library.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.enumlib.enum_calcjob.validate_elements_to_enumerate
+   aim2dat.aiida_workflows.enumlib.enum_calcjob.validate_inputs
+   aim2dat.aiida_workflows.enumlib.enum_calcjob.validate_makeStr_path
+   aim2dat.aiida_workflows.enumlib.enum_calcjob.validate_sites_to_enumerate
+   aim2dat.aiida_workflows.enumlib.enum_calcjob.validate_structure
+
+
+
+
+.. py:class:: EnumlibCalculation(*args, **kwargs)
+
+
+   Bases: :py:obj:`aiida.engine.CalcJob`
+
+   `CalcJob` implementation for the enum.x code of the enumlib library.
+
+   
+   .. py:class:: SaveKeys
+
+
+      Bases: :py:obj:`enum.Enum`
+
+      Keys used to identify things in the saved instance state bundle.
+
+
+      .. rubric:: Overview
+
+
+      .. list-table:: Methods
+         :header-rows: 0
+         :widths: auto
+
+         * - :py:obj:`name <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.SaveKeys.name>`\ ()
+           - The name of the Enum member.
+         * - :py:obj:`value <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.SaveKeys.value>`\ ()
+           - The value of the Enum member.
+
+
+      .. py:attribute:: CALC_ID
+         :type: str
+         :value: 'calc_id'
+
+         
+
+
+
+      .. py:method:: name()
+
+         The name of the Enum member.
+
+
+      .. py:method:: value()
+
+         The value of the Enum member.
+
+
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`inputs <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.inputs>`
+        - Return the inputs attribute dictionary or an empty one.
+      * - :py:obj:`metadata <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.metadata>`
+        - Return the metadata that were specified when this process instance was launched.
+      * - :py:obj:`node <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.node>`
+        - Return the ProcessNode used by this process to represent itself in the database.
+      * - :py:obj:`options <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.options>`
+        - Return the options of the metadata that were specified when this process instance was launched.
+      * - :py:obj:`runner <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.runner>`
+        - Get process runner.
+      * - :py:obj:`uuid <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.uuid>`
+        - Return the UUID of the process which corresponds to the UUID of its associated `ProcessNode`.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`build_process_type <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.build_process_type>`\ ()
+        - `class` The process type.
+      * - :py:obj:`decode_input_args <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.decode_input_args>`\ (encoded)
+        - Decode saved input arguments as they came from the saved instance state Bundle
+      * - :py:obj:`define <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.define>`\ (spec)
+        - `class` Define input/output and outline.
+      * - :py:obj:`encode_input_args <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.encode_input_args>`\ (inputs)
+        - Encode input arguments such that they may be saved in a Bundle
+      * - :py:obj:`exit_codes <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.exit_codes>`\ ()
+        - Return the namespace of exit codes defined for this WorkChain through its ProcessSpec.
+      * - :py:obj:`exposed_inputs <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.exposed_inputs>`\ (process_class, namespace, agglomerate)
+        - Gather a dictionary of the inputs that were exposed for a given Process class under an optional namespace.
+      * - :py:obj:`exposed_outputs <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.exposed_outputs>`\ (node, process_class, namespace, agglomerate)
+        - Return the outputs which were exposed from the ``process_class`` and emitted by the specific ``node``
+      * - :py:obj:`get_builder <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.get_builder>`\ ()
+        - `class` \-
+      * - :py:obj:`get_exit_statuses <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.get_exit_statuses>`\ (exit_code_labels)
+        - `class` Return the exit status (integers) for the given exit code labels.
+      * - :py:obj:`get_importer <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.get_importer>`\ (entry_point_name)
+        - `class` Load the `CalcJobImporter` associated with this `CalcJob` if it exists.
+      * - :py:obj:`get_or_create_db_record <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.get_or_create_db_record>`\ ()
+        - `class` Create a process node that represents what happened in this process.
+      * - :py:obj:`get_parent_calc <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.get_parent_calc>`\ ()
+        - Get the parent process node
+      * - :py:obj:`get_provenance_inputs_iterator <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.get_provenance_inputs_iterator>`\ ()
+        - Get provenance input iterator.
+      * - :py:obj:`get_state_classes <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.get_state_classes>`\ ()
+        - `class` A mapping of the State constants to the corresponding state class.
+      * - :py:obj:`init <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.init>`\ ()
+        - \-
+      * - :py:obj:`is_valid_cache <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.is_valid_cache>`\ (node)
+        - `class` Check if the given node can be cached from.
+      * - :py:obj:`kill <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.kill>`\ (msg)
+        - Kill the process and all the children calculations it called
+      * - :py:obj:`load_instance_state <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.load_instance_state>`\ (saved_state, load_context)
+        - Load instance state.
+      * - :py:obj:`on_create <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.on_create>`\ ()
+        - Called when a Process is created.
+      * - :py:obj:`on_entered <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.on_entered>`\ (from_state)
+        - After entering a new state, save a checkpoint and update the latest process state change timestamp.
+      * - :py:obj:`on_except <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.on_except>`\ (exc_info)
+        - Log the exception by calling the report method with formatted stack trace from exception info object
+      * - :py:obj:`on_finish <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.on_finish>`\ (result, successful)
+        - Set the finish status on the process node.
+      * - :py:obj:`on_output_emitting <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.on_output_emitting>`\ (output_port, value)
+        - The process has emitted a value on the given output port.
+      * - :py:obj:`on_paused <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.on_paused>`\ (msg)
+        - The Process was paused so set the paused attribute on the process node
+      * - :py:obj:`on_playing <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.on_playing>`\ ()
+        - The Process was unpaused so remove the paused attribute on the process node
+      * - :py:obj:`on_terminated <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.on_terminated>`\ ()
+        - Cleanup the node by deleting the calulation job state.
+      * - :py:obj:`out <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.out>`\ (output_port, value)
+        - Attach output to output port.
+      * - :py:obj:`out_many <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.out_many>`\ (out_dict)
+        - Attach outputs to multiple output ports.
+      * - :py:obj:`parse <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.parse>`\ (retrieved_temporary_folder, existing_exit_code)
+        - Parse a retrieved job calculation.
+      * - :py:obj:`parse_retrieved_output <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.parse_retrieved_output>`\ (retrieved_temporary_folder)
+        - Parse the retrieved data by calling the parser plugin if it was defined in the inputs.
+      * - :py:obj:`parse_scheduler_output <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.parse_scheduler_output>`\ (retrieved)
+        - Parse the output of the scheduler if that functionality has been implemented for the plugin.
+      * - :py:obj:`prepare_for_submission <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.prepare_for_submission>`\ (folder)
+        - Create input file.
+      * - :py:obj:`presubmit <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.presubmit>`\ (folder)
+        - Prepares the calculation folder with all inputs, ready to be copied to the cluster.
+      * - :py:obj:`report <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.report>`\ (msg, \*args, \*\*kwargs)
+        - Log a message to the logger, which should get saved to the database through the attached DbLogHandler.
+      * - :py:obj:`run <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.run>`\ ()
+        - Run the calculation job.
+      * - :py:obj:`save_instance_state <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.save_instance_state>`\ (out_state, save_context)
+        - Save instance state.
+      * - :py:obj:`set_status <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.set_status>`\ (status)
+        - The status of the Process is about to be changed, so we reflect this is in node's attribute proxy.
+      * - :py:obj:`spec <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.spec>`\ ()
+        - `class` \-
+      * - :py:obj:`spec_metadata <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.spec_metadata>`\ ()
+        - Return the metadata port namespace of the process specification of this process.
+      * - :py:obj:`spec_options <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.spec_options>`\ ()
+        - Return the metadata options port namespace of the process specification of this process.
+      * - :py:obj:`submit <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.submit>`\ (process, \*\*kwargs)
+        - Submit process for execution.
+      * - :py:obj:`terminate <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.terminate>`\ (exit_code)
+        - `static` Terminate the process immediately and return the given exit code.
+      * - :py:obj:`update_outputs <aim2dat.aiida_workflows.enumlib.enum_calcjob.EnumlibCalculation.update_outputs>`\ ()
+        - Attach new outputs to the node since the last call.
+
+
+   .. py:attribute:: SINGLE_OUTPUT_LINKNAME
+      :type: str
+      :value: 'result'
+
+      
+
+   .. py:attribute:: link_label_retrieved
+      :type: str
+      :value: 'retrieved'
+
+      
+
+
+   .. py:property:: inputs
+      :type: plumpy.utils.AttributesFrozendict
+
+      Return the inputs attribute dictionary or an empty one.
+
+      This overrides the property of the base class because that can also return ``None``. This override ensures
+      calling functions that they will always get an instance of ``AttributesFrozenDict``.
+
+   .. py:property:: metadata
+      :type: aiida.common.extendeddicts.AttributeDict
+
+      Return the metadata that were specified when this process instance was launched.
+
+      :return: metadata dictionary
+
+   .. py:property:: node
+      :type: aiida.orm.CalcJobNode
+
+      Return the ProcessNode used by this process to represent itself in the database.
+
+      :return: instance of sub class of ProcessNode
+
+   .. py:property:: options
+      :type: aiida.common.AttributeDict
+
+      Return the options of the metadata that were specified when this process instance was launched.
+
+      :return: options dictionary
+
+   .. py:property:: runner
+      :type: aiida.engine.runners.Runner
+
+      Get process runner.
+
+   .. py:property:: uuid
+      :type: str
+
+      Return the UUID of the process which corresponds to the UUID of its associated `ProcessNode`.
+
+      :return: the UUID associated to this process instance
+
+
+   .. py:method:: build_process_type() -> str
+      :classmethod:
+
+      The process type.
+
+      :return: string of the process type
+
+      Note: This could be made into a property 'process_type' but in order to have it be a property of the class
+      it would need to be defined in the metaclass, see https://bugs.python.org/issue20659
+
+
+   .. py:method:: decode_input_args(encoded: str) -> Dict[str, Any]
+
+      Decode saved input arguments as they came from the saved instance state Bundle
+
+      :param encoded: encoded (serialized) inputs
+      :return: The decoded input args
+
+
+   .. py:method:: define(spec)
+      :classmethod:
+
+      Define input/output and outline.
+
+
+   .. py:method:: encode_input_args(inputs: Dict[str, Any]) -> str
+
+      Encode input arguments such that they may be saved in a Bundle
+
+      :param inputs: A mapping of the inputs as passed to the process
+      :return: The encoded (serialized) inputs
+
+
+   .. py:method:: exit_codes() -> aiida.engine.processes.exit_code.ExitCodesNamespace
+
+      Return the namespace of exit codes defined for this WorkChain through its ProcessSpec.
+
+      The namespace supports getitem and getattr operations with an ExitCode label to retrieve a specific code.
+      Additionally, the namespace can also be called with either the exit code integer status to retrieve it.
+
+      :returns: ExitCodesNamespace of ExitCode named tuples
+
+
+
+   .. py:method:: exposed_inputs(process_class: Type[Process], namespace: Optional[str] = None, agglomerate: bool = True) -> aiida.common.extendeddicts.AttributeDict
+
+      Gather a dictionary of the inputs that were exposed for a given Process class under an optional namespace.
+
+      :param process_class: Process class whose inputs to try and retrieve
+      :param namespace: PortNamespace in which to look for the inputs
+      :param agglomerate: If set to true, all parent namespaces of the given ``namespace`` will also be
+          searched for inputs. Inputs in lower-lying namespaces take precedence.
+
+      :returns: exposed inputs
+
+
+
+   .. py:method:: exposed_outputs(node: aiida.orm.ProcessNode, process_class: Type[Process], namespace: Optional[str] = None, agglomerate: bool = True) -> aiida.common.extendeddicts.AttributeDict
+
+      Return the outputs which were exposed from the ``process_class`` and emitted by the specific ``node``
+
+      :param node: process node whose outputs to try and retrieve
+      :param namespace: Namespace in which to search for exposed outputs.
+      :param agglomerate: If set to true, all parent namespaces of the given ``namespace`` will also
+          be searched for outputs. Outputs in lower-lying namespaces take precedence.
+
+      :returns: exposed outputs
+
+
+
+   .. py:method:: get_builder() -> aiida.engine.processes.builder.ProcessBuilder
+      :classmethod:
+
+
+   .. py:method:: get_exit_statuses(exit_code_labels: Iterable[str]) -> List[int]
+      :classmethod:
+
+      Return the exit status (integers) for the given exit code labels.
+
+      :param exit_code_labels: a list of strings that reference exit code labels of this process class
+      :return: list of exit status integers that correspond to the given exit code labels
+      :raises AttributeError: if at least one of the labels does not correspond to an existing exit code
+
+
+   .. py:method:: get_importer(entry_point_name: str | None = None) -> aiida.engine.processes.calcjobs.importer.CalcJobImporter
+      :classmethod:
+
+      Load the `CalcJobImporter` associated with this `CalcJob` if it exists.
+
+      By default an importer with the same entry point as the ``CalcJob`` will be loaded, however, this can be
+      overridden using the ``entry_point_name`` argument.
+
+      :param entry_point_name: optional entry point name of a ``CalcJobImporter`` to override the default.
+      :return: the loaded ``CalcJobImporter``.
+      :raises: if no importer class could be loaded.
+
+
+   .. py:method:: get_or_create_db_record() -> aiida.orm.ProcessNode
+      :classmethod:
+
+      Create a process node that represents what happened in this process.
+
+      :return: A process node
+
+
+   .. py:method:: get_parent_calc() -> Optional[aiida.orm.ProcessNode]
+
+      Get the parent process node
+
+      :return: the parent process node if there is one
+
+
+
+   .. py:method:: get_provenance_inputs_iterator() -> Iterator[Tuple[str, Union[aiida.engine.processes.ports.InputPort, aiida.engine.processes.ports.PortNamespace]]]
+
+      Get provenance input iterator.
+
+      :rtype: filter
+
+
+   .. py:method:: get_state_classes() -> Dict[Hashable, Type[plumpy.process_states.State]]
+      :classmethod:
+
+      A mapping of the State constants to the corresponding state class.
+
+      Overrides the waiting state with the Calcjob specific version.
+
+
+   .. py:method:: init() -> None
+
+
+   .. py:method:: is_valid_cache(node: aiida.orm.ProcessNode) -> bool
+      :classmethod:
+
+      Check if the given node can be cached from.
+
+      Overriding this method allows ``Process`` sub-classes to modify when
+      corresponding process nodes are considered as a cache.
+
+      .. warning :: When overriding this method, make sure to return ``False``
+          *at least* in all cases when ``super()._node.base.caching.is_valid_cache(node)``
+          returns ``False``. Otherwise, the ``invalidates_cache`` keyword on exit
+          codes may have no effect.
+
+
+
+   .. py:method:: kill(msg: Union[str, None] = None) -> Union[bool, plumpy.futures.Future]
+
+      Kill the process and all the children calculations it called
+
+      :param msg: message
+
+
+   .. py:method:: load_instance_state(saved_state: MutableMapping[str, Any], load_context: plumpy.persistence.LoadSaveContext) -> None
+
+      Load instance state.
+
+      :param saved_state: saved instance state
+      :param load_context:
+
+
+
+   .. py:method:: on_create() -> None
+
+      Called when a Process is created.
+
+
+   .. py:method:: on_entered(from_state: Optional[plumpy.process_states.State]) -> None
+
+      After entering a new state, save a checkpoint and update the latest process state change timestamp.
+
+
+   .. py:method:: on_except(exc_info: Tuple[Any, Exception, types.TracebackType]) -> None
+
+      Log the exception by calling the report method with formatted stack trace from exception info object
+      and store the exception string as a node attribute
+
+      :param exc_info: the sys.exc_info() object (type, value, traceback)
+
+
+   .. py:method:: on_finish(result: Union[int, aiida.engine.processes.exit_code.ExitCode, None], successful: bool) -> None
+
+      Set the finish status on the process node.
+
+      :param result: result of the process
+      :param successful: whether execution was successful
+
+
+
+   .. py:method:: on_output_emitting(output_port: str, value: Any) -> None
+
+      The process has emitted a value on the given output port.
+
+      :param output_port: The output port name the value was emitted on
+      :param value: The value emitted
+
+
+
+   .. py:method:: on_paused(msg: Optional[str] = None) -> None
+
+      The Process was paused so set the paused attribute on the process node
+
+      :param msg: message
+
+
+
+   .. py:method:: on_playing() -> None
+
+      The Process was unpaused so remove the paused attribute on the process node
+
+
+   .. py:method:: on_terminated() -> None
+
+      Cleanup the node by deleting the calulation job state.
+
+      .. note:: This has to be done before calling the super because that will seal the node after we cannot change it
+
+
+   .. py:method:: out(output_port: str, value: Any = None) -> None
+
+      Attach output to output port.
+
+      The name of the port will be used as the link label.
+
+      :param output_port: name of output port
+      :param value: value to put inside output port
+
+
+
+   .. py:method:: out_many(out_dict: Dict[str, Any]) -> None
+
+      Attach outputs to multiple output ports.
+
+      Keys of the dictionary will be used as output port names, values as outputs.
+
+      :param out_dict: output dictionary
+      :type out_dict: dict
+
+
+   .. py:method:: parse(retrieved_temporary_folder: Optional[str] = None, existing_exit_code: aiida.engine.processes.exit_code.ExitCode | None = None) -> aiida.engine.processes.exit_code.ExitCode
+
+      Parse a retrieved job calculation.
+
+      This is called once it's finished waiting for the calculation to be finished and the data has been retrieved.
+
+      :param retrieved_temporary_folder: The path to the temporary folder
+
+
+
+   .. py:method:: parse_retrieved_output(retrieved_temporary_folder: Optional[str] = None) -> Optional[aiida.engine.processes.exit_code.ExitCode]
+
+      Parse the retrieved data by calling the parser plugin if it was defined in the inputs.
+
+
+   .. py:method:: parse_scheduler_output(retrieved: aiida.orm.Node) -> Optional[aiida.engine.processes.exit_code.ExitCode]
+
+      Parse the output of the scheduler if that functionality has been implemented for the plugin.
+
+
+   .. py:method:: prepare_for_submission(folder)
+
+      Create input file.
+
+
+   .. py:method:: presubmit(folder: aiida.common.folders.Folder) -> aiida.common.datastructures.CalcInfo
+
+      Prepares the calculation folder with all inputs, ready to be copied to the cluster.
+
+      :param folder: a SandboxFolder that can be used to write calculation input files and the scheduling script.
+
+      :return calcinfo: the CalcInfo object containing the information needed by the daemon to handle operations.
+
+
+
+   .. py:method:: report(msg: str, *args, **kwargs) -> None
+
+      Log a message to the logger, which should get saved to the database through the attached DbLogHandler.
+
+      The pk, class name and function name of the caller are prepended to the given message
+
+      :param msg: message to log
+      :param args: args to pass to the log call
+      :param kwargs: kwargs to pass to the log call
+
+
+
+   .. py:method:: run() -> Union[plumpy.process_states.Stop, int, plumpy.process_states.Wait]
+
+      Run the calculation job.
+
+      This means invoking the `presubmit` and storing the temporary folder in the node's repository. Then we move the
+      process in the `Wait` state, waiting for the `UPLOAD` transport task to be started.
+
+      :returns: the `Stop` command if a dry run, int if the process has an exit status,
+          `Wait` command if the calcjob is to be uploaded
+
+
+
+   .. py:method:: save_instance_state(out_state: MutableMapping[str, Any], save_context: Optional[plumpy.persistence.LoadSaveContext]) -> None
+
+      Save instance state.
+
+      See documentation of :meth:`!plumpy.processes.Process.save_instance_state`.
+
+
+   .. py:method:: set_status(status: Optional[str]) -> None
+
+      The status of the Process is about to be changed, so we reflect this is in node's attribute proxy.
+
+      :param status: the status message
+
+
+
+   .. py:method:: spec() -> aiida.engine.processes.process_spec.ProcessSpec
+      :classmethod:
+
+
+   .. py:method:: spec_metadata() -> aiida.engine.processes.ports.PortNamespace
+
+      Return the metadata port namespace of the process specification of this process.
+
+
+   .. py:method:: spec_options()
+
+      Return the metadata options port namespace of the process specification of this process.
+
+      :return: options dictionary
+      :rtype: dict
+
+
+   .. py:method:: submit(process: Type[Process], **kwargs) -> aiida.orm.ProcessNode
+
+      Submit process for execution.
+
+      :param process: process
+      :return: the calculation node of the process
+
+
+
+   .. py:method:: terminate(exit_code: aiida.engine.processes.exit_code.ExitCode) -> aiida.engine.processes.exit_code.ExitCode
+      :staticmethod:
+
+      Terminate the process immediately and return the given exit code.
+
+      This method is called by :meth:`aiida.engine.processes.calcjobs.tasks.Waiting.execute` if a monitor triggered
+      the job to be terminated and specified the parsing to be skipped. It will construct the running state and tell
+      this method to be run, which returns the given exit code which will cause the process to be terminated.
+
+      :param exit_code: The exit code to return.
+      :returns: The provided exit code.
+
+
+   .. py:method:: update_outputs() -> None
+
+      Attach new outputs to the node since the last call.
+
+      Does nothing, if self.metadata.store_provenance is False.
+
+
+
+.. py:function:: validate_elements_to_enumerate(value, _)
+
+   Validate `elements_to_enumerate`.
+
+
+.. py:function:: validate_inputs(value, _)
+
+   Validate the input parameters `sites_to_enumerate`, `elements_to_emnumerate` and
+   `concentration_restrictions`.
+
+
+.. py:function:: validate_makeStr_path(value, _)
+
+   Validate the absolute path of the `makeStr.py` executable.
+
+
+.. py:function:: validate_sites_to_enumerate(value, _)
+
+   Validate `sites_to_enumerate`.
+
+
+.. py:function:: validate_structure(value, _)
+
+   Validate the input structure. Checks that the structure has no fractional occupations and each
+   site is only occupied once.
+
+

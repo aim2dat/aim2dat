@@ -1,0 +1,11 @@
+:py:mod:`aim2dat.ext_interfaces.mp_openapi`
+===========================================
+
+.. py:module:: aim2dat.ext_interfaces.mp_openapi
+
+.. autoapi-nested-parse::
+
+   Interface to the materials project online database using the openapi.
+
+
+

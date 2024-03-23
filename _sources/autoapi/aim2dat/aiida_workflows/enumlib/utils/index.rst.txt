@@ -1,0 +1,35 @@
+:py:mod:`aim2dat.aiida_workflows.enumlib.utils`
+===============================================
+
+.. py:module:: aim2dat.aiida_workflows.enumlib.utils
+
+.. autoapi-nested-parse::
+
+   Utils for the EnumlibCalcjob.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.enumlib.utils.check_kinds
+   aim2dat.aiida_workflows.enumlib.utils.get_kindnames
+
+
+
+.. py:function:: check_kinds(kind_names)
+
+   Check whether all kinds can be processed.
+
+
+.. py:function:: get_kindnames(structure, to_enumerate)
+
+   Get kind names from structure.
+
+

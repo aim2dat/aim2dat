@@ -1,0 +1,65 @@
+:py:mod:`aim2dat.io.qe`
+=======================
+
+.. py:module:: aim2dat.io.qe
+
+.. autoapi-nested-parse::
+
+   Module of functions to read output-files of Quantum ESPRESSO.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.io.qe.read_atom_proj_density_of_states
+   aim2dat.io.qe.read_band_structure
+   aim2dat.io.qe.read_input_structure
+   aim2dat.io.qe.read_total_density_of_states
+
+
+
+.. py:function:: read_atom_proj_density_of_states(folder_path)
+
+   Read the projected density of states from Quantum ESPRESSO.
+
+   :Parameters: **folder_path** (*str*) -- Path to the folder containing the pdos ouput-files.
+
+   :returns: **pdos** (*dict*) -- Dictionary containing the projected density of states for each atom.
+
+
+.. py:function:: read_band_structure(file_name)
+
+   Read band structure file from Quantum ESPRESSO.
+   Spin-polarized calculations are not yet supported.
+
+   :Parameters: **file_name** (*str*) -- Path of the output-file of Quantum ESPRESSO containing the band structure.
+
+   :returns: **band_structure** (*dict*) -- Dictionary containing the k-path and th eigenvalues as well as the occupations.
+
+
+.. py:function:: read_input_structure(file_name)
+
+   Read structure from the Quantum ESPRESSO input file.
+   ibrav parameters are not yet fully supported.
+
+   :Parameters: **file_name** (*str*) -- Path of the input-file of Quantum ESPRESSO containing structural data.
+
+   :returns: *dict* -- Dictionary containing the structural information.
+
+
+.. py:function:: read_total_density_of_states(file_name)
+
+   Read the total density of states from Quantum ESPRESSO.
+
+   :Parameters: **file_name** (*str*) -- Path of the output-file of Quantum ESPRESSO containing the total density of states.
+
+   :returns: **pdos** (*dict*) -- Dictionary containing the projected density of states for each atom.
+
+

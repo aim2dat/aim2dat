@@ -1,0 +1,44 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.brillouin_zone_2d`
+=========================================
+
+.. py:module:: aim2dat.strct.brillouin_zone_2d
+
+.. autoapi-nested-parse::
+
+   k-path in 2d Brillouin zones.
+
+
+
+Module Contents
+---------------
+
+.. py:data:: C_RECT_LGS
+   :value: [10, 13, 18, 22, 26, 35, 36, 47, 48]
+
+   
+
+.. py:data:: P_HEX_LGS
+   :value: [66, 67, 69, 71, 72, 73, 75, 76, 77, 78, 80]
+
+   
+
+.. py:data:: P_OBL_LGS
+   :value: [1, 2, 3, 4, 5, 6, 7]
+
+   
+
+.. py:data:: P_RECT_LGS
+
+   
+
+.. py:data:: P_SQU_LGS
+
+   
+
+.. py:data:: P_TRIG_LGS
+   :value: [65, 68, 70, 74, 79]
+
+   
+

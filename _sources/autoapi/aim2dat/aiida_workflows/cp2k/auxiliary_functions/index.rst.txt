@@ -1,0 +1,112 @@
+:py:mod:`aim2dat.aiida_workflows.cp2k.auxiliary_functions`
+==========================================================
+
+.. py:module:: aim2dat.aiida_workflows.cp2k.auxiliary_functions
+
+.. autoapi-nested-parse::
+
+   Auxiliary functions for AiiDA work chains.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.cp2k.auxiliary_functions.calc_nr_explicit_electrons
+   aim2dat.aiida_workflows.cp2k.auxiliary_functions.calculate_added_mos
+   aim2dat.aiida_workflows.cp2k.auxiliary_functions.create_aiida_node
+   aim2dat.aiida_workflows.cp2k.auxiliary_functions.estimate_comp_resources
+   aim2dat.aiida_workflows.cp2k.auxiliary_functions.return_rec_space_eigenvalues
+   aim2dat.aiida_workflows.cp2k.auxiliary_functions.return_runtime_stats
+   aim2dat.aiida_workflows.cp2k.auxiliary_functions.return_scf_parameters
+   aim2dat.aiida_workflows.cp2k.auxiliary_functions.return_work_chain_info
+   aim2dat.aiida_workflows.cp2k.auxiliary_functions.set_xc_functional
+
+
+
+.. py:function:: calc_nr_explicit_electrons(structure, parameters)
+
+   Determine the number of valence electrons based on the structure and
+   the pseudopotential name.
+
+   :Parameters: * **structure** (*aiida.structure*) -- The input structure.
+                * **parameters** (*dict*) -- Dictionary of the input parameters for the cp2k calculation.
+
+   :returns: **nelectrons** (*(int)*) -- Number of valence electrons.
+
+
+.. py:function:: calculate_added_mos(structure, parameters, factor_unocc_states=0.3, return_n_electrons=False)
+
+   Calculate the number of unoccupied states based on the number of electrons and the smearing
+   temperature.
+
+   The following formula is used to calculate the number of states:
+   max(10, nelectrons*factor_unocc_states*(1.0 + electronic_temperature/1000.0))
+
+   :Parameters: * **structure** (*aiida.structure*) -- The input structure.
+                * **parameters** (*dict*) -- Dictionary of the input parameters for the cp2k calculation.
+                * **factor_unocc_states** (*float (optional)*) -- Empirical factor. The default value is ``0.3``.
+
+   :returns: **added_mos** (*int*) -- Number of unoccupied states
+
+
+.. py:function:: create_aiida_node(value, node_type=None)
+
+   Create AiiDA data node from standard python variable.
+
+   :Parameters: * **value** (*variable*) -- Input variable.
+                * **node_type** (*str (optional)*) -- AiiDA node type. The default value is ``None``.
+
+   :returns: **aiida_node** (*variable*) -- AiiDA data node.
+
+
+.. py:function:: estimate_comp_resources(structure, parameters, resources_dict, coeff, exp=3.0, shift=12.0)
+
+   Estimate the number of nodes based on the number of electrons.
+
+   The following equation is used: ntasks = coeff*nelec^exp + shift
+
+   :Parameters: * **structure** (*aiida.structure*) -- AiiDA structure node.
+                * **parameters** (*dict*) -- CP2K input parameters.
+                * **resources_dict** (*dict*) -- Dictionary giving the parameters ``'num_mpiprocs_per_machine'``.
+                * **coeff** (*float*) -- Coefficient of the leading term.
+                * **exp** (*float*) -- Exponent of the leading term.
+                * **shift** (*float*) -- Constant shift of the  equation. The default value is ``12.0``.
+
+
+.. py:function:: return_rec_space_eigenvalues(cp2k_output)
+
+   Calcfuntion that summarizes information on the eigenvalues and 1st Brillouin zone.
+
+
+.. py:function:: return_runtime_stats(**calcjob_output_parameters)
+
+   Return runtime statistics of the work chain.
+
+
+.. py:function:: return_scf_parameters(scf_parameters)
+
+   Aiida calcfuntion that creates a dictionary of the mixing parameters.
+
+
+.. py:function:: return_work_chain_info(cp2k_output, structure, **kwargs)
+
+   Return general information of the work chain.
+
+
+.. py:function:: set_xc_functional(input_dict, xc_functional)
+
+   Set the parameters for the exchange-correlation functional in the input-paramters.
+
+   :Parameters: * **input_dict** (*dict*) -- Input parmaters for the cp2k calculation.
+                * **xc_functional** (*str*) -- Exchange-correlation functional used for the calculation.
+
+   :returns: **input_dict** (*dict*) -- Input parmaters for the cp2k calculation.
+
+

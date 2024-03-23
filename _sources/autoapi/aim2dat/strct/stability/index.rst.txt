@@ -1,0 +1,13 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.stability`
+=================================
+
+.. py:module:: aim2dat.strct.stability
+
+.. autoapi-nested-parse::
+
+   Functions to calculate the formation energy and stability.
+
+
+

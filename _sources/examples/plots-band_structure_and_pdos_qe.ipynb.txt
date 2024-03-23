@@ -1,0 +1,588 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "improving-keeping",
+   "metadata": {},
+   "source": [
+    "# Plotting the band structure and projected density of states (pDOS) from Quantum ESPRESSO output-files\n",
+    "\n",
+    "*Spin-polarized band structures are not yet supported...*"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "divided-columbus",
+   "metadata": {},
+   "source": [
+    "## The band structure plot\n",
+    "\n",
+    "To plot the band structure from the quantum espresso output the function ``read_band_structure`` from the ``io`` sub-package can be used to parse the eigenvalues and k-points from the band output file:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "naked-lending",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.io.qe import read_band_structure\n",
+    "\n",
+    "band_structure = read_band_structure(\"files/el_bands_qe/bands.dat\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "metropolitan-auditor",
+   "metadata": {},
+   "source": [
+    "The output of the function is a dictionary containing a list of k-points and a nested list of eigenvalues:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "coated-architect",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "band_structure.keys()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "binding-essay",
+   "metadata": {},
+   "source": [
+    "Now the `BandStructurePlot` class in the plots sub-package is used to visualize the band structure. For non-cubic systems the unit-cell needs to be given as nested list or numpy-array to scale the k-points accordingly. Additional attributes can be set to show and store the plot:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "impossible-glance",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.plots import BandStructurePlot\n",
+    "\n",
+    "bands_plot = BandStructurePlot()\n",
+    "bands_plot.store_path = \".\"\n",
+    "bands_plot.store_plot = True\n",
+    "bands_plot.show_plot = True\n",
+    "bands_plot.set_reference_cell(\n",
+    "    [\n",
+    "        [0.000, 2.692, 2.692],\n",
+    "        [2.692, 0.000, 2.692],\n",
+    "        [2.692, 2.692, 0.000],\n",
+    "    ]\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "liked-miami",
+   "metadata": {},
+   "source": [
+    "The labels of the high-symmetry points are given as a list of pairs with the indices of the k-points."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "noble-transcription",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "path_labels = [(0, \"W\"), (41, \"L\"), (92, \"\\\\Gamma\"), (151, \"X\"), (181, \"W\"), (204, \"K\")]"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "configured-action",
+   "metadata": {},
+   "source": [
+    "All plotting classes distinguish two steps:\n",
+    "1. Importing the data: The band structure is imported with the `import_band_structure`-function. All data sets have its own `data_label` to distinguish them.\n",
+    "2. Data sets chosen by their `data_label` are plotted with the function `plot`. A title and the file-name can be passed via the parameters ``plot_title`` and `plot_name`, respectively."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "democratic-acoustic",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bands_plot.import_band_structure(\n",
+    "    data_label=\"test_band_structure\",\n",
+    "    kpoints=band_structure[\"kpoints\"],\n",
+    "    path_labels=path_labels,\n",
+    "    bands=band_structure[\"bands\"],\n",
+    "    unit_y=band_structure[\"unit_y\"],\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "d57f8ba2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plot = bands_plot.plot(\n",
+    "    \"test_band_structure\", plot_title=\"Bandstructure\", plot_name=\"bands_plot.png\"\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "grand-constant",
+   "metadata": {},
+   "source": [
+    "The valence band maximum (vbm) can be read from the output-file and the whole band structure can be shifted accordingly:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5a1abed0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bands_plot.shift_bands(\"test_band_structure\", -5.9678)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "processed-teddy",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "plot = bands_plot.plot(\n",
+    "    \"test_band_structure\", plot_title=\"Bandstructure\", plot_name=\"bands_plot.png\"\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "reduced-discretion",
+   "metadata": {},
+   "source": [
+    "The x-range is set to show the whole k-path, the y-range can be set via the attribute `y_range`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "invalid-edgar",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bands_plot.y_range = (-10, 5)\n",
+    "plot = bands_plot.plot(\n",
+    "    \"test_band_structure\", plot_title=\"Bandstructure\", plot_name=\"bands_plot.png\"\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7a2d686e",
+   "metadata": {},
+   "source": [
+    "The same plot can be also visualized using plotly by switching the ``backend`` property. This way interactive features can be utilized:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "eb8eb0b3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import plotly.io as pio\n",
+    "pio.renderers.default = \"sphinx_gallery\"\n",
+    "\n",
+    "bands_plot.ratio = (6.3, 6.3)\n",
+    "bands_plot.backend = \"plotly\"\n",
+    "bands_plot.store_plot = False\n",
+    "plot = bands_plot.plot(\"test_band_structure\", plot_title=\"Bandstructure\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "persistent-happening",
+   "metadata": {},
+   "source": [
+    "Other functions include the calculation of the band gap (if the occupations are given, the index of the highest valence band or 0 eV is set within the band gap as done here):"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "comparable-announcement",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bands_plot.calculate_band_gap(\"test_band_structure\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "guilty-bryan",
+   "metadata": {},
+   "source": [
+    "The smallest energy gap between two bands:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "active-tract",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bands_plot.calculate_smallest_energy_diff(\"test_band_structure\", 4, 10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "dominican-entity",
+   "metadata": {},
+   "source": [
+    "The smallest direct energy difference between two bands:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "accepting-screen",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bands_plot.calculate_smallest_direct_energy_diff(\"test_band_structure\", 4, 10)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "comparable-civilian",
+   "metadata": {},
+   "source": [
+    "Calculate the energy difference between two bands at a certain k-point:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "biblical-rates",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bands_plot.calculate_energy_diff_at_kpoint(\"test_band_structure\", 4, 10, (0.0, 0.0, 0.0))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "beneficial-hopkins",
+   "metadata": {},
+   "source": [
+    "The minimum and maximum of a single band:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "posted-operator",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bands_plot.analyse_band(\"test_band_structure\", 4)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "sticky-buying",
+   "metadata": {},
+   "source": [
+    "## The projected density of states plot\n",
+    "\n",
+    "The procedure to plot the projected density of states is very similar to plotting the band structure. There is a function in the `io` sub-package to parse the projected density of states from the output-files.\n",
+    "\n",
+    "In this case the path to the folder needs to be given. Based on the standard pattern of the file names of Quantum ESPRESSO the corresponding files are read and the information is parsed:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "criminal-latino",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.io.qe import read_atom_proj_density_of_states\n",
+    "\n",
+    "pdos = read_atom_proj_density_of_states(\"files/el_pdos_qe/\")\n",
+    "\n",
+    "print(pdos[\"pdos\"][0].keys())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "twenty-uzbekistan",
+   "metadata": {},
+   "source": [
+    "Next, an object of the `DOSPlot`-class is created and the pojected density of states can be loaded. We shift the pDOS straight-away such that the valence band maximum is at 0 eV with the parameter `shift_dos`.\n",
+    "\n",
+    "The parameters `sum_kinds`, `sum_principal_qn` and `sum_magnetic_qn` sum up over different atoms of the same element, the principal and magnetic quantum numbers, respectively."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "miniature-corps",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.plots import DOSPlot\n",
+    "\n",
+    "dos_plot = DOSPlot()\n",
+    "dos_plot.import_projected_dos(\n",
+    "    \"test_pdos\",\n",
+    "    pdos[\"energy\"],\n",
+    "    pdos[\"pdos\"],\n",
+    "    shift_dos=-5.9678,\n",
+    "    sum_kinds=False,\n",
+    "    sum_principal_qn=True,\n",
+    "    sum_magnetic_qn=True,\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "spanish-obligation",
+   "metadata": {},
+   "source": [
+    "Likewise to the band structure plot, we can plot the pDOS using the `plot` function. s-orbitals are solid lines, p-orbitals, dashed, d-orbitals dotted and f-orbitals dash-dotted.\n",
+    "The colors and line styles can be changed with the attributes `dos_colors` and `dos_linestyles`, respectively.\n",
+    "\n",
+    "The input parameters are the same as before and with the class's attributes the range and other features of the plot can be adjusted:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "foster-funds",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dos_plot.show_plot = True\n",
+    "dos_plot.show_legend = True\n",
+    "dos_plot.x_range = (-10, 5)\n",
+    "plot = dos_plot.plot(\"test_pdos\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "outstanding-making",
+   "metadata": {},
+   "source": [
+    "There are two options to include the total density of states:\n",
+    "\n",
+    "* All projected densities can be summed. Depending on the basis set and how well it can be projected onto the localized orbitals this may not always lead to the total density of states.\n",
+    "* The total density of states can be imported for a dataset as before done with the projected DOS.\n",
+    "\n",
+    "Here is the first option:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "caring-festival",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dos_plot.sum_pdos = True\n",
+    "plot = dos_plot.plot(\"test_pdos\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "deluxe-registrar",
+   "metadata": {},
+   "source": [
+    "The second option involves another function of the `io` sub-package to parse the total density of states directly from the output-file:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "competitive-interim",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "from aim2dat.io.qe import read_total_density_of_states\n",
+    "\n",
+    "tdos = read_total_density_of_states(\"files/el_pdos_qe/dos.dat\")\n",
+    "\n",
+    "dos_plot.import_projected_dos(\n",
+    "    \"test_pdos_2\",\n",
+    "    pdos[\"energy\"],\n",
+    "    pdos[\"pdos\"],\n",
+    "    shift_dos=-5.9678,\n",
+    "    sum_kinds=False,\n",
+    "    sum_magnetic_qn=True,\n",
+    ")\n",
+    "dos_plot.import_total_dos(\"test_pdos_2\", tdos[\"energy\"], tdos[\"tdos\"], shift_dos=-5.9678)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "fd7d684f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plot = dos_plot.plot(\"test_pdos_2\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "expressed-austin",
+   "metadata": {},
+   "source": [
+    "Another feature is to smear the density of states to create a smoother look. The strength of the smearing can be ajusted with the attributes `smearing_delta` and `smearing_sigma`. \n",
+    "\n",
+    "The parameter `use_smearing` activates the smearing:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "loving-butter",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "dos_plot.smearing_delta = 0.001\n",
+    "dos_plot.smearing_sigma = 0.01\n",
+    "dos_plot.import_projected_dos(\n",
+    "    \"test_pdos_smeared\",\n",
+    "    pdos[\"energy\"],\n",
+    "    pdos[\"pdos\"],\n",
+    "    shift_dos=-5.9678,\n",
+    "    sum_kinds=False,\n",
+    "    sum_magnetic_qn=True,\n",
+    "    use_smearing=True,\n",
+    ")\n",
+    "dos_plot.import_total_dos(\n",
+    "    \"test_pdos_smeared\", tdos[\"energy\"], tdos[\"tdos\"], shift_dos=-5.9678, use_smearing=True\n",
+    ")\n",
+    "plot = dos_plot.plot(\"test_pdos_smeared\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "arabic-lancaster",
+   "metadata": {},
+   "source": [
+    "## Band structure + projected density of states plot\n",
+    "\n",
+    "The two previous plots can also be combined in one figure with the `BandStructureDOSPlot` class:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "frank-spanking",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.plots import BandStructureDOSPlot\n",
+    "\n",
+    "bands_dos_plot = BandStructureDOSPlot()\n",
+    "bands_dos_plot.show_plot = True\n",
+    "bands_dos_plot.import_band_structure(\n",
+    "    data_label=\"test_band_structure_dos\",\n",
+    "    kpoints=band_structure[\"kpoints\"],\n",
+    "    path_labels=path_labels,\n",
+    "    bands=band_structure[\"bands\"],\n",
+    "    unit_y=band_structure[\"unit_y\"],\n",
+    ")\n",
+    "bands_dos_plot.import_projected_dos(\"test_band_structure_dos\", pdos[\"energy\"], pdos[\"pdos\"])\n",
+    "bands_dos_plot.import_total_dos(\n",
+    "    \"test_band_structure_dos\",\n",
+    "    tdos[\"energy\"],\n",
+    "    tdos[\"tdos\"],\n",
+    ")\n",
+    "plot = bands_dos_plot.plot(\"test_band_structure_dos\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "impressed-arena",
+   "metadata": {},
+   "source": [
+    "We can shift the band structure and DOS with the follwoing function:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "moderate-characteristic",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bands_dos_plot.shift_bands_and_dos(\"test_band_structure_dos\", -5.9678)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "appointed-steal",
+   "metadata": {},
+   "source": [
+    "And choose the x- and y-range as well as the figure ratio and the ratio between band structure and dos plot:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "driving-bangkok",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bands_dos_plot.ratio = (15, 6)\n",
+    "bands_dos_plot.x_range = (0, 2.5)\n",
+    "bands_dos_plot.y_range = (-10, 5)\n",
+    "bands_dos_plot.show_legend = [False, True]\n",
+    "plot = bands_dos_plot.plot(\"test_band_structure_dos\")"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.13"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

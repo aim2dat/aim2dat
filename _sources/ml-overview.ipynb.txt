@@ -1,0 +1,292 @@
+{
+ "cells": [
+  {
+   "cell_type": "raw",
+   "id": "4053602a",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "================\n",
+    "Machine Learning\n",
+    "================\n",
+    "\n",
+    ".. toctree::\n",
+    "    :maxdepth: 1\n",
+    "    :hidden:\n",
+    "\n",
+    "    ml-scikit_learn\n",
+    "\n",
+    "\n",
+    "In order to exploit the generated data from high-throughput studies this library also offers methods and interfaces to other python packages to facilitate the training of machine learning models.\n",
+    "Generally, the workflow can be split up into three consecutive steps:\n",
+    "\n",
+    "1. Splitting up the initial data set into a training and test set\n",
+    "2. Extracting features from the data sets\n",
+    "3. Transforming data, model training and performance testing\n",
+    "4. Applying the ML model on new unknown data\n",
+    "\n",
+    "In the following, we give an overview on how the methods of this libary can be used to achieve the individual steps. As an example we use a subset of the data set used in **TODO: Add reference**:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "1879bb43-57c3-4bd3-b337-53fcd3d84eb0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.strct import StructureCollection\n",
+    "\n",
+    "strct_c = StructureCollection()\n",
+    "strct_c.import_from_hdf5_file(\n",
+    "    \"../../tests/ml/train_test_split_crystals_ref/PBE_CSP_Cs-Te_crystal-preopt_wo_dup.h5\"\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "d93cc162",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Splitting up the initial data set into a training and test set\n",
+    "==============================================================\n",
+    "\n",
+    "A good and established way to evaluate the ML model's performance is splitting up the initial data set into a training and test set.\n",
+    "This has to be done before any feature extraction or transformation of the data set took place in order to prevent data leakage.\n",
+    "Many machine learning packages offer methods to do this task (e.g. scikit-learn's |scikit_split| function).\n",
+    "Usually the split is performed in a random manner, which has the disadvantage that the training and test set may be unbalanced and do not represent the distribution of the initial data set anymore.\n",
+    "\n",
+    "For classification problems a stratified splitting has been introduced with the :meth:`train_test_split_crystals <aim2dat.ml.utils.train_test_split_crystals>` where the fraction of target categories is maintained for the training and test set.\n",
+    "Based on this idea, a stratified splitting for data sets of inorganic crystals is implemented by binning the elemental concentrations and \n",
+    "target values using the numpy |numpy_hist| function.\n",
+    "During the splitting process it is ensured that each bin of the training and test set contains the same relative amount of crystals as the initial data set.\n",
+    "The most import parameters of the function are:\n",
+    "\n",
+    "*  ``structure_collection``: The :class:`StructureCollection <aim2dat.strct.StructureCollection>` object serves as container for the crystal structures.\n",
+    "*  ``target_attribute``: key of the target value stored in ``attributes`` of the structure.\n",
+    "*  ``train_size``: Size of the training set, if smaller than ``1.0`` the input is considered as fraction of the initial data set otherwise as absolute size of the data set. \n",
+    "*  ``test_size``: Size of the test set, same input interpretation as for the ``train_size`` parameter apply.\n",
+    "*  ``target_bins``: Number of bins or list bin-edges.\n",
+    "*  ``composition_bins``: Number of bins or list bin-edges.\n",
+    "*  ``elements``: List of elements that are considered for the binning (if set to ``None`` all elements are considered).\n",
+    "*  ``return_structure_collection``: Whether a :class:`StructureCollection <aim2dat.strct.StructureCollection>` or a list is returned.\n",
+    "\n",
+    ".. |scikit_split| raw:: html\n",
+    "\n",
+    "   <a href=\"https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html\" target=\"_blank\">train_test_split</a>\n",
+    "\n",
+    ".. |numpy_hist| raw:: html\n",
+    "\n",
+    "   <a href=\"https://numpy.org/doc/stable/reference/generated/numpy.histogram.html\" target=\"_blank\">histogram</a>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "a6d9456d-4a4f-44e9-9794-c0af59765373",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.ml.utils import train_test_split_crystals\n",
+    "\n",
+    "comp_bins = [\n",
+    "    -0.05, 0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95, 1.05\n",
+    "]\n",
+    "\n",
+    "train_set, test_set, train_target, test_target = train_test_split_crystals(\n",
+    "    strct_c,\n",
+    "    \"stability\",\n",
+    "    train_size=0.6,\n",
+    "    test_size=0.35,\n",
+    "    return_structure_collections=False,\n",
+    "    composition_bins=comp_bins,\n",
+    "    target_bins=126,\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "de8508c3",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Extracting features from data sets\n",
+    "==================================\n",
+    "\n",
+    "This library implements several methods to extract feature vectors from molecular or crystalline structures that are based on scikit-learn's |scikit_estimator| class. This means that the transformer classes can be combined with other transformer or estimator classes by defining pipelines (more details on scikit-learn's pipeline framework can be found |scikit_compose|).\n",
+    "A list of the different classes is given :doc:`here <ml-scikit_learn>`.\n",
+    "The calculation of features is based on the :class:`StructureOperations <aim2dat.strct.StructureOperations>` class and can exploit its parallel implementations via the attributes :attr:`n_procs <aim2dat.strct.StructureOperations.n_procs>` and :attr:`chunksize <aim2dat.strct.StructureOperations.chunksize>`.\n",
+    "\n",
+    "Here, we make use of the :class:`StructureFFPrintTransformer <aim2dat.ml.transformers.StructureFFPrintTransformer>` (with reduced numerical parameters) which uses the F-Fingerprint (:doi:`10.1063/1.3079326`) to describe the crystals:\n",
+    "\n",
+    ".. |scikit_estimator| raw:: html\n",
+    "\n",
+    "   <a href=\"https://scikit-learn.org/stable/modules/generated/sklearn.base.BaseEstimator.html\" target=\"_blank\">BaseEstimator</a>\n",
+    "\n",
+    ".. |scikit_compose| raw:: html\n",
+    "\n",
+    "   <a href=\"https://scikit-learn.org/stable/modules/compose.html\" target=\"_blank\">here</a>"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5b9ac38f-c1a4-4cb5-8660-d23d366b6400",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.ml.transformers import StructureFFPrintTransformer\n",
+    "\n",
+    "ffprint_transf = StructureFFPrintTransformer(\n",
+    "    r_max=10.0, delta_bin=0.5, sigma=2.0, add_header=True, verbose=False\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "0f04c8eb",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Specifically for a parameter grid search structural properties that deman large computational resources to calculate can be \"precomputed\" for different parameter sets reused later on. The properties are stored in a :class:`StructureOperations <aim2dat.strct.StructureOperations>` object for each parameter set (note that we only precompute properties for the first 40 structures of the training set to reduce the run time):"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "6cf6f7ef",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "ffprint_transf.nprocs = 4\n",
+    "ffprint_transf.chunksize = 10\n",
+    "ffprint_transf.precompute_parameter_space(\n",
+    "    {\"r_max\": [5.0, 10.0], \"sigma\": [2.0]}, train_set[:40]\n",
+    ")\n",
+    "ffprint_transf.precomputed_properties"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "288ffc87",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Transforming data, model training and performance testing\n",
+    "=========================================================\n",
+    "\n",
+    "The bulk workload of this step can be accomplished by different machine learning packages. This library merely augments methods by implementing custom metrics and kernels that can be used for models implemented in the scikit-learn package (a list of the methods is given :doc:`here <ml-scikit_learn>`).\n",
+    "\n",
+    ".. warning::\n",
+    "   The custom metrics and kernel functions are experimental and so far an increase in performance compared to the standard scikit-learn implementations could not be detected. It is therefore not recommended to use these methods without thorough testing and comparison.\n",
+    "\n",
+    "As an example, we build a scikit-learn pipeline taking the F-Fingerprint transformer and the kernel ridge regression model in combination with the :meth:`krr_ffprint_laplace <aim2dat.ml.kernels.krr_ffprint_laplace>` kernel:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "d625d44a-4ed8-4121-b88e-ef5f761a8478",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from sklearn.kernel_ridge import KernelRidge\n",
+    "from sklearn.pipeline import Pipeline\n",
+    "from aim2dat.ml.kernels import krr_ffprint_laplace\n",
+    "\n",
+    "pline = Pipeline(\n",
+    "    (\n",
+    "        (\"ffprint\", ffprint_transf),\n",
+    "        (\"krr\", KernelRidge(kernel=krr_ffprint_laplace)),\n",
+    "    )\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3f46470d-f9eb-44b4-8bb1-fb794e1e7e2a",
+   "metadata": {},
+   "source": [
+    "Now we can train the model via the fit function of the pipeline and test it on the test data set:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e6516872-485b-499f-9cd0-d2d92dba5484",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pline.fit(train_set, train_target).score(test_set, test_target)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "bb628fa2",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Applying the ML model on new unknown data\n",
+    "=========================================\n",
+    "\n",
+    "Once the model is trained and possibly evaluated based on a test set the user can finally benefit from it by applying the model to new data with unknown target values.\n",
+    "This library implements the :class:`CellGridSearch <aim2dat.ml.cell_grid_search.CellGridSearch>` class which changes the lattice parameters in order to minimize the target property based on e.g. a ML model.\n",
+    "\n",
+    "Taking the trained kernel ridge regression model we can use it to optimize the lattice parameters of a random crystal structure:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "7707d584-abb7-4f2f-bcd3-f95336cc2b06",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.strct import StructureImporter\n",
+    "from aim2dat.ml.cell_grid_search import CellGridSearch\n",
+    "\n",
+    "strct_imp = StructureImporter()\n",
+    "strct_c_csp = strct_imp.generate_random_crystals(\"Cs2Te\", max_structures=1)\n",
+    "\n",
+    "grid_search = CellGridSearch(\n",
+    "    length_scaling_factors=[0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3],\n",
+    "    angle_scaling_factors=[0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3],\n",
+    ")\n",
+    "grid_search.set_initial_structure(strct_c_csp[0])\n",
+    "grid_search.set_model(pline)\n",
+    "print(\"Initial score:\", grid_search.return_initial_score())\n",
+    "fit_info = grid_search.fit()\n",
+    "print(\"Final score:\", fit_info[0], \"Scaling factors:\", fit_info[1])"
+   ]
+  }
+ ],
+ "metadata": {
+  "celltoolbar": "Raw Cell Format",
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.13"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

@@ -1,0 +1,703 @@
+:py:mod:`aim2dat.aiida_workflows.cp2k.cell_opt_work_chain`
+==========================================================
+
+.. py:module:: aim2dat.aiida_workflows.cp2k.cell_opt_work_chain
+
+.. autoapi-nested-parse::
+
+   AiiDA work chain to optimize the atomic positions and the unit cell using CP2K.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain
+
+
+
+
+
+.. py:class:: CellOptWorkChain(*args, **kwargs)
+
+
+   Bases: :py:obj:`aim2dat.aiida_workflows.cp2k.base_opt_work_chain._BaseOptimizationWorkChain`
+
+   AiiDA work chain to optimize the unit cell of a periodic system.
+
+   
+   .. py:class:: SaveKeys
+
+
+      Bases: :py:obj:`enum.Enum`
+
+      Keys used to identify things in the saved instance state bundle.
+
+
+      .. rubric:: Overview
+
+
+      .. list-table:: Methods
+         :header-rows: 0
+         :widths: auto
+
+         * - :py:obj:`name <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.SaveKeys.name>`\ ()
+           - The name of the Enum member.
+         * - :py:obj:`value <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.SaveKeys.value>`\ ()
+           - The value of the Enum member.
+
+
+      .. py:attribute:: CALC_ID
+         :type: str
+         :value: 'calc_id'
+
+         
+
+
+
+      .. py:method:: name()
+
+         The name of the Enum member.
+
+
+      .. py:method:: value()
+
+         The value of the Enum member.
+
+
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`ctx <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.ctx>`
+        - Get the context.
+      * - :py:obj:`inputs <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.inputs>`
+        - Return the inputs attribute dictionary or an empty one.
+      * - :py:obj:`metadata <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.metadata>`
+        - Return the metadata that were specified when this process instance was launched.
+      * - :py:obj:`node <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.node>`
+        - Return the ProcessNode used by this process to represent itself in the database.
+      * - :py:obj:`process_class <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.process_class>`
+        - Return the process class to run in the loop.
+      * - :py:obj:`runner <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.runner>`
+        - Get process runner.
+      * - :py:obj:`uuid <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.uuid>`
+        - Return the UUID of the process which corresponds to the UUID of its associated `ProcessNode`.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`build_process_type <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.build_process_type>`\ ()
+        - `class` The process type.
+      * - :py:obj:`check_scf_convergence <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.check_scf_convergence>`\ (calc)
+        - Check if the scf-calculation is convergenced and increments the
+      * - :py:obj:`decode_input_args <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.decode_input_args>`\ (encoded)
+        - Decode saved input arguments as they came from the saved instance state Bundle
+      * - :py:obj:`define <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.define>`\ (spec)
+        - `class` Specify inputs, outputs and the workflow.
+      * - :py:obj:`encode_input_args <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.encode_input_args>`\ (inputs)
+        - Encode input arguments such that they may be saved in a Bundle
+      * - :py:obj:`exit_codes <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.exit_codes>`\ ()
+        - Return the namespace of exit codes defined for this WorkChain through its ProcessSpec.
+      * - :py:obj:`exposed_inputs <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.exposed_inputs>`\ (process_class, namespace, agglomerate)
+        - Gather a dictionary of the inputs that were exposed for a given Process class under an optional namespace.
+      * - :py:obj:`exposed_outputs <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.exposed_outputs>`\ (node, process_class, namespace, agglomerate)
+        - Return the outputs which were exposed from the ``process_class`` and emitted by the specific ``node``
+      * - :py:obj:`get_builder <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.get_builder>`\ ()
+        - `class` \-
+      * - :py:obj:`get_exit_statuses <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.get_exit_statuses>`\ (exit_code_labels)
+        - `class` Return the exit status (integers) for the given exit code labels.
+      * - :py:obj:`get_or_create_db_record <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.get_or_create_db_record>`\ ()
+        - `class` Create a process node that represents what happened in this process.
+      * - :py:obj:`get_outputs <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.get_outputs>`\ (node)
+        - Return a mapping of the outputs that should be attached as outputs to the work chain.
+      * - :py:obj:`get_parent_calc <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.get_parent_calc>`\ ()
+        - Get the parent process node
+      * - :py:obj:`get_process_handlers <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.get_process_handlers>`\ ()
+        - `class` \-
+      * - :py:obj:`get_process_handlers_by_priority <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.get_process_handlers_by_priority>`\ ()
+        - Return list of process handlers where overrides from ``inputs.handler_overrides`` are taken into account.
+      * - :py:obj:`get_provenance_inputs_iterator <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.get_provenance_inputs_iterator>`\ ()
+        - Get provenance input iterator.
+      * - :py:obj:`init <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.init>`\ ()
+        - \-
+      * - :py:obj:`initialize_opt_parameters <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.initialize_opt_parameters>`\ ()
+        - \-
+      * - :py:obj:`initialize_scf_parameters <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.initialize_scf_parameters>`\ ()
+        - \-
+      * - :py:obj:`inspect_process <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.inspect_process>`\ ()
+        - Analyse the results of the previous process and call the handlers when necessary.
+      * - :py:obj:`is_process_handler <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.is_process_handler>`\ (process_handler_name)
+        - `class` Return whether the given method name corresponds to a process handler of this class.
+      * - :py:obj:`is_valid_cache <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.is_valid_cache>`\ (node)
+        - `class` Check if the given node can be cached from.
+      * - :py:obj:`kill <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.kill>`\ (msg)
+        - Kill the process and all the children calculations it called
+      * - :py:obj:`load_instance_state <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.load_instance_state>`\ (saved_state, load_context)
+        - Load instance state.
+      * - :py:obj:`on_create <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.on_create>`\ ()
+        - Called when a Process is created.
+      * - :py:obj:`on_entered <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.on_entered>`\ (from_state)
+        - After entering a new state, save a checkpoint and update the latest process state change timestamp.
+      * - :py:obj:`on_except <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.on_except>`\ (exc_info)
+        - Log the exception by calling the report method with formatted stack trace from exception info object
+      * - :py:obj:`on_exiting <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.on_exiting>`\ ()
+        - Ensure that any unstored nodes in the context are stored, before the state is exited
+      * - :py:obj:`on_finish <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.on_finish>`\ (result, successful)
+        - Set the finish status on the process node.
+      * - :py:obj:`on_output_emitting <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.on_output_emitting>`\ (output_port, value)
+        - The process has emitted a value on the given output port.
+      * - :py:obj:`on_paused <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.on_paused>`\ (msg)
+        - The Process was paused so set the paused attribute on the process node
+      * - :py:obj:`on_playing <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.on_playing>`\ ()
+        - The Process was unpaused so remove the paused attribute on the process node
+      * - :py:obj:`on_run <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.on_run>`\ ()
+        - \-
+      * - :py:obj:`on_terminated <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.on_terminated>`\ ()
+        - Clean working directories of the calculations.
+      * - :py:obj:`on_wait <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.on_wait>`\ (awaitables)
+        - Entering the WAITING state.
+      * - :py:obj:`opt_post_processing <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.opt_post_processing>`\ ()
+        - \-
+      * - :py:obj:`out <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.out>`\ (output_port, value)
+        - Attach output to output port.
+      * - :py:obj:`out_many <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.out_many>`\ (out_dict)
+        - Attach outputs to multiple output ports.
+      * - :py:obj:`post_processing <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.post_processing>`\ ()
+        - \-
+      * - :py:obj:`report <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.report>`\ (msg, \*args, \*\*kwargs)
+        - Log a message to the logger, which should get saved to the database through the attached DbLogHandler.
+      * - :py:obj:`resubmit_unconverged_geometry <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.resubmit_unconverged_geometry>`\ (calc)
+        - Resubmit if geometry is unconverged and choose tighter settings for the
+      * - :py:obj:`resubmit_unfinished_calculation <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.resubmit_unfinished_calculation>`\ (calc)
+        - Resubmit the geometry in case the walltime is hit or the calculation is interrupted.
+      * - :py:obj:`results <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.results>`\ ()
+        - Attach the outputs specified in the output specification from the last completed process.
+      * - :py:obj:`run <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.run>`\ ()
+        - \-
+      * - :py:obj:`run_process <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.run_process>`\ ()
+        - Run the next process, taking the input dictionary from the context at `self.ctx.inputs`.
+      * - :py:obj:`save_instance_state <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.save_instance_state>`\ (out_state, save_context)
+        - Save instance state.
+      * - :py:obj:`set_additional_optimization_p <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.set_additional_optimization_p>`\ (parameters)
+        - Place holder for additional optimization parameters set in the CP2K input dictionary.
+      * - :py:obj:`set_status <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.set_status>`\ (status)
+        - The status of the Process is about to be changed, so we reflect this is in node's attribute proxy.
+      * - :py:obj:`setup <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.setup>`\ ()
+        - Initialize context variables that are used during the logical flow of the `BaseRestartWorkChain`.
+      * - :py:obj:`setup_inputs <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.setup_inputs>`\ ()
+        - \-
+      * - :py:obj:`setup_wc_specific_inputs <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.setup_wc_specific_inputs>`\ ()
+        - Set stress tensor calculation to analystical.
+      * - :py:obj:`should_run_process <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.should_run_process>`\ ()
+        - Check conditions whether to run the calculation or not.
+      * - :py:obj:`spec <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.spec>`\ ()
+        - `class` \-
+      * - :py:obj:`spec_metadata <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.spec_metadata>`\ ()
+        - Return the metadata port namespace of the process specification of this process.
+      * - :py:obj:`submit <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.submit>`\ (process, \*\*kwargs)
+        - Submit process for execution.
+      * - :py:obj:`switch_to_broyden_mixing <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.switch_to_broyden_mixing>`\ (calc)
+        - Switch to the Broyden mixing scheme in case of numerical instabilities with the Pulay
+      * - :py:obj:`switch_to_open_shell_ks <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.switch_to_open_shell_ks>`\ (calc)
+        - Turn on restricted or unrestricted open-shell Kohn-Sham equations in case of an odd
+      * - :py:obj:`to_context <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.to_context>`\ (\*\*kwargs)
+        - Add a dictionary of awaitables to the context.
+      * - :py:obj:`update_outputs <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.update_outputs>`\ ()
+        - Attach new outputs to the node since the last call.
+      * - :py:obj:`wc_specific_post_processing <aim2dat.aiida_workflows.cp2k.cell_opt_work_chain.CellOptWorkChain.wc_specific_post_processing>`\ ()
+        - \-
+
+
+   .. py:attribute:: SINGLE_OUTPUT_LINKNAME
+      :type: str
+      :value: 'result'
+
+      
+
+
+   .. py:property:: ctx
+      :type: aiida.common.extendeddicts.AttributeDict
+
+      Get the context.
+
+   .. py:property:: inputs
+      :type: plumpy.utils.AttributesFrozendict
+
+      Return the inputs attribute dictionary or an empty one.
+
+      This overrides the property of the base class because that can also return ``None``. This override ensures
+      calling functions that they will always get an instance of ``AttributesFrozenDict``.
+
+   .. py:property:: metadata
+      :type: aiida.common.extendeddicts.AttributeDict
+
+      Return the metadata that were specified when this process instance was launched.
+
+      :return: metadata dictionary
+
+   .. py:property:: node
+      :type: aiida.orm.WorkChainNode
+
+      Return the ProcessNode used by this process to represent itself in the database.
+
+      :return: instance of sub class of ProcessNode
+
+   .. py:property:: process_class
+      :type: Type[aiida.engine.processes.process.Process]
+
+      Return the process class to run in the loop.
+
+   .. py:property:: runner
+      :type: aiida.engine.runners.Runner
+
+      Get process runner.
+
+   .. py:property:: uuid
+      :type: str
+
+      Return the UUID of the process which corresponds to the UUID of its associated `ProcessNode`.
+
+      :return: the UUID associated to this process instance
+
+
+   .. py:method:: build_process_type() -> str
+      :classmethod:
+
+      The process type.
+
+      :return: string of the process type
+
+      Note: This could be made into a property 'process_type' but in order to have it be a property of the class
+      it would need to be defined in the metaclass, see https://bugs.python.org/issue20659
+
+
+   .. py:method:: check_scf_convergence(calc)
+
+      Check if the scf-calculation is convergenced and increments the
+      internal level of mixing parameters.
+
+
+   .. py:method:: decode_input_args(encoded: str) -> Dict[str, Any]
+
+      Decode saved input arguments as they came from the saved instance state Bundle
+
+      :param encoded: encoded (serialized) inputs
+      :return: The decoded input args
+
+
+   .. py:method:: define(spec)
+      :classmethod:
+
+      Specify inputs, outputs and the workflow.
+
+
+   .. py:method:: encode_input_args(inputs: Dict[str, Any]) -> str
+
+      Encode input arguments such that they may be saved in a Bundle
+
+      :param inputs: A mapping of the inputs as passed to the process
+      :return: The encoded (serialized) inputs
+
+
+   .. py:method:: exit_codes() -> aiida.engine.processes.exit_code.ExitCodesNamespace
+
+      Return the namespace of exit codes defined for this WorkChain through its ProcessSpec.
+
+      The namespace supports getitem and getattr operations with an ExitCode label to retrieve a specific code.
+      Additionally, the namespace can also be called with either the exit code integer status to retrieve it.
+
+      :returns: ExitCodesNamespace of ExitCode named tuples
+
+
+
+   .. py:method:: exposed_inputs(process_class: Type[Process], namespace: Optional[str] = None, agglomerate: bool = True) -> aiida.common.extendeddicts.AttributeDict
+
+      Gather a dictionary of the inputs that were exposed for a given Process class under an optional namespace.
+
+      :param process_class: Process class whose inputs to try and retrieve
+      :param namespace: PortNamespace in which to look for the inputs
+      :param agglomerate: If set to true, all parent namespaces of the given ``namespace`` will also be
+          searched for inputs. Inputs in lower-lying namespaces take precedence.
+
+      :returns: exposed inputs
+
+
+
+   .. py:method:: exposed_outputs(node: aiida.orm.ProcessNode, process_class: Type[Process], namespace: Optional[str] = None, agglomerate: bool = True) -> aiida.common.extendeddicts.AttributeDict
+
+      Return the outputs which were exposed from the ``process_class`` and emitted by the specific ``node``
+
+      :param node: process node whose outputs to try and retrieve
+      :param namespace: Namespace in which to search for exposed outputs.
+      :param agglomerate: If set to true, all parent namespaces of the given ``namespace`` will also
+          be searched for outputs. Outputs in lower-lying namespaces take precedence.
+
+      :returns: exposed outputs
+
+
+
+   .. py:method:: get_builder() -> aiida.engine.processes.builder.ProcessBuilder
+      :classmethod:
+
+
+   .. py:method:: get_exit_statuses(exit_code_labels: Iterable[str]) -> List[int]
+      :classmethod:
+
+      Return the exit status (integers) for the given exit code labels.
+
+      :param exit_code_labels: a list of strings that reference exit code labels of this process class
+      :return: list of exit status integers that correspond to the given exit code labels
+      :raises AttributeError: if at least one of the labels does not correspond to an existing exit code
+
+
+   .. py:method:: get_or_create_db_record() -> aiida.orm.ProcessNode
+      :classmethod:
+
+      Create a process node that represents what happened in this process.
+
+      :return: A process node
+
+
+   .. py:method:: get_outputs(node) -> Mapping[str, aiida.orm.Node]
+
+      Return a mapping of the outputs that should be attached as outputs to the work chain.
+
+      By default this method returns the outputs of the last completed calculation job. This method can be overridden
+      if the implementation wants to update those outputs before attaching them. Make sure that if the content of an
+      output node is modified that this is done through a calcfunction in order to not lose the provenance.
+
+
+   .. py:method:: get_parent_calc() -> Optional[aiida.orm.ProcessNode]
+
+      Get the parent process node
+
+      :return: the parent process node if there is one
+
+
+
+   .. py:method:: get_process_handlers() -> List[types.FunctionType]
+      :classmethod:
+
+
+   .. py:method:: get_process_handlers_by_priority() -> List[Tuple[int, types.FunctionType]]
+
+      Return list of process handlers where overrides from ``inputs.handler_overrides`` are taken into account.
+
+
+   .. py:method:: get_provenance_inputs_iterator() -> Iterator[Tuple[str, Union[aiida.engine.processes.ports.InputPort, aiida.engine.processes.ports.PortNamespace]]]
+
+      Get provenance input iterator.
+
+      :rtype: filter
+
+
+   .. py:method:: init() -> None
+
+
+   .. py:method:: initialize_opt_parameters()
+
+
+   .. py:method:: initialize_scf_parameters()
+
+
+   .. py:method:: inspect_process() -> Optional[aiida.engine.processes.ExitCode]
+
+      Analyse the results of the previous process and call the handlers when necessary.
+
+      If the process is excepted or killed, the work chain will abort. Otherwise any attached handlers will be called
+      in order of their specified priority. If the process was failed and no handler returns a report indicating that
+      the error was handled, it is considered an unhandled process failure and the process is relaunched. If this
+      happens twice in a row, the work chain is aborted. In the case that at least one handler returned a report the
+      following matrix determines the logic that is followed:
+
+          Process  Handler    Handler     Action
+          result   report?    exit code
+          -----------------------------------------
+          Success      yes        == 0     Restart
+          Success      yes        != 0     Abort
+          Failed       yes        == 0     Restart
+          Failed       yes        != 0     Abort
+
+      If no handler returned a report and the process finished successfully, the work chain's work is considered done
+      and it will move on to the next step that directly follows the `while` conditional, if there is one defined in
+      the outline.
+
+
+   .. py:method:: is_process_handler(process_handler_name: Union[str, types.FunctionType]) -> bool
+      :classmethod:
+
+      Return whether the given method name corresponds to a process handler of this class.
+
+      :param process_handler_name: string name of the instance method
+      :return: boolean, True if corresponds to process handler, False otherwise
+
+
+   .. py:method:: is_valid_cache(node: aiida.orm.ProcessNode) -> bool
+      :classmethod:
+
+      Check if the given node can be cached from.
+
+      Overriding this method allows ``Process`` sub-classes to modify when
+      corresponding process nodes are considered as a cache.
+
+      .. warning :: When overriding this method, make sure to return ``False``
+          *at least* in all cases when ``super()._node.base.caching.is_valid_cache(node)``
+          returns ``False``. Otherwise, the ``invalidates_cache`` keyword on exit
+          codes may have no effect.
+
+
+
+   .. py:method:: kill(msg: Union[str, None] = None) -> Union[bool, plumpy.futures.Future]
+
+      Kill the process and all the children calculations it called
+
+      :param msg: message
+
+
+   .. py:method:: load_instance_state(saved_state, load_context)
+
+      Load instance state.
+
+      :param saved_state: saved instance state
+      :param load_context:
+
+
+
+   .. py:method:: on_create() -> None
+
+      Called when a Process is created.
+
+
+   .. py:method:: on_entered(from_state: Optional[plumpy.process_states.State]) -> None
+
+      After entering a new state, save a checkpoint and update the latest process state change timestamp.
+
+
+   .. py:method:: on_except(exc_info: Tuple[Any, Exception, types.TracebackType]) -> None
+
+      Log the exception by calling the report method with formatted stack trace from exception info object
+      and store the exception string as a node attribute
+
+      :param exc_info: the sys.exc_info() object (type, value, traceback)
+
+
+   .. py:method:: on_exiting() -> None
+
+      Ensure that any unstored nodes in the context are stored, before the state is exited
+
+      After the state is exited the next state will be entered and if persistence is enabled, a checkpoint will
+      be saved. If the context contains unstored nodes, the serialization necessary for checkpointing will fail.
+
+
+   .. py:method:: on_finish(result: Union[int, aiida.engine.processes.exit_code.ExitCode, None], successful: bool) -> None
+
+      Set the finish status on the process node.
+
+      :param result: result of the process
+      :param successful: whether execution was successful
+
+
+
+   .. py:method:: on_output_emitting(output_port: str, value: Any) -> None
+
+      The process has emitted a value on the given output port.
+
+      :param output_port: The output port name the value was emitted on
+      :param value: The value emitted
+
+
+
+   .. py:method:: on_paused(msg: Optional[str] = None) -> None
+
+      The Process was paused so set the paused attribute on the process node
+
+      :param msg: message
+
+
+
+   .. py:method:: on_playing() -> None
+
+      The Process was unpaused so remove the paused attribute on the process node
+
+
+   .. py:method:: on_run()
+
+
+   .. py:method:: on_terminated()
+
+      Clean working directories of the calculations.
+
+
+   .. py:method:: on_wait(awaitables: Sequence[Awaitable])
+
+      Entering the WAITING state.
+
+
+   .. py:method:: opt_post_processing()
+
+
+   .. py:method:: out(output_port: str, value: Any = None) -> None
+
+      Attach output to output port.
+
+      The name of the port will be used as the link label.
+
+      :param output_port: name of output port
+      :param value: value to put inside output port
+
+
+
+   .. py:method:: out_many(out_dict: Dict[str, Any]) -> None
+
+      Attach outputs to multiple output ports.
+
+      Keys of the dictionary will be used as output port names, values as outputs.
+
+      :param out_dict: output dictionary
+      :type out_dict: dict
+
+
+   .. py:method:: post_processing()
+
+
+   .. py:method:: report(msg: str, *args, **kwargs) -> None
+
+      Log a message to the logger, which should get saved to the database through the attached DbLogHandler.
+
+      The pk, class name and function name of the caller are prepended to the given message
+
+      :param msg: message to log
+      :param args: args to pass to the log call
+      :param kwargs: kwargs to pass to the log call
+
+
+
+   .. py:method:: resubmit_unconverged_geometry(calc)
+
+      Resubmit if geometry is unconverged and choose tighter settings for the
+      optimization algorithm.
+
+
+   .. py:method:: resubmit_unfinished_calculation(calc)
+
+      Resubmit the geometry in case the walltime is hit or the calculation is interrupted.
+
+
+   .. py:method:: results() -> Optional[aiida.engine.processes.ExitCode]
+
+      Attach the outputs specified in the output specification from the last completed process.
+
+
+   .. py:method:: run() -> Any
+
+
+   .. py:method:: run_process() -> aiida.engine.processes.workchains.context.ToContext
+
+      Run the next process, taking the input dictionary from the context at `self.ctx.inputs`.
+
+
+   .. py:method:: save_instance_state(out_state, save_context)
+
+      Save instance state.
+
+      :param out_state: state to save in
+
+      :param save_context:
+      :type save_context: :class:`!plumpy.persistence.LoadSaveContext`
+
+
+
+   .. py:method:: set_additional_optimization_p(parameters)
+
+      Place holder for additional optimization parameters set in the CP2K input dictionary.
+
+      :Parameters: **parameters** (*dict*) -- Input parameters for the CP2K calculation.
+
+
+   .. py:method:: set_status(status: Optional[str]) -> None
+
+      The status of the Process is about to be changed, so we reflect this is in node's attribute proxy.
+
+      :param status: the status message
+
+
+
+   .. py:method:: setup() -> None
+
+      Initialize context variables that are used during the logical flow of the `BaseRestartWorkChain`.
+
+
+   .. py:method:: setup_inputs()
+
+
+   .. py:method:: setup_wc_specific_inputs()
+
+      Set stress tensor calculation to analystical.
+
+
+   .. py:method:: should_run_process()
+
+      Check conditions whether to run the calculation or not.
+
+
+   .. py:method:: spec() -> WorkChainSpec
+      :classmethod:
+
+
+   .. py:method:: spec_metadata() -> aiida.engine.processes.ports.PortNamespace
+
+      Return the metadata port namespace of the process specification of this process.
+
+
+   .. py:method:: submit(process: Type[Process], **kwargs) -> aiida.orm.ProcessNode
+
+      Submit process for execution.
+
+      :param process: process
+      :return: the calculation node of the process
+
+
+
+   .. py:method:: switch_to_broyden_mixing(calc)
+
+      Switch to the Broyden mixing scheme in case of numerical instabilities with the Pulay
+      mixing scheme.
+
+
+   .. py:method:: switch_to_open_shell_ks(calc)
+
+      Turn on restricted or unrestricted open-shell Kohn-Sham equations in case of an odd
+      number of electrons.
+
+
+   .. py:method:: to_context(**kwargs: aiida.engine.processes.workchains.awaitable.Awaitable | aiida.orm.ProcessNode) -> None
+
+      Add a dictionary of awaitables to the context.
+
+      This is a convenience method that provides syntactic sugar, for a user to add multiple intersteps that will
+      assign a certain value to the corresponding key in the context of the work chain.
+
+
+   .. py:method:: update_outputs() -> None
+
+      Attach new outputs to the node since the last call.
+
+      Does nothing, if self.metadata.store_provenance is False.
+
+
+   .. py:method:: wc_specific_post_processing()
+
+
+

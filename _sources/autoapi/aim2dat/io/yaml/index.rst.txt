@@ -1,0 +1,43 @@
+:py:mod:`aim2dat.io.yaml`
+=========================
+
+.. py:module:: aim2dat.io.yaml
+
+.. autoapi-nested-parse::
+
+   Input and output operations for yaml-files formated according to YAML 1.2 based on ruamel.yaml.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.io.yaml.load_yaml_file
+   aim2dat.io.yaml.store_in_yaml_file
+
+
+
+.. py:function:: load_yaml_file(file_path, typ='safe')
+
+   Load a yaml-file and returns the content.
+
+   :Parameters: * **file_path** (*str*) -- Path to the yaml-file.
+                * **typ** (*str (optional)*) -- Typ used to load the yaml-file.
+
+   :returns: *data* -- Content of the file.
+
+
+.. py:function:: store_in_yaml_file(file_name, content)
+
+   Load a yaml-file and returns the content.
+
+   :Parameters: * **file_name** (*str*) -- Path to the yaml-file.
+                * **content** -- Content of the file.
+
+

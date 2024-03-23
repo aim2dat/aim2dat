@@ -1,0 +1,250 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "3b84ed29",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "# Using the ``SimplePlot`` class as a flexible plotting framework\n",
+    "\n",
+    "The ``SimplePlot`` class gives an unspecific and flexible interface to the backend plot libraries to create individual plots in an intuitive way."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "killing-ministry",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.plots import SimplePlot\n",
+    "\n",
+    "splot = SimplePlot()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "2556058c",
+   "metadata": {
+    "raw_mimetype": "text/markdown"
+   },
+   "source": [
+    "The following data set types can be imported:\n",
+    "\n",
+    "* scatter data sets via the function: ``import_scatter_data_set``\n",
+    "* bar data sets via the function: ``import_bar_data_set``"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3df91f9c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "splot.import_scatter_data_set(\n",
+    "    \"test dataset\", [0.0, 1.0, 2.0, 3.0], [-1.0, 2.0, 3.0, 0.0]\n",
+    ")\n",
+    "splot.import_scatter_data_set(\n",
+    "    \"test dataset 2\", \n",
+    "    [0.0, 1.0, 2.0, 3.0], \n",
+    "    [4.0, 1.0, 3.0, 2.0], \n",
+    "    plot_label=\"Test 2\"\n",
+    ")\n",
+    "splot.import_bar_data_set(\n",
+    "    \"test dataset 3\",\n",
+    "    [1.0, 4.0],\n",
+    "    [2.0, 3.0],\n",
+    "    [4.0, 1.0],\n",
+    "    plot_label=\"Bar data set\",\n",
+    "    width=0.15,\n",
+    "    bottom=1.5,\n",
+    "    color=\"C4\",\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5abc8b3a",
+   "metadata": {},
+   "source": [
+    "Some plots support additional plot elements:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "1f4882b5",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "splot.add_hline(y=2.0, x_min=0.0, x_max=4.0, scaled=False, color=\"C1\")\n",
+    "splot.add_vline(\n",
+    "    x=0.5, y_min=0.2, y_max=0.8, scaled=True, \n",
+    "    color=\"black\", subplot_assignment=[1]\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "250d5c0a",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "All imported data sets can be plotted with ``plot`` function:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "atomic-heating",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "splot.plot([\"test dataset\", \"test dataset 2\", \"test dataset 3\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "87ba22d9",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The ``backend`` property switches between the two supported plotting backends, namely matplotlib and plotly:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "successful-complex",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import plotly.io as pio\n",
+    "pio.renderers.default = \"sphinx_gallery\"\n",
+    "\n",
+    "splot.ratio = (6.3, 6.3)\n",
+    "splot.backend = \"plotly\"\n",
+    "splot.plot([\"test dataset\", \"test dataset 2\", \"test dataset 3\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "45d53a97",
+   "metadata": {},
+   "source": [
+    "The data sets can also be distributed over several subplots:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ac5e4030",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "splot.subplot_nrows = 2\n",
+    "splot.subplot_ncols = 2\n",
+    "splot.plot(\n",
+    "    [\"test dataset\", \"test dataset 2\", \"test dataset 3\"], \n",
+    "    subplot_assignment=[0, 1, 3]\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c089bdae",
+   "metadata": {},
+   "source": [
+    "The additional plot elements can also be removed from the object:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ca1d9337",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "splot.remove_additional_plot_elements()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "96925925",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "splot.subplot_nrows = 2\n",
+    "splot.subplot_ncols = 2\n",
+    "splot.plot(\n",
+    "    [\"test dataset\", \"test dataset 2\", \"test dataset 3\"], \n",
+    "    subplot_assignment=[0, 3, 3]\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e635f3cd",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "splot.create_default_gridspec(2, 2, 3, heights=2)\n",
+    "splot.backend = \"plotly\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0b39d262",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "splot.subplot_gridspec"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3da39de1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "splot.plot(\n",
+    "    [\"test dataset\", \"test dataset 2\", \"test dataset 3\"], \n",
+    "    subplot_assignment=[0, 1, 2]\n",
+    ")"
+   ]
+  }
+ ],
+ "metadata": {
+  "celltoolbar": "Raw Cell Format",
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.13"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

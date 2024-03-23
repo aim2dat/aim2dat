@@ -1,0 +1,11 @@
+:py:mod:`aim2dat.ext_interfaces.import_opt_dependencies`
+========================================================
+
+.. py:module:: aim2dat.ext_interfaces.import_opt_dependencies
+
+.. autoapi-nested-parse::
+
+   Handle optional external interfaces.
+
+
+

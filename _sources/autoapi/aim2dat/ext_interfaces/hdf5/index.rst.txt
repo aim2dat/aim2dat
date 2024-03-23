@@ -1,0 +1,11 @@
+:py:mod:`aim2dat.ext_interfaces.hdf5`
+=====================================
+
+.. py:module:: aim2dat.ext_interfaces.hdf5
+
+.. autoapi-nested-parse::
+
+   Interface to h5py to store/import structures.
+
+
+

@@ -1,0 +1,21 @@
+:py:mod:`aim2dat.aiida_data`
+============================
+
+.. py:module:: aim2dat.aiida_data
+
+.. autoapi-nested-parse::
+
+   AiiDA data plugins.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   gaussian_cube_data/index.rst
+   surface_data/index.rst
+
+

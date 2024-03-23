@@ -1,0 +1,214 @@
+:py:mod:`aim2dat.fct.discretization`
+====================================
+
+.. py:module:: aim2dat.fct.discretization
+
+.. autoapi-nested-parse::
+
+   Module to create grids to discretize a function.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.fct.discretization.DiscretizedAxis
+   aim2dat.fct.discretization.DiscretizedGrid
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.fct.discretization.limit_array
+
+
+
+
+.. py:class:: DiscretizedAxis(axis_type, **kwargs)
+
+
+   Class to create an axis to discretize a 1d function i.e. a 2d plot
+   in a grid. Different methods for the discretization are available.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`T <aim2dat.fct.discretization.DiscretizedAxis.T>`
+        - `x --> y` or `y --> x`.
+      * - :py:obj:`axis <aim2dat.fct.discretization.DiscretizedAxis.axis>`
+        - Axis array. Contains the discrete values.
+      * - :py:obj:`axis_type <aim2dat.fct.discretization.DiscretizedAxis.axis_type>`
+        - Specify whether this axis should be used as `x` or `y` axis in a grid.
+      * - :py:obj:`discretization_method <aim2dat.fct.discretization.DiscretizedAxis.discretization_method>`
+        - Discretize the specified range.
+      * - :py:obj:`is_empty <aim2dat.fct.discretization.DiscretizedAxis.is_empty>`
+        - Check whether the axis is empty.
+      * - :py:obj:`shape <aim2dat.fct.discretization.DiscretizedAxis.shape>`
+        - Tuple specifying the dimensions of the axis (like numpy).
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`discretize_axis <aim2dat.fct.discretization.DiscretizedAxis.discretize_axis>`\ (\*\*kwargs)
+        - Perform the discretization of the specified range.
+      * - :py:obj:`transpose <aim2dat.fct.discretization.DiscretizedAxis.transpose>`\ ()
+        - Change the `axis_type`: `x --> y` or `y --> x`.
+
+
+
+   .. py:property:: T
+      :type: DiscretizedAxis
+
+      `x --> y` or `y --> x`.
+
+      :returns: *DiscretizedAxis* -- Transposed axis.
+
+      :type: Change the `axis_type`
+
+   .. py:property:: axis
+      :type: numpy.array
+
+      Axis array. Contains the discrete values.
+
+      :returns: *np.array* -- The discretized range.
+
+   .. py:property:: axis_type
+      :type: str
+
+      Specify whether this axis should be used as `x` or `y` axis in a grid.
+
+      :returns: *str* -- indicating whether this axis should be used as `x` or `y`
+                axis in case of a merge into a grid.
+
+      :raises ValueError: The `axis_type` attribute needs to be specified
+
+   .. py:property:: discretization_method
+      :type: Callable
+
+      Discretize the specified range.
+      Can be chosen via a string, accepting the methods specified in
+      `_available_discretization_methods` or by passing a callable
+      function.
+
+      :returns: *Callable* -- Method to discretize the axis.
+
+   .. py:property:: is_empty
+      :type: bool
+
+      Check whether the axis is empty.
+
+      :returns: *bool* -- Whether the axis is empty.
+
+   .. py:property:: shape
+      :type: tuple
+
+      Tuple specifying the dimensions of the axis (like numpy).
+
+      :returns: *tuple* -- The shape of the axis.
+
+
+   .. py:method:: discretize_axis(**kwargs) -> DiscretizedAxis
+
+      Perform the discretization of the specified range.
+
+      :returns: *DiscretizedAxis*
+
+
+   .. py:method:: transpose() -> DiscretizedAxis
+
+      Change the `axis_type`: `x --> y` or `y --> x`.
+
+      :returns: *DiscretizedAxis* -- Transposed axis.
+
+
+
+
+.. py:class:: DiscretizedGrid(**kwargs)
+
+
+   Class to create a grid to discretize a 1d function i.e. a 2d plot.
+
+   Use the `plot_grid` method to visualize the created grid.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`grid <aim2dat.fct.discretization.DiscretizedGrid.grid>`
+        - Return the internal grid as a list of lists.
+      * - :py:obj:`is_empty <aim2dat.fct.discretization.DiscretizedGrid.is_empty>`
+        - Check whether the axis is empty.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`create_grid <aim2dat.fct.discretization.DiscretizedGrid.create_grid>`\ ()
+        - Create the internal grid which is based on a list of lists.
+      * - :py:obj:`plot_grid <aim2dat.fct.discretization.DiscretizedGrid.plot_grid>`\ ()
+        - Plot the grid.
+
+
+
+   .. py:property:: grid
+      :type: list
+
+      Return the internal grid as a list of lists.
+
+      :returns: *type* -- list: List of lists representing the x-values and discretized y-values.
+
+   .. py:property:: is_empty
+      :type: bool
+
+      Check whether the axis is empty.
+
+      :returns: *bool* -- Whether the axis is empty.
+
+
+   .. py:method:: create_grid() -> DiscretizedGrid
+
+      Create the internal grid which is based on a list of lists.
+      Each list contains the energy-value (x) as the first argument and the
+      DOS-values (y) as a list in the second argument.
+
+      :returns: *DiscretizedGrid* -- Discretized grid.
+
+
+   .. py:method:: plot_grid()
+
+      Plot the grid.
+
+
+
+.. py:function:: limit_array(input_array: numpy.array, min_value: Union[float, int], max_value: Union[float, int]) -> numpy.array
+
+   Limit an array to a given minimum and maximum value.
+
+   In case the range is not covered, the corresponding values are added at the first
+   or last index.
+
+   :Parameters: * **input_list** (*np.array*) -- array that should be limited
+                * **min_value** (*int*) -- minimum value
+                * **max_value** (*int*) -- max_value
+
+   :returns: *np.array* -- limited array
+
+

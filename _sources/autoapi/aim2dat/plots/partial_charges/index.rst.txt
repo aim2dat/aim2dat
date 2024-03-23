@@ -1,0 +1,508 @@
+:orphan:
+
+:py:mod:`aim2dat.plots.partial_charges`
+=======================================
+
+.. py:module:: aim2dat.plots.partial_charges
+
+.. autoapi-nested-parse::
+
+   Module to plot the partial charges.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.plots.partial_charges.PartialChargesPlot
+
+
+
+
+
+.. py:class:: PartialChargesPlot(custom_linestyles=['solid'], pc_plot_type='scatter', pc_plot_order=[], **kwargs)
+
+
+   Bases: :py:obj:`aim2dat.plots.base_plot._BasePlot`
+
+   Plot the partial charges.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`backend <aim2dat.plots.partial_charges.PartialChargesPlot.backend>`
+        - used backend library to plot the data. Supported values are ``"matplotlib"`` and
+      * - :py:obj:`custom_alpha <aim2dat.plots.partial_charges.PartialChargesPlot.custom_alpha>`
+        - Alpha value(s) controlling the opacity of plot elements.
+      * - :py:obj:`custom_colors <aim2dat.plots.partial_charges.PartialChargesPlot.custom_colors>`
+        - Colors used in the plot.
+      * - :py:obj:`custom_linestyles <aim2dat.plots.partial_charges.PartialChargesPlot.custom_linestyles>`
+        - Line styles used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_linewidths <aim2dat.plots.partial_charges.PartialChargesPlot.custom_linewidths>`
+        - Line widths used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_markers <aim2dat.plots.partial_charges.PartialChargesPlot.custom_markers>`
+        - Marker types used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_xticklabels <aim2dat.plots.partial_charges.PartialChargesPlot.custom_xticklabels>`
+        - List of labels for the ticks on the x-axis.
+      * - :py:obj:`custom_xticks <aim2dat.plots.partial_charges.PartialChargesPlot.custom_xticks>`
+        - List of values to set ticks on the x-axis.
+      * - :py:obj:`custom_yticklabels <aim2dat.plots.partial_charges.PartialChargesPlot.custom_yticklabels>`
+        - List of labels for the ticks on the y-axis.
+      * - :py:obj:`custom_yticks <aim2dat.plots.partial_charges.PartialChargesPlot.custom_yticks>`
+        - List of values to set ticks on the y-axis.
+      * - :py:obj:`data_labels <aim2dat.plots.partial_charges.PartialChargesPlot.data_labels>`
+        - List of labels for all data sets.
+      * - :py:obj:`equal_aspect_ratio <aim2dat.plots.partial_charges.PartialChargesPlot.equal_aspect_ratio>`
+        - Set equal aspect ratio of the plot(s).
+      * - :py:obj:`legend_bbox_to_anchor <aim2dat.plots.partial_charges.PartialChargesPlot.legend_bbox_to_anchor>`
+        - Shift between box and anchor. The default value is ``(1, 1)``.
+      * - :py:obj:`legend_loc <aim2dat.plots.partial_charges.PartialChargesPlot.legend_loc>`
+        - Location of the legend. The default value is ``1``.
+      * - :py:obj:`legend_ncol <aim2dat.plots.partial_charges.PartialChargesPlot.legend_ncol>`
+        - Columns of the legend (only supported for the matplotlib backend).
+      * - :py:obj:`legend_sort_entries <aim2dat.plots.partial_charges.PartialChargesPlot.legend_sort_entries>`
+        - Sort entries of the legend.
+      * - :py:obj:`pc_plot_order <aim2dat.plots.partial_charges.PartialChargesPlot.pc_plot_order>`
+        - List of plot assignments to order the plotted data.
+      * - :py:obj:`pc_plot_type <aim2dat.plots.partial_charges.PartialChargesPlot.pc_plot_type>`
+        - plot type of the partial charge data sets,
+      * - :py:obj:`plot_grid <aim2dat.plots.partial_charges.PartialChargesPlot.plot_grid>`
+        - Whether to draw a grid in the plot. The default value is ``False``.
+      * - :py:obj:`ratio <aim2dat.plots.partial_charges.PartialChargesPlot.ratio>`
+        - Length-to-width ratio of the plot given as a tuple of two numbers.
+      * - :py:obj:`show_colorbar <aim2dat.plots.partial_charges.PartialChargesPlot.show_colorbar>`
+        - Show colorbar (not supported by all plots).
+      * - :py:obj:`show_grid <aim2dat.plots.partial_charges.PartialChargesPlot.show_grid>`
+        - Whether to draw a grid in the plot. The default value is ``False``.
+      * - :py:obj:`show_legend <aim2dat.plots.partial_charges.PartialChargesPlot.show_legend>`
+        - Show legend. The default value is ``False``.
+      * - :py:obj:`show_plot <aim2dat.plots.partial_charges.PartialChargesPlot.show_plot>`
+        - Show plot. The default value is ``False``.
+      * - :py:obj:`store_path <aim2dat.plots.partial_charges.PartialChargesPlot.store_path>`
+        - Path of the folder to store the plot. The default value is ``./``.
+      * - :py:obj:`store_plot <aim2dat.plots.partial_charges.PartialChargesPlot.store_plot>`
+        - Store plot. The default value is ``False``.
+      * - :py:obj:`style_sheet <aim2dat.plots.partial_charges.PartialChargesPlot.style_sheet>`
+        - Custom matplotlib style sheet.
+      * - :py:obj:`subplot_adjust <aim2dat.plots.partial_charges.PartialChargesPlot.subplot_adjust>`
+        - Keyword arguments for the matplotlib ``subplots_adjust`` function.
+      * - :py:obj:`subplot_gridspec <aim2dat.plots.partial_charges.PartialChargesPlot.subplot_gridspec>`
+        - Grid spec values.
+      * - :py:obj:`subplot_hspace <aim2dat.plots.partial_charges.PartialChargesPlot.subplot_hspace>`
+        - Vertical spacing between the subplots.
+      * - :py:obj:`subplot_ncols <aim2dat.plots.partial_charges.PartialChargesPlot.subplot_ncols>`
+        - Number of columns. The default value is ``1``.
+      * - :py:obj:`subplot_nrows <aim2dat.plots.partial_charges.PartialChargesPlot.subplot_nrows>`
+        - Number of rows. The default value is ``2``.
+      * - :py:obj:`subplot_share_colorbar <aim2dat.plots.partial_charges.PartialChargesPlot.subplot_share_colorbar>`
+        - Use one common colorbar for all subplots.
+      * - :py:obj:`subplot_share_legend <aim2dat.plots.partial_charges.PartialChargesPlot.subplot_share_legend>`
+        - Merge legend items of all subplots.
+      * - :py:obj:`subplot_sharex <aim2dat.plots.partial_charges.PartialChargesPlot.subplot_sharex>`
+        - Share the x-axis of subplots located in the same column.
+      * - :py:obj:`subplot_sharey <aim2dat.plots.partial_charges.PartialChargesPlot.subplot_sharey>`
+        - Share the y-axis of subplots located in the same row.
+      * - :py:obj:`subplot_sup_title <aim2dat.plots.partial_charges.PartialChargesPlot.subplot_sup_title>`
+        - Title of the whole figure.
+      * - :py:obj:`subplot_sup_x_label <aim2dat.plots.partial_charges.PartialChargesPlot.subplot_sup_x_label>`
+        - x-label of the whole figure.
+      * - :py:obj:`subplot_sup_y_label <aim2dat.plots.partial_charges.PartialChargesPlot.subplot_sup_y_label>`
+        - y-label of the whole figure.
+      * - :py:obj:`subplot_tight_layout <aim2dat.plots.partial_charges.PartialChargesPlot.subplot_tight_layout>`
+        - Tight layout of plot. The default value is ``False``.
+      * - :py:obj:`subplot_wspace <aim2dat.plots.partial_charges.PartialChargesPlot.subplot_wspace>`
+        - Horizontal spacing between the subplots.
+      * - :py:obj:`x_label <aim2dat.plots.partial_charges.PartialChargesPlot.x_label>`
+        - Label of the x-axis. If ``None`` is given no label will be shown. The
+      * - :py:obj:`x_range <aim2dat.plots.partial_charges.PartialChargesPlot.x_range>`
+        - Range of the x-axis. The default value is ``None``.
+      * - :py:obj:`y_label <aim2dat.plots.partial_charges.PartialChargesPlot.y_label>`
+        - Label of the y-axis. If ``None`` is given no label will be shown. The
+      * - :py:obj:`y_range <aim2dat.plots.partial_charges.PartialChargesPlot.y_range>`
+        - Range of the y-axis. The default value is ``None``.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`auto_set_axis_properties <aim2dat.plots.partial_charges.PartialChargesPlot.auto_set_axis_properties>`\ (set_x_label, set_y_label)
+        - Whether the axis labels and other axis properties are auto-generated.
+      * - :py:obj:`create_default_gridspec <aim2dat.plots.partial_charges.PartialChargesPlot.create_default_gridspec>`\ (nrows, ncols, nplots, heights, widths, center_last_row)
+        - Create default grid for multiple plots.
+      * - :py:obj:`import_from_aiida_list <aim2dat.plots.partial_charges.PartialChargesPlot.import_from_aiida_list>`\ (data_label, pcdata, plot_label, x_label, custom_kind_dict)
+        - Import partial charges.
+      * - :py:obj:`import_partial_charges <aim2dat.plots.partial_charges.PartialChargesPlot.import_partial_charges>`\ (data_label, partial_charges, valence_electrons, plot_label, x_label, custom_kind_dict)
+        - Import partial charges.
+      * - :py:obj:`plot <aim2dat.plots.partial_charges.PartialChargesPlot.plot>`\ (data_labels, plot_title, plot_name, subplot_assignment)
+        - Plot the data sets.
+      * - :py:obj:`reset_gridspec <aim2dat.plots.partial_charges.PartialChargesPlot.reset_gridspec>`\ ()
+        - Reset gridspec settings.
+      * - :py:obj:`return_data_labels <aim2dat.plots.partial_charges.PartialChargesPlot.return_data_labels>`\ ()
+        - Return the labels of all data sets.
+
+
+
+   .. py:property:: backend
+
+      used backend library to plot the data. Supported values are ``"matplotlib"`` and
+      ``"plotly"``.
+
+      :type: str
+
+   .. py:property:: custom_alpha
+
+      Alpha value(s) controlling the opacity of plot elements.
+
+      :type: float, list or tuple
+
+   .. py:property:: custom_colors
+
+      Colors used in the plot.
+
+      :type: list or tuple
+
+   .. py:property:: custom_linestyles
+
+      Line styles used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_linewidths
+
+      Line widths used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_markers
+
+      Marker types used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_xticklabels
+
+      List of labels for the ticks on the x-axis.
+
+      :type: list
+
+   .. py:property:: custom_xticks
+
+      List of values to set ticks on the x-axis.
+
+      :type: list
+
+   .. py:property:: custom_yticklabels
+
+      List of labels for the ticks on the y-axis.
+
+      :type: list
+
+   .. py:property:: custom_yticks
+
+      List of values to set ticks on the y-axis.
+
+      :type: list
+
+   .. py:property:: data_labels
+
+      List of labels for all data sets.
+
+      :type: list
+
+   .. py:property:: equal_aspect_ratio
+
+      Set equal aspect ratio of the plot(s).
+
+      :type: bool
+
+   .. py:property:: legend_bbox_to_anchor
+
+      Shift between box and anchor. The default value is ``(1, 1)``.
+
+      :type: tuple or list
+
+   .. py:property:: legend_loc
+
+      Location of the legend. The default value is ``1``.
+
+      :type: int
+
+   .. py:property:: legend_ncol
+
+      Columns of the legend (only supported for the matplotlib backend).
+
+      :type: int
+
+   .. py:property:: legend_sort_entries
+
+      Sort entries of the legend.
+
+      :type: bool
+
+   .. py:property:: pc_plot_order
+
+      List of plot assignments to order the plotted data.
+
+      :type: list
+
+   .. py:property:: pc_plot_type
+
+      plot type of the partial charge data sets,
+      supported options are ``'scatter'``, ``'bar'``.
+
+      :type: str
+
+   .. py:property:: plot_grid
+
+      Whether to draw a grid in the plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: ratio
+
+      Length-to-width ratio of the plot given as a tuple of two numbers.
+
+      :type: tuple or list
+
+   .. py:property:: show_colorbar
+
+      Show colorbar (not supported by all plots).
+
+      :type: bool
+
+   .. py:property:: show_grid
+
+      Whether to draw a grid in the plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: show_legend
+
+      Show legend. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: show_plot
+
+      Show plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: store_path
+
+      Path of the folder to store the plot. The default value is ``./``.
+
+      :type: str
+
+   .. py:property:: store_plot
+
+      Store plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: style_sheet
+
+      Custom matplotlib style sheet.
+
+      :type: str
+
+   .. py:property:: subplot_adjust
+
+      Keyword arguments for the matplotlib ``subplots_adjust`` function.
+
+      :type: dict
+
+   .. py:property:: subplot_gridspec
+
+      Grid spec values.
+
+      :type: list or tuple
+
+   .. py:property:: subplot_hspace
+
+      Vertical spacing between the subplots.
+
+      :type: float
+
+   .. py:property:: subplot_ncols
+
+      Number of columns. The default value is ``1``.
+
+      :type: int
+
+   .. py:property:: subplot_nrows
+
+      Number of rows. The default value is ``2``.
+
+      :type: int
+
+   .. py:property:: subplot_share_colorbar
+
+      Use one common colorbar for all subplots.
+
+      :type: bool
+
+   .. py:property:: subplot_share_legend
+
+      Merge legend items of all subplots.
+
+      :type: bool
+
+   .. py:property:: subplot_sharex
+
+      Share the x-axis of subplots located in the same column.
+
+      :type: bool
+
+   .. py:property:: subplot_sharey
+
+      Share the y-axis of subplots located in the same row.
+
+      :type: bool
+
+   .. py:property:: subplot_sup_title
+
+      Title of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_sup_x_label
+
+      x-label of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_sup_y_label
+
+      y-label of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_tight_layout
+
+      Tight layout of plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: subplot_wspace
+
+      Horizontal spacing between the subplots.
+
+      :type: float
+
+   .. py:property:: x_label
+
+      Label of the x-axis. If ``None`` is given no label will be shown. The
+      default value is ``None``.
+
+      :type: str or None
+
+   .. py:property:: x_range
+
+      Range of the x-axis. The default value is ``None``.
+
+      :type: tuple or list
+
+   .. py:property:: y_label
+
+      Label of the y-axis. If ``None`` is given no label will be shown. The
+      default value is ``None``.
+
+      :type: str or None
+
+   .. py:property:: y_range
+
+      Range of the y-axis. The default value is ``None``.
+
+      :type: tuple or list
+
+
+   .. py:method:: auto_set_axis_properties(set_x_label=True, set_y_label=True)
+
+      Whether the axis labels and other axis properties are auto-generated.
+
+      :Parameters: * **set_x_label** (*bool*) -- Set x-axis label automatically.
+                   * **set_y_label** (*bool*) -- Set y-axis label automatically.
+
+
+   .. py:method:: create_default_gridspec(nrows, ncols, nplots, heights=1, widths=1, center_last_row=True)
+
+      Create default grid for multiple plots.
+
+      :Parameters: * **nrows** (*Int*) -- Number of rows.
+                   * **ncols** (*int*) -- Number columns.
+                   * **nplots** (*int*) -- Number of subplots.
+                   * **heights** (*int (optional)*) -- Height of subplots.
+                   * **widths** (*int (optional)*) -- Width of subplots.
+                   * **center_last_row** (*bool (optional)*) -- Center the plots of the last row.
+
+
+   .. py:method:: import_from_aiida_list(data_label, pcdata, plot_label, x_label, custom_kind_dict=None)
+
+      Import partial charges.
+
+      :Parameters: * **data_label** (*str*) -- Internal label of the data set.
+                   * **pcdata** (*aiida.orm.list*) -- AiiDA data node containing the partial charges as list of dictionaries.
+                   * **plot_label** (*str*) -- Label in legend on how to plot data.
+                   * **x_label** (*str*) -- Label on x axes to sort data.
+                   * **custom_kind_dict** (*dict or None (optional)*) -- Group the partial charges by taking the average value and put custom labels, e.g.
+                     ``{"label_1": [0, 1, 2], "label_2": [[3, 4], [5]]}``.
+                     In case a nested list is given as a value the sum of the average value(s) is
+                     calculated.
+
+
+   .. py:method:: import_partial_charges(data_label, partial_charges, valence_electrons, plot_label, x_label, custom_kind_dict=None)
+
+      Import partial charges.
+
+      :Parameters: * **data_label** (*str*) -- Internal label of the data set.
+                   * **partial_charges** (*list of dict*) -- List of dict containing elements and populations, e.g.
+                     ``[{"element": "H", "population": 0.9}, {"element": "O", "population": 7.4}]``
+                   * **valence_electrons** (*dict*) -- Valence electrons used for each element to calculate partial charges.
+                   * **plot_label** (*str*) -- Label in legend on how to plot data.
+                   * **x_label** (*str*) -- Label on x axes to sort data.
+                   * **custom_kind_dict** (*dict or None (optional)*) -- Group the partial charges by taking the average value and put custom labels, e.g.
+                     ``{"label_1": [0, 1, 2], "label_2": [[3, 4], [5]]}``.
+                     In case a nested list is given as a value the sum of the average value(s) is
+                     calculated.
+
+
+   .. py:method:: plot(data_labels, plot_title=None, plot_name='plot.png', subplot_assignment=None)
+
+      Plot the data sets.
+
+      :Parameters: * **data_labels** (*list or str*) -- List of data labels of the data sets that are plotted or
+                     in case only one data set is plotted a string.
+                   * **plot_title** (*list or str (optional)*) -- Title of the plots or subplots.
+                   * **plot_name** (*str (optional)*) -- The file name of the plot.
+                   * **subplot_assignment** (*list or None (optional)*) -- Assignment of the data sets to individual subplots.
+
+      :returns: **fig** (*matplotlib.pyplot.figure or plotly.graph_objects.Figure*) -- Figure object of the plot.
+
+
+   .. py:method:: reset_gridspec()
+
+      Reset gridspec settings.
+
+
+   .. py:method:: return_data_labels()
+
+      Return the labels of all data sets.
+
+      :returns: **data_labels** (*list*) -- List of the labels of all data sets.
+
+
+

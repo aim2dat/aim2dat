@@ -1,0 +1,11 @@
+:py:mod:`aim2dat.ext_interfaces.pymatgen`
+=========================================
+
+.. py:module:: aim2dat.ext_interfaces.pymatgen
+
+.. autoapi-nested-parse::
+
+   Wrapper functions for the pymatgen interface.
+
+
+

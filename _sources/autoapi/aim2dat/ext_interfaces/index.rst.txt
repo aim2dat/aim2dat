@@ -1,0 +1,52 @@
+:orphan:
+
+:py:mod:`aim2dat.ext_interfaces`
+================================
+
+.. py:module:: aim2dat.ext_interfaces
+
+.. autoapi-nested-parse::
+
+   Wrapper functions to use third-party libraries.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   aiida/index.rst
+   ase_atoms/index.rst
+   ase_surface/index.rst
+   dscribe/index.rst
+   graphs/index.rst
+   hdf5/index.rst
+   import_opt_dependencies/index.rst
+   mp/index.rst
+   mp_openapi/index.rst
+   optimade/index.rst
+   oqmd/index.rst
+   pandas/index.rst
+   phonopy/index.rst
+   pymatgen/index.rst
+   pyxtal/index.rst
+   seekpath/index.rst
+   spglib/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.ext_interfaces._return_ext_interface_modules
+
+
+
+

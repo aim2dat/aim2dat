@@ -1,0 +1,315 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "c795b81d",
+   "metadata": {},
+   "source": [
+    "# How to use the plots package to plot a x-ray absorption spectrum\n",
+    "\n",
+    "This notebook shows how to use the `plots` subpackage of the `aim2dat` library to plot a spectrum."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9cc32cdb",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "import matplotlib.pyplot as plt"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "a9d538ed",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "x = np.linspace(0, 10, 1000)\n",
+    "\n",
+    "y = (\n",
+    "    3 * np.exp(-((x - 1) ** 2) / 0.1**2)\n",
+    "    + 1.5 * np.exp(-((x - 5) ** 2) / 2**2)\n",
+    "    + 2 * np.exp(-((x - 7) ** 2) / 0.5**2)\n",
+    "    + 1.5 * np.exp(-((x - 3) ** 2) / 5**2)\n",
+    "    + 0.2 * np.sin(5 * np.pi * x)\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3721a089",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "plt.Figure(figsize=(2, 2))\n",
+    "plt.plot(x, y)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "8b69b894",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.plots.spectroscopy import SpectrumPlot\n",
+    "\n",
+    "spectroscopy_plot = SpectrumPlot()\n",
+    "spectroscopy_plot.ratio = (4, 4)\n",
+    "spectroscopy_plot.import_spectrum(\"test\", x, y, \"eV\")\n",
+    "spectroscopy_plot.import_spectrum(\"test05\", x, 0.5 * y, \"eV\")\n",
+    "spectroscopy_plot.import_spectrum(\"test2\", x, 2 * y, \"eV\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "467b637c",
+   "metadata": {},
+   "source": [
+    "One can import spectra via the function `import_spectrum`.\n",
+    "\n",
+    "The `Spectrum` object contains several attributes including the plot properties like labels, title, storing the plot and the data. Each plot-class has the same basic structure. The following properties can be specified:\n",
+    "\n",
+    "* `ratio`: figure size (tuple)\n",
+    "* `store_plot`: (boolean)\n",
+    "* `store_path`: directory to store the plot (string)\n",
+    "* `show_plot`: (boolean)\n",
+    "* `show_legend`: (boolean)\n",
+    "* `legend_loc`: (int)\n",
+    "* `legend_bbox_to_anchor`: (tuple)\n",
+    "* `x_label`: (string)\n",
+    "* `y_label`: (string)\n",
+    "* `x_range`: (tuple)\n",
+    "* `y_range`: (tuple)\n",
+    "* `style_sheet`: name of style_sheet including default plot specifications (string)\n",
+    "\n",
+    "Specific attributes of the `Spectrum` object are:\n",
+    "\n",
+    "* `detect_peaks`: (bool)\n",
+    "* `smooth_spectra`: (bool)\n",
+    "* `plot_original_spectra`: (bool)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "6606e07a",
+   "metadata": {},
+   "source": [
+    "## Single plot for each data set\n",
+    "\n",
+    "The simplest way to plot the spectra is to call the function `plot` for each element:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e17b7dbe",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "spectroscopy_plot.show_plot = True\n",
+    "spectroscopy_plot.backend = \"plotly\"\n",
+    "for data_label in spectroscopy_plot.data_labels:\n",
+    "    _ = spectroscopy_plot.plot(data_label)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "cb260070",
+   "metadata": {},
+   "source": [
+    "## Multiple datasets in one plot\n",
+    "\n",
+    "We can also plot multiple spectra in one plot:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "suspended-institution",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "_ = spectroscopy_plot.plot(spectroscopy_plot.data_labels)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "09310451",
+   "metadata": {},
+   "source": [
+    "## Plot each dataset in a single subplot\n",
+    "\n",
+    "* The function `plot` also allows to plot the spectra in separate subplots. \n",
+    "\n",
+    "Using `create_default_gridspec`, one create a default grid with the following structure:\n",
+    "<br>\n",
+    "<br>\n",
+    "$$ \\left( \\begin{array}{cc} 1 & 2 \\\\ 3 & 4  \\\\ 5 & 6\\end{array}\\right) $$\n",
+    "\n",
+    "In case the last row is not complete, the corresponding subplots will be centered."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "protected-coverage",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "spectroscopy_plot.ratio = (8, 8)\n",
+    "\n",
+    "spectroscopy_plot.create_default_gridspec(2, 2, 3)\n",
+    "\n",
+    "spectroscopy_plot.subplot_hspace = 0.4\n",
+    "spectroscopy_plot.subplot_wspace = 1.5\n",
+    "_ = spectroscopy_plot.plot(list(spectroscopy_plot.data_labels), subplot_assignment=[0, 1, 2])\n",
+    "\n",
+    "spectroscopy_plot.backend = \"plotly\"\n",
+    "spectroscopy_plot.reset_gridspec()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ff7577a7",
+   "metadata": {},
+   "source": [
+    "## Peak detection\n",
+    "\n",
+    "We can detect and mark the peaks in the plot by setting the attribute `detect_peaks` to True:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e4a725ca",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "spectroscopy_plot.ratio = (6, 4)\n",
+    "spectroscopy_plot.subplot_ncols = 1\n",
+    "spectroscopy_plot.subplot_nrows = 1\n",
+    "\n",
+    "spectroscopy_plot.detect_peaks = True\n",
+    "\n",
+    "_ = spectroscopy_plot.plot(\"test\")\n",
+    "\n",
+    "spectroscopy_plot.detect_peaks = False"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "59b9dcf5",
+   "metadata": {},
+   "source": [
+    "The detected peaks can be accessed via the `peaks` property and are stored in a dictionary with the corresponding `data_label`."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "04285b87",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "spectroscopy_plot.peaks"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ea97bd9d",
+   "metadata": {},
+   "source": [
+    "The peaks are only displayed in the subplot of the corresponding dataset."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f7603867",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "_ = spectroscopy_plot.plot(\"test2\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "brilliant-automation",
+   "metadata": {},
+   "source": [
+    "## Smoothening the spectrum\n",
+    "\n",
+    "In case the input data is very noisy or consists of discrete points the data can be smoothed out using different smearing methods:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "caroline-american",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "spectroscopy_plot.detect_peaks = False\n",
+    "spectroscopy_plot.smooth_spectra = True\n",
+    "spectroscopy_plot.smearing_method = \"gaussian\"\n",
+    "spectroscopy_plot.smearing_sigma = 10\n",
+    "spectroscopy_plot.smearing_delta = None\n",
+    "spectroscopy_plot.remove_additional_plot_elements()\n",
+    "spectroscopy_plot.show_legend = True\n",
+    "spectroscopy_plot.backend = \"matplotlib\""
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "simplified-pickup",
+   "metadata": {},
+   "source": [
+    "The orginal data can be plotted as comparison by setting the attribute `plot_original_spectra`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "eleven-weapon",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "spectroscopy_plot.plot_original_spectra = True\n",
+    "for data_label in spectroscopy_plot.data_labels:\n",
+    "    spectroscopy_plot.plot(data_label)"
+   ]
+  }
+ ],
+ "metadata": {
+  "interpreter": {
+   "hash": "3a0b55945693ff8a2e253d2b0b0e6f9db3c6a4144f2e6a9c1b83cde79e183e4b"
+  },
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.13"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

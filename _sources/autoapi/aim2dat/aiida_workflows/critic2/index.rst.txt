@@ -1,0 +1,24 @@
+:orphan:
+
+:py:mod:`aim2dat.aiida_workflows.critic2`
+=========================================
+
+.. py:module:: aim2dat.aiida_workflows.critic2
+
+.. autoapi-nested-parse::
+
+   AiiDA framework for the software package critic2.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   calcjobs/index.rst
+   parser_utils/index.rst
+   parsers/index.rst
+
+

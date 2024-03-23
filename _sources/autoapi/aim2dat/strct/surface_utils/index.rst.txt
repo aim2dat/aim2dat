@@ -1,0 +1,20 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.surface_utils`
+=====================================
+
+.. py:module:: aim2dat.strct.surface_utils
+
+.. autoapi-nested-parse::
+
+   Functions to generate surfaces.
+
+
+
+Module Contents
+---------------
+
+.. py:data:: SPACE_GROUP_HN_TO_LAYER_GROUP
+
+   
+

@@ -1,0 +1,37 @@
+:py:mod:`aim2dat.ml.metrics`
+============================
+
+.. py:module:: aim2dat.ml.metrics
+
+.. autoapi-nested-parse::
+
+   Metrics to be used with scikit-learn models.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.ml.metrics.ffprint_cosine
+
+
+
+.. py:function:: ffprint_cosine(fprint1, fprint2)
+
+   Cosine distance between two F-Fingerprints  as defined in: :doi:`10.1063/1.3079326`.
+
+   To be used in combination with ``StructureFFPrintTransformer``. The attribute ``add_header``
+   needs to be set to ``True``.
+
+   :Parameters: * **fprint1** (*numpy.array*) -- F-Fingerprint.
+                * **fprint2** (*numpy.array*) -- F-Fingerprint.
+
+   :returns: *float* -- Cosine distance.
+
+

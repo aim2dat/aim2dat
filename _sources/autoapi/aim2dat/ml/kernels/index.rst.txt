@@ -1,0 +1,47 @@
+:py:mod:`aim2dat.ml.kernels`
+============================
+
+.. py:module:: aim2dat.ml.kernels
+
+.. autoapi-nested-parse::
+
+   Kernels to be used with scikit-learn models.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.ml.kernels.krr_ffprint_cosine
+   aim2dat.ml.kernels.krr_ffprint_laplace
+
+
+
+.. py:function:: krr_ffprint_cosine(X, Y)
+
+   Cosine kernel for the F-Fingerprint Transformer based on the cosine distance metric
+   (:doi:`10.1063/1.3079326`).
+
+   :Parameters: * **X** (*numpy.array*) -- F-Fingerprint.
+                * **Y** (*numpy.array*) -- F-Fingerprint.
+
+   :returns: *float* -- Cosine kernel.
+
+
+.. py:function:: krr_ffprint_laplace(X, Y, gamma=None)
+
+   Laplacian kernel for the F-Fingerprint Transformer based on the cosine distance metric
+   (:doi:`10.1063/1.3079326`).
+
+   :Parameters: * **X** (*numpy.array*) -- F-Fingerprint.
+                * **Y** (*numpy.array*) -- F-Fingerprint.
+
+   :returns: *float* -- Laplacian kernel.
+
+

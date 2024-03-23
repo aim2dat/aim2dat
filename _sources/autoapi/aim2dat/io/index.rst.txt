@@ -1,0 +1,26 @@
+:py:mod:`aim2dat.io`
+====================
+
+.. py:module:: aim2dat.io
+
+.. autoapi-nested-parse::
+
+   Subpackage containing functions to read or write files.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   cp2k/index.rst
+   critic2/index.rst
+   fhi_aims/index.rst
+   phonopy/index.rst
+   qe/index.rst
+   xmgrace/index.rst
+   yaml/index.rst
+
+

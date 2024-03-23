@@ -1,0 +1,41 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.ext_analysis.planes`
+===========================================
+
+.. py:module:: aim2dat.strct.ext_analysis.planes
+
+.. autoapi-nested-parse::
+
+   Find atoms that span a plane.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.ext_analysis.planes.calculate_planes
+
+
+
+.. py:function:: calculate_planes(structure: aim2dat.strct.strct.Structure, r_max: float = 15.0, fragment: list = None, threshold: float = 0.05, margin: float = 1.0, vector_lengths: List[float] = None, min_nr_atoms: int = 5, use_scaled_coordinates: bool = False) -> list
+
+   Find planar arangements of atoms in the structure.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                * **fragment** (*list or None (optional)*) -- Whether to restrict the search to a fragment of the structure.
+                * **threshold** (*float (optional)*) -- Numerical threshold to consider an atom to be part of the plane.
+                * **margin** (*float (optional)*) -- Margin between the plane vectors and outermost atoms.
+                * **vector_lengths** (*list (optional)*) -- Absolute lengths of the plane vectors (overwrites ``margin``).
+                * **use_scaled_coordinates** (*bool (optional)*) -- Whether to use scaled coordinates for the calculation.
+
+   :returns: *list* -- List of planes.
+
+

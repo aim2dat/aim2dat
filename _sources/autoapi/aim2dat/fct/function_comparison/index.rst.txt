@@ -1,0 +1,129 @@
+:py:mod:`aim2dat.fct.function_comparison`
+=========================================
+
+.. py:module:: aim2dat.fct.function_comparison
+
+.. autoapi-nested-parse::
+
+   Module to analyze spectra.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.fct.function_comparison.FunctionAnalysis
+
+
+
+
+
+.. py:class:: FunctionAnalysis(**kwargs)
+
+
+   Class to analyze and compare functions.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`allowed_distance_methods <aim2dat.fct.function_comparison.FunctionAnalysis.allowed_distance_methods>`
+        - Return allowed distance methods.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`calculate_correlation <aim2dat.fct.function_comparison.FunctionAnalysis.calculate_correlation>`\ (label1, label2)
+        - Calculate the pearson-correlation between the values of two functions.
+      * - :py:obj:`calculate_discrete_fingerprint <aim2dat.fct.function_comparison.FunctionAnalysis.calculate_discrete_fingerprint>`\ (label, grid)
+        - Calculate a discretized fingerprint of a function (:doi:`10.1038/s41597-022-01754-z`).
+      * - :py:obj:`calculate_distance <aim2dat.fct.function_comparison.FunctionAnalysis.calculate_distance>`\ (label1, label2, method)
+        - Calculate the distance between the values of two functions.
+      * - :py:obj:`compare_areas <aim2dat.fct.function_comparison.FunctionAnalysis.compare_areas>`\ (label1, label2)
+        - Compare the enclosed areas of two functions.
+      * - :py:obj:`compare_functions_by_discrete_fingerprint <aim2dat.fct.function_comparison.FunctionAnalysis.compare_functions_by_discrete_fingerprint>`\ (label1, label2, grid)
+        - Compare two functions based on a discretized fingerprint
+      * - :py:obj:`import_data <aim2dat.fct.function_comparison.FunctionAnalysis.import_data>`\ (data_label, x_values, y_values)
+        - Import data into the internal memory.
+
+
+
+   .. py:property:: allowed_distance_methods
+      :type: list
+
+      Return allowed distance methods.
+
+
+   .. py:method:: calculate_correlation(label1: str, label2: str) -> float
+
+      Calculate the pearson-correlation between the values of two functions.
+
+      :Parameters: * **label_1** (*str*) -- Label of the first dataset.
+                   * **label_2** (*str*) -- Label of the second dataset.
+
+      :returns: *float* -- The correlation.
+
+
+   .. py:method:: calculate_discrete_fingerprint(label: str, grid: aim2dat.fct.discretization.DiscretizedGrid) -> numpy.array
+
+      Calculate a discretized fingerprint of a function (:doi:`10.1038/s41597-022-01754-z`).
+
+      :Parameters: * **label** (*str*) -- Label of the dataset.
+                   * **grid** (*DiscretizedGrid*) -- The grid to discretize the function.
+
+      :returns: *np.array* -- Discretized fingerprint.
+
+
+   .. py:method:: calculate_distance(label1: str, label2: str, method: str = 'euclidian') -> float
+
+      Calculate the distance between the values of two functions.
+
+      :Parameters: * **label1** (*str*) -- Label of the first dataset.
+                   * **label2** (*str*) -- Label of the second dataset.
+                   * **method** (*str*) -- The metric to calculate the distance. Defaults to "euclidian".
+
+      :returns: *float* -- Abs. error
+
+
+   .. py:method:: compare_areas(label1: str, label2: str) -> float
+
+      Compare the enclosed areas of two functions.
+
+      :Parameters: * **label1** (*str*) -- Label of the first dataset.
+                   * **label2** (*str*) -- Label of the second dataset.
+
+      :returns: *float* -- The ratio of the areas. (A1 / A2)
+
+
+   .. py:method:: compare_functions_by_discrete_fingerprint(label1: str, label2: str, grid: aim2dat.fct.discretization.DiscretizedGrid) -> float
+
+      Compare two functions based on a discretized fingerprint
+      (:doi:`10.1038/s41597-022-01754-z`).
+
+      :Parameters: * **label1** (*str*) -- Label of the first dataset.
+                   * **label2** (*str*) -- Label of the second dataset.
+                   * **grid** (*DiscretizedGrid*) -- The grid to discretize the function.
+
+      :returns: *float* -- Similarity.
+
+
+   .. py:method:: import_data(data_label: str, x_values: numpy.array, y_values: numpy.array)
+
+      Import data into the internal memory.
+
+      :Parameters: * **data_label** (*str*) -- Label for the internal memory.
+                   * **x_values** (*np.array*) -- x-values of the function.
+                   * **y_values** (*np.array*) -- y-values of the function.
+
+
+

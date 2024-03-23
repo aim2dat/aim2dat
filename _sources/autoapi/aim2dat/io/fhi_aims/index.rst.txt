@@ -1,0 +1,57 @@
+:py:mod:`aim2dat.io.fhi_aims`
+=============================
+
+.. py:module:: aim2dat.io.fhi_aims
+
+.. autoapi-nested-parse::
+
+   Module of functions to read output-files of FHI-aims.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.io.fhi_aims.read_atom_proj_density_of_states
+   aim2dat.io.fhi_aims.read_band_structure
+   aim2dat.io.fhi_aims.read_total_density_of_states
+
+
+
+.. py:function:: read_atom_proj_density_of_states(folder_path, soc=False, load_raw=False)
+
+   Read the atom projected density of states from FHI-aims.
+
+   :Parameters: * **folder_path** (*str*) -- Path to the folder of the pdos files.
+                * **soc** (*bool (optional)*) -- Whether spin-orbit coupling is activated. The default value is ``False``.
+                * **load_raw** (*bool (optional)*) -- Load files with appendix 'raw'. The default value is ``False``.
+
+   :returns: **pdos** (*dict*) -- Dictionary containing the projected density of states for each atom.
+
+
+.. py:function:: read_band_structure(folder_path, soc=False)
+
+   Read band structure files from FHI-aims.
+   Spin-polarized calculations are not yet supported.
+
+   :Parameters: * **folder_path** (*str*) -- Path to the folder of the band structure files.
+                * **soc** (*bool (optional)*) -- Whether spin-orbit coupling is activated. The default value is ``False``.
+
+   :returns: **band_structure** (*dict*) -- Dictionary containing the k-path and th eigenvalues as well as the occupations.
+
+
+.. py:function:: read_total_density_of_states(file_name)
+
+   Read the total density of states from FHI-aims.
+
+   :Parameters: **file_name** (*str*) -- Path of the output-file of FHI-aims containing the total density of states.
+
+   :returns: **pdos** (*dict*) -- Dictionary containing the projected density of states for each atom.
+
+

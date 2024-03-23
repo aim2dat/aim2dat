@@ -1,0 +1,21 @@
+:py:mod:`aim2dat.aiida_workflows`
+=================================
+
+.. py:module:: aim2dat.aiida_workflows
+
+.. autoapi-nested-parse::
+
+   Custom aiida workflows.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   utils/index.rst
+   workflow_builder/index.rst
+
+

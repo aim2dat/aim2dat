@@ -1,0 +1,159 @@
+{
+ "cells": [
+  {
+   "cell_type": "raw",
+   "id": "22ebd6d0",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "======================================\n",
+    "Plotting with the ``SimplePlot`` class\n",
+    "======================================\n",
+    "\n",
+    "The classes in the :mod:`plots <aim2dat.plots>` sub-package can be used to analyse and plot data. Each class is dedicated to spcific data types and therefore implements different functions with the prefix ``import_*`` to import individual data sets. All data sets are stored in the internal attribute ``_data`` having the ``data_label`` as a key and the imported data as value.\n",
+    "\n",
+    "The ``plot``-function can then be used to create a plot of the corresponding data. Depending on the class several data sets can be plotted at the same time or in separate subplots. All plot classes share an extensive set of properties to change the look and customize the plot.\n",
+    "\n",
+    "As a starting point, we demonstrate a basic use case with the :class:`SimplePlot <aim2dat.plots.SimplePlot>` class which is designed as the most general and adjustable interface to plot-backends.\n",
+    "\n",
+    "Importing data sets\n",
+    "===================\n",
+    "\n",
+    "First, the class is imported and and instance is created:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c278481d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.plots import SimplePlot\n",
+    "\n",
+    "splot = SimplePlot()"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "033e5c38",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Using the implemented ``import_*`` functions the data to be plotted can be loaded into the objects. These functions are specific for each of the plot classes, e.g. for the :class:`SimplePlot <aim2dat.plots.SimplePlot>` we have the :meth:`import_scatter_data_set <aim2dat.plots.SimplePlot.import_scatter_data_set>` and :meth:`import_bar_data_set <aim2dat.plots.SimplePlot.import_bar_data_set>` function:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "98d79903",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "splot.import_scatter_data_set(\"test data set\", [0.0, 1.0, 2.0], [0.0, 2.0, 5.0], color=\"C0\")\n",
+    "splot.import_bar_data_set(\n",
+    "    \"test data set 2\", [0.0, 1.0, 2.0], [0.0, 2.0, 5.0], [2.0, 4.0, 2.0], color=\"C1\"\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "6d9c6c23",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The first argument of an ``import_*`` function is always the label of the data set which is the unique internal key for the data set.\n",
+    "We can check the labels of the imported data sets by calling the property :meth:`data_labels <aim2dat.plots.SimplePlot.data_labels>` or by printing the object:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c22bde5e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "splot.data_labels"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "831a0773",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(splot)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "d827c5c0",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Plotting data sets\n",
+    "==================\n",
+    "\n",
+    "Now, one or more data sets can be plotted with the :meth:`plot <aim2dat.plots.SimplePlot.plot>` function:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "fc5b8f3e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "splot.ratio = (8, 4)\n",
+    "splot.x_label = \"Label of the x-axis\"\n",
+    "splot.y_label = \"Label of the y-axis\"\n",
+    "splot.plot([\"test data set\", \"test data set 2\"])"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "7e0aee27",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Related examples\n",
+    "================\n",
+    "\n",
+    "* :doc:`Using the SimplePlot class as a flexible plotting framework <examples/plots-simple_plot>`\n",
+    "\n",
+    "Related API instances\n",
+    "=====================\n",
+    "\n",
+    "* :class:`SimplePlot <aim2dat.plots.SimplePlot>`"
+   ]
+  }
+ ],
+ "metadata": {
+  "celltoolbar": "Raw Cell Format",
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.13"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

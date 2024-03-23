@@ -1,0 +1,27 @@
+:py:mod:`aim2dat`
+=================
+
+.. py:module:: aim2dat
+
+.. autoapi-nested-parse::
+
+   aim2dat package.
+
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   aiida_data/index.rst
+   aiida_workflows/index.rst
+   fct/index.rst
+   io/index.rst
+   ml/index.rst
+   plots/index.rst
+   strct/index.rst
+   utils/index.rst
+
+

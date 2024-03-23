@@ -1,0 +1,11 @@
+:py:mod:`aim2dat.aiida_workflows.cp2k.core_work_chain_handlers`
+===============================================================
+
+.. py:module:: aim2dat.aiida_workflows.cp2k.core_work_chain_handlers
+
+.. autoapi-nested-parse::
+
+   Error handlers for core work chains.
+
+
+

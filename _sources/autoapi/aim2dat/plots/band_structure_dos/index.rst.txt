@@ -1,0 +1,2004 @@
+:orphan:
+
+:py:mod:`aim2dat.plots.band_structure_dos`
+==========================================
+
+.. py:module:: aim2dat.plots.band_structure_dos
+
+.. autoapi-nested-parse::
+
+   Module to plot the band structure and the density of states separately or combined.
+
+   This module is still work in progress.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.plots.band_structure_dos.BandStructureDOSPlot
+   aim2dat.plots.band_structure_dos.BandStructurePlot
+   aim2dat.plots.band_structure_dos.DOSPlot
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.plots.band_structure_dos.BandStructure
+   aim2dat.plots.band_structure_dos.BandStructureDensityOfStates
+   aim2dat.plots.band_structure_dos.DensityOfStates
+
+
+
+
+.. py:class:: BandStructureDOSPlot(ratio=(12, 7), show_legend=[False, True], subplot_hspace=5, subplot_wspace=0.1, subplot_nrows=1, subplot_ncols=3, subplot_sharex=False, subplot_sharey=True, subplot_gridspec=[(0, 1, 0, 2), (0, 1, 2, 3)], pdos_plot_type='line', tdos_plot_type='fill', dos_comp_threshold=0.47, smearing_method='gaussian', smearing_delta=0.005, smearing_sigma=5.0, sum_pdos=False, per_atom=False, **kwargs)
+
+
+   Bases: :py:obj:`aim2dat.plots.base_plot._BasePlot`, :py:obj:`aim2dat.plots.base_mixin._HLineMixin`, :py:obj:`aim2dat.plots.base_mixin._VLineMixin`, :py:obj:`aim2dat.plots.base_band_structure._BaseBandStructure`, :py:obj:`aim2dat.plots.base_dos._BaseDensityOfStates`
+
+   Class to plot the band structure combined with the density of states.
+
+   :ivar dos_comp_threshold: Threshold to compare the density of states if ``detect_equivalent_kinds`` is set to
+                             ``True`` when importing projected density of states data sets.
+   :vartype dos_comp_threshold: float
+   :ivar sum_pdos: Whether to sum all pDOS data sets to obtain a tDOS.
+   :vartype sum_pdos: bool
+   :ivar per_atom: Normalize all density of states data sets to the numer of atoms.
+
+   :vartype per_atom: bool
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`backend <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.backend>`
+        - used backend library to plot the data. Supported values are ``"matplotlib"`` and
+      * - :py:obj:`custom_alpha <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.custom_alpha>`
+        - Alpha value(s) controlling the opacity of plot elements.
+      * - :py:obj:`custom_colors <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.custom_colors>`
+        - Colors used in the plot.
+      * - :py:obj:`custom_linestyles <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.custom_linestyles>`
+        - Line styles used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_linewidths <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.custom_linewidths>`
+        - Line widths used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_markers <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.custom_markers>`
+        - Marker types used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_xticklabels <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.custom_xticklabels>`
+        - List of labels for the ticks on the x-axis.
+      * - :py:obj:`custom_xticks <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.custom_xticks>`
+        - List of values to set ticks on the x-axis.
+      * - :py:obj:`custom_yticklabels <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.custom_yticklabels>`
+        - List of labels for the ticks on the y-axis.
+      * - :py:obj:`custom_yticks <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.custom_yticks>`
+        - List of values to set ticks on the y-axis.
+      * - :py:obj:`data_labels <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.data_labels>`
+        - List of labels for all data sets.
+      * - :py:obj:`equal_aspect_ratio <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.equal_aspect_ratio>`
+        - Set equal aspect ratio of the plot(s).
+      * - :py:obj:`legend_bbox_to_anchor <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.legend_bbox_to_anchor>`
+        - Shift between box and anchor. The default value is ``(1, 1)``.
+      * - :py:obj:`legend_loc <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.legend_loc>`
+        - Location of the legend. The default value is ``1``.
+      * - :py:obj:`legend_ncol <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.legend_ncol>`
+        - Columns of the legend (only supported for the matplotlib backend).
+      * - :py:obj:`legend_sort_entries <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.legend_sort_entries>`
+        - Sort entries of the legend.
+      * - :py:obj:`pdos_plot_type <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.pdos_plot_type>`
+        - plot type of the pDOS data sets, supported options are ``'line'``, ``'fill'``
+      * - :py:obj:`plot_grid <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.plot_grid>`
+        - Whether to draw a grid in the plot. The default value is ``False``.
+      * - :py:obj:`ratio <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.ratio>`
+        - Length-to-width ratio of the plot given as a tuple of two numbers.
+      * - :py:obj:`show_colorbar <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.show_colorbar>`
+        - Show colorbar (not supported by all plots).
+      * - :py:obj:`show_grid <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.show_grid>`
+        - Whether to draw a grid in the plot. The default value is ``False``.
+      * - :py:obj:`show_legend <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.show_legend>`
+        - Show legend. The default value is ``False``.
+      * - :py:obj:`show_plot <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.show_plot>`
+        - Show plot. The default value is ``False``.
+      * - :py:obj:`smearing_delta <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.smearing_delta>`
+        - Spacing between two values. If set to ``None`` the original function is
+      * - :py:obj:`smearing_method <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.smearing_method>`
+        - Method used to smear out the functions. Supported options are ``'gaussian'`` and
+      * - :py:obj:`smearing_sigma <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.smearing_sigma>`
+        - Sigma value of the smearing distribution.
+      * - :py:obj:`store_path <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.store_path>`
+        - Path of the folder to store the plot. The default value is ``./``.
+      * - :py:obj:`store_plot <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.store_plot>`
+        - Store plot. The default value is ``False``.
+      * - :py:obj:`style_sheet <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.style_sheet>`
+        - Custom matplotlib style sheet.
+      * - :py:obj:`subplot_adjust <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.subplot_adjust>`
+        - Keyword arguments for the matplotlib ``subplots_adjust`` function.
+      * - :py:obj:`subplot_gridspec <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.subplot_gridspec>`
+        - Grid spec values.
+      * - :py:obj:`subplot_hspace <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.subplot_hspace>`
+        - Vertical spacing between the subplots.
+      * - :py:obj:`subplot_ncols <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.subplot_ncols>`
+        - Number of columns. The default value is ``1``.
+      * - :py:obj:`subplot_nrows <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.subplot_nrows>`
+        - Number of rows. The default value is ``2``.
+      * - :py:obj:`subplot_share_colorbar <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.subplot_share_colorbar>`
+        - Use one common colorbar for all subplots.
+      * - :py:obj:`subplot_share_legend <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.subplot_share_legend>`
+        - Merge legend items of all subplots.
+      * - :py:obj:`subplot_sharex <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.subplot_sharex>`
+        - Share the x-axis of subplots located in the same column.
+      * - :py:obj:`subplot_sharey <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.subplot_sharey>`
+        - Share the y-axis of subplots located in the same row.
+      * - :py:obj:`subplot_sup_title <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.subplot_sup_title>`
+        - Title of the whole figure.
+      * - :py:obj:`subplot_sup_x_label <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.subplot_sup_x_label>`
+        - x-label of the whole figure.
+      * - :py:obj:`subplot_sup_y_label <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.subplot_sup_y_label>`
+        - y-label of the whole figure.
+      * - :py:obj:`subplot_tight_layout <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.subplot_tight_layout>`
+        - Tight layout of plot. The default value is ``False``.
+      * - :py:obj:`subplot_wspace <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.subplot_wspace>`
+        - Horizontal spacing between the subplots.
+      * - :py:obj:`tdos_plot_type <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.tdos_plot_type>`
+        - plot type of the tDOS data sets, supported options are ``'line'``, ``'fill'``
+      * - :py:obj:`x_label <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.x_label>`
+        - Label of the x-axis. If ``None`` is given no label will be shown. The
+      * - :py:obj:`x_range <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.x_range>`
+        - Range of the x-axis. The default value is ``None``.
+      * - :py:obj:`y_label <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.y_label>`
+        - Label of the y-axis. If ``None`` is given no label will be shown. The
+      * - :py:obj:`y_range <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.y_range>`
+        - Range of the y-axis. The default value is ``None``.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_hline <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.add_hline>`\ (y, x_min, x_max, color, line_style, scaled, foreground, subplot_assignment, data_label)
+        - Add a vertical line to the plot.
+      * - :py:obj:`add_vline <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.add_vline>`\ (x, y_min, y_max, color, line_style, scaled, foreground, subplot_assignment, data_label)
+        - Add a vertical line to the plot.
+      * - :py:obj:`analyse_band <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.analyse_band>`\ (data_label, band_idx)
+        - Calculate the minimum and the maximum energy of the band as well as their k-points.
+      * - :py:obj:`auto_set_axis_properties <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.auto_set_axis_properties>`\ (set_x_label, set_y_label)
+        - Whether the axis labels and other axis properties are auto-generated.
+      * - :py:obj:`calculate_band_gap <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.calculate_band_gap>`\ (data_label, vbm_band_idx)
+        - Calculate the direct and indirect band gap of the band structure.
+      * - :py:obj:`calculate_energy_diff_at_kpoint <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.calculate_energy_diff_at_kpoint>`\ (data_labels, band_idx1, band_idx2, kpoint)
+        - Calculate the energy difference between two bands at a certain k-point.
+      * - :py:obj:`calculate_smallest_direct_energy_diff <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.calculate_smallest_direct_energy_diff>`\ (data_label, band_idx1, band_idx2)
+        - Calculate the smallest direct energy difference between two bands.
+      * - :py:obj:`calculate_smallest_energy_diff <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.calculate_smallest_energy_diff>`\ (data_label, band_idx1, band_idx2)
+        - Calculate the smallest energy difference between two bands.
+      * - :py:obj:`create_default_gridspec <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.create_default_gridspec>`\ (nrows, ncols, nplots, heights, widths, center_last_row)
+        - Create default grid for multiple plots.
+      * - :py:obj:`import_band_structure <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.import_band_structure>`\ (data_label, kpoints, bands, path_labels, occupations, unit_y, align_to_vbm)
+        - Import a data set.
+      * - :py:obj:`import_from_aiida_bandsdata <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.import_from_aiida_bandsdata>`\ (data_label, bandsdata_node, align_to_vbm)
+        - Read band structure from an aiida bandsdata node.
+      * - :py:obj:`import_from_aiida_xydata <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.import_from_aiida_xydata>`\ (data_label, pdosdata, shift_dos, use_smearing, sum_kinds, sum_principal_qn, sum_azimuth_qn, sum_magnetic_qn, detect_equivalent_kinds, custom_kind_dict)
+        - Read projected density of states from an AiiDA xy-data node.
+      * - :py:obj:`import_projected_dos <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.import_projected_dos>`\ (data_label, energy, pdos, unit_x, shift_dos, use_smearing, sum_kinds, sum_principal_qn, sum_azimuth_qn, sum_magnetic_qn, detect_equivalent_kinds, custom_kind_dict)
+        - Import projected density of states.
+      * - :py:obj:`import_total_dos <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.import_total_dos>`\ (data_label, energy, tdos, use_smearing, unit_x, shift_dos)
+        - Import total density of states.
+      * - :py:obj:`plot <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.plot>`\ (data_labels, plot_title, plot_name, subplot_assignment)
+        - Plot the data sets.
+      * - :py:obj:`remove_additional_plot_elements <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.remove_additional_plot_elements>`\ ()
+        - Remove all added plot elements.
+      * - :py:obj:`reset_gridspec <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.reset_gridspec>`\ ()
+        - Reset gridspec settings.
+      * - :py:obj:`return_data_labels <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.return_data_labels>`\ ()
+        - Return the labels of all data sets.
+      * - :py:obj:`set_reference_cell <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.set_reference_cell>`\ (reference_cell)
+        - Set reference cell.
+      * - :py:obj:`shift_bands <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.shift_bands>`\ (data_label, energy_shift, spin)
+        - Shift the bands of one data set.
+      * - :py:obj:`shift_bands_and_dos <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.shift_bands_and_dos>`\ (data_label, shift)
+        - Shift band structure and density of states.
+      * - :py:obj:`shift_bands_and_dos_to_vbm <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.shift_bands_and_dos_to_vbm>`\ (data_label)
+        - Shift the bands and the density of states such that the VBM is zero.
+      * - :py:obj:`shift_dos <aim2dat.plots.band_structure_dos.BandStructureDOSPlot.shift_dos>`\ (data_label, shift)
+        - Shift density of states.
+
+
+
+   .. py:property:: backend
+
+      used backend library to plot the data. Supported values are ``"matplotlib"`` and
+      ``"plotly"``.
+
+      :type: str
+
+   .. py:property:: custom_alpha
+
+      Alpha value(s) controlling the opacity of plot elements.
+
+      :type: float, list or tuple
+
+   .. py:property:: custom_colors
+
+      Colors used in the plot.
+
+      :type: list or tuple
+
+   .. py:property:: custom_linestyles
+
+      Line styles used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_linewidths
+
+      Line widths used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_markers
+
+      Marker types used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_xticklabels
+
+      List of labels for the ticks on the x-axis.
+
+      :type: list
+
+   .. py:property:: custom_xticks
+
+      List of values to set ticks on the x-axis.
+
+      :type: list
+
+   .. py:property:: custom_yticklabels
+
+      List of labels for the ticks on the y-axis.
+
+      :type: list
+
+   .. py:property:: custom_yticks
+
+      List of values to set ticks on the y-axis.
+
+      :type: list
+
+   .. py:property:: data_labels
+
+      List of labels for all data sets.
+
+      :type: list
+
+   .. py:property:: equal_aspect_ratio
+
+      Set equal aspect ratio of the plot(s).
+
+      :type: bool
+
+   .. py:property:: legend_bbox_to_anchor
+
+      Shift between box and anchor. The default value is ``(1, 1)``.
+
+      :type: tuple or list
+
+   .. py:property:: legend_loc
+
+      Location of the legend. The default value is ``1``.
+
+      :type: int
+
+   .. py:property:: legend_ncol
+
+      Columns of the legend (only supported for the matplotlib backend).
+
+      :type: int
+
+   .. py:property:: legend_sort_entries
+
+      Sort entries of the legend.
+
+      :type: bool
+
+   .. py:property:: pdos_plot_type
+
+      plot type of the pDOS data sets, supported options are ``'line'``, ``'fill'``
+      and ``'linefill'``.
+
+      :type: str
+
+   .. py:property:: plot_grid
+
+      Whether to draw a grid in the plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: ratio
+
+      Length-to-width ratio of the plot given as a tuple of two numbers.
+
+      :type: tuple or list
+
+   .. py:property:: show_colorbar
+
+      Show colorbar (not supported by all plots).
+
+      :type: bool
+
+   .. py:property:: show_grid
+
+      Whether to draw a grid in the plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: show_legend
+
+      Show legend. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: show_plot
+
+      Show plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: smearing_delta
+
+      Spacing between two values. If set to ``None`` the original function is
+      used.
+
+      :type: float or None
+
+   .. py:property:: smearing_method
+
+      Method used to smear out the functions. Supported options are ``'gaussian'`` and
+      ``'lorentzian'``.
+
+      :type: str
+
+   .. py:property:: smearing_sigma
+
+      Sigma value of the smearing distribution.
+
+      :type: float
+
+   .. py:property:: store_path
+
+      Path of the folder to store the plot. The default value is ``./``.
+
+      :type: str
+
+   .. py:property:: store_plot
+
+      Store plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: style_sheet
+
+      Custom matplotlib style sheet.
+
+      :type: str
+
+   .. py:property:: subplot_adjust
+
+      Keyword arguments for the matplotlib ``subplots_adjust`` function.
+
+      :type: dict
+
+   .. py:property:: subplot_gridspec
+
+      Grid spec values.
+
+      :type: list or tuple
+
+   .. py:property:: subplot_hspace
+
+      Vertical spacing between the subplots.
+
+      :type: float
+
+   .. py:property:: subplot_ncols
+
+      Number of columns. The default value is ``1``.
+
+      :type: int
+
+   .. py:property:: subplot_nrows
+
+      Number of rows. The default value is ``2``.
+
+      :type: int
+
+   .. py:property:: subplot_share_colorbar
+
+      Use one common colorbar for all subplots.
+
+      :type: bool
+
+   .. py:property:: subplot_share_legend
+
+      Merge legend items of all subplots.
+
+      :type: bool
+
+   .. py:property:: subplot_sharex
+
+      Share the x-axis of subplots located in the same column.
+
+      :type: bool
+
+   .. py:property:: subplot_sharey
+
+      Share the y-axis of subplots located in the same row.
+
+      :type: bool
+
+   .. py:property:: subplot_sup_title
+
+      Title of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_sup_x_label
+
+      x-label of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_sup_y_label
+
+      y-label of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_tight_layout
+
+      Tight layout of plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: subplot_wspace
+
+      Horizontal spacing between the subplots.
+
+      :type: float
+
+   .. py:property:: tdos_plot_type
+
+      plot type of the tDOS data sets, supported options are ``'line'``, ``'fill'``
+      and ``'linefill'``.
+
+      :type: str
+
+   .. py:property:: x_label
+
+      Label of the x-axis. If ``None`` is given no label will be shown. The
+      default value is ``None``.
+
+      :type: str or None
+
+   .. py:property:: x_range
+
+      Range of the x-axis. The default value is ``None``.
+
+      :type: tuple or list
+
+   .. py:property:: y_label
+
+      Label of the y-axis. If ``None`` is given no label will be shown. The
+      default value is ``None``.
+
+      :type: str or None
+
+   .. py:property:: y_range
+
+      Range of the y-axis. The default value is ``None``.
+
+      :type: tuple or list
+
+
+   .. py:method:: add_hline(y, x_min, x_max, color=None, line_style=None, scaled=False, foreground=False, subplot_assignment=None, data_label=None)
+
+      Add a vertical line to the plot.
+
+      :Parameters: * **y** (*float*) -- y-position of the line.
+                   * **x_min** (*float*) -- Bottom x-position of the line.
+                   * **x_max** (*float*) -- Top x-position of the line.
+                   * **color** (*str or None*) -- Color of the line.
+                   * **line_style** (*str or None*) -- Line style of the line.
+                   * **scaled** (*bool*) -- Whether the input is given in scaled positions.
+                   * **foreground** (*bool*) -- Whether to plot the line in front of the other elements.
+                   * **subplot_assignment** (*list or None*) -- Assignment of the line to individual subplots.
+
+
+   .. py:method:: add_vline(x, y_min, y_max, color=None, line_style=None, scaled=False, foreground=False, subplot_assignment=None, data_label=None)
+
+      Add a vertical line to the plot.
+
+      :Parameters: * **x** (*float*) -- x-position of the line.
+                   * **y_min** (*float*) -- Bottom y-position of the line.
+                   * **y_max** (*float*) -- Top y-position of the line.
+                   * **color** (*str or None*) -- Color of the line.
+                   * **line_style** (*str or None*) -- Line style of the line.
+                   * **scaled** (*bool*) -- Whether the input is given in scaled positions.
+                   * **foreground** (*bool*) -- Whether to plot the line in front of the other elements.
+                   * **subplot_assignment** (*list or None*) -- Assignment of the line to individual subplots.
+
+
+   .. py:method:: analyse_band(data_label, band_idx)
+
+      Calculate the minimum and the maximum energy of the band as well as their k-points.
+
+      :Parameters: * **data_label** (*str*) -- Internal label of the data set.
+                   * **band_idx** (*int*) -- Index of the band that is analysed.
+
+      :returns: * **band_min** (*dict*) -- Dictionary containing the minimum energy and the corresponding k-point.
+                * **band_max** (*dict*) -- Dictionary containing the maximum energy and the corresponding k-point.
+
+
+   .. py:method:: auto_set_axis_properties(set_x_label=True, set_y_label=True)
+
+      Whether the axis labels and other axis properties are auto-generated.
+
+      :Parameters: * **set_x_label** (*bool*) -- Set x-axis label automatically.
+                   * **set_y_label** (*bool*) -- Set y-axis label automatically.
+
+
+   .. py:method:: calculate_band_gap(data_label, vbm_band_idx=None)
+
+      Calculate the direct and indirect band gap of the band structure.
+
+      With the parameter ``vbm_band_idx`` the index of the highest valence band can be passed on.
+
+      Otherwise, if the occupations are given for the eigenvalues, the highest valence band and
+      lowest conduction band are determined based on the occupation number; an occupation below
+      0.5 is considered as unoccupied.
+
+      If the previous cases do not apply the energy level 0~eV is considered to be within the
+      band gap.
+
+      :Parameters: * **data_label** (*str*) -- Internal label of the data set.
+                   * **vbm_band_idx** (*int or list (optional)*) -- Index of the highest occupied band. In case of spin non-degenerate calculations a list
+                     of two indices can be given (otherwise the indices for spin-up and spin-down channels
+                     are assumed to be the same). If an occupation list is not available this parameter is
+                     used to calculate the band gap. Default value is ``Ǹone``.
+
+      :returns: **band_gap** (*dict or list*) -- A dictionary containing information on the size and nature of the band gap, e.g.
+                ``{'direct_gap': 2.605352729999999, 'direct_gap_kpoint': [0.0, 0.0, 0.0],
+                'indirect_gap': 0.6067583699999997, 'vbm_kpoint': [0.0, 0.0, 0.0], 'vbm_energy': 0.0,
+                'vbm_band_idx': 3, 'cbm_kpoint': [0.41447368, 0.0, 0.41447368],
+                'cbm_energy': 0.6067583699999997, 'cbm_band_idx': 4}``. In case of spin non-degeneracy
+                the dictionary is given for both spins as a list of dictionaries.
+
+
+   .. py:method:: calculate_energy_diff_at_kpoint(data_labels, band_idx1, band_idx2, kpoint)
+
+      Calculate the energy difference between two bands at a certain k-point.
+
+      :Parameters: * **data_labels** (*str or list*) -- Internal labels of the data sets. In case only one label is given as a string both
+                     bands are assumed to be part of the same data set.
+                   * **band_idx1** (*int*) -- Index of the first band.
+                   * **band_idx2** (*int*) -- Index of the second band.
+                   * **kpoint** (*list*) -- K-point at which the difference is calculated.
+
+      :returns: **energy_diff** (*float*) -- Energy difference between the two bands.
+
+
+   .. py:method:: calculate_smallest_direct_energy_diff(data_label, band_idx1, band_idx2)
+
+      Calculate the smallest direct energy difference between two bands.
+
+      :Parameters: * **data_label** (*str*) -- Internal label of the data set.
+                   * **band_idx1** (*int*) -- Index of the first band.
+                   * **band_idx2** (*int*) -- Index of the second band.
+
+      :returns: **energy_diff** (*dict or list*) -- Dictionary containing the energy difference and the k-points of the band maximum and
+                band minimum, e.g.: ``{'energy': 2.605352729999999, 'kpoint': [0.0, 0.0, 0.0]}``.
+                In case of spin non-degeneracy the dictionary is given for both spins as a list of
+                dictionaries.
+
+
+   .. py:method:: calculate_smallest_energy_diff(data_label, band_idx1, band_idx2)
+
+      Calculate the smallest energy difference between two bands.
+
+      :Parameters: * **data_label** (*str*) -- Internal label of the data set.
+                   * **band_idx1** (*int*) -- Index of the first band.
+                   * **band_idx2** (*int*) -- Index of the second band.
+
+      :returns: **energy_diff** (*dict or list*) -- Dictionary containing the energy difference and the k-points of the band maximum and
+                band minimum, e.g.: ``{'energy': 3.7729889100000005, 'kpoint_min': [0.5, 0.25, 0.75],
+                'kpoint_max' : [0.5, 0.25, 0.75]}``.
+                In case of spin non-degeneracy the dictionary is given for both spins as a list of
+                dictionaries.
+
+
+   .. py:method:: create_default_gridspec(nrows, ncols, nplots, heights=1, widths=1, center_last_row=True)
+
+      Create default grid for multiple plots.
+
+      :Parameters: * **nrows** (*Int*) -- Number of rows.
+                   * **ncols** (*int*) -- Number columns.
+                   * **nplots** (*int*) -- Number of subplots.
+                   * **heights** (*int (optional)*) -- Height of subplots.
+                   * **widths** (*int (optional)*) -- Width of subplots.
+                   * **center_last_row** (*bool (optional)*) -- Center the plots of the last row.
+
+
+   .. py:method:: import_band_structure(data_label, kpoints, bands, path_labels=None, occupations=None, unit_y='eV', align_to_vbm=False)
+
+      Import a data set.
+
+      :Parameters: * **data_label** (*str*) -- Internal label used to plot and compare multiple data sets.
+                   * **kpoints** (*list*) -- List of k-points.
+                   * **bands** (*list*) -- List of eigenvalues (nkpoints x neigenvalues or nspins x nkpoints x neigenvalues).
+                   * **path_labels** (*list (optional)*) -- List of path labels.
+                   * **occupations** (*list (optional)*) -- List of occupations.
+                   * **unit_y** (*str (optional)*) -- Unit to be used in the y-label.
+                   * **align_to_vbm** (*bool*) -- Whether the bands should be aligned to the valence band maximum. Works only
+                     if occupation numbers are given. A band is defined as unoccupied if the number of
+                     electrons is below 0.5.
+
+
+   .. py:method:: import_from_aiida_bandsdata(data_label, bandsdata_node, align_to_vbm=False)
+
+      Read band structure from an aiida bandsdata node.
+
+      :Parameters: * **data_label** (*str*) -- Internal label of the data set.
+                   * **bandsdata_node** (*aiida.bands, int or str*) -- Data node containing the band structure or its primary key or uuid.
+                   * **align_to_vbm** (*bool*) -- Whether the bands should be aligned to the valence band maximum. Works only
+                     if occupation numbers are given. A band is defined as unoccupied if the number of
+                     electrons is below 0.5. The default value is ``False``.
+
+
+   .. py:method:: import_from_aiida_xydata(data_label, pdosdata, shift_dos=0.0, use_smearing=False, sum_kinds=False, sum_principal_qn=True, sum_azimuth_qn=False, sum_magnetic_qn=True, detect_equivalent_kinds=False, custom_kind_dict=None)
+
+      Read projected density of states from an AiiDA xy-data node.
+
+      :Parameters: * **data_label** (*str*) -- Internal label used to plot and compare multiple data sets.
+                   * **pdosdata** (*aiida.orm.array.xy or dict*) -- AiiDA data node or dictionary of AiiDA data nodes for each kind.
+                   * **shift_dos** (*float*) -- Shift the density of states by constant value. The default value is ``0.0``.
+                   * **use_smearing** (*bool (optional)*) -- Whether to smear out the density of states. The default value is ``False``.
+                   * **sum_kinds** (*bool (optional)*) -- Whether to sum different kinds of the same element. The default value is ``False``.
+                   * **sum_principal_qn** (*bool (optional)*) -- Whether to sum up the principal quantum numbers. The default value is ``True``.
+                   * **sum_azimuth_qn** (*bool (optional)*) -- Whether to sum up the azimuth quantum numbers.
+                   * **sum_magnetic_qn** (*bool (optional)*) -- Whether to sum up the magnetic quantum numbers. The default value is ``True``.
+                   * **detect_equivalent_kinds** (*bool (optional)*) -- Tries to identify equivalent sites by calculating the difference of the projected
+                     densities at each energy value. The default value is ``False``.
+                   * **custom_kind_dict** (*dict or None (optional)*) -- Group the projected densities and put custom labels, e.g.
+                     ``{"label_1": (0, 1, 2), "label_2": (3, 4, 5)}``.
+
+
+   .. py:method:: import_projected_dos(data_label, energy, pdos, unit_x='eV', shift_dos=0.0, use_smearing=False, sum_kinds=False, sum_principal_qn=True, sum_azimuth_qn=False, sum_magnetic_qn=True, detect_equivalent_kinds=False, custom_kind_dict=None)
+
+      Import projected density of states.
+
+      :Parameters: * **data_label** (*str*) -- Internal label used to plot and compare multiple data sets.
+                   * **energy** (*list*) -- List of energy values.
+                   * **pdos** (*list*) -- List of projected density of states data. The list should consist of dictionaries with
+                     the orbital labels as keys and the pdos as values. Additionallly, the element and/or
+                     kind of the atom should be included.
+                   * **unit_x** (*str (optional)*) -- Unit of the energy. The default value is ``'eV'``.
+                   * **shift_dos** (*float (optional)*) -- Shift the density of states by constant value. The default value is ``0.0``.
+                   * **use_smearing** (*bool (optional)*) -- Whether to smear out the density of states. The default value is ``False``.
+                   * **sum_kinds** (*bool (optional)*) -- Whether to sum different kinds of the same element. The default value is ``False``.
+                   * **sum_principal_qn** (*bool (optional)*) -- Whether to sum up the principal quantum numbers. The default value is ``True``.
+                   * **sum_azimuth_qn** (*bool (optional)*) -- Whether to sum up the azimuth quantum numbers.
+                   * **sum_magnetic_qn** (*bool (optional)*) -- Whether to sum up the magnetic quantum numbers. The default value is ``True``.
+                   * **detect_equivalent_kinds** (*bool (optional)*) -- Tries to identify equivalent sites by calculating the difference of the projected
+                     densities at each energy value. The default value is ``False``.
+                   * **custom_kind_dict** (*dict or None (optional)*) -- Group the projected densities and put custom labels, e.g.
+                     ``{"label_1": (0, 1, 2), "label_2": (3, 4, 5)}``.
+
+
+   .. py:method:: import_total_dos(data_label, energy, tdos, use_smearing=False, unit_x='eV', shift_dos=0.0)
+
+      Import total density of states.
+
+      :Parameters: * **data_label** (*str*) -- Internal label used to plot and compare multiple data sets.
+                   * **energy** (*list*) -- List of energy values.
+                   * **tdos** (*list*) -- List of tDOS values.
+                   * **use_smearing** (*bool (optional)*) -- Whether to smear out the density of states. The default value is ``False``.
+                   * **unit_x** (*str (optional)*) -- Unit of the energy. The default value is ``'eV'``.
+                   * **shift_dos** (*float (optional)*) -- Shift the density of states by constant value. The default value is ``0.0``.
+
+
+   .. py:method:: plot(data_labels, plot_title=None, plot_name='plot.png', subplot_assignment=None)
+
+      Plot the data sets.
+
+      :Parameters: * **data_labels** (*list or str*) -- List of data labels of the data sets that are plotted or
+                     in case only one data set is plotted a string.
+                   * **plot_title** (*list or str (optional)*) -- Title of the plots or subplots.
+                   * **plot_name** (*str (optional)*) -- The file name of the plot.
+                   * **subplot_assignment** (*list or None (optional)*) -- Assignment of the data sets to individual subplots.
+
+      :returns: **fig** (*matplotlib.pyplot.figure or plotly.graph_objects.Figure*) -- Figure object of the plot.
+
+
+   .. py:method:: remove_additional_plot_elements()
+
+      Remove all added plot elements.
+
+
+   .. py:method:: reset_gridspec()
+
+      Reset gridspec settings.
+
+
+   .. py:method:: return_data_labels()
+
+      Return the labels of all data sets.
+
+      :returns: **data_labels** (*list*) -- List of the labels of all data sets.
+
+
+   .. py:method:: set_reference_cell(reference_cell)
+
+      Set reference cell.
+
+      Just taking the relative positions of the high-symmetry k-points will distort the path if
+      if the unit cell vectors and consequently also the basis vectors of the reciprocal cell
+      have different lengths.
+      This can be accounted for by setting the reference cell and thereby scaling the path
+      segments accordingly. The reference cell needs to be set before importing band structures.
+
+      :Parameters: **reference_cell** (*list or np.array*) -- Nested 3x3 list of the cell vectors.
+
+
+   .. py:method:: shift_bands(data_label, energy_shift, spin='up')
+
+      Shift the bands of one data set.
+
+      :Parameters: * **data_label** (*str*) -- Data label of the data set.
+                   * **energy_shift** (*float*) -- Value to shift the bands.
+                   * **spin** (*str (optional)*) -- In case of the spin non-degenerate case the spin ('up' or 'down').
+
+
+   .. py:method:: shift_bands_and_dos(data_label, shift)
+
+      Shift band structure and density of states.
+
+      TODO: include spin-polarized case.
+
+      :Parameters: * **data_label** (*str*) -- Data label of the data set.
+                   * **shift** (*float*) -- Value to shift band structure and density of states.
+
+
+   .. py:method:: shift_bands_and_dos_to_vbm(data_label)
+
+      Shift the bands and the density of states such that the VBM is zero.
+
+      :Parameters: **data_label** (*str*) -- Data label of the data set.
+
+
+   .. py:method:: shift_dos(data_label, shift)
+
+      Shift density of states.
+
+      :Parameters: * **data_label** (*str*) -- Data label of the data set.
+                   * **shift** (*float*) -- Value to shift band structure and density of states.
+
+
+
+
+.. py:class:: BandStructurePlot(**kwargs)
+
+
+   Bases: :py:obj:`aim2dat.plots.base_plot._BasePlot`, :py:obj:`aim2dat.plots.base_mixin._HLineMixin`, :py:obj:`aim2dat.plots.base_mixin._VLineMixin`, :py:obj:`aim2dat.plots.base_band_structure._BaseBandStructure`
+
+   Plot the band structure of a crystalline structure.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`backend <aim2dat.plots.band_structure_dos.BandStructurePlot.backend>`
+        - used backend library to plot the data. Supported values are ``"matplotlib"`` and
+      * - :py:obj:`custom_alpha <aim2dat.plots.band_structure_dos.BandStructurePlot.custom_alpha>`
+        - Alpha value(s) controlling the opacity of plot elements.
+      * - :py:obj:`custom_colors <aim2dat.plots.band_structure_dos.BandStructurePlot.custom_colors>`
+        - Colors used in the plot.
+      * - :py:obj:`custom_linestyles <aim2dat.plots.band_structure_dos.BandStructurePlot.custom_linestyles>`
+        - Line styles used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_linewidths <aim2dat.plots.band_structure_dos.BandStructurePlot.custom_linewidths>`
+        - Line widths used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_markers <aim2dat.plots.band_structure_dos.BandStructurePlot.custom_markers>`
+        - Marker types used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_xticklabels <aim2dat.plots.band_structure_dos.BandStructurePlot.custom_xticklabels>`
+        - List of labels for the ticks on the x-axis.
+      * - :py:obj:`custom_xticks <aim2dat.plots.band_structure_dos.BandStructurePlot.custom_xticks>`
+        - List of values to set ticks on the x-axis.
+      * - :py:obj:`custom_yticklabels <aim2dat.plots.band_structure_dos.BandStructurePlot.custom_yticklabels>`
+        - List of labels for the ticks on the y-axis.
+      * - :py:obj:`custom_yticks <aim2dat.plots.band_structure_dos.BandStructurePlot.custom_yticks>`
+        - List of values to set ticks on the y-axis.
+      * - :py:obj:`data_labels <aim2dat.plots.band_structure_dos.BandStructurePlot.data_labels>`
+        - List of labels for all data sets.
+      * - :py:obj:`equal_aspect_ratio <aim2dat.plots.band_structure_dos.BandStructurePlot.equal_aspect_ratio>`
+        - Set equal aspect ratio of the plot(s).
+      * - :py:obj:`legend_bbox_to_anchor <aim2dat.plots.band_structure_dos.BandStructurePlot.legend_bbox_to_anchor>`
+        - Shift between box and anchor. The default value is ``(1, 1)``.
+      * - :py:obj:`legend_loc <aim2dat.plots.band_structure_dos.BandStructurePlot.legend_loc>`
+        - Location of the legend. The default value is ``1``.
+      * - :py:obj:`legend_ncol <aim2dat.plots.band_structure_dos.BandStructurePlot.legend_ncol>`
+        - Columns of the legend (only supported for the matplotlib backend).
+      * - :py:obj:`legend_sort_entries <aim2dat.plots.band_structure_dos.BandStructurePlot.legend_sort_entries>`
+        - Sort entries of the legend.
+      * - :py:obj:`plot_grid <aim2dat.plots.band_structure_dos.BandStructurePlot.plot_grid>`
+        - Whether to draw a grid in the plot. The default value is ``False``.
+      * - :py:obj:`ratio <aim2dat.plots.band_structure_dos.BandStructurePlot.ratio>`
+        - Length-to-width ratio of the plot given as a tuple of two numbers.
+      * - :py:obj:`show_colorbar <aim2dat.plots.band_structure_dos.BandStructurePlot.show_colorbar>`
+        - Show colorbar (not supported by all plots).
+      * - :py:obj:`show_grid <aim2dat.plots.band_structure_dos.BandStructurePlot.show_grid>`
+        - Whether to draw a grid in the plot. The default value is ``False``.
+      * - :py:obj:`show_legend <aim2dat.plots.band_structure_dos.BandStructurePlot.show_legend>`
+        - Show legend. The default value is ``False``.
+      * - :py:obj:`show_plot <aim2dat.plots.band_structure_dos.BandStructurePlot.show_plot>`
+        - Show plot. The default value is ``False``.
+      * - :py:obj:`store_path <aim2dat.plots.band_structure_dos.BandStructurePlot.store_path>`
+        - Path of the folder to store the plot. The default value is ``./``.
+      * - :py:obj:`store_plot <aim2dat.plots.band_structure_dos.BandStructurePlot.store_plot>`
+        - Store plot. The default value is ``False``.
+      * - :py:obj:`style_sheet <aim2dat.plots.band_structure_dos.BandStructurePlot.style_sheet>`
+        - Custom matplotlib style sheet.
+      * - :py:obj:`subplot_adjust <aim2dat.plots.band_structure_dos.BandStructurePlot.subplot_adjust>`
+        - Keyword arguments for the matplotlib ``subplots_adjust`` function.
+      * - :py:obj:`subplot_gridspec <aim2dat.plots.band_structure_dos.BandStructurePlot.subplot_gridspec>`
+        - Grid spec values.
+      * - :py:obj:`subplot_hspace <aim2dat.plots.band_structure_dos.BandStructurePlot.subplot_hspace>`
+        - Vertical spacing between the subplots.
+      * - :py:obj:`subplot_ncols <aim2dat.plots.band_structure_dos.BandStructurePlot.subplot_ncols>`
+        - Number of columns. The default value is ``1``.
+      * - :py:obj:`subplot_nrows <aim2dat.plots.band_structure_dos.BandStructurePlot.subplot_nrows>`
+        - Number of rows. The default value is ``2``.
+      * - :py:obj:`subplot_share_colorbar <aim2dat.plots.band_structure_dos.BandStructurePlot.subplot_share_colorbar>`
+        - Use one common colorbar for all subplots.
+      * - :py:obj:`subplot_share_legend <aim2dat.plots.band_structure_dos.BandStructurePlot.subplot_share_legend>`
+        - Merge legend items of all subplots.
+      * - :py:obj:`subplot_sharex <aim2dat.plots.band_structure_dos.BandStructurePlot.subplot_sharex>`
+        - Share the x-axis of subplots located in the same column.
+      * - :py:obj:`subplot_sharey <aim2dat.plots.band_structure_dos.BandStructurePlot.subplot_sharey>`
+        - Share the y-axis of subplots located in the same row.
+      * - :py:obj:`subplot_sup_title <aim2dat.plots.band_structure_dos.BandStructurePlot.subplot_sup_title>`
+        - Title of the whole figure.
+      * - :py:obj:`subplot_sup_x_label <aim2dat.plots.band_structure_dos.BandStructurePlot.subplot_sup_x_label>`
+        - x-label of the whole figure.
+      * - :py:obj:`subplot_sup_y_label <aim2dat.plots.band_structure_dos.BandStructurePlot.subplot_sup_y_label>`
+        - y-label of the whole figure.
+      * - :py:obj:`subplot_tight_layout <aim2dat.plots.band_structure_dos.BandStructurePlot.subplot_tight_layout>`
+        - Tight layout of plot. The default value is ``False``.
+      * - :py:obj:`subplot_wspace <aim2dat.plots.band_structure_dos.BandStructurePlot.subplot_wspace>`
+        - Horizontal spacing between the subplots.
+      * - :py:obj:`x_label <aim2dat.plots.band_structure_dos.BandStructurePlot.x_label>`
+        - Label of the x-axis. If ``None`` is given no label will be shown. The
+      * - :py:obj:`x_range <aim2dat.plots.band_structure_dos.BandStructurePlot.x_range>`
+        - Range of the x-axis. The default value is ``None``.
+      * - :py:obj:`y_label <aim2dat.plots.band_structure_dos.BandStructurePlot.y_label>`
+        - Label of the y-axis. If ``None`` is given no label will be shown. The
+      * - :py:obj:`y_range <aim2dat.plots.band_structure_dos.BandStructurePlot.y_range>`
+        - Range of the y-axis. The default value is ``None``.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_hline <aim2dat.plots.band_structure_dos.BandStructurePlot.add_hline>`\ (y, x_min, x_max, color, line_style, scaled, foreground, subplot_assignment, data_label)
+        - Add a vertical line to the plot.
+      * - :py:obj:`add_vline <aim2dat.plots.band_structure_dos.BandStructurePlot.add_vline>`\ (x, y_min, y_max, color, line_style, scaled, foreground, subplot_assignment, data_label)
+        - Add a vertical line to the plot.
+      * - :py:obj:`analyse_band <aim2dat.plots.band_structure_dos.BandStructurePlot.analyse_band>`\ (data_label, band_idx)
+        - Calculate the minimum and the maximum energy of the band as well as their k-points.
+      * - :py:obj:`auto_set_axis_properties <aim2dat.plots.band_structure_dos.BandStructurePlot.auto_set_axis_properties>`\ (set_x_label, set_y_label)
+        - Whether the axis labels and other axis properties are auto-generated.
+      * - :py:obj:`calculate_band_gap <aim2dat.plots.band_structure_dos.BandStructurePlot.calculate_band_gap>`\ (data_label, vbm_band_idx)
+        - Calculate the direct and indirect band gap of the band structure.
+      * - :py:obj:`calculate_energy_diff_at_kpoint <aim2dat.plots.band_structure_dos.BandStructurePlot.calculate_energy_diff_at_kpoint>`\ (data_labels, band_idx1, band_idx2, kpoint)
+        - Calculate the energy difference between two bands at a certain k-point.
+      * - :py:obj:`calculate_smallest_direct_energy_diff <aim2dat.plots.band_structure_dos.BandStructurePlot.calculate_smallest_direct_energy_diff>`\ (data_label, band_idx1, band_idx2)
+        - Calculate the smallest direct energy difference between two bands.
+      * - :py:obj:`calculate_smallest_energy_diff <aim2dat.plots.band_structure_dos.BandStructurePlot.calculate_smallest_energy_diff>`\ (data_label, band_idx1, band_idx2)
+        - Calculate the smallest energy difference between two bands.
+      * - :py:obj:`create_default_gridspec <aim2dat.plots.band_structure_dos.BandStructurePlot.create_default_gridspec>`\ (nrows, ncols, nplots, heights, widths, center_last_row)
+        - Create default grid for multiple plots.
+      * - :py:obj:`import_band_structure <aim2dat.plots.band_structure_dos.BandStructurePlot.import_band_structure>`\ (data_label, kpoints, bands, path_labels, occupations, unit_y, align_to_vbm)
+        - Import a data set.
+      * - :py:obj:`import_from_aiida_bandsdata <aim2dat.plots.band_structure_dos.BandStructurePlot.import_from_aiida_bandsdata>`\ (data_label, bandsdata_node, align_to_vbm)
+        - Read band structure from an aiida bandsdata node.
+      * - :py:obj:`plot <aim2dat.plots.band_structure_dos.BandStructurePlot.plot>`\ (data_labels, plot_title, plot_name, subplot_assignment)
+        - Plot the data sets.
+      * - :py:obj:`remove_additional_plot_elements <aim2dat.plots.band_structure_dos.BandStructurePlot.remove_additional_plot_elements>`\ ()
+        - Remove all added plot elements.
+      * - :py:obj:`reset_gridspec <aim2dat.plots.band_structure_dos.BandStructurePlot.reset_gridspec>`\ ()
+        - Reset gridspec settings.
+      * - :py:obj:`return_data_labels <aim2dat.plots.band_structure_dos.BandStructurePlot.return_data_labels>`\ ()
+        - Return the labels of all data sets.
+      * - :py:obj:`set_reference_cell <aim2dat.plots.band_structure_dos.BandStructurePlot.set_reference_cell>`\ (reference_cell)
+        - Set reference cell.
+      * - :py:obj:`shift_bands <aim2dat.plots.band_structure_dos.BandStructurePlot.shift_bands>`\ (data_label, energy_shift, spin)
+        - Shift the bands of one data set.
+
+
+
+   .. py:property:: backend
+
+      used backend library to plot the data. Supported values are ``"matplotlib"`` and
+      ``"plotly"``.
+
+      :type: str
+
+   .. py:property:: custom_alpha
+
+      Alpha value(s) controlling the opacity of plot elements.
+
+      :type: float, list or tuple
+
+   .. py:property:: custom_colors
+
+      Colors used in the plot.
+
+      :type: list or tuple
+
+   .. py:property:: custom_linestyles
+
+      Line styles used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_linewidths
+
+      Line widths used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_markers
+
+      Marker types used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_xticklabels
+
+      List of labels for the ticks on the x-axis.
+
+      :type: list
+
+   .. py:property:: custom_xticks
+
+      List of values to set ticks on the x-axis.
+
+      :type: list
+
+   .. py:property:: custom_yticklabels
+
+      List of labels for the ticks on the y-axis.
+
+      :type: list
+
+   .. py:property:: custom_yticks
+
+      List of values to set ticks on the y-axis.
+
+      :type: list
+
+   .. py:property:: data_labels
+
+      List of labels for all data sets.
+
+      :type: list
+
+   .. py:property:: equal_aspect_ratio
+
+      Set equal aspect ratio of the plot(s).
+
+      :type: bool
+
+   .. py:property:: legend_bbox_to_anchor
+
+      Shift between box and anchor. The default value is ``(1, 1)``.
+
+      :type: tuple or list
+
+   .. py:property:: legend_loc
+
+      Location of the legend. The default value is ``1``.
+
+      :type: int
+
+   .. py:property:: legend_ncol
+
+      Columns of the legend (only supported for the matplotlib backend).
+
+      :type: int
+
+   .. py:property:: legend_sort_entries
+
+      Sort entries of the legend.
+
+      :type: bool
+
+   .. py:property:: plot_grid
+
+      Whether to draw a grid in the plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: ratio
+
+      Length-to-width ratio of the plot given as a tuple of two numbers.
+
+      :type: tuple or list
+
+   .. py:property:: show_colorbar
+
+      Show colorbar (not supported by all plots).
+
+      :type: bool
+
+   .. py:property:: show_grid
+
+      Whether to draw a grid in the plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: show_legend
+
+      Show legend. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: show_plot
+
+      Show plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: store_path
+
+      Path of the folder to store the plot. The default value is ``./``.
+
+      :type: str
+
+   .. py:property:: store_plot
+
+      Store plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: style_sheet
+
+      Custom matplotlib style sheet.
+
+      :type: str
+
+   .. py:property:: subplot_adjust
+
+      Keyword arguments for the matplotlib ``subplots_adjust`` function.
+
+      :type: dict
+
+   .. py:property:: subplot_gridspec
+
+      Grid spec values.
+
+      :type: list or tuple
+
+   .. py:property:: subplot_hspace
+
+      Vertical spacing between the subplots.
+
+      :type: float
+
+   .. py:property:: subplot_ncols
+
+      Number of columns. The default value is ``1``.
+
+      :type: int
+
+   .. py:property:: subplot_nrows
+
+      Number of rows. The default value is ``2``.
+
+      :type: int
+
+   .. py:property:: subplot_share_colorbar
+
+      Use one common colorbar for all subplots.
+
+      :type: bool
+
+   .. py:property:: subplot_share_legend
+
+      Merge legend items of all subplots.
+
+      :type: bool
+
+   .. py:property:: subplot_sharex
+
+      Share the x-axis of subplots located in the same column.
+
+      :type: bool
+
+   .. py:property:: subplot_sharey
+
+      Share the y-axis of subplots located in the same row.
+
+      :type: bool
+
+   .. py:property:: subplot_sup_title
+
+      Title of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_sup_x_label
+
+      x-label of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_sup_y_label
+
+      y-label of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_tight_layout
+
+      Tight layout of plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: subplot_wspace
+
+      Horizontal spacing between the subplots.
+
+      :type: float
+
+   .. py:property:: x_label
+
+      Label of the x-axis. If ``None`` is given no label will be shown. The
+      default value is ``None``.
+
+      :type: str or None
+
+   .. py:property:: x_range
+
+      Range of the x-axis. The default value is ``None``.
+
+      :type: tuple or list
+
+   .. py:property:: y_label
+
+      Label of the y-axis. If ``None`` is given no label will be shown. The
+      default value is ``None``.
+
+      :type: str or None
+
+   .. py:property:: y_range
+
+      Range of the y-axis. The default value is ``None``.
+
+      :type: tuple or list
+
+
+   .. py:method:: add_hline(y, x_min, x_max, color=None, line_style=None, scaled=False, foreground=False, subplot_assignment=None, data_label=None)
+
+      Add a vertical line to the plot.
+
+      :Parameters: * **y** (*float*) -- y-position of the line.
+                   * **x_min** (*float*) -- Bottom x-position of the line.
+                   * **x_max** (*float*) -- Top x-position of the line.
+                   * **color** (*str or None*) -- Color of the line.
+                   * **line_style** (*str or None*) -- Line style of the line.
+                   * **scaled** (*bool*) -- Whether the input is given in scaled positions.
+                   * **foreground** (*bool*) -- Whether to plot the line in front of the other elements.
+                   * **subplot_assignment** (*list or None*) -- Assignment of the line to individual subplots.
+
+
+   .. py:method:: add_vline(x, y_min, y_max, color=None, line_style=None, scaled=False, foreground=False, subplot_assignment=None, data_label=None)
+
+      Add a vertical line to the plot.
+
+      :Parameters: * **x** (*float*) -- x-position of the line.
+                   * **y_min** (*float*) -- Bottom y-position of the line.
+                   * **y_max** (*float*) -- Top y-position of the line.
+                   * **color** (*str or None*) -- Color of the line.
+                   * **line_style** (*str or None*) -- Line style of the line.
+                   * **scaled** (*bool*) -- Whether the input is given in scaled positions.
+                   * **foreground** (*bool*) -- Whether to plot the line in front of the other elements.
+                   * **subplot_assignment** (*list or None*) -- Assignment of the line to individual subplots.
+
+
+   .. py:method:: analyse_band(data_label, band_idx)
+
+      Calculate the minimum and the maximum energy of the band as well as their k-points.
+
+      :Parameters: * **data_label** (*str*) -- Internal label of the data set.
+                   * **band_idx** (*int*) -- Index of the band that is analysed.
+
+      :returns: * **band_min** (*dict*) -- Dictionary containing the minimum energy and the corresponding k-point.
+                * **band_max** (*dict*) -- Dictionary containing the maximum energy and the corresponding k-point.
+
+
+   .. py:method:: auto_set_axis_properties(set_x_label=True, set_y_label=True)
+
+      Whether the axis labels and other axis properties are auto-generated.
+
+      :Parameters: * **set_x_label** (*bool*) -- Set x-axis label automatically.
+                   * **set_y_label** (*bool*) -- Set y-axis label automatically.
+
+
+   .. py:method:: calculate_band_gap(data_label, vbm_band_idx=None)
+
+      Calculate the direct and indirect band gap of the band structure.
+
+      With the parameter ``vbm_band_idx`` the index of the highest valence band can be passed on.
+
+      Otherwise, if the occupations are given for the eigenvalues, the highest valence band and
+      lowest conduction band are determined based on the occupation number; an occupation below
+      0.5 is considered as unoccupied.
+
+      If the previous cases do not apply the energy level 0~eV is considered to be within the
+      band gap.
+
+      :Parameters: * **data_label** (*str*) -- Internal label of the data set.
+                   * **vbm_band_idx** (*int or list (optional)*) -- Index of the highest occupied band. In case of spin non-degenerate calculations a list
+                     of two indices can be given (otherwise the indices for spin-up and spin-down channels
+                     are assumed to be the same). If an occupation list is not available this parameter is
+                     used to calculate the band gap. Default value is ``Ǹone``.
+
+      :returns: **band_gap** (*dict or list*) -- A dictionary containing information on the size and nature of the band gap, e.g.
+                ``{'direct_gap': 2.605352729999999, 'direct_gap_kpoint': [0.0, 0.0, 0.0],
+                'indirect_gap': 0.6067583699999997, 'vbm_kpoint': [0.0, 0.0, 0.0], 'vbm_energy': 0.0,
+                'vbm_band_idx': 3, 'cbm_kpoint': [0.41447368, 0.0, 0.41447368],
+                'cbm_energy': 0.6067583699999997, 'cbm_band_idx': 4}``. In case of spin non-degeneracy
+                the dictionary is given for both spins as a list of dictionaries.
+
+
+   .. py:method:: calculate_energy_diff_at_kpoint(data_labels, band_idx1, band_idx2, kpoint)
+
+      Calculate the energy difference between two bands at a certain k-point.
+
+      :Parameters: * **data_labels** (*str or list*) -- Internal labels of the data sets. In case only one label is given as a string both
+                     bands are assumed to be part of the same data set.
+                   * **band_idx1** (*int*) -- Index of the first band.
+                   * **band_idx2** (*int*) -- Index of the second band.
+                   * **kpoint** (*list*) -- K-point at which the difference is calculated.
+
+      :returns: **energy_diff** (*float*) -- Energy difference between the two bands.
+
+
+   .. py:method:: calculate_smallest_direct_energy_diff(data_label, band_idx1, band_idx2)
+
+      Calculate the smallest direct energy difference between two bands.
+
+      :Parameters: * **data_label** (*str*) -- Internal label of the data set.
+                   * **band_idx1** (*int*) -- Index of the first band.
+                   * **band_idx2** (*int*) -- Index of the second band.
+
+      :returns: **energy_diff** (*dict or list*) -- Dictionary containing the energy difference and the k-points of the band maximum and
+                band minimum, e.g.: ``{'energy': 2.605352729999999, 'kpoint': [0.0, 0.0, 0.0]}``.
+                In case of spin non-degeneracy the dictionary is given for both spins as a list of
+                dictionaries.
+
+
+   .. py:method:: calculate_smallest_energy_diff(data_label, band_idx1, band_idx2)
+
+      Calculate the smallest energy difference between two bands.
+
+      :Parameters: * **data_label** (*str*) -- Internal label of the data set.
+                   * **band_idx1** (*int*) -- Index of the first band.
+                   * **band_idx2** (*int*) -- Index of the second band.
+
+      :returns: **energy_diff** (*dict or list*) -- Dictionary containing the energy difference and the k-points of the band maximum and
+                band minimum, e.g.: ``{'energy': 3.7729889100000005, 'kpoint_min': [0.5, 0.25, 0.75],
+                'kpoint_max' : [0.5, 0.25, 0.75]}``.
+                In case of spin non-degeneracy the dictionary is given for both spins as a list of
+                dictionaries.
+
+
+   .. py:method:: create_default_gridspec(nrows, ncols, nplots, heights=1, widths=1, center_last_row=True)
+
+      Create default grid for multiple plots.
+
+      :Parameters: * **nrows** (*Int*) -- Number of rows.
+                   * **ncols** (*int*) -- Number columns.
+                   * **nplots** (*int*) -- Number of subplots.
+                   * **heights** (*int (optional)*) -- Height of subplots.
+                   * **widths** (*int (optional)*) -- Width of subplots.
+                   * **center_last_row** (*bool (optional)*) -- Center the plots of the last row.
+
+
+   .. py:method:: import_band_structure(data_label, kpoints, bands, path_labels=None, occupations=None, unit_y='eV', align_to_vbm=False)
+
+      Import a data set.
+
+      :Parameters: * **data_label** (*str*) -- Internal label used to plot and compare multiple data sets.
+                   * **kpoints** (*list*) -- List of k-points.
+                   * **bands** (*list*) -- List of eigenvalues (nkpoints x neigenvalues or nspins x nkpoints x neigenvalues).
+                   * **path_labels** (*list (optional)*) -- List of path labels.
+                   * **occupations** (*list (optional)*) -- List of occupations.
+                   * **unit_y** (*str (optional)*) -- Unit to be used in the y-label.
+                   * **align_to_vbm** (*bool*) -- Whether the bands should be aligned to the valence band maximum. Works only
+                     if occupation numbers are given. A band is defined as unoccupied if the number of
+                     electrons is below 0.5.
+
+
+   .. py:method:: import_from_aiida_bandsdata(data_label, bandsdata_node, align_to_vbm=False)
+
+      Read band structure from an aiida bandsdata node.
+
+      :Parameters: * **data_label** (*str*) -- Internal label of the data set.
+                   * **bandsdata_node** (*aiida.bands, int or str*) -- Data node containing the band structure or its primary key or uuid.
+                   * **align_to_vbm** (*bool*) -- Whether the bands should be aligned to the valence band maximum. Works only
+                     if occupation numbers are given. A band is defined as unoccupied if the number of
+                     electrons is below 0.5. The default value is ``False``.
+
+
+   .. py:method:: plot(data_labels, plot_title=None, plot_name='plot.png', subplot_assignment=None)
+
+      Plot the data sets.
+
+      :Parameters: * **data_labels** (*list or str*) -- List of data labels of the data sets that are plotted or
+                     in case only one data set is plotted a string.
+                   * **plot_title** (*list or str (optional)*) -- Title of the plots or subplots.
+                   * **plot_name** (*str (optional)*) -- The file name of the plot.
+                   * **subplot_assignment** (*list or None (optional)*) -- Assignment of the data sets to individual subplots.
+
+      :returns: **fig** (*matplotlib.pyplot.figure or plotly.graph_objects.Figure*) -- Figure object of the plot.
+
+
+   .. py:method:: remove_additional_plot_elements()
+
+      Remove all added plot elements.
+
+
+   .. py:method:: reset_gridspec()
+
+      Reset gridspec settings.
+
+
+   .. py:method:: return_data_labels()
+
+      Return the labels of all data sets.
+
+      :returns: **data_labels** (*list*) -- List of the labels of all data sets.
+
+
+   .. py:method:: set_reference_cell(reference_cell)
+
+      Set reference cell.
+
+      Just taking the relative positions of the high-symmetry k-points will distort the path if
+      if the unit cell vectors and consequently also the basis vectors of the reciprocal cell
+      have different lengths.
+      This can be accounted for by setting the reference cell and thereby scaling the path
+      segments accordingly. The reference cell needs to be set before importing band structures.
+
+      :Parameters: **reference_cell** (*list or np.array*) -- Nested 3x3 list of the cell vectors.
+
+
+   .. py:method:: shift_bands(data_label, energy_shift, spin='up')
+
+      Shift the bands of one data set.
+
+      :Parameters: * **data_label** (*str*) -- Data label of the data set.
+                   * **energy_shift** (*float*) -- Value to shift the bands.
+                   * **spin** (*str (optional)*) -- In case of the spin non-degenerate case the spin ('up' or 'down').
+
+
+
+
+.. py:class:: DOSPlot(ratio=(10, 4), pdos_plot_type='line', tdos_plot_type='fill', dos_comp_threshold=0.47, smearing_method='gaussian', smearing_delta=0.005, smearing_sigma=5.0, sum_pdos=False, per_atom=False, **kwargs)
+
+
+   Bases: :py:obj:`aim2dat.plots.base_plot._BasePlot`, :py:obj:`aim2dat.plots.base_mixin._VLineMixin`, :py:obj:`aim2dat.plots.base_dos._BaseDensityOfStates`
+
+   Class to plot the density of states.
+
+   :ivar dos_comp_threshold: Threshold to compare the density of states if ``detect_equivalent_kinds`` is set to
+                             ``True`` when importing projected density of states data sets.
+   :vartype dos_comp_threshold: float
+   :ivar sum_pdos: Whether to sum all pDOS data sets to obtain a tDOS.
+   :vartype sum_pdos: bool
+   :ivar per_atom: Normalize all density of states data sets to the numer of atoms.
+
+   :vartype per_atom: bool
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`backend <aim2dat.plots.band_structure_dos.DOSPlot.backend>`
+        - used backend library to plot the data. Supported values are ``"matplotlib"`` and
+      * - :py:obj:`custom_alpha <aim2dat.plots.band_structure_dos.DOSPlot.custom_alpha>`
+        - Alpha value(s) controlling the opacity of plot elements.
+      * - :py:obj:`custom_colors <aim2dat.plots.band_structure_dos.DOSPlot.custom_colors>`
+        - Colors used in the plot.
+      * - :py:obj:`custom_linestyles <aim2dat.plots.band_structure_dos.DOSPlot.custom_linestyles>`
+        - Line styles used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_linewidths <aim2dat.plots.band_structure_dos.DOSPlot.custom_linewidths>`
+        - Line widths used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_markers <aim2dat.plots.band_structure_dos.DOSPlot.custom_markers>`
+        - Marker types used in the plot (This feature is not supported by all plot
+      * - :py:obj:`custom_xticklabels <aim2dat.plots.band_structure_dos.DOSPlot.custom_xticklabels>`
+        - List of labels for the ticks on the x-axis.
+      * - :py:obj:`custom_xticks <aim2dat.plots.band_structure_dos.DOSPlot.custom_xticks>`
+        - List of values to set ticks on the x-axis.
+      * - :py:obj:`custom_yticklabels <aim2dat.plots.band_structure_dos.DOSPlot.custom_yticklabels>`
+        - List of labels for the ticks on the y-axis.
+      * - :py:obj:`custom_yticks <aim2dat.plots.band_structure_dos.DOSPlot.custom_yticks>`
+        - List of values to set ticks on the y-axis.
+      * - :py:obj:`data_labels <aim2dat.plots.band_structure_dos.DOSPlot.data_labels>`
+        - List of labels for all data sets.
+      * - :py:obj:`equal_aspect_ratio <aim2dat.plots.band_structure_dos.DOSPlot.equal_aspect_ratio>`
+        - Set equal aspect ratio of the plot(s).
+      * - :py:obj:`legend_bbox_to_anchor <aim2dat.plots.band_structure_dos.DOSPlot.legend_bbox_to_anchor>`
+        - Shift between box and anchor. The default value is ``(1, 1)``.
+      * - :py:obj:`legend_loc <aim2dat.plots.band_structure_dos.DOSPlot.legend_loc>`
+        - Location of the legend. The default value is ``1``.
+      * - :py:obj:`legend_ncol <aim2dat.plots.band_structure_dos.DOSPlot.legend_ncol>`
+        - Columns of the legend (only supported for the matplotlib backend).
+      * - :py:obj:`legend_sort_entries <aim2dat.plots.band_structure_dos.DOSPlot.legend_sort_entries>`
+        - Sort entries of the legend.
+      * - :py:obj:`pdos_plot_type <aim2dat.plots.band_structure_dos.DOSPlot.pdos_plot_type>`
+        - plot type of the pDOS data sets, supported options are ``'line'``, ``'fill'``
+      * - :py:obj:`plot_grid <aim2dat.plots.band_structure_dos.DOSPlot.plot_grid>`
+        - Whether to draw a grid in the plot. The default value is ``False``.
+      * - :py:obj:`ratio <aim2dat.plots.band_structure_dos.DOSPlot.ratio>`
+        - Length-to-width ratio of the plot given as a tuple of two numbers.
+      * - :py:obj:`show_colorbar <aim2dat.plots.band_structure_dos.DOSPlot.show_colorbar>`
+        - Show colorbar (not supported by all plots).
+      * - :py:obj:`show_grid <aim2dat.plots.band_structure_dos.DOSPlot.show_grid>`
+        - Whether to draw a grid in the plot. The default value is ``False``.
+      * - :py:obj:`show_legend <aim2dat.plots.band_structure_dos.DOSPlot.show_legend>`
+        - Show legend. The default value is ``False``.
+      * - :py:obj:`show_plot <aim2dat.plots.band_structure_dos.DOSPlot.show_plot>`
+        - Show plot. The default value is ``False``.
+      * - :py:obj:`smearing_delta <aim2dat.plots.band_structure_dos.DOSPlot.smearing_delta>`
+        - Spacing between two values. If set to ``None`` the original function is
+      * - :py:obj:`smearing_method <aim2dat.plots.band_structure_dos.DOSPlot.smearing_method>`
+        - Method used to smear out the functions. Supported options are ``'gaussian'`` and
+      * - :py:obj:`smearing_sigma <aim2dat.plots.band_structure_dos.DOSPlot.smearing_sigma>`
+        - Sigma value of the smearing distribution.
+      * - :py:obj:`store_path <aim2dat.plots.band_structure_dos.DOSPlot.store_path>`
+        - Path of the folder to store the plot. The default value is ``./``.
+      * - :py:obj:`store_plot <aim2dat.plots.band_structure_dos.DOSPlot.store_plot>`
+        - Store plot. The default value is ``False``.
+      * - :py:obj:`style_sheet <aim2dat.plots.band_structure_dos.DOSPlot.style_sheet>`
+        - Custom matplotlib style sheet.
+      * - :py:obj:`subplot_adjust <aim2dat.plots.band_structure_dos.DOSPlot.subplot_adjust>`
+        - Keyword arguments for the matplotlib ``subplots_adjust`` function.
+      * - :py:obj:`subplot_gridspec <aim2dat.plots.band_structure_dos.DOSPlot.subplot_gridspec>`
+        - Grid spec values.
+      * - :py:obj:`subplot_hspace <aim2dat.plots.band_structure_dos.DOSPlot.subplot_hspace>`
+        - Vertical spacing between the subplots.
+      * - :py:obj:`subplot_ncols <aim2dat.plots.band_structure_dos.DOSPlot.subplot_ncols>`
+        - Number of columns. The default value is ``1``.
+      * - :py:obj:`subplot_nrows <aim2dat.plots.band_structure_dos.DOSPlot.subplot_nrows>`
+        - Number of rows. The default value is ``2``.
+      * - :py:obj:`subplot_share_colorbar <aim2dat.plots.band_structure_dos.DOSPlot.subplot_share_colorbar>`
+        - Use one common colorbar for all subplots.
+      * - :py:obj:`subplot_share_legend <aim2dat.plots.band_structure_dos.DOSPlot.subplot_share_legend>`
+        - Merge legend items of all subplots.
+      * - :py:obj:`subplot_sharex <aim2dat.plots.band_structure_dos.DOSPlot.subplot_sharex>`
+        - Share the x-axis of subplots located in the same column.
+      * - :py:obj:`subplot_sharey <aim2dat.plots.band_structure_dos.DOSPlot.subplot_sharey>`
+        - Share the y-axis of subplots located in the same row.
+      * - :py:obj:`subplot_sup_title <aim2dat.plots.band_structure_dos.DOSPlot.subplot_sup_title>`
+        - Title of the whole figure.
+      * - :py:obj:`subplot_sup_x_label <aim2dat.plots.band_structure_dos.DOSPlot.subplot_sup_x_label>`
+        - x-label of the whole figure.
+      * - :py:obj:`subplot_sup_y_label <aim2dat.plots.band_structure_dos.DOSPlot.subplot_sup_y_label>`
+        - y-label of the whole figure.
+      * - :py:obj:`subplot_tight_layout <aim2dat.plots.band_structure_dos.DOSPlot.subplot_tight_layout>`
+        - Tight layout of plot. The default value is ``False``.
+      * - :py:obj:`subplot_wspace <aim2dat.plots.band_structure_dos.DOSPlot.subplot_wspace>`
+        - Horizontal spacing between the subplots.
+      * - :py:obj:`tdos_plot_type <aim2dat.plots.band_structure_dos.DOSPlot.tdos_plot_type>`
+        - plot type of the tDOS data sets, supported options are ``'line'``, ``'fill'``
+      * - :py:obj:`x_label <aim2dat.plots.band_structure_dos.DOSPlot.x_label>`
+        - Label of the x-axis. If ``None`` is given no label will be shown. The
+      * - :py:obj:`x_range <aim2dat.plots.band_structure_dos.DOSPlot.x_range>`
+        - Range of the x-axis. The default value is ``None``.
+      * - :py:obj:`y_label <aim2dat.plots.band_structure_dos.DOSPlot.y_label>`
+        - Label of the y-axis. If ``None`` is given no label will be shown. The
+      * - :py:obj:`y_range <aim2dat.plots.band_structure_dos.DOSPlot.y_range>`
+        - Range of the y-axis. The default value is ``None``.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_vline <aim2dat.plots.band_structure_dos.DOSPlot.add_vline>`\ (x, y_min, y_max, color, line_style, scaled, foreground, subplot_assignment, data_label)
+        - Add a vertical line to the plot.
+      * - :py:obj:`auto_set_axis_properties <aim2dat.plots.band_structure_dos.DOSPlot.auto_set_axis_properties>`\ (set_x_label, set_y_label)
+        - Whether the axis labels and other axis properties are auto-generated.
+      * - :py:obj:`create_default_gridspec <aim2dat.plots.band_structure_dos.DOSPlot.create_default_gridspec>`\ (nrows, ncols, nplots, heights, widths, center_last_row)
+        - Create default grid for multiple plots.
+      * - :py:obj:`import_from_aiida_xydata <aim2dat.plots.band_structure_dos.DOSPlot.import_from_aiida_xydata>`\ (data_label, pdosdata, shift_dos, use_smearing, sum_kinds, sum_principal_qn, sum_azimuth_qn, sum_magnetic_qn, detect_equivalent_kinds, custom_kind_dict)
+        - Read projected density of states from an AiiDA xy-data node.
+      * - :py:obj:`import_projected_dos <aim2dat.plots.band_structure_dos.DOSPlot.import_projected_dos>`\ (data_label, energy, pdos, unit_x, shift_dos, use_smearing, sum_kinds, sum_principal_qn, sum_azimuth_qn, sum_magnetic_qn, detect_equivalent_kinds, custom_kind_dict)
+        - Import projected density of states.
+      * - :py:obj:`import_total_dos <aim2dat.plots.band_structure_dos.DOSPlot.import_total_dos>`\ (data_label, energy, tdos, use_smearing, unit_x, shift_dos)
+        - Import total density of states.
+      * - :py:obj:`plot <aim2dat.plots.band_structure_dos.DOSPlot.plot>`\ (data_labels, plot_title, plot_name, subplot_assignment)
+        - Plot the data sets.
+      * - :py:obj:`remove_additional_plot_elements <aim2dat.plots.band_structure_dos.DOSPlot.remove_additional_plot_elements>`\ ()
+        - Remove all added plot elements.
+      * - :py:obj:`reset_gridspec <aim2dat.plots.band_structure_dos.DOSPlot.reset_gridspec>`\ ()
+        - Reset gridspec settings.
+      * - :py:obj:`return_data_labels <aim2dat.plots.band_structure_dos.DOSPlot.return_data_labels>`\ ()
+        - Return the labels of all data sets.
+      * - :py:obj:`shift_dos <aim2dat.plots.band_structure_dos.DOSPlot.shift_dos>`\ (data_label, shift)
+        - Shift density of states.
+
+
+
+   .. py:property:: backend
+
+      used backend library to plot the data. Supported values are ``"matplotlib"`` and
+      ``"plotly"``.
+
+      :type: str
+
+   .. py:property:: custom_alpha
+
+      Alpha value(s) controlling the opacity of plot elements.
+
+      :type: float, list or tuple
+
+   .. py:property:: custom_colors
+
+      Colors used in the plot.
+
+      :type: list or tuple
+
+   .. py:property:: custom_linestyles
+
+      Line styles used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_linewidths
+
+      Line widths used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_markers
+
+      Marker types used in the plot (This feature is not supported by all plot
+      types).
+
+      :type: list or tuple
+
+   .. py:property:: custom_xticklabels
+
+      List of labels for the ticks on the x-axis.
+
+      :type: list
+
+   .. py:property:: custom_xticks
+
+      List of values to set ticks on the x-axis.
+
+      :type: list
+
+   .. py:property:: custom_yticklabels
+
+      List of labels for the ticks on the y-axis.
+
+      :type: list
+
+   .. py:property:: custom_yticks
+
+      List of values to set ticks on the y-axis.
+
+      :type: list
+
+   .. py:property:: data_labels
+
+      List of labels for all data sets.
+
+      :type: list
+
+   .. py:property:: equal_aspect_ratio
+
+      Set equal aspect ratio of the plot(s).
+
+      :type: bool
+
+   .. py:property:: legend_bbox_to_anchor
+
+      Shift between box and anchor. The default value is ``(1, 1)``.
+
+      :type: tuple or list
+
+   .. py:property:: legend_loc
+
+      Location of the legend. The default value is ``1``.
+
+      :type: int
+
+   .. py:property:: legend_ncol
+
+      Columns of the legend (only supported for the matplotlib backend).
+
+      :type: int
+
+   .. py:property:: legend_sort_entries
+
+      Sort entries of the legend.
+
+      :type: bool
+
+   .. py:property:: pdos_plot_type
+
+      plot type of the pDOS data sets, supported options are ``'line'``, ``'fill'``
+      and ``'linefill'``.
+
+      :type: str
+
+   .. py:property:: plot_grid
+
+      Whether to draw a grid in the plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: ratio
+
+      Length-to-width ratio of the plot given as a tuple of two numbers.
+
+      :type: tuple or list
+
+   .. py:property:: show_colorbar
+
+      Show colorbar (not supported by all plots).
+
+      :type: bool
+
+   .. py:property:: show_grid
+
+      Whether to draw a grid in the plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: show_legend
+
+      Show legend. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: show_plot
+
+      Show plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: smearing_delta
+
+      Spacing between two values. If set to ``None`` the original function is
+      used.
+
+      :type: float or None
+
+   .. py:property:: smearing_method
+
+      Method used to smear out the functions. Supported options are ``'gaussian'`` and
+      ``'lorentzian'``.
+
+      :type: str
+
+   .. py:property:: smearing_sigma
+
+      Sigma value of the smearing distribution.
+
+      :type: float
+
+   .. py:property:: store_path
+
+      Path of the folder to store the plot. The default value is ``./``.
+
+      :type: str
+
+   .. py:property:: store_plot
+
+      Store plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: style_sheet
+
+      Custom matplotlib style sheet.
+
+      :type: str
+
+   .. py:property:: subplot_adjust
+
+      Keyword arguments for the matplotlib ``subplots_adjust`` function.
+
+      :type: dict
+
+   .. py:property:: subplot_gridspec
+
+      Grid spec values.
+
+      :type: list or tuple
+
+   .. py:property:: subplot_hspace
+
+      Vertical spacing between the subplots.
+
+      :type: float
+
+   .. py:property:: subplot_ncols
+
+      Number of columns. The default value is ``1``.
+
+      :type: int
+
+   .. py:property:: subplot_nrows
+
+      Number of rows. The default value is ``2``.
+
+      :type: int
+
+   .. py:property:: subplot_share_colorbar
+
+      Use one common colorbar for all subplots.
+
+      :type: bool
+
+   .. py:property:: subplot_share_legend
+
+      Merge legend items of all subplots.
+
+      :type: bool
+
+   .. py:property:: subplot_sharex
+
+      Share the x-axis of subplots located in the same column.
+
+      :type: bool
+
+   .. py:property:: subplot_sharey
+
+      Share the y-axis of subplots located in the same row.
+
+      :type: bool
+
+   .. py:property:: subplot_sup_title
+
+      Title of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_sup_x_label
+
+      x-label of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_sup_y_label
+
+      y-label of the whole figure.
+
+      :type: str
+
+   .. py:property:: subplot_tight_layout
+
+      Tight layout of plot. The default value is ``False``.
+
+      :type: bool
+
+   .. py:property:: subplot_wspace
+
+      Horizontal spacing between the subplots.
+
+      :type: float
+
+   .. py:property:: tdos_plot_type
+
+      plot type of the tDOS data sets, supported options are ``'line'``, ``'fill'``
+      and ``'linefill'``.
+
+      :type: str
+
+   .. py:property:: x_label
+
+      Label of the x-axis. If ``None`` is given no label will be shown. The
+      default value is ``None``.
+
+      :type: str or None
+
+   .. py:property:: x_range
+
+      Range of the x-axis. The default value is ``None``.
+
+      :type: tuple or list
+
+   .. py:property:: y_label
+
+      Label of the y-axis. If ``None`` is given no label will be shown. The
+      default value is ``None``.
+
+      :type: str or None
+
+   .. py:property:: y_range
+
+      Range of the y-axis. The default value is ``None``.
+
+      :type: tuple or list
+
+
+   .. py:method:: add_vline(x, y_min, y_max, color=None, line_style=None, scaled=False, foreground=False, subplot_assignment=None, data_label=None)
+
+      Add a vertical line to the plot.
+
+      :Parameters: * **x** (*float*) -- x-position of the line.
+                   * **y_min** (*float*) -- Bottom y-position of the line.
+                   * **y_max** (*float*) -- Top y-position of the line.
+                   * **color** (*str or None*) -- Color of the line.
+                   * **line_style** (*str or None*) -- Line style of the line.
+                   * **scaled** (*bool*) -- Whether the input is given in scaled positions.
+                   * **foreground** (*bool*) -- Whether to plot the line in front of the other elements.
+                   * **subplot_assignment** (*list or None*) -- Assignment of the line to individual subplots.
+
+
+   .. py:method:: auto_set_axis_properties(set_x_label=True, set_y_label=True)
+
+      Whether the axis labels and other axis properties are auto-generated.
+
+      :Parameters: * **set_x_label** (*bool*) -- Set x-axis label automatically.
+                   * **set_y_label** (*bool*) -- Set y-axis label automatically.
+
+
+   .. py:method:: create_default_gridspec(nrows, ncols, nplots, heights=1, widths=1, center_last_row=True)
+
+      Create default grid for multiple plots.
+
+      :Parameters: * **nrows** (*Int*) -- Number of rows.
+                   * **ncols** (*int*) -- Number columns.
+                   * **nplots** (*int*) -- Number of subplots.
+                   * **heights** (*int (optional)*) -- Height of subplots.
+                   * **widths** (*int (optional)*) -- Width of subplots.
+                   * **center_last_row** (*bool (optional)*) -- Center the plots of the last row.
+
+
+   .. py:method:: import_from_aiida_xydata(data_label, pdosdata, shift_dos=0.0, use_smearing=False, sum_kinds=False, sum_principal_qn=True, sum_azimuth_qn=False, sum_magnetic_qn=True, detect_equivalent_kinds=False, custom_kind_dict=None)
+
+      Read projected density of states from an AiiDA xy-data node.
+
+      :Parameters: * **data_label** (*str*) -- Internal label used to plot and compare multiple data sets.
+                   * **pdosdata** (*aiida.orm.array.xy or dict*) -- AiiDA data node or dictionary of AiiDA data nodes for each kind.
+                   * **shift_dos** (*float*) -- Shift the density of states by constant value. The default value is ``0.0``.
+                   * **use_smearing** (*bool (optional)*) -- Whether to smear out the density of states. The default value is ``False``.
+                   * **sum_kinds** (*bool (optional)*) -- Whether to sum different kinds of the same element. The default value is ``False``.
+                   * **sum_principal_qn** (*bool (optional)*) -- Whether to sum up the principal quantum numbers. The default value is ``True``.
+                   * **sum_azimuth_qn** (*bool (optional)*) -- Whether to sum up the azimuth quantum numbers.
+                   * **sum_magnetic_qn** (*bool (optional)*) -- Whether to sum up the magnetic quantum numbers. The default value is ``True``.
+                   * **detect_equivalent_kinds** (*bool (optional)*) -- Tries to identify equivalent sites by calculating the difference of the projected
+                     densities at each energy value. The default value is ``False``.
+                   * **custom_kind_dict** (*dict or None (optional)*) -- Group the projected densities and put custom labels, e.g.
+                     ``{"label_1": (0, 1, 2), "label_2": (3, 4, 5)}``.
+
+
+   .. py:method:: import_projected_dos(data_label, energy, pdos, unit_x='eV', shift_dos=0.0, use_smearing=False, sum_kinds=False, sum_principal_qn=True, sum_azimuth_qn=False, sum_magnetic_qn=True, detect_equivalent_kinds=False, custom_kind_dict=None)
+
+      Import projected density of states.
+
+      :Parameters: * **data_label** (*str*) -- Internal label used to plot and compare multiple data sets.
+                   * **energy** (*list*) -- List of energy values.
+                   * **pdos** (*list*) -- List of projected density of states data. The list should consist of dictionaries with
+                     the orbital labels as keys and the pdos as values. Additionallly, the element and/or
+                     kind of the atom should be included.
+                   * **unit_x** (*str (optional)*) -- Unit of the energy. The default value is ``'eV'``.
+                   * **shift_dos** (*float (optional)*) -- Shift the density of states by constant value. The default value is ``0.0``.
+                   * **use_smearing** (*bool (optional)*) -- Whether to smear out the density of states. The default value is ``False``.
+                   * **sum_kinds** (*bool (optional)*) -- Whether to sum different kinds of the same element. The default value is ``False``.
+                   * **sum_principal_qn** (*bool (optional)*) -- Whether to sum up the principal quantum numbers. The default value is ``True``.
+                   * **sum_azimuth_qn** (*bool (optional)*) -- Whether to sum up the azimuth quantum numbers.
+                   * **sum_magnetic_qn** (*bool (optional)*) -- Whether to sum up the magnetic quantum numbers. The default value is ``True``.
+                   * **detect_equivalent_kinds** (*bool (optional)*) -- Tries to identify equivalent sites by calculating the difference of the projected
+                     densities at each energy value. The default value is ``False``.
+                   * **custom_kind_dict** (*dict or None (optional)*) -- Group the projected densities and put custom labels, e.g.
+                     ``{"label_1": (0, 1, 2), "label_2": (3, 4, 5)}``.
+
+
+   .. py:method:: import_total_dos(data_label, energy, tdos, use_smearing=False, unit_x='eV', shift_dos=0.0)
+
+      Import total density of states.
+
+      :Parameters: * **data_label** (*str*) -- Internal label used to plot and compare multiple data sets.
+                   * **energy** (*list*) -- List of energy values.
+                   * **tdos** (*list*) -- List of tDOS values.
+                   * **use_smearing** (*bool (optional)*) -- Whether to smear out the density of states. The default value is ``False``.
+                   * **unit_x** (*str (optional)*) -- Unit of the energy. The default value is ``'eV'``.
+                   * **shift_dos** (*float (optional)*) -- Shift the density of states by constant value. The default value is ``0.0``.
+
+
+   .. py:method:: plot(data_labels, plot_title=None, plot_name='plot.png', subplot_assignment=None)
+
+      Plot the data sets.
+
+      :Parameters: * **data_labels** (*list or str*) -- List of data labels of the data sets that are plotted or
+                     in case only one data set is plotted a string.
+                   * **plot_title** (*list or str (optional)*) -- Title of the plots or subplots.
+                   * **plot_name** (*str (optional)*) -- The file name of the plot.
+                   * **subplot_assignment** (*list or None (optional)*) -- Assignment of the data sets to individual subplots.
+
+      :returns: **fig** (*matplotlib.pyplot.figure or plotly.graph_objects.Figure*) -- Figure object of the plot.
+
+
+   .. py:method:: remove_additional_plot_elements()
+
+      Remove all added plot elements.
+
+
+   .. py:method:: reset_gridspec()
+
+      Reset gridspec settings.
+
+
+   .. py:method:: return_data_labels()
+
+      Return the labels of all data sets.
+
+      :returns: **data_labels** (*list*) -- List of the labels of all data sets.
+
+
+   .. py:method:: shift_dos(data_label, shift)
+
+      Shift density of states.
+
+      :Parameters: * **data_label** (*str*) -- Data label of the data set.
+                   * **shift** (*float*) -- Value to shift band structure and density of states.
+
+
+
+.. py:function:: BandStructure(*args, **kwargs)
+
+   Depreciated band structure class.
+
+
+.. py:function:: BandStructureDensityOfStates(*args, **kwargs)
+
+   Depreciated band structure DOS class.
+
+
+.. py:function:: DensityOfStates(*args, **kwargs)
+
+   Depreciated DOS class.
+
+

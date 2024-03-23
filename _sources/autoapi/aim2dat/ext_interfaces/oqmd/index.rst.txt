@@ -1,0 +1,11 @@
+:py:mod:`aim2dat.ext_interfaces.oqmd`
+=====================================
+
+.. py:module:: aim2dat.ext_interfaces.oqmd
+
+.. autoapi-nested-parse::
+
+   Interface to the open quantum materials database.
+
+
+

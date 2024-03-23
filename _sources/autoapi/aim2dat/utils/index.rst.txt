@@ -1,0 +1,24 @@
+:py:mod:`aim2dat.utils`
+=======================
+
+.. py:module:: aim2dat.utils
+
+.. autoapi-nested-parse::
+
+   Utils that are used for several modules.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   chem_formula/index.rst
+   element_properties/index.rst
+   maths/index.rst
+   space_groups/index.rst
+   units/index.rst
+
+

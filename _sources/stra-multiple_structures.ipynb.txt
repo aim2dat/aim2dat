@@ -1,0 +1,724 @@
+{
+ "cells": [
+  {
+   "cell_type": "raw",
+   "id": "5ad77f8a",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "====================================\n",
+    "Handling multiple structures at once\n",
+    "====================================\n",
+    "\n",
+    "To facilitate the work with larger sets of structures, e.g. for high-throughput studies, this package includes the :class:`StructureCollection <aim2dat.strct.StructureCollection>` and the :class:`StructureOperations <aim2dat.strct.StructureOperations>` classes. \n",
+    "\n",
+    "The ``StructureCollection`` class\n",
+    "=================================\n",
+    "\n",
+    "The :class:`StructureCollection <aim2dat.strct.StructureCollection>` acts as a data container for larger numbers of molecules or crystals: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "bcc00377-0e66-45fc-ab28-613922ebb323",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.strct import StructureCollection\n",
+    "\n",
+    "strct_c = StructureCollection()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "de136a36-b4f9-4cfc-b0e2-4ee19418679b",
+   "metadata": {},
+   "source": [
+    "The structures can be added to the object via the different `append*` functions of the object:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "11b651b2-053d-4e6e-9025-1993fbcf7224",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from ase.spacegroup import crystal\n",
+    "import aiida\n",
+    "from aiida.orm import StructureData\n",
+    "from aim2dat.strct import Structure\n",
+    "\n",
+    "structure_dict = {\n",
+    "    \"label\": \"Benzene\",\n",
+    "    \"elements\": [\"C\"] * 6 + [\"H\"] * 6,\n",
+    "    \"pbc\": False,\n",
+    "    \"positions\": [\n",
+    "        [-0.7040, -1.2194, -0.0000],\n",
+    "        [0.7040, -1.2194, -0.0000],\n",
+    "        [-1.4081, -0.0000, -0.0000],\n",
+    "        [1.4081, 0.0000, 0.0000],\n",
+    "        [-0.7040, 1.2194, 0.0000],\n",
+    "        [0.7040, 1.2194, -0.0000],\n",
+    "        [-1.2152, -2.1048, -0.0000],\n",
+    "        [1.2152, -2.1048, 0.0000],\n",
+    "        [-2.4304, -0.0000, 0.0000],\n",
+    "        [2.4304, 0.0000, 0.0000],\n",
+    "        [-1.2152, 2.1048, -0.0000],\n",
+    "        [1.2152, 2.1048, 0.0000],\n",
+    "    ],\n",
+    "}\n",
+    "strct_c.append(**structure_dict)\n",
+    "\n",
+    "structure = Structure(\n",
+    "    elements=[\"O\", \"H\", \"H\"],\n",
+    "    positions=[[0.0, 0.0, 0.119], [0.0, 0.763, -0.477], [0.0, -0.763, -0.477]],\n",
+    "    pbc=False,\n",
+    ")\n",
+    "strct_c.append_structure(structure, label=\"Water\")\n",
+    "\n",
+    "a = 4.066 * 2.0\n",
+    "GaAs_conv = crystal(\n",
+    "    (\"Ga\", \"As\"),\n",
+    "    basis=((0.0, 0.0, 0.0), (0.75, 0.75, 0.75)),\n",
+    "    spacegroup=216,\n",
+    "    cellpar=[a, a, a, 90, 90, 90],\n",
+    "    primitive_cell=False,\n",
+    ")\n",
+    "strct_c.append_from_ase_atoms(\"GaAs\", GaAs_conv)\n",
+    "\n",
+    "aiida.load_profile(\"tests\")\n",
+    "unit_cell = [[3.0, 0.0, 0.0], [0.0, 3.0, 0.0], [0.0, 0.0, 3.0]]\n",
+    "structure = StructureData(cell=unit_cell)\n",
+    "structure.label = \"Li\"\n",
+    "structure.append_atom(position=(0.0, 0.0, 0.0), symbols=\"Li\")\n",
+    "structure.append_atom(position=(1.5, 1.5, 1.5), symbols=\"Li\")\n",
+    "strct_c.append_from_aiida_structuredata(structure)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "079747b0-a369-4381-995f-3b8a6632221d",
+   "metadata": {},
+   "source": [
+    "Alternatively, a list of dictionaries can be passed upon initialization of the object:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "d528c29b-28c5-40a3-9220-cc48b316fc6c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_c2 = StructureCollection(structures=[structure_dict])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "f5f6fda0-3ea3-490a-9e7f-eef5f8ca4ecc",
+   "metadata": {},
+   "source": [
+    "A summary of the object is given by its string representation:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "11c19a4d-a90d-44ca-af85-488b6bd54229",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "----------------------------------------------------------------------\n",
+      "------------------------ Structure Collection ------------------------\n",
+      "----------------------------------------------------------------------\n",
+      "\n",
+      " - Number of structures: 4\n",
+      " - Elements: As-C-Ga-H-Li-O\n",
+      "\n",
+      "                              Structures                              \n",
+      "  - Benzene             C6H6                [False False False]\n",
+      "  - Water               OH2                 [False False False]\n",
+      "  - GaAs                Ga4As4              [True  True  True ]\n",
+      "  - Li                  Li2                 [True  True  True ]\n",
+      "----------------------------------------------------------------------\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(strct_c)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "5f459dcc-694e-4cbf-8070-33a0551217b6",
+   "metadata": {},
+   "source": [
+    "Additionally, a pandas data frame can be created based on the object's content:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "956b0150-ae74-4a26-b0f8-aa46d9a9eda4",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>label</th>\n",
+       "      <th>el_conc_C</th>\n",
+       "      <th>el_conc_H</th>\n",
+       "      <th>nr_atoms</th>\n",
+       "      <th>nr_atoms_C</th>\n",
+       "      <th>nr_atoms_H</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>Benzene</td>\n",
+       "      <td>0.5</td>\n",
+       "      <td>0.5</td>\n",
+       "      <td>12</td>\n",
+       "      <td>6</td>\n",
+       "      <td>6</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     label  el_conc_C  el_conc_H  nr_atoms  nr_atoms_C  nr_atoms_H\n",
+       "0  Benzene        0.5        0.5        12           6           6"
+      ]
+     },
+     "execution_count": 7,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "strct_c2.create_pandas_df()"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "8dc56f40",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The :class:`StructureCollection <aim2dat.strct.StructureCollection>` object contains features of the `list` and `dictionary` python types and stores each structure as :class:`Structure <aim2dat.strct.Structure>` object in a list.\n",
+    "As such each added structure gets an index (integer number) and a label (string) assigned that is used to obtain the structure.\n",
+    "While the label is stored within the :class:`Structure <aim2dat.strct.Structure>` object in the `label` property the index is given by the position in the internal list of the :class:`StructureCollection <aim2dat.strct.StructureCollection>` object and defined by the order of the ``append*`` function calls.\n",
+    "\n",
+    "The structure can be obtained via the :meth:`get_structure <aim2dat.strct.StructureCollection.get_structure>` function or squared brackets using its label or index:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "287e8a58-9d9d-4ba5-be3d-3425db10d65a",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "----------------------------------------------------------------------\n",
+      "-------------------------- Structure: Water --------------------------\n",
+      "----------------------------------------------------------------------\n",
+      "\n",
+      " Formula: OH2\n",
+      " PBC: [False False False]\n",
+      "\n",
+      "                                Sites                                 \n",
+      "  - O  None  [  0.0000   0.0000   0.1190]\n",
+      "  - H  None  [  0.0000   0.7630  -0.4770]\n",
+      "  - H  None  [  0.0000  -0.7630  -0.4770]\n",
+      "----------------------------------------------------------------------\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(strct_c[1])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "3c1bdec7-e2a5-45f7-96a1-bac16ebd610c",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "----------------------------------------------------------------------\n",
+      "-------------------------- Structure: Water --------------------------\n",
+      "----------------------------------------------------------------------\n",
+      "\n",
+      " Formula: OH2\n",
+      " PBC: [False False False]\n",
+      "\n",
+      "                                Sites                                 \n",
+      "  - O  None  [  0.0000   0.0000   0.1190]\n",
+      "  - H  None  [  0.0000   0.7630  -0.4770]\n",
+      "  - H  None  [  0.0000  -0.7630  -0.4770]\n",
+      "----------------------------------------------------------------------\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(strct_c[\"Water\"])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "4766111a-2980-402b-b5fe-822fdb1ac03b",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "----------------------------------------------------------------------\n",
+      "--------------------------- Structure: Li ----------------------------\n",
+      "----------------------------------------------------------------------\n",
+      "\n",
+      " Formula: Li2\n",
+      " PBC: [True True True]\n",
+      "\n",
+      "                                 Cell                                 \n",
+      " Vectors: - [  3.0000   0.0000   0.0000]\n",
+      "          - [  0.0000   3.0000   0.0000]\n",
+      "          - [  0.0000   0.0000   3.0000]\n",
+      " Lengths: [  3.0000   3.0000   3.0000]\n",
+      " Angles: [ 90.0000  90.0000  90.0000]\n",
+      " Volume: 27.0000\n",
+      "\n",
+      "                                Sites                                 \n",
+      "  - Li None  [  0.0000   0.0000   0.0000] [  0.0000   0.0000   0.0000]\n",
+      "  - Li None  [  1.5000   1.5000   1.5000] [  0.5000   0.5000   0.5000]\n",
+      "----------------------------------------------------------------------\n"
+     ]
+    }
+   ],
+   "source": [
+    "print(strct_c.get_structure(3))"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "6d3c8347",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Similar to a `list` the index of the structure is returned using the :meth:`index <aim2dat.strct.StructureCollection.index>` function and a structure can be deleted via `del` and the :meth:`pop <aim2dat.strct.StructureCollection.pop>` function is implemented as well.\n",
+    "All labels of the structures are returned via the :attr:`labels <aim2dat.strct.StructureCollection.labels>` property:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "e71ee6ed-b618-469e-a9af-410b89083c90",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "['Water', 'GaAs', 'Li']"
+      ]
+     },
+     "execution_count": 11,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "del strct_c[\"Benzene\"]\n",
+    "strct_c.labels"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e8d55353-4c93-4798-95b2-4bd107a71f96",
+   "metadata": {},
+   "source": [
+    "Two structure collection objects can be merged into one using `+`:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "e40379b1-6495-4a50-9cec-4c6881a3f7e9",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(strct_c + strct_c2)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "1b4e70ed",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "There are two ways to store all structures contained in the `StructureCollection` object, the structures can be written into a hdf5 file or into an AiiDA database using the functions `store_in_hdf5_file` and `store_in_aiidadb`, respectively.\n",
+    "The structures can be retrieved using the corresponding `import_from_hdf5_file` and `import_from_aiidadb` functions."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b94cceaa-8265-4c98-a860-b22d7c71bdfe",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_c.store_in_aiida_db(group_label=\"test\")\n",
+    "strct_c = StructureCollection()\n",
+    "strct_c.import_from_aiida_db(group_label=\"test\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "53a92523-dc09-4fec-954d-3b700295e21e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_c.store_in_hdf5_file(\"test.h5\")\n",
+    "strct_c = StructureCollection()\n",
+    "strct_c.import_from_hdf5_file(\"test.h5\")"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "294dfa6e",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Analysis and manipulation of multiple structures via the ``StructureOperations`` class\n",
+    "======================================================================================\n",
+    "\n",
+    "The :class:`StructureOperations <aim2dat.strct.StructureOperations>` class offers the same structural analysis and manipulation methods as implemented in the :class:`Structure <aim2dat.strct.Structure>` class but offers a more convenient interface to apply the methods on multiple structures at once.\n",
+    "\n",
+    "The :class:`StructureOperations <aim2dat.strct.StructureOperations>` object demands a :class:`StructureCollection <aim2dat.strct.StructureCollection>` object upon initialization which the class uses as internal storage for the original as well as newly created structures via the manipulation methods:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "fc6aa646-da1a-4d0b-b4f7-913508b985bf",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.strct import StructureOperations\n",
+    "\n",
+    "strct_c += strct_c2\n",
+    "strct_op = StructureOperations(structures=strct_c, verbose=False)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "b80d1a77",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "There are three additional properties to be set:\n",
+    "\n",
+    "* :meth:`verbose <aim2dat.strct.StructureOperations.verbose>` expects a boolean variable, if set to ``True`` a progress bar is shown.\n",
+    "* :meth:`append_to_coll <aim2dat.strct.StructureOperations.append_to_coll>` expects a boolean variable and defines whether new manipulated structures should be appended to the :class:`StructureCollection <aim2dat.strct.StructureCollection>` stored in the :attr:`structures <aim2dat.strct.StructureOperations.structures>` property.\n",
+    "* :attr:`output_format <aim2dat.strct.StructureOperations.output_format>` expects a string and specifies the output format for the analysis methods. \n",
+    "\n",
+    "A list of all supported options is returned via the :attr:`supported_output_formats <aim2dat.strct.StructureOperations.supported_output_formats>` property:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "cef1f988-edd1-407a-bbed-0f78a8f65eee",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_op.supported_output_formats"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "f2127e17",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "All methods of the class are parallelized, two properties control the parallelization, both expecting a positive integer number:\n",
+    "\n",
+    "* :attr:`n_procs <aim2dat.strct.StructureOperations.n_procs>` sets the number of used processes.\n",
+    "* :attr:`chunksize <aim2dat.strct.StructureOperations.chunksize>` defines the number of tasks assigned to each process at once.\n",
+    "\n",
+    "As mentioned before, the :class:`StructureOperations <aim2dat.strct.StructureOperations>` class inherits the same analysis and manipulation methods as the :class:`Structure <aim2dat.strct.Structure>` class which can be listed with the same properties:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "293f2c42-64bb-4c89-befc-8c2dad15ac00",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(\"Analysis methods: \", strct_op.analysis_methods)\n",
+    "print(\"Manipulation methods: \", strct_op.manipulation_methods)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "807b2c8a",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The analysis and manipulation methods work the same way as for the :class:`Structure <aim2dat.strct.Structure>` object, however, now we have the option to specify the first argument of the methods which gives the key or a list/tuple of keys in order to apply the method on the structure(s) in the :class:`StructureCollection <aim2dat.strct.StructureCollection>` identified by the key(s).\n",
+    "In case a single key is given by an integer number or the structure label the output will be the same as for the :class:`Structure <aim2dat.strct.Structure>`.\n",
+    "For example, the calculation of the distance between two atoms can be performed via the :class:`StructureOperations <aim2dat.strct.StructureOperations>` or the :class:`StructureCollection <aim2dat.strct.StructureCollection>` object in one line:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "53cfde2c-c2dd-4a1e-810e-2043b85d80fa",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(\"One structure: \", strct_op.calculate_distance(\"Benzene\", 2, 3))\n",
+    "print(\"One structure: \", strct_c[\"Benzene\"].calculate_distance(site_index1=2, site_index2=3))"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "7bada2b6",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "The advantage of the :class:`StructureOperations <aim2dat.strct.StructureOperations>` class comes into play, when several structures are analysed at once, e.g.:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "c53de27f-2545-446b-bc5d-34ba544fe0d6",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "print(\"Multiple structures: \", strct_op.calculate_distance([0, 1], 0, 1))"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "c78f5f60",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "If the :attr:`output_format <aim2dat.strct.StructureOperations.output_format>` is changed to ``'DataFrame'`` a pandas data frame is returned using the structure labels as indices and the results are stored in a column named like the called method:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ec15c518-44cf-4b7f-a71d-78e72e53abb0",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "strct_op.output_format = \"DataFrame\"\n",
+    "strct_op.calculate_distance([0, 1], 0, 1)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "b0e60109",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "As for the structural manipulation methods, once again, the output for a single key will be the same for the :class:`Structure <aim2dat.strct.Structure>`\n",
+    "The only difference is that if :attr:`append_to_coll <aim2dat.strct.StructureOperations.append_to_coll>` is set to ``True`` the new structure (for the manipulation methods) is also added to its :class:`StructureCollection <aim2dat.strct.StructureCollection>` object:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "66609e9a-5b7f-47fc-a7d1-d29a0d707fd3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "subst_structure = strct_op.substitute_elements(\"GaAs\", (\"Ga\", \"Al\"), change_label=True)\n",
+    "print(subst_structure)\n",
+    "print(strct_op.structures.labels)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "c8e7bc07",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "We can see that if ``change_label`` is set to ``True`` the newly created :class:`Structure <aim2dat.strct.Structure>` is added to :attr:`structures <aim2dat.strct.StructureOperations.structures>`.\n",
+    "If we set ``change_label`` to ``False`` the original structure will be overwritten:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9b1e3b30-903f-4606-8ccc-fefb51977c0f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "subst_structure = strct_op.substitute_elements(\"GaAs\", (\"Ga\", \"Al\"), change_label=False)\n",
+    "print(subst_structure)\n",
+    "print(strct_op.structures.labels)\n",
+    "print(strct_op.structures[\"GaAs\"])"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "3ddf5d89",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "For a list/tuple of keys instead of a :class:`Structure <aim2dat.strct.Structure>` a :class:`StructureCollection <aim2dat.strct.StructureCollection>` is returned containing the structures identified via the keys:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "23c4843a-8d44-4250-a8ab-f1873692034f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "subst_structures = strct_op.substitute_elements(\n",
+    "    strct_op.structures.labels, (\"Al\", \"Ga\"), change_label=False\n",
+    ")\n",
+    "print(subst_structures)"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "4ffcecd6",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "It is important to note that in this case, all structures are returned regardless of whether they are actually changed by the method or not.\n",
+    "\n",
+    "External analysis and manipulation methods can be used via the implemented :meth:`perform_analysis <aim2dat.strct.StructureOperations.perform_analysis>` and :meth:`perform_manipulation <aim2dat.strct.StructureOperations.perform_manipulation>` functions, respectively.\n",
+    "In this case the analysis function and its keyword arguments need to be passed."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "08875c33-c7cb-4e2b-bde8-f73bce92bda7",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.strct.ext_analysis import calculate_prdf\n",
+    "\n",
+    "output = strct_op.perform_analysis(\"Benzene\", calculate_prdf, {\"r_max\": 7.5})"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "b90fdc76",
+   "metadata": {
+    "raw_mimetype": "text/restructuredtext"
+   },
+   "source": [
+    "Comparing structures via the ``StructureOperations`` class\n",
+    "==========================================================\n",
+    "\n",
+    "Another handy feature of the class are its comparison methods between to structures or the sites of a structure:\n",
+    "\n",
+    "* :meth:`compare_structures_via_ffingerprint <aim2dat.strct.StructureOperations.compare_structures_via_ffingerprint>`\n",
+    "* :meth:`compare_structures_via_comp_sym <aim2dat.strct.StructureOperations.compare_structures_via_comp_sym>`\n",
+    "* :meth:`compare_structures_via_direct_comp <aim2dat.strct.StructureOperations.compare_structures_via_direct_comp>`\n",
+    "* :meth:`compare_sites_via_coordination <aim2dat.strct.StructureOperations.compare_sites_via_coordination>`\n",
+    "* :meth:`compare_sites_via_ffingerprint <aim2dat.strct.StructureOperations.compare_sites_via_ffingerprint>`\n",
+    "\n",
+    "And methods to filter out duplicate structures or find equivalent sites based on the comparison methods:\n",
+    "\n",
+    "* :meth:`find_duplicates_via_ffingerprint <aim2dat.strct.StructureOperations.find_duplicates_via_ffingerprint>`\n",
+    "* :meth:`find_duplicates_via_comp_sym <aim2dat.strct.StructureOperations.find_duplicates_via_comp_sym>`\n",
+    "* :meth:`find_duplicates_via_direct_comp <aim2dat.strct.StructureOperations.find_duplicates_via_direct_comp>`\n",
+    "* :meth:`find_eq_sites_via_coordination <aim2dat.strct.StructureOperations.find_eq_sites_via_coordination>`\n",
+    "* :meth:`find_eq_sites_via_ffingerprint <aim2dat.strct.StructureOperations.find_eq_sites_via_ffingerprint>`\n",
+    "\n",
+    "\n",
+    "Related examples\n",
+    "================\n",
+    "\n",
+    "* :doc:`Querying crystals from online databases <examples/strct-odb_interfaces>`\n",
+    "\n",
+    "\n",
+    "Related API instances\n",
+    "=====================\n",
+    "\n",
+    "* :class:`StructureCollection <aim2dat.strct.StructureCollection>`\n",
+    "* :class:`StructureOperations <aim2dat.strct.StructureOperations>`"
+   ]
+  }
+ ],
+ "metadata": {
+  "celltoolbar": "Raw Cell Format",
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.13"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

@@ -1,0 +1,37 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.ext_analysis.warren_cowley_order_parameters`
+===================================================================
+
+.. py:module:: aim2dat.strct.ext_analysis.warren_cowley_order_parameters
+
+.. autoapi-nested-parse::
+
+   Functions to calculate the Warren-Cowley like order parameters.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.ext_analysis.warren_cowley_order_parameters.calculate_warren_cowley_order_p
+
+
+
+.. py:function:: calculate_warren_cowley_order_p(structure: aim2dat.strct.strct.Structure, r_max: float = 20.0, max_shells: int = 3)
+
+   Calculate Warren-Cowley like order parameters as defined in :doi:`10.1103/PhysRevB.96.024104`.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                * **max_shells** (*int*) -- Number of neighbour shells that are evaluated.
+
+   :returns: *dict* -- Dictionary containing the order parameters.
+
+

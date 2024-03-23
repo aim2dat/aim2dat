@@ -1,0 +1,43 @@
+:py:mod:`aim2dat.io.critic2`
+============================
+
+.. py:module:: aim2dat.io.critic2
+
+.. autoapi-nested-parse::
+
+   Functions to read output-files of critic2.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.io.critic2.read_plane
+   aim2dat.io.critic2.read_stdout
+
+
+
+.. py:function:: read_plane(file_name)
+
+   Read output plane file.
+
+   :Parameters: **file_name** (*str*) -- Path to the file.
+
+   :returns: *dict* -- plane details.
+
+
+.. py:function:: read_stdout(file_name)
+
+   Read standard output file.
+
+   :Parameters: **file_name** (*str*) -- Path to the file.
+
+   :returns: *dict* -- Results.
+
+

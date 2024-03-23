@@ -1,0 +1,11 @@
+:py:mod:`aim2dat.ext_interfaces.aiida`
+======================================
+
+.. py:module:: aim2dat.ext_interfaces.aiida
+
+.. autoapi-nested-parse::
+
+   Auxiliary functions for structure-importers.
+
+
+

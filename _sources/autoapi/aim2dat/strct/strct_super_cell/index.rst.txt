@@ -1,0 +1,31 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.strct_super_cell`
+========================================
+
+.. py:module:: aim2dat.strct.strct_super_cell
+
+.. autoapi-nested-parse::
+
+   Module to create a supercell of an existing structure.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.strct_super_cell.calculate_voronoi_tessellation
+
+
+
+.. py:function:: calculate_voronoi_tessellation(structure: aim2dat.strct.structure.Structure, r_max: float) -> Tuple[None, List[List[dict]]]
+
+   Calculate voronoi tessellation.
+
+

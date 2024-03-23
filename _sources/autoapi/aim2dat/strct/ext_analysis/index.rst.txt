@@ -1,0 +1,256 @@
+:py:mod:`aim2dat.strct.ext_analysis`
+====================================
+
+.. py:module:: aim2dat.strct.ext_analysis
+
+.. autoapi-nested-parse::
+
+   Methods acting on a ``Structure`` object to calculate structural properties and features.
+
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   decorator/index.rst
+
+
+Package Contents
+----------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.ext_analysis.calculate_acsf_descriptor
+   aim2dat.strct.ext_analysis.calculate_ffingerprint_order_p
+   aim2dat.strct.ext_analysis.calculate_interaction_matrix
+   aim2dat.strct.ext_analysis.calculate_mbtr_descriptor
+   aim2dat.strct.ext_analysis.calculate_planes
+   aim2dat.strct.ext_analysis.calculate_prdf
+   aim2dat.strct.ext_analysis.calculate_soap_descriptor
+   aim2dat.strct.ext_analysis.calculate_warren_cowley_order_p
+   aim2dat.strct.ext_analysis.create_graph
+   aim2dat.strct.ext_analysis.determine_molecular_fragments
+
+
+
+.. py:function:: calculate_acsf_descriptor(structure: aim2dat.strct.strct.Structure, r_cut: float = 7.5, g2_params: list = None, g3_params: list = None, g4_params: list = None, g5_params: list = None, elements: list = None, periodic: bool = False, sparse: bool = False, dscribe_n_jobs: int = 1, dscribe_only_physical_cores: bool = False) -> List[float]
+
+   Calculate ACSF descriptor as defined in :doi:`10.1063/1.3553717`. This method is
+   based on the implementations of the dscribe python package.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **r_cut** (*float*) -- Cutoff value.
+                * **g2_params** (*np.array*) -- List of pairs of eta and R_s values for the G^2 functions.
+                * **g3_params** (*np.array*) -- List of kappa values for the G^3 functions.
+                * **g4_params** (*np.array*) -- List of triplets of eta, zeta and lambda values for G^4 functions.
+                * **g5_params** (*np.array*) -- List of triplets of eta, zeta and lambda values for G^5 functions.
+                * **elements** (*list*) -- List of atomic numbers or chemical symbols.
+                * **periodic** (*bool*) -- Whether to consider periodic boundary conditions.
+                * **sparse** (*bool*) -- Whether to return a sparse matrix or a dense array.
+                * **dscribe_n_jobs** (*int*) -- Number of jobs used by dscribe to calculate the interaction matrix.
+                * **dscribe_only_physical_cores** (*bool*) -- Whether to only use physicsl cores.
+
+   :returns: *list* -- ACSF descriptor.
+
+
+.. py:function:: calculate_ffingerprint_order_p(structure: aim2dat.strct.strct.Structure, r_max: float = 15.0, delta_bin: float = 0.005, sigma: float = 0.05, distinguish_kinds: bool = False) -> Tuple[float, List[float]]
+
+   Calculate order parameters for the total structure and for each individual site.
+
+   The calculation is based on equation (5) in :doi:`10.1016/j.cpc.2010.06.007`.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                * **delta_bin** (*float (optional)*) -- Bin size to descritize the function in angstrom.
+                * **sigma** (*float (optional)*) -- Smearing parameter for the Gaussian function.
+                * **distinguish_kinds** (*bool (optional)*) -- Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
+                  different elements if ``True``.
+
+   :returns: * **total_order_p** (*float*) -- Order parameter of the structure.
+             * **atomic_fingerprints** (*list*) -- List of order parameters for each atomic site.
+
+
+.. py:function:: calculate_interaction_matrix(structure: aim2dat.strct.strct.Structure, matrix_type: str = 'coulomb', n_atoms_max: int = None, enforce_real: bool = False, permutation: str = 'eigenspectrum', sigma: float = None, seed: int = None, sparse: bool = False, ewald_accuracy: float = 1e-05, ewald_w: int = 1, ewald_r_cut: float = None, ewald_g_cut: float = None, ewald_a: float = None, dscribe_n_jobs: int = 1, dscribe_only_physical_cores: bool = False) -> list
+
+   Calculate interaction matrices as defined in :doi:`10.1002/qua.24917`.
+   This method is based on the implementations of the dscribe python package.
+
+   :ivar structure: Structure object.
+   :vartype structure: aim2dat.strct.Structure
+   :ivar matrix_type: Matrix type. Supported options are ``'coulomb'``, ``'ewald_sum'`` or ``'sine'``.
+   :vartype matrix_type: str
+   :ivar permutation: Defines the output format. Options are: ``'none'``, ``'sorted_l2'``,
+                      ``'eigenspectrum'`` or ``'random'``.
+   :vartype permutation: str
+   :ivar sigma: Standar deviation of the Gaussian distributed noise when using ``'random'`` for
+                ``permutation``.
+   :vartype sigma: float
+   :ivar seed: Seed for the random numbers in case ``'random'`` is chosen for the ``permutation``
+               attibute.
+   :vartype seed: int
+   :ivar sparse: Whether to return a sparse matrix or a dense 1D array.
+   :vartype sparse: bool
+   :ivar ewald_accuracy: Accuracy threshold for the Ewald sum.
+   :vartype ewald_accuracy: float
+   :ivar ewald_w: Weight parameter.
+   :vartype ewald_w: int
+   :ivar ewald_r_cut: Real space cutoff parameter.
+   :vartype ewald_r_cut: float or None
+   :ivar ewald_g_cut: Reciprocal space cutoff parameter.
+   :vartype ewald_g_cut: float or None
+   :ivar ewald_a: Parameter controlling the width of the Gaussian functions.
+   :vartype ewald_a: float or None
+   :ivar dscribe_n_jobs: Number of jobs used by dscribe to calculate the interaction matrix.
+   :vartype dscribe_n_jobs: int
+   :ivar dscribe_only_physical_cores: Whether to only use physicsl cores.
+
+   :vartype dscribe_only_physical_cores: bool
+
+   :returns: *list* -- Interaction matrix descriptor.
+
+
+.. py:function:: calculate_mbtr_descriptor(structure: aim2dat.strct.strct.Structure, geometry: dict = {'function': 'inverse_distance'}, grid: dict = {'min': 0, 'max': 1, 'n': 100, 'sigma': 0.1}, weighting: dict = {'function': 'exp', 'scale': 1.0, 'threshold': 0.001}, normalize_gaussians: bool = True, normalization: str = 'l2', elements: list = None, periodic: bool = False, sparse: bool = False, dscribe_n_jobs: int = 1, dscribe_only_physical_cores: bool = False) -> List[float]
+
+   Calculate MBTR descriptor as defined in :doi:`10.1088/2632-2153/aca005`. This method
+   is based on the implementations of the dscribe python package.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **geometry** (*dict*) -- Setup the geometry function.
+                * **grid** (*dict*) -- Setup the discretization grid.
+                * **weighting** (*dict*) -- Setup the weighting function and its parameters.
+                * **normalize_gaussians** (*bool*) -- Whether to normalize the gaussians to an area of 1.
+                * **normalization** (*str*) -- Method for normalizing. Supported options are ``'none'``, ``'l2'``, ``'n_atoms'``,
+                  ``'valle_oganov'``.
+                * **elements** (*list*) -- List of atomic numbers or chemical symbols.
+                * **periodic** (*bool*) -- Whether to consider periodic boundary conditions.
+                * **sparse** (*bool*) -- Whether to return a sparse matrix or a dense array.
+                * **dscribe_n_jobs** (*int*) -- Number of jobs used by dscribe to calculate the interaction matrix.
+                * **dscribe_only_physical_cores** (*bool*) -- Whether to only use physicsl cores.
+
+   :returns: *list* -- MBTR descriptor.
+
+
+.. py:function:: calculate_planes(structure: aim2dat.strct.strct.Structure, r_max: float = 15.0, fragment: list = None, threshold: float = 0.05, margin: float = 1.0, vector_lengths: List[float] = None, min_nr_atoms: int = 5, use_scaled_coordinates: bool = False) -> list
+
+   Find planar arangements of atoms in the structure.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                * **fragment** (*list or None (optional)*) -- Whether to restrict the search to a fragment of the structure.
+                * **threshold** (*float (optional)*) -- Numerical threshold to consider an atom to be part of the plane.
+                * **margin** (*float (optional)*) -- Margin between the plane vectors and outermost atoms.
+                * **vector_lengths** (*list (optional)*) -- Absolute lengths of the plane vectors (overwrites ``margin``).
+                * **use_scaled_coordinates** (*bool (optional)*) -- Whether to use scaled coordinates for the calculation.
+
+   :returns: *list* -- List of planes.
+
+
+.. py:function:: calculate_prdf(structure: aim2dat.strct.strct.Structure, r_max: float = 20.0, delta_bin: float = 0.005, distinguish_kinds: bool = False) -> Tuple[dict, dict]
+
+   Calculate the partial radial distribution function. The calculation is based on:
+   :doi:`10.1103/PhysRevB.89.205118`.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                * **delta_bin** (*float (optional)*) -- Bin size to descritize the function in angstrom.
+                * **distinguish_kinds** (*bool (optional)*) -- Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
+                  different elements if ``True``.
+
+   :returns: * **element_prdf** (*dict*) -- Dictionary containing all partial radial distribution functions of the structure
+               summed over all atoms of the same element.
+             * **atomic_prdf** (*dict*) -- Dictionary containing all individual partial radial distribution functions for each
+               atomic site.
+
+
+.. py:function:: calculate_soap_descriptor(structure: aim2dat.strct.strct.Structure, r_cut: float = 7.5, n_max: list = 8, l_max: list = 6, sigma: float = 1.0, rbf: str = 'gto', weighting: dict = None, compression: dict = {'mode': 'off', 'species_weighting': None}, average: str = 'off', elements: list = None, periodic: bool = False, sparse: bool = False, dscribe_n_jobs: int = 1, dscribe_only_physical_cores: bool = False) -> List[float]
+
+   Calculate SOAP descriptor as defined in :doi:`10.1103/PhysRevB.87.184115`. This method
+    is based on the implementations of the dscribe python package.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **r_cut** (*float*) -- Cutoff value.
+                * **n_max** (*int*) -- The number of radial basis functions.
+                * **l_max** (*int*) -- The maximum degree of spherical harmonics.
+                * **sigma** (*float*) -- The standard deviation of the gaussians.
+                * **rbf** (*str*) -- The radial basis functions to use. Supported options are: ``'gto'`` or
+                  ``'polynomial'``.
+                * **weighting** (*dict*) -- Contains the options which control the weighting of the atomic density.
+                * **compression** (*dict*) -- Feature compression options.
+                * **average** (*str*) -- The averaging mode over the centers of interest. Supported options are: ``'off'``,
+                  ``'inner'`` or ``'outer'``.
+                * **elements** (*list*) -- List of atomic numbers or chemical symbols.
+                * **periodic** (*bool*) -- Whether to consider periodic boundary conditions.
+                * **sparse** (*bool*) -- Whether to return a sparse matrix or a dense array.
+                * **dscribe_n_jobs** (*int*) -- Number of jobs used by dscribe to calculate the interaction matrix.
+                * **dscribe_only_physical_cores** (*bool*) -- Whether to only use physicsl cores.
+
+   :returns: *list* -- SOAP descriptor.
+
+
+.. py:function:: calculate_warren_cowley_order_p(structure: aim2dat.strct.strct.Structure, r_max: float = 20.0, max_shells: int = 3)
+
+   Calculate Warren-Cowley like order parameters as defined in :doi:`10.1103/PhysRevB.96.024104`.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                * **max_shells** (*int*) -- Number of neighbour shells that are evaluated.
+
+   :returns: *dict* -- Dictionary containing the order parameters.
+
+
+.. py:function:: create_graph(structure: aim2dat.strct.strct.Structure, graphviz_engine: str = 'circo', graphviz_edge_rank_colors: List[str] = ['blue', 'red', 'green', 'orange', 'darkblue'], r_max: float = 20.0, cn_method: str = 'minimum_distance', min_dist_delta: float = 0.1, n_nearest_neighbours: int = 5, econ_tolerance: float = 0.5, econ_conv_threshold: float = 0.001, voronoi_weight_type: float = 'rel_solid_angle', voronoi_weight_threshold: float = 0.5)
+
+   Create graph based on the coordination.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **graphviz_engine** (*str*) -- Graphviz engine used to create the graph. The default value is ``'circo'``.
+                * **graphviz_edge_rank_colors** (*list*) -- List of colors of the different edge ranks.
+                * **r_max** (*float*) -- Cut-off value for the maximum distance between two atoms in angstrom. The default
+                  value is set to ``20.0``.
+                * **cn_method** (*str*) -- Method used to calculate the coordination environment. The default value is
+                  ``'minimum_distance'``.
+                * **min_dist_delta** (*float*) -- Tolerance parameter that defines the relative distance from the nearest neighbour atom
+                  for the ``'minimum_distance'`` method. The default value is ``0.1``.
+                * **n_nearest_neighbours** (*int*) -- Number of neighbours that are considered coordinated for the ``'n_neighbours'``
+                  method. The default value is ``5``.
+                * **econ_tolerance** (*float*) -- Tolerance parameter for the econ method. The default value is ``0.5``.
+                * **econ_conv_threshold** (*float*) -- Convergence threshold for the econ method. The default value is ``0.001``.
+                * **voronoi_weight_type** (*str (optional)*) -- Weight type of the Voronoi facets. Supported options are ``'covalent_atomic_radius'``,
+                  ``'area'`` and ``'solid_angle'``. The prefix ``'rel_'`` specifies that the relative
+                  weights with respect to the maximum value of the polyhedron are calculated.
+                * **voronoi_weight_threshold** (*float (optional)*) -- Weight threshold to consider a neighbouring atom coordinated.
+
+   :returns: * **nx_graph** (*nx.MultiDiGraph*) -- networkx graph of the structure.
+             * **graphviz_graph** (*graphviz.Digraph*) -- graphviz graph of the structure.
+
+
+.. py:function:: determine_molecular_fragments(structure: aim2dat.strct.strct.Structure, exclude_elements: List[str] = [], end_point_elements: List[str] = [], r_max: float = 20.0, cn_method: str = 'minimum_distance', min_dist_delta: float = 0.1, n_nearest_neighbours: int = 5, econ_tolerance: float = 0.5, econ_conv_threshold: float = 0.001, voronoi_weight_type: float = 'rel_solid_angle', voronoi_weight_threshold: float = 0.5, okeeffe_weight_threshold: float = 0.5)
+
+   Find molecular fragments in a larger molecule/cluster of periodic crystal.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **exclude_elements** (*list*) -- List of elements that are excluded from the search.
+                * **end_point_elements** (*list*) -- List of elements that serve as an end point for a fragment.
+                * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                * **cn_method** (*str (optional)*) -- Method used to calculate the coordination environment.
+                * **min_dist_delta** (*float (optional)*) -- Tolerance parameter that defines the relative distance from the nearest neighbour atom
+                  for the ``'minimum_distance'`` method.
+                * **n_nearest_neighbours** (*int (optional)*) -- Number of neighbours that are considered coordinated for the ``'n_neighbours'``
+                  method.
+                * **econ_tolerance** (*float (optional)*) -- Tolerance parameter for the econ method.
+                * **econ_conv_threshold** (*float (optional)*) -- Convergence threshold for the econ method.
+                * **voronoi_weight_type** (*str (optional)*) -- Weight type of the Voronoi facets. Supported options are ``'covalent_atomic_radius'``,
+                  ``'area'`` and ``'solid_angle'``. The prefix ``'rel_'`` specifies that the relative
+                  weights with respect to the maximum value of the polyhedron are calculated.
+                * **voronoi_weight_threshold** (*float (optional)*) -- Weight threshold to consider a neighbouring atom coordinated.
+
+   :returns: *list* -- List of fragments.
+
+

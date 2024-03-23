@@ -1,0 +1,209 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "0cd67c25",
+   "metadata": {},
+   "source": [
+    "# Plotting planar fields from Critic2 output files\n",
+    "\n",
+    "In this example we plot the electron deformation density (EDD) of four different variants of the imidazole molecule as plotted in [doi:10.1021/acs.jpcc.3c06054](https://doi.org/10.1021/acs.jpcc.3c06054).\n",
+    "\n",
+    "The process can be divided in tw steps:\n",
+    "\n",
+    "* Creating the plane vectors used as input for *Critic2* to calculate the planar field.\n",
+    "* Parsing the output files from *Critic2* and importing them into the plot class.\n",
+    "* Plotting the data.\n",
+    "\n",
+    "## Calculating the plane vectors\n",
+    "\n",
+    "First, the plane vectors are calculated using the input structures read from the quantume espresso input-file. We use the ``read_input_structure`` function of the ``io`` sub-package. The periodic boundary conditions are removed to avoid the inclusion of periodic replicas in the plane calculation. The plane itself is calculated using the ``calculate_planes`` analysis function of the ``Structure`` object:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "eced2a2b",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.io.qe import read_input_structure\n",
+    "from aim2dat.strct import Structure\n",
+    "from aim2dat.strct.ext_analysis import calculate_planes\n",
+    "\n",
+    "functional_groups = {\n",
+    "    \"H\": (True, False),\n",
+    "    \"CH3\": (False, True),\n",
+    "    \"Cl\": (True, False),\n",
+    "    \"Br\": (True, False),\n",
+    "}\n",
+    "proj_positions = []\n",
+    "\n",
+    "for fct_grp in functional_groups:\n",
+    "    struct_dict = read_input_structure(f\"files/el_def_density_critic2/pw.scf_{fct_grp}.in\")\n",
+    "    struct_dict[\"pbc\"] = False\n",
+    "    del struct_dict[\"cell\"]\n",
+    "    structure = Structure(**struct_dict)\n",
+    "    plane = calculate_planes(structure, threshold=0.01, margin=1.2)[0]\n",
+    "    print(\n",
+    "        f\"{fct_grp}:\",\n",
+    "        f\"{plane['plane'][0][0]:.3f} {plane['plane'][0][1]:.3f} {plane['plane'][0][2]:.3f} \"\n",
+    "        f\"{plane['plane'][1][0]:.3f} {plane['plane'][1][1]:.3f} {plane['plane'][1][2]:.3f} \"\n",
+    "        f\"{plane['plane'][2][0]:.3f} {plane['plane'][2][1]:.3f} {plane['plane'][2][2]:.3f} \",\n",
+    "    )\n",
+    "    proj_positions.append(plane[\"proj_positions\"])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ec373e17",
+   "metadata": {},
+   "source": [
+    "Each plane is defined by three vectors serving as input for *Critic2*. The method also calculates the projected positions of the atoms which we store in the ``proj_positions`` list for later use in the plot class.\n",
+    "\n",
+    "## Parsing and importing the critic2 field data into the ``PlanarFieldPlot`` class\n",
+    "\n",
+    "Once the calculation of the EDD (or any other field) has finished sucessfully the data can be parsed making use of the ``read_plane`` function of the ``io`` sub-package:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "013e9ef8",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.io.critic2 import read_plane\n",
+    "\n",
+    "plane_data = []\n",
+    "\n",
+    "for fct_grp in functional_groups:\n",
+    "    plane_data.append(read_plane(f\"files/el_def_density_critic2/rhodef_{fct_grp}\"))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "2375f2ef",
+   "metadata": {},
+   "source": [
+    "Now, we can initiate an instance of the ``PlanarFieldPlot`` class of the ``plots`` sub-package and import the planes with the corresponding atom labels:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "a3603eaa",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.plots import PlanarFieldPlot\n",
+    "\n",
+    "pf_plot = PlanarFieldPlot()\n",
+    "for (fct_grp, frg_det), pd0, pos0 in zip(functional_groups.items(), plane_data, proj_positions):\n",
+    "    pf_plot.import_field(fct_grp, **pd0, text_labels=pos0, flip_lr=frg_det[0], flip_ud=frg_det[1])"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b06640cb",
+   "metadata": {},
+   "source": [
+    "## Plotting the field\n",
+    "\n",
+    "Before plotting the data we specify a few plotting parameters: "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "d8524676",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pf_plot.ratio = [5, 6]\n",
+    "pf_plot.equal_aspect_ratio = True\n",
+    "pf_plot.norm = \"symlog\"\n",
+    "pf_plot.color_map = \"RdBu_r\"\n",
+    "pf_plot.contour_filled = True\n",
+    "pf_plot.vmin = -10.0\n",
+    "pf_plot.vmax = 10.0\n",
+    "pf_plot.show_colorbar = True"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "cb68ce0c",
+   "metadata": {},
+   "source": [
+    "Now we are ready to plot the field for the first molecule. \n",
+    "Red fraction of the heatmap highlight electron accumulation in comparison to the case of isolated atoms and blue electron depletation.\n",
+    "Thus, the character of the covalent bonds is visualized as the red areas between the atoms."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "db2d83f1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pf_plot.plot(\"H\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b6bd0798",
+   "metadata": {},
+   "source": [
+    "We can also plot all molecules side by side:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "48249508",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "pf_plot.ratio = (7, 6.5)\n",
+    "pf_plot.x_range = [0.0, 6.1]\n",
+    "pf_plot.y_range = [0.0, 6.8]\n",
+    "pf_plot.subplot_nrows = 2\n",
+    "pf_plot.subplot_ncols = 2\n",
+    "pf_plot.subplot_sharex = True\n",
+    "pf_plot.subplot_sharey = True\n",
+    "pf_plot.subplot_wspace = 0.15\n",
+    "pf_plot.subplot_hspace = 0.0001\n",
+    "pf_plot.subplot_sup_x_label = r\"Length in $\\mathrm{\\AA}$\"\n",
+    "pf_plot.subplot_sup_y_label = r\"Length in $\\mathrm{\\AA}$\"\n",
+    "pf_plot.subplot_share_colorbar = True\n",
+    "pf_plot.subplot_adjust = {\"left\": 0.17, \"bottom\": 0.11}\n",
+    "pf_plot.auto_set_axis_properties(set_x_label=False, set_y_label=False)\n",
+    "pf_plot.x_label = None\n",
+    "pf_plot.y_label = None\n",
+    "pf_plot.plot(pf_plot.data_labels, subplot_assignment=[0, 1, 2, 3])"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.13"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

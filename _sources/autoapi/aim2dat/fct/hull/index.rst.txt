@@ -1,0 +1,48 @@
+:py:mod:`aim2dat.fct.hull`
+==========================
+
+.. py:module:: aim2dat.fct.hull
+
+.. autoapi-nested-parse::
+
+   Functions to determine the different types of hulls for function values.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.fct.hull.get_convex_hull
+   aim2dat.fct.hull.get_minimum_maximum_points
+
+
+
+.. py:function:: get_convex_hull(points, lower_hull=True, upper_hull=True, tolerance=0.001)
+
+   Get convex hull from a list of n-dimensional points using scipy.
+
+   So far this method only works for 2-dimensional data.
+
+   :Parameters: * **points** (*list*) -- List of points with shape (npoints, ndim).
+                * **lower_hull** (*bool*) -- Whether to include the lower part of the hull (values below zero).
+                * **upper_hull** (*bool*) -- Whether to include the upper part of the hull (values above zero).
+                * **tolerance** (*float*) -- Tolerance parameter for lower and upper hull.
+
+
+.. py:function:: get_minimum_maximum_points(points)
+
+   Get minimum and maximum values for each x-value.
+
+   :Parameters: **points** (*list*) -- List of points with shape (npoints, ndim).
+
+   :returns: * **x_values** (*list*) -- x-values.
+             * **min_values** (*list*) -- Minimum y-value for each point.
+             * **max_values** (*list*) -- Maximum y-value for each point.
+
+

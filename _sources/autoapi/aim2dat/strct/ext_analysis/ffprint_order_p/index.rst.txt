@@ -1,0 +1,43 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.ext_analysis.ffprint_order_p`
+====================================================
+
+.. py:module:: aim2dat.strct.ext_analysis.ffprint_order_p
+
+.. autoapi-nested-parse::
+
+   Calculate f-fingerprint order parameters.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.ext_analysis.ffprint_order_p.calculate_ffingerprint_order_p
+
+
+
+.. py:function:: calculate_ffingerprint_order_p(structure: aim2dat.strct.strct.Structure, r_max: float = 15.0, delta_bin: float = 0.005, sigma: float = 0.05, distinguish_kinds: bool = False) -> Tuple[float, List[float]]
+
+   Calculate order parameters for the total structure and for each individual site.
+
+   The calculation is based on equation (5) in :doi:`10.1016/j.cpc.2010.06.007`.
+
+   :Parameters: * **structure** (*aim2dat.strct.Structure*) -- Structure object.
+                * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                * **delta_bin** (*float (optional)*) -- Bin size to descritize the function in angstrom.
+                * **sigma** (*float (optional)*) -- Smearing parameter for the Gaussian function.
+                * **distinguish_kinds** (*bool (optional)*) -- Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
+                  different elements if ``True``.
+
+   :returns: * **total_order_p** (*float*) -- Order parameter of the structure.
+             * **atomic_fingerprints** (*list*) -- List of order parameters for each atomic site.
+
+

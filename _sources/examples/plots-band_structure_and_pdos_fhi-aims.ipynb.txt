@@ -1,0 +1,337 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "certified-possible",
+   "metadata": {},
+   "source": [
+    "# Plotting the band structure and projected density of states (pDOS) from FHI-aims output files\n",
+    "\n",
+    "_A more detailed description of the different features is given in the example [Plotting the band structure and projected density of states (pDOS) from Quantum ESPRESSO output-files](plots-band_structure_and_pdos_qe.ipynb)._\n",
+    "\n",
+    "## The band structure plot\n",
+    "\n",
+    "We can read the band structures using the `read_band_structure` function in the io sub-package:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "rising-education",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.io.fhi_aims import read_band_structure"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "alternate-saudi",
+   "metadata": {},
+   "source": [
+    "In FHI-aims all output-files have a pre-defined name and thus, just the path to the calculation-folder needs to be given as input-parameter. Additionally, in case of a calculation with spin-orbit coupling included the optional input-parameter `soc` can be set to `True` to load the soc corrected band structure.\n",
+    "\n",
+    "The function returns a dictionary containing the k-path, the eigenvalues and the occupations:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "green-hotel",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "band_structure = read_band_structure(\"files/el_bands_fhi-aims\")\n",
+    "print(band_structure.keys())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "first-store",
+   "metadata": {},
+   "source": [
+    "Now we can use the `BandStructurePlot` class in the plots sub-package to visualize the band structure:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "living-melbourne",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.plots import BandStructurePlot"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "documentary-singer",
+   "metadata": {},
+   "source": [
+    "We first create an object of the class and import the band structure:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "fatty-apache",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "path_labels = [\n",
+    "    (0, \"W\"),\n",
+    "    (46, \"L\"),\n",
+    "    (47, \"L\"),\n",
+    "    (163, \"\\\\Gamma\"),\n",
+    "    (164, \"\\\\Gamma\"),\n",
+    "    (258, \"X\"),\n",
+    "    (259, \"X\"),\n",
+    "    (305, \"W\"),\n",
+    "    (306, \"W\"),\n",
+    "    (329, \"K\"),\n",
+    "]\n",
+    "bands_plot = BandStructurePlot(show_plot=True)\n",
+    "bands_plot.import_band_structure(\n",
+    "    data_label=\"FHI-aims_bands\",\n",
+    "    kpoints=band_structure[\"kpoints\"],\n",
+    "    path_labels=path_labels,\n",
+    "    bands=band_structure[\"bands\"],\n",
+    "    occupations=band_structure[\"occupations\"],\n",
+    "    unit_y=band_structure[\"unit_y\"],\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "executive-prior",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "band_structure_soc = read_band_structure(\"files/el_bands_fhi-aims\", soc=True)\n",
+    "bands_plot.import_band_structure(\n",
+    "    data_label=\"FHI-aims_bands_soc\",\n",
+    "    kpoints=band_structure_soc[\"kpoints\"],\n",
+    "    bands=band_structure_soc[\"bands\"],\n",
+    "    occupations=band_structure_soc[\"occupations\"],\n",
+    "    unit_y=band_structure_soc[\"unit_y\"],\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "educated-chapel",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "bands_plot.y_range = [-2.5, 5.0]\n",
+    "bands_plot.shift_bands(\"FHI-aims_bands\", 2.0)\n",
+    "bands_plot.show_legend = True\n",
+    "bands_plot.custom_linestyles = [\"-\", \"--\"]\n",
+    "plot = bands_plot.plot([\"FHI-aims_bands\", \"FHI-aims_bands_soc\"], plot_title=\"Bandstructure\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "fed48dcb",
+   "metadata": {},
+   "source": [
+    "## The projected density of states plot\n",
+    "\n",
+    "The procedure to plot the projected density of states is very similar to plotting the band structure. There is a function in the `io` sub-package to parse the projected density of states from the output-files.\n",
+    "\n",
+    "Using the keyword `load_raw` the raw version of the pDOS or the shifted pDOS can be read. Also, similar to the band structure with the keyword `soc` the pDOS including spin-orbit coupling will be read.\n",
+    "\n",
+    "In this case the path to the folder needs to be given. Based on the standard pattern of the file names of FHI-aims the corresponding files are read and the information is parsed:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "85a41784",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.io.fhi_aims import read_atom_proj_density_of_states\n",
+    "\n",
+    "pdos = read_atom_proj_density_of_states(\"files/el_pdos_fhi-aims/\", load_raw=True)\n",
+    "\n",
+    "print(pdos[\"pdos\"][0].keys())"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3aa9f1c0",
+   "metadata": {},
+   "source": [
+    "Next, an object of the `DOSPlot`-class is created and the pojected density of states can be loaded. We shift the pDOS straight-away such that the valence band maximum is at 0 eV with the parameter `shift_dos`.\n",
+    "\n",
+    "The parameters `sum_kinds`, `sum_principal_qn` and `sum_magnetic_qn` sum up over different atoms of the same element, the principal and magnetic quantum numbers, respectively."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "126d23f3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.plots import DOSPlot\n",
+    "\n",
+    "dos_plot = DOSPlot()\n",
+    "dos_plot.import_projected_dos(\n",
+    "    \"test_pdos\",\n",
+    "    pdos[\"energy\"],\n",
+    "    pdos[\"pdos\"],\n",
+    "    shift_dos=4.95590811,\n",
+    "    sum_kinds=False,\n",
+    "    sum_principal_qn=True,\n",
+    "    sum_magnetic_qn=True,\n",
+    ")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "516dd895",
+   "metadata": {},
+   "source": [
+    "Likewise to the band structure plot, we can plot the pDOS using the `plot` function. s-orbitals are solid lines, p-orbitals, dashed, d-orbitals dotted and f-orbitals dash-dotted.\n",
+    "The colors and line styles can be changed with the attributes `dos_colors` and `dos_linestyles`, respectively.\n",
+    "\n",
+    "The input parameters are the same as before and with the class's attributes the range and other features of the plot can be adjusted:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4f6da3a2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dos_plot.show_plot = True\n",
+    "dos_plot.show_legend = True\n",
+    "dos_plot.x_range = (-15, 5)\n",
+    "plot = dos_plot.plot(\"test_pdos\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "118c1fe8",
+   "metadata": {},
+   "source": [
+    "There are two options to include the total density of states:\n",
+    "\n",
+    "* All projected densities can be summed. Depending on the basis set and how well it can be projected onto the localized orbitals this may not always lead to the total density of states.\n",
+    "* The total density of states can be imported for a dataset as before done with the projected DOS.\n",
+    "\n",
+    "Here is the first option:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "575bf4b3",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dos_plot.sum_pdos = True\n",
+    "plot = dos_plot.plot(\"test_pdos\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "00ba2f0a",
+   "metadata": {},
+   "source": [
+    "The second option involves another function of the `io` sub-package to parse the total density of states directly from the output-file:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f7843162",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.io.fhi_aims import read_total_density_of_states\n",
+    "\n",
+    "tdos = read_total_density_of_states(\"files/el_pdos_fhi-aims/KS_DOS_total_raw.dat.no_soc\")\n",
+    "\n",
+    "dos_plot.import_projected_dos(\n",
+    "    \"test_pdos_2\",\n",
+    "    pdos[\"energy\"],\n",
+    "    pdos[\"pdos\"],\n",
+    "    shift_dos=4.95590811,\n",
+    "    sum_kinds=False,\n",
+    "    sum_magnetic_qn=True,\n",
+    ")\n",
+    "dos_plot.import_total_dos(\"test_pdos_2\", tdos[\"energy\"], tdos[\"tdos\"], shift_dos=4.95590811)\n",
+    "plot = dos_plot.plot(\"test_pdos_2\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d5154a20",
+   "metadata": {},
+   "source": [
+    "## Band structure + projected density of states plot\n",
+    "\n",
+    "The two previous plots can also be combined in one figure with the `BandStructureDOSPlot` class:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "da1415ba",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from aim2dat.plots import BandStructureDOSPlot\n",
+    "\n",
+    "bands_dos_plot = BandStructureDOSPlot()\n",
+    "bands_dos_plot.ratio = (15, 6)\n",
+    "bands_dos_plot.y_range = (-10, 5)\n",
+    "bands_dos_plot.show_plot = True\n",
+    "bands_dos_plot.import_band_structure(\n",
+    "    \"test_band_structure_dos\",\n",
+    "    kpoints=band_structure[\"kpoints\"],\n",
+    "    path_labels=path_labels,\n",
+    "    bands=band_structure[\"bands\"],\n",
+    "    unit_y=band_structure[\"unit_y\"],\n",
+    ")\n",
+    "bands_dos_plot.import_projected_dos(\n",
+    "    \"test_band_structure_dos\", pdos[\"energy\"], pdos[\"pdos\"], shift_dos=4.95590811, sum_kinds=True\n",
+    ")\n",
+    "bands_dos_plot.import_total_dos(\n",
+    "    \"test_band_structure_dos\",\n",
+    "    tdos[\"energy\"],\n",
+    "    tdos[\"tdos\"],\n",
+    "    shift_dos=4.95590811,\n",
+    ")\n",
+    "plot = bands_dos_plot.plot(\"test_band_structure_dos\")"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.13"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

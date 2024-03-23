@@ -1,0 +1,160 @@
+:py:mod:`aim2dat.aiida_workflows.cp2k.parser_utils`
+===================================================
+
+.. py:module:: aim2dat.aiida_workflows.cp2k.parser_utils
+
+.. autoapi-nested-parse::
+
+   Containing all functions and classes that parse output-files of cp2k.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.cp2k.parser_utils.BandStructureParser
+   aim2dat.aiida_workflows.cp2k.parser_utils.MainOutputParser
+   aim2dat.aiida_workflows.cp2k.parser_utils.PDOSParser
+   aim2dat.aiida_workflows.cp2k.parser_utils.Parser
+   aim2dat.aiida_workflows.cp2k.parser_utils.RestartStructureParser
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.aiida_workflows.cp2k.parser_utils.cwd
+
+
+
+.. py:class:: BandStructureParser(fstring)
+
+
+   Bases: :py:obj:`MainOutputParser`
+
+   Band structure parser (work in progress).
+
+
+   .. rubric:: Overview
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`retrieve_result_dict <aim2dat.aiida_workflows.cp2k.parser_utils.BandStructureParser.retrieve_result_dict>`\ (parser_type)
+        - Retrieve the result dictionary.
+
+
+
+
+   .. py:method:: retrieve_result_dict(parser_type)
+
+      Retrieve the result dictionary.
+
+
+
+
+.. py:class:: MainOutputParser(fstring)
+
+
+   Bases: :py:obj:`Parser`
+
+   Parse CP2K output into a dictionary.
+
+
+   .. rubric:: Overview
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`retrieve_result_dict <aim2dat.aiida_workflows.cp2k.parser_utils.MainOutputParser.retrieve_result_dict>`\ (parser_type)
+        - Retrieve the result dictionary.
+
+
+
+
+   .. py:method:: retrieve_result_dict(parser_type)
+
+      Retrieve the result dictionary.
+
+
+
+
+.. py:class:: PDOSParser
+
+
+   Bases: :py:obj:`Parser`
+
+   Parser for the projected density of states.
+
+
+   .. rubric:: Overview
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`parse_pdos <aim2dat.aiida_workflows.cp2k.parser_utils.PDOSParser.parse_pdos>`\ (file_content, spin)
+        - Parse pDOS from file.
+
+
+
+
+   .. py:method:: parse_pdos(file_content, spin)
+
+      Parse pDOS from file.
+
+
+
+
+.. py:class:: Parser(fstring)
+
+
+   Main class to parse CP2K output.
+
+
+
+
+.. py:class:: RestartStructureParser(fstring)
+
+
+   Bases: :py:obj:`Parser`
+
+   Parser for the cp2k-restart file to obtain the latest structure.
+
+
+   .. rubric:: Overview
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`retrieve_output_structure <aim2dat.aiida_workflows.cp2k.parser_utils.RestartStructureParser.retrieve_output_structure>`\ ()
+        - Retrieve output structure.
+
+
+
+
+   .. py:method:: retrieve_output_structure()
+
+      Retrieve output structure.
+
+
+
+.. py:data:: cwd
+
+   
+

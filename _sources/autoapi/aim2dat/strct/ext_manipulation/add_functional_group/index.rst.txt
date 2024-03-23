@@ -1,0 +1,64 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.ext_manipulation.add_functional_group`
+=============================================================
+
+.. py:module:: aim2dat.strct.ext_manipulation.add_functional_group
+
+.. autoapi-nested-parse::
+
+   Module that implements functions to change molecular or crystalline structures.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.ext_manipulation.add_functional_group.add_functional_group
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.ext_manipulation.add_functional_group.cwd
+
+
+.. py:function:: add_functional_group(structure: aim2dat.strct.strct.Structure, wrap: bool = False, host_index: int = 0, functional_group: str = 'CH3', bond_length: float = 1.25, r_max: float = 15.0, cn_method: str = 'minimum_distance', min_dist_delta: float = 0.1, n_nearest_neighbours: int = 5, econ_tolerance: float = 0.5, econ_conv_threshold: float = 0.001, voronoi_weight_type: float = 'rel_solid_angle', voronoi_weight_threshold: float = 0.5, okeeffe_weight_threshold: float = 0.5, change_label: bool = False) -> aim2dat.strct.strct.Structure
+
+   Add a functional group or an atom to a host site.
+
+   :Parameters: * **key** (*str, int, tuple or list*) -- Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
+                  keys of the underlying ``StructureCollection`` object.
+                * **wrap** (*bool (optional)*) -- Wrap atomic positions back into the unit cell.
+                * **host_index** (*int*) -- Index of the host site.
+                * **functional_group** (*str*) -- Functional group or element symbol of the added functional group or atom.
+                * **bond_length** (*float*) -- Bond length between the host atom and the base atom of the functional group.
+                * **r_max** (*float (optional)*) -- Cut-off value for the maximum distance between two atoms in angstrom.
+                * **cn_method** (*str (optional)*) -- Method used to calculate the coordination environment.
+                * **min_dist_delta** (*float (optional)*) -- Tolerance parameter that defines the relative distance from the nearest neighbour atom
+                  for the ``'minimum_distance'`` method.
+                * **n_nearest_neighbours** (*int (optional)*) -- Number of neighbours that are considered coordinated for the ``'n_neighbours'``
+                  method.
+                * **econ_tolerance** (*float (optional)*) -- Tolerance parameter for the econ method.
+                * **econ_conv_threshold** (*float (optional)*) -- Convergence threshold for the econ method.
+                * **voronoi_weight_type** (*str (optional)*) -- Weight type of the Voronoi facets. Supported options are ``'covalent_atomic_radius'``,
+                  ``'area'`` and ``'solid_angle'``. The prefix ``'rel_'`` specifies that the relative
+                  weights with respect to the maximum value of the polyhedron are calculated.
+                * **voronoi_weight_threshold** (*float (optional)*) -- Weight threshold to consider a neighbouring atom coordinated.
+
+   :returns: *aiida_scripst.strct.Structure* -- Structure with attached functional group.
+
+
+.. py:data:: cwd
+
+   
+

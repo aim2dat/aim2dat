@@ -1,0 +1,5358 @@
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="">
+    
+    
+      
+        <title>Calculating the coordination numbers for different atomic sites - aim2dat  documentation</title>
+      
+    
+    
+      
+        
+        
+      
+      
+
+    
+    
+    
+      
+    
+        <link rel="stylesheet" type="text/css" href="../_static/sphinx_immaterial_theme.c145f3631d897b861.min.css?v=b0f86f06" />
+        <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=eafc0fe6" />
+        <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+        <link rel="stylesheet" type="text/css" href="../_static/contentui.css" />
+        <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="blue">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../index.html" title="aim2dat  documentation" class="md-header__button md-logo" aria-label="aim2dat  documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            aim2dat  documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Calculating the coordination numbers for different atomic sites
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="green" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="green" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/aim2dat/aim2dat" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    aim2dat
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../installation.html" class="md-tabs__link">
+      <span class="md-ellipsis">Installation</span>
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../user_guide.html" class="md-tabs__link">
+      <span class="md-ellipsis">User Guide</span>
+    </a>
+  </li>
+
+      
+        
+  
+  
+    
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../examples.html" class="md-tabs__link md-tabs__link--active">
+      <span class="md-ellipsis">Examples</span>
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../autoapi/aim2dat/index.html" class="md-tabs__link">
+      <span class="md-ellipsis">Python API</span>
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../api-aiida_processes.html" class="md-tabs__link">
+      <span class="md-ellipsis">Aii<wbr>DA Processes</span>
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../changelog.html" class="md-tabs__link">
+      <span class="md-ellipsis">Changelog</span>
+    </a>
+  </li>
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../index.html" title="aim2dat  documentation" class="md-nav__button md-logo" aria-label="aim2dat  documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+    </a>
+    aim2dat  documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/aim2dat/aim2dat" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    aim2dat
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1" type="checkbox" id="__nav_1" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_1">
+          <span class="md-ellipsis">Installation</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Installation" data-md-level="1">
+        <label class="md-nav__title" for="__nav_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Installation</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_1_1" type="checkbox" id="__nav_1_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../installation.html"><span title="/installation.rst (reference label)" class="md-ellipsis">Overview and Package Dependencies</span></a>
+          
+            <label for="__nav_1_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Overview and Package Dependencies" data-md-level="2">
+        <label class="md-nav__title" for="__nav_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/installation.rst (reference label)" class="md-ellipsis">Overview and Package Dependencies</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inst_windows.html" class="md-nav__link">
+        <span title="/inst_windows.rst (reference label)" class="md-ellipsis">Windows operating systems</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../inst_linux.html" class="md-nav__link">
+        <span title="/inst_linux.rst (reference label)" class="md-ellipsis">Linux operating systems</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2" type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2">
+          <span class="md-ellipsis">User Guide</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="User Guide" data-md-level="1">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">User Guide</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../user_guide.html" class="md-nav__link">
+        <span title="/user_guide.rst (reference label)" class="md-ellipsis">Overview</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_2" type="checkbox" id="__nav_2_2" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../stra-overview.html"><span title="/stra-overview.rst (reference label)" class="md-ellipsis">Structural Analysis</span></a>
+          
+            <label for="__nav_2_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Structural Analysis" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/stra-overview.rst (reference label)" class="md-ellipsis">Structural Analysis</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stra-structure.html" class="md-nav__link">
+        <span title="/stra-structure.ipynb (reference label)" class="md-ellipsis">Representation of molecules and crystals</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stra-multiple_structures.html" class="md-nav__link">
+        <span title="/stra-multiple_structures.ipynb (reference label)" class="md-ellipsis">Handling multiple structures at once</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stra-structure_importer.html" class="md-nav__link">
+        <span title="/stra-structure_importer.ipynb (reference label)" class="md-ellipsis">Interfaces to online databases and random crystal generation</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stra-surfaces.html" class="md-nav__link">
+        <span title="/stra-surfaces.ipynb (reference label)" class="md-ellipsis">Creating surfaces from bulk crystals</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_3" type="checkbox" id="__nav_2_3" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../htw-overview.html"><span title="/htw-overview.rst (reference label)" class="md-ellipsis">High-<wbr>throughput Workflows</span></a>
+          
+            <label for="__nav_2_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="High-throughput Workflows" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/htw-overview.rst (reference label)" class="md-ellipsis">High-<wbr>throughput Workflows</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../htw-workflow_builders.html" class="md-nav__link">
+        <span title="/htw-workflow_builders.ipynb (reference label)" class="md-ellipsis">Handling complex workflows using the workflow builders</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../htw-cp2k_calculations.html" class="md-nav__link">
+        <span title="/htw-cp2k_calculations.ipynb (reference label)" class="md-ellipsis">Running high-<wbr>throughput calculations using CP2K</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_4" type="checkbox" id="__nav_2_4" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../plots-overview.html"><span title="/plots-overview.rst (reference label)" class="md-ellipsis">Plots</span></a>
+          
+            <label for="__nav_2_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Plots" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/plots-overview.rst (reference label)" class="md-ellipsis">Plots</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plots-simple_plot.html" class="md-nav__link">
+        <span title="/plots-simple_plot.ipynb (reference label)" class="md-ellipsis">Plotting with the Simple<wbr>Plot class</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plots-properties_and_functions.html" class="md-nav__link">
+        <span title="/plots-properties_and_functions.ipynb (reference label)" class="md-ellipsis">Common features</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plots-subplots.html" class="md-nav__link">
+        <span title="/plots-subplots.ipynb (reference label)" class="md-ellipsis">Subplots and grids</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fa-overview.html" class="md-nav__link">
+        <span title="/fa-overview.ipynb (reference label)" class="md-ellipsis">Function Analysis</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_2_6" type="checkbox" id="__nav_2_6" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../ml-overview.html"><span title="/ml-overview.ipynb (reference label)" class="md-ellipsis">Machine Learning</span></a>
+          
+            <label for="__nav_2_6">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Machine Learning" data-md-level="2">
+        <label class="md-nav__title" for="__nav_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/ml-overview.ipynb (reference label)" class="md-ellipsis">Machine Learning</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ml-scikit_learn.html" class="md-nav__link">
+        <span title="/ml-scikit_learn.rst (reference label)" class="md-ellipsis">Scikit-<wbr>learn integration</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          <span class="md-ellipsis">Examples</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Examples" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Examples</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3_1" type="checkbox" id="__nav_3_1" checked>
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../examples.html"><span title="/examples.rst (reference label)" class="md-ellipsis">Example List</span></a>
+          
+            <label for="__nav_3_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Example List" data-md-level="2">
+        <label class="md-nav__title" for="__nav_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/examples.rst (reference label)" class="md-ellipsis">Example List</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fct-discretization.html" class="md-nav__link">
+        <span title="/examples/fct-discretization.ipynb (reference label)" class="md-ellipsis">Creating a discretized grid to analyse functions</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fct-fingerprint_comparison.html" class="md-nav__link">
+        <span title="/examples/fct-fingerprint_comparison.ipynb (reference label)" class="md-ellipsis">Comparing two functions on a discretized grid</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plots-band_structure_and_pdos_cp2k.html" class="md-nav__link">
+        <span title="/examples/plots-band_structure_and_pdos_cp2k.ipynb (reference label)" class="md-ellipsis">Plotting the band structure and projected density of states <wbr>(p<wbr>DOS) from CP2K output-<wbr>files</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plots-band_structure_and_pdos_fhi-aims.html" class="md-nav__link">
+        <span title="/examples/plots-band_structure_and_pdos_fhi-aims.ipynb (reference label)" class="md-ellipsis">Plotting the band structure and projected density of states <wbr>(p<wbr>DOS) from FHI-<wbr>aims output files</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plots-band_structure_and_pdos_phonopy.html" class="md-nav__link">
+        <span title="/examples/plots-band_structure_and_pdos_phonopy.ipynb (reference label)" class="md-ellipsis">Plotting the band structure, projected density of states <wbr>(p<wbr>DOS) and thermal properties from phonopy output-<wbr>files</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plots-band_structure_and_pdos_qe.html" class="md-nav__link">
+        <span title="/examples/plots-band_structure_and_pdos_qe.ipynb (reference label)" class="md-ellipsis">Plotting the band structure and projected density of states <wbr>(p<wbr>DOS) from Quantum ESPRESSO output-<wbr>files</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plots-band_structure_materials_project.html" class="md-nav__link">
+        <span title="/examples/plots-band_structure_materials_project.ipynb (reference label)" class="md-ellipsis">Plotting the band structure and projected density of states <wbr>(p<wbr>DOS) from Materials Project</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plots-partial_charges_critic2.html" class="md-nav__link">
+        <span title="/examples/plots-partial_charges_critic2.ipynb (reference label)" class="md-ellipsis">Plotting atomic partial charges from Critic2 output-<wbr>files</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plots-planar_fields_critic2.html" class="md-nav__link">
+        <span title="/examples/plots-planar_fields_critic2.ipynb (reference label)" class="md-ellipsis">Plotting planar fields from Critic2 output files</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plots-simple_plot.html" class="md-nav__link">
+        <span title="/examples/plots-simple_plot.ipynb (reference label)" class="md-ellipsis">Using the Simple<wbr>Plot class as a flexible plotting framework</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="plots-spectroscopy.html" class="md-nav__link">
+        <span title="/examples/plots-spectroscopy.ipynb (reference label)" class="md-ellipsis">How to use the plots package to plot a x-<wbr>ray absorption spectrum</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      <a href="#" class="md-nav__link md-nav__link--active">
+        <span title="/examples/strct-coordination_number_analysis.ipynb (reference label)" class="md-ellipsis">Calculating the coordination numbers for different atomic sites</span>
+      </a>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="strct-odb_interfaces.html" class="md-nav__link">
+        <span title="/examples/strct-odb_interfaces.ipynb (reference label)" class="md-ellipsis">Querying the structure pool for the Cs-<wbr>Te binary system</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="strct-partial_rdf.html" class="md-nav__link">
+        <span title="/examples/strct-partial_rdf.ipynb (reference label)" class="md-ellipsis">Calculating the F-<wbr>Fingerprint to compare crystal structures</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          <span class="md-ellipsis">Python API</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Python API" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Python API</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/index.html"><span title="/autoapi/aim2dat/index.rst (reference label)" class="md-ellipsis">aim2dat</span></a>
+          
+            <label for="__nav_4_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/index.rst (reference label)" class="md-ellipsis">aim2dat</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1" type="checkbox" id="__nav_4_1_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/index.html#subpackages"><span title="/autoapi/aim2dat/index.rst#subpackages (reference label)" class="md-ellipsis">Subpackages</span></a>
+          
+            <label for="__nav_4_1_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Subpackages" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/index.rst#subpackages (reference label)" class="md-ellipsis">Subpackages</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_1" type="checkbox" id="__nav_4_1_1_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/aiida_data/index.html"><span title="/autoapi/aim2dat/aiida_data/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>data</span></a>
+          
+            <label for="__nav_4_1_1_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.aiida_data" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/aiida_data/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>data</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_1_1" type="checkbox" id="__nav_4_1_1_1_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/aiida_data/index.html#submodules"><span title="/autoapi/aim2dat/aiida_data/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_1_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_1_1_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/aiida_data/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/aiida_data/gaussian_cube_data/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/aiida_data/gaussian_cube_data/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>data.<wbr>gaussian_<wbr>cube_<wbr>data</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/aiida_data/surface_data/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/aiida_data/surface_data/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>data.<wbr>surface_<wbr>data</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_2" type="checkbox" id="__nav_4_1_1_2" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/aiida_workflows/index.html"><span title="/autoapi/aim2dat/aiida_workflows/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>workflows</span></a>
+          
+            <label for="__nav_4_1_1_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.aiida_workflows" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/aiida_workflows/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>workflows</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_2_1" type="checkbox" id="__nav_4_1_1_2_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/aiida_workflows/index.html#submodules"><span title="/autoapi/aim2dat/aiida_workflows/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_2_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_1_1_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/aiida_workflows/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/aiida_workflows/utils/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/aiida_workflows/utils/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>workflows.<wbr>utils</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/aiida_workflows/workflow_builder/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/aiida_workflows/workflow_builder/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>aiida_<wbr>workflows.<wbr>workflow_<wbr>builder</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_3" type="checkbox" id="__nav_4_1_1_3" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/fct/index.html"><span title="/autoapi/aim2dat/fct/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>fct</span></a>
+          
+            <label for="__nav_4_1_1_3">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.fct" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_1_3">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/fct/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>fct</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_3_1" type="checkbox" id="__nav_4_1_1_3_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/fct/index.html#submodules"><span title="/autoapi/aim2dat/fct/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_3_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_1_1_3_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/fct/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/fct/discretization/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/fct/discretization/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>fct.<wbr>discretization</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/fct/fingerprint/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/fct/fingerprint/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>fct.<wbr>fingerprint</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/fct/function_comparison/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/fct/function_comparison/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>fct.<wbr>function_<wbr>comparison</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/fct/hull/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/fct/hull/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>fct.<wbr>hull</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/fct/smearing/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/fct/smearing/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>fct.<wbr>smearing</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_4" type="checkbox" id="__nav_4_1_1_4" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/io/index.html"><span title="/autoapi/aim2dat/io/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io</span></a>
+          
+            <label for="__nav_4_1_1_4">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.io" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_1_4">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/io/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_4_1" type="checkbox" id="__nav_4_1_1_4_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/io/index.html#submodules"><span title="/autoapi/aim2dat/io/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_4_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_1_1_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/io/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/io/cp2k/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/io/cp2k/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io.<wbr>cp2k</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/io/critic2/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/io/critic2/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io.<wbr>critic2</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/io/fhi_aims/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/io/fhi_aims/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io.<wbr>fhi_<wbr>aims</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/io/phonopy/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/io/phonopy/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io.<wbr>phonopy</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/io/qe/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/io/qe/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io.<wbr>qe</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/io/xmgrace/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/io/xmgrace/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io.<wbr>xmgrace</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/io/yaml/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/io/yaml/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>io.<wbr>yaml</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_5" type="checkbox" id="__nav_4_1_1_5" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/ml/index.html"><span title="/autoapi/aim2dat/ml/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>ml</span></a>
+          
+            <label for="__nav_4_1_1_5">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.ml" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_1_5">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/ml/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>ml</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_5_1" type="checkbox" id="__nav_4_1_1_5_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/ml/index.html#submodules"><span title="/autoapi/aim2dat/ml/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_5_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_1_1_5_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/ml/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/ml/cell_grid_search/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/ml/cell_grid_search/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>ml.<wbr>cell_<wbr>grid_<wbr>search</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/ml/kernels/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/ml/kernels/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>ml.<wbr>kernels</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/ml/metrics/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/ml/metrics/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>ml.<wbr>metrics</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/ml/transformers/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/ml/transformers/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>ml.<wbr>transformers</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/ml/utils/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/ml/utils/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>ml.<wbr>utils</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/plots/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/plots/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>plots</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_7" type="checkbox" id="__nav_4_1_1_7" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/strct/index.html"><span title="/autoapi/aim2dat/strct/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct</span></a>
+          
+            <label for="__nav_4_1_1_7">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.strct" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_1_7">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/strct/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_7_1" type="checkbox" id="__nav_4_1_1_7_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/strct/index.html#subpackages"><span title="/autoapi/aim2dat/strct/index.rst#subpackages (reference label)" class="md-ellipsis">Subpackages</span></a>
+          
+            <label for="__nav_4_1_1_7_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Subpackages" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_1_1_7_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/strct/index.rst#subpackages (reference label)" class="md-ellipsis">Subpackages</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_7_1_1" type="checkbox" id="__nav_4_1_1_7_1_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/strct/ext_analysis/index.html"><span title="/autoapi/aim2dat/strct/ext_analysis/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct.<wbr>ext_<wbr>analysis</span></a>
+          
+            <label for="__nav_4_1_1_7_1_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.strct.ext_analysis" data-md-level="6">
+        <label class="md-nav__title" for="__nav_4_1_1_7_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/strct/ext_analysis/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct.<wbr>ext_<wbr>analysis</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_7_1_1_1" type="checkbox" id="__nav_4_1_1_7_1_1_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/strct/ext_analysis/index.html#submodules"><span title="/autoapi/aim2dat/strct/ext_analysis/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_7_1_1_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="7">
+        <label class="md-nav__title" for="__nav_4_1_1_7_1_1_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/strct/ext_analysis/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/strct/ext_analysis/decorator/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/strct/ext_analysis/decorator/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct.<wbr>ext_<wbr>analysis.<wbr>decorator</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_7_1_2" type="checkbox" id="__nav_4_1_1_7_1_2" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/strct/ext_manipulation/index.html"><span title="/autoapi/aim2dat/strct/ext_manipulation/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct.<wbr>ext_<wbr>manipulation</span></a>
+          
+            <label for="__nav_4_1_1_7_1_2">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.strct.ext_manipulation" data-md-level="6">
+        <label class="md-nav__title" for="__nav_4_1_1_7_1_2">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/strct/ext_manipulation/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct.<wbr>ext_<wbr>manipulation</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_7_1_2_1" type="checkbox" id="__nav_4_1_1_7_1_2_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/strct/ext_manipulation/index.html#submodules"><span title="/autoapi/aim2dat/strct/ext_manipulation/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_7_1_2_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="7">
+        <label class="md-nav__title" for="__nav_4_1_1_7_1_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/strct/ext_manipulation/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/strct/ext_manipulation/decorator/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/strct/ext_manipulation/decorator/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>strct.<wbr>ext_<wbr>manipulation.<wbr>decorator</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_8" type="checkbox" id="__nav_4_1_1_8" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/utils/index.html"><span title="/autoapi/aim2dat/utils/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>utils</span></a>
+          
+            <label for="__nav_4_1_1_8">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="aim2dat.utils" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_1_1_8">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/utils/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>utils</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1_1_8_1" type="checkbox" id="__nav_4_1_1_8_1" >
+      
+      
+      
+        
+        <div class="md-nav__link md-nav__link--index ">
+          <a href="../autoapi/aim2dat/utils/index.html#submodules"><span title="/autoapi/aim2dat/utils/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span></a>
+          
+            <label for="__nav_4_1_1_8_1">
+              <span class="md-nav__icon md-icon"></span>
+            </label>
+          
+        </div>
+      
+      <nav class="md-nav" aria-label="Submodules" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_1_1_8_1">
+          <span class="md-nav__icon md-icon"></span>
+          <span title="/autoapi/aim2dat/utils/index.rst#submodules (reference label)" class="md-ellipsis">Submodules</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/utils/chem_formula/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/utils/chem_formula/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>utils.<wbr>chem_<wbr>formula</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/utils/element_properties/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/utils/element_properties/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>utils.<wbr>element_<wbr>properties</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/utils/maths/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/utils/maths/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>utils.<wbr>maths</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/utils/space_groups/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/utils/space_groups/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>utils.<wbr>space_<wbr>groups</span>
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../autoapi/aim2dat/utils/units/index.html" class="md-nav__link">
+        <span title="/autoapi/aim2dat/utils/units/index.rst (reference label)" class="md-ellipsis">aim2dat.<wbr>utils.<wbr>units</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          <span class="md-ellipsis">Aii<wbr>DA Processes</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="AiiDA Processes" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Aii<wbr>DA Processes</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-aiida_processes.html" class="md-nav__link">
+        <span title="/api-aiida_processes.rst (reference label)" class="md-ellipsis">Aii<wbr>DA Processes</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_6">
+          <span class="md-ellipsis">Changelog</span>
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Changelog" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          <span class="md-ellipsis">Changelog</span>
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog.html" class="md-nav__link">
+        <span title="/changelog.rst (reference label)" class="md-ellipsis">Changelog</span>
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary">
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset" role="main">
+                  
+
+
+<h1 id="Calculating-the-coordination-numbers-for-different-atomic-sites">Calculating the coordination numbers for different atomic sites<a class="headerlink" href="#Calculating-the-coordination-numbers-for-different-atomic-sites" title="Link to this heading">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">Structure</span></code> class of the <code class="docutils literal notranslate"><span class="pre">strct</span></code> sub-package can be used to determine the coordination number of periodic and non-periodic structures using different methods, all of them described here: doi:10.1021/acs.inorgchem.0c02996.</p>
+<p>First, we create an object of the class and import a structure:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[1]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">aim2dat.strct</span> <span class="kn">import</span> <span class="n">Structure</span>
+
+<span class="n">strct</span> <span class="o">=</span> <span class="n">Structure</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;files/zif8_structure/ZIF-8.cif&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;ZIF-8&quot;</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<p>Three different methods are implemented to calculate the coordination numbers:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;minimum_distance&quot;</span></code>: The distance of the closest atom is taken as reference. All atoms inbetween that distance and a relative margin are considered as neighbours of the atomic site. The relative margin can be set via the attribute <code class="docutils literal notranslate"><span class="pre">minimum_distance_delta</span></code>, the default value is <code class="docutils literal notranslate"><span class="pre">0.1</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;econ&quot;</span></code>: The effective coordination number algorithm is an iterative method. Two parameters can be changed to tweak the method: <code class="docutils literal notranslate"><span class="pre">econ_tolerance</span></code> and <code class="docutils literal notranslate"><span class="pre">econ_conv_threshold</span></code> with the default values of <code class="docutils literal notranslate"><span class="pre">0.5</span></code> and <code class="docutils literal notranslate"><span class="pre">0.001</span></code>, respectively.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;okeeffe&quot;</span></code>: The method developed by O’Keeffe is based on the Voronoi tessellation and thereby computationally a bit more demanding than the previous methods. The attribute <code class="docutils literal notranslate"><span class="pre">okeeffe_weight_threshold</span></code> can be set and acts as threshold for the solid angle of the Voronoi facets. Its default value is set to <code class="docutils literal notranslate"><span class="pre">0.5</span></code>.</p></li>
+</ul>
+<p>The coordination numbers for each site can then be readily calculated using the methods <code class="docutils literal notranslate"><span class="pre">calculate_coordination</span></code>:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="n">strct</span><span class="o">.</span><span class="n">calculate_coordination</span><span class="p">()</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[2]:
+</code></pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+{&#39;distance_avg&#39;: {(&#39;Zn&#39;, &#39;N&#39;): 1.9651884952153824,
+  (&#39;C&#39;, &#39;N&#39;): 1.3481992499546553,
+  (&#39;N&#39;, &#39;C&#39;): 1.3734536168260307,
+  (&#39;C&#39;, &#39;H&#39;): 0.9482500804509107,
+  (&#39;H&#39;, &#39;C&#39;): 0.9482500804509109},
+ &#39;distance_stdev&#39;: {(&#39;Zn&#39;, &#39;N&#39;): 8.612455701839897e-06,
+  (&#39;C&#39;, &#39;N&#39;): 6.170252041246332e-06,
+  (&#39;N&#39;, &#39;C&#39;): 0.02552161688364479,
+  (&#39;C&#39;, &#39;H&#39;): 0.01490735862562007,
+  (&#39;H&#39;, &#39;C&#39;): 0.014907358625619952},
+ &#39;distance_max&#39;: {(&#39;Zn&#39;, &#39;N&#39;): 1.9652020658995912,
+  (&#39;C&#39;, &#39;N&#39;): 1.3482095142807609,
+  (&#39;N&#39;, &#39;C&#39;): 1.398712990170384,
+  (&#39;C&#39;, &#39;H&#39;): 0.9612687439831057,
+  (&#39;H&#39;, &#39;C&#39;): 0.9612687439831057},
+ &#39;distance_min&#39;: {(&#39;Zn&#39;, &#39;N&#39;): 1.9651805961901716,
+  (&#39;C&#39;, &#39;N&#39;): 1.3481940221322792,
+  (&#39;N&#39;, &#39;C&#39;): 1.3481940221322792,
+  (&#39;C&#39;, &#39;H&#39;): 0.9301526896173402,
+  (&#39;H&#39;, &#39;C&#39;): 0.9301526896173401},
+ &#39;nrs_avg&#39;: {(&#39;Zn&#39;, &#39;Zn&#39;): 0,
+  (&#39;Zn&#39;, &#39;C&#39;): 0,
+  (&#39;Zn&#39;, &#39;N&#39;): 4,
+  (&#39;Zn&#39;, &#39;H&#39;): 0,
+  (&#39;C&#39;, &#39;Zn&#39;): 0,
+  (&#39;C&#39;, &#39;C&#39;): 0,
+  (&#39;C&#39;, &#39;N&#39;): 0.5,
+  (&#39;C&#39;, &#39;H&#39;): 1.25,
+  (&#39;N&#39;, &#39;Zn&#39;): 0,
+  (&#39;N&#39;, &#39;C&#39;): 2,
+  (&#39;N&#39;, &#39;N&#39;): 0,
+  (&#39;N&#39;, &#39;H&#39;): 0,
+  (&#39;H&#39;, &#39;Zn&#39;): 0,
+  (&#39;H&#39;, &#39;C&#39;): 1,
+  (&#39;H&#39;, &#39;N&#39;): 0,
+  (&#39;H&#39;, &#39;H&#39;): 0},
+ &#39;nrs_stdev&#39;: {(&#39;Zn&#39;, &#39;Zn&#39;): 0.0,
+  (&#39;Zn&#39;, &#39;C&#39;): 0.0,
+  (&#39;Zn&#39;, &#39;N&#39;): 0.0,
+  (&#39;Zn&#39;, &#39;H&#39;): 0.0,
+  (&#39;C&#39;, &#39;Zn&#39;): 0.0,
+  (&#39;C&#39;, &#39;C&#39;): 0.0,
+  (&#39;C&#39;, &#39;N&#39;): 0.8751899489873673,
+  (&#39;C&#39;, &#39;H&#39;): 1.1012565357112796,
+  (&#39;N&#39;, &#39;Zn&#39;): 0.0,
+  (&#39;N&#39;, &#39;C&#39;): 0.0,
+  (&#39;N&#39;, &#39;N&#39;): 0.0,
+  (&#39;N&#39;, &#39;H&#39;): 0.0,
+  (&#39;H&#39;, &#39;Zn&#39;): 0.0,
+  (&#39;H&#39;, &#39;C&#39;): 0.0,
+  (&#39;H&#39;, &#39;N&#39;): 0.0,
+  (&#39;H&#39;, &#39;H&#39;): 0.0},
+ &#39;nrs_max&#39;: {(&#39;Zn&#39;, &#39;Zn&#39;): 0,
+  (&#39;Zn&#39;, &#39;C&#39;): 0,
+  (&#39;Zn&#39;, &#39;N&#39;): 4,
+  (&#39;Zn&#39;, &#39;H&#39;): 0,
+  (&#39;C&#39;, &#39;Zn&#39;): 0,
+  (&#39;C&#39;, &#39;C&#39;): 0,
+  (&#39;C&#39;, &#39;N&#39;): 2,
+  (&#39;C&#39;, &#39;H&#39;): 3,
+  (&#39;N&#39;, &#39;Zn&#39;): 0,
+  (&#39;N&#39;, &#39;C&#39;): 2,
+  (&#39;N&#39;, &#39;N&#39;): 0,
+  (&#39;N&#39;, &#39;H&#39;): 0,
+  (&#39;H&#39;, &#39;Zn&#39;): 0,
+  (&#39;H&#39;, &#39;C&#39;): 1,
+  (&#39;H&#39;, &#39;N&#39;): 0,
+  (&#39;H&#39;, &#39;H&#39;): 0},
+ &#39;nrs_min&#39;: {(&#39;Zn&#39;, &#39;Zn&#39;): 0,
+  (&#39;Zn&#39;, &#39;C&#39;): 0,
+  (&#39;Zn&#39;, &#39;N&#39;): 4,
+  (&#39;Zn&#39;, &#39;H&#39;): 0,
+  (&#39;C&#39;, &#39;Zn&#39;): 0,
+  (&#39;C&#39;, &#39;C&#39;): 0,
+  (&#39;C&#39;, &#39;N&#39;): 0,
+  (&#39;C&#39;, &#39;H&#39;): 0,
+  (&#39;N&#39;, &#39;Zn&#39;): 0,
+  (&#39;N&#39;, &#39;C&#39;): 2,
+  (&#39;N&#39;, &#39;N&#39;): 0,
+  (&#39;N&#39;, &#39;H&#39;): 0,
+  (&#39;H&#39;, &#39;Zn&#39;): 0,
+  (&#39;H&#39;, &#39;C&#39;): 1,
+  (&#39;H&#39;, &#39;N&#39;): 0,
+  (&#39;H&#39;, &#39;H&#39;): 0},
+ &#39;sites&#39;: [{&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 4,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;Zn&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [7.296689736497134, 5.619566364689632e-05, 5.957730332583271],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 18,
+     &#39;distance&#39;: 1.9651889528071236,
+     &#39;position&#39;: [9.157826390914545, 0.07298329121481956, 6.58448356357103]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 19,
+     &#39;distance&#39;: 1.9651805961901723,
+     &#39;position&#39;: [6.745065666789741, 1.7790519935249622, 5.330977101595511]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 32,
+     &#39;distance&#39;: 1.9651823659646426,
+     &#39;position&#39;: [6.130206305553247, -0.5640371384649034, 7.435247455063922]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 33,
+     &#39;distance&#39;: 1.9652020658995908,
+     &#39;position&#39;: [7.153660582731001, -1.2877733636202902, 4.48021321010262]}],
+   &#39;total_cn&#39;: 4,
+   &#39;min_dist&#39;: 1.9651805961901723,
+   &#39;max_dist&#39;: 1.9652020658995908,
+   &#39;avg_dist&#39;: 1.9651884952153824},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 4,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;Zn&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-2.4321504391714384, 6.879413154848223, 5.957730332583271],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 20,
+     &#39;distance&#39;: 1.9651823659646415,
+     &#39;position&#39;: [-2.575159883634991, 5.591611468613456, 7.435247455063922]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 21,
+     &#39;distance&#39;: 1.9652020658995908,
+     &#39;position&#39;: [-3.5986535794179053, 6.315291947670503, 4.48021321010262]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 30,
+     &#39;distance&#39;: 1.9651889528071242,
+     &#39;position&#39;: [-2.983766148319832, 8.65842077627717, 6.58448356357103]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 31,
+     &#39;distance&#39;: 1.9651805961901716,
+     &#39;position&#39;: [-0.5710221453130249, 6.952328426831764, 5.330977101595511]}],
+   &#39;total_cn&#39;: 4,
+   &#39;min_dist&#39;: 1.9651805961901716,
+   &#39;max_dist&#39;: 1.9652020658995908,
+   &#39;avg_dist&#39;: 1.965188495215382},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 4,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;Zn&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [2.4322696486628486, 8.599224296812542, 2.9788651662916354],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 22,
+     &#39;distance&#39;: 1.9651889528071258,
+     &#39;position&#39;: [2.289265226892534, 10.522696054166493, 3.3553937233108986]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 23,
+     &#39;distance&#39;: 1.9651805961901718,
+     &#39;position&#39;: [1.2657828798532025, 7.601729114037491, 4.206157614803789]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 40,
+     &#39;distance&#39;: 1.9651823659646426,
+     &#39;position&#39;: [4.293401280387023, 8.019984801067077, 3.229089840260133]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 41,
+     &#39;distance&#39;: 1.9652020658995903,
+     &#39;position&#39;: [1.8806292075186353, 8.252487217979114, 1.1248194867917216]}],
+   &#39;total_cn&#39;: 4,
+   &#39;min_dist&#39;: 1.9651805961901718,
+   &#39;max_dist&#39;: 1.9652020658995903,
+   &#39;avg_dist&#39;: 1.9651884952153826},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 4,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;Zn&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [2.4322696486628486, -1.7197549463006727, 8.936595498874906],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 24,
+     &#39;distance&#39;: 1.9651823659646437,
+     &#39;position&#39;: [4.293401280387023, -1.2134378256706302, 8.560066941855643]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 25,
+     &#39;distance&#39;: 1.9652020658995908,
+     &#39;position&#39;: [1.8806292075186355, -3.1520486415096127, 7.709303050362752]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 38,
+     &#39;distance&#39;: 1.9651889528071236,
+     &#39;position&#39;: [2.289265226892534, -2.3553900412388, 10.79064117837482]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 39,
+     &#39;distance&#39;: 1.9651805961901723,
+     &#39;position&#39;: [1.265782879853203,
+      -0.15814327678364726,
+      8.686370824906408]}],
+   &#39;total_cn&#39;: 4,
+   &#39;min_dist&#39;: 1.9651805961901723,
+   &#39;max_dist&#39;: 1.9652020658995908,
+   &#39;avg_dist&#39;: 1.9651884952153824},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 4,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;Zn&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-2.4321504391714384, 1.7199235332916143, 8.936595498874906],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 26,
+     &#39;distance&#39;: 1.9651889528071236,
+     &#39;position&#39;: [-2.983766148319832, 1.3732214306392387, 10.79064117837482]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 27,
+     &#39;distance&#39;: 1.9651805961901718,
+     &#39;position&#39;: [-0.5710221453130249, 1.1406793171104, 8.686370824906408]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 36,
+     &#39;distance&#39;: 1.9651823659646417,
+     &#39;position&#39;: [-2.575159883634991, 3.643388187513678, 8.560066941855643]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 37,
+     &#39;distance&#39;: 1.9652020658995912,
+     &#39;position&#39;: [-3.5986535794179053,
+      0.7224051979031391,
+      7.709303050362752]}],
+   &#39;total_cn&#39;: 4,
+   &#39;min_dist&#39;: 1.9651805961901718,
+   &#39;max_dist&#39;: 1.9652020658995912,
+   &#39;avg_dist&#39;: 1.965188495215382},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 4,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;Zn&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [7.296689736497135, 5.1595458172202555, 2.9788651662916354],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 28,
+     &#39;distance&#39;: 1.9651823659646417,
+     &#39;position&#39;: [6.130206305553249, 6.721162207173027, 3.229089840260133]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 29,
+     &#39;distance&#39;: 1.9652020658995906,
+     &#39;position&#39;: [7.1536605827310025, 4.523875746101074, 1.1248194867917216]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 34,
+     &#39;distance&#39;: 1.9651889528071247,
+     &#39;position&#39;: [9.157826390914547, 5.665870040982182, 3.3553937233108986]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 35,
+     &#39;distance&#39;: 1.965180596190172,
+     &#39;position&#39;: [6.745065666789744, 3.727275274624738, 4.206157614803789]}],
+   &#39;total_cn&#39;: 4,
+   &#39;min_dist&#39;: 1.965180596190172,
+   &#39;max_dist&#39;: 1.9652020658995906,
+   &#39;avg_dist&#39;: 1.9651884952153822},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 2,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-4.915942783061324, 0.9170890105215702, 7.4983993965893045],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 18,
+     &#39;distance&#39;: 1.3482095142807609,
+     &#39;position&#39;: [-5.435473609085451, 0.0729832912148195, 6.58448356357103]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 37,
+     &#39;distance&#39;: 1.3481961964440305,
+     &#39;position&#39;: [-3.598653579417905, 0.7224051979031391, 7.709303050362752]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481961964440305,
+   &#39;max_dist&#39;: 1.3482095142807609,
+   &#39;avg_dist&#39;: 1.3482028553623957},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 2,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [7.367710007518636, 2.55021928823475, 4.417061268577236],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 19,
+     &#39;distance&#39;: 1.34819402213228,
+     &#39;position&#39;: [6.7450656667897455, 1.7790519935249627, 5.330977101595511]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 35,
+     &#39;distance&#39;: 1.3481940221322792,
+     &#39;position&#39;: [6.745065666789746, 3.7272752746247386, 4.206157614803789]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481940221322792,
+   &#39;max_dist&#39;: 1.34819402213228,
+   &#39;avg_dist&#39;: 1.3481940221322795},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 2,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-2.40004584674459, 4.2563276871616935, 7.3720955135385395],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 20,
+     &#39;distance&#39;: 1.348197266961551,
+     &#39;position&#39;: [-2.5751598836349907, 5.591611468613456, 7.435247455063922]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 36,
+     &#39;distance&#39;: 1.3481972669615494,
+     &#39;position&#39;: [-2.5751598836349907, 3.643388187513678, 8.560066941855643]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481972669615494,
+   &#39;max_dist&#39;: 1.348197266961551,
+   &#39;avg_dist&#39;: 1.34819726696155},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 2,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-4.915942783061324, 6.035302715105725, 4.543365151628002],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 21,
+     &#39;distance&#39;: 1.3481961964440305,
+     &#39;position&#39;: [-3.598653579417905, 6.315291947670503, 4.48021321010262]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 34,
+     &#39;distance&#39;: 1.3482095142807602,
+     &#39;position&#39;: [-5.435473609085451, 5.665870040982182, 3.3553937233108986]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481961964440305,
+   &#39;max_dist&#39;: 1.3482095142807602,
+   &#39;avg_dist&#39;: 1.3482028553623953},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 2,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [7.328775462035145, -2.6230559537239815, 4.543365151628002],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 22,
+     &#39;distance&#39;: 1.3482095142807604,
+     &#39;position&#39;: [7.153645578229685, -3.236017864202659, 3.3553937233108986]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 33,
+     &#39;distance&#39;: 1.3481961964440308,
+     &#39;position&#39;: [7.153660582731004, -1.2877733636202902, 4.48021321010262]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481961964440308,
+   &#39;max_dist&#39;: 1.3482095142807604,
+   &#39;avg_dist&#39;: 1.3482028553623957},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 2,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-0.051503510446218856, 7.796416905308908, 4.417061268577236],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 23,
+     &#39;distance&#39;: 1.3481940221322797,
+     &#39;position&#39;: [1.2657828798532034, 7.601729114037492, 4.206157614803789]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 31,
+     &#39;distance&#39;: 1.3481940221322803,
+     &#39;position&#39;: [-0.5710221453130243, 6.952328426831765, 5.330977101595511]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481940221322797,
+   &#39;max_dist&#39;: 1.3481940221322803,
+   &#39;avg_dist&#39;: 1.34819402213228},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 2,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [4.812916259496092, -0.8440275623777511, 7.3720955135385395],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 24,
+     &#39;distance&#39;: 1.3481972669615487,
+     &#39;position&#39;: [4.293401280387024, -1.213437825670631, 8.560066941855643]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 32,
+     &#39;distance&#39;: 1.34819726696155,
+     &#39;position&#39;: [6.1302063055532505,
+      -0.5640371384649034,
+      7.435247455063922]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481972669615487,
+   &#39;max_dist&#39;: 1.34819726696155,
+   &#39;avg_dist&#39;: 1.3481972669615494},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 2,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [2.5032707349035297, -4.3291086065525874, 7.4983993965893045],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 25,
+     &#39;distance&#39;: 1.3481961964440305,
+     &#39;position&#39;: [1.8806292075186355, -3.1520486415096136, 7.709303050362752]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 30,
+     &#39;distance&#39;: 1.3482095142807602,
+     &#39;position&#39;: [1.880614203017318, -5.100293142091982, 6.58448356357103]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481961964440305,
+   &#39;max_dist&#39;: 1.3482095142807602,
+   &#39;avg_dist&#39;: 1.3482028553623953},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 2,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [2.5032707349035297, 8.658358668829706, 0.0],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 26,
+     &#39;distance&#39;: 1.34820951428076,
+     &#39;position&#39;: [1.8806142030173176, 8.25246599849652, -1.124819486791722]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 41,
+     &#39;distance&#39;: 1.3481961964440303,
+     &#39;position&#39;: [1.8806292075186353, 8.252487217979114, 1.1248194867917216]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481961964440303,
+   &#39;max_dist&#39;: 1.34820951428076,
+   &#39;avg_dist&#39;: 1.3482028553623953},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 2,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-0.05150351044621865, -0.07283666548923233, 8.96042642020524],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 27,
+     &#39;distance&#39;: 1.3481940221322808,
+     &#39;position&#39;: [-0.5710221453130244, 1.1406793171104, 8.686370824906408]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 39,
+     &#39;distance&#39;: 1.3481940221322806,
+     &#39;position&#39;: [1.2657828798532038,
+      -0.15814327678364806,
+      8.686370824906408]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481940221322806,
+   &#39;max_dist&#39;: 1.3481940221322808,
+   &#39;avg_dist&#39;: 1.3481940221322808},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 2,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [4.812916259496092, 6.806463648466388, 2.955034244961302],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 28,
+     &#39;distance&#39;: 1.34819726696155,
+     &#39;position&#39;: [6.1302063055532505, 6.721162207173027, 3.2290898402601327]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 40,
+     &#39;distance&#39;: 1.348197266961551,
+     &#39;position&#39;: [4.293401280387024, 8.019984801067077, 3.2290898402601327]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.34819726696155,
+   &#39;max_dist&#39;: 1.348197266961551,
+   &#39;avg_dist&#39;: 1.3481972669615505},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 2,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [7.328775462035145, 5.2461976170741575, 0.0],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 29,
+     &#39;distance&#39;: 1.348196196444031,
+     &#39;position&#39;: [7.153660582731004, 4.523875746101074, 1.1248194867917216]},
+    {&#39;element&#39;: &#39;N&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 38,
+     &#39;distance&#39;: 1.3482095142807604,
+     &#39;position&#39;: [7.1536455782296855, 4.523854526618481, -1.124819486791722]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.348196196444031,
+   &#39;max_dist&#39;: 1.3482095142807604,
+   &#39;avg_dist&#39;: 1.3482028553623957},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [9.157826390914549, 0.07298329121481943, 6.5844835635710295],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 6,
+     &#39;distance&#39;: 1.34820951428076,
+     &#39;position&#39;: [9.677357216938676, 0.9170890105215701, 7.498399396589304]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 42,
+     &#39;distance&#39;: 1.3987032924097325,
+     &#39;position&#39;: [10.23869774492923, -0.7181465579182702, 6.181740993088401]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.34820951428076,
+   &#39;max_dist&#39;: 1.3987032924097325,
+   &#39;avg_dist&#39;: 1.373456403345246},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [6.745065666789745, 1.7790519935249631, 5.330977101595511],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 7,
+     &#39;distance&#39;: 1.34819402213228,
+     &#39;position&#39;: [7.367710007518635, 2.5502192882347505, 4.417061268577236]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 43,
+     &#39;distance&#39;: 1.3987031466734938,
+     &#39;position&#39;: [5.638899121688542, 2.5344091864702922, 5.7337196720781405]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.34819402213228,
+   &#39;max_dist&#39;: 1.3987031466734938,
+   &#39;avg_dist&#39;: 1.3734485844028868},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-2.575159883634991, 5.591611468613456, 7.435247455063922],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 8,
+     &#39;distance&#39;: 1.348197266961551,
+     &#39;position&#39;: [-2.4000458467445904,
+      4.2563276871616935,
+      7.3720955135385395]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 44,
+     &#39;distance&#39;: 1.3987129901703823,
+     &#39;position&#39;: [-2.891338153264771, 5.84203269471296, 8.774545233828642]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.348197266961551,
+   &#39;max_dist&#39;: 1.3987129901703823,
+   &#39;avg_dist&#39;: 1.3734551285659666},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-3.598653579417905, 6.315291947670503, 4.48021321010262],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 9,
+     &#39;distance&#39;: 1.348196196444031,
+     &#39;position&#39;: [-4.915942783061324, 6.035302715105725, 4.543365151628002]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 45,
+     &#39;distance&#39;: 1.3987125055360148,
+     &#39;position&#39;: [-3.257180118701602, 6.100643377758757, 3.1409154313379006]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.348196196444031,
+   &#39;max_dist&#39;: 1.3987125055360148,
+   &#39;avg_dist&#39;: 1.373454350990023},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [2.2892652268925344, 10.522696054166495, 3.3553937233108986],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 10,
+     &#39;distance&#39;: 1.3482095142807602,
+     &#39;position&#39;: [2.464395110697994, 11.135657964645173, 4.543365151628002]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 46,
+     &#39;distance&#39;: 1.3987032924097336,
+     &#39;position&#39;: [1.9730751316812072, 11.557342978913105, 2.468883449822507]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3482095142807602,
+   &#39;max_dist&#39;: 1.3987032924097336,
+   &#39;avg_dist&#39;: 1.373456403345247},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [1.265782879853202, 7.601729114037491, 4.206157614803789],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 11,
+     &#39;distance&#39;: 1.34819402213228,
+     &#39;position&#39;: [-0.05150351044622026, 7.796416905308907, 4.417061268577236]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 47,
+     &#39;distance&#39;: 1.3987031466734945,
+     &#39;position&#39;: [1.6072677528914832, 6.549195568979551, 5.0616876905627475]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.34819402213228,
+   &#39;max_dist&#39;: 1.3987031466734945,
+   &#39;avg_dist&#39;: 1.3734485844028872},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [4.293401280387024, -1.2134378256706313, 8.560066941855643],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 12,
+     &#39;distance&#39;: 1.348197266961549,
+     &#39;position&#39;: [4.812916259496092, -0.8440275623777513, 7.3720955135385395]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 48,
+     &#39;distance&#39;: 1.3987129901703832,
+     &#39;position&#39;: [5.374284459983252, -1.1666498364334252, 9.446577215344034]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.348197266961549,
+   &#39;max_dist&#39;: 1.3987129901703832,
+   &#39;avg_dist&#39;: 1.3734551285659662},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [1.8806292075186368, -3.152048641509613, 7.7093030503627515],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 13,
+     &#39;distance&#39;: 1.348196196444031,
+     &#39;position&#39;: [2.503270734903531, -4.3291086065525874, 7.498399396589304]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 49,
+     &#39;distance&#39;: 1.3987125055360152,
+     &#39;position&#39;: [0.7744512500954559, -3.180950010435488, 6.853772974603794]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.348196196444031,
+   &#39;max_dist&#39;: 1.3987125055360152,
+   &#39;avg_dist&#39;: 1.373454350990023},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-2.9837661483198326, 1.3732214306392387, 10.79064117837482],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 14,
+     &#39;distance&#39;: 1.3482095142807595,
+     &#39;position&#39;: [-2.3611096164336205, 1.779114100972424, 11.915460665166542]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 50,
+     &#39;distance&#39;: 1.3987032924097333,
+     &#39;position&#39;: [-4.089938065795449,
+      0.6467656066197851,
+      11.243428683651148]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3482095142807595,
+   &#39;max_dist&#39;: 1.3987032924097333,
+   &#39;avg_dist&#39;: 1.3734564033452465},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-0.5710221453130244, 1.1406793171104, 8.686370824906408],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 15,
+     &#39;distance&#39;: 1.3481940221322808,
+     &#39;position&#39;: [-0.0515035104462187,
+      -0.07283666548923229,
+      8.96042642020524]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 51,
+     &#39;distance&#39;: 1.3987031466734947,
+     &#39;position&#39;: [0.5098545810760688, 1.8850211770062832, 8.202603121900648]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481940221322808,
+   &#39;max_dist&#39;: 1.3987031466734947,
+   &#39;avg_dist&#39;: 1.3734485844028876},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [6.130206305553249, 6.721162207173027, 3.229089840260133],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 16,
+     &#39;distance&#39;: 1.3481972669615492,
+     &#39;position&#39;: [4.81291625949609, 6.806463648466388, 2.9550342449613023]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 52,
+     &#39;distance&#39;: 1.3987129901703834,
+     &#39;position&#39;: [6.471697631798664, 7.988344322142715, 3.712857543265894]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481972669615492,
+   &#39;max_dist&#39;: 1.3987129901703834,
+   &#39;avg_dist&#39;: 1.3734551285659662},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [7.1536605827310025, 4.523875746101075, 1.1248194867917216],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 17,
+     &#39;distance&#39;: 1.3481961964440314,
+     &#39;position&#39;: [7.328775462035143, 5.246197617074158, 0.0]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 53,
+     &#39;distance&#39;: 1.3987125055360146,
+     &#39;position&#39;: [6.83746444757211, 3.2388075952549586, 0.6720319815153929]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481961964440314,
+   &#39;max_dist&#39;: 1.3987125055360146,
+   &#39;avg_dist&#39;: 1.373454350990023},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-2.9837661483198317, 8.658420776277172, 6.5844835635710295],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 13,
+     &#39;distance&#39;: 1.3482095142807597,
+     &#39;position&#39;: [-2.3611096164336196, 9.429605311816566, 7.498399396589304]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 54,
+     &#39;distance&#39;: 1.3987032924097331,
+     &#39;position&#39;: [-4.089938065795448, 9.413770371568775, 6.181740993088401]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3482095142807597,
+   &#39;max_dist&#39;: 1.3987032924097331,
+   &#39;avg_dist&#39;: 1.3734564033452465},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-0.5710221453130251, 6.952328426831764, 5.330977101595511],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 11,
+     &#39;distance&#39;: 1.34819402213228,
+     &#39;position&#39;: [-0.05150351044621959, 7.796416905308907, 4.417061268577236]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 55,
+     &#39;distance&#39;: 1.3987031466734956,
+     &#39;position&#39;: [0.5098545810760682, 6.161206175352399, 5.7337196720781405]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.34819402213228,
+   &#39;max_dist&#39;: 1.3987031466734956,
+   &#39;avg_dist&#39;: 1.3734485844028876},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [6.130206305553249, -0.564037138464903, 7.435247455063922],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 12,
+     &#39;distance&#39;: 1.34819726696155,
+     &#39;position&#39;: [4.81291625949609, -0.8440275623777507, 7.3720955135385395]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 56,
+     &#39;distance&#39;: 1.3987129901703828,
+     &#39;position&#39;: [6.471697631798664, -0.7786604428062747, 8.774545233828642]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.34819726696155,
+   &#39;max_dist&#39;: 1.3987129901703828,
+   &#39;avg_dist&#39;: 1.3734551285659664},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [7.1536605827310025, -1.2877733636202902, 4.48021321010262],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 10,
+     &#39;distance&#39;: 1.3481961964440308,
+     &#39;position&#39;: [7.328775462035143, -2.6230559537239815, 4.543365151628002]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 57,
+     &#39;distance&#39;: 1.3987125055360152,
+     &#39;position&#39;: [6.83746444757211, -1.0373774030911593, 3.1409154313379006]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481961964440308,
+   &#39;max_dist&#39;: 1.3987125055360152,
+   &#39;avg_dist&#39;: 1.373454350990023},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [9.157826390914547, 5.665870040982182, 3.3553937233108986],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 9,
+     &#39;distance&#39;: 1.3482095142807593,
+     &#39;position&#39;: [9.677357216938674, 6.035302715105725, 4.543365151628002]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 58,
+     &#39;distance&#39;: 1.3987032924097327,
+     &#39;position&#39;: [10.238697744929228, 5.712641306389887, 2.468883449822507]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3482095142807593,
+   &#39;max_dist&#39;: 1.3987032924097327,
+   &#39;avg_dist&#39;: 1.373456403345246},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [6.7450656667897455, 3.727275274624738, 4.206157614803789],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 7,
+     &#39;distance&#39;: 1.3481940221322792,
+     &#39;position&#39;: [7.367710007518635, 2.5502192882347496, 4.417061268577236]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 59,
+     &#39;distance&#39;: 1.3987031466734947,
+     &#39;position&#39;: [5.638899121688542, 3.6983900450934626, 5.0616876905627475]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481940221322792,
+   &#39;max_dist&#39;: 1.3987031466734947,
+   &#39;avg_dist&#39;: 1.373448584402887},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-2.5751598836349907, 3.643388187513679, 8.560066941855643],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 8,
+     &#39;distance&#39;: 1.3481972669615494,
+     &#39;position&#39;: [-2.40004584674459, 4.256327687161694, 7.3720955135385395]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 60,
+     &#39;distance&#39;: 1.398712990170384,
+     &#39;position&#39;: [-2.8913381532647704, 4.678051836089792, 9.446577215344034]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481972669615494,
+   &#39;max_dist&#39;: 1.398712990170384,
+   &#39;avg_dist&#39;: 1.3734551285659666},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-3.598653579417905, 0.7224051979031398, 7.7093030503627515],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 6,
+     &#39;distance&#39;: 1.348196196444031,
+     &#39;position&#39;: [-4.915942783061324, 0.917089010521571, 7.498399396589304]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 61,
+     &#39;distance&#39;: 1.398712505536015,
+     &#39;position&#39;: [-3.257180118701602,
+      -0.3301444865493999,
+      6.853772974603794]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.348196196444031,
+   &#39;max_dist&#39;: 1.398712505536015,
+   &#39;avg_dist&#39;: 1.373454350990023},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [2.289265226892535, -2.3553900412388002, 10.79064117837482],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 17,
+     &#39;distance&#39;: 1.3482095142807604,
+     &#39;position&#39;: [2.4643951106979944, -1.633046950783124, 11.915460665166542]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 62,
+     &#39;distance&#39;: 1.3987032924097336,
+     &#39;position&#39;: [1.9730751316812078,
+      -3.640449650344043,
+      11.243428683651148]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3482095142807604,
+   &#39;max_dist&#39;: 1.3987032924097336,
+   &#39;avg_dist&#39;: 1.373456403345247},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [1.2657828798532034, -0.15814327678364817, 8.686370824906408],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 15,
+     &#39;distance&#39;: 1.3481940221322803,
+     &#39;position&#39;: [-0.05150351044621915,
+      -0.07283666548923244,
+      8.96042642020524]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 63,
+     &#39;distance&#39;: 1.398703146673494,
+     &#39;position&#39;: [1.6072677528914843, 1.1090297120102626, 8.202603121900648]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481940221322803,
+   &#39;max_dist&#39;: 1.398703146673494,
+   &#39;avg_dist&#39;: 1.3734485844028872},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [4.293401280387025, 8.019984801067077, 3.229089840260133],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 16,
+     &#39;distance&#39;: 1.3481972669615512,
+     &#39;position&#39;: [4.812916259496093, 6.806463648466388, 2.9550342449613023]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 64,
+     &#39;distance&#39;: 1.398712990170382,
+     &#39;position&#39;: [5.374284459983253, 8.764335787138734, 3.712857543265894]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481972669615512,
+   &#39;max_dist&#39;: 1.398712990170382,
+   &#39;avg_dist&#39;: 1.3734551285659666},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 2,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;N&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [1.8806292075186362, 8.252487217979114, 1.1248194867917216],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 14,
+     &#39;distance&#39;: 1.3481961964440303,
+     &#39;position&#39;: [2.5032707349035306, 8.658358668829706, 0.0]},
+    {&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 65,
+     &#39;distance&#39;: 1.3987125055360148,
+     &#39;position&#39;: [0.7744512500954557, 7.526022852218786, 0.6720319815153929]}],
+   &#39;total_cn&#39;: 2,
+   &#39;min_dist&#39;: 1.3481961964440303,
+   &#39;max_dist&#39;: 1.3987125055360148,
+   &#39;avg_dist&#39;: 1.3734543509900226},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [10.23869774492923, -0.7181465579182701, 6.181740993088402],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 66,
+     &#39;distance&#39;: 0.9301621543588344,
+     &#39;position&#39;: [10.20366699025172, -1.4012726494665118, 5.551413123901091]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301621543588344,
+   &#39;max_dist&#39;: 0.9301621543588344,
+   &#39;avg_dist&#39;: 0.9301621543588344},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [5.638899121688544, 2.5344091864702913, 5.7337196720781405],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 67,
+     &#39;distance&#39;: 0.9301531048227242,
+     &#39;position&#39;: [5.0065259884677795,
+      2.2736875032184094,
+      6.3640475412654505]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301531048227242,
+   &#39;max_dist&#39;: 0.9301531048227242,
+   &#39;avg_dist&#39;: 0.9301531048227242},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-2.89133815326477, 5.84203269471296, 8.77454523382864],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 68,
+     &#39;distance&#39;: 0.9301579414405873,
+     &#39;position&#39;: [-3.0722894147875777, 6.677878015667634, 9.140349876249253]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301579414405873,
+   &#39;max_dist&#39;: 0.9301579414405873,
+   &#39;avg_dist&#39;: 0.9301579414405873},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-3.257180118701602, 6.100643377758758, 3.1409154313379006],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 69,
+     &#39;distance&#39;: 0.9301526896173413,
+     &#39;position&#39;: [-2.408824969280522,
+      6.2086458316042075,
+      2.7751107889172877]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301526896173413,
+   &#39;max_dist&#39;: 0.9301526896173413,
+   &#39;avg_dist&#39;: 0.9301526896173413},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [1.9730751316812074, 11.557342978913105, 2.468883449822507],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 70,
+     &#39;distance&#39;: 0.9301621543588344,
+     &#39;position&#39;: [1.7921117743686703,
+      11.456207878633084,
+      1.5621168932033336]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301621543588344,
+   &#39;max_dist&#39;: 0.9301621543588344,
+   &#39;avg_dist&#39;: 0.9301621543588344},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [1.6072677528914845, 6.549195568979551, 5.0616876905627475],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 71,
+     &#39;distance&#39;: 0.9301531048227242,
+     &#39;position&#39;: [2.455624094407477, 6.178399071814457, 5.151053645551496]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301531048227242,
+   &#39;max_dist&#39;: 0.9301531048227242,
+   &#39;avg_dist&#39;: 0.9301531048227242},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [5.374284459983252, -1.1666498364334241, 9.446577215344034],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 72,
+     &#39;distance&#39;: 0.9301579414405878,
+     &#39;position&#39;: [5.339265801095472,
+      -1.3709581851411998,
+      10.353343771963209]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301579414405878,
+   &#39;max_dist&#39;: 0.9301579414405878,
+   &#39;avg_dist&#39;: 0.9301579414405878},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [0.7744512500954556, -3.1809500104354886, 6.853772974603795],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 73,
+     &#39;distance&#39;: 0.9301526896173403,
+     &#39;position&#39;: [0.14207692477977785,
+      -2.5047100642825995,
+      6.764407019615046]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301526896173403,
+   &#39;max_dist&#39;: 0.9301526896173403,
+   &#39;avg_dist&#39;: 0.9301526896173403},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-4.089938065795448, 0.6467656066197858, 11.243428683651148],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 74,
+     &#39;distance&#39;: 0.9301621543588333,
+     &#39;position&#39;: [-4.722319607259006,
+      0.2312473437187772,
+      10.702466769452588]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301621543588333,
+   &#39;max_dist&#39;: 0.9301621543588333,
+   &#39;avg_dist&#39;: 0.9301621543588333},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [0.5098545810760678, 1.8850211770062841, 8.202603121900648],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 75,
+     &#39;distance&#39;: 0.9301531048227247,
+     &#39;position&#39;: [0.4748322346413548, 2.772455617262301, 7.926164434468784]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301531048227247,
+   &#39;max_dist&#39;: 0.9301531048227247,
+   &#39;avg_dist&#39;: 0.9301531048227247},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [6.471697631798665, 7.988344322142717, 3.712857543265894],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 76,
+     &#39;distance&#39;: 0.9301579414405864,
+     &#39;position&#39;: [7.320057660861592, 8.25113836546236, 3.989296230697758]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301579414405864,
+   &#39;max_dist&#39;: 0.9301579414405864,
+   &#39;avg_dist&#39;: 0.9301579414405864},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [6.837464447572112, 3.2388075952549578, 0.6720319815153929],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 77,
+     &#39;distance&#39;: 0.9301526896173404,
+     &#39;position&#39;: [6.656508306407456, 2.504097374580304, 1.2129938957139539]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301526896173404,
+   &#39;max_dist&#39;: 0.9301526896173404,
+   &#39;avg_dist&#39;: 0.9301526896173404},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-4.089938065795448, 9.413770371568775, 6.181740993088402],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 78,
+     &#39;distance&#39;: 0.9301621543588351,
+     &#39;position&#39;: [-4.722319607259007, 9.153036797314465, 5.551413123901091]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301621543588351,
+   &#39;max_dist&#39;: 0.9301621543588351,
+   &#39;avg_dist&#39;: 0.9301621543588351},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [0.5098545810760681, 6.161206175352399, 5.7337196720781405],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 79,
+     &#39;distance&#39;: 0.9301531048227241,
+     &#39;position&#39;: [0.47483223464135504,
+      5.478091974806586,
+      6.3640475412654505]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301531048227241,
+   &#39;max_dist&#39;: 0.9301531048227241,
+   &#39;avg_dist&#39;: 0.9301531048227241},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [6.4716976317986665, -0.7786604428062734, 8.77454523382864],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 80,
+     &#39;distance&#39;: 0.9301579414405868,
+     &#39;position&#39;: [7.320057660861594, -0.6706510881333277, 9.140349876249253]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301579414405868,
+   &#39;max_dist&#39;: 0.9301579414405868,
+   &#39;avg_dist&#39;: 0.9301579414405868},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [6.837464447572112, -1.0373774030911591, 3.1409154313379006],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 81,
+     &#39;distance&#39;: 0.9301526896173402,
+     &#39;position&#39;: [6.656508306407456,
+      -0.2015389829639811,
+      2.7751107889172877]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301526896173402,
+   &#39;max_dist&#39;: 0.9301526896173402,
+   &#39;avg_dist&#39;: 0.9301526896173402},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [10.23869774492923, 5.712641306389887, 2.468883449822507],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 82,
+     &#39;distance&#39;: 0.9301621543588342,
+     &#39;position&#39;: [10.20366699025172, 5.508315851722098, 1.5621168932033336]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301621543588342,
+   &#39;max_dist&#39;: 0.9301621543588342,
+   &#39;avg_dist&#39;: 0.9301621543588342},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [5.638899121688543, 3.6983900450934635, 5.0616876905627475],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 83,
+     &#39;distance&#39;: 0.9301531048227245,
+     &#39;position&#39;: [5.006525988467779, 4.3746316771162626, 5.151053645551496]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301531048227245,
+   &#39;max_dist&#39;: 0.9301531048227245,
+   &#39;avg_dist&#39;: 0.9301531048227245},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-2.891338153264771, 4.678051836089793, 9.446577215344034],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 84,
+     &#39;distance&#39;: 0.9301579414405877,
+     &#39;position&#39;: [-3.0722894147875786,
+      4.576933841769786,
+      10.353343771963209]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301579414405877,
+   &#39;max_dist&#39;: 0.9301579414405877,
+   &#39;avg_dist&#39;: 0.9301579414405877},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-3.257180118701602, -0.3301444865494006, 6.853772974603795],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 85,
+     &#39;distance&#39;: 0.9301526896173409,
+     &#39;position&#39;: [-2.4088249692805226,
+      -0.7009426695844034,
+      6.764407019615046]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301526896173409,
+   &#39;max_dist&#39;: 0.9301526896173409,
+   &#39;avg_dist&#39;: 0.9301526896173409},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [1.9730751316812065, -3.6404496503440433, 11.243428683651148],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 86,
+     &#39;distance&#39;: 0.9301621543588335,
+     &#39;position&#39;: [1.792111774368669, -4.375170076151215, 10.702466769452588]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301621543588335,
+   &#39;max_dist&#39;: 0.9301621543588335,
+   &#39;avg_dist&#39;: 0.9301621543588335},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [1.6072677528914856, 1.1090297120102626, 8.202603121900648],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 87,
+     &#39;distance&#39;: 0.9301531048227248,
+     &#39;position&#39;: [2.455624094407479, 1.37181854037232, 7.926164434468784]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301531048227248,
+   &#39;max_dist&#39;: 0.9301531048227248,
+   &#39;avg_dist&#39;: 0.9301531048227248},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [5.374284459983252, 8.764335787138734, 3.712857543265894],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 88,
+     &#39;distance&#39;: 0.9301579414405863,
+     &#39;position&#39;: [5.339265801095472, 9.651775442352337, 3.989296230697758]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301579414405863,
+   &#39;max_dist&#39;: 0.9301579414405863,
+   &#39;avg_dist&#39;: 0.9301579414405863},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 1,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [0.774451250095456, 7.526022852218787, 0.6720319815153929],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 89,
+     &#39;distance&#39;: 0.9301526896173407,
+     &#39;position&#39;: [0.14207692477977818,
+      7.110514794450297,
+      1.2129938957139539]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301526896173407,
+   &#39;max_dist&#39;: 0.9301526896173407,
+   &#39;avg_dist&#39;: 0.9301526896173407},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [10.203666990251719, -1.4012726494665113, 5.551413123901091],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 42,
+     &#39;distance&#39;: 0.9301621543588343,
+     &#39;position&#39;: [10.238697744929228,
+      -0.7181465579182696,
+      6.181740993088402]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301621543588343,
+   &#39;max_dist&#39;: 0.9301621543588343,
+   &#39;avg_dist&#39;: 0.9301621543588343},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [5.006525988467776, 2.2736875032184094, 6.3640475412654505],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 43,
+     &#39;distance&#39;: 0.9301531048227261,
+     &#39;position&#39;: [5.6388991216885405,
+      2.5344091864702913,
+      5.7337196720781405]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301531048227261,
+   &#39;max_dist&#39;: 0.9301531048227261,
+   &#39;avg_dist&#39;: 0.9301531048227261},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-3.072289414787578, 6.677878015667634, 9.140349876249255],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 44,
+     &#39;distance&#39;: 0.9301579414405873,
+     &#39;position&#39;: [-2.8913381532647704, 5.84203269471296, 8.774545233828642]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301579414405873,
+   &#39;max_dist&#39;: 0.9301579414405873,
+   &#39;avg_dist&#39;: 0.9301579414405873},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-2.4088249692805226, 6.2086458316042075, 2.7751107889172877],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 45,
+     &#39;distance&#39;: 0.9301526896173404,
+     &#39;position&#39;: [-3.2571801187016023,
+      6.100643377758758,
+      3.1409154313379006]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301526896173404,
+   &#39;max_dist&#39;: 0.9301526896173404,
+   &#39;avg_dist&#39;: 0.9301526896173404},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [1.7921117743686705, 11.456207878633082, 1.5621168932033336],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 46,
+     &#39;distance&#39;: 0.9301621543588344,
+     &#39;position&#39;: [1.9730751316812076, 11.557342978913104, 2.468883449822507]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301621543588344,
+   &#39;max_dist&#39;: 0.9301621543588344,
+   &#39;avg_dist&#39;: 0.9301621543588344},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [2.455624094407476, 6.178399071814457, 5.151053645551496],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 47,
+     &#39;distance&#39;: 0.9301531048227251,
+     &#39;position&#39;: [1.6072677528914832, 6.549195568979551, 5.0616876905627475]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301531048227251,
+   &#39;max_dist&#39;: 0.9301531048227251,
+   &#39;avg_dist&#39;: 0.9301531048227251},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [5.33926580109547, -1.3709581851412007, 10.353343771963209],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 48,
+     &#39;distance&#39;: 0.9301579414405879,
+     &#39;position&#39;: [5.37428445998325, -1.166649836433425, 9.446577215344034]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301579414405879,
+   &#39;max_dist&#39;: 0.9301579414405879,
+   &#39;avg_dist&#39;: 0.9301579414405879},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [0.14207692477977785, -2.5047100642825995, 6.764407019615046],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 49,
+     &#39;distance&#39;: 0.9301526896173407,
+     &#39;position&#39;: [0.7744512500954556,
+      -3.1809500104354886,
+      6.853772974603795]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301526896173407,
+   &#39;max_dist&#39;: 0.9301526896173407,
+   &#39;avg_dist&#39;: 0.9301526896173407},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-4.722319607259006, 0.23124734371877656, 10.702466769452588],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 50,
+     &#39;distance&#39;: 0.9301621543588345,
+     &#39;position&#39;: [-4.089938065795448,
+      0.6467656066197851,
+      11.243428683651148]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301621543588345,
+   &#39;max_dist&#39;: 0.9301621543588345,
+   &#39;avg_dist&#39;: 0.9301621543588345},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [0.4748322346413557, 2.7724556172623003, 7.926164434468784],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 51,
+     &#39;distance&#39;: 0.9301531048227255,
+     &#39;position&#39;: [0.5098545810760687, 1.8850211770062832, 8.202603121900648]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301531048227255,
+   &#39;max_dist&#39;: 0.9301531048227255,
+   &#39;avg_dist&#39;: 0.9301531048227255},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [7.3200576608615915, 8.25113836546236, 3.989296230697758],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 52,
+     &#39;distance&#39;: 0.9301579414405866,
+     &#39;position&#39;: [6.471697631798664, 7.988344322142717, 3.712857543265894]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301579414405866,
+   &#39;max_dist&#39;: 0.9301579414405866,
+   &#39;avg_dist&#39;: 0.9301579414405866},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [6.656508306407456, 2.5040973745803043, 1.2129938957139539],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 53,
+     &#39;distance&#39;: 0.9301526896173401,
+     &#39;position&#39;: [6.837464447572112, 3.238807595254958, 0.6720319815153929]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301526896173401,
+   &#39;max_dist&#39;: 0.9301526896173401,
+   &#39;avg_dist&#39;: 0.9301526896173401},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-4.722319607259006, 9.153036797314464, 5.551413123901091],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 54,
+     &#39;distance&#39;: 0.9301621543588356,
+     &#39;position&#39;: [-4.089938065795447, 9.413770371568773, 6.181740993088402]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301621543588356,
+   &#39;max_dist&#39;: 0.9301621543588356,
+   &#39;avg_dist&#39;: 0.9301621543588356},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [0.47483223464135593, 5.478091974806586, 6.3640475412654505],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 55,
+     &#39;distance&#39;: 0.9301531048227247,
+     &#39;position&#39;: [0.509854581076069, 6.161206175352399, 5.7337196720781405]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301531048227247,
+   &#39;max_dist&#39;: 0.9301531048227247,
+   &#39;avg_dist&#39;: 0.9301531048227247},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [7.3200576608615915, -0.6706510881333294, 9.140349876249255],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 56,
+     &#39;distance&#39;: 0.9301579414405869,
+     &#39;position&#39;: [6.471697631798664, -0.7786604428062751, 8.774545233828642]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301579414405869,
+   &#39;max_dist&#39;: 0.9301579414405869,
+   &#39;avg_dist&#39;: 0.9301579414405869},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [6.656508306407456, -0.20153898296398132, 2.7751107889172877],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 57,
+     &#39;distance&#39;: 0.9301526896173402,
+     &#39;position&#39;: [6.837464447572112,
+      -1.0373774030911593,
+      3.1409154313379006]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301526896173402,
+   &#39;max_dist&#39;: 0.9301526896173402,
+   &#39;avg_dist&#39;: 0.9301526896173402},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [10.203666990251719, 5.508315851722098, 1.5621168932033336],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 58,
+     &#39;distance&#39;: 0.9301621543588342,
+     &#39;position&#39;: [10.238697744929228, 5.712641306389887, 2.468883449822507]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301621543588342,
+   &#39;max_dist&#39;: 0.9301621543588342,
+   &#39;avg_dist&#39;: 0.9301621543588342},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [5.006525988467776, 4.374631677116262, 5.151053645551496],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 59,
+     &#39;distance&#39;: 0.9301531048227257,
+     &#39;position&#39;: [5.6388991216885405,
+      3.6983900450934626,
+      5.0616876905627475]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301531048227257,
+   &#39;max_dist&#39;: 0.9301531048227257,
+   &#39;avg_dist&#39;: 0.9301531048227257},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-3.0722894147875786, 4.576933841769786, 10.353343771963209],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 60,
+     &#39;distance&#39;: 0.9301579414405877,
+     &#39;position&#39;: [-2.891338153264771, 4.678051836089793, 9.446577215344034]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301579414405877,
+   &#39;max_dist&#39;: 0.9301579414405877,
+   &#39;avg_dist&#39;: 0.9301579414405877},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-2.408824969280523, -0.700942669584403, 6.764407019615046],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 61,
+     &#39;distance&#39;: 0.9301526896173404,
+     &#39;position&#39;: [-3.2571801187016023,
+      -0.33014448654940015,
+      6.853772974603795]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301526896173404,
+   &#39;max_dist&#39;: 0.9301526896173404,
+   &#39;avg_dist&#39;: 0.9301526896173404},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [1.7921117743686703, -4.375170076151215, 10.702466769452588],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 62,
+     &#39;distance&#39;: 0.9301621543588336,
+     &#39;position&#39;: [1.9730751316812078,
+      -3.6404496503440433,
+      11.243428683651148]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301621543588336,
+   &#39;max_dist&#39;: 0.9301621543588336,
+   &#39;avg_dist&#39;: 0.9301621543588336},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [2.455624094407478, 1.37181854037232, 7.926164434468784],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 63,
+     &#39;distance&#39;: 0.9301531048227252,
+     &#39;position&#39;: [1.6072677528914847, 1.1090297120102626, 8.202603121900648]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301531048227252,
+   &#39;max_dist&#39;: 0.9301531048227252,
+   &#39;avg_dist&#39;: 0.9301531048227252},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [5.33926580109547, 9.651775442352337, 3.989296230697758],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 64,
+     &#39;distance&#39;: 0.9301579414405863,
+     &#39;position&#39;: [5.37428445998325, 8.764335787138734, 3.712857543265894]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301579414405863,
+   &#39;max_dist&#39;: 0.9301579414405863,
+   &#39;avg_dist&#39;: 0.9301579414405863},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [0.14207692477977782, 7.110514794450297, 1.2129938957139539],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 65,
+     &#39;distance&#39;: 0.9301526896173408,
+     &#39;position&#39;: [0.7744512500954557, 7.526022852218787, 0.6720319815153929]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9301526896173408,
+   &#39;max_dist&#39;: 0.9301526896173408,
+   &#39;avg_dist&#39;: 0.9301526896173408},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 3,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [8.891273352162592, 1.9992180754417024, 8.157324371373015],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 102,
+     &#39;distance&#39;: 0.9598744540989668,
+     &#39;position&#39;: [9.447770512461496, 2.4622047442960375, 8.787652240560325]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 114,
+     &#39;distance&#39;: 0.9598001244017856,
+     &#39;position&#39;: [8.139233537692746, 1.6167301443380089, 8.614878060915409]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 126,
+     &#39;distance&#39;: 0.9612635197160941,
+     &#39;position&#39;: [8.579947573724207, 2.619729801724089, 7.492441666256722]}],
+   &#39;total_cn&#39;: 3,
+   &#39;min_dist&#39;: 0.9598001244017856,
+   &#39;max_dist&#39;: 0.9612635197160941,
+   &#39;avg_dist&#39;: 0.9603126994056156},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 3,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [8.649968774376525, 2.169784633151443, 3.7581362937935276],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 103,
+     &#39;distance&#39;: 0.9598638438686002,
+     &#39;position&#39;: [8.900971944916641, 2.8487712195217476, 3.127808424606217]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 115,
+     &#39;distance&#39;: 0.9598083465512355,
+     &#39;position&#39;: [8.540026307974843, 1.3332505110876312, 3.300582604251132]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 127,
+     &#39;distance&#39;: 0.961268743983105,
+     &#39;position&#39;: [9.338776635183029, 2.0831110069017815, 4.42301899890982]}],
+   &#39;total_cn&#39;: 3,
+   &#39;min_dist&#39;: 0.9598083465512355,
+   &#39;max_dist&#39;: 0.961268743983105,
+   &#39;avg_dist&#39;: 0.9603136448009802},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 3,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-2.110136884050312, 3.525040095202283, 6.105482044831335],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 104,
+     &#39;distance&#39;: 0.9598644911136519,
+     &#39;position&#39;: [-1.9992301564509425, 2.5901372489929373, 6.292554777274451]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 116,
+     &#39;distance&#39;: 0.959800236633208,
+     &#39;position&#39;: [-1.305560903477686, 3.870380105639548, 5.71227184288084]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 128,
+     &#39;distance&#39;: 0.9612679689255172,
+     &#39;position&#39;: [-2.8417512919485834,
+      3.6419833865941973,
+      5.493027366641776]}],
+   &#39;total_cn&#39;: 3,
+   &#39;min_dist&#39;: 0.959800236633208,
+   &#39;max_dist&#39;: 0.9612679689255172,
+   &#39;avg_dist&#39;: 0.9603108988907924},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 3,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-5.702026647837407, 6.06489589722831, 5.8099786203352055],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 105,
+     &#39;distance&#39;: 0.9598676400957284,
+     &#39;position&#39;: [-6.620433706275793, 5.857825488213016, 5.622905887892091]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 117,
+     &#39;distance&#39;: 0.959807302546322,
+     &#39;position&#39;: [-5.644620347538505, 6.938577939958552, 6.203188822285701]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 129,
+     &#39;distance&#39;: 0.961263156605026,
+     &#39;position&#39;: [-5.347894322307255, 5.414114505803672, 6.4224332985247665]}],
+   &#39;total_cn&#39;: 3,
+   &#39;min_dist&#39;: 0.959807302546322,
+   &#39;max_dist&#39;: 0.961263156605026,
+   &#39;avg_dist&#39;: 0.9603126997490254},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 3,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [7.618701320688006, -3.3543196512872107, 5.8099786203352055],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 106,
+     &#39;distance&#39;: 0.9598744540989672,
+     &#39;position&#39;: [7.729617600941286, -2.7248517348030514, 6.526097806311714]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 118,
+     &#39;distance&#39;: 0.959800124401787,
+     &#39;position&#39;: [8.423275934325131, -3.8675206470077943, 5.707505658614774]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 130,
+     &#39;distance&#39;: 0.9612635197160951,
+     &#39;position&#39;: [6.887089646660736, -3.9431906738625813, 6.014924543776071]}],
+   &#39;total_cn&#39;: 3,
+   &#39;min_dist&#39;: 0.959800124401787,
+   &#39;max_dist&#39;: 0.9612635197160951,
+   &#39;avg_dist&#39;: 0.9603126994056165},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 3,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-0.8375961649354691, 8.878533539748242, 3.7581362937935276],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 107,
+     &#39;distance&#39;: 0.959863843868599,
+     &#39;position&#39;: [-1.7559995835107172, 8.820061579356567, 4.031000343025841]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 119,
+     &#39;distance&#39;: 0.9598083465512358,
+     &#39;position&#39;: [-0.7802025803156505, 8.782213551013475, 2.804899440580204]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 131,
+     &#39;distance&#39;: 0.9612687439831057,
+     &#39;position&#39;: [-0.48346040617196384,
+      9.734327973123472,
+      4.015510244161125]}],
+   &#39;total_cn&#39;: 3,
+   &#39;min_dist&#39;: 0.9598083465512358,
+   &#39;max_dist&#39;: 0.9612687439831057,
+   &#39;avg_dist&#39;: 0.9603136448009802},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 3,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [4.026815498761425, -0.8144582746513482, 6.105482044831335],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 108,
+     &#39;distance&#39;: 0.9598644911136512,
+     &#39;position&#39;: [4.583303106406416, -0.5000784163353837, 5.389362858854827]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 120,
+     &#39;distance&#39;: 0.9598002366332078,
+     &#39;position&#39;: [3.27477705122708, -0.2269602237715712, 6.207955006551768]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 132,
+     &#39;distance&#39;: 0.9612679689255181,
+     &#39;position&#39;: [3.7154869864520363,
+      -1.7005213841251512,
+      5.900536121390471]}],
+   &#39;total_cn&#39;: 3,
+   &#39;min_dist&#39;: 0.9598002366332078,
+   &#39;max_dist&#39;: 0.9612679689255181,
+   &#39;avg_dist&#39;: 0.9603108988907924},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 3,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [3.785538291474586, -4.709530831155095, 8.157324371373015],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 109,
+     &#39;distance&#39;: 0.9598676400957287,
+     &#39;position&#39;: [4.036537822151563, -5.594906645563545, 7.884460322140701]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 121,
+     &#39;distance&#39;: 0.9598073025463206,
+     &#39;position&#39;: [3.675608540751988, -4.687507897579521, 9.110561224586338]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 133,
+     &#39;distance&#39;: 0.9612631566050266,
+     &#39;position&#39;: [4.474342719047739, -4.0903911324811535, 7.899950421005418]}],
+   &#39;total_cn&#39;: 3,
+   &#39;min_dist&#39;: 0.9598073025463206,
+   &#39;max_dist&#39;: 0.9612631566050266,
+   &#39;avg_dist&#39;: 0.9603126997490253},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 3,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [3.785538291474586, 9.41921554851552, 0.0],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 110,
+     &#39;distance&#39;: 0.9598744540989678,
+     &#39;position&#39;: [4.036549870257495, 9.625604776553667, 0.903191918419624]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 122,
+     &#39;distance&#39;: 0.959800124401786,
+     &#39;position&#39;: [3.6756019285988653,
+      10.233726737003758,
+      -0.4956831636709278]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 134,
+     &#39;distance&#39;: 0.9612635197160945,
+     &#39;position&#39;: [4.474337283094931, 8.886749476091241, -0.4075087547486958]}],
+   &#39;total_cn&#39;: 3,
+   &#39;min_dist&#39;: 0.959800124401786,
+   &#39;max_dist&#39;: 0.9612635197160945,
+   &#39;avg_dist&#39;: 0.960312699405616},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 3,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-0.8375961649354701, -1.1845350181357668, 9.568114914128733],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 111,
+     &#39;distance&#39;: 0.9598638438685984,
+     &#39;position&#39;: [-0.28110741287936225,
+      -1.9619015453060669,
+      9.653906230917933]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 123,
+     &#39;distance&#39;: 0.9598083465512358,
+     &#39;position&#39;: [-1.5896420829312774,
+      -1.3895451379118495,
+      9.008088262865906]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 135,
+     &#39;distance&#39;: 0.9612687439831054,
+     &#39;position&#39;: [-1.148913074187694,
+      -0.9189836349443492,
+      10.43794354268589]}],
+   &#39;total_cn&#39;: 3,
+   &#39;min_dist&#39;: 0.9598083465512358,
+   &#39;max_dist&#39;: 0.9612687439831054,
+   &#39;avg_dist&#39;: 0.9603136448009799},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 3,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [4.026815498761424, 5.694753831904469, 2.3473457510378086],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 112,
+     &#39;distance&#39;: 0.9598644911136516,
+     &#39;position&#39;: [3.1084109357750584, 5.960296201311438, 2.26155443424861]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 124,
+     &#39;distance&#39;: 0.9598002366332085,
+     &#39;position&#39;: [4.084216553842705, 4.917391777908995, 2.907372402300636]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 136,
+     &#39;distance&#39;: 0.9612679689255176,
+     &#39;position&#39;: [4.380939654467766, 5.489740789953878, 1.4775171224806511]}],
+   &#39;total_cn&#39;: 3,
+   &#39;min_dist&#39;: 0.9598002366332085,
+   &#39;max_dist&#39;: 0.9612679689255176,
+   &#39;avg_dist&#39;: 0.9603108988907926},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 0,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 3,
+   &#39;element&#39;: &#39;C&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [7.618701320688006, 6.708748906596798, 0.0],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 113,
+     &#39;distance&#39;: 0.9598676400957282,
+     &#39;position&#39;: [7.729605552835353, 7.014183836321984, -0.9031919184196237]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 125,
+     &#39;distance&#39;: 0.9598073025463206,
+     &#39;position&#39;: [8.423282546478253, 6.876609891880117, 0.49568316367092813]},
+    {&#39;element&#39;: &#39;H&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 137,
+     &#39;distance&#39;: 0.9612631566050279,
+     &#39;position&#39;: [6.887095082613545,
+      7.1806766377802544,
+      0.40750875474869575]}],
+   &#39;total_cn&#39;: 3,
+   &#39;min_dist&#39;: 0.9598073025463206,
+   &#39;max_dist&#39;: 0.9612631566050279,
+   &#39;avg_dist&#39;: 0.9603126997490256},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-5.145529487538505, 2.4622047442960366, 8.787652240560325],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 90,
+     &#39;distance&#39;: 0.9598744540989675,
+     &#39;position&#39;: [-5.702026647837408, 1.9992180754417015, 8.157324371373015]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598744540989675,
+   &#39;max_dist&#39;: 0.9598744540989675,
+   &#39;avg_dist&#39;: 0.9598744540989675},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [8.900971944916641, 2.8487712195217485, 3.127808424606217],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 91,
+     &#39;distance&#39;: 0.9598638438686002,
+     &#39;position&#39;: [8.649968774376525, 2.169784633151444, 3.7581362937935276]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598638438686002,
+   &#39;max_dist&#39;: 0.9598638438686002,
+   &#39;avg_dist&#39;: 0.9598638438686002},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-1.9992301564509423, 2.5901372489929373, 6.292554777274451],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 92,
+     &#39;distance&#39;: 0.9598644911136519,
+     &#39;position&#39;: [-2.110136884050312, 3.525040095202283, 6.105482044831335]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598644911136519,
+   &#39;max_dist&#39;: 0.9598644911136519,
+   &#39;avg_dist&#39;: 0.9598644911136519},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [7.972866293724205, 5.8578254882130185, 5.62290588789209],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 93,
+     &#39;distance&#39;: 0.9598676400957292,
+     &#39;position&#39;: [8.891273352162592, 6.064895897228313, 5.809978620335205]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598676400957292,
+   &#39;max_dist&#39;: 0.9598676400957292,
+   &#39;avg_dist&#39;: 0.9598676400957292},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [7.729617600941286, -2.7248517348030514, 6.526097806311714],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 94,
+     &#39;distance&#39;: 0.9598744540989672,
+     &#39;position&#39;: [7.618701320688006,
+      -3.3543196512872107,
+      5.8099786203352055]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598744540989672,
+   &#39;max_dist&#39;: 0.9598744540989672,
+   &#39;avg_dist&#39;: 0.9598744540989672},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-1.7559995835107172, 8.820061579356567, 4.031000343025841],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 95,
+     &#39;distance&#39;: 0.959863843868599,
+     &#39;position&#39;: [-0.8375961649354691,
+      8.878533539748242,
+      3.7581362937935276]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.959863843868599,
+   &#39;max_dist&#39;: 0.959863843868599,
+   &#39;avg_dist&#39;: 0.959863843868599},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [4.583303106406416, -0.5000784163353837, 5.389362858854827],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 96,
+     &#39;distance&#39;: 0.9598644911136514,
+     &#39;position&#39;: [4.026815498761425, -0.8144582746513482, 6.105482044831335]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598644911136514,
+   &#39;max_dist&#39;: 0.9598644911136514,
+   &#39;avg_dist&#39;: 0.9598644911136514},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-0.827842529185588, 8.163807272805606, 7.884460322140701],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 97,
+     &#39;distance&#39;: 0.9598676400957289,
+     &#39;position&#39;: [-1.0788420598625652, 9.049183087214056, 8.157324371373015]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598676400957289,
+   &#39;max_dist&#39;: 0.9598676400957289,
+   &#39;avg_dist&#39;: 0.9598676400957289},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [4.036549870257495, 9.625604776553667, 0.903191918419624],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 98,
+     &#39;distance&#39;: 0.9598744540989675,
+     &#39;position&#39;: [3.785538291474586, 9.41921554851552, 0.0]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598744540989675,
+   &#39;max_dist&#39;: 0.9598744540989675,
+   &#39;avg_dist&#39;: 0.9598744540989675},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-0.28110741287936136, -1.9619015453060675, 9.653906230917933],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 99,
+     &#39;distance&#39;: 0.9598638438685989,
+     &#39;position&#39;: [-0.8375961649354692,
+      -1.1845350181357674,
+      9.568114914128733]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598638438685989,
+   &#39;max_dist&#39;: 0.9598638438685989,
+   &#39;avg_dist&#39;: 0.9598638438685989},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [3.1084109357750593, 5.960296201311437, 2.26155443424861],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 100,
+     &#39;distance&#39;: 0.9598644911136524,
+     &#39;position&#39;: [4.026815498761425, 5.694753831904468, 2.3473457510378086]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598644911136524,
+   &#39;max_dist&#39;: 0.9598644911136524,
+   &#39;avg_dist&#39;: 0.9598644911136524},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [2.8652252014982005, 0.13493926846470197, 11.012268746746917],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 101,
+     &#39;distance&#39;: 0.959867640095729,
+     &#39;position&#39;: [2.7543209693508532,
+      -0.17049566126048452,
+      11.915460665166542]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.959867640095729,
+   &#39;max_dist&#39;: 0.959867640095729,
+   &#39;avg_dist&#39;: 0.959867640095729},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [8.139233537692746, 1.6167301443380095, 8.614878060915409],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 90,
+     &#39;distance&#39;: 0.959800124401785,
+     &#39;position&#39;: [8.891273352162592, 1.999218075441703, 8.157324371373015]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.959800124401785,
+   &#39;max_dist&#39;: 0.959800124401785,
+   &#39;avg_dist&#39;: 0.959800124401785},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [8.540026307974843, 1.3332505110876316, 3.3005826042511317],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 91,
+     &#39;distance&#39;: 0.9598083465512355,
+     &#39;position&#39;: [8.649968774376525, 2.1697846331514437, 3.758136293793527]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598083465512355,
+   &#39;max_dist&#39;: 0.9598083465512355,
+   &#39;avg_dist&#39;: 0.9598083465512355},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-1.305560903477686, 3.8703801056395473, 5.71227184288084],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 92,
+     &#39;distance&#39;: 0.9598002366332081,
+     &#39;position&#39;: [-2.110136884050312, 3.5250400952022822, 6.105482044831335]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598002366332081,
+   &#39;max_dist&#39;: 0.9598002366332081,
+   &#39;avg_dist&#39;: 0.9598002366332081},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-5.644620347538505, 6.938577939958554, 6.203188822285701],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 93,
+     &#39;distance&#39;: 0.9598073025463213,
+     &#39;position&#39;: [-5.702026647837407, 6.064895897228312, 5.8099786203352055]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598073025463213,
+   &#39;max_dist&#39;: 0.9598073025463213,
+   &#39;avg_dist&#39;: 0.9598073025463213},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [3.55889558298798, 9.891193271361356, 5.707505658614774],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 94,
+     &#39;distance&#39;: 0.9598001244017863,
+     &#39;position&#39;: [2.7543209693508555, 10.40439426708194, 5.8099786203352055]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598001244017863,
+   &#39;max_dist&#39;: 0.9598001244017863,
+   &#39;avg_dist&#39;: 0.9598001244017863},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-0.7802025803156502, 8.782213551013477, 2.804899440580204],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 95,
+     &#39;distance&#39;: 0.9598083465512358,
+     &#39;position&#39;: [-0.8375961649354687,
+      8.878533539748243,
+      3.7581362937935276]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598083465512358,
+   &#39;max_dist&#39;: 0.9598083465512358,
+   &#39;avg_dist&#39;: 0.9598083465512358},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [3.274777051227081, -0.22696022377157118, 6.207955006551768],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 96,
+     &#39;distance&#39;: 0.959800236633208,
+     &#39;position&#39;: [4.026815498761426, -0.8144582746513482, 6.105482044831335]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.959800236633208,
+   &#39;max_dist&#39;: 0.959800236633208,
+   &#39;avg_dist&#39;: 0.959800236633208},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [3.675608540751988, -4.687507897579521, 9.110561224586338],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 97,
+     &#39;distance&#39;: 0.9598073025463206,
+     &#39;position&#39;: [3.785538291474586, -4.709530831155095, 8.157324371373015]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598073025463206,
+   &#39;max_dist&#39;: 0.9598073025463206,
+   &#39;avg_dist&#39;: 0.9598073025463206},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-1.1887784227382858, 3.354482169146477, 11.419777501495615],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 98,
+     &#39;distance&#39;: 0.9598001244017856,
+     &#39;position&#39;: [-1.078842059862565,
+      2.5399709806582385,
+      11.915460665166542]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598001244017856,
+   &#39;max_dist&#39;: 0.9598001244017856,
+   &#39;avg_dist&#39;: 0.9598001244017856},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-1.589642082931277, -1.3895451379118493, 9.008088262865906],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 99,
+     &#39;distance&#39;: 0.9598083465512356,
+     &#39;position&#39;: [-0.8375961649354696,
+      -1.1845350181357666,
+      9.568114914128733]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598083465512356,
+   &#39;max_dist&#39;: 0.9598083465512356,
+   &#39;avg_dist&#39;: 0.9598083465512356},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [4.0842165538427055, 4.917391777908994, 2.907372402300636],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 100,
+     &#39;distance&#39;: 0.9598002366332083,
+     &#39;position&#39;: [4.026815498761425, 5.694753831904468, 2.3473457510378086]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598002366332083,
+   &#39;max_dist&#39;: 0.9598002366332083,
+   &#39;avg_dist&#39;: 0.9598002366332083},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [8.423282546478253, 6.876609891880117, 0.49568316367092813],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 101,
+     &#39;distance&#39;: 0.9598073025463206,
+     &#39;position&#39;: [7.618701320688006, 6.708748906596798, 0.0]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9598073025463206,
+   &#39;max_dist&#39;: 0.9598073025463206,
+   &#39;avg_dist&#39;: 0.9598073025463206},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [8.579947573724203, 2.619729801724089, 7.492441666256722],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 90,
+     &#39;distance&#39;: 0.9612635197160949,
+     &#39;position&#39;: [8.89127335216259, 1.9992180754417024, 8.157324371373015]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9612635197160949,
+   &#39;max_dist&#39;: 0.9612635197160949,
+   &#39;avg_dist&#39;: 0.9612635197160949},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [9.338776635183027, 2.0831110069017815, 4.42301899890982],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 91,
+     &#39;distance&#39;: 0.961268743983105,
+     &#39;position&#39;: [8.649968774376523, 2.169784633151443, 3.7581362937935276]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.961268743983105,
+   &#39;max_dist&#39;: 0.961268743983105,
+   &#39;avg_dist&#39;: 0.961268743983105},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-2.8417512919485834, 3.6419833865941964, 5.493027366641776],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 92,
+     &#39;distance&#39;: 0.9612679689255172,
+     &#39;position&#39;: [-2.110136884050312, 3.5250400952022822, 6.105482044831335]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9612679689255172,
+   &#39;max_dist&#39;: 0.9612679689255172,
+   &#39;avg_dist&#39;: 0.9612679689255172},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-5.347894322307255, 5.414114505803672, 6.4224332985247665],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 93,
+     &#39;distance&#39;: 0.9612631566050267,
+     &#39;position&#39;: [-5.702026647837407, 6.06489589722831, 5.8099786203352055]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9612631566050267,
+   &#39;max_dist&#39;: 0.9612631566050267,
+   &#39;avg_dist&#39;: 0.9612631566050267},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [2.0227092953235855, 9.815523244506572, 6.014924543776071],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 94,
+     &#39;distance&#39;: 0.9612635197160945,
+     &#39;position&#39;: [2.7543209693508546,
+      10.404394267081942,
+      5.8099786203352055]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9612635197160945,
+   &#39;max_dist&#39;: 0.9612635197160945,
+   &#39;avg_dist&#39;: 0.9612635197160945},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-0.48346040617196473, 9.734327973123472, 4.015510244161125],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 95,
+     &#39;distance&#39;: 0.9612687439831057,
+     &#39;position&#39;: [-0.83759616493547, 8.878533539748242, 3.7581362937935276]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9612687439831057,
+   &#39;max_dist&#39;: 0.9612687439831057,
+   &#39;avg_dist&#39;: 0.9612687439831057},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [3.715486986452035, -1.7005213841251507, 5.900536121390471],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 96,
+     &#39;distance&#39;: 0.9612679689255177,
+     &#39;position&#39;: [4.026815498761424, -0.8144582746513478, 6.105482044831335]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9612679689255177,
+   &#39;max_dist&#39;: 0.9612679689255177,
+   &#39;avg_dist&#39;: 0.9612679689255177},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [4.474342719047739, -4.0903911324811535, 7.899950421005418],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 97,
+     &#39;distance&#39;: 0.9612631566050266,
+     &#39;position&#39;: [3.785538291474586, -4.709530831155095, 8.157324371373015]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9612631566050266,
+   &#39;max_dist&#39;: 0.9612631566050266,
+   &#39;avg_dist&#39;: 0.9612631566050266},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-0.39004306824221974, 2.0075049082339596, 11.507951910417846],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 98,
+     &#39;distance&#39;: 0.9612635197160944,
+     &#39;position&#39;: [-1.078842059862564,
+      2.5399709806582385,
+      11.915460665166542]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9612635197160944,
+   &#39;max_dist&#39;: 0.9612635197160944,
+   &#39;avg_dist&#39;: 0.9612635197160944},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [-1.148913074187694, -0.9189836349443491, 10.43794354268589],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 99,
+     &#39;distance&#39;: 0.961268743983105,
+     &#39;position&#39;: [-0.8375961649354701,
+      -1.1845350181357666,
+      9.568114914128733]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.961268743983105,
+   &#39;max_dist&#39;: 0.961268743983105,
+   &#39;avg_dist&#39;: 0.961268743983105},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [4.380939654467767, 5.489740789953878, 1.477517122480651],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 100,
+     &#39;distance&#39;: 0.9612679689255178,
+     &#39;position&#39;: [4.026815498761425, 5.694753831904469, 2.3473457510378086]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9612679689255178,
+   &#39;max_dist&#39;: 0.9612679689255178,
+   &#39;avg_dist&#39;: 0.9612679689255178},
+  {&#39;Zn&#39;: 0,
+   &#39;C&#39;: 1,
+   &#39;N&#39;: 0,
+   &#39;H&#39;: 0,
+   &#39;element&#39;: &#39;H&#39;,
+   &#39;kind&#39;: None,
+   &#39;position&#39;: [6.887095082613543, 7.1806766377802544, 0.40750875474869575],
+   &#39;neighbours&#39;: [{&#39;element&#39;: &#39;C&#39;,
+     &#39;kind&#39;: None,
+     &#39;site_index&#39;: 101,
+     &#39;distance&#39;: 0.9612631566050279,
+     &#39;position&#39;: [7.618701320688004, 6.708748906596798, 0.0]}],
+   &#39;total_cn&#39;: 1,
+   &#39;min_dist&#39;: 0.9612631566050279,
+   &#39;max_dist&#39;: 0.9612631566050279,
+   &#39;avg_dist&#39;: 0.9612631566050279}]}
+</pre></div></div>
+</div>
+<p>Based on the coordination numbers and distances two atomic sites can be compared using the <code class="docutils literal notranslate"><span class="pre">StructureOperations</span></code> class:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">aim2dat.strct</span> <span class="kn">import</span> <span class="n">StructureCollection</span><span class="p">,</span> <span class="n">StructureOperations</span>
+
+<span class="n">strct_op</span> <span class="o">=</span> <span class="n">StructureOperations</span><span class="p">(</span><span class="n">StructureCollection</span><span class="p">([</span><span class="n">strct</span><span class="p">]))</span>
+<span class="n">strct_op</span><span class="o">.</span><span class="n">compare_sites_via_coordination</span><span class="p">(</span><span class="s2">&quot;ZIF-8&quot;</span><span class="p">,</span> <span class="s2">&quot;ZIF-8&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span><code>[3]:
+</code></pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+True
+</pre></div></div>
+</div>
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+        </div>
+        
+          <a href="#" class="md-top md-icon" data-md-component="top" hidden>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+            Back to top
+          </a>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+    <nav class="md-footer__inner md-grid" aria-label="Footer" >
+      
+        
+        <a href="plots-spectroscopy.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: How to use the plots package to plot a x-ray absorption spectrum" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              How to use the plots package to plot a x-ray absorption spectrum
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="strct-odb_interfaces.html" class="md-footer__link md-footer__link--next" aria-label="Next: Querying the structure pool for the Cs-Te binary system" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Querying the structure pool for the Cs-Te binary system
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  
+  
+  <div class="md-footer-meta md-typeset">
+    
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-footer-copyright__highlight">
+        &#169; Copyright 2024, aim2dat developers.
+        
+    </div>
+  
+    Created using
+    <a href="https://www.sphinx-doc.org/" target="_blank" rel="noopener">Sphinx</a>
+    7.2.6.
+     and
+    <a href="https://github.com/jbms/sphinx-immaterial/" target="_blank" rel="noopener">Sphinx-Immaterial</a>
+  
+</div>
+      
+    </div>
+    
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "toc.follow", "toc.sticky", "content.tabs.link", "announce.dismiss"], "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version.title": "Select version"}}</script>
+    
+      
+        <script src="../_static/sphinx_immaterial_theme.f9d9eeeb247ace16c.min.js?v=8ec58cb5"></script>
+        <script src="../_static/design-tabs.js?v=36754332"></script>
+        <script src="../_static/contentui.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script id="MathJax-script" src="../_static/mathjax/tex-mml-chtml.js?v=cadf963e"></script>
+    
+  </body>
+</html>

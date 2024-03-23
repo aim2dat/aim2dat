@@ -1,0 +1,21 @@
+:orphan:
+
+:py:mod:`aim2dat.utils.print`
+=============================
+
+.. py:module:: aim2dat.utils.print
+
+.. autoapi-nested-parse::
+
+   Print information of classes with __str__.
+
+
+
+Module Contents
+---------------
+
+.. py:data:: MAX_STR_LENGTH
+   :value: 70
+
+   
+

@@ -1,0 +1,238 @@
+:orphan:
+
+:py:mod:`aim2dat.strct.structure_importer`
+==========================================
+
+.. py:module:: aim2dat.strct.structure_importer
+
+.. autoapi-nested-parse::
+
+   Module that implements an interface to online databases and random crystal generation.
+
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.strct.structure_importer.StructureImporter
+
+
+
+
+
+.. py:class:: StructureImporter(structures: aim2dat.strct.StructureCollection = None, neglect_elemental_structures: bool = False)
+
+
+   Bases: :py:obj:`aim2dat.strct.mixin.ConstraintsMixin`
+
+   Imports structures from online databases.
+
+
+   .. rubric:: Overview
+
+   .. list-table:: Properties
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`attribute_constraints <aim2dat.strct.structure_importer.StructureImporter.attribute_constraints>`
+        - Attribute constraints.
+      * - :py:obj:`chem_formula_constraints <aim2dat.strct.structure_importer.StructureImporter.chem_formula_constraints>`
+        - Constraints on the chemical formula.
+      * - :py:obj:`concentration_constraints <aim2dat.strct.structure_importer.StructureImporter.concentration_constraints>`
+        - Elemental concentration constraints.
+      * - :py:obj:`neglect_elemental_structures <aim2dat.strct.structure_importer.StructureImporter.neglect_elemental_structures>`
+        - Whether to neglect elemental phases.
+      * - :py:obj:`structures <aim2dat.strct.structure_importer.StructureImporter.structures>`
+        - Return the internal ``StructureCollection`` object.
+
+
+   .. list-table:: Methods
+      :header-rows: 0
+      :widths: auto
+
+      * - :py:obj:`add_chem_formula_constraint <aim2dat.strct.structure_importer.StructureImporter.add_chem_formula_constraint>`\ (chem_formula, reduced_formula)
+        - Add a chemical formula as a constraint.
+      * - :py:obj:`append_from_mp_by_id <aim2dat.strct.structure_importer.StructureImporter.append_from_mp_by_id>`\ (entry_id, api_key, property_data, structure_type)
+        - Append structure via the database-id.
+      * - :py:obj:`generate_random_crystals <aim2dat.strct.structure_importer.StructureImporter.generate_random_crystals>`\ (formulas, excl_space_groups, tol_tuples, molecular, dimensions, bin_size, max_atoms, max_structures, max_structures_per_cs, max_structures_per_sg, volume_factor)
+        - Generate random crystals using the PyXtaL library.
+      * - :py:obj:`import_from_mp <aim2dat.strct.structure_importer.StructureImporter.import_from_mp>`\ (formulas, api_key, compatible_only, conv_unit_cell, property_data, structure_type, use_openapi)
+        - Import structures from the crystal database Materials Project using the pymatgen interface.
+      * - :py:obj:`import_from_optimade <aim2dat.strct.structure_importer.StructureImporter.import_from_optimade>`\ (formulas, database_id, api_version, optimade_url, timeout)
+        - Import crystal structures using the optimade-API.
+      * - :py:obj:`import_from_oqmd <aim2dat.strct.structure_importer.StructureImporter.import_from_oqmd>`\ (formulas, query_limit)
+        - Import from the open quantum materials database.
+      * - :py:obj:`remove_constraints <aim2dat.strct.structure_importer.StructureImporter.remove_constraints>`\ ()
+        - Remove all constraints.
+      * - :py:obj:`return_optimade_database_ids <aim2dat.strct.structure_importer.StructureImporter.return_optimade_database_ids>`\ (api_version, optimade_url, timeout)
+        - Return a list of all ids of online databases that provide a base-url.
+      * - :py:obj:`set_attribute_constraint <aim2dat.strct.structure_importer.StructureImporter.set_attribute_constraint>`\ (attribute, min_value, max_value)
+        - Set a constraint on attributes.
+      * - :py:obj:`set_concentration_constraint <aim2dat.strct.structure_importer.StructureImporter.set_concentration_constraint>`\ (element, min_conc, max_conc)
+        - Set a constraint on the concentration of an element in the structure.
+
+
+
+   .. py:property:: attribute_constraints
+
+      Attribute constraints.
+
+   .. py:property:: chem_formula_constraints
+
+      Constraints on the chemical formula.
+
+   .. py:property:: concentration_constraints
+
+      Elemental concentration constraints.
+
+   .. py:property:: neglect_elemental_structures
+
+      Whether to neglect elemental phases.
+
+   .. py:property:: structures
+      :type: aim2dat.strct.StructureCollection
+
+      Return the internal ``StructureCollection`` object.
+
+
+   .. py:method:: add_chem_formula_constraint(chem_formula, reduced_formula=True)
+
+      Add a chemical formula as a constraint.
+
+      The formula can be given as a string, dictionary or list of strings or dictionaries.
+
+      :Parameters: * **chem_formula** (*list, dict or str*) -- Chemical formula given as list, dict or str.
+                   * **reduced_formula** (*bool (optional)*) -- If set to ``True`` the reduced formulas are compared. The default value is ``True``.
+
+
+   .. py:method:: append_from_mp_by_id(entry_id: str, api_key: str, property_data: list = [], structure_type: str = 'initial') -> aim2dat.strct.Structure
+
+      Append structure via the database-id.
+
+      :Parameters: * **entry_id** (*str*) -- Database id of the entry.
+                   * **api_key** (*str*) -- API key for the database, can be obtained here:
+                     https://www.materialsproject.org/dashboard
+                   * **property_data** (*list (optional)*) -- Extra data that is queried for each entry. The properties need to be passed as a list
+                     of strings (e.g. ``['el_band_structure', 'el_dos']`` to obtain the electronic band
+                     structure and the electronic density of states).
+                   * **structure_type** (*str (optional)*) -- Materials project includes the initial and final (relaxed) stucture in the database.
+                     The intial or final structure can be queried by setting this attribute
+                     to ``initial`` or ``final``, respectively.
+
+
+   .. py:method:: generate_random_crystals(formulas: Union[str, List[str]], excl_space_groups: list = [], tol_tuples: list = None, molecular: bool = False, dimensions: int = 3, bin_size: float = 0.1, max_atoms: int = 30, max_structures: int = 10, max_structures_per_cs: int = 10, max_structures_per_sg: int = 5, volume_factor: float = 1.0) -> aim2dat.strct.StructureCollection
+
+      Generate random crystals using the PyXtaL library.
+
+      :Parameters: * **formulas** (*str or list of str*) -- List of chemical formulas or systems that are queried
+                     from the database. E.g. ``'Fe2O3'`` - defined chemical composition,
+                     ``'Cs'`` - all entries of elemental phases Cs, ``'Cs-Te'`` - all entries that
+                     exclusively contain the elements Cs and/or Te.
+                   * **excl_space_groups** (*list (optional)*) -- Exclude one or more space groups.
+                   * **tol_tuples** (*None or list*) -- Tolerance tuples used to create the tolerance matrix. The default value is ``None``.
+                   * **molecular** (*bool (optional)*) -- Whether to generate molecular crystals. The default value is ``False``.
+                   * **dimensions** (*int*) -- Dimension of the crystal, possible values range from zero to three. The default value
+                     is ``3``.
+                   * **bin_size** (*float (optional)*) -- Size of bins that contain a certain number of structures. The default value is ``0.1``.
+                   * **max_atoms** (*int (optional)*) -- Maximum number of atoms per structure. The default value is ``30``.
+                   * **max_structures** (*int (optional)*) -- Maximum number of structures that are generated. The default value is ``10``.
+                   * **max_structures_per_cs** (*int (optional)*) -- Maximum number of structures that are generated per crystal system. The default value
+                     is ``10``.
+                   * **max_structures_per_sg** (*int (optional)*) -- Maximum number of structures that are generated per space group. The default value is
+                     ``5``.
+                   * **volume_factor** (*float (optional)*) -- Volume factor used to generate the crystal. The default value is ``1.0``.
+
+
+   .. py:method:: import_from_mp(formulas: Union[str, List[str]], api_key: str, compatible_only: bool = True, conv_unit_cell: bool = False, property_data: list = [], structure_type: str = 'initial', use_openapi: bool = False) -> aim2dat.strct.StructureCollection
+
+      Import structures from the crystal database Materials Project using the pymatgen interface.
+
+      :Parameters: * **formulas** (*str or list of str*) -- List of chemical formulas or systems that are queried
+                     from the database. E.g. ``'Fe2O3'`` - defined chemical composition,
+                     ``'Cs'`` - all entries of elemental phases Cs, ``'Cs-Te'`` - all entries that
+                     exclusively contain the elements Cs and/or Te.
+                   * **api_key** (*str*) -- API key for the database, can be obtained here:
+                     https://www.materialsproject.org/dashboard
+                   * **compatible_only** (*bool (optional)*) -- Whether to only query compatible data. The default value is ``True``.
+                   * **conv_unit_cell** (*bool (optional)*) -- Query the conventional unit cell instead of the primitive unit cell. The default value
+                     is ``False``.
+                   * **property_data** (*list (optional)*) -- Extra data that is queried for each entry. The properties need to be passed as a list
+                     of strings (e.g. ``['el_bandstructure', 'el_dos']`` to obtain the electronic band
+                     structure and the electronic density of states). The default value is ``[]``.
+                   * **structure_type** (*str (optional)*) -- Materials project includes the initial and final (relaxed) stucture in the database.
+                     The intial or final structure can be queried by setting this attribute
+                     to ``initial`` or ``final``, respectively. The default setting is ``initial``.
+
+
+   .. py:method:: import_from_optimade(formulas: Union[str, List[str]], database_id: str, api_version: int = 1, optimade_url: str = 'https://providers.optimade.org/providers.json', timeout: float = 60.0) -> aim2dat.strct.StructureCollection
+
+      Import crystal structures using the optimade-API.
+
+      The provider information is queried using the page:
+      https://providers.optimade.org/providers.json.
+
+      :Parameters: * **formulas** (*str or list of str*) -- List of chemical formulas or systems that are queried
+                     from the database. E.g. ``'Fe2O3'`` - defined chemical composition,
+                     ``'Cs'`` - all entries of elemental phases Cs, ``'Cs-Te'`` - all entries that
+                     exclusively contain the elements Cs and/or Te.
+                   * **database_id** (*str*) -- Database used to query the data.
+                   * **api_version** (*int (optional)*) -- Version of the optimade API. The default value is ``1``.
+                   * **optimade_url** (*str (optional)*) -- Page used to obtain the provider information. The default value is
+                     ``'https://providers.optimade.org/providers.json'``.
+                   * **timeout** (*float (optional)*) -- Specifies the time to wait for response from the server. The default value is ``60.0``.
+
+
+   .. py:method:: import_from_oqmd(formulas: Union[str, List[str]], query_limit=1000) -> aim2dat.strct.StructureCollection
+
+      Import from the open quantum materials database.
+
+      :Parameters: * **formulas** (*str or list of str*) -- List of chemical formulas or systems that are queried
+                     from the database. E.g. ``'Fe2O3'`` - defined chemical composition,
+                     ``'Cs'`` - all entries of elemental phases Cs, ``'Cs-Te'`` - all entries that
+                     exclusively contain the elements Cs and/or Te.
+                   * **query_limit** (*int (optional)*) -- Maximum number of crystals that are queried.
+
+
+   .. py:method:: remove_constraints()
+
+      Remove all constraints.
+
+
+   .. py:method:: return_optimade_database_ids(api_version: int = 1, optimade_url: str = 'https://providers.optimade.org/providers.json', timeout: float = 60.0) -> list
+
+      Return a list of all ids of online databases that provide a base-url.
+
+      :Parameters: * **api_version** (*int (optional)*) -- Version of the optimade API. The default value is ``1``.
+                   * **optimade_url** (*str (optional)*) -- Page used to obtain the provider information. The default value is
+                     ``'https://providers.optimade.org/providers.json'``.
+                   * **timeout** (*float (optional)*) -- Specifies the time to wait for response from the server. The default value is ``60.0``.
+
+      :returns: *list* -- List of provider-ids.
+
+
+   .. py:method:: set_attribute_constraint(attribute, min_value=None, max_value=None)
+
+      Set a constraint on attributes.
+
+      :Parameters: * **attribute** (*str*) -- Attribute to be constraint.
+                   * **min_value** (*float*) -- Minimum value of the attribute. In case of no limit the variable can be set to ``0.0``.
+                   * **max_value** (*float*) -- Maximum value of the attribute. In case of no limit the variable can be set to ``1.0``.
+
+
+   .. py:method:: set_concentration_constraint(element, min_conc=0.0, max_conc=1.0)
+
+      Set a constraint on the concentration of an element in the structure.
+
+      The minimum and maximum values have to be set between 0.0 and 1.0.
+
+      :Parameters: * **element** (*str*) -- Element to be constraint.
+                   * **min_conc** (*float*) -- Minimum concentration. In case of no limit the variable can be set to ``0.0``.
+                   * **max_conc** (*float*) -- Maximum concentration. In case of no limit the variable can be set to ``1.0``.
+
+
+

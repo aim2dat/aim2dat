@@ -1,0 +1,11 @@
+:py:mod:`aim2dat.ext_interfaces.ase_atoms`
+==========================================
+
+.. py:module:: aim2dat.ext_interfaces.ase_atoms
+
+.. autoapi-nested-parse::
+
+   Wrapper functions for the ase Atoms object.
+
+
+

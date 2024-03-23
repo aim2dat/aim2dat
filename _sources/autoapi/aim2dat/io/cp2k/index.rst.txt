@@ -1,0 +1,55 @@
+:py:mod:`aim2dat.io.cp2k`
+=========================
+
+.. py:module:: aim2dat.io.cp2k
+
+.. autoapi-nested-parse::
+
+   Module of functions to read output-files of CP2K.
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   aim2dat.io.cp2k.read_atom_proj_density_of_states
+   aim2dat.io.cp2k.read_band_structure
+   aim2dat.io.cp2k.read_optimized_structure
+
+
+
+.. py:function:: read_atom_proj_density_of_states(folder_path)
+
+   Read the atom projected density of states from CP2K.
+
+   :Parameters: **folder_path** (*str*) -- Path to the folder of the pdos files.
+
+   :returns: **pdos** (*dict*) -- Dictionary containing the projected density of states for each kind.
+
+
+.. py:function:: read_band_structure(file_name)
+
+   Read band structure file from CP2K.
+
+   :Parameters: **file_name** (*str*) -- Path of the output-file of CP2K containing the band structure.
+
+   :returns: **band_structure** (*dict*) -- Dictionary containing the k-path and the eigenvalues as well as the occupations.
+
+
+.. py:function:: read_optimized_structure(folder_path)
+
+   Read optimized structures from 'restart'-files.
+
+   :Parameters: **folder_path** (*str*) -- Path to the folder containing the CP2K ouput-files.
+
+   :returns: *dict or list* -- Dictionary containing the structural information. In case of a farming job a list of
+             dictionaries is returned. In case several calculations have been run in the same folder a
+             nested dictionary is returned.
+
+
