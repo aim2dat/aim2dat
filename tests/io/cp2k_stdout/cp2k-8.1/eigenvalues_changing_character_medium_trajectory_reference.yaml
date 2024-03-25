@@ -1,0 +1,144 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - []
+- [cp2k_version, 8.1]
+- [run_type, ENERGY]
+- [kpoint_scheme, Monkhorst-Pack]
+- - kpoint_grid
+  - [5, 5, 7]
+- [dft_type, RKS]
+- [multiplicity, 1]
+- [charge, 0.0]
+- - xc
+  - {functional: PBE}
+- [natoms, 28]
+- [nelectrons, 252]
+- [nr_occ_orbitals, 126]
+- [scf_converged, true]
+- [energy_scf, -563.6319496199976]
+- [energy, -563.6319496199976]
+- - kind_info
+  - - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+- - motion_step_info
+  - - scf_converged: true
+      nr_scf_steps: 4
+      energy: -563.6319496199976
+      mulliken:
+      - {kind: 1, element: Cs, population: 9.019476, charge: -0.019476}
+      - {kind: 1, element: Cs, population: 9.005324, charge: -0.005324}
+      - {kind: 1, element: Cs, population: 8.996018, charge: 0.003982}
+      - {kind: 1, element: Cs, population: 8.93181, charge: 0.06819}
+      - {kind: 1, element: Cs, population: 9.032917, charge: -0.032917}
+      - {kind: 1, element: Cs, population: 8.926922, charge: 0.073078}
+      - {kind: 1, element: Cs, population: 8.940469, charge: 0.059531}
+      - {kind: 1, element: Cs, population: 8.999083, charge: 0.000917}
+      - {kind: 1, element: Cs, population: 8.941439, charge: 0.058561}
+      - {kind: 1, element: Cs, population: 9.036551, charge: -0.036551}
+      - {kind: 1, element: Cs, population: 8.944174, charge: 0.055826}
+      - {kind: 1, element: Cs, population: 9.038604, charge: -0.038604}
+      - {kind: 1, element: Cs, population: 9.003081, charge: -0.003081}
+      - {kind: 1, element: Cs, population: 9.087626, charge: -0.087626}
+      - {kind: 1, element: Cs, population: 8.940766, charge: 0.059234}
+      - {kind: 1, element: Cs, population: 8.940985, charge: 0.059015}
+      - {kind: 1, element: Cs, population: 9.017812, charge: -0.017812}
+      - {kind: 1, element: Cs, population: 8.935624, charge: 0.064376}
+      - {kind: 1, element: Cs, population: 9.056247, charge: -0.056247}
+      - {kind: 1, element: Cs, population: 9.055762, charge: -0.055762}
+      - {kind: 1, element: Cs, population: 9.031035, charge: -0.031035}
+      - {kind: 1, element: Cs, population: 8.929681, charge: 0.070319}
+      - {kind: 1, element: Cs, population: 8.983138, charge: 0.016862}
+      - {kind: 1, element: Cs, population: 8.984963, charge: 0.015037}
+      - {kind: 1, element: Cs, population: 8.943715, charge: 0.056285}
+      - {kind: 1, element: Cs, population: 9.091661, charge: -0.091661}
+      - {kind: 1, element: Cs, population: 9.09407, charge: -0.09407}
+      - {kind: 1, element: Cs, population: 9.09105, charge: -0.09105}
+      hirshfeld:
+      - {kind: 1, element: Cs, population: 8.998, charge: 0.002}
+      - {kind: 1, element: Cs, population: 8.998, charge: 0.002}
+      - {kind: 1, element: Cs, population: 9.002, charge: -0.002}
+      - {kind: 1, element: Cs, population: 9.003, charge: -0.003}
+      - {kind: 1, element: Cs, population: 8.997, charge: 0.003}
+      - {kind: 1, element: Cs, population: 9.0, charge: 0.0}
+      - {kind: 1, element: Cs, population: 8.999, charge: 0.001}
+      - {kind: 1, element: Cs, population: 9.002, charge: -0.002}
+      - {kind: 1, element: Cs, population: 8.999, charge: 0.001}
+      - {kind: 1, element: Cs, population: 9.003, charge: -0.003}
+      - {kind: 1, element: Cs, population: 9.0, charge: 0.0}
+      - {kind: 1, element: Cs, population: 9.003, charge: -0.003}
+      - {kind: 1, element: Cs, population: 8.998, charge: 0.002}
+      - {kind: 1, element: Cs, population: 9.005, charge: -0.005}
+      - {kind: 1, element: Cs, population: 8.993, charge: 0.007}
+      - {kind: 1, element: Cs, population: 8.993, charge: 0.007}
+      - {kind: 1, element: Cs, population: 8.998, charge: 0.002}
+      - {kind: 1, element: Cs, population: 9.003, charge: -0.003}
+      - {kind: 1, element: Cs, population: 9.002, charge: -0.002}
+      - {kind: 1, element: Cs, population: 9.003, charge: -0.003}
+      - {kind: 1, element: Cs, population: 8.996, charge: 0.004}
+      - {kind: 1, element: Cs, population: 9.0, charge: 0.0}
+      - {kind: 1, element: Cs, population: 8.998, charge: 0.002}
+      - {kind: 1, element: Cs, population: 8.998, charge: 0.002}
+      - {kind: 1, element: Cs, population: 9.0, charge: -0.0}
+      - {kind: 1, element: Cs, population: 9.004, charge: -0.004}
+      - {kind: 1, element: Cs, population: 9.004, charge: -0.004}
+      - {kind: 1, element: Cs, population: 9.005, charge: -0.005}
+- [nr_unocc_orbitals, 10]
+- [runtime, 33.071]
+- [nwarnings, 2]
+- [energy_units, a.u.]

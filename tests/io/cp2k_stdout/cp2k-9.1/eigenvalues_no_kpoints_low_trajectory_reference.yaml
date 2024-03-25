@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - [Using a non-square number of MPI ranks.]
+- [cp2k_version, 9.1]
+- [run_type, ENERGY]
+- [natoms, 2]
+- [nelectrons, 8]
+- [nr_occ_orbitals, 4]
+- [scf_converged, true]
+- [energy_scf, -7.23156741775531]
+- [energy, -7.23156741775531]
+- - motion_step_info
+  - - {scf_converged: true, nr_scf_steps: 6, energy: -7.23156741775531}
+- [nr_unocc_orbitals, 8]
+- [runtime, 18.701]
+- [nwarnings, 2]
+- [energy_units, a.u.]

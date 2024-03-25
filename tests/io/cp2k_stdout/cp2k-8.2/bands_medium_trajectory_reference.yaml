@@ -1,0 +1,40 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - []
+- [cp2k_version, 8.2]
+- [run_type, ENERGY]
+- [kpoint_scheme, Monkhorst-Pack]
+- - kpoint_grid
+  - [3, 3, 3]
+- [dft_type, RKS]
+- [multiplicity, 1]
+- [charge, 0.0]
+- - xc
+  - functional: ['SCAN exchange of Sun, Ruzsinszky, and Perdew (exchange)', 'SCAN
+        correlation of Sun, Ruzsinszky, and Perdew (correlation)']
+- [natoms, 2]
+- [nelectrons, 8]
+- [nr_occ_orbitals, 4]
+- [scf_converged, true]
+- [energy_scf, -7.86001152240175]
+- [energy, -7.860011522401748]
+- - kind_info
+  - - {kind: 1, element: Si, atomic_nr: 14, core_electrons: 10, valence_electrons: 4,
+      mass: 28.0855}
+    - {kind: 1, element: Si, atomic_nr: 14, core_electrons: 10, valence_electrons: 4,
+      mass: 28.0855}
+- - motion_step_info
+  - - scf_converged: true
+      nr_scf_steps: 7
+      energy: -7.860011522401748
+      mulliken:
+      - {kind: 1, element: Si, population: 3.999953, charge: 4.7e-05}
+      - {kind: 1, element: Si, population: 4.000047, charge: -4.7e-05}
+      hirshfeld:
+      - {kind: 1, element: Si, population: 4.0, charge: -0.0}
+      - {kind: 1, element: Si, population: 4.0, charge: -0.0}
+- [runtime, 5.874]
+- [nwarnings, 2]
+- [energy_units, a.u.]

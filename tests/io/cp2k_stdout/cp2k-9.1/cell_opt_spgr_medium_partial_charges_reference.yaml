@@ -1,0 +1,46 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - []
+- [cp2k_version, 9.1]
+- [run_type, CELL_OPT]
+- [kpoint_scheme, Monkhorst-Pack]
+- - kpoint_grid
+  - [2, 2, 2]
+- [dft_type, RKS]
+- [multiplicity, 1]
+- [charge, 0.0]
+- - xc
+  - {functional: PBE}
+- [natoms, 4]
+- - spgr_info
+  - {sg_number: 225, int_symbol: Fm-3m, point_group_symbol: m-3m, schoenflies_symbol: Oh^5}
+- [nelectrons, 32]
+- [nr_occ_orbitals, 16]
+- [scf_converged, true]
+- [energy_scf, -65.98858867167876]
+- - mulliken
+  - - {kind: 1, element: Cs, population: 9.060268, charge: -0.060268}
+    - {kind: 1, element: Cs, population: 9.060233, charge: -0.060233}
+    - {kind: 1, element: Cs, population: 7.827445, charge: 1.172555}
+    - {kind: 2, element: Sb, population: 6.052054, charge: -1.052054}
+- - hirshfeld
+  - - {kind: 1, element: Cs, population: 9.426, charge: -0.426}
+    - {kind: 1, element: Cs, population: 9.426, charge: -0.426}
+    - {kind: 1, element: Cs, population: 9.025, charge: -0.025}
+    - {kind: 2, element: Sb, population: 4.123, charge: 0.877}
+- [energy, -65.98858867167876]
+- [nr_steps, 3]
+- - kind_info
+  - - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 2, element: Sb, atomic_nr: 51, core_electrons: 46, valence_electrons: 5,
+      mass: 121.76}
+- [runtime, 51.938]
+- [nwarnings, 1]
+- [energy_units, a.u.]

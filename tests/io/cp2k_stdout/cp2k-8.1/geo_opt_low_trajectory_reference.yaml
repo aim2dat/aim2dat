@@ -1,0 +1,24 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - [Using a non-square number of MPI ranks.]
+- [cp2k_version, 8.1]
+- [run_type, GEO_OPT]
+- [natoms, 2]
+- [nelectrons, 2]
+- [nr_occ_orbitals, 1]
+- [scf_converged, true]
+- [energy_scf, -1.16118536976581]
+- [energy, -1.161185369765809]
+- [nr_steps, 2]
+- - motion_step_info
+  - - {scf_converged: true, nr_scf_steps: 8, energy: -1.160960512083268}
+    - {scf_converged: true, nr_scf_steps: 4, energy: -1.161180187722721}
+    - {scf_converged: true, nr_scf_steps: 4, energy: -1.161185369765988, max_step: 0.0178180049,
+      rms_step: 0.0102872299, max_grad: 0.0022539017, rms_grad: 0.0013012907}
+    - {scf_converged: true, nr_scf_steps: 4, energy: -1.161185369765809, max_step: 0.0024333103,
+      rms_step: 0.0014048724, max_grad: 0.0001178855, rms_grad: 6.80612e-05}
+- [runtime, 0.832]
+- [nwarnings, 1]
+- [energy_units, a.u.]

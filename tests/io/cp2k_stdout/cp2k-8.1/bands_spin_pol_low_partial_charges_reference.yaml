@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - []
+- [cp2k_version, 8.1]
+- [run_type, ENERGY]
+- [natoms, 6]
+- - nelectrons
+  - [24, 24]
+- - nr_occ_orbitals
+  - [24, 24]
+- [scf_converged, true]
+- [energy_scf, -180.90877393783902]
+- [energy, -180.90877393783902]
+- [runtime, 9.894]
+- [nwarnings, 3]
+- [energy_units, a.u.]

@@ -1,0 +1,118 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - []
+- [cp2k_version, 8.2]
+- [run_type, CELL_OPT]
+- [kpoint_scheme, Monkhorst-Pack]
+- - kpoint_grid
+  - [2, 2, 2]
+- [dft_type, RKS]
+- [multiplicity, 1]
+- [charge, 0.0]
+- - xc
+  - {functional: PBE}
+- [natoms, 4]
+- - spgr_info
+  - {sg_number: 225, int_symbol: Fm-3m, point_group_symbol: m-3m, schoenflies_symbol: Oh^5}
+- [nelectrons, 32]
+- [nr_occ_orbitals, 16]
+- [scf_converged, true]
+- [energy_scf, -65.98856445906493]
+- [energy, -65.98856445906493]
+- [nr_steps, 3]
+- - kind_info
+  - - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 1, element: Cs, atomic_nr: 55, core_electrons: 46, valence_electrons: 9,
+      mass: 132.9055}
+    - {kind: 2, element: Sb, atomic_nr: 51, core_electrons: 46, valence_electrons: 5,
+      mass: 121.76}
+- - motion_step_info
+  - - scf_converged: true
+      nr_scf_steps: 10
+      energy: -65.9885466874459
+      mulliken:
+      - {kind: 1, element: Cs, population: 9.063061, charge: -0.063061}
+      - {kind: 1, element: Cs, population: 9.06286, charge: -0.06286}
+      - {kind: 1, element: Cs, population: 7.813724, charge: 1.186276}
+      - {kind: 2, element: Sb, population: 6.060354, charge: -1.060354}
+      hirshfeld:
+      - {kind: 1, element: Cs, population: 9.429, charge: -0.429}
+      - {kind: 1, element: Cs, population: 9.429, charge: -0.429}
+      - {kind: 1, element: Cs, population: 9.03, charge: -0.03}
+      - {kind: 2, element: Sb, population: 4.112, charge: 0.888}
+    - scf_converged: true
+      nr_scf_steps: 11
+      energy: -65.98854714550045
+      pressure: 687.2227752723
+      mulliken:
+      - {kind: 1, element: Cs, population: 9.06305, charge: -0.06305}
+      - {kind: 1, element: Cs, population: 9.062852, charge: -0.062852}
+      - {kind: 1, element: Cs, population: 7.813859, charge: 1.186141}
+      - {kind: 2, element: Sb, population: 6.06024, charge: -1.06024}
+      hirshfeld:
+      - {kind: 1, element: Cs, population: 9.429, charge: -0.429}
+      - {kind: 1, element: Cs, population: 9.429, charge: -0.429}
+      - {kind: 1, element: Cs, population: 9.03, charge: -0.03}
+      - {kind: 2, element: Sb, population: 4.112, charge: 0.888}
+    - scf_converged: true
+      nr_scf_steps: 11
+      energy: -65.98856523486353
+      pressure: 679.9974928937
+      max_step: 0.0003309125
+      rms_step: 0.0001246865
+      max_grad: 0.0003276116
+      rms_grad: 0.0001234428
+      mulliken:
+      - {kind: 1, element: Cs, population: 9.060142, charge: -0.060142}
+      - {kind: 1, element: Cs, population: 9.060106, charge: -0.060106}
+      - {kind: 1, element: Cs, population: 7.828122, charge: 1.171878}
+      - {kind: 2, element: Sb, population: 6.051629, charge: -1.051629}
+      hirshfeld:
+      - {kind: 1, element: Cs, population: 9.426, charge: -0.426}
+      - {kind: 1, element: Cs, population: 9.426, charge: -0.426}
+      - {kind: 1, element: Cs, population: 9.024, charge: -0.024}
+      - {kind: 2, element: Sb, population: 4.124, charge: 0.876}
+    - scf_converged: true
+      nr_scf_steps: 11
+      energy: -65.988564459065
+      pressure: -71.8048551207
+      max_step: 0.0328437924
+      rms_step: 0.0123754156
+      max_grad: 1.80228e-05
+      rms_grad: 6.7886e-06
+      mulliken:
+      - {kind: 1, element: Cs, population: 9.060234, charge: -0.060234}
+      - {kind: 1, element: Cs, population: 9.060198, charge: -0.060198}
+      - {kind: 1, element: Cs, population: 7.827431, charge: 1.172569}
+      - {kind: 2, element: Sb, population: 6.052137, charge: -1.052137}
+      hirshfeld:
+      - {kind: 1, element: Cs, population: 9.426, charge: -0.426}
+      - {kind: 1, element: Cs, population: 9.426, charge: -0.426}
+      - {kind: 1, element: Cs, population: 9.025, charge: -0.025}
+      - {kind: 2, element: Sb, population: 4.123, charge: 0.877}
+    - scf_converged: true
+      nr_scf_steps: 1
+      energy: -65.98856445906493
+      pressure: -31.8519880457
+      max_step: 0.0017120559
+      rms_step: 0.0006450939
+      max_grad: 4.49e-07
+      rms_grad: 1.715e-07
+      mulliken:
+      - {kind: 1, element: Cs, population: 9.060249, charge: -0.060249}
+      - {kind: 1, element: Cs, population: 9.060213, charge: -0.060213}
+      - {kind: 1, element: Cs, population: 7.827434, charge: 1.172566}
+      - {kind: 2, element: Sb, population: 6.052104, charge: -1.052104}
+      hirshfeld:
+      - {kind: 1, element: Cs, population: 9.426, charge: -0.426}
+      - {kind: 1, element: Cs, population: 9.426, charge: -0.426}
+      - {kind: 1, element: Cs, population: 9.025, charge: -0.025}
+      - {kind: 2, element: Sb, population: 4.123, charge: 0.877}
+- [runtime, 25.913]
+- [nwarnings, 1]
+- [energy_units, a.u.]

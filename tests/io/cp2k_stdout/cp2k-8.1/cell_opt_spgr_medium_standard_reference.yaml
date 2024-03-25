@@ -1,0 +1,50 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - []
+- [cp2k_version, 8.1]
+- [run_type, CELL_OPT]
+- - brillouin_zone
+  - kpoint_scheme: Monkhorst-Pack
+    kpoint_grid: [2, 2, 2]
+    nr_kpoints: 4
+    kpoints:
+    - nr: 1
+      weight: 0.25
+      position: [-0.25, -0.25, -0.25]
+    - nr: 2
+      weight: 0.25
+      position: [-0.25, -0.25, 0.25]
+    - nr: 3
+      weight: 0.25
+      position: [-0.25, 0.25, -0.25]
+    - nr: 4
+      weight: 0.25
+      position: [-0.25, 0.25, 0.25]
+- [dft_type, RKS]
+- [multiplicity, 1]
+- [charge, 0.0]
+- - xc
+  - {functional: PBE}
+- [natoms, 4]
+- - spgr_info
+  - {sg_number: 225, int_symbol: Fm-3m, point_group_symbol: m-3m, schoenflies_symbol: Oh^5}
+- [nelectrons, 32]
+- [nr_occ_orbitals, 16]
+- [scf_converged, true]
+- [energy_scf, -65.98856445906493]
+- - mulliken
+  - - {kind: 1, element: Cs, population: 9.060249, charge: -0.060249}
+    - {kind: 1, element: Cs, population: 9.060213, charge: -0.060213}
+    - {kind: 1, element: Cs, population: 7.827434, charge: 1.172566}
+    - {kind: 2, element: Sb, population: 6.052104, charge: -1.052104}
+- - hirshfeld
+  - - {kind: 1, element: Cs, population: 9.426, charge: -0.426}
+    - {kind: 1, element: Cs, population: 9.426, charge: -0.426}
+    - {kind: 1, element: Cs, population: 9.025, charge: -0.025}
+    - {kind: 2, element: Sb, population: 4.123, charge: 0.877}
+- [energy, -65.98856445906493]
+- [nr_steps, 3]
+- [nwarnings, 1]
+- [energy_units, a.u.]

@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+- [exceeded_walltime, true]
+- - warnings
+  - [One or more SCF run did not converge.]
+- [cp2k_version, 8.1]
+- [run_type, CELL_OPT]
+- [natoms, 4]
+- [nelectrons, 32]
+- [nr_occ_orbitals, 16]
+- [scf_converged, false]
+- [energy_scf, -65.99915332484856]
+- [energy, -65.99913809739694]
+- [nr_steps, 6]
+- [runtime, 183.028]
+- [nwarnings, 3]
+- [energy_units, a.u.]
