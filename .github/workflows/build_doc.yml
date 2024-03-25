@@ -2,13 +2,14 @@ name: Building Documentation
 
 on: workflow_dispatch
 
-permissions:
-  contents: read
-
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
 
     services:
       postgres:
@@ -31,7 +32,9 @@ jobs:
         - 15672:15672
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Install pandoc
       run: |
         sudo apt-get install --no-install-recommends pandoc graphviz
@@ -51,12 +54,8 @@ jobs:
       run: |
         cd doc/
         make html
-    - name: Install SSH Key
-      uses: shimataro/ssh-key-action@v2
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
       with:
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        known_hosts: unnecessary
-    - name: Adding Known Hosts
-      run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
-    - name: Deploy with scp
-      run: scp -o StrictHostKeyChecking=no -o PubkeyAcceptedKeyTypes=+ssh-rsa -o HostKeyAlgorithms=+ssh-rsa -O -r ./doc/build/html/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:./aim2dat
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./doc/build/html

@@ -156,6 +156,7 @@ nbsphinx_allow_errors = False
 
 html_theme = "sphinx_immaterial"
 html_theme_options = {
+    "font": False,
     "icon": {
         "repo": "fontawesome/brands/github",
     },
