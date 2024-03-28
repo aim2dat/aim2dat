@@ -175,6 +175,7 @@ class _BasePlot(abc.ABC):
         self._subplot_share_legend = False
         self._subplot_share_colorbar = False
         self._subplot_adjust = {}
+        self._subplot_align_ylabels = False
         self._subplot_tight_layout = False
         self._subplot_gridspec_values = None
         self._subplot_gf_x = 1
@@ -679,6 +680,15 @@ class _BasePlot(abc.ABC):
     @subplot_tight_layout.setter
     def subplot_tight_layout(self, value):
         self._subplot_tight_layout = value
+
+    @property
+    def subplot_align_ylabels(self):
+        """bool: Align y label of plot. The default value is ``False``."""
+        return self._subplot_align_ylabels
+
+    @subplot_align_ylabels.setter
+    def subplot_align_ylabels(self, value):
+        self._subplot_align_ylabels = value
 
     def auto_set_axis_properties(self, set_x_label=True, set_y_label=True):
         """

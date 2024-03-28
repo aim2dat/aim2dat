@@ -90,6 +90,8 @@ def _set_subplot_parameters(obj):
     obj._figure.subplots_adjust(**adjust_kwargs)
     if obj.subplot_tight_layout:
         obj._figure.tight_layout()
+    if obj.subplot_align_ylabels:
+        obj._figure.align_ylabels()
 
 
 def _plot2d(
