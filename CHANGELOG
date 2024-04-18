@@ -9,6 +9,10 @@ Version 0.2.0
 
 * ``utils.chem_formula.transform_str_to_dict`` supports now recurring elements and nested brackets (`PR #13 <https://github.com/aim2dat/aim2dat/pull/13>`_).
 
+**Enhancement**
+
+* ``plots.base_plot`` added new property `subplot_align_ylabels` to adjust y labels in subplots for backend `matplotlib`.
+
 
 Version 0.1.0
 =============
