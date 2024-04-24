@@ -88,6 +88,8 @@ def read_atom_proj_density_of_states(folder_path):
     _, indices = zip(*indices)
     parser = PDOSParser()
     for idx in indices:  # file_p, spin in zip(folder_path["file"], folder_path["spin"]):
-        file_content = custom_open(folder_path["file"][idx], "r").read()
+        # file_content = custom_open(folder_path["file"][idx], "r").read()
+        with custom_open(folder_path["file"][idx], "r") as dos_file:
+            file_content = dos_file.read()
         parser.parse_pdos(file_content, folder_path["spin"][idx])
     return parser.pdos

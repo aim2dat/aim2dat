@@ -3,7 +3,9 @@
 # Standard library imports
 import os
 import re
+import io
 from functools import wraps
+from contextlib import contextmanager
 
 
 def read_multiple(pattern):
@@ -71,12 +73,20 @@ def read_multiple(pattern):
     return read_func_decorator
 
 
+@contextmanager
 def custom_open(file, mode="r", **kwargs):
     """
     Open files by distinguishing custom file classes (such as AiiDA's SingleFileData) with an
     open function.
     """
-    if hasattr(file, "open"):
-        return file.open(mode=mode)
+    has_close = True
+    if os.path.exists(file):
+        resource = open(file, mode=mode, **kwargs)
     else:
-        return open(file, mode=mode, **kwargs)
+        resource = io.StringIO(file)
+        has_close = False
+    try:
+        yield resource
+    finally:
+        if has_close:
+            resource.close()

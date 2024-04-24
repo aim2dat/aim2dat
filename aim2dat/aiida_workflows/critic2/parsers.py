@@ -20,7 +20,7 @@ class Critic2Parser(Parser):
         """Receives in input a dictionary of retrieved nodes. Does all the logic here."""
         try:
             result_dict = read_stdout(
-                self.retrieved.get_object(self.node.get_option("output_filename"))
+                self.retrieved.get_object_content(self.node.get_option("output_filename"))
             )
         except OSError:
             return self.exit_codes.ERROR_READING_OUTPUT_FILE
@@ -30,7 +30,9 @@ class Critic2Parser(Parser):
         planes = {}
         for file_name in result_dict.pop("plane_files"):
             try:
-                planes[file_name.split(".")[0]] = read_plane(self.retrieved.get_object(file_name))
+                planes[file_name.split(".")[0]] = read_plane(
+                    self.retrieved.get_object_content(file_name)
+                )
             except OSError:
                 return self.exit_codes.ERROR_READING_OUTPUT_FILE
             except ValueError:

@@ -100,11 +100,11 @@ class _Cp2kBaseParser(Parser):
 
         try:
             result_dict = read_stdout(
-                self.retrieved.get_object(fname), parser_type=self.parser_type
+                self.retrieved.get_object_content(fname), parser_type=self.parser_type
             )
         # TODO distinguish different exceptions.
         except IOError:
-            return self.exit_codes.ERROR_OUTPUT_STDOUT_READ
+            return self.exit_codes.ERROR_READING_OUTPUT_FILE
 
         if result_dict is None:
             raise OutputParsingError("CP2K version is not supported.")
@@ -126,9 +126,9 @@ class _Cp2kBaseParser(Parser):
         # Read the restart file.
         # TODO distinguish different exceptions.
         try:
-            structures = read_optimized_structure(self.retrieved.get_object(fname))
+            structures = read_optimized_structure(self.retrieved.get_object_content(fname))
         except IOError:
-            return self.exit_codes.ERROR_OUTPUT_STDOUT_READ
+            return self.exit_codes.ERROR_READING_OUTPUT_FILE
 
         # For now only one structure is supported
         if len(structures) > 1:
@@ -207,69 +207,16 @@ class Cp2kStandardParser(_Cp2kBaseParser):
                             continue
                         y_values.append(np.array(density))
                         y_labels.append(pdos["kind"] + "_" + orb_label)
-                        y_units.append("states/" + pdos["unit_x"])
+                        y_units.append("states/" + pdos_data["unit_x"])
                 xydata.set_y(y_values, y_labels, y_units)
                 xydata.set_attribute("e_fermi", pdos_data["e_fermi"])  # TODO this to pDOS output..
                 self.out("output_pdos", xydata)
                 return_dict["e_fermi"] = pdos_data["e_fermi"]
         return return_dict
-        # pdos_files = {}
-        # if retrieved_temporary_folder is not None:
-        #     pattern = re.compile(r"^[a-zA-Z0-9\.]*-([A-Z]*)?_*k(\d+)?-\d+\.pdos$")
-        #     file_names = os.listdir(retrieved_temporary_folder)
-        #     for file_name in file_names:
-        #         found_match = pattern.match(file_name)
-        #         if found_match is not None:
-        #             if found_match.groups()[1] not in pdos_files:
-        #                 pdos_files[found_match.groups()[1]] = {}
-        #             pdos_files[found_match.groups()[1]][found_match.groups()[0]] = file_name
-        # if len(pdos_files) > 0:
-        #     xydata = XyData()
-        #     pdos_parser = PDOSParser()
-        #     for kind_dict in pdos_files.values():
-        #         for spin, file_name in sorted(kind_dict.items()):
-        #             file_path = os.path.join(retrieved_temporary_folder, file_name)
-        #             try:
-        #                 with open(file_path, "r") as fobj:
-        #                     file_content = fobj.read()
-        #             except IOError:
-        #                 return self.exit_codes.ERROR_OUTPUT_STDOUT_READ
-        #             pdos_parser.parse_pdos(file_content, spin)
-        #     pdos = pdos_parser.pdos
-        #     site_indices = [kind.split("_")[-1] for kind in pdos_parser.used_kinds.keys()]
-        #     zipped = list(zip(site_indices, pdos_parser.used_kinds.keys()))
-        #     zipped.sort(key=lambda point: int(point[0]) if point[0].isdigit() else point[0])
-        #     _, kinds_sorted = zip(*zipped)
-        #     e_fermi = pdos["e_fermi"]
-        #     y_labels = ["occupation"]
-        #     y_values = [np.array(pdos["occupation"])]
-        #     y_units = [""]
-        #     for kind in kinds_sorted:
-        #         for orb_label, density in pdos["pdos"][pdos_parser.used_kinds[kind]].items():
-        #             if orb_label == "kind":
-        #                 continue
-        #             y_values.append(np.array(density))
-        #             y_labels.append(kind + "_" + orb_label)
-        #             y_units.append("states/" + pdos["unit_x"])
-        #     xydata.set_x(
-        #         np.array(pdos["energy"]),
-        #         "energy",
-        #         pdos["unit_x"],
-        #     )
-        #     xydata.set_y(y_values, y_labels, y_units)
-        #     xydata.set_attribute("e_fermi", e_fermi)
-        #     self.out("output_pdos", xydata)
-        #     return {"e_fermi": e_fermi}
-        # else:
-        #     return {}
 
     def _create_output_nodes(self, result_dict, output_structure):
         if "kpoint_data" in result_dict:
             bnds = BandsData()
-            # if output_structure is None:
-            #     bnds.cell = self.node.inputs.structure.cell
-            # else:
-            #     bnds.cell = output_structure.cell
             bnds.set_kpoints(result_dict["kpoint_data"]["kpoints"])
             bnds.labels = result_dict["kpoint_data"]["labels"]
             bnds.set_bands(
