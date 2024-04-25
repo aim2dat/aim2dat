@@ -12,7 +12,7 @@ Version 0.2.0
 **Enhancement**
 
 * ``plots.base_plot`` added new property `subplot_align_ylabels` to adjust y labels in subplots for backend `matplotlib`.
-
+* ``strct.strct`` added new file formats `.cssr`, `.v1` and `.cuc` to `to_file` for postprocessing in Zeo++.
 
 Version 0.1.0
 =============
