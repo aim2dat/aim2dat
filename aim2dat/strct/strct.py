@@ -649,7 +649,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         elif file_path.endswith(".cuc"):
             f = open(file_path, "w")
             f.write(f"Processing: {self.label}\n")
-            f.write(f"Unit_cell: ")
+            f.write("Unit_cell: ")
             f.write(" ".join(map(str, self.cell_lengths)) + " ")
             f.write(" ".join(map(str, self.cell_angles)) + "\n")
             for el, pos in zip(self.elements, self.scaled_positions):
