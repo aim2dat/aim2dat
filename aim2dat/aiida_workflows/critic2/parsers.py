@@ -8,10 +8,7 @@ from aiida.parsers import Parser
 from aiida.orm import List, Dict, ArrayData
 
 # Internal library imports
-from aim2dat.aiida_workflows.critic2.parser_utils import (
-    _parse_stdout_file,
-    _parse_plane_file,
-)
+from aim2dat.io.critic2 import read_stdout, read_plane
 
 
 class Critic2Parser(Parser):
@@ -22,8 +19,9 @@ class Critic2Parser(Parser):
     def parse(self, **kwargs):
         """Receives in input a dictionary of retrieved nodes. Does all the logic here."""
         try:
-            with self.retrieved.open(self.node.get_option("output_filename"), "r") as handle:
-                result_dict = _parse_stdout_file(handle)
+            result_dict = read_stdout(
+                self.retrieved.get_object_content(self.node.get_option("output_filename"))
+            )
         except OSError:
             return self.exit_codes.ERROR_READING_OUTPUT_FILE
         except ValueError:
@@ -32,8 +30,9 @@ class Critic2Parser(Parser):
         planes = {}
         for file_name in result_dict.pop("plane_files"):
             try:
-                with self.retrieved.open(file_name, "r") as handle:
-                    planes[file_name.split(".")[0]] = _parse_plane_file(handle)
+                planes[file_name.split(".")[0]] = read_plane(
+                    self.retrieved.get_object_content(file_name)
+                )
             except OSError:
                 return self.exit_codes.ERROR_READING_OUTPUT_FILE
             except ValueError:

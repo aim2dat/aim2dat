@@ -3,11 +3,10 @@ Module of functions to read output-files of Quantum ESPRESSO.
 """
 
 # Standard library imports
-import os
 import re
 
 # Internal library imports
-from aim2dat.io.auxiliary_functions import _extract_file_names
+from aim2dat.io.utils import read_multiple, custom_open
 from aim2dat.utils.units import length
 
 
@@ -142,7 +141,7 @@ def read_input_structure(file_name):
         return line_idx, elements, positions, is_cartesian
 
     struct_dict = {"pbc": [True, True, True]}
-    with open(file_name, "r") as input_file:
+    with custom_open(file_name, "r") as input_file:
         file_content = input_file.read().splitlines()
     line_idx = 0
     while line_idx < len(file_content):  # line in enumerate(file_content):
@@ -186,27 +185,22 @@ def read_band_structure(file_name):
     """
     kpoints = []
     bands = []
-    with open(file_name, "r") as bands_file:
+    with custom_open(file_name, "r") as bands_file:
         nr_bands = 0
-        nr_kpoints = 0
         current_bands = []
         parse_kpoint = True
         for line in bands_file:
+            line_split = line.split()
             # Catch the number of bands and k-points at the beginning of the file:
             if line.startswith(" &plot"):
-                nr_bands = int(line.split()[2][:-1])
-                nr_kpoints = int(line.split()[4])
-                print("nr of bands:", nr_bands)
-                print("nr of kpoints:", nr_kpoints)
+                nr_bands = int(line_split[2][:-1])
                 parse_kpoint = True
             # Parse k-point:
             elif parse_kpoint:
-                kpoints.append(
-                    [float(line.split()[0]), float(line.split()[1]), float(line.split()[2])]
-                )
+                kpoints.append([float(line_split[0]), float(line_split[1]), float(line_split[2])])
                 parse_kpoint = False
             else:
-                current_bands += [float(eigenvalue) for eigenvalue in line.split()]
+                current_bands += [float(eigenvalue) for eigenvalue in line_split]
                 if len(current_bands) == nr_bands:
                     parse_kpoint = True
                     bands.append(current_bands)
@@ -230,14 +224,22 @@ def read_total_density_of_states(file_name):
     """
     energy = []
     tdos = []
-    with open(file_name, "r") as tdos_file:
+    e_fermi = None
+    with custom_open(file_name, "r") as tdos_file:
         for line in tdos_file:
+            line_split = line.split()
             if not line.startswith("#"):
-                energy.append(float(line.split()[0]))
-                tdos.append(float(line.split()[1]))
-    return {"energy": energy, "tdos": tdos, "unit_x": "eV"}
+                energy.append(float(line_split[0]))
+                tdos.append(float(line_split[1]))
+            else:
+                e_fermi = float(line_split[-2])
+    return {"energy": energy, "tdos": tdos, "unit_x": "eV", "e_fermi": e_fermi}
 
 
+@read_multiple(
+    pattern=r"^.*pdos_atm#(?P<at_idx>\d*)?\((?P<el>[a-zA-Z]*)"
+    + r"?\)\_wfc\#(?P<orb_idx>\d*)?\((?P<orb>[a-z])?\)$"
+)
 def read_atom_proj_density_of_states(folder_path):
     """
     Read the projected density of states from Quantum ESPRESSO.
@@ -263,55 +265,53 @@ def read_atom_proj_density_of_states(folder_path):
     atomic_pdos = []
     kind_indices = {}
 
-    if len(folder_path) > 0:
-        folder_path += "/"
+    indices = [(val, idx) for idx, val in enumerate(folder_path["at_idx"])]
+    indices.sort(key=lambda point: point[0])
+    _, indices = zip(*indices)
+    for idx in indices:
+        # Get regex details:
+        at_idx = folder_path["at_idx"][idx]
+        el = folder_path["el"][idx]
+        orb = folder_path["orb"][idx]
+        orb_idx = folder_path["orb_idx"][idx]
 
-    pattern = re.compile(
-        r"^[a-zA-Z0-9\.\_]*pdos_atm#(\d*)?\(([a-zA-Z]*)?\)\_wfc\#(\d*)?\(([a-z])?\)$"
-    )
-    # Check the files in the folder:
-    files = [
-        file for file in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, file))
-    ]
-    pdos_files, file_info = _extract_file_names(files, pattern)
-    if len(pdos_files) == 0:
-        raise ValueError("No pDOS files found.")
-
-    for file_name, f_info in sorted(zip(pdos_files, file_info), key=lambda x: int(x[1][0])):
         # Check which kind the pdos belongs to:
-        if f_info[0] not in kind_indices:
-            kind_indices[f_info[0]] = len(atomic_pdos)
-            atomic_pdos.append({"kind": f_info[1] + "_" + f_info[0]})
+        if at_idx not in kind_indices:
+            kind_indices[at_idx] = len(atomic_pdos)
+            atomic_pdos.append({"kind": el + "_" + at_idx})
+
+        # The energy is only parsed from the first file, we assume the same energy range:
+        parse_energy = len(energy) == 0
 
         # Read pdos, we only read the orbital contributions here, the summation is performed in
         # the plotting-class:
-        with open(folder_path + file_name, "r") as pdos_file:
-            # The energy is only parsed from the first file, we assume the same energy range:
-            parse_energy = False
-            if len(energy) == 0:
-                parse_energy = True
+        with custom_open(folder_path["file"][idx], "r") as pdos_file:
 
-            qn_labels = quantum_numbers[f_info[3]]
+            # Get inof from regex:
+            qn_labels = quantum_numbers[orb]
 
             # Create empty lists for each quantum number:
             for qn_label in qn_labels:
-                atomic_pdos[kind_indices[f_info[0]]][f_info[2] + "_" + qn_label] = []
+                atomic_pdos[kind_indices[at_idx]][orb_idx + "_" + qn_label] = []
 
             # Iterate over lines and fill the list:
             for line in pdos_file:
                 if not line.startswith("#"):
+                    line_split = line.split()
                     if parse_energy:
-                        energy.append(float(line.split()[0]))
+                        energy.append(float(line_split[0]))
                     for qn_idx in range(len(qn_labels)):
-                        qn_label = f_info[2] + "_" + qn_labels[qn_idx]
+                        qn_label = orb_idx + "_" + qn_labels[qn_idx]
 
                         # Fix bug in output when exponential is too small, e.g.: 0.292-105 instead
                         # of 0.292E-105
                         float_number = 0.0
                         try:
-                            float_number = float(line.split()[2 + qn_idx])
+                            float_number = float(line_split[2 + qn_idx])
                         except ValueError:
                             pass
-                        atomic_pdos[kind_indices[f_info[0]]][qn_label].append(float_number)
+                        atomic_pdos[kind_indices[at_idx]].setdefault(qn_label, []).append(
+                            float_number
+                        )
 
     return {"energy": energy, "pdos": atomic_pdos, "unit_x": "eV"}

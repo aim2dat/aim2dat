@@ -1,0 +1,792 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - [One or more SCF run did not converge., Using a non-square number of MPI ranks.]
+- [cp2k_version, 8.1]
+- [run_type, MD-NVT]
+- [dft_type, RKS]
+- [multiplicity, 1]
+- [charge, 0.0]
+- - xc
+  - {functional: PBE, vdw_type: Pair Potential, vdw_method: DFT-D3}
+- [natoms, 192]
+- [nelectrons, 512]
+- [nr_occ_orbitals, 256]
+- [energy_scf, -1103.374912828688]
+- [scf_converged, true]
+- - mulliken
+  - - {kind: 1, element: O, population: 6.454068, charge: -0.454068}
+    - {kind: 2, element: H, population: 0.7955, charge: 0.2045}
+    - {kind: 2, element: H, population: 0.759338, charge: 0.240662}
+    - {kind: 1, element: O, population: 6.396988, charge: -0.396988}
+    - {kind: 2, element: H, population: 0.76325, charge: 0.23675}
+    - {kind: 2, element: H, population: 0.799855, charge: 0.200145}
+    - {kind: 1, element: O, population: 6.442752, charge: -0.442752}
+    - {kind: 2, element: H, population: 0.74881, charge: 0.25119}
+    - {kind: 2, element: H, population: 0.798662, charge: 0.201338}
+    - {kind: 1, element: O, population: 6.444205, charge: -0.444205}
+    - {kind: 2, element: H, population: 0.800976, charge: 0.199024}
+    - {kind: 2, element: H, population: 0.76557, charge: 0.23443}
+    - {kind: 1, element: O, population: 6.455355, charge: -0.455355}
+    - {kind: 2, element: H, population: 0.78722, charge: 0.21278}
+    - {kind: 2, element: H, population: 0.754549, charge: 0.245451}
+    - {kind: 1, element: O, population: 6.484086, charge: -0.484086}
+    - {kind: 2, element: H, population: 0.760893, charge: 0.239107}
+    - {kind: 2, element: H, population: 0.756228, charge: 0.243772}
+    - {kind: 1, element: O, population: 6.463529, charge: -0.463529}
+    - {kind: 2, element: H, population: 0.76369, charge: 0.23631}
+    - {kind: 2, element: H, population: 0.781614, charge: 0.218386}
+    - {kind: 1, element: O, population: 6.42488, charge: -0.42488}
+    - {kind: 2, element: H, population: 0.801025, charge: 0.198975}
+    - {kind: 2, element: H, population: 0.754614, charge: 0.245386}
+    - {kind: 1, element: O, population: 6.458777, charge: -0.458777}
+    - {kind: 2, element: H, population: 0.766563, charge: 0.233437}
+    - {kind: 2, element: H, population: 0.763085, charge: 0.236915}
+    - {kind: 1, element: O, population: 6.438725, charge: -0.438725}
+    - {kind: 2, element: H, population: 0.785851, charge: 0.214149}
+    - {kind: 2, element: H, population: 0.769179, charge: 0.230821}
+    - {kind: 1, element: O, population: 6.432112, charge: -0.432112}
+    - {kind: 2, element: H, population: 0.797287, charge: 0.202713}
+    - {kind: 2, element: H, population: 0.794036, charge: 0.205964}
+    - {kind: 1, element: O, population: 6.459239, charge: -0.459239}
+    - {kind: 2, element: H, population: 0.782127, charge: 0.217873}
+    - {kind: 2, element: H, population: 0.772286, charge: 0.227714}
+    - {kind: 1, element: O, population: 6.39382, charge: -0.39382}
+    - {kind: 2, element: H, population: 0.804669, charge: 0.195331}
+    - {kind: 2, element: H, population: 0.787591, charge: 0.212409}
+    - {kind: 1, element: O, population: 6.398932, charge: -0.398932}
+    - {kind: 2, element: H, population: 0.770724, charge: 0.229276}
+    - {kind: 2, element: H, population: 0.819272, charge: 0.180728}
+    - {kind: 1, element: O, population: 6.445595, charge: -0.445595}
+    - {kind: 2, element: H, population: 0.774727, charge: 0.225273}
+    - {kind: 2, element: H, population: 0.790937, charge: 0.209063}
+    - {kind: 1, element: O, population: 6.418269, charge: -0.418269}
+    - {kind: 2, element: H, population: 0.798446, charge: 0.201554}
+    - {kind: 2, element: H, population: 0.793122, charge: 0.206878}
+    - {kind: 1, element: O, population: 6.43141, charge: -0.43141}
+    - {kind: 2, element: H, population: 0.779494, charge: 0.220506}
+    - {kind: 2, element: H, population: 0.815748, charge: 0.184252}
+    - {kind: 1, element: O, population: 6.483529, charge: -0.483529}
+    - {kind: 2, element: H, population: 0.775815, charge: 0.224185}
+    - {kind: 2, element: H, population: 0.781389, charge: 0.218611}
+    - {kind: 1, element: O, population: 6.509253, charge: -0.509253}
+    - {kind: 2, element: H, population: 0.745261, charge: 0.254739}
+    - {kind: 2, element: H, population: 0.732429, charge: 0.267571}
+    - {kind: 1, element: O, population: 6.409746, charge: -0.409746}
+    - {kind: 2, element: H, population: 0.776751, charge: 0.223249}
+    - {kind: 2, element: H, population: 0.796628, charge: 0.203372}
+    - {kind: 1, element: O, population: 6.454993, charge: -0.454993}
+    - {kind: 2, element: H, population: 0.762683, charge: 0.237317}
+    - {kind: 2, element: H, population: 0.765403, charge: 0.234597}
+    - {kind: 1, element: O, population: 6.434339, charge: -0.434339}
+    - {kind: 2, element: H, population: 0.791102, charge: 0.208898}
+    - {kind: 2, element: H, population: 0.776878, charge: 0.223122}
+    - {kind: 1, element: O, population: 6.522896, charge: -0.522896}
+    - {kind: 2, element: H, population: 0.75402, charge: 0.24598}
+    - {kind: 2, element: H, population: 0.758735, charge: 0.241265}
+    - {kind: 1, element: O, population: 6.455316, charge: -0.455316}
+    - {kind: 2, element: H, population: 0.775492, charge: 0.224508}
+    - {kind: 2, element: H, population: 0.780354, charge: 0.219646}
+    - {kind: 1, element: O, population: 6.512983, charge: -0.512983}
+    - {kind: 2, element: H, population: 0.736485, charge: 0.263515}
+    - {kind: 2, element: H, population: 0.763107, charge: 0.236893}
+    - {kind: 1, element: O, population: 6.425188, charge: -0.425188}
+    - {kind: 2, element: H, population: 0.767296, charge: 0.232704}
+    - {kind: 2, element: H, population: 0.772197, charge: 0.227803}
+    - {kind: 1, element: O, population: 6.413416, charge: -0.413416}
+    - {kind: 2, element: H, population: 0.774603, charge: 0.225397}
+    - {kind: 2, element: H, population: 0.768835, charge: 0.231165}
+    - {kind: 1, element: O, population: 6.452062, charge: -0.452062}
+    - {kind: 2, element: H, population: 0.727348, charge: 0.272652}
+    - {kind: 2, element: H, population: 0.818673, charge: 0.181327}
+    - {kind: 1, element: O, population: 6.436729, charge: -0.436729}
+    - {kind: 2, element: H, population: 0.782334, charge: 0.217666}
+    - {kind: 2, element: H, population: 0.758752, charge: 0.241248}
+    - {kind: 1, element: O, population: 6.480351, charge: -0.480351}
+    - {kind: 2, element: H, population: 0.739014, charge: 0.260986}
+    - {kind: 2, element: H, population: 0.771228, charge: 0.228772}
+    - {kind: 1, element: O, population: 6.45321, charge: -0.45321}
+    - {kind: 2, element: H, population: 0.808345, charge: 0.191655}
+    - {kind: 2, element: H, population: 0.741801, charge: 0.258199}
+    - {kind: 1, element: O, population: 6.488064, charge: -0.488064}
+    - {kind: 2, element: H, population: 0.757198, charge: 0.242802}
+    - {kind: 2, element: H, population: 0.749199, charge: 0.250801}
+    - {kind: 1, element: O, population: 6.460406, charge: -0.460406}
+    - {kind: 2, element: H, population: 0.78884, charge: 0.21116}
+    - {kind: 2, element: H, population: 0.748903, charge: 0.251097}
+    - {kind: 1, element: O, population: 6.431091, charge: -0.431091}
+    - {kind: 2, element: H, population: 0.76835, charge: 0.23165}
+    - {kind: 2, element: H, population: 0.776001, charge: 0.223999}
+    - {kind: 1, element: O, population: 6.482816, charge: -0.482816}
+    - {kind: 2, element: H, population: 0.789433, charge: 0.210567}
+    - {kind: 2, element: H, population: 0.711963, charge: 0.288037}
+    - {kind: 1, element: O, population: 6.444336, charge: -0.444336}
+    - {kind: 2, element: H, population: 0.79135, charge: 0.20865}
+    - {kind: 2, element: H, population: 0.7859, charge: 0.2141}
+    - {kind: 1, element: O, population: 6.428547, charge: -0.428547}
+    - {kind: 2, element: H, population: 0.783919, charge: 0.216081}
+    - {kind: 2, element: H, population: 0.771583, charge: 0.228417}
+    - {kind: 1, element: O, population: 6.407659, charge: -0.407659}
+    - {kind: 2, element: H, population: 0.760716, charge: 0.239284}
+    - {kind: 2, element: H, population: 0.828194, charge: 0.171806}
+    - {kind: 1, element: O, population: 6.449167, charge: -0.449167}
+    - {kind: 2, element: H, population: 0.759984, charge: 0.240016}
+    - {kind: 2, element: H, population: 0.751495, charge: 0.248505}
+    - {kind: 1, element: O, population: 6.467917, charge: -0.467917}
+    - {kind: 2, element: H, population: 0.775427, charge: 0.224573}
+    - {kind: 2, element: H, population: 0.791469, charge: 0.208531}
+    - {kind: 1, element: O, population: 6.437965, charge: -0.437965}
+    - {kind: 2, element: H, population: 0.787267, charge: 0.212733}
+    - {kind: 2, element: H, population: 0.792247, charge: 0.207753}
+    - {kind: 1, element: O, population: 6.494687, charge: -0.494687}
+    - {kind: 2, element: H, population: 0.741665, charge: 0.258335}
+    - {kind: 2, element: H, population: 0.766124, charge: 0.233876}
+    - {kind: 1, element: O, population: 6.480677, charge: -0.480677}
+    - {kind: 2, element: H, population: 0.755054, charge: 0.244946}
+    - {kind: 2, element: H, population: 0.741787, charge: 0.258213}
+    - {kind: 1, element: O, population: 6.444339, charge: -0.444339}
+    - {kind: 2, element: H, population: 0.759408, charge: 0.240592}
+    - {kind: 2, element: H, population: 0.782795, charge: 0.217205}
+    - {kind: 1, element: O, population: 6.537264, charge: -0.537264}
+    - {kind: 2, element: H, population: 0.762785, charge: 0.237215}
+    - {kind: 2, element: H, population: 0.715553, charge: 0.284447}
+    - {kind: 1, element: O, population: 6.436086, charge: -0.436086}
+    - {kind: 2, element: H, population: 0.759442, charge: 0.240558}
+    - {kind: 2, element: H, population: 0.797655, charge: 0.202345}
+    - {kind: 1, element: O, population: 6.466536, charge: -0.466536}
+    - {kind: 2, element: H, population: 0.774633, charge: 0.225367}
+    - {kind: 2, element: H, population: 0.771588, charge: 0.228412}
+    - {kind: 1, element: O, population: 6.447828, charge: -0.447828}
+    - {kind: 2, element: H, population: 0.798436, charge: 0.201564}
+    - {kind: 2, element: H, population: 0.773318, charge: 0.226682}
+    - {kind: 1, element: O, population: 6.505222, charge: -0.505222}
+    - {kind: 2, element: H, population: 0.798993, charge: 0.201007}
+    - {kind: 2, element: H, population: 0.726856, charge: 0.273144}
+    - {kind: 1, element: O, population: 6.427388, charge: -0.427388}
+    - {kind: 2, element: H, population: 0.79277, charge: 0.20723}
+    - {kind: 2, element: H, population: 0.788847, charge: 0.211153}
+    - {kind: 1, element: O, population: 6.41592, charge: -0.41592}
+    - {kind: 2, element: H, population: 0.788277, charge: 0.211723}
+    - {kind: 2, element: H, population: 0.759653, charge: 0.240347}
+    - {kind: 1, element: O, population: 6.466151, charge: -0.466151}
+    - {kind: 2, element: H, population: 0.759329, charge: 0.240671}
+    - {kind: 2, element: H, population: 0.78323, charge: 0.21677}
+    - {kind: 1, element: O, population: 6.442532, charge: -0.442532}
+    - {kind: 2, element: H, population: 0.758911, charge: 0.241089}
+    - {kind: 2, element: H, population: 0.749158, charge: 0.250842}
+    - {kind: 1, element: O, population: 6.450143, charge: -0.450143}
+    - {kind: 2, element: H, population: 0.744563, charge: 0.255437}
+    - {kind: 2, element: H, population: 0.777802, charge: 0.222198}
+    - {kind: 1, element: O, population: 6.400734, charge: -0.400734}
+    - {kind: 2, element: H, population: 0.798319, charge: 0.201681}
+    - {kind: 2, element: H, population: 0.796097, charge: 0.203903}
+    - {kind: 1, element: O, population: 6.430904, charge: -0.430904}
+    - {kind: 2, element: H, population: 0.794984, charge: 0.205016}
+    - {kind: 2, element: H, population: 0.787926, charge: 0.212074}
+    - {kind: 1, element: O, population: 6.388695, charge: -0.388695}
+    - {kind: 2, element: H, population: 0.812493, charge: 0.187507}
+    - {kind: 2, element: H, population: 0.797098, charge: 0.202902}
+    - {kind: 1, element: O, population: 6.470135, charge: -0.470135}
+    - {kind: 2, element: H, population: 0.778103, charge: 0.221897}
+    - {kind: 2, element: H, population: 0.786647, charge: 0.213353}
+    - {kind: 1, element: O, population: 6.432198, charge: -0.432198}
+    - {kind: 2, element: H, population: 0.768307, charge: 0.231693}
+    - {kind: 2, element: H, population: 0.784051, charge: 0.215949}
+    - {kind: 1, element: O, population: 6.446363, charge: -0.446363}
+    - {kind: 2, element: H, population: 0.798164, charge: 0.201836}
+    - {kind: 2, element: H, population: 0.793691, charge: 0.206309}
+    - {kind: 1, element: O, population: 6.398002, charge: -0.398002}
+    - {kind: 2, element: H, population: 0.801916, charge: 0.198084}
+    - {kind: 2, element: H, population: 0.795966, charge: 0.204034}
+    - {kind: 1, element: O, population: 6.466651, charge: -0.466651}
+    - {kind: 2, element: H, population: 0.79398, charge: 0.20602}
+    - {kind: 2, element: H, population: 0.780929, charge: 0.219071}
+    - {kind: 1, element: O, population: 6.474908, charge: -0.474908}
+    - {kind: 2, element: H, population: 0.744351, charge: 0.255649}
+    - {kind: 2, element: H, population: 0.796216, charge: 0.203784}
+    - {kind: 1, element: O, population: 6.496497, charge: -0.496497}
+    - {kind: 2, element: H, population: 0.787432, charge: 0.212568}
+    - {kind: 2, element: H, population: 0.740781, charge: 0.259219}
+- - hirshfeld
+  - - {kind: 1, element: O, population: 7.174, charge: -1.174}
+    - {kind: 2, element: H, population: 0.427, charge: 0.573}
+    - {kind: 2, element: H, population: 0.408, charge: 0.592}
+    - {kind: 1, element: O, population: 7.137, charge: -1.137}
+    - {kind: 2, element: H, population: 0.419, charge: 0.581}
+    - {kind: 2, element: H, population: 0.429, charge: 0.571}
+    - {kind: 1, element: O, population: 7.15, charge: -1.15}
+    - {kind: 2, element: H, population: 0.406, charge: 0.594}
+    - {kind: 2, element: H, population: 0.436, charge: 0.564}
+    - {kind: 1, element: O, population: 7.189, charge: -1.189}
+    - {kind: 2, element: H, population: 0.428, charge: 0.572}
+    - {kind: 2, element: H, population: 0.411, charge: 0.589}
+    - {kind: 1, element: O, population: 7.154, charge: -1.154}
+    - {kind: 2, element: H, population: 0.418, charge: 0.582}
+    - {kind: 2, element: H, population: 0.418, charge: 0.582}
+    - {kind: 1, element: O, population: 7.179, charge: -1.179}
+    - {kind: 2, element: H, population: 0.418, charge: 0.582}
+    - {kind: 2, element: H, population: 0.412, charge: 0.588}
+    - {kind: 1, element: O, population: 7.155, charge: -1.155}
+    - {kind: 2, element: H, population: 0.411, charge: 0.589}
+    - {kind: 2, element: H, population: 0.429, charge: 0.571}
+    - {kind: 1, element: O, population: 7.122, charge: -1.122}
+    - {kind: 2, element: H, population: 0.436, charge: 0.564}
+    - {kind: 2, element: H, population: 0.416, charge: 0.584}
+    - {kind: 1, element: O, population: 7.153, charge: -1.153}
+    - {kind: 2, element: H, population: 0.422, charge: 0.578}
+    - {kind: 2, element: H, population: 0.409, charge: 0.591}
+    - {kind: 1, element: O, population: 7.155, charge: -1.155}
+    - {kind: 2, element: H, population: 0.423, charge: 0.577}
+    - {kind: 2, element: H, population: 0.42, charge: 0.58}
+    - {kind: 1, element: O, population: 7.121, charge: -1.121}
+    - {kind: 2, element: H, population: 0.432, charge: 0.568}
+    - {kind: 2, element: H, population: 0.431, charge: 0.569}
+    - {kind: 1, element: O, population: 7.176, charge: -1.176}
+    - {kind: 2, element: H, population: 0.418, charge: 0.582}
+    - {kind: 2, element: H, population: 0.412, charge: 0.588}
+    - {kind: 1, element: O, population: 7.148, charge: -1.148}
+    - {kind: 2, element: H, population: 0.425, charge: 0.575}
+    - {kind: 2, element: H, population: 0.424, charge: 0.576}
+    - {kind: 1, element: O, population: 7.131, charge: -1.131}
+    - {kind: 2, element: H, population: 0.419, charge: 0.581}
+    - {kind: 2, element: H, population: 0.442, charge: 0.558}
+    - {kind: 1, element: O, population: 7.165, charge: -1.165}
+    - {kind: 2, element: H, population: 0.418, charge: 0.582}
+    - {kind: 2, element: H, population: 0.421, charge: 0.579}
+    - {kind: 1, element: O, population: 7.162, charge: -1.162}
+    - {kind: 2, element: H, population: 0.422, charge: 0.578}
+    - {kind: 2, element: H, population: 0.427, charge: 0.573}
+    - {kind: 1, element: O, population: 7.167, charge: -1.167}
+    - {kind: 2, element: H, population: 0.409, charge: 0.591}
+    - {kind: 2, element: H, population: 0.433, charge: 0.567}
+    - {kind: 1, element: O, population: 7.173, charge: -1.173}
+    - {kind: 2, element: H, population: 0.418, charge: 0.582}
+    - {kind: 2, element: H, population: 0.409, charge: 0.591}
+    - {kind: 1, element: O, population: 7.202, charge: -1.202}
+    - {kind: 2, element: H, population: 0.404, charge: 0.596}
+    - {kind: 2, element: H, population: 0.408, charge: 0.592}
+    - {kind: 1, element: O, population: 7.148, charge: -1.148}
+    - {kind: 2, element: H, population: 0.42, charge: 0.58}
+    - {kind: 2, element: H, population: 0.428, charge: 0.572}
+    - {kind: 1, element: O, population: 7.168, charge: -1.168}
+    - {kind: 2, element: H, population: 0.42, charge: 0.58}
+    - {kind: 2, element: H, population: 0.412, charge: 0.588}
+    - {kind: 1, element: O, population: 7.15, charge: -1.15}
+    - {kind: 2, element: H, population: 0.426, charge: 0.574}
+    - {kind: 2, element: H, population: 0.414, charge: 0.586}
+    - {kind: 1, element: O, population: 7.19, charge: -1.19}
+    - {kind: 2, element: H, population: 0.41, charge: 0.59}
+    - {kind: 2, element: H, population: 0.408, charge: 0.592}
+    - {kind: 1, element: O, population: 7.16, charge: -1.16}
+    - {kind: 2, element: H, population: 0.415, charge: 0.585}
+    - {kind: 2, element: H, population: 0.432, charge: 0.568}
+    - {kind: 1, element: O, population: 7.177, charge: -1.177}
+    - {kind: 2, element: H, population: 0.407, charge: 0.593}
+    - {kind: 2, element: H, population: 0.419, charge: 0.581}
+    - {kind: 1, element: O, population: 7.155, charge: -1.155}
+    - {kind: 2, element: H, population: 0.42, charge: 0.58}
+    - {kind: 2, element: H, population: 0.421, charge: 0.579}
+    - {kind: 1, element: O, population: 7.15, charge: -1.15}
+    - {kind: 2, element: H, population: 0.421, charge: 0.579}
+    - {kind: 2, element: H, population: 0.427, charge: 0.573}
+    - {kind: 1, element: O, population: 7.161, charge: -1.161}
+    - {kind: 2, element: H, population: 0.4, charge: 0.6}
+    - {kind: 2, element: H, population: 0.438, charge: 0.562}
+    - {kind: 1, element: O, population: 7.155, charge: -1.155}
+    - {kind: 2, element: H, population: 0.427, charge: 0.573}
+    - {kind: 2, element: H, population: 0.41, charge: 0.59}
+    - {kind: 1, element: O, population: 7.153, charge: -1.153}
+    - {kind: 2, element: H, population: 0.406, charge: 0.594}
+    - {kind: 2, element: H, population: 0.419, charge: 0.581}
+    - {kind: 1, element: O, population: 7.166, charge: -1.166}
+    - {kind: 2, element: H, population: 0.435, charge: 0.565}
+    - {kind: 2, element: H, population: 0.406, charge: 0.594}
+    - {kind: 1, element: O, population: 7.166, charge: -1.166}
+    - {kind: 2, element: H, population: 0.42, charge: 0.58}
+    - {kind: 2, element: H, population: 0.407, charge: 0.593}
+    - {kind: 1, element: O, population: 7.165, charge: -1.165}
+    - {kind: 2, element: H, population: 0.432, charge: 0.568}
+    - {kind: 2, element: H, population: 0.409, charge: 0.591}
+    - {kind: 1, element: O, population: 7.165, charge: -1.165}
+    - {kind: 2, element: H, population: 0.415, charge: 0.585}
+    - {kind: 2, element: H, population: 0.422, charge: 0.578}
+    - {kind: 1, element: O, population: 7.16, charge: -1.16}
+    - {kind: 2, element: H, population: 0.434, charge: 0.566}
+    - {kind: 2, element: H, population: 0.393, charge: 0.607}
+    - {kind: 1, element: O, population: 7.16, charge: -1.16}
+    - {kind: 2, element: H, population: 0.421, charge: 0.579}
+    - {kind: 2, element: H, population: 0.428, charge: 0.572}
+    - {kind: 1, element: O, population: 7.171, charge: -1.171}
+    - {kind: 2, element: H, population: 0.419, charge: 0.581}
+    - {kind: 2, element: H, population: 0.419, charge: 0.581}
+    - {kind: 1, element: O, population: 7.148, charge: -1.148}
+    - {kind: 2, element: H, population: 0.407, charge: 0.593}
+    - {kind: 2, element: H, population: 0.441, charge: 0.559}
+    - {kind: 1, element: O, population: 7.169, charge: -1.169}
+    - {kind: 2, element: H, population: 0.411, charge: 0.589}
+    - {kind: 2, element: H, population: 0.416, charge: 0.584}
+    - {kind: 1, element: O, population: 7.148, charge: -1.148}
+    - {kind: 2, element: H, population: 0.417, charge: 0.583}
+    - {kind: 2, element: H, population: 0.424, charge: 0.576}
+    - {kind: 1, element: O, population: 7.142, charge: -1.142}
+    - {kind: 2, element: H, population: 0.421, charge: 0.579}
+    - {kind: 2, element: H, population: 0.432, charge: 0.568}
+    - {kind: 1, element: O, population: 7.167, charge: -1.167}
+    - {kind: 2, element: H, population: 0.41, charge: 0.59}
+    - {kind: 2, element: H, population: 0.42, charge: 0.58}
+    - {kind: 1, element: O, population: 7.158, charge: -1.158}
+    - {kind: 2, element: H, population: 0.417, charge: 0.583}
+    - {kind: 2, element: H, population: 0.409, charge: 0.591}
+    - {kind: 1, element: O, population: 7.175, charge: -1.175}
+    - {kind: 2, element: H, population: 0.406, charge: 0.594}
+    - {kind: 2, element: H, population: 0.422, charge: 0.578}
+    - {kind: 1, element: O, population: 7.184, charge: -1.184}
+    - {kind: 2, element: H, population: 0.419, charge: 0.581}
+    - {kind: 2, element: H, population: 0.392, charge: 0.608}
+    - {kind: 1, element: O, population: 7.159, charge: -1.159}
+    - {kind: 2, element: H, population: 0.41, charge: 0.59}
+    - {kind: 2, element: H, population: 0.433, charge: 0.567}
+    - {kind: 1, element: O, population: 7.172, charge: -1.172}
+    - {kind: 2, element: H, population: 0.417, charge: 0.583}
+    - {kind: 2, element: H, population: 0.414, charge: 0.586}
+    - {kind: 1, element: O, population: 7.155, charge: -1.155}
+    - {kind: 2, element: H, population: 0.427, charge: 0.573}
+    - {kind: 2, element: H, population: 0.415, charge: 0.585}
+    - {kind: 1, element: O, population: 7.174, charge: -1.174}
+    - {kind: 2, element: H, population: 0.431, charge: 0.569}
+    - {kind: 2, element: H, population: 0.394, charge: 0.606}
+    - {kind: 1, element: O, population: 7.156, charge: -1.156}
+    - {kind: 2, element: H, population: 0.422, charge: 0.578}
+    - {kind: 2, element: H, population: 0.424, charge: 0.576}
+    - {kind: 1, element: O, population: 7.143, charge: -1.143}
+    - {kind: 2, element: H, population: 0.429, charge: 0.571}
+    - {kind: 2, element: H, population: 0.416, charge: 0.584}
+    - {kind: 1, element: O, population: 7.166, charge: -1.166}
+    - {kind: 2, element: H, population: 0.418, charge: 0.582}
+    - {kind: 2, element: H, population: 0.415, charge: 0.585}
+    - {kind: 1, element: O, population: 7.163, charge: -1.163}
+    - {kind: 2, element: H, population: 0.416, charge: 0.584}
+    - {kind: 2, element: H, population: 0.419, charge: 0.581}
+    - {kind: 1, element: O, population: 7.149, charge: -1.149}
+    - {kind: 2, element: H, population: 0.41, charge: 0.59}
+    - {kind: 2, element: H, population: 0.428, charge: 0.572}
+    - {kind: 1, element: O, population: 7.156, charge: -1.156}
+    - {kind: 2, element: H, population: 0.433, charge: 0.567}
+    - {kind: 2, element: H, population: 0.422, charge: 0.578}
+    - {kind: 1, element: O, population: 7.157, charge: -1.157}
+    - {kind: 2, element: H, population: 0.42, charge: 0.58}
+    - {kind: 2, element: H, population: 0.43, charge: 0.57}
+    - {kind: 1, element: O, population: 7.148, charge: -1.148}
+    - {kind: 2, element: H, population: 0.431, charge: 0.569}
+    - {kind: 2, element: H, population: 0.427, charge: 0.573}
+    - {kind: 1, element: O, population: 7.158, charge: -1.158}
+    - {kind: 2, element: H, population: 0.415, charge: 0.585}
+    - {kind: 2, element: H, population: 0.424, charge: 0.576}
+    - {kind: 1, element: O, population: 7.166, charge: -1.166}
+    - {kind: 2, element: H, population: 0.416, charge: 0.584}
+    - {kind: 2, element: H, population: 0.421, charge: 0.579}
+    - {kind: 1, element: O, population: 7.138, charge: -1.138}
+    - {kind: 2, element: H, population: 0.422, charge: 0.578}
+    - {kind: 2, element: H, population: 0.417, charge: 0.583}
+    - {kind: 1, element: O, population: 7.134, charge: -1.134}
+    - {kind: 2, element: H, population: 0.431, charge: 0.569}
+    - {kind: 2, element: H, population: 0.434, charge: 0.566}
+    - {kind: 1, element: O, population: 7.168, charge: -1.168}
+    - {kind: 2, element: H, population: 0.428, charge: 0.572}
+    - {kind: 2, element: H, population: 0.412, charge: 0.588}
+    - {kind: 1, element: O, population: 7.16, charge: -1.16}
+    - {kind: 2, element: H, population: 0.405, charge: 0.595}
+    - {kind: 2, element: H, population: 0.432, charge: 0.568}
+    - {kind: 1, element: O, population: 7.192, charge: -1.192}
+    - {kind: 2, element: H, population: 0.413, charge: 0.587}
+    - {kind: 2, element: H, population: 0.411, charge: 0.589}
+- [energy, -1103.3749128463717]
+- - kind_info
+  - - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+- [runtime, 232.985]
+- [nwarnings, 2]
+- [energy_units, a.u.]

@@ -1,0 +1,16 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - [One or more SCF run did not converge., Using a non-square number of MPI ranks.]
+- [cp2k_version, 9.1]
+- [run_type, MD-NVT]
+- [natoms, 192]
+- [nelectrons, 512]
+- [nr_occ_orbitals, 256]
+- [energy_scf, -1103.3749128287448]
+- [scf_converged, true]
+- [energy, -1103.3749128464283]
+- [runtime, 209.391]
+- [nwarnings, 2]
+- [energy_units, a.u.]

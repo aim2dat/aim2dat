@@ -1,0 +1,107 @@
+&GLOBAL
+  PROJECT aiida
+  RUN_TYPE ENERGY
+  PRINT_LEVEL MEDIUM
+&END GLOBAL
+&FORCE_EVAL
+  METHOD QS
+  &SUBSYS
+    &CELL
+      A 0.000 2.692 2.692 
+      B 2.692 0.000 2.692 
+      C 2.692 2.692 0.000 
+      PERIODIC XYZ
+    &END CELL
+    &COORD
+      Si 0.000 0.000 0.000
+      Si 1.346 1.346 1.346
+    &END COORD
+    &KIND Si
+      BASIS_SET DZVP-MOLOPT-GTH
+      POTENTIAL_TYPE GTH
+      &POTENTIAL
+          2    2    0    0
+    0.44144916884150       1   -6.12520711704447
+       2
+    0.43553254372095       2    8.95353337591270   -2.70627128244285
+                                                    3.51070859382511
+    0.49540951084677       1    2.43136607001531
+      &END POTENTIAL
+    &END KIND
+  &END SUBSYS
+  &DFT
+    BASIS_SET_FILE_NAME BASIS_MOLOPT
+    BASIS_SET_FILE_NAME BASIS_MOLOPT_UCL
+    POTENTIAL_FILE_NAME GTH_POTENTIALS
+    &MGRID
+      NGRIDS 3
+      CUTOFF 100
+      REL_CUTOFF 20
+    &END MGRID
+    &QS
+      EPS_DEFAULT 1.0E-7
+    &END
+    &POISSON
+      PERIODIC XYZ
+    &END POISSON
+    &SCF
+      SCF_GUESS RESTART
+      MAX_SCF 150
+      EPS_SCF 1.0E-4
+      &MIXING T
+        METHOD BROYDEN_MIXING
+        NBUFFER 20
+        ALPHA 0.3
+      &END MIXING
+    &END SCF
+    &KPOINTS
+      SCHEME MONKHORST-PACK 3 3 3
+    &END KPOINTS
+    &XC
+      &XC_FUNCTIONAL
+        &LIBXC
+          FUNCTIONAL XC_MGGA_X_SCAN
+        &END LIBXC
+        &LIBXC
+          FUNCTIONAL XC_MGGA_C_SCAN
+        &END LIBXC
+      &END XC_FUNCTIONAL
+    &END XC
+    &PRINT
+      &BAND_STRUCTURE
+        ADDED_MOS 10
+        &KPOINT_SET
+               UNITS B_VECTOR
+               SPECIAL_POINT W 0.25  0.75 0.25  #W
+               SPECIAL_POINT L 0.5   0.5  0.5   #L
+               NPOINTS 5
+        &END KPOINT_SET
+        &KPOINT_SET
+               UNITS B_VECTOR
+               SPECIAL_POINT L 0.5   0.5  0.5   #L
+               SPECIAL_POINT GAMMA 0.0   0.0  0.0   #Gamma
+               NPOINTS 5
+        &END KPOINT_SET
+        &KPOINT_SET
+               UNITS B_VECTOR
+               SPECIAL_POINT 0.0   0.0  0.0   #Gamma
+               SPECIAL_POINT 0.0   0.5  0.5   #X
+               NPOINTS 6
+        &END KPOINT_SET
+        &KPOINT_SET
+               UNITS B_VECTOR
+               SPECIAL_POINT 0.0   0.5  0.5   #X
+               SPECIAL_POINT 0.25  0.75 0.5   #W
+               NPOINTS 3
+        &END KPOINT_SET
+        &KPOINT_SET
+               UNITS B_VECTOR
+               SPECIAL_POINT 0.25  0.75 0.5   #W
+               SPECIAL_POINT 0.375 0.75 0.375 #K
+               NPOINTS 2
+        &END KPOINT_SET
+      &END BAND_STRUCTURE
+    &END PRINT
+  &END DFT
+&END FORCE_EVAL
+
