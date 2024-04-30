@@ -26,7 +26,7 @@ def read_optimized_structure(folder_path):
     """
     structures = {}
     for file_p, file_n in zip(folder_path["file"], folder_path["file_name"]):
-        proj = "-".join(file_n.split("-")[:-1])
+        proj = file_n.rsplit("-", 1)[0]
         with custom_open(file_p, "r") as restart_file:
             restart_content = restart_file.read()
         str_parser = RestartStructureParser(restart_content)
