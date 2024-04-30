@@ -281,7 +281,7 @@ def read_atom_proj_density_of_states(folder_path):
             atomic_pdos.append({"kind": el + "_" + at_idx})
 
         # The energy is only parsed from the first file, we assume the same energy range:
-        parse_energy = True if len(energy) == 0 else False
+        parse_energy = len(energy) == 0
 
         # Read pdos, we only read the orbital contributions here, the summation is performed in
         # the plotting-class:
