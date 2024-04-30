@@ -31,10 +31,8 @@ def read_optimized_structure(folder_path):
             restart_content = restart_file.read()
         str_parser = RestartStructureParser(restart_content)
         new_structures = str_parser.retrieve_output_structure()
-        if len(new_structures) == 0:
-            continue
-        elif len(new_structures) == 1:
+        if len(new_structures) == 1:
             structures[proj] = new_structures[0]
-        else:
+        elif len(new_structures) > 1:
             structures[proj] = new_structures
     return list(structures.values())[0] if len(structures.values()) == 1 else structures
