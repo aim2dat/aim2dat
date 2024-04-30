@@ -310,6 +310,8 @@ def read_atom_proj_density_of_states(folder_path):
                             float_number = float(line_split[2 + qn_idx])
                         except ValueError:
                             pass
-                        atomic_pdos[kind_indices[at_idx]].setdefault(qn_label, []).append(float_number)
+                        atomic_pdos[kind_indices[at_idx]].setdefault(qn_label, []).append(
+                            float_number
+                        )
 
     return {"energy": energy, "pdos": atomic_pdos, "unit_x": "eV"}
