@@ -46,7 +46,9 @@ def test_errors():
     )
 
 
-@pytest.mark.parametrize("system,soc", [("Cs3Sb", False), ("Cs3Sb_soc", False), ("Cs3Sb_soc", True)])
+@pytest.mark.parametrize(
+    "system,soc", [("Cs3Sb", False), ("Cs3Sb_soc", False), ("Cs3Sb_soc", True)]
+)
 def test_read_band_structure(nested_dict_comparison, system, soc):
     """Test read_band_structure function."""
     bands_data = read_band_structure(BAND_STRUCTURE_PATH + system + "/", soc=soc)
