@@ -41,7 +41,7 @@ class StructureCollection:
         List of ``Structure`` or dict objects.
     """
 
-    def __init__(self, structures: Union[list, None] = None):
+    def __init__(self, structures: Union[List[Union[Structure, dict]], None] = None):
         """Initialize object."""
         self._structures = []
         if structures is not None:

@@ -75,7 +75,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
 
     def __init__(
         self,
-        structures: StructureCollection,
+        structures: Union[List[Union[Structure, dict]], StructureCollection],
         append_to_coll: bool = True,
         output_format: str = "dict",
         n_procs: int = 1,
@@ -148,11 +148,13 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         return self._structures
 
     @structures.setter
-    def structures(self, value: StructureCollection):
+    def structures(self, value: Union[List[Union[Structure, dict]], StructureCollection]):
         if isinstance(value, StructureCollection):
             self._structures = value
+        elif isinstance(value, list):
+            self._structures = StructureCollection(value)
         else:
-            raise TypeError("`structures` needs to be of type `StructureCollection`.")
+            raise TypeError("`structures` needs to be of type `StructureCollection` or `list`.")
 
     @property
     def verbose(self) -> bool:
