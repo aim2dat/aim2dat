@@ -12,30 +12,6 @@ ref:
     max_dist: 4.477765890306448
     avg_dist: 4.1301649678517425
     neighbours:
-    - element: Te
-      kind:
-      site_index: 11
-      distance: 3.7830557069886868
-      position: [2.358692414000001, 1.472817, -1.3017499039999998]
-      weight: 0.9893189059368018
-    - element: Te
-      kind:
-      site_index: 8
-      distance: 3.864835681657127
-      position: [7.190669586000001, 4.418451, 1.301749904]
-      weight: 0.9121276148851952
-    - element: Cs
-      kind:
-      site_index: 2
-      distance: 4.477765890306448
-      position: [5.013415050000002, 7.364085, 3.789022042]
-      weight: 0.5407177013285455
-    - element: Te
-      kind:
-      site_index: 11
-      distance: 3.7830557069886868
-      position: [2.358692414000001, 7.364085, -1.3017499039999998]
-      weight: 0.9893189059368024
     - element: Cs
       kind:
       site_index: 1
@@ -44,22 +20,46 @@ ref:
       weight: 0.5727654469117527
     - element: Cs
       kind:
+      site_index: 1
+      distance: 4.440793142957318
+      position: [0.2406439224000009, 7.364085, 2.022361458]
+      weight: 0.5727654469117525
+    - element: Cs
+      kind:
       site_index: 2
       distance: 4.477765890306448
       position: [5.013415050000002, 1.472817, 3.789022042]
       weight: 0.5407177013285454
+    - element: Cs
+      kind:
+      site_index: 2
+      distance: 4.477765890306448
+      position: [5.013415050000002, 7.364085, 3.789022042]
+      weight: 0.5407177013285455
+    - element: Te
+      kind:
+      site_index: 8
+      distance: 3.864835681657127
+      position: [7.190669586000001, 4.418451, 1.301749904]
+      weight: 0.9121276148851952
     - element: Te
       kind:
       site_index: 9
       distance: 3.773254580651904
       position: [2.415988586000001, 4.418451, 4.509633596]
       weight: 1.0
-    - element: Cs
+    - element: Te
       kind:
-      site_index: 1
-      distance: 4.440793142957318
-      position: [0.2406439224000009, 7.364085, 2.022361458]
-      weight: 0.5727654469117525
+      site_index: 11
+      distance: 3.7830557069886868
+      position: [2.358692414000001, 1.472817, -1.3017499039999998]
+      weight: 0.9893189059368018
+    - element: Te
+      kind:
+      site_index: 11
+      distance: 3.7830557069886868
+      position: [2.358692414000001, 7.364085, -1.3017499039999998]
+      weight: 0.9893189059368024
   - Cs: 4
     Te: 5
     element: Cs
@@ -70,30 +70,36 @@ ref:
     max_dist: 4.4822853026157565
     avg_dist: 4.292132135283276
     neighbours:
-    - element: Te
-      kind:
-      site_index: 11
-      distance: 3.9415537240720857
-      position: [2.358692414, 1.472817, -1.3017499039999998]
-      weight: 0.9900857371049084
-    - element: Cs
-      kind:
-      site_index: 0
-      distance: 4.440793142957318
-      position: [3.3518260619999998, 4.418451, 0.8542733745]
-      weight: 0.6255203583062685
-    - element: Te
-      kind:
-      site_index: 8
-      distance: 3.99406936137114
-      position: [-2.358692414, -1.472817, 1.301749904]
-      weight: 1.0
     - element: Cs
       kind:
       site_index: 0
       distance: 4.440793142957318
       position: [3.3518260619999998, -1.472817, 0.8542733745]
       weight: 0.6255203583062683
+    - element: Cs
+      kind:
+      site_index: 0
+      distance: 4.440793142957318
+      position: [3.3518260619999998, 4.418451, 0.8542733745]
+      weight: 0.6255203583062685
+    - element: Cs
+      kind:
+      site_index: 3
+      distance: 4.4822853026157565
+      position: [-1.4228549380000002, -1.472817, 4.962921509]
+      weight: 0.5885826859164495
+    - element: Cs
+      kind:
+      site_index: 3
+      distance: 4.4822853026157565
+      position: [-1.4228549380000002, 4.418451, 4.962921509]
+      weight: 0.5885826859164495
+    - element: Te
+      kind:
+      site_index: 8
+      distance: 3.99406936137114
+      position: [-2.358692414, -1.472817, 1.301749904]
+      weight: 1.0
     - element: Te
       kind:
       site_index: 8
@@ -106,24 +112,18 @@ ref:
       distance: 4.426669939794483
       position: [2.415988586, -1.472817, 4.509633596]
       weight: 0.6353885636073194
-    - element: Cs
-      kind:
-      site_index: 3
-      distance: 4.4822853026157565
-      position: [-1.4228549380000002, 4.418451, 4.962921509]
-      weight: 0.5885826859164495
     - element: Te
       kind:
       site_index: 9
       distance: 4.426669939794483
       position: [2.415988586, 4.418451, 4.509633596]
       weight: 0.6353885636073192
-    - element: Cs
+    - element: Te
       kind:
-      site_index: 3
-      distance: 4.4822853026157565
-      position: [-1.4228549380000002, -1.472817, 4.962921509]
-      weight: 0.5885826859164495
+      site_index: 11
+      distance: 3.9415537240720857
+      position: [2.358692414, 1.472817, -1.3017499039999998]
+      weight: 0.9900857371049084
   - Cs: 4
     Te: 5
     element: Cs
@@ -134,12 +134,12 @@ ref:
     max_dist: 4.477765890306448
     avg_dist: 4.291812136918563
     neighbours:
-    - element: Te
+    - element: Cs
       kind:
-      site_index: 8
-      distance: 4.427608797642319
-      position: [7.190669586, 4.418451, 1.301749904]
-      weight: 0.6355907654450212
+      site_index: 0
+      distance: 4.477765890306448
+      position: [3.3518260619999998, -1.472817, 0.8542733745]
+      weight: 0.5907603233880239
     - element: Cs
       kind:
       site_index: 0
@@ -150,26 +150,14 @@ ref:
       kind:
       site_index: 3
       distance: 4.443663071808785
-      position: [8.126507062, 4.418451, 4.962921509]
-      weight: 0.6244140656569724
-    - element: Cs
-      kind:
-      site_index: 0
-      distance: 4.477765890306448
-      position: [3.3518260619999998, -1.472817, 0.8542733745]
-      weight: 0.5907603233880239
-    - element: Te
-      kind:
-      site_index: 9
-      distance: 3.9928266816381903
-      position: [2.415988586, 4.418451, 4.509633596]
-      weight: 0.9999999999999994
+      position: [8.126507062, -1.472817, 4.962921509]
+      weight: 0.6244140656569722
     - element: Cs
       kind:
       site_index: 3
       distance: 4.443663071808785
-      position: [8.126507062, -1.472817, 4.962921509]
-      weight: 0.6244140656569722
+      position: [8.126507062, 4.418451, 4.962921509]
+      weight: 0.6244140656569724
     - element: Te
       kind:
       site_index: 8
@@ -178,10 +166,22 @@ ref:
       weight: 0.6355907654450212
     - element: Te
       kind:
+      site_index: 8
+      distance: 4.427608797642319
+      position: [7.190669586, 4.418451, 1.301749904]
+      weight: 0.6355907654450212
+    - element: Te
+      kind:
       site_index: 9
       distance: 3.9928266816381903
       position: [2.415988586, -1.472817, 4.509633596]
       weight: 1.0
+    - element: Te
+      kind:
+      site_index: 9
+      distance: 3.9928266816381903
+      position: [2.415988586, 4.418451, 4.509633596]
+      weight: 0.9999999999999994
     - element: Te
       kind:
       site_index: 10
@@ -198,18 +198,6 @@ ref:
     max_dist: 4.482285302615756
     avg_dist: 4.131973462891795
     neighbours:
-    - element: Te
-      kind:
-      site_index: 8
-      distance: 3.778884663858415
-      position: [7.190669586, 4.418451, 1.301749904]
-      weight: 1.0
-    - element: Cs
-      kind:
-      site_index: 2
-      distance: 4.443663071808785
-      position: [5.013415050000001, 1.472817, 3.789022042]
-      weight: 0.5728619412534998
     - element: Cs
       kind:
       site_index: 1
@@ -226,14 +214,20 @@ ref:
       kind:
       site_index: 2
       distance: 4.443663071808785
+      position: [5.013415050000001, 1.472817, 3.789022042]
+      weight: 0.5728619412534998
+    - element: Cs
+      kind:
+      site_index: 2
+      distance: 4.443663071808785
       position: [5.013415050000001, 7.364085, 3.789022042]
       weight: 0.5728619412534999
     - element: Te
       kind:
-      site_index: 10
-      distance: 3.779746724073622
-      position: [7.133373414, 7.364085, 7.113133404]
-      weight: 0.9934348820247334
+      site_index: 8
+      distance: 3.778884663858415
+      position: [7.190669586, 4.418451, 1.301749904]
+      weight: 1.0
     - element: Te
       kind:
       site_index: 9
@@ -246,6 +240,12 @@ ref:
       distance: 3.779746724073622
       position: [7.133373414, 1.472817, 7.113133404]
       weight: 0.9934348820247337
+    - element: Te
+      kind:
+      site_index: 10
+      distance: 3.779746724073622
+      position: [7.133373414, 7.364085, 7.113133404]
+      weight: 0.9934348820247334
   - Cs: 4
     Te: 4
     element: Cs
@@ -256,18 +256,6 @@ ref:
     max_dist: 4.4815768475544395
     avg_dist: 4.131796349126466
     neighbours:
-    - element: Te
-      kind:
-      site_index: 10
-      distance: 3.865512842279616
-      position: [-2.415988586, 1.472817, 7.113133404]
-      weight: 0.9140185059470967
-    - element: Cs
-      kind:
-      site_index: 5
-      distance: 4.4436630718087855
-      position: [4.53594695, 4.418451, 7.8337449580000005]
-      weight: 0.5729235954815357
     - element: Cs
       kind:
       site_index: 5
@@ -276,16 +264,16 @@ ref:
       weight: 0.5729235954815358
     - element: Cs
       kind:
+      site_index: 5
+      distance: 4.4436630718087855
+      position: [4.53594695, 4.418451, 7.8337449580000005]
+      weight: 0.5729235954815357
+    - element: Cs
+      kind:
       site_index: 6
       distance: 4.4815768475544395
       position: [-0.23873405000000023, -1.472817, 9.600405541999999]
       weight: 0.5406152165511824
-    - element: Te
-      kind:
-      site_index: 9
-      distance: 3.779746724073622
-      position: [2.415988586, -1.472817, 4.509633596]
-      weight: 0.9936018000848914
     - element: Cs
       kind:
       site_index: 6
@@ -296,8 +284,20 @@ ref:
       kind:
       site_index: 9
       distance: 3.779746724073622
+      position: [2.415988586, -1.472817, 4.509633596]
+      weight: 0.9936018000848914
+    - element: Te
+      kind:
+      site_index: 9
+      distance: 3.779746724073622
       position: [2.415988586, 4.418451, 4.509633596]
       weight: 0.9936018000848911
+    - element: Te
+      kind:
+      site_index: 10
+      distance: 3.865512842279616
+      position: [-2.415988586, 1.472817, 7.113133404]
+      weight: 0.9140185059470967
     - element: Te
       kind:
       site_index: 11
@@ -316,22 +316,28 @@ ref:
     neighbours:
     - element: Cs
       kind:
+      site_index: 4
+      distance: 4.4436630718087855
+      position: [1.422854938, 1.472817, 6.659845491]
+      weight: 0.6236994105977773
+    - element: Cs
+      kind:
+      site_index: 4
+      distance: 4.4436630718087855
+      position: [1.422854938, 7.364085, 6.659845491]
+      weight: 0.623699410597777
+    - element: Cs
+      kind:
       site_index: 7
       distance: 4.48157684755444
       position: [6.197535938000001, 1.472817, 10.774305009]
       weight: 0.5888962793184328
     - element: Cs
       kind:
-      site_index: 4
-      distance: 4.4436630718087855
-      position: [1.422854938, 1.472817, 6.659845491]
-      weight: 0.6236994105977773
-    - element: Te
-      kind:
-      site_index: 11
-      distance: 4.427608797642319
-      position: [2.358692414, 1.472817, 10.321017096]
-      weight: 0.6360225062084774
+      site_index: 7
+      distance: 4.48157684755444
+      position: [6.197535938000001, 7.364085, 10.774305009]
+      weight: 0.5888962793184329
     - element: Te
       kind:
       site_index: 9
@@ -346,28 +352,22 @@ ref:
       weight: 1.0
     - element: Te
       kind:
-      site_index: 11
-      distance: 4.427608797642319
-      position: [2.358692414, 7.364085, 10.321017096]
-      weight: 0.6360225062084774
-    - element: Cs
-      kind:
-      site_index: 7
-      distance: 4.48157684755444
-      position: [6.197535938000001, 7.364085, 10.774305009]
-      weight: 0.5888962793184329
-    - element: Te
-      kind:
       site_index: 10
       distance: 3.9928266816381903
       position: [7.133373414, 7.364085, 7.113133404]
       weight: 1.0
-    - element: Cs
+    - element: Te
       kind:
-      site_index: 4
-      distance: 4.4436630718087855
-      position: [1.422854938, 7.364085, 6.659845491]
-      weight: 0.623699410597777
+      site_index: 11
+      distance: 4.427608797642319
+      position: [2.358692414, 1.472817, 10.321017096]
+      weight: 0.6360225062084774
+    - element: Te
+      kind:
+      site_index: 11
+      distance: 4.427608797642319
+      position: [2.358692414, 7.364085, 10.321017096]
+      weight: 0.6360225062084774
   - Cs: 4
     Te: 5
     element: Cs
@@ -380,34 +380,28 @@ ref:
     neighbours:
     - element: Cs
       kind:
-      site_index: 7
-      distance: 4.443663071808786
-      position: [6.197535938000001, 1.472817, 10.774305009000003]
-      weight: 0.623352367997393
+      site_index: 4
+      distance: 4.4815768475544395
+      position: [10.972216938, 1.472817, 6.659845491000001]
+      weight: 0.58816801750794
     - element: Cs
       kind:
       site_index: 4
       distance: 4.4815768475544395
       position: [10.972216938, 7.364085, 6.659845491000001]
       weight: 0.5881680175079399
-    - element: Te
+    - element: Cs
       kind:
-      site_index: 11
-      distance: 3.9928266816381885
-      position: [11.908054413999999, 7.364085, 10.321017096000002]
-      weight: 0.9999999999999999
-    - element: Te
+      site_index: 7
+      distance: 4.443663071808786
+      position: [6.197535938000001, 1.472817, 10.774305009000003]
+      weight: 0.623352367997393
+    - element: Cs
       kind:
-      site_index: 11
-      distance: 3.9928266816381885
-      position: [11.908054413999999, 1.472817, 10.321017096000002]
-      weight: 1.0
-    - element: Te
-      kind:
-      site_index: 10
-      distance: 4.427608797642319
-      position: [7.133373414, 7.364085, 7.113133404000002]
-      weight: 0.6349395133555108
+      site_index: 7
+      distance: 4.443663071808786
+      position: [6.197535938000001, 7.364085, 10.774305009000003]
+      weight: 0.6233523679973928
     - element: Te
       kind:
       site_index: 8
@@ -420,18 +414,24 @@ ref:
       distance: 4.427608797642319
       position: [7.133373414, 1.472817, 7.113133404000002]
       weight: 0.6349395133555108
-    - element: Cs
+    - element: Te
       kind:
-      site_index: 7
-      distance: 4.443663071808786
-      position: [6.197535938000001, 7.364085, 10.774305009000003]
-      weight: 0.6233523679973928
-    - element: Cs
+      site_index: 10
+      distance: 4.427608797642319
+      position: [7.133373414, 7.364085, 7.113133404000002]
+      weight: 0.6349395133555108
+    - element: Te
       kind:
-      site_index: 4
-      distance: 4.4815768475544395
-      position: [10.972216938, 1.472817, 6.659845491000001]
-      weight: 0.58816801750794
+      site_index: 11
+      distance: 3.9928266816381885
+      position: [11.908054413999999, 1.472817, 10.321017096000002]
+      weight: 1.0
+    - element: Te
+      kind:
+      site_index: 11
+      distance: 3.9928266816381885
+      position: [11.908054413999999, 7.364085, 10.321017096000002]
+      weight: 0.9999999999999999
   - Cs: 4
     Te: 4
     element: Cs
@@ -442,42 +442,18 @@ ref:
     max_dist: 4.48157684755444
     avg_dist: 4.131796349126466
     neighbours:
-    - element: Te
-      kind:
-      site_index: 10
-      distance: 3.778884663858416
-      position: [7.133373414, 1.472817, 7.113133404]
-      weight: 1.0
-    - element: Cs
-      kind:
-      site_index: 5
-      distance: 4.48157684755444
-      position: [4.53594695, 4.418451, 7.8337449580000005]
-      weight: 0.5409538120124976
-    - element: Te
-      kind:
-      site_index: 11
-      distance: 3.8655128422796166
-      position: [2.358692414, 1.472817, 10.321017096]
-      weight: 0.9148164720636685
     - element: Cs
       kind:
       site_index: 5
       distance: 4.48157684755444
       position: [4.53594695, -1.472817, 7.8337449580000005]
       weight: 0.5409538120124978
-    - element: Te
+    - element: Cs
       kind:
-      site_index: 8
-      distance: 3.779746724073622
-      position: [7.190669586, -1.472817, 12.924516904]
-      weight: 0.9941023577482146
-    - element: Te
-      kind:
-      site_index: 8
-      distance: 3.779746724073622
-      position: [7.190669586, 4.418451, 12.924516904]
-      weight: 0.9941023577482141
+      site_index: 5
+      distance: 4.48157684755444
+      position: [4.53594695, 4.418451, 7.8337449580000005]
+      weight: 0.5409538120124976
     - element: Cs
       kind:
       site_index: 6
@@ -490,6 +466,30 @@ ref:
       distance: 4.443663071808786
       position: [9.31062795, 4.418451, 9.600405541999999]
       weight: 0.5729549471942411
+    - element: Te
+      kind:
+      site_index: 8
+      distance: 3.779746724073622
+      position: [7.190669586, -1.472817, 12.924516904]
+      weight: 0.9941023577482146
+    - element: Te
+      kind:
+      site_index: 8
+      distance: 3.779746724073622
+      position: [7.190669586, 4.418451, 12.924516904]
+      weight: 0.9941023577482141
+    - element: Te
+      kind:
+      site_index: 10
+      distance: 3.778884663858416
+      position: [7.133373414, 1.472817, 7.113133404]
+      weight: 1.0
+    - element: Te
+      kind:
+      site_index: 11
+      distance: 3.8655128422796166
+      position: [2.358692414, 1.472817, 10.321017096]
+      weight: 0.9148164720636685
   - Cs: 9
     Te: 0
     element: Te
@@ -502,10 +502,10 @@ ref:
     neighbours:
     - element: Cs
       kind:
-      site_index: 1
-      distance: 3.9940693613711393
-      position: [9.790005922399999, 7.364085, 2.022361458]
-      weight: 0.9178112713916924
+      site_index: 0
+      distance: 3.864835681657127
+      position: [3.3518260619999998, 4.418451, 0.8542733745]
+      weight: 0.9142682317646227
     - element: Cs
       kind:
       site_index: 1
@@ -514,16 +514,16 @@ ref:
       weight: 0.9178112713916926
     - element: Cs
       kind:
-      site_index: 6
-      distance: 3.9425803494755884
-      position: [9.31062795, 4.418451, -2.0223614580000002]
-      weight: 0.90833313647544
+      site_index: 1
+      distance: 3.9940693613711393
+      position: [9.790005922399999, 7.364085, 2.022361458]
+      weight: 0.9178112713916924
     - element: Cs
       kind:
-      site_index: 7
-      distance: 3.7797467240736218
-      position: [6.197535938000001, 7.364085, -0.8484619909999994]
-      weight: 0.9938373908855785
+      site_index: 2
+      distance: 4.427608797642319
+      position: [5.013415050000001, 1.472817, 3.789022042]
+      weight: 0.58311588377264
     - element: Cs
       kind:
       site_index: 2
@@ -538,10 +538,10 @@ ref:
       weight: 1.0
     - element: Cs
       kind:
-      site_index: 2
-      distance: 4.427608797642319
-      position: [5.013415050000001, 1.472817, 3.789022042]
-      weight: 0.58311588377264
+      site_index: 6
+      distance: 3.9425803494755884
+      position: [9.31062795, 4.418451, -2.0223614580000002]
+      weight: 0.90833313647544
     - element: Cs
       kind:
       site_index: 7
@@ -550,10 +550,10 @@ ref:
       weight: 0.9938373908855785
     - element: Cs
       kind:
-      site_index: 0
-      distance: 3.864835681657127
-      position: [3.3518260619999998, 4.418451, 0.8542733745]
-      weight: 0.9142682317646227
+      site_index: 7
+      distance: 3.7797467240736218
+      position: [6.197535938000001, 7.364085, -0.8484619909999994]
+      weight: 0.9938373908855785
   - Cs: 9
     Te: 0
     element: Te
@@ -572,12 +572,6 @@ ref:
       weight: 1.0
     - element: Cs
       kind:
-      site_index: 4
-      distance: 3.779746724073622
-      position: [1.422854938, 1.472817, 6.659845491]
-      weight: 0.9910112226147818
-    - element: Cs
-      kind:
       site_index: 1
       distance: 4.426669939794483
       position: [0.24064392240000002, 1.472817, 2.022361458]
@@ -588,12 +582,6 @@ ref:
       distance: 4.426669939794483
       position: [0.24064392240000002, 7.364085, 2.022361458]
       weight: 0.5818013910571638
-    - element: Cs
-      kind:
-      site_index: 5
-      distance: 3.942580349475589
-      position: [4.53594695, 4.418451, 7.8337449580000005]
-      weight: 0.9061279256406598
     - element: Cs
       kind:
       site_index: 2
@@ -616,8 +604,20 @@ ref:
       kind:
       site_index: 4
       distance: 3.779746724073622
+      position: [1.422854938, 1.472817, 6.659845491]
+      weight: 0.9910112226147818
+    - element: Cs
+      kind:
+      site_index: 4
+      distance: 3.779746724073622
       position: [1.422854938, 7.364085, 6.659845491]
       weight: 0.9910112226147814
+    - element: Cs
+      kind:
+      site_index: 5
+      distance: 3.942580349475589
+      position: [4.53594695, 4.418451, 7.8337449580000005]
+      weight: 0.9061279256406598
   - Cs: 9
     Te: 0
     element: Te
@@ -630,22 +630,10 @@ ref:
     neighbours:
     - element: Cs
       kind:
-      site_index: 3
-      distance: 3.779746724073622
-      position: [8.126507062, 4.418451, 4.962921509]
-      weight: 0.9936997415745306
-    - element: Cs
-      kind:
-      site_index: 7
-      distance: 3.778884663858416
-      position: [6.197535938000001, 1.472817, 10.774305009]
-      weight: 1.0
-    - element: Cs
-      kind:
-      site_index: 6
-      distance: 4.427608797642319
-      position: [9.31062795, 4.418451, 9.600405541999999]
-      weight: 0.583605283340586
+      site_index: 2
+      distance: 3.942580349475588
+      position: [5.013415050000001, 1.472817, 3.789022042]
+      weight: 0.9085032934411579
     - element: Cs
       kind:
       site_index: 3
@@ -654,10 +642,16 @@ ref:
       weight: 0.9936997415745309
     - element: Cs
       kind:
-      site_index: 2
-      distance: 3.942580349475588
-      position: [5.013415050000001, 1.472817, 3.789022042]
-      weight: 0.9085032934411579
+      site_index: 3
+      distance: 3.779746724073622
+      position: [8.126507062, 4.418451, 4.962921509]
+      weight: 0.9936997415745306
+    - element: Cs
+      kind:
+      site_index: 4
+      distance: 3.8655128422796166
+      position: [10.972216938, 1.472817, 6.659845491]
+      weight: 0.9140185059470963
     - element: Cs
       kind:
       site_index: 5
@@ -666,22 +660,28 @@ ref:
       weight: 0.9185892847524485
     - element: Cs
       kind:
-      site_index: 6
-      distance: 4.427608797642319
-      position: [9.31062795, -1.472817, 9.600405541999999]
-      weight: 0.583605283340586
-    - element: Cs
-      kind:
       site_index: 5
       distance: 3.9928266816381903
       position: [4.53594695, 4.418451, 7.8337449580000005]
       weight: 0.9185892847524488
     - element: Cs
       kind:
-      site_index: 4
-      distance: 3.8655128422796166
-      position: [10.972216938, 1.472817, 6.659845491]
-      weight: 0.9140185059470963
+      site_index: 6
+      distance: 4.427608797642319
+      position: [9.31062795, -1.472817, 9.600405541999999]
+      weight: 0.583605283340586
+    - element: Cs
+      kind:
+      site_index: 6
+      distance: 4.427608797642319
+      position: [9.31062795, 4.418451, 9.600405541999999]
+      weight: 0.583605283340586
+    - element: Cs
+      kind:
+      site_index: 7
+      distance: 3.778884663858416
+      position: [6.197535938000001, 1.472817, 10.774305009]
+      weight: 1.0
   - Cs: 9
     Te: 0
     element: Te
@@ -694,34 +694,10 @@ ref:
     neighbours:
     - element: Cs
       kind:
-      site_index: 7
-      distance: 3.865512842279617
-      position: [6.1975359380000015, 1.472817, 10.774305009]
-      weight: 0.9148164720636683
-    - element: Cs
-      kind:
       site_index: 0
       distance: 3.783055706988686
       position: [3.351826062, -1.472817, 12.477040374499998]
       weight: 0.9919050595645195
-    - element: Cs
-      kind:
-      site_index: 4
-      distance: 3.778884663858416
-      position: [1.4228549380000004, 1.472817, 6.659845491]
-      weight: 1.0
-    - element: Cs
-      kind:
-      site_index: 6
-      distance: 3.9928266816381903
-      position: [-0.23873404999999978, -1.472817, 9.600405541999999]
-      weight: 0.9191509916533059
-    - element: Cs
-      kind:
-      site_index: 5
-      distance: 4.427608797642319
-      position: [4.53594695, 4.418451, 7.8337449580000005]
-      weight: 0.5842434590645054
     - element: Cs
       kind:
       site_index: 0
@@ -730,72 +706,96 @@ ref:
       weight: 0.9919050595645201
     - element: Cs
       kind:
-      site_index: 6
-      distance: 3.9928266816381903
-      position: [-0.23873404999999978, 4.418451, 9.600405541999999]
-      weight: 0.9191509916533058
-    - element: Cs
-      kind:
       site_index: 1
       distance: 3.9415537240720844
       position: [0.24064392240000046, 1.472817, 13.645128457999999]
       weight: 0.9089541207116267
     - element: Cs
       kind:
+      site_index: 4
+      distance: 3.778884663858416
+      position: [1.4228549380000004, 1.472817, 6.659845491]
+      weight: 1.0
+    - element: Cs
+      kind:
       site_index: 5
       distance: 4.427608797642319
       position: [4.53594695, -1.472817, 7.8337449580000005]
       weight: 0.5842434590645057
+    - element: Cs
+      kind:
+      site_index: 5
+      distance: 4.427608797642319
+      position: [4.53594695, 4.418451, 7.8337449580000005]
+      weight: 0.5842434590645054
+    - element: Cs
+      kind:
+      site_index: 6
+      distance: 3.9928266816381903
+      position: [-0.23873404999999978, -1.472817, 9.600405541999999]
+      weight: 0.9191509916533059
+    - element: Cs
+      kind:
+      site_index: 6
+      distance: 3.9928266816381903
+      position: [-0.23873404999999978, 4.418451, 9.600405541999999]
+      weight: 0.9191509916533058
+    - element: Cs
+      kind:
+      site_index: 7
+      distance: 3.865512842279617
+      position: [6.1975359380000015, 1.472817, 10.774305009]
+      weight: 0.9148164720636683
   nrs_avg:
-    &id001 [Cs, Cs]: 4
-    &id002 [Cs, Te]: 4.5
-    &id003 [Te, Cs]: 9
-    &id004 [Te, Te]: 0
+    [Cs, Cs]: 4
+    [Cs, Te]: 4.5
+    [Te, Cs]: 9
+    [Te, Te]: 0
   nrs_stdev:
-    *id001 : 0.0
-    *id002 : 0.5345224838248488
-    *id003 : 0.0
-    *id004 : 0.0
+    [Cs, Cs]: 0.0
+    [Cs, Te]: 0.5345224838248488
+    [Te, Cs]: 0.0
+    [Te, Te]: 0.0
   nrs_max:
-    *id001 : 4
-    *id002 : 5
-    *id003 : 9
-    *id004 : 0
+    [Cs, Cs]: 4
+    [Cs, Te]: 5
+    [Te, Cs]: 9
+    [Te, Te]: 0
   nrs_min:
-    *id001 : 4
-    *id002 : 4
-    *id003 : 9
-    *id004 : 0
+    [Cs, Cs]: 4
+    [Cs, Te]: 4
+    [Te, Cs]: 9
+    [Te, Te]: 0
   distance_avg:
-    &id005 [Cs, Te]: 3.9985905774904276
-    &id006 [Cs, Cs]: 4.461873405801845
-    &id007 [Te, Cs]: 3.998590577490427
+    [Cs, Te]: 3.9985905774904276
+    [Cs, Cs]: 4.461873405801845
+    [Te, Cs]: 3.998590577490427
   distance_stdev:
-    *id005 : 0.24672846215561214
-    *id006 : 0.01929363626683861
-    *id007 : 0.24672846215561223
+    [Cs, Te]: 0.24672846215561214
+    [Cs, Cs]: 0.01929363626683861
+    [Te, Cs]: 0.24672846215561223
   distance_max:
-    *id005 : 4.4276087976423195
-    *id006 : 4.4822853026157565
-    *id007 : 4.4276087976423195
+    [Cs, Te]: 4.4276087976423195
+    [Cs, Cs]: 4.4822853026157565
+    [Te, Cs]: 4.4276087976423195
   distance_min:
-    *id005 : 3.7732545806519044
-    *id006 : 4.440793142957319
-    *id007 : 3.7732545806519044
+    [Cs, Te]: 3.7732545806519044
+    [Cs, Cs]: 4.440793142957319
+    [Te, Cs]: 3.7732545806519044
   weight_avg:
-    *id005 : 0.9065860988016973
-    *id006 : 0.5817121245439142
-    *id007 : 0.8676321185430881
+    [Cs, Te]: 0.9065860988016973
+    [Cs, Cs]: 0.5817121245439142
+    [Te, Cs]: 0.8676321185430881
   weight_stdev:
-    *id005 : 0.1492413277933769
-    *id006 : 0.030614634033087458
-    *id007 : 0.15833066424347023
+    [Cs, Te]: 0.1492413277933769
+    [Cs, Cs]: 0.030614634033087458
+    [Te, Cs]: 0.15833066424347023
   weight_max:
-    *id005 : 1.0
-    *id006 : 0.6255203583062681
-    *id007 : 1.0
+    [Cs, Te]: 1.0
+    [Cs, Cs]: 0.6255203583062681
+    [Te, Cs]: 1.0
   weight_min:
-    *id005 : 0.6349395133555118
-    *id006 : 0.5402078232801137
-    *id007 : 0.581801391057164
+    [Cs, Te]: 0.6349395133555118
+    [Cs, Cs]: 0.5402078232801137
+    [Te, Cs]: 0.581801391057164
 parameters: {r_max: 5.0, method: okeeffe, okeeffe_weight_threshold: 0.5}

@@ -49,7 +49,12 @@ def calculate_voronoi_tessellation(
                         "vertices": [vor_scipy.vertices[idx] + shift for idx in ridge_v],
                     }
                 )
-        voronoi_list.append(neighbours)
+        voronoi_list.append(
+            sorted(
+                neighbours,
+                key=lambda neighbor: (neighbor["index"], *neighbor["position"].tolist()),
+            )
+        )
     return None, voronoi_list
 
 

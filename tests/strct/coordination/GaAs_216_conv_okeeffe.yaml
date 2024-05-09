@@ -20,10 +20,10 @@ ref:
       weight: 0.9999999999999996
     - element: As
       kind:
-      site_index: 7
+      site_index: 5
       distance: 3.5212592917875276
-      position: [-2.033, 2.033, 2.033]
-      weight: 1.0
+      position: [2.033, 2.033, -2.033]
+      weight: 0.9999999999999997
     - element: As
       kind:
       site_index: 6
@@ -32,10 +32,10 @@ ref:
       weight: 1.0
     - element: As
       kind:
-      site_index: 5
+      site_index: 7
       distance: 3.5212592917875276
-      position: [2.033, 2.033, -2.033]
-      weight: 0.9999999999999997
+      position: [-2.033, 2.033, 2.033]
+      weight: 1.0
   - Ga: 0
     As: 4
     element: Ga
@@ -54,10 +54,10 @@ ref:
       weight: 0.9999999999999992
     - element: As
       kind:
-      site_index: 7
-      distance: 3.521259291787527
-      position: [-2.033, 10.165000000000001, 2.033]
-      weight: 1.0
+      site_index: 5
+      distance: 3.5212592917875276
+      position: [2.033, 10.165000000000001, 6.099]
+      weight: 0.9999999999999997
     - element: As
       kind:
       site_index: 6
@@ -66,10 +66,10 @@ ref:
       weight: 0.9999999999999993
     - element: As
       kind:
-      site_index: 5
-      distance: 3.5212592917875276
-      position: [2.033, 10.165000000000001, 6.099]
-      weight: 0.9999999999999997
+      site_index: 7
+      distance: 3.521259291787527
+      position: [-2.033, 10.165000000000001, 2.033]
+      weight: 1.0
   - Ga: 0
     As: 4
     element: Ga
@@ -82,12 +82,6 @@ ref:
     neighbours:
     - element: As
       kind:
-      site_index: 6
-      distance: 3.5212592917875276
-      position: [2.033, -2.033, 2.033]
-      weight: 0.999999999999999
-    - element: As
-      kind:
       site_index: 4
       distance: 3.521259291787528
       position: [6.099, -2.033, 6.099]
@@ -98,6 +92,12 @@ ref:
       distance: 3.5212592917875276
       position: [2.033, 2.033, 6.099]
       weight: 0.9999999999999992
+    - element: As
+      kind:
+      site_index: 6
+      distance: 3.5212592917875276
+      position: [2.033, -2.033, 2.033]
+      weight: 0.999999999999999
     - element: As
       kind:
       site_index: 7
@@ -116,6 +116,18 @@ ref:
     neighbours:
     - element: As
       kind:
+      site_index: 4
+      distance: 3.521259291787528
+      position: [6.099, 6.099, -2.033]
+      weight: 0.9999999999999993
+    - element: As
+      kind:
+      site_index: 5
+      distance: 3.5212592917875276
+      position: [2.033, 2.033, -2.033]
+      weight: 1.0
+    - element: As
+      kind:
       site_index: 6
       distance: 3.5212592917875276
       position: [2.033, 6.099, 2.033]
@@ -126,18 +138,6 @@ ref:
       distance: 3.5212592917875276
       position: [6.099, 2.033, 2.033]
       weight: 0.9999999999999997
-    - element: As
-      kind:
-      site_index: 5
-      distance: 3.5212592917875276
-      position: [2.033, 2.033, -2.033]
-      weight: 1.0
-    - element: As
-      kind:
-      site_index: 4
-      distance: 3.521259291787528
-      position: [6.099, 6.099, -2.033]
-      weight: 0.9999999999999993
   - Ga: 4
     As: 0
     element: As
@@ -150,28 +150,28 @@ ref:
     neighbours:
     - element: Ga
       kind:
-      site_index: 2
-      distance: 3.5212592917875276
-      position: [4.066, 8.132, 4.066]
-      weight: 0.9999999999999997
-    - element: Ga
-      kind:
       site_index: 0
       distance: 3.5212592917875267
       position: [8.132, 8.132, 8.132]
       weight: 1.0
     - element: Ga
       kind:
-      site_index: 3
-      distance: 3.5212592917875276
-      position: [4.066, 4.066, 8.132]
-      weight: 0.9999999999999997
-    - element: Ga
-      kind:
       site_index: 1
       distance: 3.5212592917875276
       position: [8.132, 4.066, 4.066]
       weight: 1.0
+    - element: Ga
+      kind:
+      site_index: 2
+      distance: 3.5212592917875276
+      position: [4.066, 8.132, 4.066]
+      weight: 0.9999999999999997
+    - element: Ga
+      kind:
+      site_index: 3
+      distance: 3.5212592917875276
+      position: [4.066, 4.066, 8.132]
+      weight: 0.9999999999999997
   - Ga: 4
     As: 0
     element: As
@@ -184,6 +184,12 @@ ref:
     neighbours:
     - element: Ga
       kind:
+      site_index: 0
+      distance: 3.521259291787527
+      position: [0.0, 0.0, 8.132]
+      weight: 0.9999999999999997
+    - element: Ga
+      kind:
       site_index: 1
       distance: 3.5212592917875276
       position: [0.0, 4.066, 4.066]
@@ -194,12 +200,6 @@ ref:
       distance: 3.5212592917875276
       position: [4.066, 0.0, 4.066]
       weight: 0.9999999999999999
-    - element: Ga
-      kind:
-      site_index: 0
-      distance: 3.521259291787527
-      position: [0.0, 0.0, 8.132]
-      weight: 0.9999999999999997
     - element: Ga
       kind:
       site_index: 3
@@ -252,12 +252,6 @@ ref:
     neighbours:
     - element: Ga
       kind:
-      site_index: 2
-      distance: 3.5212592917875276
-      position: [4.066, 0.0, 4.066]
-      weight: 0.9999999999999992
-    - element: Ga
-      kind:
       site_index: 0
       distance: 3.521259291787527
       position: [8.132, 0.0, 0.0]
@@ -270,52 +264,58 @@ ref:
       weight: 0.9999999999999997
     - element: Ga
       kind:
+      site_index: 2
+      distance: 3.5212592917875276
+      position: [4.066, 0.0, 4.066]
+      weight: 0.9999999999999992
+    - element: Ga
+      kind:
       site_index: 3
       distance: 3.5212592917875276
       position: [4.066, 4.066, 0.0]
       weight: 0.9999999999999993
   nrs_avg:
-    &id001 [Ga, Ga]: 0
-    &id002 [Ga, As]: 4
-    &id003 [As, Ga]: 4
-    &id004 [As, As]: 0
+    [Ga, Ga]: 0
+    [Ga, As]: 4
+    [As, Ga]: 4
+    [As, As]: 0
   nrs_stdev:
-    *id001 : 0.0
-    *id002 : 0.0
-    *id003 : 0.0
-    *id004 : 0.0
+    [Ga, Ga]: 0.0
+    [Ga, As]: 0.0
+    [As, Ga]: 0.0
+    [As, As]: 0.0
   nrs_max:
-    *id001 : 0
-    *id002 : 4
-    *id003 : 4
-    *id004 : 0
+    [Ga, Ga]: 0
+    [Ga, As]: 4
+    [As, Ga]: 4
+    [As, As]: 0
   nrs_min:
-    *id001 : 0
-    *id002 : 4
-    *id003 : 4
-    *id004 : 0
+    [Ga, Ga]: 0
+    [Ga, As]: 4
+    [As, Ga]: 4
+    [As, As]: 0
   distance_avg:
-    &id005 [Ga, As]: 3.521259291787528
-    &id006 [As, Ga]: 3.5212592917875276
+    [Ga, As]: 3.521259291787528
+    [As, Ga]: 3.5212592917875276
   distance_stdev:
-    *id005 : 8.426000324584082e-16
-    *id006 : 1.056755042076211e-15
+    [Ga, As]: 8.426000324584082e-16
+    [As, Ga]: 1.056755042076211e-15
   distance_max:
-    *id005 : 3.5212592917875285
-    *id006 : 3.5212592917875285
+    [Ga, As]: 3.5212592917875285
+    [As, Ga]: 3.5212592917875285
   distance_min:
-    *id005 : 3.521259291787526
-    *id006 : 3.5212592917875254
+    [Ga, As]: 3.521259291787526
+    [As, Ga]: 3.5212592917875254
   weight_avg:
-    *id005 : 1.0
-    *id006 : 1.0
+    [Ga, As]: 1.0
+    [As, Ga]: 1.0
   weight_stdev:
-    *id005 : 0.0
-    *id006 : 0.0
+    [Ga, As]: 0.0
+    [As, Ga]: 0.0
   weight_max:
-    *id005 : 1.0
-    *id006 : 1.0
+    [Ga, As]: 1.0
+    [As, Ga]: 1.0
   weight_min:
-    *id005 : 1.0
-    *id006 : 1.0
+    [Ga, As]: 1.0
+    [As, Ga]: 1.0
 parameters: {r_max: 5.0, method: okeeffe, okeeffe_weight_threshold: 0.5}
