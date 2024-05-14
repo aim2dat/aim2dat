@@ -32,7 +32,7 @@ def test_errors():
     assert str(error.value) == "No files with the correct naming scheme found."
 
     with pytest.raises(ValueError) as error:
-        read_band_structure(BAND_STRUCTURE_PATH + "no_soc", soc=True)
+        read_band_structure(BAND_STRUCTURE_PATH + "Cs3Sb", soc=True)
     assert (
         str(error.value)
         == "Spin-orbit coupling activated but the files don't have the proper naming scheme."
@@ -46,7 +46,9 @@ def test_errors():
     )
 
 
-@pytest.mark.parametrize("system,soc", [("Cs3Sb_soc", False), ("Cs3Sb_soc", True)])
+@pytest.mark.parametrize(
+    "system,soc", [("Cs3Sb", False), ("Cs3Sb_soc", False), ("Cs3Sb_soc", True)]
+)
 def test_read_band_structure(nested_dict_comparison, system, soc):
     """Test read_band_structure function."""
     bands_data = read_band_structure(BAND_STRUCTURE_PATH + system + "/", soc=soc)
