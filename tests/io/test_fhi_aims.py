@@ -71,9 +71,8 @@ def test_read_total_density_of_states():
 
 
 @pytest.mark.parametrize(
-    "system,soc,load_raw", [
-        ("Cs3Sb_soc", False, False), ("Cs3Sb_soc", True, True), ("g_qantum_number", False, True)
-    ]
+    "system,soc,load_raw",
+    [("Cs3Sb_soc", False, False), ("Cs3Sb_soc", True, True), ("g_qantum_number", False, True)],
 )
 def test_read_atom_proj_density_of_states(nested_dict_comparison, system, soc, load_raw):
     """Test read_atom_proj_density_of_states function."""
