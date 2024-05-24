@@ -39,7 +39,7 @@ def test_errors():
     )
 
     with pytest.raises(ValueError) as error:
-        read_atom_proj_density_of_states(PDOS_PATH + "no_soc", soc=True)
+        read_atom_proj_density_of_states(PDOS_PATH + "g_qantum_number", soc=True)
     assert (
         str(error.value)
         == "Spin-orbit coupling activated but the files don't have the proper naming scheme."
@@ -71,7 +71,9 @@ def test_read_total_density_of_states():
 
 
 @pytest.mark.parametrize(
-    "system,soc,load_raw", [("Cs3Sb_soc", False, False), ("Cs3Sb_soc", True, True)]
+    "system,soc,load_raw", [
+        ("Cs3Sb_soc", False, False), ("Cs3Sb_soc", True, True), ("g_qantum_number", False, True)
+    ]
 )
 def test_read_atom_proj_density_of_states(nested_dict_comparison, system, soc, load_raw):
     """Test read_atom_proj_density_of_states function."""
