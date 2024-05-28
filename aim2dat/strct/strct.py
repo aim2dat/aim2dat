@@ -20,7 +20,7 @@ except ImportError:
 
 # Internal library imports
 from aim2dat.ext_interfaces import _return_ext_interface_modules
-from aim2dat.io.zeo import write_to_file
+from aim2dat.io import zeo
 from aim2dat.strct.strct_validation import (
     _structure_validate_cell,
     _structure_validate_elements,
@@ -625,7 +625,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         Export structure to file using the ase interface or certain file formats for Zeo++.
         """
         if file_path.endswith((".cssr", ".v1", ".cuc")):
-            write_to_file(self, file_path)
+            zeo.write_to_file(self, file_path)
         else:
             backend_module = _return_ext_interface_modules("ase_atoms")
             backend_module._write_structure_to_file(self, file_path)
