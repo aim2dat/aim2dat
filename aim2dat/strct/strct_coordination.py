@@ -13,7 +13,13 @@ from aim2dat.strct.strct_super_cell import _create_supercell_positions
 from aim2dat.utils.element_properties import get_atomic_radius
 from aim2dat.utils.maths import calc_solid_angle, calc_polygon_area
 
-_supported_methods = ["minimum_distance", "n_nearest_neighbours", "econ", "voronoi"]
+_supported_methods = [
+    "minimum_distance",
+    "n_nearest_neighbours",
+    "atomic_radius",
+    "econ",
+    "voronoi",
+]
 
 
 def calculate_coordination(
@@ -22,6 +28,8 @@ def calculate_coordination(
     method: str,
     min_dist_delta: float,
     n_nearest_neighbours: int,
+    radius_type: str,
+    atomic_radius_delta: float,
     econ_tolerance: float,
     econ_conv_threshold: float,
     voronoi_weight_type: str,
@@ -55,6 +63,8 @@ def calculate_coordination(
     method_args = _coord_group_method_args(
         min_dist_delta,
         n_nearest_neighbours,
+        radius_type,
+        atomic_radius_delta,
         econ_tolerance,
         econ_conv_threshold,
         voronoi_weight_type,
@@ -95,6 +105,8 @@ def calculate_coordination(
 def _coord_group_method_args(
     min_dist_delta,
     n_nearest_neighbours,
+    radius_type,
+    atomic_radius_delta,
     econ_tolerance,
     econ_conv_threshold,
     voronoi_weight_type,
@@ -103,6 +115,7 @@ def _coord_group_method_args(
     return {
         "minimum_distance": [min_dist_delta],
         "n_nearest_neighbours": [n_nearest_neighbours],
+        "atomic_radius": [radius_type, atomic_radius_delta],
         "econ": [econ_tolerance, econ_conv_threshold],
         "voronoi": [voronoi_weight_type, voronoi_weight_threshold],
     }
@@ -251,6 +264,43 @@ def _coord_calculate_n_nearest_neighbours(
     for idx in sc_indices[1 : n_neighbours + 1]:
         neigh_pos = position + (np.array(positions_sc[idx]) - np.array(positions_sc[el_idx_sc]))
         neighbours.append((mapping[idx], neigh_pos, dist_matrix[site_idx][idx]))
+    return _create_site_dict(structure, site_idx, neighbours)
+
+
+def _coord_calculate_atomic_radius(
+    site_idx,
+    structure,
+    r_max,
+    elements_sc,
+    positions_sc,
+    indices_sc,
+    mapping,
+    dist_matrix,
+    radius_type,
+    atomic_radius_delta,
+):
+    el_idx_sc = indices_sc.index(site_idx)
+    # min_dist = np.amin(np.delete(dist_matrix[site_idx], el_idx_sc))
+    position = np.array(structure.positions[site_idx])
+    site_radius = get_atomic_radius(structure.elements[site_idx], radius_type=radius_type)
+    if site_radius is None:
+        site_radius = get_atomic_radius(structure.elements[site_idx], radius_type="covalent")
+    neighbours = []
+    for idx in range(len(elements_sc)):
+        distance = dist_matrix[site_idx][idx]
+        if idx == el_idx_sc or distance > r_max:
+            continue
+
+        neigh_radius = get_atomic_radius(structure.elements[mapping[idx]], radius_type=radius_type)
+        if neigh_radius is None:
+            neigh_radius = get_atomic_radius(
+                structure.elements[mapping[idx]], radius_type="covalent"
+            )
+        if distance <= (site_radius + neigh_radius) * (1.0 + atomic_radius_delta):
+            neigh_pos = position + (
+                np.array(positions_sc[idx]) - np.array(positions_sc[el_idx_sc])
+            )
+            neighbours.append((mapping[idx], neigh_pos, distance))
     return _create_site_dict(structure, site_idx, neighbours)
 
 

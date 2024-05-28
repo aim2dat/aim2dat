@@ -1,0 +1,801 @@
+%YAML 1.2
+---
+ref:
+  distance_avg:
+    &id001 [Cs, Cs]: 4.523988761222049
+    &id002 [Cs, Te]: 3.998590577490427
+    &id003 [Te, Cs]: 3.998590577490427
+  distance_stdev:
+    *id001 : 0.12055405789310557
+    *id002 : 0.24672846215561198
+    *id003 : 0.2467284621556121
+  distance_max:
+    *id001 : 4.79190302513394
+    *id002 : 4.427608797642319
+    *id003 : 4.427608797642319
+  distance_min:
+    *id001 : 4.433325541961324
+    *id002 : 3.773254580651904
+    *id003 : 3.773254580651904
+  nrs_avg:
+    &id004 [Cs, Cs]: 7
+    &id005 [Cs, Te]: 4.5
+    &id006 [Te, Cs]: 9
+    &id007 [Te, Te]: 0
+  nrs_stdev:
+    *id004 : 1.0690449676496976
+    *id005 : 0.5345224838248488
+    *id006 : 0.0
+    *id007 : 0.0
+  nrs_max:
+    *id004 : 8
+    *id005 : 5
+    *id006 : 9
+    *id007 : 0
+  nrs_min:
+    *id004 : 6
+    *id005 : 4
+    *id006 : 9
+    *id007 : 0
+  sites:
+  - Cs: 8
+    Te: 4
+    element: Cs
+    kind:
+    position: [3.3518260620000007, 4.418451, 0.8542733745]
+    neighbours:
+    - element: Cs
+      kind:
+      site_index: 1
+      distance: 4.440793142957318
+      position: [0.24064392240000076, 1.472817, 2.022361458]
+    - element: Cs
+      kind:
+      site_index: 1
+      distance: 4.440793142957318
+      position: [0.24064392240000076, 7.364085, 2.022361458]
+    - element: Cs
+      kind:
+      site_index: 2
+      distance: 4.477765890306448
+      position: [5.013415050000002, 1.472817, 3.789022042]
+    - element: Cs
+      kind:
+      site_index: 2
+      distance: 4.477765890306448
+      position: [5.013415050000002, 7.364085, 3.789022042]
+    - element: Cs
+      kind:
+      site_index: 5
+      distance: 4.79190302513394
+      position: [4.5359469500000005, 4.418451, -3.789022041999999]
+    - element: Cs
+      kind:
+      site_index: 6
+      distance: 4.600777094952304
+      position: [-0.23873404999999925, 4.418451, -2.0223614580000002]
+    - element: Cs
+      kind:
+      site_index: 7
+      distance: 4.435553188187957
+      position: [6.1975359380000015, 1.472817, -0.8484619909999993]
+    - element: Cs
+      kind:
+      site_index: 7
+      distance: 4.435553188187957
+      position: [6.1975359380000015, 7.364085, -0.8484619909999993]
+    - element: Te
+      kind:
+      site_index: 8
+      distance: 3.864835681657127
+      position: [7.190669586000001, 4.418451, 1.301749904]
+    - element: Te
+      kind:
+      site_index: 9
+      distance: 3.773254580651904
+      position: [2.415988586000001, 4.418451, 4.509633596]
+    - element: Te
+      kind:
+      site_index: 11
+      distance: 3.7830557069886868
+      position: [2.358692414000001, 1.472817, -1.3017499039999998]
+    - element: Te
+      kind:
+      site_index: 11
+      distance: 3.7830557069886868
+      position: [2.358692414000001, 7.364085, -1.3017499039999998]
+    total_cn: 12
+    min_dist: 3.773254580651904
+    max_dist: 4.79190302513394
+    avg_dist: 4.275425519939674
+  - Cs: 6
+    Te: 5
+    element: Cs
+    kind:
+    position: [0.24064392240000002, 1.472817, 2.022361458]
+    neighbours:
+    - element: Cs
+      kind:
+      site_index: 0
+      distance: 4.440793142957318
+      position: [3.3518260619999998, -1.472817, 0.8542733745]
+    - element: Cs
+      kind:
+      site_index: 0
+      distance: 4.440793142957318
+      position: [3.3518260619999998, 4.418451, 0.8542733745]
+    - element: Cs
+      kind:
+      site_index: 3
+      distance: 4.4822853026157565
+      position: [-1.4228549380000002, -1.472817, 4.962921509]
+    - element: Cs
+      kind:
+      site_index: 3
+      distance: 4.4822853026157565
+      position: [-1.4228549380000002, 4.418451, 4.962921509]
+    - element: Cs
+      kind:
+      site_index: 4
+      distance: 4.785799937495917
+      position: [1.422854938, 1.472817, 6.659845491]
+    - element: Cs
+      kind:
+      site_index: 7
+      distance: 4.598637609569076
+      position: [-3.3518260619999998, 1.472817, -0.8484619909999993]
+    - element: Te
+      kind:
+      site_index: 8
+      distance: 3.99406936137114
+      position: [-2.358692414, -1.472817, 1.301749904]
+    - element: Te
+      kind:
+      site_index: 8
+      distance: 3.99406936137114
+      position: [-2.358692414, 4.418451, 1.301749904]
+    - element: Te
+      kind:
+      site_index: 9
+      distance: 4.426669939794483
+      position: [2.415988586, -1.472817, 4.509633596]
+    - element: Te
+      kind:
+      site_index: 9
+      distance: 4.426669939794483
+      position: [2.415988586, 4.418451, 4.509633596]
+    - element: Te
+      kind:
+      site_index: 11
+      distance: 3.9415537240720857
+      position: [2.358692414, 1.472817, -1.3017499039999998]
+    total_cn: 11
+    min_dist: 3.9415537240720857
+    max_dist: 4.785799937495917
+    avg_dist: 4.364875160419497
+  - Cs: 6
+    Te: 5
+    element: Cs
+    kind:
+    position: [5.013415050000001, 1.472817, 3.789022042]
+    neighbours:
+    - element: Cs
+      kind:
+      site_index: 0
+      distance: 4.477765890306448
+      position: [3.3518260619999998, -1.472817, 0.8542733745]
+    - element: Cs
+      kind:
+      site_index: 0
+      distance: 4.477765890306448
+      position: [3.3518260619999998, 4.418451, 0.8542733745]
+    - element: Cs
+      kind:
+      site_index: 3
+      distance: 4.443663071808785
+      position: [8.126507062, -1.472817, 4.962921509]
+    - element: Cs
+      kind:
+      site_index: 3
+      distance: 4.443663071808785
+      position: [8.126507062, 4.418451, 4.962921509]
+    - element: Cs
+      kind:
+      site_index: 4
+      distance: 4.597145765930607
+      position: [1.422854938, 1.472817, 6.659845491]
+    - element: Cs
+      kind:
+      site_index: 7
+      distance: 4.78627208103842
+      position: [6.197535938000001, 1.472817, -0.8484619909999997]
+    - element: Te
+      kind:
+      site_index: 8
+      distance: 4.427608797642319
+      position: [7.190669586, -1.472817, 1.3017499040000002]
+    - element: Te
+      kind:
+      site_index: 8
+      distance: 4.427608797642319
+      position: [7.190669586, 4.418451, 1.3017499040000002]
+    - element: Te
+      kind:
+      site_index: 9
+      distance: 3.9928266816381903
+      position: [2.415988586, -1.472817, 4.509633596]
+    - element: Te
+      kind:
+      site_index: 9
+      distance: 3.9928266816381903
+      position: [2.415988586, 4.418451, 4.509633596]
+    - element: Te
+      kind:
+      site_index: 10
+      distance: 3.942580349475588
+      position: [7.133373414, 1.472817, 7.113133404]
+    total_cn: 11
+    min_dist: 3.942580349475588
+    max_dist: 4.78627208103842
+    avg_dist: 4.364520643566919
+  - Cs: 8
+    Te: 4
+    element: Cs
+    kind:
+    position: [8.126507062, 4.418451, 4.962921509]
+    neighbours:
+    - element: Cs
+      kind:
+      site_index: 1
+      distance: 4.482285302615756
+      position: [9.790005922399999, 1.472817, 2.022361458]
+    - element: Cs
+      kind:
+      site_index: 1
+      distance: 4.482285302615756
+      position: [9.790005922399999, 7.364085, 2.022361458]
+    - element: Cs
+      kind:
+      site_index: 2
+      distance: 4.443663071808785
+      position: [5.013415050000001, 1.472817, 3.789022042]
+    - element: Cs
+      kind:
+      site_index: 2
+      distance: 4.443663071808785
+      position: [5.013415050000001, 7.364085, 3.789022042]
+    - element: Cs
+      kind:
+      site_index: 4
+      distance: 4.433325541961325
+      position: [10.972216938, 1.472817, 6.659845491]
+    - element: Cs
+      kind:
+      site_index: 4
+      distance: 4.433325541961325
+      position: [10.972216938, 7.364085, 6.659845491]
+    - element: Cs
+      kind:
+      site_index: 5
+      distance: 4.597145765930607
+      position: [4.53594695, 4.418451, 7.8337449580000005]
+    - element: Cs
+      kind:
+      site_index: 6
+      distance: 4.78627208103842
+      position: [9.31062795, 4.418451, 9.600405541999999]
+    - element: Te
+      kind:
+      site_index: 8
+      distance: 3.778884663858415
+      position: [7.190669586, 4.418451, 1.3017499040000002]
+    - element: Te
+      kind:
+      site_index: 9
+      distance: 3.8655128422796174
+      position: [11.965350586000001, 4.418451, 4.509633596]
+    - element: Te
+      kind:
+      site_index: 10
+      distance: 3.779746724073622
+      position: [7.133373414, 1.472817, 7.113133404]
+    - element: Te
+      kind:
+      site_index: 10
+      distance: 3.779746724073622
+      position: [7.133373414, 7.364085, 7.113133404]
+    total_cn: 12
+    min_dist: 3.778884663858415
+    max_dist: 4.78627208103842
+    avg_dist: 4.275488052835503
+  - Cs: 8
+    Te: 4
+    element: Cs
+    kind:
+    position: [1.422854938, 1.472817, 6.659845491]
+    neighbours:
+    - element: Cs
+      kind:
+      site_index: 1
+      distance: 4.785799937495917
+      position: [0.2406439224000001, 1.472817, 2.022361458]
+    - element: Cs
+      kind:
+      site_index: 2
+      distance: 4.597145765930607
+      position: [5.013415050000001, 1.472817, 3.789022042]
+    - element: Cs
+      kind:
+      site_index: 3
+      distance: 4.433325541961324
+      position: [-1.422854938, -1.472817, 4.962921509]
+    - element: Cs
+      kind:
+      site_index: 3
+      distance: 4.433325541961324
+      position: [-1.422854938, 4.418451, 4.962921509]
+    - element: Cs
+      kind:
+      site_index: 5
+      distance: 4.4436630718087855
+      position: [4.53594695, -1.472817, 7.8337449580000005]
+    - element: Cs
+      kind:
+      site_index: 5
+      distance: 4.4436630718087855
+      position: [4.53594695, 4.418451, 7.8337449580000005]
+    - element: Cs
+      kind:
+      site_index: 6
+      distance: 4.4815768475544395
+      position: [-0.23873405000000014, -1.472817, 9.600405541999999]
+    - element: Cs
+      kind:
+      site_index: 6
+      distance: 4.4815768475544395
+      position: [-0.23873405000000014, 4.418451, 9.600405541999999]
+    - element: Te
+      kind:
+      site_index: 9
+      distance: 3.779746724073622
+      position: [2.415988586, -1.472817, 4.509633596]
+    - element: Te
+      kind:
+      site_index: 9
+      distance: 3.779746724073622
+      position: [2.415988586, 4.418451, 4.509633596]
+    - element: Te
+      kind:
+      site_index: 10
+      distance: 3.865512842279616
+      position: [-2.415988586, 1.472817, 7.113133404]
+    - element: Te
+      kind:
+      site_index: 11
+      distance: 3.778884663858416
+      position: [2.358692414, 1.472817, 10.321017096]
+    total_cn: 12
+    min_dist: 3.778884663858416
+    max_dist: 4.785799937495917
+    avg_dist: 4.275330631696741
+  - Cs: 6
+    Te: 5
+    element: Cs
+    kind:
+    position: [4.53594695, 4.418451, 7.8337449580000005]
+    neighbours:
+    - element: Cs
+      kind:
+      site_index: 0
+      distance: 4.791903025133938
+      position: [3.3518260619999998, 4.418451, 12.477040374499998]
+    - element: Cs
+      kind:
+      site_index: 3
+      distance: 4.597145765930607
+      position: [8.126507062, 4.418451, 4.962921509]
+    - element: Cs
+      kind:
+      site_index: 4
+      distance: 4.4436630718087855
+      position: [1.422854938, 1.472817, 6.659845491]
+    - element: Cs
+      kind:
+      site_index: 4
+      distance: 4.4436630718087855
+      position: [1.422854938, 7.364085, 6.659845491]
+    - element: Cs
+      kind:
+      site_index: 7
+      distance: 4.48157684755444
+      position: [6.197535938000001, 1.472817, 10.774305009]
+    - element: Cs
+      kind:
+      site_index: 7
+      distance: 4.48157684755444
+      position: [6.197535938000001, 7.364085, 10.774305009]
+    - element: Te
+      kind:
+      site_index: 9
+      distance: 3.942580349475589
+      position: [2.415988586, 4.418451, 4.509633596]
+    - element: Te
+      kind:
+      site_index: 10
+      distance: 3.9928266816381903
+      position: [7.133373414, 1.472817, 7.113133404]
+    - element: Te
+      kind:
+      site_index: 10
+      distance: 3.9928266816381903
+      position: [7.133373414, 7.364085, 7.113133404]
+    - element: Te
+      kind:
+      site_index: 11
+      distance: 4.427608797642319
+      position: [2.358692414, 1.472817, 10.321017096]
+    - element: Te
+      kind:
+      site_index: 11
+      distance: 4.427608797642319
+      position: [2.358692414, 7.364085, 10.321017096]
+    total_cn: 11
+    min_dist: 3.942580349475589
+    max_dist: 4.791903025133938
+    avg_dist: 4.365725448893419
+  - Cs: 6
+    Te: 5
+    element: Cs
+    kind:
+    position: [9.31062795, 4.418451, 9.600405542]
+    neighbours:
+    - element: Cs
+      kind:
+      site_index: 0
+      distance: 4.600777094952303
+      position: [12.901188062000001, 4.418451, 12.4770403745]
+    - element: Cs
+      kind:
+      site_index: 3
+      distance: 4.78627208103842
+      position: [8.126507062, 4.418451, 4.962921509000002]
+    - element: Cs
+      kind:
+      site_index: 4
+      distance: 4.4815768475544395
+      position: [10.972216938, 1.472817, 6.659845491000001]
+    - element: Cs
+      kind:
+      site_index: 4
+      distance: 4.4815768475544395
+      position: [10.972216938, 7.364085, 6.659845491000001]
+    - element: Cs
+      kind:
+      site_index: 7
+      distance: 4.443663071808786
+      position: [6.197535938000001, 1.472817, 10.774305009000003]
+    - element: Cs
+      kind:
+      site_index: 7
+      distance: 4.443663071808786
+      position: [6.197535938000001, 7.364085, 10.774305009000003]
+    - element: Te
+      kind:
+      site_index: 8
+      distance: 3.9425803494755898
+      position: [7.190669586, 4.418451, 12.924516904000003]
+    - element: Te
+      kind:
+      site_index: 10
+      distance: 4.427608797642319
+      position: [7.133373414, 1.472817, 7.113133404000002]
+    - element: Te
+      kind:
+      site_index: 10
+      distance: 4.427608797642319
+      position: [7.133373414, 7.364085, 7.113133404000002]
+    - element: Te
+      kind:
+      site_index: 11
+      distance: 3.9928266816381885
+      position: [11.908054413999999, 1.472817, 10.321017096000002]
+    - element: Te
+      kind:
+      site_index: 11
+      distance: 3.9928266816381885
+      position: [11.908054413999999, 7.364085, 10.321017096000002]
+    total_cn: 11
+    min_dist: 3.9425803494755898
+    max_dist: 4.78627208103842
+    avg_dist: 4.36554366570489
+  - Cs: 8
+    Te: 4
+    element: Cs
+    kind:
+    position: [6.197535938000001, 1.472817, 10.774305009]
+    neighbours:
+    - element: Cs
+      kind:
+      site_index: 0
+      distance: 4.435553188187957
+      position: [3.3518260619999998, -1.472817, 12.477040374499998]
+    - element: Cs
+      kind:
+      site_index: 0
+      distance: 4.435553188187957
+      position: [3.3518260619999998, 4.418451, 12.477040374499998]
+    - element: Cs
+      kind:
+      site_index: 1
+      distance: 4.5986376095690735
+      position: [9.790005922399999, 1.472817, 13.645128457999999]
+    - element: Cs
+      kind:
+      site_index: 2
+      distance: 4.78627208103842
+      position: [5.013415050000001, 1.472817, 15.411789042]
+    - element: Cs
+      kind:
+      site_index: 5
+      distance: 4.48157684755444
+      position: [4.53594695, -1.472817, 7.8337449580000005]
+    - element: Cs
+      kind:
+      site_index: 5
+      distance: 4.48157684755444
+      position: [4.53594695, 4.418451, 7.8337449580000005]
+    - element: Cs
+      kind:
+      site_index: 6
+      distance: 4.443663071808786
+      position: [9.31062795, -1.472817, 9.600405541999999]
+    - element: Cs
+      kind:
+      site_index: 6
+      distance: 4.443663071808786
+      position: [9.31062795, 4.418451, 9.600405541999999]
+    - element: Te
+      kind:
+      site_index: 8
+      distance: 3.779746724073622
+      position: [7.190669586, -1.472817, 12.924516904]
+    - element: Te
+      kind:
+      site_index: 8
+      distance: 3.779746724073622
+      position: [7.190669586, 4.418451, 12.924516904]
+    - element: Te
+      kind:
+      site_index: 10
+      distance: 3.778884663858416
+      position: [7.133373414, 1.472817, 7.113133404]
+    - element: Te
+      kind:
+      site_index: 11
+      distance: 3.8655128422796166
+      position: [2.358692414, 1.472817, 10.321017096]
+    total_cn: 12
+    min_dist: 3.778884663858416
+    max_dist: 4.78627208103842
+    avg_dist: 4.2758655716662615
+  - Cs: 9
+    Te: 0
+    element: Te
+    kind:
+    position: [7.190669586, 4.418451, 1.301749904]
+    neighbours:
+    - element: Cs
+      kind:
+      site_index: 0
+      distance: 3.864835681657127
+      position: [3.3518260619999998, 4.418451, 0.8542733745]
+    - element: Cs
+      kind:
+      site_index: 1
+      distance: 3.9940693613711393
+      position: [9.790005922399999, 1.472817, 2.022361458]
+    - element: Cs
+      kind:
+      site_index: 1
+      distance: 3.9940693613711393
+      position: [9.790005922399999, 7.364085, 2.022361458]
+    - element: Cs
+      kind:
+      site_index: 2
+      distance: 4.427608797642319
+      position: [5.013415050000001, 1.472817, 3.789022042]
+    - element: Cs
+      kind:
+      site_index: 2
+      distance: 4.427608797642319
+      position: [5.013415050000001, 7.364085, 3.789022042]
+    - element: Cs
+      kind:
+      site_index: 3
+      distance: 3.778884663858415
+      position: [8.126507062, 4.418451, 4.962921509]
+    - element: Cs
+      kind:
+      site_index: 6
+      distance: 3.9425803494755884
+      position: [9.31062795, 4.418451, -2.022361458]
+    - element: Cs
+      kind:
+      site_index: 7
+      distance: 3.7797467240736218
+      position: [6.197535938000001, 1.472817, -0.8484619909999995]
+    - element: Cs
+      kind:
+      site_index: 7
+      distance: 3.7797467240736218
+      position: [6.197535938000001, 7.364085, -0.8484619909999995]
+    total_cn: 9
+    min_dist: 3.778884663858415
+    max_dist: 4.427608797642319
+    avg_dist: 3.9987944956850328
+  - Cs: 9
+    Te: 0
+    element: Te
+    kind:
+    position: [2.415988586, 4.418451, 4.509633596]
+    neighbours:
+    - element: Cs
+      kind:
+      site_index: 0
+      distance: 3.773254580651904
+      position: [3.3518260619999998, 4.418451, 0.8542733745]
+    - element: Cs
+      kind:
+      site_index: 1
+      distance: 4.426669939794483
+      position: [0.24064392239999988, 1.472817, 2.022361458]
+    - element: Cs
+      kind:
+      site_index: 1
+      distance: 4.426669939794483
+      position: [0.24064392239999988, 7.364085, 2.022361458]
+    - element: Cs
+      kind:
+      site_index: 2
+      distance: 3.9928266816381903
+      position: [5.013415050000001, 1.472817, 3.789022042]
+    - element: Cs
+      kind:
+      site_index: 2
+      distance: 3.9928266816381903
+      position: [5.013415050000001, 7.364085, 3.789022042]
+    - element: Cs
+      kind:
+      site_index: 3
+      distance: 3.8655128422796166
+      position: [-1.4228549380000004, 4.418451, 4.962921509]
+    - element: Cs
+      kind:
+      site_index: 4
+      distance: 3.779746724073622
+      position: [1.422854938, 1.472817, 6.659845491]
+    - element: Cs
+      kind:
+      site_index: 4
+      distance: 3.779746724073622
+      position: [1.422854938, 7.364085, 6.659845491]
+    - element: Cs
+      kind:
+      site_index: 5
+      distance: 3.942580349475589
+      position: [4.53594695, 4.418451, 7.8337449580000005]
+    total_cn: 9
+    min_dist: 3.773254580651904
+    max_dist: 4.426669939794483
+    avg_dist: 3.9977593848244117
+  - Cs: 9
+    Te: 0
+    element: Te
+    kind:
+    position: [7.133373414, 1.472817, 7.113133404]
+    neighbours:
+    - element: Cs
+      kind:
+      site_index: 2
+      distance: 3.942580349475588
+      position: [5.013415050000001, 1.472817, 3.789022042]
+    - element: Cs
+      kind:
+      site_index: 3
+      distance: 3.779746724073622
+      position: [8.126507062, -1.472817, 4.962921509]
+    - element: Cs
+      kind:
+      site_index: 3
+      distance: 3.779746724073622
+      position: [8.126507062, 4.418451, 4.962921509]
+    - element: Cs
+      kind:
+      site_index: 4
+      distance: 3.8655128422796166
+      position: [10.972216938, 1.472817, 6.659845491]
+    - element: Cs
+      kind:
+      site_index: 5
+      distance: 3.9928266816381903
+      position: [4.53594695, -1.472817, 7.8337449580000005]
+    - element: Cs
+      kind:
+      site_index: 5
+      distance: 3.9928266816381903
+      position: [4.53594695, 4.418451, 7.8337449580000005]
+    - element: Cs
+      kind:
+      site_index: 6
+      distance: 4.427608797642319
+      position: [9.31062795, -1.472817, 9.600405541999999]
+    - element: Cs
+      kind:
+      site_index: 6
+      distance: 4.427608797642319
+      position: [9.31062795, 4.418451, 9.600405541999999]
+    - element: Cs
+      kind:
+      site_index: 7
+      distance: 3.778884663858416
+      position: [6.197535938000001, 1.472817, 10.774305009]
+    total_cn: 9
+    min_dist: 3.778884663858416
+    max_dist: 4.427608797642319
+    avg_dist: 3.9985935847024314
+  - Cs: 9
+    Te: 0
+    element: Te
+    kind:
+    position: [2.3586924140000005, 1.472817, 10.321017096]
+    neighbours:
+    - element: Cs
+      kind:
+      site_index: 0
+      distance: 3.783055706988686
+      position: [3.351826062, -1.472817, 12.477040374499998]
+    - element: Cs
+      kind:
+      site_index: 0
+      distance: 3.783055706988686
+      position: [3.351826062, 4.418451, 12.477040374499998]
+    - element: Cs
+      kind:
+      site_index: 1
+      distance: 3.9415537240720844
+      position: [0.24064392240000032, 1.472817, 13.645128457999999]
+    - element: Cs
+      kind:
+      site_index: 4
+      distance: 3.778884663858416
+      position: [1.4228549380000004, 1.472817, 6.659845491]
+    - element: Cs
+      kind:
+      site_index: 5
+      distance: 4.427608797642319
+      position: [4.53594695, -1.472817, 7.8337449580000005]
+    - element: Cs
+      kind:
+      site_index: 5
+      distance: 4.427608797642319
+      position: [4.53594695, 4.418451, 7.8337449580000005]
+    - element: Cs
+      kind:
+      site_index: 6
+      distance: 3.9928266816381903
+      position: [-0.2387340499999997, -1.472817, 9.600405541999999]
+    - element: Cs
+      kind:
+      site_index: 6
+      distance: 3.9928266816381903
+      position: [-0.2387340499999997, 4.418451, 9.600405541999999]
+    - element: Cs
+      kind:
+      site_index: 7
+      distance: 3.8655128422796166
+      position: [6.1975359380000015, 1.472817, 10.774305009]
+    total_cn: 9
+    min_dist: 3.778884663858416
+    max_dist: 4.427608797642319
+    avg_dist: 3.9992148447498335
+parameters: {r_max: 5.0, method: atomic_radius, radius_type: vdw, atomic_radius_delta: 0.0}
