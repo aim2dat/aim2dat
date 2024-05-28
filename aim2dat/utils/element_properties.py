@@ -54,26 +54,39 @@ def _check_element(element):
 
 def get_atomic_radius(element, radius_type="covalent"):
     """
-    Return the covalent or van der Waals radius of the element (imported from ase).
+    Return the covalent or van der Waals radius of the element. The following sources are
+    used for different radius types:
+
+    * ``'covalent'`` are from :doi:`10.1039/B801115J` obtained via ase.
+    * ``'vdw'`` are obtained via ase.
+    * ``'chen_manz'`` are from :doi:`10.1039/C9RA07327B`.
 
     Parameters
     ----------
     element : str or int
         Atomic number, name or symbol of the element.
     radius_type : str (optional)
-        Radius type. Valid options are 'covalent' or 'vdw'.
+        Radius type. Valid options are ``'covalent'``, ``'vdw'`` or ``'chen_manz'``.
 
     Returns
     -------
     radius : float
         Atomic radius of the element.
+
+    Raises
+    ------
+    ValueError
+        If ``radius_type`` is not supported or has the wrong format.
     """
-    el_number, _, _ = _check_element(element)
+    el_number, element, _ = _check_element(element)
 
     if radius_type == "covalent":
         radius = covalent_radii[el_number]
     elif radius_type == "vdw":
         radius = vdw_radii[el_number]
+    elif radius_type == "chen_manz":
+        file_path = os.path.dirname(__file__) + "/data_files/atomic_radii.yaml"
+        radius = load_yaml_file(file_path)[radius_type][element]
     else:
         raise ValueError(f"Radius type '{radius_type}' not supported.")
     return radius

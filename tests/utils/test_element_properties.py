@@ -8,7 +8,13 @@ import aim2dat.utils.element_properties as el_properties
 
 
 @pytest.mark.parametrize(
-    "element,radius_type,value", [("Cs", "covalent", 2.44), ("C", "vdw", 1.7)]
+    "element,radius_type,value",
+    [
+        ("Cs", "covalent", 2.44),
+        ("C", "vdw", 1.7),
+        ("Si", "chen_manz", 1.38),
+        ("Ne", "chen_manz", None),
+    ],
 )
 def test_get_atomic_radius(element, radius_type, value):
     """Test atomic radius function."""
