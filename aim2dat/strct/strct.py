@@ -619,7 +619,12 @@ class Structure(AnalysisMixin, ManipulationMixin):
         return cls(**structure_dict)
 
     @export_method
-    def to_dict(self, cartesian: bool = True, wrap: bool = False, include_calculated_properties: bool = False) -> dict:
+    def to_dict(
+        self,
+        cartesian: bool = True,
+        wrap: bool = False,
+        include_calculated_properties: bool = False,
+    ) -> dict:
         """
         Export structure to python dictionary.
 

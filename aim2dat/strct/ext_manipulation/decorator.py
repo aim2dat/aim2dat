@@ -22,7 +22,7 @@ def external_manipulation_method(func):
         if output is not None:
             new_strct, label_suffix = output
             if isinstance(new_strct, dict):
-                new_strct =  Structure(**new_strct)
+                new_strct = Structure(**new_strct)
             return _add_label_suffix(new_strct, label_suffix, extracted_args[1])
         return extracted_args[0]
 

@@ -13,7 +13,6 @@ from aim2dat.strct.ext_manipulation.decorator import (
 )
 from aim2dat.strct.strct import Structure
 from aim2dat.utils.element_properties import get_element_symbol
-from aim2dat.strct.strct_manipulation import _add_label_suffix
 from aim2dat.utils.maths import calc_angle
 from aim2dat.io.yaml import load_yaml_file
 
@@ -123,7 +122,7 @@ def add_functional_group(
             new_structure["elements"].append(el)
             new_structure["positions"].append(pos + bond_dir * bond_length + host_pos_np)
 
-        return new_structure, "_added-" + functional_group #, change_label # _add_label_suffix(new_structure, "_added-" + functional_group, change_label)
+        return new_structure, "_added-" + functional_group
 
 
 def _check_functional_group(fct_group_str: str) -> dict:
