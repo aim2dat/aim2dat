@@ -20,9 +20,11 @@ cwd = os.path.dirname(__file__)
 
 def _add_label_suffix(strct, label_suffix, change_label):
     if change_label:
-        if strct["label"] is None:
-            strct["label"] = ""
-        strct["label"] += label_suffix
+        new_label = label_suffix if strct["label"] is None else strct["label"] + label_suffix
+        if isinstance(strct, dict):
+            strct["label"] = new_label
+        else:
+            strct.label = new_label
     return strct
 
 
@@ -44,22 +46,21 @@ def delete_atoms(
         raise TypeError("All site indices need to be of type int.")
 
     # Create new structure dict:
-    new_structure = {
-        "label": structure["label"],
-        "pbc": structure["pbc"],
-        "is_cartesian": True,
-        "positions": [],
-        "cell": structure["cell"],
-        "elements": [],
-    }
+    new_structure = structure.to_dict()
+    new_structure["positions"] = []
+    new_structure["elements"] = []
+    new_structure["kinds"] = []
     has_del = False
-    for index, el in enumerate(structure["elements"]):
-        if el not in elements and index not in site_indices:
+    for idx, (el, kind, pos) in enumerate(structure.iter_sites(get_kind=True, get_cart_pos=True)):
+        if el not in elements and idx not in site_indices:
             new_structure["elements"].append(el)
-            new_structure["positions"].append(structure["positions"][index])
+            new_structure["kinds"].append(kind)
+            new_structure["positions"].append(pos)
         else:
             has_del = True
     if has_del:
+        if all(kind is None for kind in new_structure["kinds"]):
+            del new_structure["kinds"]
         return _add_label_suffix(new_structure, "_del", change_label)
 
 
@@ -75,14 +76,8 @@ def substitute_elements(
     attributes2keep = ["space_group", "source"]
     str_el_pairs = None
     if any(el_pair[0] in structure["elements"] for el_pair in elements):
-        new_structure = {
-            "label": structure.label,
-            "elements": list(structure["elements"]),
-            "positions": structure["scaled_positions"],
-            "is_cartesian": False,
-            "pbc": structure["pbc"],
-            "attributes": {},
-        }
+        new_structure = structure.to_dict(cartesian=False)
+        new_structure["elements"] = list(new_structure["elements"])
         for label, val in structure["attributes"].items():
             if label in attributes2keep:
                 new_structure["attributes"][label] = val
@@ -115,13 +110,7 @@ def substitute_elements(
 
 def scale_unit_cell(structure: Structure, scaling_factor: float, change_label: bool) -> Structure:
     """Scale unit cell of the structure."""
-    if scaling_factor != 1.0:
-        new_structure = {
-            "label": structure["label"],
-            "cell": np.array(structure["cell"]) * scaling_factor,
-            "positions": structure["scaled_positions"],
-            "elements": structure["elements"],
-            "pbc": structure["pbc"],
-            "is_cartesian": False,
-        }
+    if scaling_factor != 1.0 and structure["cell"] is not None:
+        new_structure = structure.to_dict(cartesian=False)
+        new_structure["cell"] = np.array(structure["cell"]) * scaling_factor
         return _add_label_suffix(new_structure, f"_scaled-{scaling_factor}", change_label)

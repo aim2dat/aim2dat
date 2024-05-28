@@ -115,20 +115,15 @@ def add_functional_group(
         rot_matrix = rotation.as_matrix()
 
         # Create updated structure:
-        new_structure = {
-            "label": structure["label"],
-            "pbc": structure["pbc"],
-            "is_cartesian": True,
-            "wrap": wrap,
-            "positions": list(structure["positions"]),
-            "cell": structure["cell"],
-            "elements": list(structure["elements"]),
-        }
+        new_structure = structure.to_dict()
+        new_structure["elements"] = list(new_structure["elements"])
+        new_structure["positions"] = list(new_structure["positions"])
         for el, pos in zip(fct_group_dict["elements"], fct_group_dict["positions"]):
             pos = rot_matrix.dot(np.array(pos).T)
             new_structure["elements"].append(el)
             new_structure["positions"].append(pos + bond_dir * bond_length + host_pos_np)
-        return _add_label_suffix(new_structure, "_added-" + functional_group, change_label)
+
+        return new_structure, "_added-" + functional_group #, change_label # _add_label_suffix(new_structure, "_added-" + functional_group, change_label)
 
 
 def _check_functional_group(fct_group_str: str) -> dict:
