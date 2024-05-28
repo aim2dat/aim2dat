@@ -20,6 +20,7 @@ except ImportError:
 
 # Internal library imports
 from aim2dat.ext_interfaces import _return_ext_interface_modules
+from aim2dat.io.zeo import write_to_file
 from aim2dat.strct.strct_validation import (
     _structure_validate_cell,
     _structure_validate_elements,
@@ -623,38 +624,8 @@ class Structure(AnalysisMixin, ManipulationMixin):
         """
         Export structure to file using the ase interface or certain file formats for Zeo++.
         """
-        if file_path.endswith(".cssr"):
-            f = open(file_path, "w")
-            f.write(" ".join(map(str, self.cell_lengths)) + "\n")
-            f.write(" ".join(map(str, self.cell_angles)))
-            f.write(" SPGR = " + self.determine_space_group()["space_group"]["int_symbol"] + "\n")
-            f.write(f"{len(self.positions)} 0\n")
-            f.write(f"0 {self.label}\n")
-            for i, el_pos in enumerate(zip(self.elements, self.scaled_positions)):
-                f.write(
-                    f"  {i+1} {el_pos[0]} {el_pos[1][0]} {el_pos[1][1]} {el_pos[1][2]} "
-                    + " ".join(map(str, 9 * [0]))
-                    + "\n"
-                )
-            f.close()
-        elif file_path.endswith(".v1"):
-            f = open(file_path, "w")
-            f.write("Unit cell vectors:\n")
-            for a, vec in zip(["va", "vb", "vc"], self.cell):
-                f.write(f"{a}= {vec[0]} {vec[1]} {vec[2]}\n")
-            f.write(f"{len(self.positions)}\n")
-            for el, pos in zip(self.elements, self.positions):
-                f.write(f"{el} {pos[0]} {pos[1]} {pos[2]}\n")
-            f.close()
-        elif file_path.endswith(".cuc"):
-            f = open(file_path, "w")
-            f.write(f"Processing: {self.label}\n")
-            f.write("Unit_cell: ")
-            f.write(" ".join(map(str, self.cell_lengths)) + " ")
-            f.write(" ".join(map(str, self.cell_angles)) + "\n")
-            for el, pos in zip(self.elements, self.scaled_positions):
-                f.write(f"{el} {pos[0]} {pos[1]} {pos[2]}\n")
-            f.close()
+        if file_path.endswith((".cssr", ".v1", ".cuc")):
+            write_to_file(self, file_path)
         else:
             backend_module = _return_ext_interface_modules("ase_atoms")
             backend_module._write_structure_to_file(self, file_path)
