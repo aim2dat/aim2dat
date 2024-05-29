@@ -8,7 +8,7 @@ import pandas as pd
 import pytest
 
 # Internal library imports
-from aim2dat.strct import StructureOperations, StructureCollection
+from aim2dat.strct import StructureOperations, StructureCollection, Structure
 from aim2dat.io.yaml import load_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
@@ -21,6 +21,12 @@ def test_structure_ops_basics():
     strct_collect.append("Cs2Te_62_prim", **inputs)
 
     strct_ops = StructureOperations(structures=strct_collect, append_to_coll=True)
+
+    strct_ops_inp_list = StructureOperations([Structure(label="Cs2Te_62_prim", **inputs)])
+    assert isinstance(strct_ops_inp_list.structures, StructureCollection)
+
+    with pytest.raises(TypeError) as error:
+        StructureOperations([1, 2, 3])
 
     with pytest.raises(TypeError) as error:
         strct_ops.append_to_coll = "test"

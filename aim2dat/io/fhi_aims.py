@@ -20,7 +20,8 @@ def _check_for_soc_files(soc, folder_path):
     return no_soc_suffix
 
 
-@read_multiple(r"band\d+\.out(?P<soc>\.no_soc)?$")
+
+@read_multiple(r"band.*\.out(?P<soc>\.no_soc)?$")
 def read_band_structure(folder_path, soc=False):
     """
     Read band structure files from FHI-aims.
@@ -110,7 +111,7 @@ def read_atom_proj_density_of_states(folder_path, soc=False, load_raw=False):
     no_soc_suffix = _check_for_soc_files(soc, folder_path)
 
     # Iterate over files and quantum numbers:
-    dict_labels = ["s", "p", "d", "f"]
+    dict_labels = ["s", "p", "d", "f", "g", "h", "i"]
     atomic_pdos = []
     energy = []
     indices = [(val, idx) for idx, val in enumerate(folder_path["file_name"])]
