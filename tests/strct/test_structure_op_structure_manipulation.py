@@ -30,7 +30,7 @@ def test_delete_atoms(structure_comparison, structure):
     structure_comparison(new_strct, ref_p["structure"])
 
 
-@pytest.mark.parametrize("structure", ["Cs2Te_62_prim", "GaAs_216_prim"])
+@pytest.mark.parametrize("structure", ["Cs2Te_62_prim", "GaAs_216_prim", "Cs2Te_19_prim_kinds"])
 def test_element_substitution(structure_comparison, structure):
     """Test element substitution method."""
     inputs = dict(load_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
