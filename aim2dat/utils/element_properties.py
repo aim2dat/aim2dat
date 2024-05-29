@@ -4,6 +4,7 @@
 import os
 
 # Third party library imports
+import numpy as np
 from ase.data import (
     chemical_symbols,
     atomic_masses,
@@ -89,6 +90,9 @@ def get_atomic_radius(element, radius_type="covalent"):
         radius = load_yaml_file(file_path)[radius_type][element]
     else:
         raise ValueError(f"Radius type '{radius_type}' not supported.")
+
+    if radius is None or np.isnan(radius):
+        return None
     return radius
 
 

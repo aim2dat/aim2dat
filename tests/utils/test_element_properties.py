@@ -12,6 +12,7 @@ import aim2dat.utils.element_properties as el_properties
     [
         ("Cs", "covalent", 2.44),
         ("C", "vdw", 1.7),
+        ("Sc", "vdw", None),
         ("Si", "chen_manz", 1.38),
         ("Ne", "chen_manz", None),
     ],
