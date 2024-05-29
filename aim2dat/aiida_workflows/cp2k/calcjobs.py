@@ -12,7 +12,7 @@ from aiida.common import CalcInfo, CodeInfo, InputValidationError
 from aiida.orm import List, Dict, RemoteData, SinglefileData
 
 # Internal library imports
-from aim2dat.aiida_workflows.utils import (
+from aim2dat.utils.dict_tools import (
     dict_set_parameter,
     dict_retrieve_parameter,
 )

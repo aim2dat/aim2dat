@@ -11,7 +11,7 @@ from aim2dat.io.utils import read_multiple, custom_open
 
 def _check_for_soc_files(soc, folder_path):
     no_soc_suffix = False
-    if all(val is None for val in folder_path["soc"]):
+    if soc and all(val is None for val in folder_path["soc"]):
         raise ValueError(
             "Spin-orbit coupling activated but the files don't have " + "the proper naming scheme."
         )
@@ -20,7 +20,7 @@ def _check_for_soc_files(soc, folder_path):
     return no_soc_suffix
 
 
-@read_multiple(r".*\.out(?P<soc>\.no_soc)?$")
+@read_multiple(r"band\d+\.out(?P<soc>\.no_soc)?$")
 def read_band_structure(folder_path, soc=False):
     """
     Read band structure files from FHI-aims.

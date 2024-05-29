@@ -3,11 +3,11 @@ Functions to read band structure and pDOS files of CP2K.
 """
 
 # Internal library imports
-from aim2dat.io.cp2k.legacy_parser import PDOSParser
 from aim2dat.io.utils import read_multiple, custom_open
+import aim2dat.utils.units as units
 
 
-def read_band_structure(file_name):
+def read_band_structure(file_name: str) -> dict:
     """
     Read band structure file from CP2K.
 
@@ -68,7 +68,7 @@ def read_band_structure(file_name):
 
 
 @read_multiple(r".*-(?P<spin>[A-Z]+)?_?k.*\.pdos$")
-def read_atom_proj_density_of_states(folder_path):
+def read_atom_proj_density_of_states(folder_path: str) -> dict:
     """
     Read the atom projected density of states from CP2K.
 
@@ -86,10 +86,38 @@ def read_atom_proj_density_of_states(folder_path):
     indices = [(val, idx) for idx, val in enumerate(folder_path["file_name"])]
     indices.sort(key=lambda point: point[0])
     _, indices = zip(*indices)
-    parser = PDOSParser()
-    for idx in indices:  # file_p, spin in zip(folder_path["file"], folder_path["spin"]):
-        # file_content = custom_open(folder_path["file"][idx], "r").read()
+    pdos = []
+    efermi = None
+    kinds = {}
+    for idx in indices:
+        spin_suffix = ""
+        if folder_path["spin"][idx] is not None:
+            spin_suffix = "_" + folder_path["spin"][idx].lower()
+        energy = []
+        occupation = []
         with custom_open(folder_path["file"][idx], "r") as dos_file:
-            file_content = dos_file.read()
-        parser.parse_pdos(file_content, folder_path["spin"][idx])
-    return parser.pdos
+            line_1 = dos_file.readline().split()
+            line_2 = dos_file.readline().split()
+            kind = line_1[6]
+            efermi = float(line_1[-2]) * units.energy.Hartree
+            single_pdos = {orb_label + spin_suffix: [] for orb_label in line_2[5:]}
+            single_pdos["kind"] = kind
+
+            for line in dos_file:
+                line_sp = line.split()
+                energy.append(float(line_sp[1]) * units.energy.Hartree)
+                occupation.append(float(line_sp[2]))
+                for orb, val in zip(line_2[5:], line_sp[3:]):
+                    single_pdos[orb + spin_suffix].append(float(val))
+        if kind in kinds:
+            pdos[kinds[kind]].update(single_pdos)
+        else:
+            kinds[kind] = len(pdos)
+            pdos.append(single_pdos)
+    return {
+        "energy": energy,
+        "occupation": occupation,
+        "pdos": pdos,
+        "unit_x": "eV",
+        "e_fermi": efermi,
+    }

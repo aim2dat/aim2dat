@@ -7,7 +7,7 @@ import aiida.orm as aiida_orm
 
 # Internal library imports
 from aim2dat.aiida_workflows.cp2k.base_opt_work_chain import _BaseOptimizationWorkChain
-from aim2dat.aiida_workflows.utils import (
+from aim2dat.utils.dict_tools import (
     dict_set_parameter,
     dict_create_tree,
 )

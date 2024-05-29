@@ -5,7 +5,7 @@ import aiida.orm as aiida_orm
 from aiida.engine import ProcessHandlerReport
 
 # Internal library imports
-from aim2dat.aiida_workflows.utils import (
+from aim2dat.utils.dict_tools import (
     dict_retrieve_parameter,
     dict_set_parameter,
     dict_merge,

@@ -15,7 +15,7 @@ from aiida.common import AttributeDict
 # Internal library imports
 from aim2dat.aiida_workflows.cp2k.base_core_work_chain import _BaseCoreWorkChain
 from aim2dat.aiida_workflows.cp2k.core_work_chain_handlers import _switch_to_atomic_scf_guess
-from aim2dat.aiida_workflows.utils import dict_set_parameter, dict_create_tree
+from aim2dat.utils.dict_tools import dict_set_parameter, dict_create_tree
 
 Critic2Calculation = CalculationFactory("aim2dat.critic2")
 ChargemolCalculation = CalculationFactory("aim2dat.chargemol")
