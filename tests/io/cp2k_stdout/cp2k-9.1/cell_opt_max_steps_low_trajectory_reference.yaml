@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+- [cp2k_version, 9.1]
+- [run_type, CELL_OPT]
+- [natoms, 4]
+- [nelectrons, 32]
+- [nr_occ_orbitals, 16]
+- [energy_scf, -65.98713525472003]
+- [scf_converged, true]
+- [energy_units, a.u.]
+- [energy, -65.98710770405077]
+- - motion_step_info
+  - - {pressure: 1407.5938745679, energy: -65.9870639708633, nr_scf_steps: 10, scf_converged: true}
+    - {pressure: 1391.5823882574, max_step: 0.000661258, rms_step: 0.0002491177, max_grad: 0.0006529337,
+      rms_grad: 0.000246191, energy: -65.98706505555205, nr_scf_steps: 9, scf_converged: true}
+    - {pressure: 89.8304010234, max_step: 0.0555865836, rms_step: 0.0209591157, max_grad: 6.92491e-05,
+      rms_grad: 3.52224e-05, energy: -65.98710767398181, nr_scf_steps: 5, scf_converged: true}
+    - {pressure: 48.798587673, max_step: 0.0018122577, rms_step: 0.0006979853, max_grad: 6.46603e-05,
+      rms_grad: 3.50991e-05, energy: -65.98710770405077, nr_scf_steps: 4, scf_converged: true}
+- [nr_steps, 3]
+- [geo_not_converged, true]
+- [nwarnings, 1]
+- - warnings
+  - []
+- [runtime, 327.513]
+- [exceeded_walltime, false]

@@ -11,7 +11,7 @@
 - [scf_converged, false]
 - [energy_scf, -65.99915332484856]
 - [energy, -65.99913809739694]
-- [nr_steps, 6]
+- [nr_steps, 5]
 - [runtime, 183.028]
 - [nwarnings, 3]
 - [energy_units, a.u.]

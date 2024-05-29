@@ -11,29 +11,31 @@
 - [scf_converged, true]
 - [energy_scf, -65.98647051886402]
 - [energy, -65.98647257484988]
-- [nr_steps, 12]
+- [nr_steps, 11]
 - - motion_step_info
-  - - {scf_converged: true, nr_scf_steps: 13, energy: -65.98448572566156}
-    - {scf_converged: true, nr_scf_steps: 8, energy: -65.9845526845421, pressure: 2636.685788884}
-    - {scf_converged: true, nr_scf_steps: 10, energy: -65.9862863628178, pressure: 2582.9845335579,
+  - - {scf_converged: true, nr_scf_steps: 13, energy: -65.98448572566156, pressure: 2636.685788884}
+    - {scf_converged: true, nr_scf_steps: 8, energy: -65.9845526845421, pressure: 2582.9845335579,
       max_step: 0.0052184923, rms_step: 0.0019442856, max_grad: 0.0051065877, rms_grad: 0.0019051315}
-    - {scf_converged: true, nr_scf_steps: 8, energy: -65.9863122578563, pressure: 501.977946189,
+    - {scf_converged: true, nr_scf_steps: 10, energy: -65.9862863628178, pressure: 501.977946189,
       max_step: 0.2536770541, rms_step: 0.0946400392, max_grad: 0.0009463453, rms_grad: 0.0003973091}
-    - {scf_converged: true, nr_scf_steps: 8, energy: -65.98631607113515, pressure: 295.3559459201,
+    - {scf_converged: true, nr_scf_steps: 8, energy: -65.9863122578563, pressure: 295.3559459201,
       max_step: 0.0299112453, rms_step: 0.011273529, max_grad: 0.0010504478, rms_grad: 0.0003827426}
-    - {scf_converged: true, nr_scf_steps: 8, energy: -65.98632493510452, pressure: 242.4578451713,
+    - {scf_converged: true, nr_scf_steps: 8, energy: -65.98631607113515, pressure: 242.4578451713,
       max_step: 0.0067853351, rms_step: 0.0027185346, max_grad: 0.0010618466, rms_grad: 0.0003867236}
-    - {scf_converged: true, nr_scf_steps: 8, energy: -65.9863460660598, pressure: 150.0577922418,
+    - {scf_converged: true, nr_scf_steps: 8, energy: -65.98632493510452, pressure: 150.0577922418,
       max_step: 0.0098879796, rms_step: 0.0045434861, max_grad: 0.0010478577, rms_grad: 0.0003910401}
-    - {scf_converged: true, nr_scf_steps: 10, energy: -65.98638472761289, pressure: -11.9649359088,
+    - {scf_converged: true, nr_scf_steps: 8, energy: -65.9863460660598, pressure: -11.9649359088,
       max_step: 0.0154221684, rms_step: 0.0081540457, max_grad: 0.0009574793, rms_grad: 0.000389184}
-    - {scf_converged: true, nr_scf_steps: 9, energy: -65.98643228503747, pressure: -237.7551324431,
+    - {scf_converged: true, nr_scf_steps: 10, energy: -65.98638472761289, pressure: -237.7551324431,
       max_step: 0.0303047851, rms_step: 0.0134668166, max_grad: 0.0007202743, rms_grad: 0.000371172}
-    - {scf_converged: true, nr_scf_steps: 9, energy: -65.98646244149835, pressure: -394.6419361758,
+    - {scf_converged: true, nr_scf_steps: 9, energy: -65.98643228503747, pressure: -394.6419361758,
       max_step: 0.0422988358, rms_step: 0.0158959644, max_grad: 0.0006120962, rms_grad: 0.0003248511}
-    - {scf_converged: true, nr_scf_steps: 8, energy: -65.98647008854937, pressure: -379.6483512211,
+    - {scf_converged: true, nr_scf_steps: 9, energy: -65.98646244149835, pressure: -379.6483512211,
       max_step: 0.0327383568, rms_step: 0.0124885164, max_grad: 0.0007038772, rms_grad: 0.0002869359}
-    - {scf_converged: true, nr_scf_steps: 8, energy: -65.98647257484988, pressure: -296.0237997662,
+    - {scf_converged: true, nr_scf_steps: 8, energy: -65.98647008854937, pressure: -296.0237997662,
       max_step: 0.0141964792, rms_step: 0.0052571075, max_grad: 0.0006309004, rms_grad: 0.0002708046}
+    - {scf_converged: true, nr_scf_steps: 8, energy: -65.98647257484988, pressure: -241.254627789,
+      max_step: 0.0059241161, rms_step: 0.0027831739, max_grad: 0.0005531994, rms_grad: 0.0002561311}
+    - {}
 - [energy_units, a.u.]
 - [interrupted, true]

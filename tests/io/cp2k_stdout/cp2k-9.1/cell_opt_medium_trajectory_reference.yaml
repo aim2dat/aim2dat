@@ -33,6 +33,7 @@
   - - scf_converged: true
       nr_scf_steps: 10
       energy: -65.98706397086326
+      pressure: 1407.593874581
       mulliken:
       - {kind: 1, element: Cs, population: 8.986885, charge: 0.013115}
       - {kind: 1, element: Cs, population: 8.986771, charge: 0.013229}
@@ -46,7 +47,11 @@
     - scf_converged: true
       nr_scf_steps: 9
       energy: -65.98706505555204
-      pressure: 1407.593874581
+      pressure: 1391.5823883008
+      max_step: 0.000661258
+      rms_step: 0.0002491177
+      max_grad: 0.0006529337
+      rms_grad: 0.000246191
       mulliken:
       - {kind: 1, element: Cs, population: 8.986903, charge: 0.013097}
       - {kind: 1, element: Cs, population: 8.98679, charge: 0.01321}
@@ -60,11 +65,11 @@
     - scf_converged: true
       nr_scf_steps: 5
       energy: -65.98710767398178
-      pressure: 1391.5823883008
-      max_step: 0.000661258
-      rms_step: 0.0002491177
-      max_grad: 0.0006529337
-      rms_grad: 0.000246191
+      pressure: 89.8303984943
+      max_step: 0.0555865837
+      rms_step: 0.0209591157
+      max_grad: 6.92491e-05
+      rms_grad: 3.52224e-05
       mulliken:
       - {kind: 1, element: Cs, population: 8.986642, charge: 0.013358}
       - {kind: 1, element: Cs, population: 8.986629, charge: 0.013371}
@@ -78,11 +83,11 @@
     - scf_converged: true
       nr_scf_steps: 4
       energy: -65.98710770405077
-      pressure: 89.8303984943
-      max_step: 0.0555865837
-      rms_step: 0.0209591157
-      max_grad: 6.92491e-05
-      rms_grad: 3.52224e-05
+      pressure: 48.7985876153
+      max_step: 0.0018122576
+      rms_step: 0.0006979852
+      max_grad: 6.46603e-05
+      rms_grad: 3.50991e-05
       mulliken:
       - {kind: 1, element: Cs, population: 8.986677, charge: 0.013323}
       - {kind: 1, element: Cs, population: 8.986664, charge: 0.013336}
@@ -96,11 +101,6 @@
     - scf_converged: true
       nr_scf_steps: 1
       energy: -65.98710770405076
-      pressure: 48.7985876153
-      max_step: 0.0018122576
-      rms_step: 0.0006979852
-      max_grad: 6.46603e-05
-      rms_grad: 3.50991e-05
       mulliken:
       - {kind: 1, element: Cs, population: 8.986679, charge: 0.013321}
       - {kind: 1, element: Cs, population: 8.986665, charge: 0.013335}

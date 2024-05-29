@@ -12,7 +12,7 @@
 - [scf_converged, true]
 - [energy, -1103.3749128464283]
 - - motion_step_info
-  - - {scf_converged: false, nr_scf_steps: null, energy: -1103.356751379769, potential_energy: -1103.35675138,
+  - - {scf_converged: false, nr_scf_steps: 39, energy: -1103.356751379769, potential_energy: -1103.35675138,
       kinetic_energy: 0.27361284566, temperature: 300.0, step_nr: 0, time_fs: 0.0}
     - {scf_converged: true, nr_scf_steps: 9, energy: -1103.358390988604, potential_energy: -1103.35839099,
       kinetic_energy: 0.275296282128, temperature: 301.845787, step_nr: 1, time_fs: 0.5,

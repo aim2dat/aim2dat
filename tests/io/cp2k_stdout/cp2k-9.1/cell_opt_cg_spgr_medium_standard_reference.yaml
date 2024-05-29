@@ -12,7 +12,9 @@
 - [multiplicity, 1]
 - [charge, 0.0]
 - - xc
-  - {functional: Re-regularized SCAN exchange by Furness et al (exchange)}
+  - functional:
+    - Re-regularized SCAN exchange by Furness et al (exchange)
+    - Re-regularized SCAN correlation by Furness et al (correlation)
 - [natoms, 16]
 - - spgr_info
   - {sg_number: 17, int_symbol: P222_1, point_group_symbol: '222', schoenflies_symbol: D2^2}

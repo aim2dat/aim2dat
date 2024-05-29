@@ -403,7 +403,7 @@
       mass: 1.0079}
 - - motion_step_info
   - - scf_converged: false
-      nr_scf_steps:
+      nr_scf_steps: 39
       energy: -1103.3567513797689
       potential_energy: -1103.35675138
       kinetic_energy: 0.27361284566

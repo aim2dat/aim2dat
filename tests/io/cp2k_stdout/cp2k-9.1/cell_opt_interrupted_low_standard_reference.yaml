@@ -11,6 +11,6 @@
 - [scf_converged, true]
 - [energy_scf, -65.98647051886402]
 - [energy, -65.98647257484988]
-- [nr_steps, 12]
+- [nr_steps, 11]
 - [energy_units, a.u.]
 - [interrupted, true]

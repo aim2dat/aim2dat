@@ -11,20 +11,20 @@
 - [scf_converged, false]
 - [energy_scf, -65.99915332484856]
 - [energy, -65.99913809739694]
-- [nr_steps, 6]
+- [nr_steps, 5]
 - - motion_step_info
-  - - {scf_converged: true, nr_scf_steps: 13, energy: -65.99710842331137}
-    - {scf_converged: true, nr_scf_steps: 8, energy: -65.99717836724133, pressure: 1632.6535318759}
-    - {scf_converged: true, nr_scf_steps: 10, energy: -65.99905692387841, pressure: 1579.0104904709,
+  - - {scf_converged: true, nr_scf_steps: 13, energy: -65.99710842331137, pressure: 1632.6535318759}
+    - {scf_converged: true, nr_scf_steps: 8, energy: -65.99717836724133, pressure: 1579.0104904709,
       max_step: 0.0054370892, rms_step: 0.001981035, max_grad: 0.0053297752, rms_grad: 0.0019436525}
-    - {scf_converged: true, nr_scf_steps: 8, energy: -65.99906720714128, pressure: -518.0283270305,
+    - {scf_converged: true, nr_scf_steps: 10, energy: -65.99905692387841, pressure: -518.0283270305,
       max_step: 0.2825889291, rms_step: 0.1030539082, max_grad: 0.0011039558, rms_grad: 0.0004319831}
-    - {scf_converged: true, nr_scf_steps: 8, energy: -65.99907222316176, pressure: -603.9518421377,
+    - {scf_converged: true, nr_scf_steps: 8, energy: -65.99906720714128, pressure: -603.9518421377,
       max_step: 0.0174987705, rms_step: 0.0065034263, max_grad: 0.0011568838, rms_grad: 0.0004375419}
-    - {scf_converged: true, nr_scf_steps: 8, energy: -65.99909681798167, pressure: -626.7992681493,
+    - {scf_converged: true, nr_scf_steps: 8, energy: -65.99907222316176, pressure: -626.7992681493,
       max_step: 0.0055028802, rms_step: 0.002285631, max_grad: 0.001159428, rms_grad: 0.000440667}
-    - {scf_converged: false, nr_scf_steps: null, energy: -65.99913809739694, pressure: -677.3777458144,
+    - {scf_converged: true, nr_scf_steps: 8, energy: -65.99909681798167, pressure: -677.3777458144,
       max_step: 0.0178217902, rms_step: 0.0085725405, max_grad: 0.0011087682, rms_grad: 0.0004481276}
+    - {scf_converged: false, nr_scf_steps: 4, energy: -65.99913809739694}
 - [runtime, 183.028]
 - [nwarnings, 3]
 - [energy_units, a.u.]
