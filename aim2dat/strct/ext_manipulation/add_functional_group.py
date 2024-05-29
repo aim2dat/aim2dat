@@ -116,11 +116,15 @@ def add_functional_group(
         # Create updated structure:
         new_structure = structure.to_dict()
         new_structure["elements"] = list(new_structure["elements"])
+        if new_structure["kinds"] is not None:
+            new_structure["kinds"] = list(new_structure["kinds"])
         new_structure["positions"] = list(new_structure["positions"])
         for el, pos in zip(fct_group_dict["elements"], fct_group_dict["positions"]):
             pos = rot_matrix.dot(np.array(pos).T)
             new_structure["elements"].append(el)
             new_structure["positions"].append(pos + bond_dir * bond_length + host_pos_np)
+            if new_structure["kinds"] is not None:
+                new_structure["kinds"].append(None)
 
         return new_structure, "_added-" + functional_group
 
