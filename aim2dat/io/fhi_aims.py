@@ -20,7 +20,6 @@ def _check_for_soc_files(soc, folder_path):
     return no_soc_suffix
 
 
-
 @read_multiple(r"band.*\.out(?P<soc>\.no_soc)?$")
 def read_band_structure(folder_path, soc=False):
     """
