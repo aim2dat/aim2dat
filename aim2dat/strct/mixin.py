@@ -515,6 +515,7 @@ class ManipulationMixin:
         key: Union[str, int, tuple, list] = None,
         elements: Union[List[Tuple[str]], List[Tuple[int]]] = [],
         radius_type: Union[str, None] = "covalent",
+        remove_kind: bool = False,
         change_label: bool = False,
     ) -> Union["Structure", "StructureCollection"]:
         """
@@ -527,6 +528,8 @@ class ManipulationMixin:
             keys of the underlying ``StructureCollection`` object.
         elements : list or tuple
             Tuple or list of tuples of the elements that are substituted.
+        remove_kind : bool (optional)
+            Sets the entries of the substituted sites in `kinds` to `None`.
         radius_type : str or None (optional)
             Radius type used to calculate the scaling factor for the unit cell. If set to ``None``
             no scaling is applied. The default value is ``covalent``.
@@ -539,6 +542,7 @@ class ManipulationMixin:
         kwargs = {
             "elements": elements,
             "radius_type": radius_type,
+            "remove_kind": remove_kind,
             "change_label": change_label,
         }
         return self._perform_strct_manipulation(key, substitute_elements, kwargs)

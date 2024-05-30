@@ -103,6 +103,7 @@ def test_list_methods():
         "from_aiida_structuredata",
     ]
     assert Structure.export_methods == [
+        "to_dict",
         "to_file",
         "to_ase_atoms",
         "to_pymatgen_structure",
