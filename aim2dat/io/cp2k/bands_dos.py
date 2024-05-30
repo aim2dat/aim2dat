@@ -82,7 +82,45 @@ def read_atom_proj_density_of_states(folder_path: str) -> dict:
     pdos : dict
         Dictionary containing the projected density of states for each kind.
     """
-    # TODO order pdos better..
+    all_orbitals = [
+        "s",
+        "px",
+        "py",
+        "pz",
+        "d-2",
+        "d-1",
+        "d0",
+        "d+1",
+        "d+2",
+        "f-3",
+        "f-2",
+        "f-1",
+        "f0",
+        "f+1",
+        "f+2",
+        "f+3",
+        "g-4",
+        "g-3",
+        "g-2",
+        "g-1",
+        "g0",
+        "g+1",
+        "g+2",
+        "g+3",
+        "g+4",
+        "i-5",
+        "i-4",
+        "i-3",
+        "i-2",
+        "i-1",
+        "i0",
+        "i+1",
+        "i+2",
+        "i+3",
+        "i+4",
+        "i+5",
+    ]
+
     indices = [(val, idx) for idx, val in enumerate(folder_path["file_name"])]
     indices.sort(key=lambda point: point[0])
     _, indices = zip(*indices)
@@ -100,14 +138,14 @@ def read_atom_proj_density_of_states(folder_path: str) -> dict:
             line_2 = dos_file.readline().split()
             kind = line_1[6]
             efermi = float(line_1[-2]) * units.energy.Hartree
-            single_pdos = {orb_label + spin_suffix: [] for orb_label in line_2[5:]}
+            orbital_labels = line_2[5:]
+            single_pdos = {orb + spin_suffix: [] for orb in all_orbitals if orb in orbital_labels}
             single_pdos["kind"] = kind
-
             for line in dos_file:
                 line_sp = line.split()
                 energy.append(float(line_sp[1]) * units.energy.Hartree)
                 occupation.append(float(line_sp[2]))
-                for orb, val in zip(line_2[5:], line_sp[3:]):
+                for orb, val in zip(orbital_labels, line_sp[3:]):
                     single_pdos[orb + spin_suffix].append(float(val))
         if kind in kinds:
             pdos[kinds[kind]].update(single_pdos)
