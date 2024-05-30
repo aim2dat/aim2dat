@@ -8,7 +8,7 @@ Version 0.2.0
 **Fixes:**
 
 * ``utils.chem_formula.transform_str_to_dict`` supports now recurring elements and nested brackets (`PR #13 <https://github.com/aim2dat/aim2dat/pull/13>`_).
-
+* External structure manipulation methods now share the same interface as their internal counterparts (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
 
 **Enhancements:**
 
@@ -16,6 +16,8 @@ Version 0.2.0
 * Moved all larger parser functions from ``aiida_workflows`` to ``io`` such that they can used outside of the AiiDA framework (PR #20 <https://github.com/aim2dat/aim2dat/pull/20>`_).
 * ``io.qe.read_total_density_of_states`` parses now the Fermi energy as well.
 * ``io.fhi_aims.read_atom_proj_density_of_states`` supports now higher azimuth quantum numbers up to i (PR #33 <https://github.com/aim2dat/aim2dat/pull/33>`_).
+* ``strct.Structure.to_dict`` returns a dictionary of a ``Structure`` object (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
+* Structure manipulation methods maintain ``kinds`` information and ``strct.Structure.substitute_elements`` has now the addiational ``remove_kind`` parameter (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
 
 
 Version 0.1.0

@@ -5,6 +5,13 @@ elements: [Sc, Sc, Sc, Sc, O, O, O, O, O, O, O, O, O, O, O, O, O, O, O, O, O, O,
   O, O, O, O, O, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C,
   C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, H,
   C, H, H, H, O, C, O, H, N, H, H, N, O, O, O, H]
+kinds: [kind1, null, null, null, null, null, null, null, null, null, null, null, null,
+  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+  null, null, null, null, null, null, null, null, null, null]
 positions:
 - [37.81315613762599, 6.826898335620305, 4.079760405192194]
 - [27.601662384869098, 5.8524525820205, 2.0900612270718013]

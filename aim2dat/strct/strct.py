@@ -619,6 +619,40 @@ class Structure(AnalysisMixin, ManipulationMixin):
         return cls(**structure_dict)
 
     @export_method
+    def to_dict(
+        self,
+        cartesian: bool = True,
+        wrap: bool = False,
+        include_calculated_properties: bool = False,
+    ) -> dict:
+        """
+        Export structure to python dictionary.
+
+        Parameters
+        ----------
+        cartesian : bool (optional)
+            Whether cartesian or scaled coordinates are returned.
+        wrap : bool (optional)
+            Whether the coordinates are wrapped back into the unit cell.
+        include_calculated_properties : bool (optional)
+            Whether calculated properties are included as well.
+
+        Returns
+        -------
+        dict
+            Dictionary representing the structure. The ``Structure`` object can be retrieved via
+            ``Structure(**dict)``.
+        """
+        attr_list = ["label", "elements", "pbc", "cell", "kinds"]
+        if include_calculated_properties:
+            attr_list += ["attributes", "extras", "function_args"]
+        strct_dict = {key: getattr(self, key) for key in attr_list}
+        strct_dict["positions"] = self.get_positions(cartesian=cartesian, wrap=wrap)
+        if not cartesian:
+            strct_dict["is_cartesian"] = False
+        return strct_dict
+
+    @export_method
     def to_file(self, file_path: str) -> None:
         """
         Export structure to file using the ase interface.
@@ -688,6 +722,8 @@ class Structure(AnalysisMixin, ManipulationMixin):
 
     def _perform_strct_manipulation(self, _, method, kwargs):
         new_strct = method(structure=self, **kwargs)
-        if isinstance(new_strct, dict):
+        if isinstance(new_strct, Structure):
+            return new_strct
+        elif isinstance(new_strct, dict):
             return Structure(**new_strct)
         return self
