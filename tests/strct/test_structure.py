@@ -69,6 +69,71 @@ def test_structure_print():
     )
 
 
+def test_zeo_write_to_file(tmpdir):
+    """Test write structure to zeo input files."""
+    strct_dict = load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
+    structure = Structure(**strct_dict, label="test")
+    file = tmpdir.join("Cs2Te_62_prim_kinds.cssr")
+    structure.to_file(file.strpath)  # or use str(file)
+    assert file.read() == (
+        "9.549362 5.891268 11.622767\n"
+        "90.0 90.0 90.0 SPGR = Pm\n"
+        "12 0\n"
+        "0 test\n"
+        "  1 Cs 0.3510000000000001 0.75 0.0735 0 0 0 0 0 0 0 0 0\n"
+        "  2 Cs 0.025200000000000004 0.25 0.174 0 0 0 0 0 0 0 0 0\n"
+        "  3 Cs 0.5250000000000001 0.25 0.326 0 0 0 0 0 0 0 0 0\n"
+        "  4 Cs 0.851 0.75 0.42700000000000005 0 0 0 0 0 0 0 0 0\n"
+        "  5 Cs 0.149 0.25 0.573 0 0 0 0 0 0 0 0 0\n"
+        "  6 Cs 0.475 0.75 0.674 0 0 0 0 0 0 0 0 0\n"
+        "  7 Cs 0.9750000000000001 0.75 0.8260000000000001 0 0 0 0 0 0 0 0 0\n"
+        "  8 Cs 0.649 0.25 0.9270000000000002 0 0 0 0 0 0 0 0 0\n"
+        "  9 Te 0.753 0.75 0.112 0 0 0 0 0 0 0 0 0\n"
+        "  10 Te 0.253 0.75 0.388 0 0 0 0 0 0 0 0 0\n"
+        "  11 Te 0.747 0.25 0.612 0 0 0 0 0 0 0 0 0\n"
+        "  12 Te 0.24700000000000005 0.25 0.8880000000000001 0 0 0 0 0 0 0 0 0"
+    )
+    file = tmpdir.join("Cs2Te_62_prim_kinds.v1")
+    structure.to_file(file.strpath)  # or use str(file)
+    assert file.read() == (
+        "Unit cell vectors:\n"
+        "va= 9.549362 0.0 0.0\n"
+        "vb= 0.0 5.891268 0.0\n"
+        "vc= 0.0 0.0 11.622767\n"
+        "12\n"
+        "Cs 3.3518260620000007 4.418451 0.8542733745\n"
+        "Cs 0.24064392240000002 1.472817 2.022361458\n"
+        "Cs 5.013415050000001 1.472817 3.789022042\n"
+        "Cs 8.126507062 4.418451 4.962921509\n"
+        "Cs 1.422854938 1.472817 6.659845491\n"
+        "Cs 4.53594695 4.418451 7.8337449580000005\n"
+        "Cs 9.31062795 4.418451 9.600405542\n"
+        "Cs 6.197535938000001 1.472817 10.774305009\n"
+        "Te 7.190669586 4.418451 1.301749904\n"
+        "Te 2.415988586 4.418451 4.509633596\n"
+        "Te 7.133373414 1.472817 7.113133404\n"
+        "Te 2.3586924140000005 1.472817 10.321017096"
+    )
+    file = tmpdir.join("Cs2Te_62_prim_kinds.cuc")
+    structure.to_file(file.strpath)  # or use str(file)
+    assert file.read() == (
+        "Processing: test\n"
+        "Unit_cell: 9.549362 5.891268 11.622767 90.0 90.0 90.0\n"
+        "Cs 0.3510000000000001 0.75 0.0735\n"
+        "Cs 0.025200000000000004 0.25 0.174\n"
+        "Cs 0.5250000000000001 0.25 0.326\n"
+        "Cs 0.851 0.75 0.42700000000000005\n"
+        "Cs 0.149 0.25 0.573\n"
+        "Cs 0.475 0.75 0.674\n"
+        "Cs 0.9750000000000001 0.75 0.8260000000000001\n"
+        "Cs 0.649 0.25 0.9270000000000002\n"
+        "Te 0.753 0.75 0.112\n"
+        "Te 0.253 0.75 0.388\n"
+        "Te 0.747 0.25 0.612\n"
+        "Te 0.24700000000000005 0.25 0.8880000000000001"
+    )
+
+
 def test_structure_features():
     """Test features of Structure class."""
     strct_dict = load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
@@ -103,6 +168,7 @@ def test_list_methods():
         "from_aiida_structuredata",
     ]
     assert Structure.export_methods == [
+        "to_dict",
         "to_file",
         "to_ase_atoms",
         "to_pymatgen_structure",

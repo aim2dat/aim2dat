@@ -30,7 +30,7 @@ def test_delete_atoms(structure_comparison, structure):
     structure_comparison(new_strct, ref_p["structure"])
 
 
-@pytest.mark.parametrize("structure", ["Cs2Te_62_prim", "GaAs_216_prim"])
+@pytest.mark.parametrize("structure", ["Cs2Te_62_prim", "GaAs_216_prim", "Cs2Te_19_prim_kinds"])
 def test_element_substitution(structure_comparison, structure):
     """Test element substitution method."""
     inputs = dict(load_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
@@ -54,6 +54,7 @@ def test_element_substitution(structure_comparison, structure):
 def test_add_functional_group(structure_comparison):
     """Test add functional group function."""
     inputs = dict(load_yaml_file(STRUCTURES_PATH + "Sc2BDC3.yaml"))
+    inputs["kinds"] = ["kind1"] + [None] * (len(inputs["elements"]) - 1)
     ref_p = load_yaml_file(STRUCTURE_MANIPULATION_PATH + "Sc2BDC3_ref.yaml")
     ref_p["label"] = "test"
     strct_collect = StructureCollection()
