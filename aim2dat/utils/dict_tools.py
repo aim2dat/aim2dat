@@ -22,21 +22,14 @@ def dict_set_parameter(dictionary, parameter_tree, value):
         Output dictionary.
     """
     helper_dict = dictionary
-    can_add = True
 
     for parameter in parameter_tree[:-1]:
-        if parameter in helper_dict:
-            helper_dict = helper_dict[parameter]
-        elif isinstance(helper_dict, dict):
-            helper_dict[parameter] = {}
-            helper_dict = helper_dict[parameter]
-        else:
-            can_add = False
+        if isinstance(helper_dict, dict):
+            helper_dict = helper_dict.setdefault(parameter, {})
+        if not isinstance(helper_dict, dict):
+            raise ValueError("Cannot add value to dictionary.")
 
-    if can_add:
-        helper_dict[parameter_tree[-1]] = value
-    else:
-        raise ValueError("Cannot add value to dictionary.")
+    helper_dict[parameter_tree[-1]] = value
 
 
 def dict_retrieve_parameter(dictionary, parameter_tree):
