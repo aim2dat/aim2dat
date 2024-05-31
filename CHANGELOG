@@ -20,7 +20,7 @@ Version 0.2.0
 * Structure manipulation methods maintain ``kinds`` information and ``strct.Structure.substitute_elements`` has now the addiational ``remove_kind`` parameter (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
 * ``utils.element_properties.get_atomic_radius`` supports now the set radii determined in :doi:`10.1039/C9RA07327B` (PR #35 <https://github.com/aim2dat/aim2dat/pull/35>`_).
 * ``strct.Structure.calculate_coordination`` supports the calculation of the coordination environment based on the sum of the corresponding atomic radii (PR #35 <https://github.com/aim2dat/aim2dat/pull/35>`_).
-
+* ``strct.strct`` added new file formats `.cssr`, `.v1` and `.cuc` to `to_file` for postprocessing in Zeo++.
 
 Version 0.1.0
 =============

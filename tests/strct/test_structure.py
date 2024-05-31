@@ -12,6 +12,7 @@ from aim2dat.io.yaml import load_yaml_file
 
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
+ZEO_PATH = os.path.dirname(__file__) + "/zeo/"
 
 
 def test_structure_print():
@@ -67,6 +68,27 @@ def test_structure_print():
         "  - H  None  [ -0.4752  -0.8230  -0.3360]\n"
         "----------------------------------------------------------------------"
     )
+
+
+def test_zeo_write_to_file(tmpdir):
+    """Test write structure to zeo input files."""
+    strct_dict = load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
+    structure = Structure(**strct_dict, label="test")
+
+    file = tmpdir.join("Cs2Te_62_prim_kinds.cssr")
+    structure.to_file(file.strpath)
+    cssr = open(ZEO_PATH + "Cs2Te_62_prim_kinds.cssr", "r")
+    assert file.read() == cssr.read()
+
+    file = tmpdir.join("Cs2Te_62_prim_kinds.v1")
+    structure.to_file(file.strpath)
+    v1 = open(ZEO_PATH + "Cs2Te_62_prim_kinds.v1", "r")
+    assert file.read() == v1.read()
+
+    file = tmpdir.join("Cs2Te_62_prim_kinds.cuc")
+    structure.to_file(file.strpath)
+    cuc = open(ZEO_PATH + "Cs2Te_62_prim_kinds.cuc", "r")
+    assert file.read() == cuc.read()
 
 
 def test_structure_features():
