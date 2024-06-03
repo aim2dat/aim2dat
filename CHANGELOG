@@ -13,14 +13,20 @@ Version 0.2.0
 **Enhancements:**
 
 * ``plots.base_plot`` added new property `subplot_align_ylabels` to adjust y labels in subplots for backend `matplotlib` (PR #23 <https://github.com/aim2dat/aim2dat/pull/23>`_).
-* Moved all larger parser functions from ``aiida_workflows`` to ``io`` such that they can used outside of the AiiDA framework (PR #20 <https://github.com/aim2dat/aim2dat/pull/20>`_).
-* ``io.qe.read_total_density_of_states`` parses now the Fermi energy as well.
+* All larger parser functions moved from ``aiida_workflows`` to ``io`` such that they can used outside of the AiiDA framework (PR #20 <https://github.com/aim2dat/aim2dat/pull/20>`_).
+* ``io.qe.read_total_density_of_states`` parses now the Fermi energy as well (PR #20 <https://github.com/aim2dat/aim2dat/pull/20>`_).
+* ``strct.strct`` added new file formats `.cssr`, `.v1` and `.cuc` to `to_file` for postprocessing in Zeo++ (PR #26 <https://github.com/aim2dat/aim2dat/pull/26>`_).
 * ``io.fhi_aims.read_atom_proj_density_of_states`` supports now higher azimuth quantum numbers up to i (PR #33 <https://github.com/aim2dat/aim2dat/pull/33>`_).
 * ``strct.Structure.to_dict`` returns a dictionary of a ``Structure`` object (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
 * Structure manipulation methods maintain ``kinds`` information and ``strct.Structure.substitute_elements`` has now the addiational ``remove_kind`` parameter (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
 * ``utils.element_properties.get_atomic_radius`` supports now the set radii determined in :doi:`10.1039/C9RA07327B` (PR #35 <https://github.com/aim2dat/aim2dat/pull/35>`_).
 * ``strct.Structure.calculate_coordination`` supports the calculation of the coordination environment based on the sum of the corresponding atomic radii (PR #35 <https://github.com/aim2dat/aim2dat/pull/35>`_).
-* ``strct.strct`` added new file formats `.cssr`, `.v1` and `.cuc` to `to_file` for postprocessing in Zeo++.
+* ``strct.ext_manipulation.add_structure`` replaces the ``strct.ext_manipulation.add_functional_group`` function allowing ``Structure`` objects as input and adding methods to define the orientation and position of the guest structure in more detail (PR #35 <https://github.com/aim2dat/aim2dat/pull/37>`_).
+
+**Depreciations:**
+
+* ``strct.ext_manipulation.add_structure`` replaces ``strct.ext_manipulation.add_functional_group`` function (PR #35 <https://github.com/aim2dat/aim2dat/pull/37>`_).
+
 
 Version 0.1.0
 =============
