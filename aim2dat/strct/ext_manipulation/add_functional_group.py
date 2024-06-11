@@ -2,7 +2,7 @@
 
 # Internal library imports
 from aim2dat.strct.strct import Structure
-from aim2dat.strct.ext_manipulation.add_structure import add_structure
+from aim2dat.strct.ext_manipulation.add_structure import add_structure_coord
 
 
 def add_functional_group(
@@ -74,12 +74,12 @@ def add_functional_group(
 
     warn(
         "This function will be removed soon, please use "
-        + "`strct.ext_manipulation.add_structure` instead.",
+        + "`strct.ext_manipulation.add_structure_coord` instead.",
         DeprecationWarning,
         2,
     )
 
-    return add_structure(
+    return add_structure_coord(
         structure=structure,
         wrap=wrap,
         host_indices=host_index,

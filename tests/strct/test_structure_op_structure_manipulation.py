@@ -8,7 +8,7 @@ import pytest
 
 # Internal library imports
 from aim2dat.strct import StructureOperations, StructureCollection
-from aim2dat.strct.ext_manipulation.add_structure import add_structure
+from aim2dat.strct.ext_manipulation import add_structure_coord
 
 from aim2dat.io.yaml import load_yaml_file
 
@@ -52,7 +52,7 @@ def test_element_substitution(structure_comparison, structure):
     structure_comparison(strct_ops.structures[2], ref_p["structure"])
 
 
-def test_add_structure(structure_comparison):
+def test_add_structure_coord(structure_comparison):
     """Test add functional group function."""
     inputs = dict(load_yaml_file(STRUCTURES_PATH + "Sc2BDC3.yaml"))
     inputs["kinds"] = ["kind1"] + [None] * (len(inputs["elements"]) - 1)
@@ -63,7 +63,7 @@ def test_add_structure(structure_comparison):
     strct_ops = StructureOperations(strct_collect, append_to_coll=True)
     strct_ops.perform_manipulation(
         0,
-        method=add_structure,
+        method=add_structure_coord,
         kwargs={
             "wrap": True,
             "host_indices": 37,
@@ -74,7 +74,7 @@ def test_add_structure(structure_comparison):
     )
     strct_ops.perform_manipulation(
         0,
-        method=add_structure,
+        method=add_structure_coord,
         kwargs={
             "wrap": True,
             "host_indices": 39,
@@ -85,22 +85,22 @@ def test_add_structure(structure_comparison):
     )
     strct_ops.perform_manipulation(
         0,
-        method=add_structure,
+        method=add_structure_coord,
         kwargs={"host_indices": 41, "guest_structure": "COOH", "change_label": False},
     )
     strct_ops.perform_manipulation(
         0,
-        method=add_structure,
+        method=add_structure_coord,
         kwargs={"host_indices": 42, "guest_structure": "NH2", "change_label": False},
     )
     strct_ops.perform_manipulation(
         0,
-        method=add_structure,
+        method=add_structure_coord,
         kwargs={"host_indices": 62, "guest_structure": "NO2", "change_label": False},
     )
     strct_ops.perform_manipulation(
         0,
-        method=add_structure,
+        method=add_structure_coord,
         kwargs={
             "host_indices": 74,
             "guest_structure": "OH",

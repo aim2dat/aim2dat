@@ -26,7 +26,7 @@ cwd = os.path.dirname(__file__)
 
 
 @external_manipulation_method
-def add_structure(
+def add_structure_coord(
     structure: Structure,
     wrap: bool = False,
     host_indices: Union[int, List[int]] = 0,
