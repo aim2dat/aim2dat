@@ -5,7 +5,7 @@ import os
 
 # Internal library imports
 from aim2dat.strct import Structure
-from aim2dat.strct import add_structure_coord
+from aim2dat.strct.ext_manipulation import add_structure_coord
 from aim2dat.io.yaml import load_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
