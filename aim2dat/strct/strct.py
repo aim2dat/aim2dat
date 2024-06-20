@@ -354,7 +354,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
             having the same length as the ``Structure`` object itself (number of sites) containing
             site specific properties or attributes (e.g. charges, magnetic moments, forces, ...).
         """
-        return self._site_attributes.copy()
+        return copy.deepcopy(self._site_attributes)
 
     @site_attributes.setter
     def site_attributes(self, value: dict):
