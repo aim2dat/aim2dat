@@ -51,10 +51,8 @@ def dict_retrieve_parameter(dictionary, parameter_tree):
     helper_dict = dictionary
 
     for parameter in parameter_tree:
-        if parameter in helper_dict:
-            helper_dict = helper_dict[parameter]
-        else:
-            helper_dict = None
+        helper_dict = helper_dict.get(parameter)
+        if helper_dict is None:
             break
     return helper_dict
 
