@@ -93,6 +93,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         cell: List[List[float]] = None,
         kinds: List[str] = None,
         label: str = None,
+        site_attributes: dict = None,
         store_calculated_properties: bool = True,
         attributes: dict = None,
         extras: dict = None,
@@ -100,12 +101,14 @@ class Structure(AnalysisMixin, ManipulationMixin):
     ):
         """Initialize object."""
         self._inverse_cell = None
+        self._site_attributes = {}
 
         self.elements = elements
         self.kinds = kinds
         self.cell = cell
         self.pbc = pbc
         self.label = label
+        self.site_attributes = site_attributes
         self.store_calculated_properties = store_calculated_properties
 
         self._attributes = {} if attributes is None else attributes
@@ -201,13 +204,16 @@ class Structure(AnalysisMixin, ManipulationMixin):
     def keys(self) -> list:
         """Return property names to create the structure."""
         return [
+            "label",
             "elements",
             "positions",
             "pbc",
             "cell",
             "kinds",
+            "site_attributes",
             "attributes",
             "extras",
+            "function_args",
         ]
 
     def copy(self) -> "Structure":
@@ -341,6 +347,23 @@ class Structure(AnalysisMixin, ManipulationMixin):
         self._kinds = value
 
     @property
+    def site_attributes(self) -> Union[dict, None]:
+        """
+        dict :
+            Dictionary containing the label of a site attribute as key and a tuple/list of values
+            having the same length as the ``Structure`` object itself (number of sites) containing
+            site specific properties or attributes (e.g. charges, magnetic moments, forces, ...).
+        """
+        return copy.deepcopy(self._site_attributes)
+
+    @site_attributes.setter
+    def site_attributes(self, value: dict):
+        if value is None:
+            value = {}
+        for key, val in value.items():
+            self.set_site_attribute(key, val)
+
+    @property
     def function_args(self) -> dict:
         """Return function arguments for stored extras."""
         return copy.deepcopy(self._function_args)
@@ -376,6 +399,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         get_cart_pos: bool = False,
         get_scaled_pos: bool = False,
         wrap: bool = False,
+        site_attributes: Union[str, list] = [],
     ):
         """
         Iterate through the sites of the structure.
@@ -390,13 +414,18 @@ class Structure(AnalysisMixin, ManipulationMixin):
             Include scaled position in tuple.
         wrap : bool (optional)
             Wrap atomic positions back into the unit cell.
+        site_attributes : list (optional)
+            Include site attributes defined by their label.
 
         Yields
         ------
         str or tuple
             Either element symbol or tuple containing the element symbol, kind string,
-            cartesian position or scaled position.
+            cartesian position, scaled position or specified site attributes.
         """
+        if isinstance(site_attributes, str):
+            site_attributes = [site_attributes]
+        site_attr_dict = {} if self.site_attributes is None else self.site_attributes
         for idx, el in enumerate(self.elements):
             output = [el]
             if get_kind:
@@ -409,6 +438,9 @@ class Structure(AnalysisMixin, ManipulationMixin):
                 output.append(pos_cart)
             if get_scaled_pos:
                 output.append(pos_scaled)
+            for site_attr in site_attributes:
+                output.append(site_attr_dict[site_attr][idx])
+
             if len(output) == 1:
                 yield el
             else:
@@ -472,6 +504,26 @@ class Structure(AnalysisMixin, ManipulationMixin):
             Value of the attribute.
         """
         self._attributes[key] = value
+
+    def set_site_attribute(self, key: str, values: Union[list, tuple]):
+        """
+        Set site attribute.
+
+        Parameters
+        ----------
+        key : str
+            Key of the site attribute.
+        values :
+            Values of the attribute, need to have the same length as the ``Structure`` object
+            itself (number of sites).
+        """
+        if not isinstance(values, (list, tuple)):
+            raise TypeError(f"Value of site property `{key}` must be a list or tuple.")
+        if len(values) != len(self.elements):
+            raise ValueError(
+                f"Value of site property `{key}` must have the same length as `elements`."
+            )
+        self._site_attributes[key] = tuple(values)
 
     @classmethod
     @property
@@ -636,7 +688,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         wrap : bool (optional)
             Whether the coordinates are wrapped back into the unit cell.
         include_calculated_properties : bool (optional)
-            Whether calculated properties are included as well.
+            Also include ``attributes``, ``extras`` and ``function_args`` in dictionary.
 
         Returns
         -------
@@ -644,10 +696,13 @@ class Structure(AnalysisMixin, ManipulationMixin):
             Dictionary representing the structure. The ``Structure`` object can be retrieved via
             ``Structure(**dict)``.
         """
-        attr_list = ["label", "elements", "pbc", "cell", "kinds"]
-        if include_calculated_properties:
-            attr_list += ["attributes", "extras", "function_args"]
-        strct_dict = {key: getattr(self, key) for key in attr_list}
+        # TODO add test:
+        calc_prop_keys = ["attributes", "extras", "function_args"]
+        strct_dict = {}
+        for key in self.keys():
+            if (not include_calculated_properties and key in calc_prop_keys) or key == "positions":
+                continue
+            strct_dict[key] = getattr(self, key)
         strct_dict["positions"] = self.get_positions(cartesian=cartesian, wrap=wrap)
         if not cartesian:
             strct_dict["is_cartesian"] = False
