@@ -21,6 +21,7 @@ Version 0.2.0
 * ``utils.element_properties.get_atomic_radius`` supports now the set radii determined in :doi:`10.1039/C9RA07327B` (PR #35 <https://github.com/aim2dat/aim2dat/pull/35>`_).
 * ``strct.Structure.calculate_coordination`` supports the calculation of the coordination environment based on the sum of the corresponding atomic radii (PR #35 <https://github.com/aim2dat/aim2dat/pull/35>`_).
 * ``strct.strct`` added new file formats `.cssr`, `.v1` and `.cuc` to `to_file` for postprocessing in Zeo++.
+* ``strct.Structure`` has now site attributes which store site specific information (PR #39 <https://github.com/aim2dat/aim2dat/pull/39>`_).
 
 Version 0.1.0
 =============
