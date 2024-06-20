@@ -1,26 +1,10 @@
 """Module that implements functions to change molecular or crystalline structures."""
 
-# Standard library imports
-import os
-
-# Third party library imports
-import numpy as np
-from scipy.spatial.transform import Rotation
-
 # Internal library imports
-from aim2dat.strct.ext_manipulation.decorator import (
-    external_manipulation_method,
-)
 from aim2dat.strct.strct import Structure
-from aim2dat.utils.element_properties import get_element_symbol
-from aim2dat.utils.maths import calc_angle
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.strct.ext_manipulation.add_structure import add_structure_coord
 
 
-cwd = os.path.dirname(__file__)
-
-
-@external_manipulation_method
 def add_functional_group(
     structure: Structure,
     wrap: bool = False,
@@ -41,11 +25,15 @@ def add_functional_group(
     """
     Add a functional group or an atom to a host site.
 
+    Notes
+    -----
+        This function is depreciated and will be removed soon. Please use
+        ``aim2dat.strct.ext_manipulation.add_structure`` instead.
+
     Parameters
     ----------
-    key : str, int, tuple or list
-        Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
-        keys of the underlying ``StructureCollection`` object.
+    structure : aim2dat.strct.Structure
+        Structure to which the guest structure is added.
     wrap : bool (optional)
             Wrap atomic positions back into the unit cell.
     host_index : int
@@ -74,73 +62,38 @@ def add_functional_group(
         weights with respect to the maximum value of the polyhedron are calculated.
     voronoi_weight_threshold : float (optional)
         Weight threshold to consider a neighbouring atom coordinated.
-
+    change_label : bool (optional)
+        Add suffix to the label of the new structure highlighting the performed manipulation.
 
     Returns
     -------
-    aiida_scripst.strct.Structure
+    aim2dat.strct.Structure
         Structure with attached functional group.
     """
-    if host_index < len(structure):
-        fct_group_dict = _check_functional_group(functional_group)
+    from warnings import warn
 
-        # Calculate coordination:
-        coord = structure.calculate_coordination(
-            method=cn_method,
-            min_dist_delta=min_dist_delta,
-            n_nearest_neighbours=n_nearest_neighbours,
-            econ_tolerance=econ_tolerance,
-            econ_conv_threshold=econ_conv_threshold,
-            okeeffe_weight_threshold=okeeffe_weight_threshold,
-        )
-        cn_details = coord["sites"][host_index]
+    warn(
+        "This function will be removed soon, please use "
+        + "`strct.ext_manipulation.add_structure_coord` instead.",
+        DeprecationWarning,
+        2,
+    )
 
-        # Derive bond direction and first rotation matrix:
-        host_pos_np = np.array(cn_details["position"])
-        bond_dir = np.zeros(3)
-        for neigh in cn_details["neighbours"]:
-            dir_v = np.array(neigh["position"]) - host_pos_np
-            bond_dir += dir_v / np.linalg.norm(dir_v)
-        if np.linalg.norm(bond_dir) < 1e-5:
-            bond_dir = np.cross(
-                np.array(cn_details["neighbours"][0]["position"]),
-                np.array(cn_details["neighbours"][1]["position"]),
-            )
-        bond_dir *= -1.0 / np.linalg.norm(bond_dir)
-        rot_dir = np.cross(bond_dir, np.array([1.0, 0.0, 0.0]))
-        rot_dir /= np.linalg.norm(rot_dir)
-        rot_angle = -calc_angle(np.array([1.0, 0.0, 0.0]), bond_dir)
-        rotation = Rotation.from_rotvec(rot_angle * rot_dir)
-        rot_matrix = rotation.as_matrix()
-
-        # Create updated structure:
-        new_structure = structure.to_dict()
-        new_structure["elements"] = list(new_structure["elements"])
-        if new_structure["kinds"] is not None:
-            new_structure["kinds"] = list(new_structure["kinds"])
-        new_structure["positions"] = list(new_structure["positions"])
-        for el, pos in zip(fct_group_dict["elements"], fct_group_dict["positions"]):
-            pos = rot_matrix.dot(np.array(pos).T)
-            new_structure["elements"].append(el)
-            new_structure["positions"].append(pos + bond_dir * bond_length + host_pos_np)
-            if new_structure["kinds"] is not None:
-                new_structure["kinds"].append(None)
-
-        return new_structure, "_added-" + functional_group
-
-
-def _check_functional_group(fct_group_str: str) -> dict:
-    if not isinstance(fct_group_str, str):
-        raise TypeError("Functional group needs to be of type str.")
-    fct_group_dict = {}
-    try:
-        fct_group_dict["elements"] = [get_element_symbol(fct_group_str)]
-        fct_group_dict["positions"] = [[0.0, 0.0, 0.0]]
-    except ValueError:
-        try:
-            fct_group_dict = load_yaml_file(
-                os.path.join(cwd, "functional_groups", fct_group_str + ".yaml")
-            )
-        except FileNotFoundError:
-            raise ValueError(f"Functional group `{fct_group_str}` is not supported.")
-    return fct_group_dict
+    return add_structure_coord(
+        structure=structure,
+        wrap=wrap,
+        host_indices=host_index,
+        guest_index=0,
+        guest_structure=functional_group,
+        bond_length=bond_length,
+        r_max=r_max,
+        cn_method=cn_method,
+        min_dist_delta=min_dist_delta,
+        n_nearest_neighbours=n_nearest_neighbours,
+        econ_tolerance=econ_tolerance,
+        econ_conv_threshold=econ_conv_threshold,
+        voronoi_weight_type=voronoi_weight_type,
+        voronoi_weight_threshold=voronoi_weight_threshold,
+        okeeffe_weight_threshold=okeeffe_weight_threshold,
+        change_label=change_label,
+    )

@@ -1,5 +1,8 @@
 """Decorator for manipulation methods."""
 
+# Standard library imports
+import inspect
+
 # Internal library imports
 from aim2dat.strct.strct import Structure
 from aim2dat.strct.strct_manipulation import _add_label_suffix
@@ -10,14 +13,18 @@ def external_manipulation_method(func):
 
     def wrapper(*args, **kwargs):
         """Wrap manipulation method and create output."""
+        sig_pars = inspect.signature(func).parameters
         extracted_args = []
-        for key, pos in [("structure", 0), ("change_label", -1)]:
+        for key, pos in [("structure", 0), ("change_label", len(sig_pars) - 1)]:
             if key in kwargs:
                 extracted_args.append(kwargs[key])
-            elif len(args) > 0:
+            elif len(args) > pos:
                 extracted_args.append(args[pos])
+            elif key in sig_pars:
+                extracted_args.append(sig_pars[key].default)
             else:
                 raise TypeError(f"'{key}' not in arguments.")
+
         output = func(*args, **kwargs)
         if output is not None:
             new_strct, label_suffix = output
