@@ -70,6 +70,26 @@ def test_structure_print():
     )
 
 
+def test_to_dict(structure_comparison):
+    """Test to_dict function."""
+    calc_keys = ["attributes", "extras", "function_args"]
+    site_attrs = {"test": (0.0, 0.0, 1.0, 2.0, 3.0, -1.0, "test", 0.0, 0.0, 1.0, 1.0, -2.5)}
+    strct_dict = load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
+    strct_dict["label"] = "test"
+    structure = Structure(**strct_dict)
+    test_dict = structure.to_dict(include_calculated_properties=False)
+    structure_comparison(strct_dict, test_dict)
+    assert test_dict["site_attributes"] == {}
+    for key in calc_keys:
+        assert key not in test_dict
+
+    structure.site_attributes = site_attrs
+    test_dict = structure.to_dict(include_calculated_properties=True)
+    for key in calc_keys:
+        assert key in test_dict
+    assert test_dict["site_attributes"] == site_attrs
+
+
 def test_zeo_write_to_file(tmpdir):
     """Test write structure to zeo input files."""
     strct_dict = load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
@@ -94,6 +114,9 @@ def test_zeo_write_to_file(tmpdir):
 def test_structure_features():
     """Test features of Structure class."""
     strct_dict = load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
+    strct_dict["site_attributes"] = {
+        "test": (0.0, [0.0, 1.9], 1.0, 2.0, 3.0, -1.0, "test", 0.0, 0.0, 1.0, 1.0, -2.5)
+    }
     structure = Structure(**strct_dict)
     for idx, (el, pos) in enumerate(structure):
         assert el == strct_dict["elements"][idx]
@@ -101,9 +124,12 @@ def test_structure_features():
             assert (
                 abs(pos[idx0] - strct_dict["positions"][idx][idx0]) < 0.00001
             ), "Positions don't match."
-    for idx, (el, kind, pos) in enumerate(structure.iter_sites(get_kind=True, get_cart_pos=True)):
+    for idx, (el, kind, pos, site_attr) in enumerate(
+        structure.iter_sites(get_kind=True, get_cart_pos=True, site_attributes="test")
+    ):
         assert el == strct_dict["elements"][idx]
         assert kind == strct_dict["kinds"][idx]
+        assert site_attr == strct_dict["site_attributes"]["test"][idx]
         for idx0 in range(3):
             assert (
                 abs(pos[idx0] - strct_dict["positions"][idx][idx0]) < 0.00001
