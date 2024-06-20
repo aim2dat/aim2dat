@@ -1,0 +1,109 @@
+%YAML 1.2
+---
+ref:
+  distance_avg: {}
+  distance_stdev: {}
+  distance_max: {}
+  distance_min: {}
+  nrs_avg:
+    &id001 [Ga, Ga]: 0
+    &id002 [Ga, As]: 0
+    &id003 [As, Ga]: 0
+    &id004 [As, As]: 0
+  nrs_stdev:
+    *id001 : 0.0
+    *id002 : 0.0
+    *id003 : 0.0
+    *id004 : 0.0
+  nrs_max:
+    *id001 : 0
+    *id002 : 0
+    *id003 : 0
+    *id004 : 0
+  nrs_min:
+    *id001 : 0
+    *id002 : 0
+    *id003 : 0
+    *id004 : 0
+  sites:
+  - Ga: 0
+    As: 0
+    element: Ga
+    kind:
+    position: [0.0, 0.0, 0.0]
+    neighbours: []
+    total_cn: 0
+    min_dist: 0.0
+    max_dist: 0.0
+    avg_dist: 0.0
+  - Ga: 0
+    As: 0
+    element: Ga
+    kind:
+    position: [0.0, 12.198, 4.066]
+    neighbours: []
+    total_cn: 0
+    min_dist: 0.0
+    max_dist: 0.0
+    avg_dist: 0.0
+  - Ga: 0
+    As: 0
+    element: Ga
+    kind:
+    position: [4.066, 0.0, 4.066]
+    neighbours: []
+    total_cn: 0
+    min_dist: 0.0
+    max_dist: 0.0
+    avg_dist: 0.0
+  - Ga: 0
+    As: 0
+    element: Ga
+    kind:
+    position: [4.066, 4.066, 0.0]
+    neighbours: []
+    total_cn: 0
+    min_dist: 0.0
+    max_dist: 0.0
+    avg_dist: 0.0
+  - Ga: 0
+    As: 0
+    element: As
+    kind:
+    position: [6.099, 6.099, 6.099]
+    neighbours: []
+    total_cn: 0
+    min_dist: 0.0
+    max_dist: 0.0
+    avg_dist: 0.0
+  - Ga: 0
+    As: 0
+    element: As
+    kind:
+    position: [2.033, 2.033, 6.099]
+    neighbours: []
+    total_cn: 0
+    min_dist: 0.0
+    max_dist: 0.0
+    avg_dist: 0.0
+  - Ga: 0
+    As: 0
+    element: As
+    kind:
+    position: [2.033, 6.099, 2.033]
+    neighbours: []
+    total_cn: 0
+    min_dist: 0.0
+    max_dist: 0.0
+    avg_dist: 0.0
+  - Ga: 0
+    As: 0
+    element: As
+    kind:
+    position: [6.099, 2.033, 2.033]
+    neighbours: []
+    total_cn: 0
+    min_dist: 0.0
+    max_dist: 0.0
+    avg_dist: 0.0
+parameters: {r_max: 5.0, method: atomic_radius, radius_type: chen_manz, atomic_radius_delta: 0.2}

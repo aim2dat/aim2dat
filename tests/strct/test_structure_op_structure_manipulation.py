@@ -1,4 +1,4 @@
-"""Test  structure manipulation funcitons of the StructureCollection class."""
+"""Test structure manipulation funcitons via the StructureOperations class."""
 
 # Standard library imports
 import os
@@ -8,7 +8,8 @@ import pytest
 
 # Internal library imports
 from aim2dat.strct import StructureOperations, StructureCollection
-from aim2dat.strct.ext_manipulation import add_functional_group
+from aim2dat.strct.ext_manipulation import add_structure_coord
+
 from aim2dat.io.yaml import load_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
@@ -30,7 +31,7 @@ def test_delete_atoms(structure_comparison, structure):
     structure_comparison(new_strct, ref_p["structure"])
 
 
-@pytest.mark.parametrize("structure", ["Cs2Te_62_prim", "GaAs_216_prim"])
+@pytest.mark.parametrize("structure", ["Cs2Te_62_prim", "GaAs_216_prim", "Cs2Te_19_prim_kinds"])
 def test_element_substitution(structure_comparison, structure):
     """Test element substitution method."""
     inputs = dict(load_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
@@ -51,9 +52,10 @@ def test_element_substitution(structure_comparison, structure):
     structure_comparison(strct_ops.structures[2], ref_p["structure"])
 
 
-def test_add_functional_group(structure_comparison):
+def test_add_structure_coord(structure_comparison):
     """Test add functional group function."""
     inputs = dict(load_yaml_file(STRUCTURES_PATH + "Sc2BDC3.yaml"))
+    inputs["kinds"] = ["kind1"] + [None] * (len(inputs["elements"]) - 1)
     ref_p = load_yaml_file(STRUCTURE_MANIPULATION_PATH + "Sc2BDC3_ref.yaml")
     ref_p["label"] = "test"
     strct_collect = StructureCollection()
@@ -61,45 +63,50 @@ def test_add_functional_group(structure_comparison):
     strct_ops = StructureOperations(strct_collect, append_to_coll=True)
     strct_ops.perform_manipulation(
         0,
-        method=add_functional_group,
+        method=add_structure_coord,
         kwargs={
             "wrap": True,
-            "host_index": 37,
-            "functional_group": "H",
+            "host_indices": 37,
+            "guest_structure": "H",
             "bond_length": 1.0,
             "change_label": False,
         },
     )
     strct_ops.perform_manipulation(
         0,
-        method=add_functional_group,
+        method=add_structure_coord,
         kwargs={
             "wrap": True,
-            "host_index": 39,
-            "functional_group": "CH3",
+            "host_indices": 39,
+            "guest_structure": "CH3",
             "bond_length": 1.1,
             "change_label": False,
         },
     )
     strct_ops.perform_manipulation(
         0,
-        method=add_functional_group,
-        kwargs={"host_index": 41, "functional_group": "COOH", "change_label": False},
+        method=add_structure_coord,
+        kwargs={"host_indices": 41, "guest_structure": "COOH", "change_label": False},
     )
     strct_ops.perform_manipulation(
         0,
-        method=add_functional_group,
-        kwargs={"host_index": 42, "functional_group": "NH2", "change_label": False},
+        method=add_structure_coord,
+        kwargs={"host_indices": 42, "guest_structure": "NH2", "change_label": False},
     )
     strct_ops.perform_manipulation(
         0,
-        method=add_functional_group,
-        kwargs={"host_index": 62, "functional_group": "NO2", "change_label": False},
+        method=add_structure_coord,
+        kwargs={"host_indices": 62, "guest_structure": "NO2", "change_label": False},
     )
     strct_ops.perform_manipulation(
         0,
-        method=add_functional_group,
-        kwargs={"host_index": 74, "functional_group": "OH", "change_label": False},
+        method=add_structure_coord,
+        kwargs={
+            "host_indices": 74,
+            "guest_structure": "OH",
+            "change_label": False,
+            "dist_threshold": None,
+        },
     )
     strct_ops.structures[0].set_positions(strct_ops.structures[0].positions, wrap=True)
     structure_comparison(strct_ops.structures[0], ref_p)

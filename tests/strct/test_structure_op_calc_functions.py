@@ -108,7 +108,7 @@ def test_cn_analysis_error():
     assert (
         str(error.value)
         == "Method 'test' is not supported. Supported methods are: 'minimum_distance', "
-        "'n_nearest_neighbours', 'econ', 'voronoi'."
+        "'n_nearest_neighbours', 'atomic_radius', 'econ', 'voronoi'."
     )
     with pytest.raises(ValueError) as error:
         strct_ops.calculate_coordination("test", method="voronoi", voronoi_weight_type="test")

@@ -19,10 +19,12 @@ COORDINATION_PATH = os.path.dirname(__file__) + "/coordination/"
     [
         ("GaAs_216_conv", "minimum_distance"),
         ("GaAs_216_conv", "n_nearest_neighbours"),
+        ("GaAs_216_conv", "atomic_radius"),
         ("GaAs_216_conv", "econ"),
         ("GaAs_216_conv", "okeeffe"),
         ("Cs2Te_62_prim", "minimum_distance"),
         ("Cs2Te_62_prim", "n_nearest_neighbours"),
+        ("Cs2Te_62_prim", "atomic_radius"),
         ("Cs2Te_62_prim", "econ"),
         ("Cs2Te_62_prim", "okeeffe"),
         ("Cs2Te_62_prim", "voronoi_no_weights"),

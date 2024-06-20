@@ -4,7 +4,14 @@ pbc: [true, true, true]
 elements: [Sc, Sc, Sc, Sc, O, O, O, O, O, O, O, O, O, O, O, O, O, O, O, O, O, O, O,
   O, O, O, O, O, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C,
   C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, H,
-  C, H, H, H, O, C, O, H, N, H, H, N, O, O, O, H]
+  C, H, H, H, C, O, O, H, N, H, H, N, O, O, O, H]
+kinds: [kind1, null, null, null, null, null, null, null, null, null, null, null, null,
+  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
+  null, null, null, null, null, null, null, null, null, null]
 positions:
 - [37.81315613762599, 6.826898335620305, 4.079760405192194]
 - [27.601662384869098, 5.8524525820205, 2.0900612270718013]
@@ -87,8 +94,8 @@ positions:
 - [20.706985007662997, 0.3023120469328129, 5.829138102204663]
 - [21.841983956753467, 1.4622530934091005, 6.558953022341964]
 - [22.12073083340324, 0.8644596967704632, 4.906300942476016]
-- [20.59617891624261, -1.104683830728423, 3.613591922317246]
 - [21.370097151833377, -0.0009798324207097586, 3.6955065542559056]
+- [20.59617891624261, -1.104683830728423, 3.613591922317246]
 - [22.40842543081171, 0.42955629799974293, 4.034189436819336]
 - [21.043446175335617, -1.4384991351771574, 3.872597989993719]
 - [19.415515113286364, 3.882795179445956, 4.316186644847779]
@@ -98,7 +105,7 @@ positions:
 - [24.62888134226325, 5.429234785183556, 3.5078156357743637]
 - [9.980302754978126, -2.5178439539171213, 3.464123262326102]
 - [5.706757114399334, -2.9485321597886616, 4.65230023531689]
-- [25.212734191857923, -2.804848884424568, 4.916366877714349]
+- [5.326812170033195, -2.3872669446647925, 3.9457712213743674]
 is_cartesian: true
 cell:
 - [20.437750649553, 0.0, 0.0]
