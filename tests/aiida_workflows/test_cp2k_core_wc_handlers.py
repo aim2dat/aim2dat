@@ -11,7 +11,8 @@ from aiida.common.extendeddicts import AttributeDict
 
 # Internal library imports
 from aim2dat.io.yaml import load_yaml_file
-from aim2dat.aiida_workflows.utils import create_aiida_node, dict_set_parameter
+from aim2dat.aiida_workflows.utils import create_aiida_node
+from aim2dat.utils.dict_tools import dict_set_parameter
 from aim2dat.aiida_workflows.cp2k.core_work_chain_inputs import _set_input_parameters
 from aim2dat.aiida_workflows.cp2k.core_work_chain_scf import _initialize_scf_parameters
 from aim2dat.aiida_workflows.cp2k.core_work_chain_opt import _initialize_opt_parameters

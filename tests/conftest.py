@@ -18,7 +18,8 @@ from aiida.plugins.entry_point import format_entry_point_string
 from aim2dat.strct import StructureCollection, Structure
 from aim2dat.aiida_data.surface_data import SurfaceData
 from aim2dat.io.yaml import load_yaml_file
-from aim2dat.aiida_workflows.utils import dict_set_parameter, create_aiida_node
+from aim2dat.aiida_workflows.utils import create_aiida_node
+from aim2dat.utils.dict_tools import dict_set_parameter
 from aim2dat.utils.element_properties import get_element_symbol
 
 

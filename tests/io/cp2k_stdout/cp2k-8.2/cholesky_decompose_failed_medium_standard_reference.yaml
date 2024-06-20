@@ -17,8 +17,6 @@
 - [natoms, 8]
 - - spgr_info
   - {sg_number: 51, int_symbol: Pmma, point_group_symbol: mmm, schoenflies_symbol: D2h^5}
-- [nelectrons, 56]
-- [nr_occ_orbitals, 28]
 - [aborted, true]
 - [cholesky_decompose_failed, true]
 - [nr_unocc_orbitals, 25]

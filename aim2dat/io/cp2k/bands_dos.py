@@ -3,11 +3,11 @@ Functions to read band structure and pDOS files of CP2K.
 """
 
 # Internal library imports
-from aim2dat.io.cp2k.legacy_parser import PDOSParser
 from aim2dat.io.utils import read_multiple, custom_open
+import aim2dat.utils.units as units
 
 
-def read_band_structure(file_name):
+def read_band_structure(file_name: str) -> dict:
     """
     Read band structure file from CP2K.
 
@@ -68,7 +68,7 @@ def read_band_structure(file_name):
 
 
 @read_multiple(r".*-(?P<spin>[A-Z]+)?_?k.*\.pdos$")
-def read_atom_proj_density_of_states(folder_path):
+def read_atom_proj_density_of_states(folder_path: str) -> dict:
     """
     Read the atom projected density of states from CP2K.
 
@@ -82,14 +82,80 @@ def read_atom_proj_density_of_states(folder_path):
     pdos : dict
         Dictionary containing the projected density of states for each kind.
     """
-    # TODO order pdos better..
+    all_orbitals = [
+        "s",
+        "px",
+        "py",
+        "pz",
+        "d-2",
+        "d-1",
+        "d0",
+        "d+1",
+        "d+2",
+        "f-3",
+        "f-2",
+        "f-1",
+        "f0",
+        "f+1",
+        "f+2",
+        "f+3",
+        "g-4",
+        "g-3",
+        "g-2",
+        "g-1",
+        "g0",
+        "g+1",
+        "g+2",
+        "g+3",
+        "g+4",
+        "i-5",
+        "i-4",
+        "i-3",
+        "i-2",
+        "i-1",
+        "i0",
+        "i+1",
+        "i+2",
+        "i+3",
+        "i+4",
+        "i+5",
+    ]
+
     indices = [(val, idx) for idx, val in enumerate(folder_path["file_name"])]
     indices.sort(key=lambda point: point[0])
     _, indices = zip(*indices)
-    parser = PDOSParser()
-    for idx in indices:  # file_p, spin in zip(folder_path["file"], folder_path["spin"]):
-        # file_content = custom_open(folder_path["file"][idx], "r").read()
+    pdos = []
+    efermi = None
+    kinds = {}
+    for idx in indices:
+        spin_suffix = ""
+        if folder_path["spin"][idx] is not None:
+            spin_suffix = "_" + folder_path["spin"][idx].lower()
+        energy = []
+        occupation = []
         with custom_open(folder_path["file"][idx], "r") as dos_file:
-            file_content = dos_file.read()
-        parser.parse_pdos(file_content, folder_path["spin"][idx])
-    return parser.pdos
+            line_1 = dos_file.readline().split()
+            line_2 = dos_file.readline().split()
+            kind = line_1[6]
+            efermi = float(line_1[-2]) * units.energy.Hartree
+            orbital_labels = line_2[5:]
+            single_pdos = {orb + spin_suffix: [] for orb in all_orbitals if orb in orbital_labels}
+            single_pdos["kind"] = kind
+            for line in dos_file:
+                line_sp = line.split()
+                energy.append(float(line_sp[1]) * units.energy.Hartree)
+                occupation.append(float(line_sp[2]))
+                for orb, val in zip(orbital_labels, line_sp[3:]):
+                    single_pdos[orb + spin_suffix].append(float(val))
+        if kind in kinds:
+            pdos[kinds[kind]].update(single_pdos)
+        else:
+            kinds[kind] = len(pdos)
+            pdos.append(single_pdos)
+    return {
+        "energy": energy,
+        "occupation": occupation,
+        "pdos": pdos,
+        "unit_x": "eV",
+        "e_fermi": efermi,
+    }

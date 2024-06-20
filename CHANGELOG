@@ -9,6 +9,7 @@ Version 0.2.0
 
 * ``utils.chem_formula.transform_str_to_dict`` supports now recurring elements and nested brackets (`PR #13 <https://github.com/aim2dat/aim2dat/pull/13>`_).
 * External structure manipulation methods now share the same interface as their internal counterparts (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
+* A few smaller bug fixes in CP2K output parser (`PR #36 <https://github.com/aim2dat/aim2dat/pull/36>`_).
 
 **Enhancements:**
 
@@ -21,12 +22,15 @@ Version 0.2.0
 * Structure manipulation methods maintain ``kinds`` information and ``strct.Structure.substitute_elements`` has now the addiational ``remove_kind`` parameter (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
 * ``utils.element_properties.get_atomic_radius`` supports now the set radii determined in :doi:`10.1039/C9RA07327B` (PR #35 <https://github.com/aim2dat/aim2dat/pull/35>`_).
 * ``strct.Structure.calculate_coordination`` supports the calculation of the coordination environment based on the sum of the corresponding atomic radii (PR #35 <https://github.com/aim2dat/aim2dat/pull/35>`_).
-* ``strct.ext_manipulation.add_structure_coord`` replaces the ``strct.ext_manipulation.add_functional_group`` function allowing ``Structure`` objects as input and adding methods to define the orientation and position of the guest structure in more detail (PR #35 <https://github.com/aim2dat/aim2dat/pull/37>`_).
+* ``strct.ext_manipulation.add_structure_coord`` replaces the ``strct.ext_manipulation.add_functional_group`` function allowing ``Structure`` objects as input and adding methods to define the orientation and position of the guest structure in more detail (PR #37 <https://github.com/aim2dat/aim2dat/pull/37>`_).
 * ``strct.Structure`` has now site attributes which store site specific information (PR #39 <https://github.com/aim2dat/aim2dat/pull/39>`_).
 
 **Depreciations:**
 
-* ``strct.ext_manipulation.add_structure_coord`` replaces ``strct.ext_manipulation.add_functional_group`` function (PR #35 <https://github.com/aim2dat/aim2dat/pull/37>`_).
+**Breaking Changes:**
+
+* Moved ``dict_*`` functions from ``aiida_workflows.utils`` to ``utils.dict_tools`` (PR #36 <https://github.com/aim2dat/aim2dat/pull/36>`_).
+* ``strct.ext_manipulation.add_structure_coord`` replaces ``strct.ext_manipulation.add_functional_group`` function (PR #37 <https://github.com/aim2dat/aim2dat/pull/37>`_).
 
 Version 0.1.0
 =============

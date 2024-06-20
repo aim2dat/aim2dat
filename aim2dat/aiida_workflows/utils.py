@@ -17,6 +17,7 @@ from aim2dat.strct.surface_utils import (
 )
 from aim2dat.strct.strct import Structure
 from aim2dat.strct.brillouin_zone_2d import _get_kpath
+from aim2dat.utils.dict_tools import dict_retrieve_parameter
 
 
 @calcfunction
@@ -306,107 +307,3 @@ def obtain_value_from_aiida_node(aiida_node):
     else:
         raise ValueError(f"{type(aiida_node)} is not supported.")
     return value
-
-
-def dict_set_parameter(dictionary, parameter_tree, value):
-    """
-    Set parameter in a nested dictionary.
-
-    Parameters
-    ----------
-    dictionary : dict
-        Input dictionary.
-    parameter_tree : list
-        List of dictionary key words.
-    value : str, float or int
-        Value of the parameter.
-
-    Returns
-    -------
-    dictionary : dict
-        Output dictionary.
-    """
-    helper_dict = dictionary
-    can_add = True
-
-    for parameter in parameter_tree[:-1]:
-        if parameter in helper_dict:
-            helper_dict = helper_dict[parameter]
-        elif isinstance(helper_dict, dict):
-            helper_dict[parameter] = {}
-            helper_dict = helper_dict[parameter]
-        else:
-            can_add = False
-
-    if can_add:
-        helper_dict[parameter_tree[-1]] = value
-    else:
-        raise ValueError("Cannot add value to dictionary.")
-
-
-def dict_retrieve_parameter(dictionary, parameter_tree):
-    """
-    Retrieve value from nested dictionary.
-
-    Parameters
-    ----------
-    dictionary : dict
-        Input dictionary.
-    parameter_tree : list
-        List of dictionary key words.
-
-    Returns
-    -------
-    value :
-        The value of the parameter or ``None`` if the key word cound not be found.
-    """
-    helper_dict = dictionary
-
-    for parameter in parameter_tree:
-        if parameter in helper_dict:
-            helper_dict = helper_dict[parameter]
-        else:
-            helper_dict = None
-            break
-    return helper_dict
-
-
-def dict_create_tree(dictionary, parameter_tree):
-    """
-    Create a nested dictionary.
-
-    Parameters
-    ----------
-    dictionary : dict
-        Input dictionary.
-    parameter_tree : list
-        List of dictionary key words.
-    """
-    helper_dict = dictionary
-    for parameter in parameter_tree:
-        if isinstance(helper_dict, dict):
-            if parameter in helper_dict:
-                helper_dict = helper_dict[parameter]
-            else:
-                helper_dict[parameter] = {}
-                helper_dict = helper_dict[parameter]
-        else:
-            raise ValueError("Cannot create nested dictionary.")
-
-
-def dict_merge(a, b, path=None):
-    """
-    Merge two dictionaries.
-    """
-    if path is None:
-        path = []
-    for key in b:
-        if key in a:
-            if isinstance(a[key], dict) and isinstance(b[key], dict):
-                dict_merge(a[key], b[key], path + [str(key)])
-            elif a[key] == b[key]:
-                pass  # same leave value
-            else:
-                a[key] = b[key]
-        else:
-            a[key] = b[key]

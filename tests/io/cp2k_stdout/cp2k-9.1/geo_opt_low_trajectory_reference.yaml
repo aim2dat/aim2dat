@@ -14,11 +14,11 @@
 - [nr_steps, 2]
 - - motion_step_info
   - - {scf_converged: true, nr_scf_steps: 8, energy: -1.160960515442514}
-    - {scf_converged: true, nr_scf_steps: 4, energy: -1.161180190094638}
-    - {scf_converged: true, nr_scf_steps: 4, energy: -1.161185372076127, max_step: 0.0178180522,
+    - {scf_converged: true, nr_scf_steps: 4, energy: -1.161180190094638, max_step: 0.0178180522,
       rms_step: 0.0102872569, max_grad: 0.0022539257, rms_grad: 0.0013013046}
-    - {scf_converged: true, nr_scf_steps: 4, energy: -1.161185372075949, max_step: 0.0024333339,
+    - {scf_converged: true, nr_scf_steps: 4, energy: -1.161185372076127, max_step: 0.0024333339,
       rms_step: 0.0014048858, max_grad: 0.0001178849, rms_grad: 6.80609e-05}
+    - {scf_converged: true, nr_scf_steps: 4, energy: -1.161185372075949}
 - [runtime, 1.089]
 - [nwarnings, 1]
 - [energy_units, a.u.]

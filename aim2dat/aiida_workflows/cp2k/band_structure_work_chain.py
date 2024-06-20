@@ -13,7 +13,8 @@ from aiida.engine import (
 from aim2dat.aiida_workflows.cp2k.base_core_work_chain import _BaseCoreWorkChain
 from aim2dat.aiida_workflows.cp2k.core_work_chain_handlers import _switch_to_atomic_scf_guess
 from aim2dat.aiida_workflows.cp2k.auxiliary_functions import calculate_added_mos
-from aim2dat.aiida_workflows.utils import seekpath_structure_analysis, dict_create_tree
+from aim2dat.aiida_workflows.utils import seekpath_structure_analysis
+from aim2dat.utils.dict_tools import dict_create_tree
 from aim2dat.aiida_workflows.cp2k.work_chain_specs import seekpath_p_specs
 
 

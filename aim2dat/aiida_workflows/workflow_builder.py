@@ -24,11 +24,11 @@ from aim2dat.io.yaml import load_yaml_file, store_in_yaml_file
 from aim2dat.aiida_workflows.utils import (
     create_aiida_node,
     obtain_value_from_aiida_node,
-    dict_retrieve_parameter,
 )
 from aim2dat.ext_interfaces.import_opt_dependencies import _check_package_dependencies
 from aim2dat.ext_interfaces.aiida import _load_data_node, _create_group
 from aim2dat.ext_interfaces.pandas import _turn_dict_into_pandas_df, _apply_color_map
+from aim2dat.utils.dict_tools import dict_retrieve_parameter
 
 
 AiidaCode = DataFactory("core.code")
