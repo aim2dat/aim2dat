@@ -70,14 +70,9 @@ def dict_create_tree(dictionary, parameter_tree):
     """
     helper_dict = dictionary
     for parameter in parameter_tree:
-        if isinstance(helper_dict, dict):
-            if parameter in helper_dict:
-                helper_dict = helper_dict[parameter]
-            else:
-                helper_dict[parameter] = {}
-                helper_dict = helper_dict[parameter]
-        else:
+        if not isinstance(helper_dict, dict):
             raise ValueError("Cannot create nested dictionary.")
+        helper_dict = helper_dict.setdefault(parameter, {})
 
 
 def dict_merge(a, b, path=None):
