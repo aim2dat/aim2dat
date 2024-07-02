@@ -187,7 +187,8 @@ class StructureImporter(ConstraintsMixin):
             The initial or final structure can be queried by setting this attribute
             to ``initial`` or ``final``, respectively. The default setting is ``initial``.
         use_openapi : bool (optional)
-            Whether to use openapi as provider. The default value is ``False``.
+            Whether to use the openapi interface of Materials Project. If set to ``False`` the 
+            legacy interface is used. The default value is ``False``.
         """
         if not isinstance(api_key, str):
             raise TypeError(
