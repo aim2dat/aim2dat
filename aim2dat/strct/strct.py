@@ -562,7 +562,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
 
         Returns
         -------
-        aim2dat.strct.strct.Structure
+        aim2dat.strct.Structure
             Structure.
         """
         backend_module = _return_ext_interface_modules("ase_atoms")
@@ -595,7 +595,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
 
         Returns
         -------
-        aim2dat.strct.strct.Structure
+        aim2dat.strct.Structure
             Structure.
         """
         backend_module = _return_ext_interface_modules("ase_atoms")
@@ -627,7 +627,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
 
         Returns
         -------
-        aim2dat.strct.strct.Structure
+        aim2dat.strct.Structure
             Structure.
         """
         backend_module = _return_ext_interface_modules("pymatgen")
@@ -660,7 +660,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
 
         Returns
         -------
-        aim2dat.strct.strct.Structure
+        aim2dat.strct.Structure
             Structure.
         """
         backend_module = _return_ext_interface_modules("aiida")
