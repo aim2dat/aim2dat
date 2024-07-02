@@ -183,9 +183,11 @@ class StructureImporter(ConstraintsMixin):
             of strings (e.g. ``['el_bandstructure', 'el_dos']`` to obtain the electronic band
             structure and the electronic density of states). The default value is ``[]``.
         structure_type : str (optional)
-            Materials project includes the initial and final (relaxed) stucture in the database.
-            The intial or final structure can be queried by setting this attribute
+            Materials project includes the initial and final (relaxed) structure in the database.
+            The initial or final structure can be queried by setting this attribute
             to ``initial`` or ``final``, respectively. The default setting is ``initial``.
+        use_openapi : bool (optional)
+            Whether to use openapi as provider. The default value is ``False``.
         """
         if not isinstance(api_key, str):
             raise TypeError(
