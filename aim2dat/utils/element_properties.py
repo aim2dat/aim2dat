@@ -61,13 +61,15 @@ def get_atomic_radius(element, radius_type="covalent"):
     * ``'covalent'`` are from :doi:`10.1039/B801115J` obtained via ase.
     * ``'vdw'`` are obtained via ase.
     * ``'chen_manz'`` are from :doi:`10.1039/C9RA07327B`.
+    * ``'vdw_charry_tkatchenko'`` are from :doi:`10.26434/chemrxiv-2024-m3rtp-v2`.
 
     Parameters
     ----------
     element : str or int
         Atomic number, name or symbol of the element.
     radius_type : str (optional)
-        Radius type. Valid options are ``'covalent'``, ``'vdw'`` or ``'chen_manz'``.
+        Radius type. Valid options are ``'covalent'``, ``'vdw'``, ``'chen_manz'``,
+        or ``'vdw_charry_tkatchenko'``.
 
     Returns
     -------
@@ -85,7 +87,7 @@ def get_atomic_radius(element, radius_type="covalent"):
         radius = covalent_radii[el_number]
     elif radius_type == "vdw":
         radius = vdw_radii[el_number]
-    elif radius_type == "chen_manz":
+    elif radius_type in ["chen_manz", "vdw_charry_tkatchenko"]:
         file_path = os.path.dirname(__file__) + "/data_files/atomic_radii.yaml"
         radius = load_yaml_file(file_path)[radius_type][element]
     else:
