@@ -13,7 +13,7 @@ def _gaussian(x: np.array, sigma: float) -> np.array:
     x : np.array
         x-values.
     sigma : float
-        Scale parameter.
+        Scale parameter corresponding to the standard deviation.
 
     Returns
     -------
@@ -32,7 +32,7 @@ def _lorentzian(x: np.array, sigma: float) -> np.array:
     x : np.array
         x-values.
     sigma : float
-        Scale parameter.
+        Scale parameter corresponding to the full-width at half-maximum (FWHM).
 
     Returns
     -------
@@ -47,7 +47,11 @@ AVAILABLE_SMEARING_METHODS = {"gaussian": _gaussian, "lorentzian": _lorentzian}
 
 
 def apply_smearing(
-    y: np.array, sigma: float = 0.5, radius: int = None, method: str = "gaussian"
+    y: np.array,
+    sampling_width: float = 1.0,
+    sigma: float = 0.5,
+    radius: int = None,
+    method: str = "gaussian",
 ) -> np.array:
     """Apply smearing to a dataset. Different smearing methods can be specified.
 
@@ -55,8 +59,10 @@ def apply_smearing(
     ----------
     y : np.array
         y-values of dataset.
+    sampling_width : float
+        Sampling width of the x-axis, i.e. distance between adjacent x-values. Defaults to 1.0.
     sigma : float
-        Scale parameter. Defaults to 0.05.
+        Scale parameter. Defaults to 0.5.
     radius : int
         Radius of the kernel.
     method : str
@@ -73,8 +79,9 @@ def apply_smearing(
     if radius is None:
         radius = int(4 * sigma + 0.5)
 
-    weights = smearing_method(np.arange(-radius, radius + 1), sigma)
+    weights = smearing_method(np.arange(-radius, radius + sampling_width, sampling_width), sigma)
     weights = weights / weights.sum()
+
     y_smeared = np.convolve(y, weights, mode="same")
 
     return y_smeared
