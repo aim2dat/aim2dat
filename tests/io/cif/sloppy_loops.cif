@@ -1,0 +1,20 @@
+data_Test
+
+loop_ _citation_id _citation_journal_full
+_citation_year
+_citation_journal_volume
+_citation_page_first
+_citation_page_last
+_citation_journal_id_ASTM
+primary
+
+;
+Test Journal
+; 1974 30 1481 1484 ACBCAR
+
+primary
+;Test;
+2000 31 14 20 ACBC
+primary
+;Test2
+; 2001 45 24 450 DDD

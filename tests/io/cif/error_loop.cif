@@ -1,0 +1,8 @@
+data_GaAs_216_conv
+
+loop_ _atom_site_label _atom_site_fract_x _atom_site_fract_y _atom_site_fract_z
+Ga .0 .0 .0
+Ga 0.0 1.5 0.5
+Ga 0.5 0.0 0.5
+Ga 0.5 0.5 0.0
+As .75 0.75
