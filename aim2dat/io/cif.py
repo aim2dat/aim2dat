@@ -136,7 +136,11 @@ class _CIFDataBlock:
                 for kind, el in zip(loop["atom_site_label"], loop["atom_site_type_symbol"]):
                     kind_el_mapping[kind] = self._extract_element(el)
             for key, values in loop.items():
-                if key not in ["atom_site_label", "atom_site_type_symbol"] + self._atomic_site_coord_fields:
+                if (
+                    key
+                    not in ["atom_site_label", "atom_site_type_symbol"]
+                    + self._atomic_site_coord_fields
+                ):
                     prel_site_attributes[key] = values.copy()
 
         # Try to get element symbols from site labels:
@@ -354,7 +358,7 @@ class _CIFDataBlock:
         for pattern, t in self._patterns:
             match = pattern.match(value)
             if match and len(match.group(1)) > 0:
-                #print(match, len(match.group(1)))
+                # print(match, len(match.group(1)))
                 return t(match.group(1))
         return value
 
@@ -369,7 +373,12 @@ class _CIFDataBlock:
         return el
 
 
-def read_file(file_name, extract_structures=False, strct_check_chem_formula=True, strct_get_sym_op_from_sg=True):
+def read_file(
+    file_name,
+    extract_structures=False,
+    strct_check_chem_formula=True,
+    strct_get_sym_op_from_sg=True,
+):
     """
     Read cif file.
 
@@ -416,7 +425,9 @@ def read_file(file_name, extract_structures=False, strct_check_chem_formula=True
                 warn("Data block 'structures' is overwritten.", UserWarning)
             cell = block.get_cell()
             if cell is not None:
-                elements, kinds, positions, site_attributes = block.get_atomic_sites(strct_check_chem_formula, strct_get_sym_op_from_sg)
+                elements, kinds, positions, site_attributes = block.get_atomic_sites(
+                    strct_check_chem_formula, strct_get_sym_op_from_sg
+                )
                 structures.append(
                     {
                         "cell": cell,

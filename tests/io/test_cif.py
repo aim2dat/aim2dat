@@ -86,11 +86,12 @@ def test_extract_structures_with_site_attributes(structure_comparison):
         PATH + "crystals_with_site_attributes.cif",
         extract_structures=True,
         strct_check_chem_formula=False,
-        strct_get_sym_op_from_sg=False
+        strct_get_sym_op_from_sg=False,
     )
     structure = Structure(**outp_dict["structures"][0])
     ref_strct = load_yaml_file(STRUCTURES_PATH + f"{structure.label}.yaml")
     ref_strct["label"] = structure.label
     structure_comparison(structure, ref_strct)
-    assert structure.site_attributes == {"atom_site_occupancy": (0.5, 0.5, 1.0, 0.5, 0.2, 0.4, 0.2, 0.1)}
-
+    assert structure.site_attributes == {
+        "atom_site_occupancy": (0.5, 0.5, 1.0, 0.5, 0.2, 0.4, 0.2, 0.1)
+    }
