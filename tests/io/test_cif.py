@@ -41,9 +41,9 @@ def test_errors_and_warnings():
         read_file(PATH + "warning_space_group.cif", extract_structures=True)
 
 
-def test_sloppy_loop():
-    """Test loops that are not well defined."""
-    outp_dict = read_file(PATH + "sloppy_loops.cif")
+def test_loops():
+    """Test different loop constructions."""
+    outp_dict = read_file(PATH + "loop_test.cif")
     assert outp_dict == {
         "Test": {
             "loops": [
@@ -55,7 +55,16 @@ def test_sloppy_loop():
                     "citation_page_first": [1481, 14, 24],
                     "citation_page_last": [1484, 20, 450],
                     "citation_journal_id_astm": ["ACBCAR", "ACBC", "DDD"],
-                }
+                },
+                {
+                    "platon_squeeze_void_nr": [1],
+                    "platon_squeeze_void_average_x": [-0.01],
+                    "platon_squeeze_void_average_y": [-0.025],
+                    "platon_squeeze_void_average_z": [-0.5],
+                    "platon_squeeze_void_volume": [10],
+                    "platon_squeeze_void_count_electrons": [20],
+                    "platon_squeeze_void_content": [""],
+                },
             ]
         }
     }
@@ -69,3 +78,19 @@ def test_extract_structures(structure_comparison):
         ref_strct = load_yaml_file(STRUCTURES_PATH + f"{strct.label}.yaml")
         ref_strct["label"] = strct.label
         structure_comparison(strct, ref_strct)
+
+
+def test_extract_structures_with_site_attributes(structure_comparison):
+    """Test parsing of site attributes and strct parameters."""
+    outp_dict = read_file(
+        PATH + "crystals_with_site_attributes.cif",
+        extract_structures=True,
+        strct_check_chem_formula=False,
+        strct_get_sym_op_from_sg=False
+    )
+    structure = Structure(**outp_dict["structures"][0])
+    ref_strct = load_yaml_file(STRUCTURES_PATH + f"{structure.label}.yaml")
+    ref_strct["label"] = structure.label
+    structure_comparison(structure, ref_strct)
+    assert structure.site_attributes == {"atom_site_occupancy": (0.5, 0.5, 1.0, 0.5, 0.2, 0.4, 0.2, 0.1)}
+

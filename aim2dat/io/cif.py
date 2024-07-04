@@ -29,7 +29,6 @@ class _CIFDataBlock:
         "cell_angle_gamma",
     ]
     _atomic_site_coord_fields = [
-        "atom_site_label",
         "atom_site_fract_x",
         "atom_site_fract_y",
         "atom_site_fract_z",
@@ -46,8 +45,8 @@ class _CIFDataBlock:
     _chem_formula_fields = ["chemical_formula_sum"]
     _pred_element_mapping = {"Ow": "O", "Hw": "H"}
     _patterns = [
-        (re.compile(r"^([+-]?[0-9]*)$"), int),
-        (re.compile(r"^" + FLOAT + r"$"), float),
+        (re.compile(r"^([+-]?[0-9]+)$"), int),
+        (re.compile(r"^" + FLOAT), float),
     ]
     _sym_op_pattern = re.compile(
         rf"(?P<sign>[-+])?(?P<num>({FLOAT}))?(\/(?P<den>{FLOAT}))?(?P<coord>[x-z])?"
@@ -117,29 +116,42 @@ class _CIFDataBlock:
         if all(f0 in self.fields for f0 in self._cell_fields):
             return _get_cell_from_lattice_p(*[self.fields[f0] for f0 in self._cell_fields])
 
-    def get_atomic_sites(self):
+    def get_atomic_sites(self, check_chem_formula, get_sym_op_from_sg):
         # Get original sites:
         kinds = []
         scaled_coords = []
         kind_el_mapping = {}
+        prel_site_attributes = {}
         for loop in self.loops:
+            if "atom_site_label" not in loop:
+                continue
+
             if all(k0 in loop for k0 in self._atomic_site_coord_fields):
                 scaled_coords0 = []
-                for key in self._atomic_site_coord_fields[1:]:
+                for key in self._atomic_site_coord_fields:
                     scaled_coords0.append(loop[key])
                 scaled_coords += list(zip(*scaled_coords0))
                 kinds += loop["atom_site_label"]
-            if all(k0 in loop for k0 in ["atom_site_label", "atom_site_type_symbol"]):
+            if "atom_site_type_symbol" in loop:
                 for kind, el in zip(loop["atom_site_label"], loop["atom_site_type_symbol"]):
                     kind_el_mapping[kind] = self._extract_element(el)
+            for key, values in loop.items():
+                if key not in ["atom_site_label", "atom_site_type_symbol"] + self._atomic_site_coord_fields:
+                    prel_site_attributes[key] = values.copy()
 
         # Try to get element symbols from site labels:
         if len(kind_el_mapping) == 0:
             for kind in kinds:
                 kind_el_mapping[kind] = self._extract_element(kind)
 
+        # In case site attributes are given, check consistency:
+        site_attributes = {}
+        for key, val in prel_site_attributes.items():
+            if len(val) == len(kinds):
+                site_attributes[key] = val
+
         # Add sites from symmetry operations:
-        sym_ops = self.get_symmetry_operations()
+        sym_ops = self.get_symmetry_operations(get_sym_op_from_sg)
         sym_ops = [(np.array(rot), np.array(trans)) for rot, trans in sym_ops]
         scaled_coords_bf = [[round(p0, 15) % 1 for p0 in pos] for pos in scaled_coords]
         n_sites = len(kinds)
@@ -152,8 +164,10 @@ class _CIFDataBlock:
                 if any(dist < 1e-3 for dist in dists):
                     continue
                 kinds.append(kinds[idx])
-                scaled_coords.append(new_pos.tolist())
+                scaled_coords.append(tuple(new_pos.tolist()))
                 scaled_coords_bf.append(new_pos_bf)
+                for val in site_attributes.values():
+                    val.append(val[idx])
 
         # In case elements and kinds coincide only elements is considered:
         elements = [kind_el_mapping[kind] for kind in kinds]
@@ -161,16 +175,17 @@ class _CIFDataBlock:
             kinds = None
 
         # Check sum formula in case given:
-        chem_formula = self.get_chem_formula()
-        if chem_formula is not None:
-            if not utils_cf.compare_formulas(
-                chem_formula, utils_cf.transform_list_to_dict(elements), reduce_formulas=True
-            ):
-                raise ValueError("Chemical formula doesn't match with number of sites.")
+        if check_chem_formula:
+            chem_formula = self.get_chem_formula()
+            if chem_formula is not None:
+                if not utils_cf.compare_formulas(
+                    chem_formula, utils_cf.transform_list_to_dict(elements), reduce_formulas=True
+                ):
+                    raise ValueError("Chemical formula doesn't match with number of sites.")
 
-        return elements, kinds, scaled_coords
+        return elements, kinds, scaled_coords, site_attributes
 
-    def get_symmetry_operations(self):
+    def get_symmetry_operations(self, get_sym_op_from_sg):
         sym_op_strings = []
         for loop in self.loops:
             for field_key in self._symmetry_fields:
@@ -194,7 +209,7 @@ class _CIFDataBlock:
                     else:
                         rot_matrix[coord_idx]["xyz".index(m["coord"])] += pref
             sym_ops.append((rot_matrix.tolist(), shift.tolist()))
-        if len(sym_ops) == 0:
+        if get_sym_op_from_sg and len(sym_ops) == 0:
             sg_details = self.get_space_group_details(return_sym_operations=True)
             if sg_details is not None:
                 warn(
@@ -294,24 +309,20 @@ class _CIFDataBlock:
         line_split = line.split()
         loop_values = []
         str_val_limiter = None
+        string_val = None
         for val in line_split:
-            limiter_set = False
-            for l0 in self._string_limiters:
-                if val.startswith(l0):
-                    loop_values.append(val)
-                    limiter_set = True
-                    if not val.endswith(l0):
-                        str_val_limiter = l0
-                    break
-            if limiter_set:
-                continue
-
-            if str_val_limiter is None:
-                loop_values.append(val)
-            else:
-                loop_values[-1] += " " + val
+            if val[0] in self._string_limiters and string_val is None:
+                str_val_limiter = val[0]
+                string_val = val[1:] if len(val) > 1 else ""
+            elif string_val is not None:
+                string_val += " " + val
                 if val.endswith(str_val_limiter):
-                    str_val_limiter = None
+                    string_val = string_val[:-1]
+                    loop_values.append(string_val)
+                    string_val = None
+            else:
+                loop_values.append(val)
+
         return [self._transf_value(val) for val in loop_values]
 
     def _finalize_current_loop(self, line_idx, line):
@@ -342,7 +353,8 @@ class _CIFDataBlock:
             value = value.strip(sl)
         for pattern, t in self._patterns:
             match = pattern.match(value)
-            if match:
+            if match and len(match.group(1)) > 0:
+                #print(match, len(match.group(1)))
                 return t(match.group(1))
         return value
 
@@ -357,7 +369,7 @@ class _CIFDataBlock:
         return el
 
 
-def read_file(file_name, extract_structures=False):
+def read_file(file_name, extract_structures=False, strct_check_chem_formula=True, strct_get_sym_op_from_sg=True):
     """
     Read cif file.
 
@@ -368,6 +380,11 @@ def read_file(file_name, extract_structures=False):
     extract_structures : bool (optional)
         Whether to extract alls crystal structures and add them to the output dictionary with the
         key ``'structures'``.
+    strct_check_chem_formula : bool (optional)
+        Check the chemical formula given by field matches with the structure.
+    strct_get_sym_op_from_sg : bool (optional)
+        Add symmetry operations based on the space group to add symmetry equivalent sites to the
+        structures.
 
     Returns
     -------
@@ -399,13 +416,14 @@ def read_file(file_name, extract_structures=False):
                 warn("Data block 'structures' is overwritten.", UserWarning)
             cell = block.get_cell()
             if cell is not None:
-                elements, kinds, positions = block.get_atomic_sites()
+                elements, kinds, positions, site_attributes = block.get_atomic_sites(strct_check_chem_formula, strct_get_sym_op_from_sg)
                 structures.append(
                     {
                         "cell": cell,
                         "label": block.title,
                         "elements": elements,
                         "kinds": kinds,
+                        "site_attributes": site_attributes,
                         "positions": positions,
                         "pbc": True,
                         "is_cartesian": False,
