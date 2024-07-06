@@ -1,0 +1,5 @@
+data_structures
+_chemical_formula_sum GaAs
+
+data_GaAs_216_conv
+_chemical_formula_sum GaAs

@@ -12,7 +12,7 @@ from aim2dat.io.utils import custom_open
 from aim2dat.utils.dict_tools import dict_set_parameter
 
 
-FLOAT = r"([+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?)"
+FLOAT = r"(([+-]?\d+)?\.?\d+([eE][-+]?\d+)?)"
 
 
 class _BasePattern(abc.ABC):

@@ -1,5 +1,8 @@
 """Wrapper functions for spglib."""
 
+# Standard library imports
+from typing import Union
+
 # Third party library imports
 import numpy as np
 import spglib
@@ -82,6 +85,41 @@ def _transform_cell_to_structure(cell):
         "pbc": True,
     }
     return Structure(**structure)
+
+
+def _get_space_group_details(space_group: Union[int, str], return_sym_operations: bool):
+    def _get_sym_ops(output_dict, hall_nr, return_sym_operations):
+        if return_sym_operations:
+            spglib_sym = spglib.get_symmetry_from_database(hall_nr)
+            output_dict["symmetry_operations"] = [
+                [rot, trans]
+                for rot, trans in zip(
+                    spglib_sym["rotations"].tolist(), spglib_sym["translations"].tolist()
+                )
+            ]
+
+    str_keys = [
+        "international_short",
+        "international_full",
+        "international",
+        "schoenflies",
+        "hall_symbol",
+    ]
+    output_dict = {}
+    is_int = True
+    if isinstance(space_group, str):
+        is_int = False
+        space_group = space_group.lower().replace(" ", "")
+    for hall_nr in range(1, 531):
+        output_dict = spglib.get_spacegroup_type(hall_nr)
+        output_dict["hall_number"] = hall_nr
+        if is_int and space_group == output_dict["number"]:
+            _get_sym_ops(output_dict, hall_nr, return_sym_operations)
+            break
+        elif space_group in [output_dict[key].lower().replace(" ", "") for key in str_keys]:
+            _get_sym_ops(output_dict, hall_nr, return_sym_operations)
+            break
+    return output_dict
 
 
 def _space_group_analysis(

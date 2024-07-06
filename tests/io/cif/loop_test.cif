@@ -1,0 +1,31 @@
+data_Test
+
+loop_ _citation_id _citation_journal_full
+_citation_year
+_citation_journal_volume
+_citation_page_first
+_citation_page_last
+_citation_journal_id_ASTM
+primary
+
+;
+Test Journal
+; 1974 30 1481 1484 ACBCAR
+
+primary
+;Test;
+2000 31 14 20 ACBC
+primary
+;Test2
+; 2001 45 24 450 DDD
+
+loop_
+  _platon_squeeze_void_nr
+  _platon_squeeze_void_average_x
+  _platon_squeeze_void_average_y
+  _platon_squeeze_void_average_z
+  _platon_squeeze_void_volume
+  _platon_squeeze_void_count_electrons
+  _platon_squeeze_void_content
+   1 -0.01 -0.025
+   -0.5     10     20 ' '

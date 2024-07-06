@@ -1,14 +1,19 @@
 """Module containing functions to parse space groups and to get information on the lattice."""
 
 # TODO change to libspg
+# Standard library imports
+from typing import Union
 
 # Third party library imports
 import ase.spacegroup as ase_sg
 
+# Internal library imports
+from aim2dat.ext_interfaces import _return_ext_interface_modules
+
 
 def transform_to_nr(space_group):
     """
-    Parse the space group into the corresponding number (if necessary).
+    Parse the space group into the corresponding number (if necessary) using the ase library.
 
     Parameters
     ----------
@@ -42,7 +47,7 @@ def transform_to_nr(space_group):
 
 def transform_to_str(space_group):
     """
-    Parse the space group from its number to the symbol.
+    Parse the space group from its number to the symbol using the ase library.
 
     Parameters
     ----------
@@ -60,6 +65,53 @@ def transform_to_str(space_group):
     else:
         sg_str = space_group
     return sg_str
+
+
+def get_space_group_details(space_group: Union[str, int], return_sym_operations: bool = False):
+    """
+    Return space group details from name or international number using spglib.
+
+    Parameters
+    ----------
+    space_group : str or int
+        Space group name or international number.
+    return_sym_operations : bool (optional)
+        Whether to return the symmetry operations as well.
+
+    Returns
+    -------
+    dict
+        - number : int
+            International number of the space group.
+        - international_short : str
+            International short symbol of the space group.
+        - international_full : str
+            International full symbol of the space group.
+        - international : str
+            International symbol of the space group.
+        - schoenflies : str
+            Schoenflies symbol of the space group.
+        - hall_number : int
+            Hall number of the space group.
+        - hall_symbol : str
+            Hall symbol of the space group.
+        - choice : str
+            Centring, origin, basis vector setting.
+        - pointgroup_international : str
+            International symbol of the crystallographic point group.
+        - pointgroup_schoenflies : str
+            Schoenflies symbol of the crystallographic point group.
+        - arithmetic_crystal_class_number : int
+            Arithmetic crystal class number.
+        - arithmetic_crystal_class_symbol : str
+            Arithmetic crystal class symbol.
+        - symmetry_operations : list
+            List of tuples containing the rotation matrix and translation as lists if
+            ``return_sym_operations`` is set to ``True``.
+    """
+    return _return_ext_interface_modules("spglib")._get_space_group_details(
+        space_group, return_sym_operations
+    )
 
 
 def get_lattice_type(space_group):
