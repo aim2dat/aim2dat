@@ -1,0 +1,33 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - []
+- [cp2k_version, 2024.1]
+- [run_type, CELL_OPT]
+- [natoms, 4]
+- [nelectrons, 32]
+- [nr_occ_orbitals, 16]
+- [scf_converged, true]
+- [energy_scf, -65.98637084181989]
+- [energy, -65.9863705297548]
+- [nr_steps, 7]
+- - motion_step_info
+  - - {scf_converged: true, nr_scf_steps: 13, energy: -65.98447337145907, pressure: 2661.5903491283}
+    - {scf_converged: true, nr_scf_steps: 8, energy: -65.98454030695082, pressure: 2609.3752156686,
+      max_step: 0.0063842216, rms_step: 0.0019369726, max_grad: 0.0062476477, rms_grad: 0.001897774}
+    - {scf_converged: true, nr_scf_steps: 10, energy: -65.98627244457354, pressure: 609.1417616528,
+      max_step: 0.3088546217, rms_step: 0.0938170196, max_grad: 0.0011642266, rms_grad: 0.0003958062}
+    - {scf_converged: true, nr_scf_steps: 9, energy: -65.98629650950086, pressure: 426.5443897975,
+      max_step: 0.0356106827, rms_step: 0.0109176596, max_grad: 0.0012905019, rms_grad: 0.0003817746}
+    - {scf_converged: true, nr_scf_steps: 8, energy: -65.98630053848743, pressure: 383.2733378695,
+      max_step: 0.0082525186, rms_step: 0.0026782525, max_grad: 0.0013044917, rms_grad: 0.0003853292}
+    - {scf_converged: true, nr_scf_steps: 8, energy: -65.9863099090177, pressure: 319.1293278288,
+      max_step: 0.0121235602, rms_step: 0.0044908648, max_grad: 0.0012884061, rms_grad: 0.0003892423}
+    - {scf_converged: true, nr_scf_steps: 8, energy: -65.98633239278264, pressure: 227.685931303,
+      max_step: 0.019600364, rms_step: 0.0083283176, max_grad: 0.0011773278, rms_grad: 0.0003878434}
+    - {scf_converged: true, nr_scf_steps: 9, energy: -65.9863705297548, pressure: 159.2088699343,
+      max_step: 0.0368724737, rms_step: 0.0131528619, max_grad: 0.0008830957, rms_grad: 0.0003680398}
+    - {}
+- [energy_units, a.u.]
+- [interrupted, true]
