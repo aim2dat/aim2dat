@@ -3,6 +3,7 @@
 # Standard library imports
 import math
 import os
+from dataclasses import make_dataclass, field
 
 # Third party library imports
 import pytest
@@ -473,6 +474,13 @@ def aiida_create_wc_inputs():
             ctx["inputs"]["parent_calc_folder"] = "test"
         ctx = AttributeDict(ctx)
         ctx.inputs.metadata = {"options": {"resources": {}}}
+        ctx.inputs.code = make_dataclass(
+            "code",
+            [
+                ("full_label", str, field(default="cp2k-8.1")),
+                ("description", str, field(default="")),
+            ],
+        )
         return inputs, ctx, strct_node
 
     return _aiida_create_wc_inputs
