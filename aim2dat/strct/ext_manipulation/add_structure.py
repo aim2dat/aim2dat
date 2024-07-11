@@ -97,7 +97,9 @@ def add_structure_random(
             )
         new_structure["positions"] = list(new_structure["positions"]) + guest_positions.tolist()
         new_structure = Structure(**new_structure, wrap=wrap)
-        is_added = _check_distances(new_structure, len(structure), dist_threshold, True)
+        is_added = _check_distances(
+            new_structure, len(guest_strct["elements"]), dist_threshold, True
+        )
         if is_added:
             return new_structure, "_added-" + guest_strct_label
     raise ValueError("Could not add guest structure, host structure seems to be too aggregated.")
@@ -362,8 +364,8 @@ def _check_distances(
     if dist_threshold is None:
         return True
 
-    indices_old = list(range(len(new_structure) - n_atoms + 1))
-    indices_new = list(range(len(new_structure) - n_atoms + 1, len(new_structure)))
+    indices_old = list(range(len(new_structure) - n_atoms))
+    indices_new = list(range(len(new_structure) - n_atoms, len(new_structure)))
     indices1, indices2 = zip(*itertools.product(indices_old, indices_new))
     dists = new_structure.calculate_distance(
         list(indices1), list(indices2), backfold_positions=True
