@@ -25,6 +25,7 @@ Version 0.2.0
 * ``strct.ext_manipulation.add_structure_coord`` replaces the ``strct.ext_manipulation.add_functional_group`` function allowing ``Structure`` objects as input and adding methods to define the orientation and position of the guest structure in more detail (PR #37 <https://github.com/aim2dat/aim2dat/pull/37>`_).
 * ``strct.Structure`` has now site attributes which store site specific information (PR #39 <https://github.com/aim2dat/aim2dat/pull/39>`_).
 * ``utils.element_properties.get_atomic_radius`` supports now Van der Waals radii determined in :doi:`10.26434/chemrxiv-2024-m3rtp-v2` (PR #44 <https://github.com/aim2dat/aim2dat/pull/44>`_).
+* The newly implemented``strct.ext_manipulation.add_structure_random`` adds a guest structure at a random position and orientation (PR #53 <https://github.com/aim2dat/aim2dat/pull/53>`_).
 
 **Depreciations:**
 
