@@ -6,6 +6,7 @@ Module that implements routines to add a functional group or adsorbed molecule t
 import os
 from typing import Union, List
 import itertools
+import random
 
 # Third party library imports
 import numpy as np
@@ -23,6 +24,83 @@ from aim2dat.io.yaml import load_yaml_file
 
 
 cwd = os.path.dirname(__file__)
+
+
+@external_manipulation_method
+def add_structure_random(
+    structure: Structure,
+    wrap: bool = False,
+    guest_structure: Union[Structure, str] = "CH3",
+    dist_threshold: Union[float, None] = 0.8,
+    random_state: Union[float, None] = None,
+    change_label: bool = False,
+):
+    """
+    Add structure at random position and orientation.
+
+    Parameters
+    ----------
+    structure : aim2dat.strct.Structure
+        Structure to which the guest structure is added.
+    wrap : bool (optional)
+        Wrap atomic positions back into the unit cell.
+    guest_structure : str or aim2dat.strct.Structure (optional)
+        A representation of the guest structure given as a string of a functional group or molecule
+        (viable options are ``'CH3'``, ``'COOH'``, ``'H2O'``, ``'NH2'``, ``'NO2'`` or ``'OH'``), a
+        ``Structure`` object (bond direction is assumed to be the ``[-1.0, 0.0, 0.0]`` direction)
+        or the element symbol to add one single atom.
+    dist_threshold : float or None (optional)
+        Check the distances between all site pairs of the host and guest structure to ensure that
+        none of the added atoms collide.
+    random_state : float or None (optional)
+        Specify the initial random state to ensure reproducible results.
+    change_label : bool (optional)
+        Add suffix to the label of the new structure highlighting the performed manipulation.
+
+    Raises
+    ------
+    ValueError
+        Could not add guest structure, host structure seems to be too aggregated.
+    """
+    guest_strct, guest_strct_label = _check_guest_structure(guest_structure)
+
+    # In case no cell is given we would like to have the structure reasonably close:
+    if structure.cell is None:
+        threshold = 1.5 if dist_threshold is None else dist_threshold + 1.5
+        positions = np.array(structure.positions)
+        min_pos = np.amin(positions, axis=0) - threshold
+        max_pos = np.amax(positions, axis=0)
+        cell = np.zeros((3, 3))
+        for d in range(3):
+            cell[d][d] = max_pos[d] + threshold
+    else:
+        min_pos = np.zeros(3)
+        cell = np.array(structure.cell)
+
+    random.seed(a=random_state)
+    max_tries = 1000
+    for _ in range(max_tries):
+        guest_positions = np.array(guest_strct["positions"])
+        rot_v = np.array([random.random(), random.random(), random.random()])
+        rotation = Rotation.from_rotvec(2.0 * random.random() * np.pi * rot_v)
+        rot_matrix = rotation.as_matrix()
+        guest_positions = (rot_matrix.dot(guest_positions.T)).T
+        shift = np.array([random.random(), random.random(), random.random()])
+        shift = (cell.T).dot(shift)
+        guest_positions += shift - min_pos
+
+        new_structure = structure.to_dict()
+        new_structure["elements"] = list(new_structure["elements"]) + list(guest_strct["elements"])
+        if new_structure["kinds"] is not None:
+            new_structure["kinds"] = list(new_structure["kinds"]) + [None] * len(
+                guest_strct["elements"]
+            )
+        new_structure["positions"] = list(new_structure["positions"]) + guest_positions.tolist()
+        new_structure = Structure(**new_structure, wrap=wrap)
+        is_added = _check_distances(new_structure, len(structure), dist_threshold, True)
+        if is_added:
+            return new_structure, "_added-" + guest_strct_label
+    raise ValueError("Could not add guest structure, host structure seems to be too aggregated.")
 
 
 @external_manipulation_method
@@ -158,6 +236,7 @@ def add_structure_coord(
         new_structure, score = _add_mol(
             structure,
             guest_strct,
+            wrap,
             host_pos_np,
             bond_length,
             [0.0, 0.0, 0.0],
@@ -173,6 +252,7 @@ def add_structure_coord(
                         new_strct0, score0 = _add_mol(
                             structure,
                             guest_strct,
+                            wrap,
                             host_pos_np,
                             bond_length,
                             [alpha, beta, gamma],
@@ -188,6 +268,7 @@ def add_structure_coord(
             new_structure, _ = _add_mol(
                 structure,
                 guest_strct,
+                wrap,
                 host_pos_np,
                 bond_length,
                 [0.0, 0.0, 0.0],
@@ -237,7 +318,7 @@ def _derive_bond_dir(host_index, coord):
 
 
 def _add_mol(
-    structure, guest_strct, host_pos, bond_length, angle_pars, ref_dirs, dist_constraints
+    structure, guest_strct, wrap, host_pos, bond_length, angle_pars, ref_dirs, dist_constraints
 ):
     # Reorient and shift guest structure:
     guest_pos = [pos.copy() for pos in guest_strct["positions"]]
@@ -258,7 +339,7 @@ def _add_mol(
         new_structure["positions"].append(pos + host_pos)
         if new_structure["kinds"] is not None:
             new_structure["kinds"].append(None)
-    new_structure = Structure(**new_structure)
+    new_structure = Structure(**new_structure, wrap=wrap)
 
     # Evaluate complex based on the distance constraints:
     score = 0.0
@@ -281,8 +362,8 @@ def _check_distances(
     if dist_threshold is None:
         return True
 
-    indices_old = list(range(len(new_structure) - n_atoms))
-    indices_new = list(range(len(new_structure) - n_atoms, len(new_structure)))
+    indices_old = list(range(len(new_structure) - n_atoms + 1))
+    indices_new = list(range(len(new_structure) - n_atoms + 1, len(new_structure)))
     indices1, indices2 = zip(*itertools.product(indices_old, indices_new))
     dists = new_structure.calculate_distance(
         list(indices1), list(indices2), backfold_positions=True
