@@ -1,7 +1,19 @@
 %YAML 1.2
 ---
-space_group: {int_symbol: Pnma, sg_number: 62, hall_number: 292, point_group_symbol: mmm,
-  schoenflies_symbol: D2h^16, centrosymmetric: true}
+space_group:
+  number: 62
+  international_short: 'Pnma'
+  international_full: 'P 2_1/n 2_1/m 2_1/a'
+  international: 'P n m a'
+  schoenflies: 'D2h^16'
+  hall_number: 292
+  hall_symbol: '-P 2ac 2n'
+  choice: ''
+  pointgroup_international: mmm
+  pointgroup_schoenflies: 'D2h'
+  centrosymmetric: true
+  arithmetic_crystal_class_number: 18
+  arithmetic_crystal_class_symbol: 'mmmP'
 equivalent_sites:
 - wyckoff: c
   symmetry: .m.

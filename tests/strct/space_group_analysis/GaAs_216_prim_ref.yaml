@@ -1,10 +1,17 @@
 space_group:
-  int_symbol: F-43m
-  sg_number: 216
+  number: 216
+  international_short: 'F-43m'
+  international_full: 'F -4 3 m'
+  international: 'F -4 3 m'
+  schoenflies: 'Td^2'
   hall_number: 512
-  point_group_symbol: '-43m'
-  schoenflies_symbol: 'Td^2'
-  centrosymmetric: False
+  hall_symbol: 'F -4 2 3'
+  choice: ''
+  pointgroup_international: -43m
+  pointgroup_schoenflies: 'Td'
+  centrosymmetric: false
+  arithmetic_crystal_class_number: 69
+  arithmetic_crystal_class_symbol: '-43mF'
 equivalent_sites: 
 - sites: [0]
   symmetry: '-43m'

@@ -79,7 +79,7 @@ def test_determine_space_group(nested_dict_comparison, structure, file_suffix, k
     strct_ops = StructureOperations(strct_c)
     sg_dict = strct_ops.determine_space_group("test", **kwargs)
     nested_dict_comparison(sg_dict, ref_outputs)
-    assert strct_c["test"]["attributes"]["space_group"] == sg_dict["space_group"]["sg_number"]
+    assert strct_c["test"]["attributes"]["space_group"] == sg_dict["space_group"]["number"]
 
 
 @pytest.mark.parametrize(
