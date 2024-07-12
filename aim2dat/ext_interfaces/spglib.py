@@ -308,22 +308,3 @@ def _get_space_group_type(hall_number):
             "arithmetic_crystal_class_symbol",
         ],
     )
-    # spglib_output = spglib.get_spacegroup_type(hall_number)
-    # keys = [
-    #     "number",
-    #     "international_short",
-    #     "international_full",
-    #     "international",
-    #     "schoenflies",
-    #     "hall_number",
-    #     "hall_symbol",
-    #     "choice",
-    #     "pointgroup_international",
-    #     "pointgroup_schoenflies",
-    #     "arithmetic_crystal_class_number",
-    #     "arithmetic_crystal_class_symbol"
-    # ]
-    # # TODO Shorten...
-    # output_dict = {key: getattr(spglib_output, key) for key in keys}
-    # print(output_dict)
-    # return output_dict
