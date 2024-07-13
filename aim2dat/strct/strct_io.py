@@ -22,7 +22,7 @@ def get_structure_from_file(
         f_name = "read_structure"
         if len(ff_split) > 1:
             f_name = f"read_{ff_split[1]}_structure"
-        func = getattr(importlib.import_module(m_name, internal_io), f_name)
+        func = getattr(importlib.import_module("aim2dat.io." + m_name), f_name)
         found_func = True
     else:
         m_names = [x.name for x in pkgutil.iter_modules(internal_io.__path__)]

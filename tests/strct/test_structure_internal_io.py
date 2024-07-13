@@ -16,7 +16,9 @@ IO_PATH = os.path.dirname(__file__) + "/io/"
 @pytest.mark.parametrize("system", ["imidazole"])
 def test_read_qe_input_structure(structure_comparison, system):
     """Test read_input_structure function."""
-    structure = Structure.from_file(IO_PATH + "qe_input/" + system + ".in", backend="internal")
+    structure = Structure.from_file(
+        IO_PATH + "qe_input/" + system + ".in", backend="internal", file_format="qe-input"
+    )
     structure_ref = load_yaml_file(IO_PATH + "qe_input/" + system + "_ref.yaml")
     structure_comparison(structure, structure_ref)
 
