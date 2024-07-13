@@ -368,7 +368,14 @@ class StructureCollection:
             )
         )
 
-    def append_from_file(self, label: str, file_path: str, attributes: dict = None):
+    def append_from_file(
+        self,
+        label: str,
+        file_path: str,
+        attributes: dict = None,
+        backend: str = "ase",
+        backend_kwargs: dict = None,
+    ):
         """
         Append structure from file using the ase read-function.
 
@@ -381,7 +388,13 @@ class StructureCollection:
         attributes : dict
             Additional information about the structure.
         """
-        structure = Structure.from_file(file_path, label=label, attributes=attributes)
+        structure = Structure.from_file(
+            file_path,
+            label=label,
+            attributes=attributes,
+            backend=backend,
+            backend_kwargs=backend_kwargs,
+        )
         if isinstance(structure, Structure):
             structure = [structure]
         for strct in structure:

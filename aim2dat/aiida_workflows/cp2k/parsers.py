@@ -16,7 +16,7 @@ from aiida.plugins import DataFactory
 from aiida.common import OutputParsingError
 
 # Internal library imports
-from aim2dat.io.cp2k import read_stdout, read_optimized_structure, read_atom_proj_density_of_states
+from aim2dat.io.cp2k import read_stdout, read_restart_structure, read_atom_proj_density_of_states
 
 
 StructureData = DataFactory("core.structure")
@@ -126,7 +126,7 @@ class _Cp2kBaseParser(Parser):
         # Read the restart file.
         # TODO distinguish different exceptions.
         try:
-            structures = read_optimized_structure(self.retrieved.get_object_content(fname))
+            structures = read_restart_structure(self.retrieved.get_object_content(fname))
         except IOError:
             return self.exit_codes.ERROR_READING_OUTPUT_FILE
 
@@ -137,7 +137,7 @@ class _Cp2kBaseParser(Parser):
             structure = structures[0]
         structure_node = StructureData(cell=structure["cell"], pbc=structure["pbc"])
         for kind, sym, pos in zip(
-            structure["kinds"], structure["symbols"], structure["positions"]
+            structure["kinds"], structure["elements"], structure["positions"]
         ):
             structure_node.append_atom(position=pos, symbols=sym, name=kind)
         return structure_node

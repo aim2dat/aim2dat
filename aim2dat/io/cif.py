@@ -9,6 +9,7 @@ import re
 from scipy.spatial.distance import cdist
 
 # Internal library imports
+from aim2dat.io.utils import read_structure
 from aim2dat.io.base_parser import FLOAT
 from aim2dat.strct.strct_misc import _get_cell_from_lattice_p
 from aim2dat.utils.element_properties import get_element_symbol
@@ -64,12 +65,23 @@ class _CIFDataBlock:
     def add_line(self, line_idx, line):
         line_tr = line.strip().lower()
 
-        # Comment or empty line:
+        # Omit comment or empty line:
         if line.startswith("#") or line == "":
-            pass
+            return None
+
+        # Truncate if comment starts somewhere midline and is not part of string value:
+        if "#" in line:
+            lt = line.split("#")
+            if len(lt) == 1:
+                line = lt[0]
+            else:
+                l1 = lt[0]
+                l2 = "#".join(lt[1:])
+                if not any([str_l in l1 and str_l in l2 for str_l in self._string_limiters]):
+                    line = l1
 
         # Start of loop:
-        elif line_tr.startswith("loop_"):
+        if line_tr.startswith("loop_"):
             # In some cases multi line fields are not properly limited via semicolons.
             self._finalize_current_loop(line_idx, "")
             self._force_finalize_multi_line()
@@ -358,7 +370,6 @@ class _CIFDataBlock:
         for pattern, t in self._patterns:
             match = pattern.match(value)
             if match and len(match.group(1)) > 0:
-                # print(match, len(match.group(1)))
                 return t(match.group(1))
         return value
 
@@ -373,6 +384,7 @@ class _CIFDataBlock:
         return el
 
 
+@read_structure(r".*\.cif", preset_kwargs={"extract_structures": True})
 def read_file(
     file_name,
     extract_structures=False,

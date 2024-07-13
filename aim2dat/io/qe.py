@@ -6,10 +6,11 @@ Module of functions to read output-files of Quantum ESPRESSO.
 import re
 
 # Internal library imports
-from aim2dat.io.utils import read_multiple, custom_open
+from aim2dat.io.utils import read_structure, read_multiple, custom_open
 from aim2dat.utils.units import length
 
 
+@read_structure(r".*\.in(p)?$")
 def read_input_structure(file_name):
     """
     Read structure from the Quantum ESPRESSO input file.

@@ -1,33 +1,5 @@
 data_140K_publ
 
-_pd_block_id
-  2011-05-31T14:42|CUT|JPSM|i11
-
-# start Validation Reply Form
-_vrf_PLAT601_140K_publ
-;
-PROBLEM: Solvent accessible voids of 1189 A**3
-RESPONSE: Porous framework material in vacuo
-;
-_vrf_PLAT201_140K_publ
-;
-PROBLEM: Isotropic non-H atoms in main residue      20
-RESPONSE: Powder diffraction data, kept isotropic
-;
-_vrf_PLAT702_140K_publ
-;
-PROBLEM: Calculated and reported O4-Sc2-O6 angles differ
-RESPONSE: Rounding error.
-;
-# end Validation Reply Form
-
-_audit_creation_method  "from EXP file using GSAS2CIF"
-_audit_creation_date                   2011-05-31T14:42
-_audit_author_name                     JPSM
-_audit_update_record
-; 2011-05-31T14:42  Initial CIF as created by GSAS2CIF
-;
-
 #=============================================================================
 # this information describes the project, paper etc. for the CIF             #
 # Acta Cryst. Section C papers and editorial correspondence is generated     #
