@@ -23,6 +23,8 @@ REF_PATH = os.path.dirname(__file__) + "/cp2k/inputs/"
         ("Al_225_conv", "inp3"),
         ("Al_225_conv", "inp4"),
         ("Al_225_conv", "inp5"),
+        ("Al_225_conv", "inp6"),
+        ("Al_225_conv", "inp7"),
         ("Cs2Te_62_prim_kinds", "inp1"),
     ],
 )
@@ -32,6 +34,10 @@ def test_inputs_general_features(
     """Test function _set_input_parameters."""
     ref = dict(load_yaml_file(REF_PATH + structure + "_" + test_case + "_ref.yaml"))
     inputs, ctx, strct_node = aiida_create_wc_inputs(structure, ref)
+    cp2k_code = ref.get("cp2k_code")
+    if cp2k_code is not None:
+        ctx.inputs.code.full_label = cp2k_code["full_label"]
+        ctx.inputs.code.description = cp2k_code["description"]
     error = _set_input_parameters(inputs, ctx, **ref["add_args"])
     if "error" in ref:
         assert ref["error"][0] == error[0]

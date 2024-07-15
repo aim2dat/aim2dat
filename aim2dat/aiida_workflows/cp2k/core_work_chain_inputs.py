@@ -2,11 +2,13 @@
 
 # Standard library imports
 import os
+import re
 
 # Third party library imports
 import aiida.orm as aiida_orm
 
 # Internal library imports
+from aim2dat.aiida_workflows.cp2k import _supported_versions
 from aim2dat.utils.dict_tools import (
     dict_set_parameter,
     dict_retrieve_parameter,
@@ -18,18 +20,33 @@ from aim2dat.io.yaml import load_yaml_file
 cwd = os.path.dirname(__file__)
 
 
-def _set_numerical_p_xc_functional(cp2k_dict, input_p):
+def _get_version(cp2k_code):
+    """
+    Extract CP2K version from code label or description.
+    """
+    pattern = re.compile(r"\d+\.\d+(.\d+)?")
+    matches = [
+        match for match in pattern.finditer(cp2k_code.full_label + " " + cp2k_code.description)
+    ]
+    for m in matches:
+        if m.group(0) in _supported_versions:
+            return m.group(0)
+    return "2024.1"
+
+
+def _set_numerical_p_xc_functional(cp2k_dict, input_p, cp2k_version):
     """
     Set the parameters for the exchange-correlation functional in the input-paramters.
     """
     xc_keyword_dict = load_yaml_file(cwd + "/parameter_files/xc_functionals_p.yaml")
-
     xc_functional = input_p.value.upper()
-    if xc_functional in xc_keyword_dict:
-        dict_set_parameter(cp2k_dict, ["FORCE_EVAL", "DFT", "XC"], xc_keyword_dict[xc_functional])
-        return True, None
-    else:
-        return False, {"parameter": "numerical_p.xc_functional"}
+    xc_parameters = xc_keyword_dict.get(xc_functional, [])
+    for xc_par in xc_parameters:
+        sup_versions = xc_par.pop("versions")
+        if sup_versions == "all" or cp2k_version in sup_versions:
+            dict_set_parameter(cp2k_dict, ["FORCE_EVAL", "DFT", "XC"], xc_par)
+            return True, None
+    return False, {"parameter": "numerical_p.xc_functional"}
 
 
 def _set_numerical_p_basis_sets(cp2k_dict, input_p, structure, xc_functional):
@@ -126,12 +143,12 @@ def _set_input_parameters(
         if "kpoints_ref_dist" in inputs.numerical_p:
             ctx.scf_m_info["kpoints_ref_dist"] = inputs.numerical_p.kpoints_ref_dist.value
         if "xc_functional" in inputs.numerical_p:
-            ret, message = _set_numerical_p_xc_functional(cp2k_p, inputs.numerical_p.xc_functional)
+            cp2k_version = _get_version(ctx.inputs.code)
+            ret, message = _set_numerical_p_xc_functional(
+                cp2k_p, inputs.numerical_p.xc_functional, cp2k_version
+            )
             if not ret:
                 return "ERROR_INPUT_WRONG_VALUE", message
-            # self.exit_codes.ERROR_INPUT_WRONG_VALUE.format(
-            #        parameter="numerical_p.xc_functional"
-            #    )
 
         if "basis_sets" in inputs.numerical_p:
             ret, message = _set_numerical_p_basis_sets(
@@ -142,14 +159,9 @@ def _set_input_parameters(
             )
             if not ret:
                 if len(message) == 2:
-                    return "ERROR_INPUT_DEPENDENCY", message  # {"parameter1": message[0], ""}
-                # self.exit_codes.ERROR_INPUT_DEPENDENCY.format(
-                #        parameter1=message[0],
-                #        parameter2=message[1],
-                #    )
+                    return "ERROR_INPUT_DEPENDENCY", message
                 else:
-                    return "ERROR_INPUT_WRONG_VALUE", message  # {"parameter": message[0]}
-                # exit_codes.ERROR_INPUT_WRONG_VALUE.format(parameter=message[0])
+                    return "ERROR_INPUT_WRONG_VALUE", message
 
         if "cutoff_values" in inputs.numerical_p:
             cutoff_values = inputs.numerical_p.cutoff_values.get_dict()

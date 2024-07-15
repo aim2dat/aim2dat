@@ -1,0 +1,129 @@
+ # Version information for this restart file 
+ # current date 2024-07-05 02:41:37.667
+ # current working dir /scratch-grete/usr/nichdsas/test_parser/cp2k-2024.1/cell_opt_walltime_low
+ # Program compiled at                                       2024-05-28 17:35:28
+ # Program compiled on                                                          
+ # Program compiled for                                                   x86_64
+ # Source code revision number                                                  
+ &GLOBAL
+   PRINT_LEVEL LOW
+   PROJECT_NAME "aiida"
+   RUN_TYPE CELL_OPT
+   WALLTIME 00:01:30
+ &END GLOBAL
+ &MOTION
+   &GEO_OPT
+     TYPE MINIMIZATION
+     OPTIMIZER BFGS
+     MAX_ITER 100
+     MAX_FORCE  1.9000000000000001E-005
+   &END GEO_OPT
+   &CELL_OPT
+     OPTIMIZER BFGS
+     MAX_ITER 100
+     MAX_FORCE  1.9000000000000001E-005
+     STEP_START_VAL 3
+     TYPE DIRECT_CELL_OPT
+     &BFGS
+     &END BFGS
+     &PRINT
+       &CELL ON
+       &END CELL
+     &END PRINT
+   &END CELL_OPT
+ &END MOTION
+ &FORCE_EVAL
+   METHOD QS
+   STRESS_TENSOR ANALYTICAL
+   &DFT
+     BASIS_SET_FILE_NAME BASIS_MOLOPT
+     BASIS_SET_FILE_NAME BASIS_MOLOPT_UCL
+     POTENTIAL_FILE_NAME GTH_POTENTIALS
+     &SCF
+       MAX_SCF 150
+       EPS_SCF  9.9999999999999995E-007
+       SCF_GUESS RESTART
+       &MIXING T
+         METHOD BROYDEN_MIXING
+         ALPHA  2.9999999999999999E-001
+         NBUFFER 20
+       &END MIXING
+     &END SCF
+     &QS
+       EPS_DEFAULT  1.0000000000000000E-008
+     &END QS
+     &MGRID
+       NGRIDS 4
+       CUTOFF  2.0000000000000000E+002
+       REL_CUTOFF  4.0000000000000000E+001
+     &END MGRID
+     &XC
+       DENSITY_CUTOFF  1.0000000000000000E-010
+       GRADIENT_CUTOFF  1.0000000000000000E-010
+       TAU_CUTOFF  1.0000000000000000E-010
+       &XC_FUNCTIONAL NO_SHORTCUT
+         &PBE T
+         &END PBE
+       &END XC_FUNCTIONAL
+     &END XC
+     &POISSON
+       PERIODIC XYZ
+     &END POISSON
+     &KPOINTS
+       SCHEME "MONKHORST-PACK" "2" "2" "2"
+     &END KPOINTS
+   &END DFT
+   &SUBSYS
+     &CELL
+       A -2.1350789650581851E-002  4.6753811000000001E+000  4.6753811000000001E+000
+       B  4.6830039921322708E+000 -5.0300643045908505E-002  4.6753811000000001E+000
+       C  4.6828161824225596E+000  4.7117650903662467E+000 -5.0182369326937676E-002
+       PERIODIC XYZ
+       MULTIPLE_UNIT_CELL 1 1 1
+     &END CELL
+     &COORD
+       Cs  2.2211903941585542E+000  2.3229566377855280E+000  2.3144739083579497E+000
+       Cs  6.9180541268518398E+000  7.0154706632594230E+000  6.9884481500195621E+000
+       Cs  4.4902257321214893E+000  4.6619493578769511E+000  4.6445609510071391E+000
+       Sb -1.3667195488628554E-002  5.4777302388390346E-003  5.5220020689997528E-003
+     &END COORD
+     &KIND "Cs"
+       BASIS_SET "DZVP-MOLOPT-SR-GTH"
+       POTENTIAL "GTH-PBE-q9"
+       &POTENTIAL
+         3 6
+           5.4000000000000004E-001 2  3.3313316759999999E+001 -2.9212167000000000E+000
+         4
+           4.6189567999999998E-001 2 -3.3229270000000000E+000  2.4556533800000002E+000
+                                                              -3.1702348800000002E+000
+           3.6635859999999998E-001 2 -4.9507640500000001E+000  8.4038977000000004E-001
+                                                              -9.9436259000000005E-001
+           7.6150192999999999E-001 1  1.9840722999999999E-001
+           5.9701503000000000E-001 1 -1.5505669300000000E+000
+         # Potential name: GTH-PBE-Q9 for element symbol: CS
+         # Potential read from the potential filename: GTH_POTENTIALS
+       &END POTENTIAL
+     &END KIND
+     &KIND "Sb"
+       BASIS_SET "DZVP-MOLOPT-SR-GTH"
+       POTENTIAL "GTH-PBE-q5"
+       &POTENTIAL
+         2 3
+           5.8999999999999997E-001 1  7.9285208400000000E+000
+         3
+           5.5613636000000000E-001 3  1.4304779000000001E+000  1.2614259900000000E+000 -9.2323352999999997E-001
+                                                              -3.1301334000000001E+000  2.3837787200000000E+000
+                                                                                       -1.8920657000000001E+000
+           6.2275506999999997E-001 2  5.6147232999999996E-001  3.0484521999999997E-001
+                                                              -3.6069772999999999E-001
+           8.8948576000000001E-001 1  2.7086863999999999E-001
+         # Potential name: GTH-PBE-Q5 for element symbol: SB
+         # Potential read from the potential filename: GTH_POTENTIALS
+       &END POTENTIAL
+     &END KIND
+     &TOPOLOGY
+       NUMBER_OF_ATOMS 4
+       MULTIPLE_UNIT_CELL 1 1 1
+     &END TOPOLOGY
+   &END SUBSYS
+ &END FORCE_EVAL
