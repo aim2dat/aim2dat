@@ -285,8 +285,8 @@ class _OptStepPattern(_BasePattern):
         )?
         (
             ((.*\n)*?\s*-{{26}})|
-            (\n\s*\*{{79}}\s*\*{{3}}\s+GEOMETRY\sOPTIMIZATION\s(?P<opt_success>\S+)\s+\*{{3}})|
-            (\n\s*\*{{3}}\s+MAXIMUM\sNUMBER\sOF\sOPTIMIZATION\sSTEPS\s(?P<max_steps>\S+)\s+\*{{3}})
+            ((.*\n)?\n\s*\*{{79}}\s*\*{{3}}\s+GEOMETRY\sOPTIMIZATION\s(?P<opt_success>\S+)\s+\*{{3}})|
+            ((.*\n)?\n\s*\*{{3}}\s+MAXIMUM\sNUMBER\sOF\sOPTIMIZATION\sSTEPS\s(?P<max_steps>\S+)\s+\*{{3}})
         )?
         $
     """
@@ -651,6 +651,8 @@ def read_stdout(file_name: str, parser_type: str = "standard") -> dict:
 
     errors = output.pop("errors", [])
     for err0 in errors:
+        if err0[2] == "SCF run NOT converged. To continue the calculation regardless,":
+            output["scf_converged"] = False
         for err1 in _ERRORS:
             if err1[0] in err0[2]:
                 output[err1[1]] = True
