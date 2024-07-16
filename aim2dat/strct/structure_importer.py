@@ -113,7 +113,7 @@ class StructureImporter(ConstraintsMixin):
         self,
         entry_id: str,
         api_key: str,
-        property_data: list = [],
+        property_data: list = None,
         structure_type: str = "initial",
     ) -> Structure:
         """
@@ -140,6 +140,8 @@ class StructureImporter(ConstraintsMixin):
                 "API key needs to be set. "
                 "It can be obtained at https://www.materialsproject.org/dashboard"
             )
+        if property_data is None:
+            property_data = []
         if structure_type == "initial":
             property_data.append("initial_structure")
         backend_module = _return_ext_interface_modules("mp_openapi")
