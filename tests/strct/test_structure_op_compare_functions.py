@@ -180,7 +180,9 @@ def test_determine_eq_sites(nested_dict_comparison, structure, file_suffix, meth
     if file_suffix == "yaml":
         strct_c.append("test", **load_yaml_file(STRUCTURES_PATH + structure + "." + file_suffix))
     else:
-        strct_c.append_from_file("test", STRUCTURES_PATH + structure + "." + file_suffix)
+        strct_c.append_from_file(
+            "test", STRUCTURES_PATH + structure + "." + file_suffix, backend="internal"
+        )
 
     strct_ops = StructureOperations(strct_c)
     eq_sites = getattr(strct_ops, "find_eq_sites_via_" + method)(

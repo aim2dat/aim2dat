@@ -71,7 +71,6 @@ class _KindPattern(_BasePattern):
             output["kind_info"][kind] = element
 
 
-@read_multiple(r".*-1\.restart$")
 def read_optimized_structure(folder_path: str) -> Union[dict, List[dict]]:
     """
     Read optimized structures from 'restart'-files.
@@ -88,14 +87,46 @@ def read_optimized_structure(folder_path: str) -> Union[dict, List[dict]]:
         dictionaries is returned. In case several calculations have been run in the same folder a
         nested dictionary is returned.
     """
-    structures = {}
+    from warnings import warn
+
+    warn(
+        "This function will be removed, please use `read_restart_structure` instead.",
+        DeprecationWarning,
+        2,
+    )
+
+    structures = read_restart_structure(folder_path)
+    if isinstance(structures, list):
+        for strct in structures:
+            strct["symbols"] = strct.pop("elements")
+    else:
+        structures["symbols"] = structures.pop("elements")
+    return structures
+
+
+@read_multiple(r".*-1\.restart$", is_read_strct_method=True)
+def read_restart_structure(folder_path: str) -> Union[dict, List[dict]]:
+    """
+    Read structures from 'restart'-files.
+
+    Parameters
+    ----------
+    folder_path : str
+        Path to the folder containing the CP2K ouput-files.
+
+    Returns
+    -------
+    dict or list
+        Dictionary or list of dictionaries containing the structural information. In case of a
+        farming job or several calculations have been run in the same folder, a list of
+        dictionaries is returned.
+    """
+    structures = []
     for file_p, file_n in zip(folder_path["file"], folder_path["file_name"]):
         proj = file_n.rsplit("-", 1)[0]
         output = parse_function(file_p, [_CellPattern, _CoordPattern, _KindPattern])
         kind_info = output.pop("kind_info")
-        output["symbols"] = [kind_info[kind] for kind in output["kinds"]]
-        if len(output) == 1:
-            structures[proj] = output[0]
-        elif len(output) > 1:
-            structures[proj] = output
-    return list(structures.values())[0] if len(structures.values()) == 1 else structures
+        output["elements"] = [kind_info[kind] for kind in output["kinds"]]
+        output["label"] = proj
+        structures.append(output)
+    return structures[0] if len(structures) == 1 else structures

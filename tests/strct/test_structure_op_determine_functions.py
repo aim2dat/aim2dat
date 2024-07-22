@@ -21,13 +21,13 @@ POINT_GROUP_PATH = os.path.dirname(__file__) + "/point_group_analysis/"
 
 
 @pytest.mark.parametrize(
-    "structure, file_suffix, excl_elements",
+    "structure, file_suffix, backend, excl_elements",
     [
-        ("Benzene", "xyz", []),
-        ("ZIF-8", "cif", ["Zn"]),
+        ("Benzene", "xyz", "ase", []),
+        ("ZIF-8", "cif", "internal", ["Zn"]),
     ],
 )
-def test_determine_molecular_fragments(structure, file_suffix, excl_elements):
+def test_determine_molecular_fragments(structure, file_suffix, backend, excl_elements):
     """Test determine_molecular_fragments function."""
     kwargs = {
         "exclude_elements": excl_elements,
@@ -37,7 +37,9 @@ def test_determine_molecular_fragments(structure, file_suffix, excl_elements):
     }
     ref_outputs = load_yaml_file(FRAG_ANALYSIS_PATH + structure + ".yaml")
     strct_c = StructureCollection()
-    strct_c.append_from_file("test", STRUCTURES_PATH + structure + "." + file_suffix)
+    strct_c.append_from_file(
+        "test", STRUCTURES_PATH + structure + "." + file_suffix, backend=backend
+    )
     strct_ops = StructureOperations(strct_c)
     fragments = strct_ops.perform_analysis(
         "test", method=determine_molecular_fragments, kwargs=kwargs
@@ -75,7 +77,9 @@ def test_determine_space_group(nested_dict_comparison, structure, file_suffix, k
     if file_suffix == "yaml":
         strct_c.append("test", **load_yaml_file(STRUCTURES_PATH + structure + "." + file_suffix))
     else:
-        strct_c.append_from_file("test", STRUCTURES_PATH + structure + "." + file_suffix)
+        strct_c.append_from_file(
+            "test", STRUCTURES_PATH + structure + "." + file_suffix, backend="internal"
+        )
     strct_ops = StructureOperations(strct_c)
     sg_dict = strct_ops.determine_space_group("test", **kwargs)
     nested_dict_comparison(sg_dict, ref_outputs)

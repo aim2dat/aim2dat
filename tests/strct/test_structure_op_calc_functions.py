@@ -63,7 +63,12 @@ def test_calculate_distance_sc(structure, file_suffix):
     """Test calculate_distance function using the super cell."""
     ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
     strct_c = StructureCollection()
-    strct_c.append_from_file("test", STRUCTURES_PATH + structure + "." + file_suffix)
+    strct_c.append_from_file(
+        "test",
+        STRUCTURES_PATH + structure + "." + file_suffix,
+        backend="internal",
+        backend_kwargs={"strct_check_chem_formula": False},
+    )
     strct_ops = StructureOperations(strct_c)
     dist = strct_ops.calculate_distance(0, **ref_outputs["distance_sc"]["function_args"])
     for idx0, dist_list in enumerate(ref_outputs["distance_sc"]["reference"]):
@@ -90,7 +95,12 @@ def test_calculate_dihedral_angle(structure, file_suffix):
     """Test calculate_dihedral_angle function."""
     ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
     strct_c = StructureCollection()
-    strct_c.append_from_file("test", STRUCTURES_PATH + structure + "." + file_suffix)
+    strct_c.append_from_file(
+        "test",
+        STRUCTURES_PATH + structure + "." + file_suffix,
+        backend="internal",
+        backend_kwargs={"strct_check_chem_formula": False},
+    )
     strct_ops = StructureOperations(strct_c)
     dist = strct_ops.calculate_dihedral_angle(
         key=0, **ref_outputs["dihedral_angle"]["function_args"]

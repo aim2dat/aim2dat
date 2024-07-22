@@ -27,9 +27,11 @@ Version 0.2.0
 * ``utils.element_properties.get_atomic_radius`` supports now Van der Waals radii determined in :doi:`10.26434/chemrxiv-2024-m3rtp-v2` (PR #44 <https://github.com/aim2dat/aim2dat/pull/44>`_).
 * Support CP2K versions 2022.1-2024.1 (PR #51 <https://github.com/aim2dat/aim2dat/pull/51>`_).
 * The newly implemented``strct.ext_manipulation.add_structure_random`` adds a guest structure at a random position and orientation (PR #53 <https://github.com/aim2dat/aim2dat/pull/53>`_).
+* ``strct.Structure.from_file`` interfaces functions from the ``io`` sub-package via the internal ``'backend'`` and adds more parameters to control the ``'ase'`` backend (PR #56 <https://github.com/aim2dat/aim2dat/pull/56>`_).
 
 **Depreciations:**
 
+* ``aim2dat.io.cp2k.read_optimized_structure`` is replaced by ``aim2dat.io.cp2k.read_restart_structure`` (PR #56 <https://github.com/aim2dat/aim2dat/pull/56>`_).
 * ``strct.ext_manipulation.add_structure_coord`` replaces ``strct.ext_manipulation.add_functional_group`` function (PR #37 <https://github.com/aim2dat/aim2dat/pull/37>`_).
 
 **Breaking Changes:**

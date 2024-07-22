@@ -8,7 +8,24 @@ from functools import wraps
 from contextlib import contextmanager
 
 
-def read_multiple(pattern):
+def read_structure(pattern, preset_kwargs={}):
+    """Decorate functions that parse structure(s)."""
+
+    def decorator(func):
+        func._is_read_structure_method = True
+        func._pattern = pattern
+        func._preset_kwargs = preset_kwargs
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+def read_multiple(pattern, is_read_strct_method=False, preset_kwargs={}):
     """Add support for a list of multiple files or folder paths (decorator)."""
     # The following cases need to be covered:
     # Single file as file name/file content/file object
@@ -31,6 +48,9 @@ def read_multiple(pattern):
                 file_dict[key].append(val)
 
     def read_func_decorator(func):
+        func._is_read_structure_method = is_read_strct_method
+        func._pattern = pattern
+        func._preset_kwargs = preset_kwargs
 
         @wraps(func)
         def wrapper(*args, **kwargs):

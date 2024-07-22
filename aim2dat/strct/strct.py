@@ -20,6 +20,7 @@ except ImportError:
 
 # Internal library imports
 from aim2dat.ext_interfaces import _return_ext_interface_modules
+from aim2dat.strct.strct_io import get_structure_from_file
 from aim2dat.io import zeo
 from aim2dat.strct.strct_validation import (
     _structure_validate_cell,
@@ -547,7 +548,15 @@ class Structure(AnalysisMixin, ManipulationMixin):
 
     @import_method
     @classmethod
-    def from_file(cls, file_path: str, attributes: dict = None, label: str = None) -> "Structure":
+    def from_file(
+        cls,
+        file_path: str,
+        attributes: dict = None,
+        label: str = None,
+        backend: str = "ase",
+        file_format: str = None,
+        backend_kwargs: dict = None,
+    ) -> "Structure":
         """
         Get structure from file using the ase read-function.
 
@@ -556,25 +565,50 @@ class Structure(AnalysisMixin, ManipulationMixin):
         file_path : str
             File path.
         attributes : dict
-
+            Attributes stored within the structure object(s).
         label : str
             Label used internally to store the structure in the object.
+        backend : str (optional)
+            Backend to be used to parse the structure file. Supported options are ``'ase'``
+            and ``'internal'``.
+        file_format : str or None (optional)
+            File format of the backend. For ``'ase'``, please refer to the documentation of the
+            package for a complete list. For ``'internal'``, the format translates from
+            ``io.{module}.read_structure`` to ``'{module}'`` or from
+            ``{module}.read_{specification}_structure`` to ``'module-specification'``. If set to
+            ``None`` the corresponding function is searched based on the file name and suffix.
+        backend_kwargs : dict (optional)
+            Arguments passed to the backend function.
 
         Returns
         -------
         aim2dat.strct.Structure
             Structure.
         """
-        backend_module = _return_ext_interface_modules("ase_atoms")
-        structure_dicts = backend_module._load_structure_from_file(file_path)
-        if len(structure_dicts) == 1:
-            return cls(**structure_dicts[0], attributes=attributes, label=label)
+        backend_kwargs = {} if backend_kwargs is None else backend_kwargs
+        if backend == "ase":
+            backend_module = _return_ext_interface_modules("ase_atoms")
+            if "format" not in backend_kwargs:
+                backend_kwargs["format"] = file_format
+            structure_dicts = backend_module._load_structure_from_file(file_path, backend_kwargs)
+        elif backend == "internal":
+            structure_dicts = get_structure_from_file(file_path, file_format, backend_kwargs)
         else:
-            # TODO How to deal with label and attributes for multiple structures.
-            return [
-                cls(**structure_dict, attributes=attributes, label=label + f"_{idx}")
-                for idx, structure_dict in enumerate(structure_dicts)
-            ]
+            raise ValueError(f"Backend '{backend}' is not supported.")
+
+        if isinstance(structure_dicts, dict):
+            structure_dicts = [structure_dicts]
+        if len(structure_dicts) == 1:
+            if label is not None:
+                structure_dicts[0]["label"] = label
+            strct = cls(**structure_dicts[0], attributes=attributes)
+        else:
+            strct = []
+            for idx, structure_dict in enumerate(structure_dicts):
+                if label is not None:
+                    structure_dict["label"] = label + f"_{idx}"
+                strct.append(cls(**structure_dict, attributes=copy.deepcopy(attributes)))
+        return strct
 
     @import_method
     @classmethod
@@ -589,7 +623,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         ase_atoms : ase.Atoms
             ase Atoms object.
         attributes : dict
-            Additional information about the structure.
+            Attributes stored within the structure object.
         label : str
             Label used internally to store the structure in the object.
 
