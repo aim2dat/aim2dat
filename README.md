@@ -1,7 +1,7 @@
 # aim2dat
 
 aim2dat (Automated Ab-Initio Materials Modeling and Data Analysis Toolkit) is a library for pre-, post-processing and data management of ab-initio high-throughput workflows for computational materials science.
-For further details and documentation, please visit www.aim2dat.github.io/aim2dat.
+For further details and documentation, please visit https://aim2dat.github.io/aim2dat.
 
 ## Feature List
 
@@ -18,4 +18,4 @@ For further details and documentation, please visit www.aim2dat.github.io/aim2da
 pip install aim2dat
 ```
 
-Further details can be found in the documentation (www.aim2dat.github.io/aim2dat/installation.html).
+Further details can be found in the documentation (https://aim2dat.github.io/aim2dat/installation.html).
