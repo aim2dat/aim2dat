@@ -1,0 +1,95 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - []
+- [cp2k_version, 2024.1]
+- [run_type, CELL_OPT]
+- [kpoint_scheme, Monkhorst-Pack]
+- - kpoint_grid
+  - [6, 4, 4]
+- [dft_type, RKS]
+- [multiplicity, 1]
+- [charge, 0.0]
+- - xc
+  - functional: [MGGA_X_SCAN, MGGA_C_SCAN]
+- [natoms, 16]
+- - spgr_info
+  - {sg_number: 17, int_symbol: P222_1, point_group_symbol: '222', schoenflies_symbol: D2^2}
+- [nelectrons, 96]
+- [nr_occ_orbitals, 48]
+- [scf_converged, true]
+- [energy_scf, -130.95495580373105]
+- - mulliken
+  - - {kind: 1, element: Te, population: 5.998499, charge: 0.001501}
+    - {kind: 1, element: Te, population: 5.998505, charge: 0.001495}
+    - {kind: 1, element: Te, population: 5.998499, charge: 0.001501}
+    - {kind: 1, element: Te, population: 5.998505, charge: 0.001495}
+    - {kind: 1, element: Te, population: 6.012496, charge: -0.012496}
+    - {kind: 1, element: Te, population: 6.012496, charge: -0.012496}
+    - {kind: 1, element: Te, population: 6.019532, charge: -0.019532}
+    - {kind: 1, element: Te, population: 6.019534, charge: -0.019534}
+    - {kind: 1, element: Te, population: 6.019532, charge: -0.019532}
+    - {kind: 1, element: Te, population: 6.019534, charge: -0.019534}
+    - {kind: 1, element: Te, population: 5.966233, charge: 0.033767}
+    - {kind: 1, element: Te, population: 5.966234, charge: 0.033766}
+    - {kind: 1, element: Te, population: 5.966233, charge: 0.033767}
+    - {kind: 1, element: Te, population: 5.966234, charge: 0.033766}
+    - {kind: 1, element: Te, population: 6.018966, charge: -0.018966}
+    - {kind: 1, element: Te, population: 6.018966, charge: -0.018966}
+- - hirshfeld
+  - - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+    - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+    - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+    - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+    - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+    - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+    - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+    - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+    - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+    - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+    - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+    - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+    - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+    - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+    - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+    - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+- [energy, -130.95495580373105]
+- [nr_steps, 14]
+- - kind_info
+  - - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+- [nr_unocc_orbitals, 72]
+- [runtime, 1154.336]
+- [nwarnings, 1]
+- [energy_units, a.u.]
