@@ -18,4 +18,4 @@ For further details and documentation, please visit https://aim2dat.github.io/ai
 pip install aim2dat
 ```
 
-Further details can be found in the documentation (https://aim2dat.github.io/aim2dat/installation.html).
+More detailed instructions are given in the documentation (https://aim2dat.github.io/aim2dat/installation.html).
