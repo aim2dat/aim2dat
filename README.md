@@ -10,7 +10,7 @@ For further details and documentation, please visit https://aim2dat.github.io/ai
 * Plotting material's properties such as electronic band structures, projected density of states or phase diagrams.
 * Interface to machine learning routines via [sci-kit learn](https://scikit-learn.org/stable/).
 * Function analysis: discretizing and comparing 2-dimensional functions.
-* Parsers for the DFT codes CP2K, FHI-Aims and QuantumESPRESSO as well as phonopy and critic2.
+* Parsers for the DFT codes [CP2K](https://www.cp2k.org/about), [FHI-Aims](https://fhi-aims.org) and [QuantumESPRESSO](https://www.quantum-espresso.org) as well as [phonopy](https://phonopy.github.io/phonopy/) and [critic2](https://aoterodelaroza.github.io/critic2/).
 
 ## Installation
 
