@@ -8,7 +8,7 @@ For further details and documentation, please visit https://aim2dat.github.io/ai
 * Managing and analysing sets of crystals and molecules.
 * Ab-initio high-throughput calculations based on AiiDA.
 * Plotting material's properties such as electronic band structures, projected density of states or phase diagrams.
-* Interface to machine learning routines via sci-kit learn.
+* Interface to machine learning routines via [sci-kit learn](https://scikit-learn.org/stable/).
 * Function analysis: discretizing and comparing 2-dimensional functions.
 * Parsers for the DFT codes CP2K, FHI-Aims and QuantumESPRESSO as well as phonopy and critic2.
 
