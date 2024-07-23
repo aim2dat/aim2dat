@@ -454,7 +454,7 @@ def test_store_calc_properties(create_structure_collection_object, nested_dict_c
     ), "Function parameters are wrong."
     assert (
         strct_ops.structures._structures[0]["attributes"]["space_group"]
-        == space_group["space_group"]["sg_number"]
+        == space_group["space_group"]["number"]
     ), "Calculated extra is wrong."
     assert (
         strct_ops.structures._structures[0]["extras"]["space_group"] == space_group
@@ -469,7 +469,7 @@ def test_store_calc_properties(create_structure_collection_object, nested_dict_c
     ), "Function parameters are wrong."
     assert (
         strct_ops.structures._structures[0]["attributes"]["space_group"]
-        == space_group["space_group"]["sg_number"]
+        == space_group["space_group"]["number"]
     ), "Calculated extra is wrong."
     assert (
         strct_ops.structures._structures[0]["extras"]["space_group"] == space_group
@@ -490,6 +490,6 @@ def test_store_calc_properties(create_structure_collection_object, nested_dict_c
     ), "Function parameters are wrong."
     assert (
         strct_ops.structures._structures[1]["attributes"]["space_group"]
-        == space_group["space_group"]["sg_number"]
+        == space_group["space_group"]["number"]
     ), "Calculated extra is wrong."
     assert strct_ops.structures._structures[1]["extras"] == {}, "Calculated extra is wrong."

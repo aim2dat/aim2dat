@@ -152,10 +152,10 @@ class CellGridSearch:
             angle_tolerance=self.angle_tolerance,
             hall_number=self.hall_number,
         )
-        lattice_type = get_lattice_type(space_group["space_group"]["sg_number"])
+        lattice_type = get_lattice_type(space_group["space_group"]["number"])
         print(
             "Space group of initial crystal: ",
-            space_group["space_group"]["sg_number"],
+            space_group["space_group"]["number"],
             "(" + lattice_type + ")",
         )
         cell = self._strct_ops.structures["initial"]["cell"]
@@ -247,7 +247,7 @@ class CellGridSearch:
             symprec=self.symprec,
             angle_tolerance=self.angle_tolerance,
             hall_number=self.hall_number,
-        )["space_group"]["sg_number"]
+        )["space_group"]["number"]
         initial_strct = self._strct_ops.structures["initial"]
 
         labels = []
@@ -275,7 +275,7 @@ class CellGridSearch:
                 symprec=self.symprec,
                 angle_tolerance=self.angle_tolerance,
                 hall_number=self.hall_number,
-            )["space_group"]["sg_number"]
+            )["space_group"]["number"]
             if initial_sg != trial_sg:
                 raise ValueError("Space groups don't match!")
             labels.append(str(idx0))

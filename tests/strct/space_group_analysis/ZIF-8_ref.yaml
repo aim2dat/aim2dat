@@ -1,7 +1,19 @@
 %YAML 1.2
 ---
-space_group: {int_symbol: R3, sg_number: 146, hall_number: 433, point_group_symbol: '3',
-  schoenflies_symbol: C3^4, centrosymmetric: false}
+space_group:
+  number: 146
+  international_short: 'R3'
+  international_full: 'R 3'
+  international: 'R 3'
+  schoenflies: 'C3^4'
+  hall_number: 433
+  hall_symbol: 'R 3'
+  choice: 'H'
+  pointgroup_international: '3'
+  pointgroup_schoenflies: 'C3'
+  centrosymmetric: false
+  arithmetic_crystal_class_number: 39
+  arithmetic_crystal_class_symbol: '3R'
 equivalent_sites:
 - wyckoff: b
   symmetry: '1'
