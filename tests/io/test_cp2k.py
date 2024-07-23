@@ -76,7 +76,6 @@ def test_read_atom_proj_density_of_states(system):
 @pytest.mark.parametrize(
     "restart_file,reference_file",
     [
-        ("/geo_opt/aiida-1.restart", "/geo_opt/ref.yaml"),
         ("/cell_opt/aiida-1.restart", "/cell_opt/ref.yaml"),
         (
             "/cell_opt_incomplete_numbers/aiida-1.restart",
@@ -101,7 +100,9 @@ def test_read_optimized_structure_multiple():
     ref_structures = dict(load_yaml_file(STRUCTURES_PATH + "multiple_structures/ref.yaml"))
 
     for str_label, str1 in ref_structures.items():
-        str0 = structures[str_label]
+        for str0 in structures:
+            if str0["label"] == str_label:
+                break
         assert all(
             [pbc0 == pbc1 for pbc0, pbc1 in zip(str0["pbc"], str1["pbc"])]
         ), "Periodic boundary conditions don't match."

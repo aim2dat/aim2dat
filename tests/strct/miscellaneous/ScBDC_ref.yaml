@@ -1,7 +1,7 @@
 distance_sc:
   function_args:
-    site_index1: 4
-    site_index2: 10
+    site_index1: 1
+    site_index2: 40
     r_max: 7.5
     use_supercell: True
   reference: [9.2464402558097,   11.524683322646483, 11.835123163801029, 12.235123272246046, 13.572034194525761, 16.40778313967841, 16.423636846760207, 
@@ -37,9 +37,9 @@ distance_sc:
              99.92142735628521, 99.96549859057144, 100.67823455316305, 101.10361509740198, 103.15105946318681, 103.38414566219274]
 dihedral_angle:
   function_args:
-    site_index1: 35
-    site_index2: 91
-    site_index3: 89
-    site_index4: 25
+    site_index1: 61
+    site_index2: 68
+    site_index3: 30
+    site_index4: 22
     backfold_positions: True
   reference: 2.5997
