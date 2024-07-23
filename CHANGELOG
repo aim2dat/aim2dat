@@ -31,13 +31,16 @@ Version 0.2.0
 
 **Depreciations:**
 
-* ``io.cp2k.read_optimized_structure`` is replaced by ``io.cp2k.read_restart_structure`` (PR #56 <https://github.com/aim2dat/aim2dat/pull/56>`_).
 * ``strct.ext_manipulation.add_structure_coord`` replaces ``strct.ext_manipulation.add_functional_group`` function (PR #37 <https://github.com/aim2dat/aim2dat/pull/37>`_).
+* ``aim2dat.io.cp2k.read_optimized_structure`` is replaced by ``aim2dat.io.cp2k.read_restart_structure`` (PR #56 <https://github.com/aim2dat/aim2dat/pull/56>`_).
 
 **Breaking Changes:**
 
 * Moved ``dict_*`` functions from ``aiida_workflows.utils`` to ``utils.dict_tools`` (PR #36 <https://github.com/aim2dat/aim2dat/pull/36>`_).
-* ``utils.chem_formula.reduce_formula`` tries now to find a formula only having natural numbers as quantities; this way utils.chem_formula.compare_formulas`` works for all use-cases (PR #60 <https://github.com/aim2dat/aim2dat/pull/60>`_)
+* Space group and symmetry related keys now conform to the attributes returned by spglib (PR #54 <https://github.com/aim2dat/aim2dat/pull/54>`_).
+  As such, the keys ``'sg_number'``, ``'int_symbol'``, ``'point_group_symbol'``, ``'schoenflies_symbol'`` are replaced by ``'number'``, ``'international'``, ``'pointgroup'``, ``'schoenflies'``, respectively.
+* ``utils.chem_formula.reduce_formula`` tries now to find a formula only having natural numbers as quantities; this way utils.chem_formula.compare_formulas`` works for all use-cases (PR #60 <https://github.com/aim2dat/aim2dat/pull/60>`_).
+
 
 Version 0.1.0
 =============

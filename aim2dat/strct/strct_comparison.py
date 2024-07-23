@@ -188,7 +188,7 @@ def _compare_structures_comp_sym(
         formulas.append(
             utils_cf.transform_list_to_dict(sg_info["standardized_structure"]["elements"])
         )
-        space_groups.append(sg_info["space_group"]["sg_number"])
+        space_groups.append(sg_info["space_group"]["number"])
     if space_groups[0] != space_groups[1]:
         return False
     if not utils_cf.compare_formulas(formulas[0], formulas[1], reduce_formulas=False):
