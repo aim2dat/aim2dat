@@ -275,9 +275,13 @@ class StructureImporter(ConstraintsMixin):
         timeout : float (optional)
             Specifies the time to wait for response from the server. The default value is ``60.0``.
         """
-        print(
+        from warnings import warn
+
+        warn(
             "This method needs to be considered experimental. It seems that the optimade "
-            "interface is unfortunately not yet commonly implemented for all databases."
+            + "interface is unfortunately not yet commonly implemented for all databases.",
+            UserWarning,
+            2,
         )
         download_kwargs = {
             "optimade_url": optimade_url,
