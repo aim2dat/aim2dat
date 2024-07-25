@@ -89,9 +89,10 @@ def add_structure_random(
         shift = np.array([random.random(), random.random(), random.random()])
         shift = (cell.T).dot(shift)
         guest_positions += shift - min_pos
-        guest_strct["positions"] = guest_positions
+        guest_strct0 = copy.deepcopy(guest_strct)
+        guest_strct0["positions"] = guest_positions
 
-        new_structure = _merge_structures(structure, guest_strct, wrap)
+        new_structure = _merge_structures(structure, guest_strct0, wrap)
         is_added = _check_distances(
             new_structure, len(guest_strct["elements"]), dist_threshold, True
         )
@@ -379,6 +380,8 @@ def _merge_structures(host_strct, guest_strct, wrap):
         new_structure["positions"].append(pos)
         for site_attr, val in new_structure["site_attributes"].items():
             val.append(guest_strct["site_attributes"].get(site_attr, None))
+    if all(kind is None for kind in new_structure["kinds"]):
+        new_structure["kinds"] = None
     return Structure(**new_structure, wrap=wrap)
 
 

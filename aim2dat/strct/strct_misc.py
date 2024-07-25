@@ -152,7 +152,10 @@ def _calc_atomic_distance(structure, site_indices1, site_indices2, backfold_posi
 
     if structure["cell"] is not None and backfold_positions:
         fold_combs = np.array(list(itertools.product([0, -1, 1], repeat=3)))
-        pos2_scaled = fold_combs + np.array(structure["scaled_positions"])[site_indices2, None, :]
+        pos2_scaled = (
+            fold_combs
+            + np.array(structure.get_positions(cartesian=False, wrap=True))[site_indices2, None, :]
+        )
         pos2_cart = (
             (np.array(structure["cell"]).T)
             .dot(pos2_scaled.reshape(-1, 3).T)
