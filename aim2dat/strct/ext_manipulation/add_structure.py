@@ -7,6 +7,7 @@ import os
 from typing import Union, List
 import itertools
 import random
+import copy
 
 # Third party library imports
 import numpy as np
@@ -88,15 +89,9 @@ def add_structure_random(
         shift = np.array([random.random(), random.random(), random.random()])
         shift = (cell.T).dot(shift)
         guest_positions += shift - min_pos
+        guest_strct["positions"] = guest_positions
 
-        new_structure = structure.to_dict()
-        new_structure["elements"] = list(new_structure["elements"]) + list(guest_strct["elements"])
-        if new_structure["kinds"] is not None:
-            new_structure["kinds"] = list(new_structure["kinds"]) + [None] * len(
-                guest_strct["elements"]
-            )
-        new_structure["positions"] = list(new_structure["positions"]) + guest_positions.tolist()
-        new_structure = Structure(**new_structure, wrap=wrap)
+        new_structure = _merge_structures(structure, guest_strct, wrap)
         is_added = _check_distances(
             new_structure, len(guest_strct["elements"]), dist_threshold, True
         )
@@ -284,7 +279,12 @@ def add_structure_coord(
 def _check_guest_structure(guest_strct: Union[Structure, str]) -> dict:
     if isinstance(guest_strct, Structure):
         label = "" if guest_strct.label is None else guest_strct.label
-        return {"elements": guest_strct.elements, "positions": guest_strct.positions}, label
+        return {
+            "elements": guest_strct.elements,
+            "positions": guest_strct.positions,
+            "kinds": [None] * len(guest_strct) if guest_strct.kinds is None else guest_strct.kinds,
+            "site_attributes": guest_strct.site_attributes,
+        }, label
     elif isinstance(guest_strct, str):
         guest_strct_dict = {}
         try:
@@ -297,6 +297,8 @@ def _check_guest_structure(guest_strct: Union[Structure, str]) -> dict:
                 )
             except FileNotFoundError:
                 raise ValueError(f"`guest_structure` '{guest_strct}' is not supported.")
+        guest_strct_dict["kinds"] = [None] * len(guest_strct_dict["elements"])
+        guest_strct_dict["site_attributes"] = {}
         return guest_strct_dict, guest_strct
     else:
         raise TypeError("`guest_structure` needs to be of type Structure or str.")
@@ -323,25 +325,19 @@ def _add_mol(
     structure, guest_strct, wrap, host_pos, bond_length, angle_pars, ref_dirs, dist_constraints
 ):
     # Reorient and shift guest structure:
+    guest_strct = copy.deepcopy(guest_strct)
     guest_pos = [pos.copy() for pos in guest_strct["positions"]]
     shifts = [bond_length * ref_dirs[2], np.zeros(3), np.zeros(3)]
     for p0, ref_dir, shift in zip(angle_pars, ref_dirs, shifts):
         rotation = Rotation.from_rotvec(p0 * ref_dir)
         for idx, pos in enumerate(guest_pos):
             guest_pos[idx] = rotation.as_matrix().dot(pos.T) + shift
+    for idx in range(len(guest_pos)):
+        guest_pos[idx] += host_pos
+    guest_strct["positions"] = guest_pos
 
     # Add guest structure to host:
-    new_structure = structure.to_dict()
-    new_structure["elements"] = list(new_structure["elements"])
-    if new_structure["kinds"] is not None:
-        new_structure["kinds"] = list(new_structure["kinds"])
-    new_structure["positions"] = list(new_structure["positions"])
-    for el, pos in zip(guest_strct["elements"], guest_pos):
-        new_structure["elements"].append(el)
-        new_structure["positions"].append(pos + host_pos)
-        if new_structure["kinds"] is not None:
-            new_structure["kinds"].append(None)
-    new_structure = Structure(**new_structure, wrap=wrap)
+    new_structure = _merge_structures(structure, guest_strct, wrap)
 
     # Evaluate complex based on the distance constraints:
     score = 0.0
@@ -356,6 +352,34 @@ def _add_mol(
             dists = [dists]
         score = sum(abs(dist - ref_dist) for dist, ref_dist in zip(dists, ref_dists))
     return new_structure, score
+
+
+def _merge_structures(host_strct, guest_strct, wrap):
+    new_structure = host_strct.to_dict()
+    new_structure["elements"] = list(new_structure["elements"])
+    if new_structure["kinds"] is not None:
+        new_structure["kinds"] = list(new_structure["kinds"])
+    else:
+        new_structure["kinds"] = [None] * len(new_structure["elements"])
+    new_structure["positions"] = list(new_structure["positions"])
+    new_structure["site_attributes"] = {
+        key: list(val) for key, val in new_structure["site_attributes"].items()
+    }
+    if len(guest_strct["site_attributes"]) > 0:
+        for site_attr in guest_strct["site_attributes"].keys():
+            if site_attr not in new_structure["site_attributes"]:
+                new_structure["site_attributes"][site_attr] = [None] * len(
+                    new_structure["elements"]
+                )
+    for idx, (el, kind, pos) in enumerate(
+        zip(guest_strct["elements"], guest_strct["kinds"], guest_strct["positions"])
+    ):
+        new_structure["elements"].append(el)
+        new_structure["kinds"].append(kind)
+        new_structure["positions"].append(pos)
+        for site_attr, val in new_structure["site_attributes"].items():
+            val.append(guest_strct["site_attributes"].get(site_attr, None))
+    return Structure(**new_structure, wrap=wrap)
 
 
 def _check_distances(
