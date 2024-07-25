@@ -48,11 +48,11 @@ def _create_index_combinations(confined, strct_c):
     for idx0 in range(strct_c_len):
         for idx1 in range(min_idx, max_idx):
             if (
-                utils_cf.compare_formulas(
+                idx0 != idx1
+                and (idx1, idx0) not in pairs
+                and utils_cf.compare_formulas(
                     strct_c[idx0].chem_formula, strct_c[idx1].chem_formula, reduce_formulas=True
                 )
-                and idx0 != idx1
-                and (idx1, idx0) not in pairs
             ):
                 pairs.append((idx0, idx1))
     return pairs
