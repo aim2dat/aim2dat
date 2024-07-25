@@ -80,7 +80,10 @@ def _return_database_ids(api_version, url, timeout):
                     url=prov_attr["base_url"] + f"/v{api_version}/links",
                     timeout=timeout,
                 )
-                provider_json = response.json()
+                try:
+                    provider_json = response.json()
+                except ValueError:
+                    continue
                 for database in provider_json["data"]:
                     if (
                         database["attributes"].get("link_type")
