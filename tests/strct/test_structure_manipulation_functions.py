@@ -15,6 +15,23 @@ STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 STRUCTURE_MANIPULATION_PATH = os.path.dirname(__file__) + "/structure_manipulation/"
 
 
+def test_add_structure_coord_planar(structure_comparison):
+    """Test add_structure_coord method for planar geometries."""
+    strct = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
+    new_strct = add_structure_coord(
+        strct,
+        guest_structure="H2O",
+        min_dist_delta=0.2,
+        host_indices=54,
+        dist_threshold=None,
+        bond_length=0.2,
+    )
+    ref_p = load_yaml_file(
+        STRUCTURE_MANIPULATION_PATH + "MOF-5_prim_add_structure_coord_planar_ref.yaml"
+    )
+    structure_comparison(new_strct, ref_p)
+
+
 def test_add_structure_coord_molecules(structure_comparison):
     """Test add_structure_coord method."""
     inputs = dict(load_yaml_file(STRUCTURES_PATH + "NH3.yaml"))
