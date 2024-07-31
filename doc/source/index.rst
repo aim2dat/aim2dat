@@ -38,7 +38,7 @@ Feature List
 ============
 
 * Managing and analysing sets of crystals and molecules.
-* Ab-initio high-throughput calculations based on aiida.
+* Ab-initio high-throughput calculations based on |aiida_page|.
 * Plotting material's properties such as electronic band structures, projected density of states or phase diagrams.
 * Interface to machine learning routines via sci-kit learn.
 * Function analysis: discretizing and comparing 2-dimensional functions.
