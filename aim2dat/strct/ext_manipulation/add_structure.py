@@ -310,10 +310,10 @@ def _derive_bond_dir(host_index, coord):
     for neigh in cn_details["neighbours"]:
         dir_v = np.array(neigh["position"]) - host_pos_np
         bond_dir += dir_v / np.linalg.norm(dir_v)
-    if np.linalg.norm(bond_dir) < 1e-5:
+    if np.linalg.norm(bond_dir) < 1e-1:
         bond_dir = np.cross(
-            np.array(cn_details["neighbours"][0]["position"]),
-            np.array(cn_details["neighbours"][1]["position"]),
+            np.array(cn_details["neighbours"][0]["position"]) - host_pos_np,
+            np.array(cn_details["neighbours"][1]["position"]) - host_pos_np,
         )
     bond_dir *= -1.0 / np.linalg.norm(bond_dir)
     return bond_dir

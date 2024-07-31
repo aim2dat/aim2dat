@@ -10,6 +10,7 @@ Version 0.2.0
 * ``utils.chem_formula.transform_str_to_dict`` supports now recurring elements and nested brackets (`PR #13 <https://github.com/aim2dat/aim2dat/pull/13>`_).
 * External structure manipulation methods now share the same interface as their internal counterparts (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
 * A few smaller bug fixes in CP2K output parser (`PR #36 <https://github.com/aim2dat/aim2dat/pull/36>`_).
+* ``strct.ext_manipulation.add_structure_coord`` or ``strct.ext_manipulation.add_functional_group`` were not in all cases dealing correctly with planar coordination geometry (`PR #64 <https://github.com/aim2dat/aim2dat/pull/64>`_).
 
 **Enhancements:**
 
