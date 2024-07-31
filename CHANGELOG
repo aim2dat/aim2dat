@@ -28,6 +28,7 @@ Version 0.2.0
 * Support CP2K versions 2022.1-2024.1 (PR #51 <https://github.com/aim2dat/aim2dat/pull/51>`_).
 * The newly implemented``strct.ext_manipulation.add_structure_random`` adds a guest structure at a random position and orientation (PR #53 <https://github.com/aim2dat/aim2dat/pull/53>`_).
 * ``strct.Structure.from_file`` interfaces functions from the ``io`` sub-package via the internal ``'backend'`` and adds more parameters to control the ``'ase'`` backend (PR #56 <https://github.com/aim2dat/aim2dat/pull/56>`_).
+* The methods to find duplicate structures of ``strct.StructureOperations`` are sped up by comparing the chemical formulas prior to more expensive checks (PR #61 <https://github.com/aim2dat/aim2dat/pull/61>`_)
 
 **Depreciations:**
 
