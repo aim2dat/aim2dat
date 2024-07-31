@@ -75,12 +75,23 @@ def _return_database_ids(api_version, url, timeout):
     providers = {}
     for prov_id, prov_attr in providers_url.items():
         if prov_attr.get("base_url"):
+            url = prov_attr["base_url"] + f"/v{api_version}/links"
             with requests.Session() as session:
                 response = session.get(
-                    url=prov_attr["base_url"] + f"/v{api_version}/links",
+                    url=url,
                     timeout=timeout,
                 )
-                provider_json = response.json()
+                try:
+                    provider_json = response.json()
+                except ValueError:
+                    from warnings import warn
+
+                    warn(
+                        f"Skipping '{prov_id}' database, cannot retrieve information from: {url}.",
+                        UserWarning,
+                        2,
+                    )
+                    continue
                 for database in provider_json["data"]:
                     if (
                         database["attributes"].get("link_type")
