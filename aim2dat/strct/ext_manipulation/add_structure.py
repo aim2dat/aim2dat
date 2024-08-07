@@ -356,7 +356,9 @@ def _rescale_bond_length(host_pos_np, host_positions, bond_dir, bond_length):
 
     for sbl in scaled_bond_lengths:
         guest = host_pos_np + sbl * bond_dir
-        if all([np.linalg.norm(guest - host_pos) >= bond_length for host_pos in host_positions]):
+        if all(
+            [np.linalg.norm(guest - host_pos) >= bond_length*.95 for host_pos in host_positions]
+        ):
             bond_length = sbl
             break
     return bond_length
