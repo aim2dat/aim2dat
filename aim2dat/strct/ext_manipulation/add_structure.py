@@ -370,7 +370,6 @@ def _add_mol(
     shifts = [bond_length * ref_dirs[2], np.zeros(3), np.zeros(3)]
     for p0, ref_dir, shift in zip(angle_pars, ref_dirs, shifts):
         rotation = Rotation.from_rotvec(p0 * ref_dir)
-        print(rotation.as_matrix())
         for idx, pos in enumerate(guest_pos):
             guest_pos[idx] = rotation.as_matrix().dot(pos.T) + shift
 
