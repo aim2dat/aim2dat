@@ -372,8 +372,8 @@ def _merge_structures(host_strct, guest_strct, wrap):
                 new_structure["site_attributes"][site_attr] = [None] * len(
                     new_structure["elements"]
                 )
-    for idx, (el, kind, pos) in enumerate(
-        zip(guest_strct["elements"], guest_strct["kinds"], guest_strct["positions"])
+    for el, kind, pos in zip(
+        guest_strct["elements"], guest_strct["kinds"], guest_strct["positions"]
     ):
         new_structure["elements"].append(el)
         new_structure["kinds"].append(kind)
