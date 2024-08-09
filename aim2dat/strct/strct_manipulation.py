@@ -50,12 +50,22 @@ def delete_atoms(
     new_structure["positions"] = []
     new_structure["elements"] = []
     new_structure["kinds"] = []
+    site_attributes = list(new_structure["site_attributes"].keys())
+    new_structure["site_attributes"] = {key: [] for key in site_attributes}
     has_del = False
-    for idx, (el, kind, pos) in enumerate(structure.iter_sites(get_kind=True, get_cart_pos=True)):
+    for idx, site_details in enumerate(
+        structure.iter_sites(get_kind=True, get_cart_pos=True, site_attributes=site_attributes)
+    ):
+        el = site_details[0]
+        kind = site_details[1]
+        pos = site_details[2]
+        site_attr_vals = site_details[3:]
         if el not in elements and idx not in site_indices:
             new_structure["elements"].append(el)
             new_structure["kinds"].append(kind)
             new_structure["positions"].append(pos)
+            for key, val in zip(site_attributes, site_attr_vals):
+                new_structure["site_attributes"][key].append(val)
         else:
             has_del = True
     if has_del:

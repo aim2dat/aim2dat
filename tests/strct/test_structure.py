@@ -72,7 +72,7 @@ def test_structure_print():
 
 def test_to_dict(structure_comparison):
     """Test to_dict function."""
-    calc_keys = ["attributes", "extras", "function_args"]
+    calc_keys = ["extras", "function_args"]
     site_attrs = {"test": (0.0, 0.0, 1.0, 2.0, 3.0, -1.0, "test", 0.0, 0.0, 1.0, 1.0, -2.5)}
     strct_dict = load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
     strct_dict["label"] = "test"
