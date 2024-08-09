@@ -30,9 +30,12 @@ from aim2dat.strct.strct_coordination import _coordination_compare_sites
 from aim2dat.strct.strct_prdf import _ffingerprint_compare_sites
 from aim2dat.strct.strct_space_groups import determine_space_group
 from aim2dat.strct.strct_prdf import calculate_ffingerprint
+import aim2dat.utils.chem_formula as utils_cf
 
 
-def _create_index_combinations(confined, strct_c_len):
+def _create_index_combinations(confined, strct_c):
+    """Create index combinations for duplicate identification."""
+    strct_c_len = len(strct_c)
     if confined is None:
         return list(itertools.combinations(range(strct_c_len), 2))
     min_idx = confined[0]
@@ -44,7 +47,13 @@ def _create_index_combinations(confined, strct_c_len):
     pairs = []
     for idx0 in range(strct_c_len):
         for idx1 in range(min_idx, max_idx):
-            if idx0 != idx1 and (idx1, idx0) not in pairs:
+            if (
+                idx0 != idx1
+                and (idx1, idx0) not in pairs
+                and utils_cf.compare_formulas(
+                    strct_c[idx0].chem_formula, strct_c[idx1].chem_formula, reduce_formulas=True
+                )
+            ):
                 pairs.append((idx0, idx1))
     return pairs
 
@@ -537,7 +546,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
     ):
         duplicate_pairs = []
         structures2del = []
-        index_comb = _create_index_combinations(confined, len(self.structures))
+        index_comb = _create_index_combinations(confined, self.structures)
 
         if self.n_procs > 1:
             strct_comb = [

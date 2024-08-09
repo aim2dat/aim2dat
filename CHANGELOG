@@ -11,6 +11,7 @@ Version 0.2.0
 * External structure manipulation methods now share the same interface as their internal counterparts (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
 * A few smaller bug fixes in CP2K output parser (`PR #36 <https://github.com/aim2dat/aim2dat/pull/36>`_).
 * ``strct.Structure.calculate_distance`` now correctly backfolds positions into the unit cell (`PR #63 <https://github.com/aim2dat/aim2dat/pull/63>`_).
+* ``strct.ext_manipulation.add_structure_coord`` or ``strct.ext_manipulation.add_functional_group`` were not in all cases dealing correctly with planar coordination geometry (`PR #64 <https://github.com/aim2dat/aim2dat/pull/64>`_).
 
 **Enhancements:**
 
@@ -29,6 +30,7 @@ Version 0.2.0
 * Support CP2K versions 2022.1-2024.1 (`PR #51 <https://github.com/aim2dat/aim2dat/pull/51>`_).
 * The newly implemented``strct.ext_manipulation.add_structure_random`` adds a guest structure at a random position and orientation (`PR #53 <https://github.com/aim2dat/aim2dat/pull/53>`_).
 * ``strct.Structure.from_file`` interfaces functions from the ``io`` sub-package via the internal ``'backend'`` and adds more parameters to control the ``'ase'`` backend (`PR #56 <https://github.com/aim2dat/aim2dat/pull/56>`_).
+* The methods to find duplicate structures of ``strct.StructureOperations`` are sped up by comparing the chemical formulas prior to more expensive checks (`PR #61 <https://github.com/aim2dat/aim2dat/pull/61>`_)
 
 **Depreciations:**
 
@@ -40,7 +42,9 @@ Version 0.2.0
 * Moved ``dict_*`` functions from ``aiida_workflows.utils`` to ``utils.dict_tools`` (`PR #36 <https://github.com/aim2dat/aim2dat/pull/36>`_).
 * Space group and symmetry related keys now conform to the attributes returned by spglib (`PR #54 <https://github.com/aim2dat/aim2dat/pull/54>`_).
   As such, the keys ``'sg_number'``, ``'int_symbol'``, ``'point_group_symbol'``, ``'schoenflies_symbol'`` are replaced by ``'number'``, ``'international'``, ``'pointgroup'``, ``'schoenflies'``, respectively.
+* ``utils.chem_formula.reduce_formula`` tries now to find a formula only having natural numbers as quantities; this way utils.chem_formula.compare_formulas`` works for all use-cases (`PR #60 <https://github.com/aim2dat/aim2dat/pull/60>`_).
 * Structure manipulation methods now in general maintain ``kinds``, ``attributes`` and ``site_attributes`` if not otherwise noted (`PR #63 <https://github.com/aim2dat/aim2dat/pull/63>`_)
+
 
 Version 0.1.0
 =============

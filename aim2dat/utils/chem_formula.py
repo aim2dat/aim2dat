@@ -3,6 +3,8 @@
 # Standard library imports
 import re
 import math
+import functools
+import fractions
 
 
 def transform_str_to_dict(formula_str):
@@ -195,65 +197,42 @@ def transform_list_to_str(formula_list):
     return transform_dict_to_str(transform_list_to_dict(formula_list))
 
 
-def reduce_formula(formula_dict):
+def reduce_formula(formula_dict, tolerance=1.0e-4):
     """
-    Try to find a reduced formula. Elements with fractional occupation numbers are neglected.
+    Try to find a reduced formula only having natural numbers as quantities
 
     Parameters
     ----------
     formula_dict : dict
         Chemical formula as dictionary, e.g. ``{'Fe' : 4.0, 'O' : 6.0}`` or
         ``{'H' : 2.0, 'O' : 1.0}``
+    tolerance : float
+        Tolerance to determine fractions, e.g., ``0.33333`` is intepreted as 1/3 for a tolerance of
+        ``1.0e-4``.
 
     Returns
     -------
     formula_red : dict
-        Chemical formula as dictionary, e.g. ``{'Fe' : 2.0, 'O' : 3.0}`` or
-        ``{'H' : 2.0, 'O' : 1.0}``
+        Chemical formula as dictionary, e.g. ``{'Fe' : 2, 'O' : 3}`` or
+        ``{'H' : 2, 'O' : 1}``
     """
-    formula_red = formula_dict.copy()
-
-    # Find elements with fractional occupation numbers:
-    formula_wo_fract = {}
-    elements_w_fract = []
-    for element, occ_number in formula_dict.items():
-        if float(occ_number).is_integer():
-            formula_wo_fract[element] = occ_number
-        else:
-            elements_w_fract.append(element)
-
-    # Find greatest common divisor:
-    is_reduced = True
-    occ_numbers = list(formula_wo_fract.values())
-
-    # In case only one element is available:
-    if len(occ_numbers) == 1:
-        gcd = int(occ_numbers[0])
+    if len(formula_dict) == 1:
+        int_values = [1]
     else:
-        # Calculate the greatest common denominator
-        gcd = math.gcd(int(occ_numbers[0]), int(occ_numbers[1]))
-        for occ_number in occ_numbers[2:]:
-            gcd = math.gcd(gcd, int(occ_number))
-
-    # Try to reduce formula:
-    for element in formula_wo_fract.keys():
-        if (formula_red[element] / float(gcd)).is_integer:
-            formula_red[element] /= float(gcd)
-        else:
-            is_reduced = False
-            break
-    # Reduce fractional occupation numbers:
-    for element in elements_w_fract:
-        formula_red[element] /= float(gcd)
-
-    # Return reduced (if worked), otherwise original formula:
-    if is_reduced:
-        return formula_red
-    else:
-        return formula_dict
+        factor = 1
+        fracts = []
+        for val in formula_dict.values():
+            frac = fractions.Fraction(val).limit_denominator(math.floor(1.0 / tolerance))
+            den = frac.denominator
+            fracts.append(frac)
+            if factor == 1 or factor % den != 0:
+                factor *= den
+        int_values = [int(frac.numerator * factor / frac.denominator) for frac in fracts]
+        gcd = functools.reduce(math.gcd, int_values)
+        int_values = [int(val / gcd) for val in int_values]
+    return {key: val for key, val in zip(formula_dict.keys(), int_values)}
 
 
-# compare_chem_formulas
 def compare_formulas(chem_formula1, chem_formula2, reduce_formulas=False):
     """
     Check if two chemical formulas are identical.
