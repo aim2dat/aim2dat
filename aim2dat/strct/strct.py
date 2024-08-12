@@ -371,13 +371,13 @@ class Structure(AnalysisMixin, ManipulationMixin):
 
     @property
     def attributes(self) -> dict:
-        """Return the specified attributes."""
+        """Return attributes."""
         return copy.deepcopy(self._attributes)
 
     @property
     def extras(self) -> dict:
         """
-        Return the specified extras.
+        Return extras.
         """
         return copy.deepcopy(self._extras)
 
@@ -722,7 +722,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         wrap : bool (optional)
             Whether the coordinates are wrapped back into the unit cell.
         include_calculated_properties : bool (optional)
-            Also include ``attributes``, ``extras`` and ``function_args`` in dictionary.
+            Include ``extras`` and ``function_args`` in the dictionary as well.
 
         Returns
         -------
@@ -731,7 +731,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
             ``Structure(**dict)``.
         """
         # TODO add test:
-        calc_prop_keys = ["attributes", "extras", "function_args"]
+        calc_prop_keys = ["extras", "function_args"]
         strct_dict = {}
         for key in self.keys():
             if (not include_calculated_properties and key in calc_prop_keys) or key == "positions":
