@@ -90,7 +90,7 @@ def add_structure_random(
         shift = (cell.T).dot(shift)
         guest_positions += shift - min_pos
         guest_strct0 = copy.deepcopy(guest_strct)
-        guest_strct0["positions"] = guest_positions
+        guest_strct0.set_positions(guest_positions)
 
         new_structure = _merge_structures(structure, guest_strct0, wrap)
         is_added = _check_distances(
@@ -194,10 +194,12 @@ def add_structure_coord(
         )
 
     # Shift guest site to [0.0, 0.0, 0.0]
-    guest_strct["positions"] = [
-        np.array(pos0) - np.array(guest_strct["positions"][guest_index])
-        for pos0 in guest_strct["positions"]
-    ]
+    guest_strct.set_positions(
+        [
+            np.array(pos0) - np.array(guest_strct["positions"][0])
+            for pos0 in guest_strct["positions"]
+        ]
+    )
 
     # Calculate coordination:
     coord = structure.calculate_coordination(
@@ -227,8 +229,9 @@ def add_structure_coord(
     rot_angle = -calc_angle(np.array([1.0, 0.0, 0.0]), bond_dir)
     rotation = Rotation.from_rotvec(rot_angle * rot_dir)
     rot_matrix = rotation.as_matrix()
-    for idx, pos in enumerate(guest_strct["positions"]):
-        guest_strct["positions"][idx] = rot_matrix.dot(np.array(pos).T)
+    guest_strct.set_positions(
+        [rot_matrix.dot(np.array(pos).T)] for pos in guest_strct["positions"]
+    )
 
     # Check bond length and adjusts if necessary
     if all(host_pos_np == host_positions[0]):
@@ -296,30 +299,37 @@ def add_structure_coord(
     return new_structure, "_added-" + guest_strct_label
 
 
-def _check_guest_structure(guest_strct: Union[Structure, str]) -> dict:
+def _check_guest_structure(guest_strct: Union[Structure, str]) -> Structure:
     if isinstance(guest_strct, Structure):
         label = "" if guest_strct.label is None else guest_strct.label
-        return {
-            "elements": guest_strct.elements,
-            "positions": guest_strct.positions,
-            "kinds": [None] * len(guest_strct) if guest_strct.kinds is None else guest_strct.kinds,
-            "site_attributes": guest_strct.site_attributes,
-        }, label
+        return guest_strct, label
     elif isinstance(guest_strct, str):
         guest_strct_dict = {}
         try:
-            guest_strct_dict["elements"] = [get_element_symbol(guest_strct)]
-            guest_strct_dict["positions"] = [[0.0, 0.0, 0.0]]
+            strct = Structure(
+                label=guest_strct,
+                elements=[get_element_symbol(guest_strct)],
+                positions=[[0.0, 0.0, 0.0]],
+                kinds=[None],
+                pbc=False,
+                site_attributes={},
+            )
         except ValueError:
             try:
                 guest_strct_dict = load_yaml_file(
                     os.path.join(cwd, "pred_structures", guest_strct + ".yaml")
                 )
+                strct = Structure(
+                    label=guest_strct,
+                    elements=guest_strct_dict["elements"],
+                    positions=guest_strct_dict["positions"],
+                    kinds=[None] * len(guest_strct_dict["elements"]),
+                    pbc=False,
+                    site_attributes={},
+                )
             except FileNotFoundError:
                 raise ValueError(f"`guest_structure` '{guest_strct}' is not supported.")
-        guest_strct_dict["kinds"] = [None] * len(guest_strct_dict["elements"])
-        guest_strct_dict["site_attributes"] = {}
-        return guest_strct_dict, guest_strct
+        return strct, guest_strct
     else:
         raise TypeError("`guest_structure` needs to be of type Structure or str.")
 
@@ -380,7 +390,7 @@ def _add_mol(
             guest_pos[idx] = rotation.as_matrix().dot(pos.T) + shift
     for idx in range(len(guest_pos)):
         guest_pos[idx] += host_pos
-    guest_strct["positions"] = guest_pos
+    guest_strct.set_positions(guest_pos)
 
     # Add guest structure to host:
     new_structure = _merge_structures(structure, guest_strct, wrap)
