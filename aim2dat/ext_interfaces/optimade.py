@@ -77,13 +77,13 @@ def _return_database_ids(api_version, url, timeout):
         if prov_attr.get("base_url"):
             url = prov_attr["base_url"] + f"/v{api_version}/links"
             with requests.Session() as session:
-                response = session.get(
-                    url=url,
-                    timeout=timeout,
-                )
                 try:
+                    response = session.get(
+                        url=url,
+                        timeout=timeout,
+                    )
                     provider_json = response.json()
-                except ValueError:
+                except (ValueError, requests.exceptions.ConnectTimeout):
                     from warnings import warn
 
                     warn(
@@ -91,7 +91,7 @@ def _return_database_ids(api_version, url, timeout):
                         UserWarning,
                         2,
                     )
-                    continue
+
                 for database in provider_json["data"]:
                     if (
                         database["attributes"].get("link_type")
