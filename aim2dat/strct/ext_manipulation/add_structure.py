@@ -127,7 +127,6 @@ def add_structure_coord(
 ) -> Structure:
     """
     Add a functional group or an atom to a host site.
-    Make sure that the molecule is aligned with the x-axis.
 
     Parameters
     ----------
