@@ -110,7 +110,7 @@ def add_structure_coord(
     guest_structure: Union[Structure, str] = "CH3",
     guest_dir: List[float] = [0.0, 0.0, 0.0],
     bond_length: float = 1.25,
-    r_max: float = 10.0,
+    r_max: float = 15.0,
     cn_method: str = "minimum_distance",
     min_dist_delta: float = 0.1,
     n_nearest_neighbours: int = 5,
