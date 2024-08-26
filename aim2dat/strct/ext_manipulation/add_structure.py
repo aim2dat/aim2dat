@@ -204,7 +204,7 @@ def add_structure_coord(
         ]
     )
 
-    if guest_dir == [0.0, 0.0, 0.0]:
+    if guest_dir == [0.0, 0.0, 0.0] and len(guest_strct) > 1:
         # Get vector of guest atoms for rotation
         guest_strct_coord = guest_strct.calculate_coordination(
             r_max=r_max,
@@ -245,13 +245,14 @@ def add_structure_coord(
         host_positions.append(pos)
     bond_dir /= np.linalg.norm(bond_dir)
     host_pos_np = np.mean(np.array(host_positions), axis=0)
-    rot_dir = np.cross(bond_dir, guest_dir)
-    rot_angle = -calc_angle(guest_dir, bond_dir)
-    rotation = Rotation.from_rotvec(rot_angle * rot_dir)
-    rot_matrix = rotation.as_matrix()
-    guest_strct.set_positions(
-        [rot_matrix.dot(np.array(pos).T) for pos in guest_strct["positions"]]
-    )
+    if len(guest_strct) > 1:
+        rot_dir = np.cross(bond_dir, guest_dir)
+        rot_angle = -calc_angle(guest_dir, bond_dir)
+        rotation = Rotation.from_rotvec(rot_angle * rot_dir)
+        rot_matrix = rotation.as_matrix()
+        guest_strct.set_positions(
+            [rot_matrix.dot(np.array(pos).T) for pos in guest_strct["positions"]]
+        )
 
     # Check bond length and adjusts if necessary
     if all(host_pos_np == host_positions[0]):
