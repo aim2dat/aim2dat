@@ -108,7 +108,7 @@ def add_structure_coord(
     host_indices: Union[int, List[int]] = 0,
     guest_index: int = 0,
     guest_structure: Union[Structure, str] = "CH3",
-    guest_dir: List[float] = [0.0, 0.0, 0.0],
+    guest_dir: Union[None, List[float]] = None,
     bond_length: float = 1.25,
     r_max: float = 15.0,
     cn_method: str = "minimum_distance",
@@ -201,7 +201,7 @@ def add_structure_coord(
         ]
     )
 
-    if guest_dir == [0.0, 0.0, 0.0] and len(guest_strct) > 1:
+    if guest_dir and len(guest_strct) > 1:
         # Get vector of guest atoms for rotation
         guest_strct_coord = guest_strct.calculate_coordination(
             r_max=r_max,
