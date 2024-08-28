@@ -191,10 +191,7 @@ def add_structure_coord(
 
     if max(host_indices) >= len(structure) or guest_index >= len(guest_strct):
         idx = max(host_indices)
-        raise IndexError(
-            f"Host index: {idx} greater than structure length: {len(structure)} or "
-            f"guest index: {guest_index} greater than guest length: {len(guest_strct)}."
-        )
+        return structure
 
     # Shift guest site to [0.0, 0.0, 0.0]
     guest_strct.set_positions(
