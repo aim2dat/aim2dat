@@ -39,7 +39,6 @@ def test_add_structure_coord_molecules(structure_comparison):
         Structure(**inputs),
         host_indices=[1, 2, 3],
         guest_structure="OH",
-        guest_dir=[1.0, 0.0, 0.0],
         min_dist_delta=0.5,
         bond_length=1.0,
         dist_constraints=[(1, 1, 0.9)],

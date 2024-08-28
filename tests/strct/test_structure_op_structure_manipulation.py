@@ -68,7 +68,6 @@ def test_add_structure_coord(structure_comparison):
             "wrap": True,
             "host_indices": 37,
             "guest_structure": "H",
-            "guest_dir": [1.0, 0.0, 0.0],
             "bond_length": 1.0,
             "change_label": False,
         },
@@ -80,7 +79,6 @@ def test_add_structure_coord(structure_comparison):
             "wrap": True,
             "host_indices": 39,
             "guest_structure": "CH3",
-            "guest_dir": [1.0, 0.0, 0.0],
             "bond_length": 1.1,
             "change_label": False,
         },
@@ -88,32 +86,17 @@ def test_add_structure_coord(structure_comparison):
     strct_ops.perform_manipulation(
         0,
         method=add_structure_coord,
-        kwargs={
-            "host_indices": 41,
-            "guest_structure": "COOH",
-            "guest_dir": [1.0, 0.0, 0.0],
-            "change_label": False,
-        },
+        kwargs={"host_indices": 41, "guest_structure": "COOH", "change_label": False},
     )
     strct_ops.perform_manipulation(
         0,
         method=add_structure_coord,
-        kwargs={
-            "host_indices": 42,
-            "guest_structure": "NH2",
-            "guest_dir": [1.0, 0.0, 0.0],
-            "change_label": False,
-        },
+        kwargs={"host_indices": 42, "guest_structure": "NH2", "change_label": False},
     )
     strct_ops.perform_manipulation(
         0,
         method=add_structure_coord,
-        kwargs={
-            "host_indices": 62,
-            "guest_structure": "NO2",
-            "guest_dir": [1.0, 0.0, 0.0],
-            "change_label": False,
-        },
+        kwargs={"host_indices": 62, "guest_structure": "NO2", "change_label": False},
     )
     strct_ops.perform_manipulation(
         0,
@@ -121,7 +104,6 @@ def test_add_structure_coord(structure_comparison):
         kwargs={
             "host_indices": 74,
             "guest_structure": "OH",
-            "guest_dir": [1.0, 0.0, 0.0],
             "change_label": False,
             "dist_threshold": None,
         },
