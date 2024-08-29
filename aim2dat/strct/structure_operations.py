@@ -142,7 +142,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
                     stop += len(self)
                 key = range(start, stop)
             for key0 in key:
-                new_sc.append_structure(self.get_structure(key0))
+                new_sc.append_structure(self.structures.get_structure(key0))
             return StructureOperations(new_sc)
         else:
             raise TypeError("key needs to be of type: str, int, slice, tuple or list.")
