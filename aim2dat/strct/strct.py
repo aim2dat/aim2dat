@@ -810,10 +810,10 @@ class Structure(AnalysisMixin, ManipulationMixin):
         cart_position = np.transpose(np.array(self.cell)).dot(scaled_position)
         return tuple(float(p) for p in cart_position), tuple(float(p) for p in scaled_position)
 
-    def _perform_strct_analysis(self, _, method, kwargs):
+    def _perform_strct_analysis(self, method, kwargs):
         return _check_calculated_properties(self, method, kwargs)
 
-    def _perform_strct_manipulation(self, _, method, kwargs):
+    def _perform_strct_manipulation(self, method, kwargs):
         new_strct = method(structure=self, **kwargs)
         if isinstance(new_strct, Structure):
             return new_strct

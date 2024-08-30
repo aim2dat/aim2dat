@@ -99,6 +99,8 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         self.chunksize = chunksize
         self.verbose = verbose
 
+        self._structure_c_to_append = None
+
     def __deepcopy__(self, memo) -> "StructureOperations":
         """Create a deepcopy of the object."""
         copy = StructureOperations(
@@ -130,7 +132,10 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             structure or ``StructureOperations`` object of the structures.
         """
         if isinstance(key, (str, int)):
-            return self.structures.get_structure(key)
+            if self.append_to_coll:
+                new_sc = StructureCollection([self.structures.get_structure(key)])
+            else:
+                return self.structures.get_structure(key)
         elif isinstance(key, (slice, tuple, list)):
             new_sc = StructureCollection()
             if isinstance(key, slice):
@@ -143,9 +148,20 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
                 key = range(start, stop)
             for key0 in key:
                 new_sc.append_structure(self.structures.get_structure(key0))
-            return StructureOperations(new_sc)
         else:
             raise TypeError("key needs to be of type: str, int, slice, tuple or list.")
+
+        new_strct_op = StructureOperations(
+            structures=new_sc,
+            append_to_coll=self.append_to_coll,
+            output_format=self.output_format,
+            n_procs=self.n_procs,
+            chunksize=self.chunksize,
+            verbose=self.verbose,
+        )
+        if self.append_to_coll:
+            new_strct_op._structure_c_to_append = self.structure_c_to_append
+        return new_strct_op
 
     def copy(self) -> "StructureOperations":
         """Return copy of ``StructureCollection`` object."""
@@ -164,6 +180,21 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             self._structures = StructureCollection(value)
         else:
             raise TypeError("`structures` needs to be of type `StructureCollection` or `list`.")
+
+    @property
+    def structure_c_to_append(self) -> StructureCollection:
+        """StructureCollection to append to when manipulating structures.
+
+        This is different to `self.structure` if `self.append_to_coll` is `True` and
+        the `StructureOperations` object is indexed, to enable appending to initially
+        underlying `StructureCollection`.
+
+        Returns:
+            StructureCollection: The `StructureCollection` to append to the manipulated structures.
+        """
+        if not self._structure_c_to_append:
+            return self.structures
+        return self._structure_c_to_append
 
     @property
     def verbose(self) -> bool:
@@ -940,17 +971,12 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             distinguish_kinds,
         )
 
-    def perform_analysis(
-        self, key: Union[str, int, tuple, list], method: Callable, kwargs: dict = {}
-    ):
+    def perform_analysis(self, method: Callable, kwargs: dict = {}):
         """
         Perform structure analaysis using an external method.
 
         Parameters
         ----------
-        key : str, int, tuple or list
-            Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
-            keys of the underlying ``StructureCollection`` object.
         method : function
             Analysis function.
         kwargs : dict
@@ -963,19 +989,14 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         """
         if not getattr(method, "_is_analysis_method", False):
             raise TypeError("Function is not a structure analysis method.")
-        return self._perform_strct_analysis(key, method, kwargs)
+        return self._perform_strct_analysis(method, kwargs)
 
-    def perform_manipulation(
-        self, key: Union[str, int, tuple, list], method: Callable, kwargs: dict = {}
-    ):
+    def perform_manipulation(self, method: Callable, kwargs: dict = {}):
         """
         Perform structure manipulation using an external method.
 
         Parameters
         ----------
-        key : str, int, tuple or list
-            Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
-            keys of the underlying ``StructureCollection`` object.
         method : function
             Function which manipulates the structure(s).
         kwargs : dict
@@ -989,35 +1010,32 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         """
         if not getattr(method, "_manipulates_structure", False):
             raise TypeError("Function is not a structure analysis method.")
-        return self._perform_strct_manipulation(key, method, kwargs)
+        return self._perform_strct_manipulation(method, kwargs)
 
-    def _perform_strct_manipulation(self, key, method, kwargs):
-        output = self._perform_operation(key, method, kwargs, False)
+    def _perform_strct_manipulation(self, method, kwargs):
+        output = self._perform_operation(method, kwargs, False)
         output_strct_c = StructureCollection()
         for label, structure in output.items():
             if self.append_to_coll:
-                self._structures[structure.label] = structure
+                self.structure_c_to_append[structure.label] = structure
             output_strct_c.append_structure(structure)
-        if isinstance(key, (str, int)):
+        if len(output) == 1:
             return list(output.values())[0]
         return output_strct_c
 
-    def _perform_strct_analysis(self, key, method, kwargs):
-        output = self._perform_operation(key, method, kwargs, False)
-        if isinstance(key, (str, int)):
+    def _perform_strct_analysis(self, method, kwargs):
+        output = self._perform_operation(method, kwargs, False)
+        if len(output) == 1:
             return list(output.values())[0]
         elif self.output_format == "dict":
             return output
         elif self.output_format == "DataFrame":
             return pd.DataFrame(output.values(), index=output.keys(), columns=[method])
 
-    def _perform_operation(self, key, method, kwargs, check_stored):
-        if key is None:
-            raise TypeError("`key` needs to be set to perform structural analysis tasks.")
-        keys = key if isinstance(key, (list, tuple)) else [key]
-        structure_list = [self.structures.get_structure(key0) for key0 in keys]
+    def _perform_operation(self, method, kwargs, check_stored):
+        structure_list = self.structures
         output = {}
-        if self.n_procs > 1 and len(keys) > 1:
+        if self.n_procs > 1 and len(structure_list) > 1:
             if self.verbose:
                 output_list = process_map(
                     partial(
@@ -1048,7 +1066,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
                 self.structures[strct.label] = strct
                 output[strct.label] = output0
         else:
-            if self.verbose and len(keys) > 1:
+            if self.verbose and len(structure_list) > 1:
                 structure_list = tqdm(structure_list, desc=method.__name__)
             for structure in structure_list:
                 _, output0 = structure_wrapper(structure, method, kwargs, check_stored)
