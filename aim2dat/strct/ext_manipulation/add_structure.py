@@ -201,22 +201,24 @@ def add_structure_coord(
         ]
     )
 
-    if guest_dir and len(guest_strct) > 1:
-        # Get vector of guest atoms for rotation
-        guest_strct_coord = guest_strct.calculate_coordination(
-            r_max=r_max,
-            method=cn_method,
-            min_dist_delta=min_dist_delta,
-            n_nearest_neighbours=n_nearest_neighbours,
-            radius_type=radius_type,
-            atomic_radius_delta=atomic_radius_delta,
-            econ_tolerance=econ_tolerance,
-            econ_conv_threshold=econ_conv_threshold,
-            voronoi_weight_type=voronoi_weight_type,
-            voronoi_weight_threshold=voronoi_weight_threshold,
-            okeeffe_weight_threshold=okeeffe_weight_threshold,
-        )
-        guest_dir = -_derive_bond_dir(guest_index, guest_strct_coord)
+    if guest_dir is None:
+        guest_dir = np.array([1.0, 0.0, 0.0])
+        if len(guest_strct) > 1:
+            # Get vector of guest atoms for rotation
+            guest_strct_coord = guest_strct.calculate_coordination(
+                r_max=r_max,
+                method=cn_method,
+                min_dist_delta=min_dist_delta,
+                n_nearest_neighbours=n_nearest_neighbours,
+                radius_type=radius_type,
+                atomic_radius_delta=atomic_radius_delta,
+                econ_tolerance=econ_tolerance,
+                econ_conv_threshold=econ_conv_threshold,
+                voronoi_weight_type=voronoi_weight_type,
+                voronoi_weight_threshold=voronoi_weight_threshold,
+                okeeffe_weight_threshold=okeeffe_weight_threshold,
+            )
+            guest_dir = -1.0 * _derive_bond_dir(guest_index, guest_strct_coord)
 
     # Calculate coordination:
     coord = structure.calculate_coordination(
@@ -244,6 +246,7 @@ def add_structure_coord(
     host_pos_np = np.mean(np.array(host_positions), axis=0)
     if len(guest_strct) > 1:
         rot_dir = np.cross(bond_dir, guest_dir)
+        rot_dir /= np.linalg.norm(rot_dir)
         rot_angle = -calc_angle(guest_dir, bond_dir)
         rotation = Rotation.from_rotvec(rot_angle * rot_dir)
         rot_matrix = rotation.as_matrix()
@@ -358,13 +361,14 @@ def _derive_bond_dir(index, coord):
     pos = np.array(cn_details["position"])
     bond_dir = np.zeros(3)
     for neigh in cn_details["neighbours"]:
-        bond_dir += pos - np.array(neigh["position"])
+        dir_v = np.array(neigh["position"]) - pos
+        bond_dir += dir_v / np.linalg.norm(dir_v)
     if np.linalg.norm(bond_dir) < 1e-1:
         bond_dir = np.cross(
-            pos - np.array(cn_details["neighbours"][0]["position"]),
-            pos - np.array(cn_details["neighbours"][1]["position"]),
+            np.array(cn_details["neighbours"][0]["position"]) - pos,
+            np.array(cn_details["neighbours"][1]["position"]) - pos,
         )
-    bond_dir /= np.linalg.norm(bond_dir)
+    bond_dir *= -1.0 / np.linalg.norm(bond_dir)
     return bond_dir
 
 

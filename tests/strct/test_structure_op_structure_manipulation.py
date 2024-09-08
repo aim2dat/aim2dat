@@ -70,6 +70,7 @@ def test_add_structure_coord(structure_comparison):
             "guest_structure": "H",
             "bond_length": 1.0,
             "change_label": False,
+            "guest_dir": [1.0, 0.0, 0.0],
         },
     )
     strct_ops.perform_manipulation(
@@ -81,22 +82,24 @@ def test_add_structure_coord(structure_comparison):
             "guest_structure": "CH3",
             "bond_length": 1.1,
             "change_label": False,
+            "guest_dir": [1.0, 0.0, 0.0],
+
         },
     )
     strct_ops.perform_manipulation(
         0,
         method=add_structure_coord,
-        kwargs={"host_indices": 41, "guest_structure": "COOH", "change_label": False},
+        kwargs={"host_indices": 41, "guest_structure": "COOH", "change_label": False, "guest_dir": [1.0, 0.0, 0.0]},
     )
     strct_ops.perform_manipulation(
         0,
         method=add_structure_coord,
-        kwargs={"host_indices": 42, "guest_structure": "NH2", "change_label": False},
+        kwargs={"host_indices": 42, "guest_structure": "NH2", "change_label": False, "guest_dir": [1.0, 0.0, 0.0]},
     )
     strct_ops.perform_manipulation(
         0,
         method=add_structure_coord,
-        kwargs={"host_indices": 62, "guest_structure": "NO2", "change_label": False},
+        kwargs={"host_indices": 62, "guest_structure": "NO2", "change_label": False, "guest_dir": [1.0, 0.0, 0.0]},
     )
     strct_ops.perform_manipulation(
         0,
@@ -106,6 +109,7 @@ def test_add_structure_coord(structure_comparison):
             "guest_structure": "OH",
             "change_label": False,
             "dist_threshold": None,
+            "guest_dir": [1.0, 0.0, 0.0],
         },
     )
     strct_ops.structures[0].set_positions(strct_ops.structures[0].positions, wrap=True)
