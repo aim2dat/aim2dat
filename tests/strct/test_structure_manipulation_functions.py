@@ -21,6 +21,7 @@ def test_add_structure_coord_planar(structure_comparison):
     new_strct = add_structure_coord(
         strct,
         guest_structure="H2O",
+        guest_dir=[1.0, 0.0, 0.0],
         min_dist_delta=0.2,
         host_indices=54,
         dist_threshold=None,
@@ -39,6 +40,7 @@ def test_add_structure_coord_molecules(structure_comparison):
         Structure(**inputs),
         host_indices=[1, 2, 3],
         guest_structure="OH",
+        guest_dir=None,
         min_dist_delta=0.5,
         bond_length=1.0,
         dist_constraints=[(1, 1, 0.9)],

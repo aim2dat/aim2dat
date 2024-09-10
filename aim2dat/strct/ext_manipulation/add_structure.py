@@ -90,7 +90,7 @@ def add_structure_random(
         shift = (cell.T).dot(shift)
         guest_positions += shift - min_pos
         guest_strct0 = copy.deepcopy(guest_strct)
-        guest_strct0["positions"] = guest_positions
+        guest_strct0.set_positions(guest_positions)
 
         new_structure = _merge_structures(structure, guest_strct0, wrap)
         is_added = _check_distances(
@@ -108,11 +108,14 @@ def add_structure_coord(
     host_indices: Union[int, List[int]] = 0,
     guest_index: int = 0,
     guest_structure: Union[Structure, str] = "CH3",
+    guest_dir: Union[None, List[float]] = None,
     bond_length: float = 1.25,
     r_max: float = 15.0,
     cn_method: str = "minimum_distance",
     min_dist_delta: float = 0.1,
     n_nearest_neighbours: int = 5,
+    radius_type: str = "chen_manz",
+    atomic_radius_delta: float = 0.0,
     econ_tolerance: float = 0.5,
     econ_conv_threshold: float = 0.001,
     voronoi_weight_type: float = "rel_solid_angle",
@@ -141,6 +144,9 @@ def add_structure_coord(
         (viable options are ``'CH3'``, ``'COOH'``, ``'H2O'``, ``'NH2'``, ``'NO2'`` or ``'OH'``), a
         ``Structure`` object (bond direction is assumed to be the ``[-1.0, 0.0, 0.0]`` direction)
         or the element symbol to add one single atom.
+    guest_dir: list of floats (optional)
+        Defines the orientation of the guest molecule. If not defined, a vector of nearest
+        neighbors is constructed based on the guest index.
     bond_length : float
         Bond length between the host atom and the base atom of the functional group.
     r_max : float (optional)
@@ -183,55 +189,124 @@ def add_structure_coord(
     if isinstance(host_indices, int):
         host_indices = [host_indices]
 
-    if all(idx < len(structure) for idx in host_indices) and guest_index < len(
-        guest_strct["elements"]
-    ):
-        # Shift guest site to [0.0, 0.0, 0.0]
-        guest_strct["positions"] = [
+    if max(host_indices) >= len(structure) or guest_index >= len(guest_strct):
+        idx = max(host_indices)
+        return structure
+
+    # Shift guest site to [0.0, 0.0, 0.0]
+    guest_strct.set_positions(
+        [
             np.array(pos0) - np.array(guest_strct["positions"][guest_index])
             for pos0 in guest_strct["positions"]
         ]
+    )
 
-        # Calculate coordination:
-        coord = structure.calculate_coordination(
-            method=cn_method,
-            min_dist_delta=min_dist_delta,
-            n_nearest_neighbours=n_nearest_neighbours,
-            econ_tolerance=econ_tolerance,
-            econ_conv_threshold=econ_conv_threshold,
-            okeeffe_weight_threshold=okeeffe_weight_threshold,
-        )
-
-        # Derive bond directions and rotation to align guest towards bond direction:
-        bond_dir = _derive_bond_dir(host_indices[0], coord)
-        host_positions = [structure.get_positions()[host_indices[0]]]
-        for idx in host_indices[1:]:
-            bond_dir += _derive_bond_dir(idx, coord)
-            _, pos = _calc_atomic_distance(
-                structure, host_indices[0], idx, backfold_positions=True
+    if guest_dir is None:
+        guest_dir = np.array([1.0, 0.0, 0.0])
+        if len(guest_strct) > 1:
+            # Get vector of guest atoms for rotation
+            guest_strct_coord = guest_strct.calculate_coordination(
+                r_max=r_max,
+                method=cn_method,
+                min_dist_delta=min_dist_delta,
+                n_nearest_neighbours=n_nearest_neighbours,
+                radius_type=radius_type,
+                atomic_radius_delta=atomic_radius_delta,
+                econ_tolerance=econ_tolerance,
+                econ_conv_threshold=econ_conv_threshold,
+                voronoi_weight_type=voronoi_weight_type,
+                voronoi_weight_threshold=voronoi_weight_threshold,
+                okeeffe_weight_threshold=okeeffe_weight_threshold,
             )
-            host_positions.append(pos)
-        bond_dir /= np.linalg.norm(bond_dir)
-        host_pos_np = np.mean(np.array(host_positions), axis=0)
-        rot_dir = np.cross(bond_dir, np.array([1.0, 0.0, 0.0]))
+            guest_dir = -1.0 * _derive_bond_dir(guest_index, guest_strct_coord)
+
+    # Calculate coordination:
+    coord = structure.calculate_coordination(
+        r_max=r_max,
+        method=cn_method,
+        min_dist_delta=min_dist_delta,
+        n_nearest_neighbours=n_nearest_neighbours,
+        radius_type=radius_type,
+        atomic_radius_delta=atomic_radius_delta,
+        econ_tolerance=econ_tolerance,
+        econ_conv_threshold=econ_conv_threshold,
+        voronoi_weight_type=voronoi_weight_type,
+        voronoi_weight_threshold=voronoi_weight_threshold,
+        okeeffe_weight_threshold=okeeffe_weight_threshold,
+    )
+
+    # Derive bond directions and rotation to align guest towards bond direction:
+    bond_dir = _derive_bond_dir(host_indices[0], coord)
+    host_positions = [structure.get_positions()[host_indices[0]]]
+    for idx in host_indices[1:]:
+        bond_dir += _derive_bond_dir(idx, coord)
+        _, pos = _calc_atomic_distance(structure, host_indices[0], idx, backfold_positions=True)
+        host_positions.append(pos)
+    bond_dir /= np.linalg.norm(bond_dir)
+    host_pos_np = np.mean(np.array(host_positions), axis=0)
+    if len(guest_strct) > 1:
+        rot_dir = np.cross(bond_dir, guest_dir)
         rot_dir /= np.linalg.norm(rot_dir)
-        rot_angle = -calc_angle(np.array([1.0, 0.0, 0.0]), bond_dir)
+        rot_angle = -calc_angle(guest_dir, bond_dir)
         rotation = Rotation.from_rotvec(rot_angle * rot_dir)
         rot_matrix = rotation.as_matrix()
-        for idx, pos in enumerate(guest_strct["positions"]):
-            guest_strct["positions"][idx] = rot_matrix.dot(np.array(pos).T)
+        guest_strct.set_positions(
+            [rot_matrix.dot(np.array(pos).T) for pos in guest_strct["positions"]]
+        )
 
-        # Define reference directions for rotations:
-        ref_dir_alpha = bond_dir
-        aux_dir = bond_dir.copy()
-        aux_dir[0] += 1.0
-        ref_dir_beta = np.cross(bond_dir, aux_dir)
-        ref_dir_beta /= np.linalg.norm(ref_dir_beta)
-        ref_dir_gamma = bond_dir
-        ref_dirs = [ref_dir_alpha, ref_dir_beta, ref_dir_gamma]
+    # Check bond length and adjusts if necessary
+    if all(host_pos_np == host_positions[0]):
+        pass
+    elif all(
+        [np.linalg.norm(host_pos_np - host_pos) >= bond_length for host_pos in host_positions]
+    ):
+        bond_length = 0.0
+    else:
+        bond_length = _rescale_bond_length(host_pos_np, host_positions, bond_dir, bond_length)
 
-        # Create new structure
-        new_structure, score = _add_mol(
+    # # Define reference directions for rotations:
+    ref_dir_alpha = bond_dir
+    aux_dir = bond_dir.copy()
+    aux_dir[0] += 1.0
+    ref_dir_beta = np.cross(bond_dir, aux_dir)
+    ref_dir_beta /= np.linalg.norm(ref_dir_beta)
+    ref_dir_gamma = bond_dir
+    ref_dirs = [ref_dir_alpha, ref_dir_beta, ref_dir_gamma]
+
+    # # Create new structure
+    new_structure, score = _add_mol(
+        structure,
+        guest_strct,
+        wrap,
+        host_pos_np,
+        bond_length,
+        [0.0, 0.0, 0.0],
+        ref_dirs,
+        dist_constraints,
+    )
+
+    # Optimize positions to reduce score
+    if len(dist_constraints) > 0:
+        for alpha in np.linspace(-0.5 * np.pi, 0.5 * np.pi, num=5):
+            for beta in np.linspace(-0.5 * np.pi, 0.5 * np.pi, num=5):
+                for gamma in np.linspace(0.0, 2.0 * np.pi, num=10):
+                    new_strct0, score0 = _add_mol(
+                        structure,
+                        guest_strct,
+                        wrap,
+                        host_pos_np,
+                        bond_length,
+                        [alpha, beta, gamma],
+                        ref_dirs,
+                        dist_constraints,
+                    )
+                    if score0 < score and _check_distances(
+                        new_strct0, len(guest_strct["elements"]), dist_threshold, True
+                    ):
+                        score = score0
+                        new_structure = new_strct0
+    else:
+        new_structure, _ = _add_mol(
             structure,
             guest_strct,
             wrap,
@@ -241,85 +316,87 @@ def add_structure_coord(
             ref_dirs,
             dist_constraints,
         )
-
-        # Optimize positions to reduce score
-        if len(dist_constraints) > 0:
-            for alpha in np.linspace(-0.5 * np.pi, 0.5 * np.pi, num=5):
-                for beta in np.linspace(-0.5 * np.pi, 0.5 * np.pi, num=5):
-                    for gamma in np.linspace(0.0, 2.0 * np.pi, num=10):
-                        new_strct0, score0 = _add_mol(
-                            structure,
-                            guest_strct,
-                            wrap,
-                            host_pos_np,
-                            bond_length,
-                            [alpha, beta, gamma],
-                            ref_dirs,
-                            dist_constraints,
-                        )
-                        if score0 < score and _check_distances(
-                            new_strct0, len(guest_strct["elements"]), dist_threshold, True
-                        ):
-                            score = score0
-                            new_structure = new_strct0
-        else:
-            new_structure, _ = _add_mol(
-                structure,
-                guest_strct,
-                wrap,
-                host_pos_np,
-                bond_length,
-                [0.0, 0.0, 0.0],
-                ref_dirs,
-                dist_constraints,
-            )
-            _check_distances(new_structure, len(guest_strct["elements"]), dist_threshold, False)
-        return new_structure, "_added-" + guest_strct_label
+        _check_distances(new_structure, len(guest_strct["elements"]), dist_threshold, False)
+    return new_structure, "_added-" + guest_strct_label
 
 
-def _check_guest_structure(guest_strct: Union[Structure, str]) -> dict:
+def _check_guest_structure(guest_strct: Union[Structure, str]) -> Structure:
     if isinstance(guest_strct, Structure):
         label = "" if guest_strct.label is None else guest_strct.label
-        return {
-            "elements": guest_strct.elements,
-            "positions": guest_strct.positions,
-            "kinds": [None] * len(guest_strct) if guest_strct.kinds is None else guest_strct.kinds,
-            "site_attributes": guest_strct.site_attributes,
-        }, label
+        return guest_strct, label
     elif isinstance(guest_strct, str):
         guest_strct_dict = {}
         try:
-            guest_strct_dict["elements"] = [get_element_symbol(guest_strct)]
-            guest_strct_dict["positions"] = [[0.0, 0.0, 0.0]]
+            strct = Structure(
+                label=guest_strct,
+                elements=[get_element_symbol(guest_strct)],
+                positions=[[0.0, 0.0, 0.0]],
+                kinds=[None],
+                pbc=False,
+                site_attributes={},
+            )
         except ValueError:
             try:
                 guest_strct_dict = load_yaml_file(
                     os.path.join(cwd, "pred_structures", guest_strct + ".yaml")
                 )
+                strct = Structure(
+                    label=guest_strct,
+                    elements=guest_strct_dict["elements"],
+                    positions=guest_strct_dict["positions"],
+                    kinds=[None] * len(guest_strct_dict["elements"]),
+                    pbc=False,
+                    site_attributes={},
+                )
             except FileNotFoundError:
                 raise ValueError(f"`guest_structure` '{guest_strct}' is not supported.")
-        guest_strct_dict["kinds"] = [None] * len(guest_strct_dict["elements"])
-        guest_strct_dict["site_attributes"] = {}
-        return guest_strct_dict, guest_strct
+        return strct, guest_strct
     else:
         raise TypeError("`guest_structure` needs to be of type Structure or str.")
 
 
-def _derive_bond_dir(host_index, coord):
+def _derive_bond_dir(index, coord):
     # Derive bond direction and rotation to align guest towards bond direction:
-    cn_details = coord["sites"][host_index]
-    host_pos_np = np.array(cn_details["position"])
+    cn_details = coord["sites"][index]
+    pos = np.array(cn_details["position"])
     bond_dir = np.zeros(3)
     for neigh in cn_details["neighbours"]:
-        dir_v = np.array(neigh["position"]) - host_pos_np
+        dir_v = np.array(neigh["position"]) - pos
         bond_dir += dir_v / np.linalg.norm(dir_v)
     if np.linalg.norm(bond_dir) < 1e-1:
         bond_dir = np.cross(
-            np.array(cn_details["neighbours"][0]["position"]) - host_pos_np,
-            np.array(cn_details["neighbours"][1]["position"]) - host_pos_np,
+            np.array(cn_details["neighbours"][0]["position"]) - pos,
+            np.array(cn_details["neighbours"][1]["position"]) - pos,
         )
     bond_dir *= -1.0 / np.linalg.norm(bond_dir)
     return bond_dir
+
+
+def _rescale_bond_length(host_pos_np, host_positions, bond_dir, bond_length):
+    # Rescale bond length to match the distance between guest molecule and host atoms
+    scaled_bond_lengths = []
+    for host_pos in host_positions:
+        # Calculate the coefficients for the quadratic equation
+        dis_host_center = host_pos_np - host_pos
+        bond_dir_square = np.dot(bond_dir, bond_dir)
+        bond_dir_dot_dis_host_center = np.dot(bond_dir, dis_host_center)
+        dis_host_center_square = np.dot(dis_host_center, dis_host_center)
+        # Coefficients of the quadratic equation at^2 + bt + c = 0
+        a = bond_dir_square
+        b = 2 * bond_dir_dot_dis_host_center
+        c = dis_host_center_square - bond_length**2
+        # Solve the quadratic equation
+        t1, t2 = np.roots([a, b, c])
+        scaled_bond_lengths.append(max([t1, t2]))
+
+    for sbl in scaled_bond_lengths:
+        guest = host_pos_np + sbl * bond_dir
+        if all(
+            [np.linalg.norm(guest - host_pos) >= bond_length * 0.95 for host_pos in host_positions]
+        ):
+            bond_length = sbl
+            break
+    return bond_length
 
 
 def _add_mol(
@@ -327,15 +404,15 @@ def _add_mol(
 ):
     # Reorient and shift guest structure:
     guest_strct = copy.deepcopy(guest_strct)
-    guest_pos = [pos.copy() for pos in guest_strct["positions"]]
+    guest_pos = [list(pos) for pos in guest_strct["positions"]]
     shifts = [bond_length * ref_dirs[2], np.zeros(3), np.zeros(3)]
     for p0, ref_dir, shift in zip(angle_pars, ref_dirs, shifts):
         rotation = Rotation.from_rotvec(p0 * ref_dir)
         for idx, pos in enumerate(guest_pos):
-            guest_pos[idx] = rotation.as_matrix().dot(pos.T) + shift
+            guest_pos[idx] = rotation.as_matrix().dot(np.array(pos).T) + shift
     for idx in range(len(guest_pos)):
         guest_pos[idx] += host_pos
-    guest_strct["positions"] = guest_pos
+    guest_strct.set_positions(guest_pos)
 
     # Add guest structure to host:
     new_structure = _merge_structures(structure, guest_strct, wrap)
