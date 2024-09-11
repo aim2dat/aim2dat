@@ -29,11 +29,11 @@ def read_stdout(file_name):
         for line in stdout_file:
             line_splitted = line.split()
             if line.startswith("+ critic2"):
-                try:
-                    result_dict["critic2_version"] = float(line_splitted[-1])
+                if "version" in line_splitted[-2]:
+                    result_dict["critic2_version"] = line_splitted[-1]
                     result_dict["critic2_branch"] = line_splitted[-3][1:-2]
-                except ValueError:
-                    result_dict["critic2_version"] = float(line_splitted[-2])
+                else:
+                    result_dict["critic2_version"] = line_splitted[-2]
                     result_dict["critic2_branch"] = line_splitted[-4][1:-2]
             if line.startswith("* Yu-Trinkle integration"):
                 result_dict["method"] = "Yu-Trinkle integration"
