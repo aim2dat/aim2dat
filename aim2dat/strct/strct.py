@@ -333,19 +333,19 @@ class Structure(AnalysisMixin, ManipulationMixin):
 
     @property
     def kinds(self) -> Union[tuple, None]:
-        """Return the kinds of the structure."""
+        """tuple: Kinds of the structure."""
         return self._kinds
 
     @kinds.setter
     def kinds(self, value: Union[tuple, list]):
-        if value is not None:
-            if not isinstance(value, (list, tuple)):
-                raise TypeError("`kinds` must be a list or tuple.")
-            if len(value) != len(self.elements):
-                raise ValueError("`kinds` must have the same length as `elements`.")
-            self._kind_dict = _create_index_dict(value)
-            value = tuple(value)
-        self._kinds = value
+        if value is None:
+            value = [None] * len(self.elements)
+        if not isinstance(value, (list, tuple)):
+            raise TypeError("`kinds` must be a list or tuple.")
+        if len(value) != len(self.elements):
+            raise ValueError("`kinds` must have the same length as `elements`.")
+        self._kind_dict = _create_index_dict(value)
+        self._kinds = tuple(value)
 
     @property
     def site_attributes(self) -> Union[dict, None]:
@@ -430,7 +430,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         for idx, el in enumerate(self.elements):
             output = [el]
             if get_kind:
-                output.append(None if self.kinds is None else self.kinds[idx])
+                output.append(self.kinds[idx])
             pos_cart = self.positions[idx]
             pos_scaled = None if self.scaled_positions is None else self.scaled_positions[idx]
             if (get_cart_pos or get_scaled_pos) and wrap:

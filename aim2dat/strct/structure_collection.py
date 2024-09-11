@@ -646,8 +646,7 @@ class StructureCollection:
         """
         all_kinds = []
         for strct in self:
-            if strct.kinds is not None:
-                all_kinds += strct.kinds
+            all_kinds += strct.kinds
         return sorted(set(all_kinds))
 
     def get_all_attribute_keys(self) -> list:

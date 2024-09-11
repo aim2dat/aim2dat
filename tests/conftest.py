@@ -149,7 +149,10 @@ def structure_comparison():
             assert (
                 strct1["elements"][el_idx] == strct2["elements"][el_idx]
             ), "Elements don't match."
-            if any("kinds" in strct and strct["kinds"] is not None for strct in [strct1, strct2]):
+            if any(
+                "kinds" in strct and any(k is not None for k in strct["kinds"])
+                for strct in [strct1, strct2]
+            ):
                 assert strct1["kinds"][el_idx] == strct2["kinds"][el_idx], "Kinds don't match."
 
             for idx0 in range(3):

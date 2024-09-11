@@ -331,9 +331,7 @@ def _check_guest_structure(guest_strct: Union[Structure, str]) -> Structure:
                 label=guest_strct,
                 elements=[get_element_symbol(guest_strct)],
                 positions=[[0.0, 0.0, 0.0]],
-                kinds=[None],
                 pbc=False,
-                site_attributes={},
             )
         except ValueError:
             try:
@@ -344,9 +342,7 @@ def _check_guest_structure(guest_strct: Union[Structure, str]) -> Structure:
                     label=guest_strct,
                     elements=guest_strct_dict["elements"],
                     positions=guest_strct_dict["positions"],
-                    kinds=[None] * len(guest_strct_dict["elements"]),
                     pbc=False,
-                    site_attributes={},
                 )
             except FileNotFoundError:
                 raise ValueError(f"`guest_structure` '{guest_strct}' is not supported.")
@@ -435,10 +431,7 @@ def _add_mol(
 def _merge_structures(host_strct, guest_strct, wrap):
     new_structure = host_strct.to_dict()
     new_structure["elements"] = list(new_structure["elements"])
-    if new_structure["kinds"] is not None:
-        new_structure["kinds"] = list(new_structure["kinds"])
-    else:
-        new_structure["kinds"] = [None] * len(new_structure["elements"])
+    new_structure["kinds"] = list(new_structure["kinds"])
     new_structure["positions"] = list(new_structure["positions"])
     new_structure["site_attributes"] = {
         key: list(val) for key, val in new_structure["site_attributes"].items()
@@ -457,8 +450,6 @@ def _merge_structures(host_strct, guest_strct, wrap):
         new_structure["positions"].append(pos)
         for site_attr, val in new_structure["site_attributes"].items():
             val.append(guest_strct["site_attributes"].get(site_attr, None))
-    if all(kind is None for kind in new_structure["kinds"]):
-        new_structure["kinds"] = None
     return Structure(**new_structure, wrap=wrap)
 
 

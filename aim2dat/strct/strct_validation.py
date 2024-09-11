@@ -14,7 +14,7 @@ from aim2dat.utils.element_properties import get_element_symbol
 
 def _structure_validate_elements(elements):
     if not isinstance(elements, (list, tuple, np.ndarray, str)):
-        raise TypeError("`elements` must be a list or str.")
+        raise TypeError("`elements` must be a list, tuple, numpy array or str.")
     if isinstance(elements, str):
         elements = re.findall("[A-Z][^A-Z]*", elements)
     if len(elements) == 0:
@@ -41,29 +41,6 @@ def _structure_validate_positions(positions, is_cartesian, cell, inv_cell, pbc):
         if len(position) != 3:
             raise ValueError("Length of one position must be 3.")
 
-        # Old version
-        # if is_cartesian and cell is not None:
-        #     pos_scaled = np.transpose(inv_cell).dot(np.array(position))
-        # else:
-        #     pos_scaled = np.array(position)
-        #
-        # # Back-transform coordinates to the unit-cell:
-        # if cell is not None:
-        #     for direction in range(3):
-        #         if pbc[direction]:
-        #             while pos_scaled[direction] < 0.0:
-        #                 pos_scaled[direction] += 1.0
-        #             while pos_scaled[direction] >= 1.0:
-        #                 pos_scaled[direction] -= 1.0
-        #     positions_scaled.append(tuple(float(p) for p in pos_scaled))
-        #     positions_cart.append(
-        #         tuple(float(p) for p in np.transpose(cell).dot(np.array(pos_scaled)))
-        #     )
-        # else:
-        #     positions_cart.append(tuple(float(p) for p in position))
-        ###
-
-        # New version
         if cell is None:
             positions_cart.append(tuple(float(p) for p in position))
         else:
