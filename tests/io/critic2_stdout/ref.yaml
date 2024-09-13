@@ -1,5 +1,5 @@
 critic2_branch: 'development'
-critic2_version: 1.0
+critic2_version: '1.0'
 method: 'Yu-Trinkle integration'
 ncomments: 0
 nwarnings: 0
