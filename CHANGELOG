@@ -46,6 +46,7 @@ Version 0.2.0
 * ``utils.chem_formula.reduce_formula`` tries now to find a formula only having natural numbers as quantities; this way utils.chem_formula.compare_formulas`` works for all use-cases (`PR #60 <https://github.com/aim2dat/aim2dat/pull/60>`_).
 * Structure manipulation methods now in general maintain ``kinds``, ``attributes`` and ``site_attributes`` if not otherwise noted (`PR #63 <https://github.com/aim2dat/aim2dat/pull/63>`_)
 * ``strct.Structure.kinds`` now always returns a tuple instead of ``None`` (`PR #73 <https://github.com/aim2dat/aim2dat/pull/73>`_)
+* ``io.critic2.read_stdout`` now returns the value of 'version' as string  (`PR #74 <https://github.com/aim2dat/aim2dat/pull/74>`_)
 
 
 Version 0.1.0
