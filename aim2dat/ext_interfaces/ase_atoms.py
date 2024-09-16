@@ -36,10 +36,8 @@ def _create_atoms_from_structure(structure):
     tags = []
     for k in structure.kinds:
         tag = None if k is None else re.findall(r"\d+", k)
-        if tag:
-            tags.append(int(tag[0]))
-        else:
-            tags.append(0)
+        tag = int(tag[0]) if tag else 0
+        tags.append(tag)
 
     return Atoms(
         structure.elements,
