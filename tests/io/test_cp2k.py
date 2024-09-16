@@ -46,7 +46,7 @@ def test_read_band_structure(system):
             ), f"Energies on k-point with index {kpt_idx} don't match."
 
 
-@pytest.mark.parametrize("system", ["standard", "uks"])
+@pytest.mark.parametrize("system", ["standard", "uks", "lists"])
 def test_read_atom_proj_density_of_states(system):
     """Test read_atom_proj_density_of_states function."""
     # Test empty folder

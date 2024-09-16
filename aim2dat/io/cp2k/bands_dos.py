@@ -67,7 +67,7 @@ def read_band_structure(file_name: str) -> dict:
     }
 
 
-@read_multiple(r".*-(?P<spin>[A-Z]+)?_?k.*\.pdos$")
+@read_multiple(r".*-(?P<spin>[A-Z]+)?_?(?:k\d|list\d).*\.pdos$")
 def read_atom_proj_density_of_states(folder_path: str) -> dict:
     """
     Read the atom projected density of states from CP2K.
@@ -136,7 +136,10 @@ def read_atom_proj_density_of_states(folder_path: str) -> dict:
         with custom_open(folder_path["file"][idx], "r") as dos_file:
             line_1 = dos_file.readline().split()
             line_2 = dos_file.readline().split()
-            kind = line_1[6]
+            if "list" in line_1:
+                kind = line_1[5]
+            else:
+                kind = line_1[6]
             efermi = float(line_1[-2]) * units.energy.Hartree
             orbital_labels = line_2[5:]
             single_pdos = {orb + spin_suffix: [] for orb in all_orbitals if orb in orbital_labels}
