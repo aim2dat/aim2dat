@@ -114,7 +114,9 @@ def _extract_dict_from_aiida_structure_node(structure_node, use_uuid=False):
 
     strct_dict = {
         "elements": elements,
-        "kinds": kinds if any(el != ki for el, ki in zip(elements, kinds)) else None,
+        "kinds": (
+            kinds if any(el != ki for el, ki in zip(elements, kinds)) else [None] * len(elements)
+        ),
         "positions": positions,
         "pbc": list(structure_node.pbc),
         "is_cartesian": True,

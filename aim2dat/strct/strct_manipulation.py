@@ -69,8 +69,6 @@ def delete_atoms(
         else:
             has_del = True
     if has_del:
-        if all(kind is None for kind in new_structure["kinds"]):
-            del new_structure["kinds"]
         return _add_label_suffix(new_structure, "_del", change_label)
 
 
@@ -89,8 +87,7 @@ def substitute_elements(
     if any(el_pair[0] in structure["elements"] for el_pair in elements):
         new_structure = structure.to_dict(cartesian=False)
         new_structure["elements"] = list(new_structure["elements"])
-        if new_structure["kinds"] is not None:
-            new_structure["kinds"] = list(new_structure["kinds"])
+        new_structure["kinds"] = list(new_structure["kinds"])
         for label, val in structure["attributes"].items():
             if label in attributes2keep:
                 new_structure["attributes"][label] = val
@@ -104,7 +101,7 @@ def substitute_elements(
                 site_indices = structure._element_dict[el_pair[0]]
                 for site_idx in site_indices:
                     new_structure["elements"][site_idx] = el_pair[1]
-                    if remove_kind and new_structure["kinds"] is not None:
+                    if remove_kind:
                         new_structure["kinds"][site_idx] = None
                 if radius_type is not None:
                     scaling_factor += (

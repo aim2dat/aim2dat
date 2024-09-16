@@ -21,12 +21,8 @@ def _compare_structures_ffprint(
     use_legacy_smearing,
     distinguish_kinds,
 ):
-    dict_type = "_element_dict"
+    dict_type = "_kind_dict" if distinguish_kinds else "_element_dict"
     structures = [structure1, structure2]
-    if distinguish_kinds:
-        if any(strct.kinds is None for strct in structures):
-            raise ValueError("If `distinguish_kinds` is true `kinds` need to be set.")
-        dict_type = "_kind_dict"
     element_dicts = [getattr(strct, dict_type) for strct in structures]
     if set(element_dicts[0].keys()) != set(element_dicts[1].keys()):
         return 1.0
@@ -140,7 +136,7 @@ def _compare_structures_direct_comp(
         formulas.append(std_structure["chem_formula"])
         cell_lengths.append(std_structure["cell_lengths"])
         cell_angles.append(std_structure["cell_angles"])
-        if distinguish_kinds and std_structure["kinds"] is not None:
+        if distinguish_kinds:
             el_lists.append(std_structure["kinds"])
         else:
             el_lists.append(std_structure["elements"])

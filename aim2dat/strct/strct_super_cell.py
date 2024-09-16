@@ -64,7 +64,7 @@ def _create_supercell_positions(
     """Create supercell to calculate the distances to the periodic image atoms."""
     if any(pbc0 for pbc0 in structure["pbc"]):
         elements_uc = structure["elements"]
-        kinds_uc = [None] * len(elements_uc) if structure["kinds"] is None else structure["kinds"]
+        kinds_uc = structure["kinds"]
         positions_scaled_uc = structure.get_positions(cartesian=False, wrap=True)
         translation_list = []
 

@@ -20,8 +20,8 @@ def calculate_ffingerprint(
     elements_uc = structure["elements"]
     element_dict = structure._element_dict
     if distinguish_kinds:
-        if structure.kinds is None:
-            raise ValueError("If `distinguish_kinds` is true `kinds` need to be set.")
+        if any(k is None for k in structure.kinds):
+            raise ValueError("If `distinguish_kinds` is true, all `kinds` must be unequal None.")
         elements_uc = structure["kinds"]
         element_dict = structure._kind_dict
     bins, el_rdf, atomic_rdf = _calculate_prdf(
@@ -71,8 +71,8 @@ def _calculate_prdf(structure, r_max, delta_bin, distinguish_kinds, method):
     )
     element_dict = structure._element_dict
     if distinguish_kinds:
-        if structure.kinds is None:
-            raise ValueError("If `distinguish_kinds` is true `kinds` need to be set.")
+        if any(k is None for k in structure.kinds):
+            raise ValueError("If `distinguish_kinds` is true, all `kinds` must be unequal None.")
         elements_uc = structure["kinds"]
         element_dict = structure._kind_dict
         elements_sc = kinds_sc

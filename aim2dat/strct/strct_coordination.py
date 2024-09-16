@@ -127,7 +127,7 @@ def _create_site_dict(structure, site_idx, neighbours, weights=None):
     """
     site_dict = {el0: 0 for el0 in structure._element_dict.keys()}
     site_dict["element"] = structure.elements[site_idx]
-    site_dict["kind"] = None if structure.kinds is None else structure.kinds[site_idx]
+    site_dict["kind"] = structure.kinds[site_idx]
     site_dict["position"] = list(structure.positions[site_idx])
     site_dict["neighbours"] = []
 
@@ -135,7 +135,7 @@ def _create_site_dict(structure, site_idx, neighbours, weights=None):
     for idx, (neigh_idx, neigh_pos, distance) in enumerate(neighbours):
         neigh_dict = {
             "element": structure.elements[neigh_idx],
-            "kind": None if structure.kinds is None else structure.kinds[neigh_idx],
+            "kind": structure.kinds[neigh_idx],
             "site_index": neigh_idx,
             "distance": float(distance),
             "position": [float(pos) for pos in neigh_pos],

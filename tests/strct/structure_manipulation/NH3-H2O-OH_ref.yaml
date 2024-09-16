@@ -4,7 +4,7 @@ label:
 elements: [N, H, H, H, O, H, H, O, H]
 pbc: [false, false, false]
 cell:
-kinds:
+kinds: [null, null, null, null, null, null, null, null, null]
 site_attributes: {}
 positions:
 - [0.0, 0.0, 0.0]

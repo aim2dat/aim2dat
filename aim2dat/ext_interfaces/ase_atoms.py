@@ -19,10 +19,6 @@ def _extract_structure_from_atoms(atoms):
         positions.append([float(atom.position[idx]) for idx in range(3)])
         kinds.append(f"{atom.symbol}{atom.tag}")
         tags_sum += atom.tag
-
-    # if tags_sum == 0:
-    #     kinds = elements
-
     structure_dict = {
         "elements": elements,
         "kinds": kinds if tags_sum != 0 else None,
@@ -37,15 +33,11 @@ def _extract_structure_from_atoms(atoms):
 
 def _create_atoms_from_structure(structure):
     """Create ase atoms object from structure dictionary."""
-    tags = [0] * len(structure.elements)
-    if structure.kinds is not None:
-        tags = []
-        for k in structure.kinds:
-            tag = re.findall(r"\d+", k)
-            if tag:
-                tags.append(int(tag[0]))
-            else:
-                tags.append(0)
+    tags = []
+    for k in structure.kinds:
+        tag = None if k is None else re.findall(r"\d+", k)
+        tag = int(tag[0]) if tag else 0
+        tags.append(tag)
 
     return Atoms(
         structure.elements,

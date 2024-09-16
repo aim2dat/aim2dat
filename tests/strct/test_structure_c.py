@@ -167,7 +167,7 @@ def test_validation_errors():
     with pytest.raises(TypeError) as error:
         strct_dict["elements"] = 0.0
         strct_c.append("test", **strct_dict)
-    assert str(error.value) == "`elements` must be a list or str."
+    assert str(error.value) == "`elements` must be a list, tuple, numpy array or str."
     with pytest.raises(ValueError) as error:
         strct_dict["elements"] = []
         strct_c.append("test", **strct_dict)

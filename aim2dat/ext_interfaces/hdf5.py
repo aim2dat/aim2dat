@@ -29,10 +29,7 @@ def _store_in_hdf5_file(file_path: str, structures: List[Structure]) -> None:
         if structure["cell"] is not None:
             cells += [v1 for dir0 in structure.cell for v1 in dir0]
         elements += structure["elements"]
-        if structure.kinds is not None:
-            kinds += structure["kinds"]
-        else:
-            kinds += [""] * len(structure)
+        kinds += ["" if k is None else k for k in structure.kinds]
         for pos in structure["positions"]:
             positions += list(pos)
         attributes[structure.label] = structure["attributes"]
