@@ -221,12 +221,12 @@ class PartialChargesPlot(_BasePlot):
                 y_values_height = [
                     all_charge[data]["mean_charge"].get(label)
                     for data in all_charge
-                    if plot_label in all_charge[data]["plot_label"]
+                    if plot_label == all_charge[data]["plot_label"]
                 ]
                 x_values = [
                     x_tick_labels.index(all_charge[data]["x_label"])
                     for data in all_charge
-                    if plot_label in all_charge[data]["plot_label"]
+                    if plot_label == all_charge[data]["plot_label"]
                 ]
                 data_set = {
                     "label": plot_label,
