@@ -31,13 +31,13 @@ def test_calculate_distance_indices_check(create_structure_collection_object):
     strct_c, _ = create_structure_collection_object(["Benzene"])
     strct_ops = StructureOperations(strct_c)
     with pytest.raises(ValueError) as error:
-        strct_ops.calculate_distance(0, 1, [0, 2, 20])
+        strct_ops[0].calculate_distance(1, [0, 2, 20])
     assert str(error.value) == "`site_index` needs to be smaller than the number of sites."
     with pytest.raises(TypeError) as error:
-        strct_ops.calculate_distance(0, 1.0, [0, 2, 3])
+        strct_ops[0].calculate_distance(1.0, [0, 2, 3])
     assert str(error.value) == "`site_index` needs to be of type int."
     with pytest.raises(TypeError) as error:
-        strct_ops.calculate_distance(0, [0, 2.0, 3], 1)
+        strct_ops[0].calculate_distance([0, 2.0, 3], 1)
     assert str(error.value) == "`site_index` needs to be of type int."
 
 
@@ -48,7 +48,7 @@ def test_calculate_distance(structure, file_suffix):
     strct_c = StructureCollection()
     strct_c.append_from_file("test", STRUCTURES_PATH + structure + "." + file_suffix)
     strct_ops = StructureOperations(strct_c)
-    dist = strct_ops.calculate_distance("test", **ref_outputs["distance"]["function_args"])
+    dist = strct_ops["test"].calculate_distance(**ref_outputs["distance"]["function_args"])
     if isinstance(ref_outputs["distance"]["reference"], list):
         assert [
             abs(dist[idx0] - val) < 1e-5
@@ -70,7 +70,7 @@ def test_calculate_distance_sc(structure, file_suffix):
         backend_kwargs={"strct_check_chem_formula": False},
     )
     strct_ops = StructureOperations(strct_c)
-    dist = strct_ops.calculate_distance(0, **ref_outputs["distance_sc"]["function_args"])
+    dist = strct_ops[0].calculate_distance(**ref_outputs["distance_sc"]["function_args"])
     for idx0, dist_list in enumerate(ref_outputs["distance_sc"]["reference"]):
         if isinstance(dist_list, list):
             for idx1, dist_ref in enumerate(dist_list):
@@ -86,7 +86,7 @@ def test_calculate_angle(structure, file_suffix):
     strct_c = StructureCollection()
     strct_c.append_from_file("test", STRUCTURES_PATH + structure + "." + file_suffix)
     strct_ops = StructureOperations(strct_c)
-    dist = strct_ops.calculate_angle("test", **ref_outputs["angle"]["function_args"])
+    dist = strct_ops["test"].calculate_angle(**ref_outputs["angle"]["function_args"])
     assert abs(dist - ref_outputs["angle"]["reference"]) < 1e-3, "Wrong angle."
 
 
@@ -102,9 +102,7 @@ def test_calculate_dihedral_angle(structure, file_suffix):
         backend_kwargs={"strct_check_chem_formula": False},
     )
     strct_ops = StructureOperations(strct_c)
-    dist = strct_ops.calculate_dihedral_angle(
-        key=0, **ref_outputs["dihedral_angle"]["function_args"]
-    )
+    dist = strct_ops[0].calculate_dihedral_angle(**ref_outputs["dihedral_angle"]["function_args"])
     assert abs(dist - ref_outputs["dihedral_angle"]["reference"]) < 1e-3, "Wrong angle."
 
 
@@ -114,14 +112,14 @@ def test_cn_analysis_error():
     strct_collect.append("test", **dict(load_yaml_file(STRUCTURES_PATH + "GaAs_216_conv.yaml")))
     strct_ops = StructureOperations(strct_collect)
     with pytest.raises(ValueError) as error:
-        strct_ops.calculate_coordination("test", method="test")
+        strct_ops["test"].calculate_coordination(method="test")
     assert (
         str(error.value)
         == "Method 'test' is not supported. Supported methods are: 'minimum_distance', "
         "'n_nearest_neighbours', 'atomic_radius', 'econ', 'voronoi'."
     )
     with pytest.raises(ValueError) as error:
-        strct_ops.calculate_coordination("test", method="voronoi", voronoi_weight_type="test")
+        strct_ops["test"].calculate_coordination(method="voronoi", voronoi_weight_type="test")
     assert str(error.value) == "`weight_type` 'test' is not supported."
 
 
@@ -158,8 +156,7 @@ def test_ffingerprint_order_parameters(structure, ref_order_p):
     # inputs["structure_label"] = structure
     strct_collect.append(structure, **inputs)
     strct_ops = StructureOperations(strct_collect)
-    t_order_p, site_order_p = strct_ops.perform_analysis(
-        structure,
+    t_order_p, site_order_p = strct_ops[structure].perform_analysis(
         method=calculate_ffingerprint_order_p,
         kwargs={"r_max": 20.0, "delta_bin": 0.005, "sigma": 10.0},
     )
@@ -183,8 +180,8 @@ def test_prdf_functions(structure, nested_dict_comparison):
     inputs = dict(load_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
     strct_c.append(structure, **inputs)
     strct_ops = StructureOperations(strct_c)
-    element_prdf, atomic_prdf = strct_ops.perform_analysis(
-        0, method=calculate_prdf, kwargs=ref["parameters"]
+    element_prdf, atomic_prdf = strct_ops[0].perform_analysis(
+        method=calculate_prdf, kwargs=ref["parameters"]
     )
 
     assert len(element_prdf) == len(ref["element_prdf"]), "Wrong number of el-pairs."
@@ -231,8 +228,7 @@ def test_warren_cowley_like_order_parameters(nested_dict_comparison, structure, 
     strct_c = StructureCollection()
     strct_c.append(structure, **inputs)
     strct_ops = StructureOperations(strct_c)
-    output = strct_ops.perform_analysis(
-        0,
+    output = strct_ops[0].perform_analysis(
         method=calculate_warren_cowley_order_p,
         kwargs={"r_max": r_max, "max_shells": max_shells},
     )
@@ -250,8 +246,8 @@ def test_planes(structure, file_type):
     strct_collect = StructureCollection()
     strct_collect.append_from_file("structure", STRUCTURES_PATH + structure + "." + file_type)
     strct_ops = StructureOperations(strct_collect)
-    planes = strct_ops.perform_analysis(
-        "structure", method=calculate_planes, kwargs=ref["parameters"]
+    planes = strct_ops["structure"].perform_analysis(
+        method=calculate_planes, kwargs=ref["parameters"]
     )
 
     for plane, ref_plane in zip(planes, ref["reference"]):

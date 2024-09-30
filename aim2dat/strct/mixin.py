@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import List, Tuple, Union
 import abc
 from typing import TYPE_CHECKING
+from collections.abc import Callable
 
 # Internal library imports
 import aim2dat.utils.chem_formula as utils_cf
@@ -500,6 +501,27 @@ class ManipulationMixin:
             "change_label": change_label,
         }
         return self._perform_strct_manipulation(substitute_elements, kwargs)
+
+    def perform_manipulation(self, method: Callable, kwargs: dict = {}):
+        """
+        Perform structure manipulation using an external method.
+
+        Parameters
+        ----------
+        method : function
+            Function which manipulates the structure(s).
+        kwargs : dict
+            Arguments to be passed to the function.
+
+        Returns
+        ------
+        aim2dat.strct.Structure or
+        aim2dat.strct.StructureCollection
+            Manipulated structure(s).
+        """
+        if not getattr(method, "_manipulates_structure", False):
+            raise TypeError("Function is not a structure analysis method.")
+        return self._perform_strct_manipulation(method, kwargs)
 
     @abc.abstractmethod
     def _perform_strct_manipulation(self, method_name, kwargs):

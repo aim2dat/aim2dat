@@ -20,7 +20,10 @@ def test_structure_ops_basics():
     inputs = dict(load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim" + ".yaml"))
     strct_collect.append("Cs2Te_62_prim", **inputs)
 
-    strct_ops = StructureOperations(structures=strct_collect, append_to_coll=True)
+    inputs = dict(load_yaml_file(STRUCTURES_PATH + "NaCl_225_prim" + ".yaml"))
+    strct_collect.append("NaCl_225_prim", **inputs)
+
+    strct_ops = StructureOperations(structures=strct_collect)
 
     strct_ops_inp_list = StructureOperations([Structure(label="Cs2Te_62_prim", **inputs)])
     assert isinstance(strct_ops_inp_list.structures, StructureCollection)
@@ -28,14 +31,12 @@ def test_structure_ops_basics():
     with pytest.raises(TypeError) as error:
         StructureOperations([1, 2, 3])
 
-    with pytest.raises(TypeError) as error:
-        strct_ops.append_to_coll = "test"
-    assert str(error.value) == "`append_to_coll` needs to be of type bool."
-
-    assert isinstance(strct_ops.calculate_distance("Cs2Te_62_prim", 0, 1), float)
-    assert isinstance(strct_ops.calculate_distance(["Cs2Te_62_prim"], 0, 1), dict)
+    assert isinstance(strct_ops["Cs2Te_62_prim"].calculate_distance(0, 1), float)
+    assert isinstance(strct_ops[["Cs2Te_62_prim", "NaCl_225_prim"]].calculate_distance(0, 1), dict)
     strct_ops.output_format = "DataFrame"
-    assert isinstance(strct_ops.calculate_distance(["Cs2Te_62_prim"], 0, 1), pd.DataFrame)
+    assert isinstance(
+        strct_ops[["Cs2Te_62_prim", "NaCl_225_prim"]].calculate_distance(0, 1), pd.DataFrame
+    )
     with pytest.raises(TypeError) as error:
         strct_ops.output_format = 10
     assert str(error.value) == "`output_format` needs to be of type str."
@@ -46,9 +47,6 @@ def test_structure_ops_basics():
         == "`output_format` 'DataFramE' is not supported."
         + " It has to be one of the following options: ['dict', 'DataFrame']"
     )
-
-    inputs = dict(load_yaml_file(STRUCTURES_PATH + "NaCl_225_prim" + ".yaml"))
-    strct_collect.append("NaCl_225_prim", **inputs)
 
     with pytest.raises(ValueError) as error:
         strct_ops.compare_structures_via_ffingerprint(0, 1, distinguish_kinds=True)

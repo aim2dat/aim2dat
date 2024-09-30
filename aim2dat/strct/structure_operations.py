@@ -10,7 +10,6 @@ from concurrent.futures import ProcessPoolExecutor
 from functools import partial
 from collections.abc import Callable
 
-
 # Third party library imports
 import pandas as pd
 from tqdm.auto import tqdm
@@ -80,12 +79,16 @@ def compare_structures(structures, compare_function, comp_kwargs, threshold):
 class StructureOperations(AnalysisMixin, ManipulationMixin):
     """Serves as a wrapper to make the methods defined on a single
     Structure object accessible for a StructureCollection.
+
+    Manipulation methods applied to one `Structure` will simply return the
+    new manipulated `Structure`. If a manipulation method is applied to
+    multiple `Structure`s, a new `StructureCollection` object will be returned.
+    The initial `StructureCollection` remains unaffected.
     """
 
     def __init__(
         self,
         structures: Union[List[Union[Structure, dict]], StructureCollection],
-        append_to_coll: bool = True,
         output_format: str = "dict",
         n_procs: int = 1,
         chunksize: int = 50,
@@ -93,19 +96,15 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
     ):
         """Initialize object."""
         self.structures = structures
-        self.append_to_coll = append_to_coll
         self.output_format = output_format
         self.n_procs = n_procs
         self.chunksize = chunksize
         self.verbose = verbose
 
-        self._structure_c_to_append = None
-
     def __deepcopy__(self, memo) -> "StructureOperations":
         """Create a deepcopy of the object."""
         copy = StructureOperations(
             structures=self.structures.copy(),
-            append_to_coll=self.append_to_coll,
             output_format=self.output_format,
             n_procs=self.n_procs,
             chunksize=self.chunksize,
@@ -132,12 +131,10 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             structure or ``StructureOperations`` object of the structures.
         """
         if isinstance(key, (str, int)):
-            if self.append_to_coll:
-                new_sc = StructureCollection([self.structures.get_structure(key)])
-            else:
-                return self.structures.get_structure(key)
+            return self.structures.get_structure(key)
         elif isinstance(key, (slice, tuple, list)):
             new_sc = StructureCollection()
+
             if isinstance(key, slice):
                 start = key.start if key.start is not None else 0
                 if start < 0:
@@ -151,17 +148,13 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         else:
             raise TypeError("key needs to be of type: str, int, slice, tuple or list.")
 
-        new_strct_op = StructureOperations(
+        return StructureOperations(
             structures=new_sc,
-            append_to_coll=self.append_to_coll,
             output_format=self.output_format,
             n_procs=self.n_procs,
             chunksize=self.chunksize,
             verbose=self.verbose,
         )
-        if self.append_to_coll:
-            new_strct_op._structure_c_to_append = self.structure_c_to_append
-        return new_strct_op
 
     def copy(self) -> "StructureOperations":
         """Return copy of ``StructureCollection`` object."""
@@ -180,21 +173,6 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             self._structures = StructureCollection(value)
         else:
             raise TypeError("`structures` needs to be of type `StructureCollection` or `list`.")
-
-    @property
-    def structure_c_to_append(self) -> StructureCollection:
-        """StructureCollection to append to when manipulating structures.
-
-        This is different to `self.structure` if `self.append_to_coll` is `True` and
-        the `StructureOperations` object is indexed, to enable appending to initially
-        underlying `StructureCollection`.
-
-        Returns:
-            StructureCollection: The `StructureCollection` to append to the manipulated structures.
-        """
-        if not self._structure_c_to_append:
-            return self.structures
-        return self._structure_c_to_append
 
     @property
     def verbose(self) -> bool:
@@ -234,20 +212,6 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         if value < 1:
             raise TypeError("`chunksize` needs to be larger than 0.")
         self._chunksize = value
-
-    @property
-    def append_to_coll(self) -> bool:
-        """
-        bool: Whether to append manipulated structures also to the internal ``StructureCollection``
-        object.
-        """
-        return self._append_to_coll
-
-    @append_to_coll.setter
-    def append_to_coll(self, value: bool):
-        if not isinstance(value, bool):
-            raise TypeError("`append_to_coll` needs to be of type bool.")
-        self._append_to_coll = value
 
     @property
     def supported_output_formats(self) -> List[str]:
@@ -461,9 +425,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             "use_legacy_smearing": use_legacy_smearing,
             "distinguish_kinds": distinguish_kinds,
         }
-        self._perform_operation(
-            list(range(len(self.structures))), calculate_ffingerprint, comp_kwargs, True
-        )
+        self._perform_operation(calculate_ffingerprint, comp_kwargs, True)
         comp_kwargs["use_weights"] = use_weights
         return self._find_duplicate_structures(
             _compare_structures_ffprint,
@@ -510,9 +472,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             "hall_number": hall_number,
             "return_standardized_structure": True,
         }
-        self._perform_operation(
-            list(range(len(self.structures))), determine_space_group, comp_kwargs, True
-        )
+        self._perform_operation(determine_space_group, comp_kwargs, True)
         return self._find_duplicate_structures(
             _compare_structures_comp_sym, comp_kwargs, None, confined, remove_structures
         )
@@ -561,9 +521,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             "no_idealize": no_idealize,
             "return_standardized_structure": True,
         }
-        self._perform_operation(
-            list(range(len(self.structures))), determine_space_group, comp_kwargs, True
-        )
+        self._perform_operation(determine_space_group, comp_kwargs, True)
         comp_kwargs["length_threshold"] = length_threshold
         comp_kwargs["angle_threshold"] = angle_threshold
         comp_kwargs["position_threshold"] = position_threshold
@@ -651,7 +609,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             structure = self.structures.get_structure(key, False)
             if site_index > len(structure["elements"]):
                 raise ValueError(f"Site index out of range for structure '{key}'.")
-            calc_props.append(calc_function(key, **calc_f_kwargs))
+            calc_props.append(getattr(self[key], calc_function)(**calc_f_kwargs))
             structures.append(structure)
         return compare_function(structures, site_indices, calc_props, **compare_f_kwargs)
 
@@ -775,7 +733,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             key2,
             site_index1,
             site_index2,
-            self.calculate_coordination,
+            "calculate_coordination",
             calc_f_kwargs,
             _coordination_compare_sites,
             compare_f_kwargs,
@@ -844,7 +802,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             key2,
             site_index1,
             site_index2,
-            self.calculate_ffingerprint,
+            "calculate_ffingerprint",
             calc_f_kwargs,
             _ffingerprint_compare_sites,
             compare_f_kwargs,
@@ -991,33 +949,10 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             raise TypeError("Function is not a structure analysis method.")
         return self._perform_strct_analysis(method, kwargs)
 
-    def perform_manipulation(self, method: Callable, kwargs: dict = {}):
-        """
-        Perform structure manipulation using an external method.
-
-        Parameters
-        ----------
-        method : function
-            Function which manipulates the structure(s).
-        kwargs : dict
-            Arguments to be passed to the function.
-
-        Returns
-        ------
-        aim2dat.strct.Structure or
-        aim2dat.strct.StructureCollection
-            Manipulated structure(s).
-        """
-        if not getattr(method, "_manipulates_structure", False):
-            raise TypeError("Function is not a structure analysis method.")
-        return self._perform_strct_manipulation(method, kwargs)
-
     def _perform_strct_manipulation(self, method, kwargs):
         output = self._perform_operation(method, kwargs, False)
         output_strct_c = StructureCollection()
         for label, structure in output.items():
-            if self.append_to_coll:
-                self.structure_c_to_append[structure.label] = structure
             output_strct_c.append_structure(structure)
         if len(output) == 1:
             return list(output.values())[0]

@@ -41,8 +41,8 @@ def test_determine_molecular_fragments(structure, file_suffix, backend, excl_ele
         "test", STRUCTURES_PATH + structure + "." + file_suffix, backend=backend
     )
     strct_ops = StructureOperations(strct_c)
-    fragments = strct_ops.perform_analysis(
-        "test", method=determine_molecular_fragments, kwargs=kwargs
+    fragments = strct_ops["test"].perform_analysis(
+        method=determine_molecular_fragments, kwargs=kwargs
     )
     assert len(fragments) == len(ref_outputs), "Number of fragments differ."
     for frag, ref_frag in zip(fragments, ref_outputs):
@@ -81,7 +81,7 @@ def test_determine_space_group(nested_dict_comparison, structure, file_suffix, k
             "test", STRUCTURES_PATH + structure + "." + file_suffix, backend="internal"
         )
     strct_ops = StructureOperations(strct_c)
-    sg_dict = strct_ops.determine_space_group("test", **kwargs)
+    sg_dict = strct_ops["test"].determine_space_group(**kwargs)
     nested_dict_comparison(sg_dict, ref_outputs)
     assert strct_c["test"]["attributes"]["space_group"] == sg_dict["space_group"]["number"]
 
@@ -120,7 +120,7 @@ def test_point_group_determination(nested_dict_comparison, structure):
     strct_c = StructureCollection()
     strct_c.append(structure, **inputs)
     strct_ops = StructureOperations(strct_c)
-    nested_dict_comparison(strct_ops.determine_point_group(structure), ref)
+    nested_dict_comparison(strct_ops[structure].determine_point_group(), ref)
     assert strct_c[structure]["attributes"]["point_group"] == pg
 
 
@@ -128,7 +128,7 @@ def test_determine_graph(nested_dict_comparison, create_structure_collection_obj
     """Test creating a graph from a structure."""
     strct_c, _ = create_structure_collection_object(["GaAs_216_prim"])
     strct_ops = StructureOperations(strct_c)
-    nx_graph, _ = strct_ops.perform_analysis(key=0, method=create_graph)
+    nx_graph, _ = strct_ops[0].perform_analysis(method=create_graph)
     assert list(nx_graph.edges) == [
         (0, 1, 0),
         (0, 1, 1),
