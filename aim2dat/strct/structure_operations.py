@@ -954,15 +954,11 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         output_strct_c = StructureCollection()
         for label, structure in output.items():
             output_strct_c.append_structure(structure)
-        if len(output) == 1:
-            return list(output.values())[0]
         return output_strct_c
 
     def _perform_strct_analysis(self, method, kwargs):
         output = self._perform_operation(method, kwargs, False)
-        if len(output) == 1:
-            return list(output.values())[0]
-        elif self.output_format == "dict":
+        if self.output_format == "dict":
             return output
         elif self.output_format == "DataFrame":
             return pd.DataFrame(output.values(), index=output.keys(), columns=[method])
