@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import List, Tuple, Union
 import abc
 from typing import TYPE_CHECKING
+from collections.abc import Callable
 
 # Internal library imports
 import aim2dat.utils.chem_formula as utils_cf
@@ -33,25 +34,21 @@ if TYPE_CHECKING:
 def analysis_method(func):
     """Mark function as calculation function."""
 
-    def check_arguments(*args, **kwargs):
-        if args[0].__class__.__name__ == "Structure" and len(args) > 1:
-            args = [args[0], None] + list(args)[1:]
+    def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
 
-    check_arguments._is_analysis_method = True
-    return check_arguments
+    wrapper._is_analysis_method = True
+    return wrapper
 
 
 def manipulates_structure(func):
     """Mark structure manipulating functions."""
 
-    def check_arguments(*args, **kwargs):
-        if args[0].__class__.__name__ == "Structure" and len(args) > 1:
-            args = [args[0], None] + list(args)[1:]
+    def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
 
-    check_arguments._manipulates_structure = True
-    return check_arguments
+    wrapper._manipulates_structure = True
+    return wrapper
 
 
 class AnalysisMixin:
@@ -70,7 +67,6 @@ class AnalysisMixin:
     @analysis_method
     def determine_point_group(
         self,
-        key: Union[str, int, tuple, list] = None,
         threshold_distance: float = 0.1,
         threshold_angle: float = 1.0,
         threshold_inertia: float = 0.1,
@@ -80,9 +76,6 @@ class AnalysisMixin:
 
         Parameters
         ----------
-        key : str, int, tuple or list
-            Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
-            keys of the underlying ``StructureCollection`` object.
         threshold_distance : float (optional)
             Tolerance parameter for distances.
         threshold_angle : float (optional)
@@ -100,12 +93,11 @@ class AnalysisMixin:
             "threshold_angle": threshold_angle,
             "threshold_inertia": threshold_inertia,
         }
-        return self._perform_strct_analysis(key, determine_point_group, kwargs)
+        return self._perform_strct_analysis(determine_point_group, kwargs)
 
     @analysis_method
     def determine_space_group(
         self,
-        key: Union[str, int, tuple, list] = None,
         symprec: float = 0.005,
         angle_tolerance: float = -1.0,
         hall_number: int = 0,
@@ -119,9 +111,6 @@ class AnalysisMixin:
 
         Parameters
         ----------
-        key : str, int, tuple or list
-            Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
-            keys of the underlying ``StructureCollection`` object.
         symprec : float (optional)
             Tolerance parameter for spglib
         angle_tolerance : float (optional)
@@ -152,12 +141,11 @@ class AnalysisMixin:
             "return_standardized_structure": return_standardized_structure,
             "no_idealize": no_idealize,
         }
-        return self._perform_strct_analysis(key, determine_space_group, kwargs)
+        return self._perform_strct_analysis(determine_space_group, kwargs)
 
     @analysis_method
     def calculate_distance(
         self,
-        key: Union[str, int, tuple, list] = None,
         site_index1: Union[int, List[int]] = 0,
         site_index2: Union[int, List[int]] = 1,
         backfold_positions: bool = True,
@@ -169,9 +157,6 @@ class AnalysisMixin:
 
         Parameters
         ----------
-        key : str, int, tuple or list
-            Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
-            keys of the underlying ``StructureCollection`` object.
         site_index1 : int
             Index of the site.
         site_index2 : int
@@ -197,12 +182,11 @@ class AnalysisMixin:
             "use_supercell": use_supercell,
             "r_max": r_max,
         }
-        return self._perform_strct_analysis(key, calculate_distance, kwargs)
+        return self._perform_strct_analysis(calculate_distance, kwargs)
 
     @analysis_method
     def calculate_angle(
         self,
-        key: Union[str, int, tuple, list] = None,
         site_index1: int = 0,
         site_index2: int = 1,
         site_index3: int = 2,
@@ -213,9 +197,6 @@ class AnalysisMixin:
 
         Parameters
         ----------
-        key : str, int, tuple or list
-            Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
-            keys of the underlying ``StructureCollection`` object.
         site_index1 : int
             Index of the site.
         site_index2 : int
@@ -236,12 +217,11 @@ class AnalysisMixin:
             "site_index3": site_index3,
             "backfold_positions": backfold_positions,
         }
-        return self._perform_strct_analysis(key, calculate_angle, kwargs)
+        return self._perform_strct_analysis(calculate_angle, kwargs)
 
     @analysis_method
     def calculate_dihedral_angle(
         self,
-        key: Union[str, int, tuple, list] = None,
         site_index1: int = 0,
         site_index2: int = 1,
         site_index3: int = 2,
@@ -253,9 +233,6 @@ class AnalysisMixin:
 
         Parameters
         ----------
-        key : str, int, tuple or list
-            Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
-            keys of the underlying ``StructureCollection`` object.
         site_index1 : int
             Index of the site.
         site_index2 : int
@@ -279,20 +256,18 @@ class AnalysisMixin:
             "site_index4": site_index4,
             "backfold_positions": backfold_positions,
         }
-        return self._perform_strct_analysis(key, calculate_dihedral_angle, kwargs)
+        return self._perform_strct_analysis(calculate_dihedral_angle, kwargs)
 
     @analysis_method
     def calculate_voronoi_tessellation(
-        self, key: Union[str, int, tuple, list] = None, r_max: float = 10.0
+        self,
+        r_max: float = 10.0,
     ) -> List[List[dict]]:
         """
         Calculate voronoi polyhedron for each atomic site.
 
         Parameters
         ----------
-        key : str, int, tuple or list
-            Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
-            keys of the underlying ``StructureCollection`` object.
         r_max : float (optional)
             Cut-off value for the maximum distance between two atoms in angstrom.
 
@@ -301,12 +276,11 @@ class AnalysisMixin:
         list
             List of voronoi details for each atomic site.
         """
-        return self._perform_strct_analysis(key, calculate_voronoi_tessellation, {"r_max": r_max})
+        return self._perform_strct_analysis(calculate_voronoi_tessellation, {"r_max": r_max})
 
     @analysis_method
     def calculate_coordination(
         self,
-        key: Union[str, int, tuple, list] = None,
         r_max: float = 10.0,
         method: str = "minimum_distance",
         min_dist_delta: float = 0.1,
@@ -324,9 +298,6 @@ class AnalysisMixin:
 
         Parameters
         ----------
-        key : str, int, tuple or list
-            Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
-            keys of the underlying ``StructureCollection`` object.
         r_max : float (optional)
             Cut-off value for the maximum distance between two atoms in angstrom.
         method : str (optional)
@@ -381,12 +352,11 @@ class AnalysisMixin:
             "voronoi_weight_threshold": voronoi_weight_threshold,
             "okeeffe_weight_threshold": okeeffe_weight_threshold,
         }
-        return self._perform_strct_analysis(key, calculate_coordination, kwargs)
+        return self._perform_strct_analysis(calculate_coordination, kwargs)
 
     @analysis_method
     def calculate_ffingerprint(
         self,
-        key: Union[str, int, tuple, list] = None,
         r_max: float = 20.0,
         delta_bin: float = 0.005,
         sigma: float = 0.05,
@@ -400,9 +370,6 @@ class AnalysisMixin:
 
         Parameters
         ----------
-        key : str, int, tuple or list
-            Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
-            keys of the underlying ``StructureCollection`` object.
         r_max : float (optional)
             Cut-off value for the maximum distance between two atoms in angstrom.
         delta_bin : float (optional)
@@ -430,10 +397,10 @@ class AnalysisMixin:
             "distinguish_kinds": distinguish_kinds,
             "use_legacy_smearing": use_legacy_smearing,
         }
-        return self._perform_strct_analysis(key, calculate_ffingerprint, kwargs)
+        return self._perform_strct_analysis(calculate_ffingerprint, kwargs)
 
     @abc.abstractmethod
-    def _perform_strct_analysis(self, key, method, kwargs):
+    def _perform_strct_analysis(self, method, kwargs):
         pass
 
 
@@ -453,7 +420,6 @@ class ManipulationMixin:
     @manipulates_structure
     def delete_atoms(
         self,
-        key: Union[str, int, tuple, list] = None,
         elements: Union[str, List[str]] = [],
         site_indices: Union[int, List[int]] = [],
         change_label: bool = False,
@@ -463,9 +429,6 @@ class ManipulationMixin:
 
         Parameters
         ----------
-        key : str, int, tuple or list
-            Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
-            keys of the underlying ``StructureCollection`` object.
         elements :  str, list or tuple
             Element or tuple or list of  the elements to be deleted.
         site_indices : list or tuple
@@ -481,12 +444,11 @@ class ManipulationMixin:
             "site_indices": site_indices,
             "change_label": change_label,
         }
-        return self._perform_strct_manipulation(key, delete_atoms, kwargs)
+        return self._perform_strct_manipulation(delete_atoms, kwargs)
 
     @manipulates_structure
     def scale_unit_cell(
         self,
-        key: Union[str, int, tuple, list] = None,
         scaling_factor: float = 1.0,
         change_label: bool = False,
     ) -> Union["Structure", "StructureCollection"]:
@@ -495,9 +457,6 @@ class ManipulationMixin:
 
         Parameters
         ----------
-        key : str, int, tuple or list
-            Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
-            keys of the underlying ``StructureCollection`` object.
         scaling_factor : float
             Scaling factor.
 
@@ -507,12 +466,11 @@ class ManipulationMixin:
             Structure with scaled unit cell.
         """
         kwargs = {"scaling_factor": scaling_factor, "change_label": change_label}
-        return self._perform_strct_manipulation(key, scale_unit_cell, kwargs)
+        return self._perform_strct_manipulation(scale_unit_cell, kwargs)
 
     @manipulates_structure
     def substitute_elements(
         self,
-        key: Union[str, int, tuple, list] = None,
         elements: Union[List[Tuple[str]], List[Tuple[int]]] = [],
         radius_type: Union[str, None] = "covalent",
         remove_kind: bool = False,
@@ -523,9 +481,6 @@ class ManipulationMixin:
 
         Parameters
         ----------
-        key : str, int, tuple or list
-            Only used in the ``StructureOperations`` class. Specifies the key or list/tuple of
-            keys of the underlying ``StructureCollection`` object.
         elements : list or tuple
             Tuple or list of tuples of the elements that are substituted.
         remove_kind : bool (optional)
@@ -545,10 +500,31 @@ class ManipulationMixin:
             "remove_kind": remove_kind,
             "change_label": change_label,
         }
-        return self._perform_strct_manipulation(key, substitute_elements, kwargs)
+        return self._perform_strct_manipulation(substitute_elements, kwargs)
+
+    def perform_manipulation(self, method: Callable, kwargs: dict = {}):
+        """
+        Perform structure manipulation using an external method.
+
+        Parameters
+        ----------
+        method : function
+            Function which manipulates the structure(s).
+        kwargs : dict
+            Arguments to be passed to the function.
+
+        Returns
+        ------
+        aim2dat.strct.Structure or
+        aim2dat.strct.StructureCollection
+            Manipulated structure(s).
+        """
+        if not getattr(method, "_manipulates_structure", False):
+            raise TypeError("Function is not a structure analysis method.")
+        return self._perform_strct_manipulation(method, kwargs)
 
     @abc.abstractmethod
-    def _perform_strct_manipulation(self, key, method_name, kwargs):
+    def _perform_strct_manipulation(self, method_name, kwargs):
         pass
 
 

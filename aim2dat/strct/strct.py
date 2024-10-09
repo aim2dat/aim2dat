@@ -3,6 +3,7 @@
 # Standard library imports
 import copy
 from typing import List, Union
+from collections.abc import Callable
 
 # Third party library imports
 import numpy as np
@@ -810,10 +811,30 @@ class Structure(AnalysisMixin, ManipulationMixin):
         cart_position = np.transpose(np.array(self.cell)).dot(scaled_position)
         return tuple(float(p) for p in cart_position), tuple(float(p) for p in scaled_position)
 
-    def _perform_strct_analysis(self, _, method, kwargs):
+    def _perform_strct_analysis(self, method, kwargs):
         return _check_calculated_properties(self, method, kwargs)
 
-    def _perform_strct_manipulation(self, _, method, kwargs):
+    def perform_analysis(self, method: Callable, kwargs: dict = {}):
+        """
+        Perform structure analaysis using an external method.
+
+        Parameters
+        ----------
+        method : function
+            Analysis function.
+        kwargs : dict
+            Arguments to be passed to the function.
+
+        Returns
+        ------
+        output
+            Output of the analysis.
+        """
+        if not getattr(method, "_is_analysis_method", False):
+            raise TypeError("Function is not a structure analysis method.")
+        return method(structure=self, **kwargs)
+
+    def _perform_strct_manipulation(self, method, kwargs):
         new_strct = method(structure=self, **kwargs)
         if isinstance(new_strct, Structure):
             return new_strct

@@ -443,7 +443,7 @@ class StructureCoordinationTransformer(_BaseStructureTransformer):
         self._features_out = np.asarray(f_labels, dtype=object)
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
-        return strct_op.calculate_coordination(key=label_list, **input_p)
+        return strct_op[label_list].calculate_coordination(**input_p)
 
     def _get_features(self, label_list, strct_op, input_p):
         check_is_fitted(self, attributes="el_pairs_")
@@ -504,8 +504,8 @@ class StructureChemOrderTransformer(_BaseStructureTransformer):
         self._features_out = np.asarray(f_labels, dtype=object)
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
-        return strct_op.perform_analysis(
-            label_list, method=calculate_warren_cowley_order_p, kwargs=input_p
+        return strct_op[label_list].perform_analysis(
+            method=calculate_warren_cowley_order_p, kwargs=input_p
         )
 
     def _get_features(self, label_list, strct_op, input_p):
@@ -577,7 +577,7 @@ class StructureFFPrintTransformer(_BaseStructureTransformer):
         self.el_pairs_ = list(itertools.combinations_with_replacement(self.elements_, 2))
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
-        return strct_op.calculate_ffingerprint(label_list, **input_p)
+        return strct_op[label_list].calculate_ffingerprint(**input_p)
 
     def _get_features(self, label_list, strct_op, input_p):
         check_is_fitted(self, attributes="el_pairs_")
@@ -653,7 +653,7 @@ class StructurePRDFTransformer(_BaseStructureTransformer):
         self.el_pairs_ = list(itertools.product(all_elements, repeat=2))
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
-        return strct_op.perform_analysis(label_list, method=calculate_prdf, kwargs=input_p)
+        return strct_op[label_list].perform_analysis(method=calculate_prdf, kwargs=input_p)
 
     def _get_features(self, label_list, strct_op, input_p):
         check_is_fitted(self, attributes="el_pairs_")
@@ -773,8 +773,8 @@ class StructureMatrixTransformer(_BaseStructureTransformer):
             self.n_atoms_max_ = self.n_atoms_max
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
-        return strct_op.perform_analysis(
-            label_list, method=calculate_interaction_matrix, kwargs=input_p
+        return strct_op[label_list].perform_analysis(
+            method=calculate_interaction_matrix, kwargs=input_p
         )
 
     def _get_features(self, label_list, strct_op, input_p):
@@ -865,8 +865,8 @@ class StructureACSFTransformer(_BaseDscribeTransformer):
         self.dscribe_only_physical_cores = dscribe_only_physical_cores
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
-        return strct_op.perform_analysis(
-            label_list, method=calculate_acsf_descriptor, kwargs=input_p
+        return strct_op[label_list].perform_analysis(
+            method=calculate_acsf_descriptor, kwargs=input_p
         )
 
 
@@ -963,8 +963,8 @@ class StructureSOAPTransformer(_BaseDscribeTransformer):
         self.dscribe_only_physical_cores = dscribe_only_physical_cores
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
-        return strct_op.perform_analysis(
-            label_list, method=calculate_soap_descriptor, kwargs=input_p
+        return strct_op[label_list].perform_analysis(
+            method=calculate_soap_descriptor, kwargs=input_p
         )
 
 
@@ -1047,6 +1047,6 @@ class StructureMBTRTransformer(_BaseDscribeTransformer):
         self.dscribe_only_physical_cores = dscribe_only_physical_cores
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
-        return strct_op.perform_analysis(
-            label_list, method=calculate_mbtr_descriptor, kwargs=input_p
+        return strct_op[label_list].perform_analysis(
+            method=calculate_mbtr_descriptor, kwargs=input_p
         )
