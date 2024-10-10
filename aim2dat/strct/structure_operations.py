@@ -27,13 +27,24 @@ from aim2dat.strct.strct_comparison import (
 from aim2dat.strct.stability import _calculate_stabilities
 from aim2dat.strct.strct_coordination import _coordination_compare_sites
 from aim2dat.strct.strct_prdf import _ffingerprint_compare_sites
-from aim2dat.strct.strct_space_groups import determine_space_group
-from aim2dat.strct.strct_prdf import calculate_ffingerprint
 import aim2dat.utils.chem_formula as utils_cf
 
 
-def _create_index_combinations(confined, strct_c):
+def _create_index_combinations(confined, strct_c, explicit_indices=None):
     """Create index combinations for duplicate identification."""
+    if explicit_indices is not None:
+        idx1 = explicit_indices[0]
+        idx2 = explicit_indices[1]
+
+        if isinstance(idx1, (int, str)):
+            idx1 = [idx1]
+        if isinstance(idx2, (int, str)):
+            idx2 = [idx2]
+        if len(idx1) != len(idx2):
+            return list(itertools.product(idx1, idx2))
+        else:
+            return list(zip(idx1, idx2))
+
     strct_c_len = len(strct_c)
     if confined is None:
         return list(itertools.combinations(range(strct_c_len), 2))
@@ -303,15 +314,28 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         distance : float
             Measure for the similarity of the two structures.
         """
-        return _compare_structures_ffprint(
-            self.structures[key1],
-            self.structures[key2],
-            r_max,
-            delta_bin,
-            sigma,
-            use_weights,
-            use_legacy_smearing,
-            distinguish_kinds,
+        comp_kwargs = {
+            "r_max": r_max,
+            "delta_bin": delta_bin,
+            "sigma": sigma,
+            "use_legacy_smearing": use_legacy_smearing,
+            "distinguish_kinds": distinguish_kinds,
+        }
+
+        index_pairs = _create_index_combinations(None, self.structures, (key1, key2))
+        comp_kwargs["use_weights"] = use_weights
+
+        comp_output = self._compare_structures(
+            compare_function=_compare_structures_ffprint,
+            comp_kwargs=comp_kwargs,
+            threshold=None,
+            index_pairs=index_pairs,
+            desc="ffprint_comp",
+        )
+
+        return self._parse_output(
+            {(idx[0], idx[1]): comp for idx, comp in zip(index_pairs, comp_output)},
+            "ffprint_comp",
         )
 
     def compare_structures_via_comp_sym(
@@ -344,8 +368,24 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         bool
             Returns ``True`` if the structures match and otherwise ``False``.
         """
-        return _compare_structures_comp_sym(
-            self.structures[key1], self.structures[key2], symprec, angle_tolerance, hall_number
+        comp_kwargs = {
+            "symprec": symprec,
+            "angle_tolerance": angle_tolerance,
+            "hall_number": hall_number,
+        }
+        index_pairs = _create_index_combinations(None, self.structures, (key1, key2))
+
+        comp_output = self._compare_structures(
+            compare_function=_compare_structures_comp_sym,
+            comp_kwargs=comp_kwargs,
+            threshold=None,
+            index_pairs=index_pairs,
+            desc="composition_symmetry_comp",
+        )
+
+        return self._parse_output(
+            {(idx[0], idx[1]): comp for idx, comp in zip(index_pairs, comp_output)},
+            "composition_symmetry_comp",
         )
 
     def compare_structures_via_direct_comp(
@@ -362,17 +402,29 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         distinguish_kinds: bool = False,
     ) -> bool:
         """Compare structures by comparing lattice vectors, angles and scaled positions."""
-        return _compare_structures_direct_comp(
-            self.structures[key1],
-            self.structures[key2],
-            symprec,
-            angle_tolerance,
-            hall_number,
-            no_idealize,
-            length_threshold,
-            angle_threshold,
-            position_threshold,
-            distinguish_kinds,
+        comp_kwargs = {
+            "symprec": symprec,
+            "angle_tolerance": angle_tolerance,
+            "hall_number": hall_number,
+            "no_idealize": no_idealize,
+            "length_threshold": length_threshold,
+            "angle_threshold": angle_threshold,
+            "position_threshold": position_threshold,
+            "distinguish_kinds": distinguish_kinds,
+        }
+        index_pairs = _create_index_combinations(None, self.structures, (key1, key2))
+
+        comp_output = self._compare_structures(
+            compare_function=_compare_structures_direct_comp,
+            comp_kwargs=comp_kwargs,
+            threshold=None,
+            index_pairs=index_pairs,
+            desc="direct_comp",
+        )
+
+        return self._parse_output(
+            {(idx[0], idx[1]): comp for idx, comp in zip(index_pairs, comp_output)},
+            "direct_comp",
         )
 
     def find_duplicates_via_ffingerprint(
@@ -425,7 +477,6 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             "use_legacy_smearing": use_legacy_smearing,
             "distinguish_kinds": distinguish_kinds,
         }
-        self._perform_operation(calculate_ffingerprint, comp_kwargs, True)
         comp_kwargs["use_weights"] = use_weights
         return self._find_duplicate_structures(
             _compare_structures_ffprint,
@@ -472,7 +523,6 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             "hall_number": hall_number,
             "return_standardized_structure": True,
         }
-        self._perform_operation(determine_space_group, comp_kwargs, True)
         return self._find_duplicate_structures(
             _compare_structures_comp_sym, comp_kwargs, None, confined, remove_structures
         )
@@ -521,7 +571,6 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             "no_idealize": no_idealize,
             "return_standardized_structure": True,
         }
-        self._perform_operation(determine_space_group, comp_kwargs, True)
         comp_kwargs["length_threshold"] = length_threshold
         comp_kwargs["angle_threshold"] = angle_threshold
         comp_kwargs["position_threshold"] = position_threshold
@@ -530,17 +579,19 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             _compare_structures_direct_comp, comp_kwargs, None, confined, remove_structures
         )
 
-    def _find_duplicate_structures(
-        self, compare_function, comp_kwargs, threshold, confined, remove_structures
-    ):
-        duplicate_pairs = []
-        structures2del = []
-        index_comb = _create_index_combinations(confined, self.structures)
-
-        if self.n_procs > 1:
-            strct_comb = [
-                (self.structures[idx0], self.structures[idx1]) for idx0, idx1 in index_comb
+    def _compare_structures(self, compare_function, comp_kwargs, threshold, index_pairs, desc):
+        if len(index_pairs) == 1:
+            return [
+                compare_structures(
+                    (self.structures[index_pairs[0][0]], self.structures[index_pairs[0][1]]),
+                    compare_function,
+                    comp_kwargs,
+                    threshold,
+                )
             ]
+
+        strct_comb = [(self.structures[idx0], self.structures[idx1]) for idx0, idx1 in index_pairs]
+        if self.n_procs > 1:
             if self.verbose:
                 output_list = process_map(
                     partial(
@@ -552,7 +603,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
                     strct_comb,
                     max_workers=self.n_procs,
                     chunksize=self.chunksize,
-                    desc="find_duplicates",
+                    desc=desc,
                 )
             else:
                 exc = ProcessPoolExecutor(max_workers=self.n_procs)
@@ -567,25 +618,34 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
                     chunksize=self.chunksize,
                 )
                 exc.shutdown()
-            for strct_pair, is_dup in zip(strct_comb, output_list):
-                if strct_pair[1].label in structures2del:
-                    continue
-                if is_dup:
-                    structures2del.append(strct_pair[1].label)
-                    duplicate_pairs.append((strct_pair[1].label, strct_pair[0].label))
         else:
+            output_list = []
             if self.verbose:
-                index_comb = tqdm(index_comb, desc="find_duplicates")
-            for idx_pair in index_comb:
-                structure1 = self.structures[idx_pair[0]]
-                structure2 = self.structures[idx_pair[1]]
-                if structure2.label in structures2del:
-                    continue
-                if compare_structures(
-                    [structure1, structure2], compare_function, comp_kwargs, threshold
-                ):
-                    structures2del.append(structure2.label)
-                    duplicate_pairs.append((structure2.label, structure1.label))
+                index_pairs = tqdm(strct_comb, desc=desc)
+            for strct_pair in strct_comb:
+                output_list.append(
+                    compare_structures(strct_pair, compare_function, comp_kwargs, threshold)
+                )
+        return output_list
+
+    def _find_duplicate_structures(
+        self, compare_function, comp_kwargs, threshold, confined, remove_structures
+    ):
+        duplicate_pairs = []
+        structures2del = []
+        index_comb = _create_index_combinations(confined, self.structures)
+
+        output_list = self._compare_structures(
+            compare_function, comp_kwargs, threshold, index_comb, "find_duplicates"
+        )
+
+        for idx_pair, is_dup in zip(index_comb, output_list):
+            strct_pair = (self.structures[idx_pair[0]], self.structures[idx_pair[1]])
+            if strct_pair[1].label in structures2del:
+                continue
+            if is_dup:
+                structures2del.append(strct_pair[1].label)
+                duplicate_pairs.append((strct_pair[1].label, strct_pair[0].label))
         if remove_structures:
             for label in set(structures2del):
                 self.structures.pop(label)
@@ -949,6 +1009,12 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             raise TypeError("Function is not a structure analysis method.")
         return self._perform_strct_analysis(method, kwargs)
 
+    def _parse_output(self, output, method="values"):
+        if self.output_format == "dict":
+            return output
+        elif self.output_format == "DataFrame":
+            return pd.DataFrame(output.values(), index=output.keys(), columns=[method])
+
     def _perform_strct_manipulation(self, method, kwargs):
         output = self._perform_operation(method, kwargs, False)
         output_strct_c = StructureCollection()
@@ -958,10 +1024,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
 
     def _perform_strct_analysis(self, method, kwargs):
         output = self._perform_operation(method, kwargs, False)
-        if self.output_format == "dict":
-            return output
-        elif self.output_format == "DataFrame":
-            return pd.DataFrame(output.values(), index=output.keys(), columns=[method])
+        return self._parse_output(output, method)
 
     def _perform_operation(self, method, kwargs, check_stored):
         structure_list = self.structures
