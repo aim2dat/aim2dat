@@ -38,10 +38,15 @@ def _create_index_combinations(confined, strct_c, explicit_indices=None):
 
         if isinstance(idx1, (int, str)):
             idx1 = [idx1]
+        if idx2 is None:
+            return list(itertools.product(idx1, idx1))
+
         if isinstance(idx2, (int, str)):
             idx2 = [idx2]
         if len(idx1) != len(idx2):
-            return list(itertools.product(idx1, idx2))
+            raise ValueError(
+                f"Length of index lists must be equal. Got {len(idx1)} and {len(idx2)}."
+            )
         else:
             return list(zip(idx1, idx2))
 
@@ -575,6 +580,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         comp_kwargs["angle_threshold"] = angle_threshold
         comp_kwargs["position_threshold"] = position_threshold
         comp_kwargs["distinguish_kinds"] = distinguish_kinds
+
         return self._find_duplicate_structures(
             _compare_structures_direct_comp, comp_kwargs, None, confined, remove_structures
         )

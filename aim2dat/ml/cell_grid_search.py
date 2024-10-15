@@ -311,7 +311,7 @@ class CellGridSearch:
         scores = []
         comparisons = self._strct_ops.compare_structures_via_ffingerprint(
             labels,
-            "target",
+            ["target"] * len(labels),
             r_max=self.ffprint_r_max,
             delta_bin=self.ffprint_delta_bin,
             sigma=self.ffprint_sigma,
