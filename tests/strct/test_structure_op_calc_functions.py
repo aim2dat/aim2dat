@@ -31,13 +31,13 @@ def test_calculate_distance_indices_check(create_structure_collection_object):
     strct_c, _ = create_structure_collection_object(["Benzene"])
     strct_ops = StructureOperations(strct_c)
     with pytest.raises(ValueError) as error:
-        strct_ops[0].calculate_distance(1, [0, 2, 20])
+        strct_ops[0].calculate_distance([1] * 3, [0, 2, 20])
     assert str(error.value) == "`site_index` needs to be smaller than the number of sites."
     with pytest.raises(TypeError) as error:
-        strct_ops[0].calculate_distance(1.0, [0, 2, 3])
+        strct_ops[0].calculate_distance([1.0] * 3, [0, 2, 3])
     assert str(error.value) == "`site_index` needs to be of type int."
     with pytest.raises(TypeError) as error:
-        strct_ops[0].calculate_distance([0, 2.0, 3], 1)
+        strct_ops[0].calculate_distance([0, 2.0, 3], [1] * 3)
     assert str(error.value) == "`site_index` needs to be of type int."
 
 

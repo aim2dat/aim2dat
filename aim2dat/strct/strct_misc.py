@@ -53,7 +53,22 @@ def calculate_dihedral_angle(
 
 
 def _check_site_indices(structure, site_indices):
-    site_indices = np.concatenate(site_indices, axis=None).flatten()
+    if site_indices[1] is None:
+        site_indices = np.array(site_indices[0])
+    else:
+        if isinstance(site_indices[0], (tuple, list)) and isinstance(
+            site_indices[1], (tuple, list)
+        ):
+            if len(site_indices[0]) != len(site_indices[1]):
+                raise ValueError("The number of site indices must be equal.")
+        elif isinstance(site_indices[0], (tuple, list)):
+            if len(site_indices[0]) != 1:
+                raise ValueError("The number of site indices must be equal.")
+        elif isinstance(site_indices[1], (tuple, list)):
+            if len(site_indices[1]) != 1:
+                raise ValueError("The number of site indices must be equal.")
+        site_indices = np.concatenate(site_indices, axis=None).flatten()
+
     if site_indices.dtype not in ["int32", "int64"]:
         raise TypeError("`site_index` needs to be of type int.")
     if len(structure["elements"]) <= site_indices.max():
@@ -143,7 +158,9 @@ def _calc_atomic_distance(structure, site_indices1, site_indices2, backfold_posi
 
     if isinstance(site_indices1, int):
         site_indices1 = [site_indices1]
-    if isinstance(site_indices2, int):
+    if site_indices2 is None:
+        site_indices1, site_indices2 = zip(*itertools.product(site_indices1, site_indices1))
+    elif isinstance(site_indices2, int):
         site_indices2 = [site_indices2]
 
     pos1 = np.array(structure["positions"])[site_indices1]
@@ -179,13 +196,12 @@ def _calc_atomic_distance_sc(structure, site_indices1, site_indices2, r_max):
     """
     _check_site_indices(structure, (site_indices1, site_indices2))
 
-    if isinstance(site_indices1, int) and isinstance(site_indices2, int):
+    if isinstance(site_indices1, int):
         site_indices1 = [site_indices1]
-        site_indices2 = [site_indices2]
+    if site_indices2 is None:
+        site_indices1, site_indices2 = zip(*itertools.product(site_indices1, site_indices1))
     elif isinstance(site_indices2, int):
-        site_indices2 = [site_indices2] * len(site_indices1)
-    elif isinstance(site_indices1, int):
-        site_indices1 = [site_indices1] * len(site_indices2)
+        site_indices2 = [site_indices2]
 
     dist_out = []
     pos_out = []
