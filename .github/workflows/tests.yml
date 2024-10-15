@@ -44,7 +44,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install .[tests]
-    - name: Building documentation
+    - name: Run tests
       env:
         MP_API_KEY: ${{ secrets.MP_API_KEY }}
         MP_OPENAPI_KEY: ${{ secrets.MP_OPENAPI_KEY }}
