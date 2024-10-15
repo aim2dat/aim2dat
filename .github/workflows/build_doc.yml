@@ -58,4 +58,5 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        external_repository: aim2dat/aim2dat.github.io
         publish_dir: ./doc/build/html
