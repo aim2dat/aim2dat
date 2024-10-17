@@ -151,6 +151,7 @@ class AnalysisMixin:
         backfold_positions: bool = True,
         use_supercell: bool = False,
         r_max: float = 7.5,
+        return_pos: bool = False,
     ) -> Union[float, list]:
         """
         Calculate distance between two atoms.
@@ -168,12 +169,17 @@ class AnalysisMixin:
             radius ``r_max``.
         r_max : float
             Cut-off value for the maximum distance between two atoms in angstrom.
+        return_pos : bool
+            Whether to return the positions. Useful if ``use_supercell`` is set to ``True`` or when
+            trying to determine the closest periodic image.
 
         Returns
         -------
         float
             Distance between the two atoms or a list of distances (if ``use_super_cell`` is
-            set to ``True``).
+            set to ``True``). If multiple indices are provided, a dictionary with the index pairs
+            as keys is returned. If ``return_pos`` is set to ``True``, the positions are
+            returned as well.
         """
         kwargs = {
             "site_index1": site_index1,
@@ -181,6 +187,7 @@ class AnalysisMixin:
             "backfold_positions": backfold_positions,
             "use_supercell": use_supercell,
             "r_max": r_max,
+            "return_pos": return_pos,
         }
         return self._perform_strct_analysis(calculate_distance, kwargs)
 
