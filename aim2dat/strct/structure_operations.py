@@ -296,10 +296,14 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
 
         Parameters
         ----------
-        key1 : str or int
-            Index or label of the first structure.
-        key2 : str or int
-            Index or label of the second structure.
+        key1 : str, int, list or tuple
+            Index or label of the structure or list/tuple of indices or labels of several
+            structures.
+        key2 : str, int, list, tuple or None
+            Index or label of the structure or list/tuple of indices or labels of several
+            structures. If set to ``None``, all structures given with ``key1`` are compared
+            to each other. Otherwise, ``key1`` and ``key2`` are compared pair-wise (in this
+            case, ``key1`` and ``key2`` must be of same length).
         r_max : float (optional)
             Cut-off value for the maximum distance between two atoms in angstrom.
         delta_bin : float (optional)
@@ -356,10 +360,14 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
 
         Parameters
         ----------
-        key1 : str or int
-            Index or label of the first structure.
-        key2 : str or int
-            Index or label of the second structure.
+        key1 : str, int, list or tuple
+            Index or label of the structure or list/tuple of indices or labels of several
+            structures.
+        key2 : str, int, list, tuple or None
+            Index or label of the structure or list/tuple of indices or labels of several
+            structures. If set to ``None``, all structures given with ``key1`` are compared
+            to each other. Otherwise, ``key1`` and ``key2`` are compared pair-wise (in this
+            case, ``key1`` and ``key2`` must be of same length).
         symprec : float (optional)
             Tolerance parameter for spglib.
         angle_tolerance : float (optional)
