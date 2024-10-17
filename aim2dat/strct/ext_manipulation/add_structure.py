@@ -270,8 +270,7 @@ def add_structure_coord(
     aux_dir[0] += 1.0
     ref_dir_beta = np.cross(bond_dir, aux_dir)
     ref_dir_beta /= np.linalg.norm(ref_dir_beta)
-    ref_dir_gamma = bond_dir
-    ref_dirs = [ref_dir_alpha, ref_dir_beta, ref_dir_gamma]
+    ref_dirs = [ref_dir_alpha, ref_dir_beta]
 
     # # Create new structure
     new_structure, score = _add_mol(
@@ -280,31 +279,30 @@ def add_structure_coord(
         wrap,
         host_pos_np,
         bond_length,
-        [0.0, 0.0, 0.0],
+        [0.0, 0.0],
         ref_dirs,
         dist_constraints,
     )
 
     # Optimize positions to reduce score
     if len(dist_constraints) > 0:
-        for alpha in np.linspace(-0.5 * np.pi, 0.5 * np.pi, num=5):
-            for beta in np.linspace(-0.5 * np.pi, 0.5 * np.pi, num=5):
-                for gamma in np.linspace(0.0, 2.0 * np.pi, num=10):
-                    new_strct0, score0 = _add_mol(
-                        structure,
-                        guest_strct,
-                        wrap,
-                        host_pos_np,
-                        bond_length,
-                        [alpha, beta, gamma],
-                        ref_dirs,
-                        dist_constraints,
-                    )
-                    if score0 < score and _check_distances(
-                        new_strct0, len(guest_strct["elements"]), dist_threshold, True
-                    ):
-                        score = score0
-                        new_structure = new_strct0
+        for beta in np.linspace(-0.5 * np.pi, 0.5 * np.pi, num=10):
+            for alpha in np.linspace(-0.5 * np.pi, 0.5 * np.pi, num=25):
+                new_strct0, score0 = _add_mol(
+                    structure,
+                    guest_strct,
+                    wrap,
+                    host_pos_np,
+                    bond_length,
+                    [alpha, beta],  # beta gamma
+                    ref_dirs,
+                    dist_constraints,
+                )
+                if score0 < score and _check_distances(
+                    new_strct0, len(guest_strct["elements"]), dist_threshold, True
+                ):
+                    score = score0
+                    new_structure = new_strct0
     else:
         new_structure, _ = _add_mol(
             structure,
@@ -401,7 +399,7 @@ def _add_mol(
     # Reorient and shift guest structure:
     guest_strct = copy.deepcopy(guest_strct)
     guest_pos = [list(pos) for pos in guest_strct["positions"]]
-    shifts = [bond_length * ref_dirs[2], np.zeros(3), np.zeros(3)]
+    shifts = [np.zeros(3), bond_length * ref_dirs[0]]
     for p0, ref_dir, shift in zip(angle_pars, ref_dirs, shifts):
         rotation = Rotation.from_rotvec(p0 * ref_dir)
         for idx, pos in enumerate(guest_pos):
@@ -425,6 +423,7 @@ def _add_mol(
         if isinstance(dists, float):
             dists = [dists]
         score = sum(abs(dist - ref_dist) for dist, ref_dist in zip(dists, ref_dists))
+    # print(score, angle_pars)
     return new_structure, score
 
 
