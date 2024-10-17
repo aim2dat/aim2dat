@@ -39,7 +39,7 @@ def _create_index_combinations(confined, strct_c, explicit_indices=None):
         if isinstance(idx1, (int, str)):
             idx1 = [idx1]
         if idx2 is None:
-            return list(itertools.product(idx1, idx1))
+            return list(itertools.combinations(idx1, 2))
 
         if isinstance(idx2, (int, str)):
             idx2 = [idx2]

@@ -15,24 +15,32 @@ from aim2dat.strct.strct_super_cell import _create_supercell_positions
 
 
 def calculate_distance(
-    structure, site_index1, site_index2, backfold_positions, use_supercell, r_max
+    structure,
+    site_index1,
+    site_index2,
+    backfold_positions,
+    use_supercell=False,
+    r_max=0.0,
+    return_pos=False,
 ):
     """Calculate distance."""
     if use_supercell:
-        distance, _ = _calc_atomic_distance_sc(structure, site_index1, site_index2, r_max)
+        distance, pos = _calc_atomic_distance_sc(structure, site_index1, site_index2, r_max)
     else:
-        distance, _ = _calc_atomic_distance(
+        distance, pos = _calc_atomic_distance(
             structure, site_index1, site_index2, backfold_positions
         )
-    return None, distance
+
+    output = (None, (distance, pos)) if return_pos else (None, distance)
+    return output
 
 
 def calculate_angle(structure, site_index1, site_index2, site_index3, backfold_positions):
     """Calculate angle between three atomic positions."""
     _check_site_indices(structure, (site_index1, site_index2, site_index3))
 
-    _, pos2 = _calc_atomic_distance(structure, site_index1, site_index2, backfold_positions)
-    _, pos3 = _calc_atomic_distance(structure, site_index1, site_index3, backfold_positions)
+    *_, pos2 = _calc_atomic_distance(structure, site_index1, site_index2, backfold_positions)
+    *_, pos3 = _calc_atomic_distance(structure, site_index1, site_index3, backfold_positions)
     pos1 = np.array(structure["positions"][site_index1])
     return None, calc_angle(pos2 - pos1, pos3 - pos1) * 180.0 / np.pi
 
@@ -53,6 +61,10 @@ def calculate_dihedral_angle(
 
 
 def _check_site_indices(structure, site_indices):
+    is_int = (
+        True if isinstance(site_indices[0], int) and isinstance(site_indices[1], int) else False
+    )
+
     if site_indices[1] is None:
         site_indices = np.array(site_indices[0])
     else:
@@ -73,6 +85,8 @@ def _check_site_indices(structure, site_indices):
         raise TypeError("`site_index` needs to be of type int.")
     if len(structure["elements"]) <= site_indices.max():
         raise ValueError("`site_index` needs to be smaller than the number of sites.")
+
+    return is_int
 
 
 def _get_cell_from_lattice_p(
@@ -152,16 +166,41 @@ def _calc_reciprocal_cell(cell):
     return reciprocal_cell.tolist()
 
 
-def _calc_atomic_distance(structure, site_indices1, site_indices2, backfold_positions):
-    """Calculate distance between two atoms."""
-    _check_site_indices(structure, (site_indices1, site_indices2))
+def _prepare_combined_indices(site_indices1, site_indices2):
+    """Prepare combined indices for `calc_atomic_distance` methods.
 
+    Can be applied to other methods requiring two sets of site indices, with the second
+    set being optional. If the second set is not provided, the first one is used to create
+    all unique combinations of pairs.
+    """
     if isinstance(site_indices1, int):
         site_indices1 = [site_indices1]
     if site_indices2 is None:
-        site_indices1, site_indices2 = zip(*itertools.product(site_indices1, site_indices1))
+        site_indices1, site_indices2 = zip(*itertools.combinations(site_indices1, 2))
+        site_indices1 = list(site_indices1)
+        site_indices2 = list(site_indices2)
     elif isinstance(site_indices2, int):
         site_indices2 = [site_indices2]
+
+    return site_indices1, site_indices2
+
+
+def _parse_calc_atomic_distance_output(is_int, distance, pos, site_indices1, site_indices2):
+    if is_int:
+        return distance[0], pos[0]
+    else:
+        distance_dict = {
+            tuple(idx): dist for *idx, dist in zip(site_indices1, site_indices2, distance)
+        }
+        pos_dict = {tuple(idx): pos_ for *idx, pos_ in zip(site_indices1, site_indices2, pos)}
+        return distance_dict, pos_dict
+
+
+def _calc_atomic_distance(structure, site_indices1, site_indices2, backfold_positions):
+    """Calculate distance between two atoms."""
+    is_int = _check_site_indices(structure, (site_indices1, site_indices2))
+
+    site_indices1, site_indices2 = _prepare_combined_indices(site_indices1, site_indices2)
 
     pos1 = np.array(structure["positions"])[site_indices1]
     pos2 = np.array(structure["positions"])[site_indices2]
@@ -182,11 +221,7 @@ def _calc_atomic_distance(structure, site_indices1, site_indices2, backfold_posi
         pos2 = pos2_cart[np.arange(dist.shape[0]), dist.argmin(axis=1), :]
         dist = dist.min(axis=1)
 
-    if len(site_indices1) == 1 and len(site_indices2) == 1:
-        dist = dist[0]
-        pos2 = pos2[0]
-
-    return dist, pos2
+    return _parse_calc_atomic_distance_output(is_int, dist, pos2, site_indices1, site_indices2)
 
 
 def _calc_atomic_distance_sc(structure, site_indices1, site_indices2, r_max):
@@ -194,14 +229,9 @@ def _calc_atomic_distance_sc(structure, site_indices1, site_indices2, r_max):
     Calculate distance between two atoms, considering the
     replicates in a supercell.
     """
-    _check_site_indices(structure, (site_indices1, site_indices2))
+    is_int = _check_site_indices(structure, (site_indices1, site_indices2))
 
-    if isinstance(site_indices1, int):
-        site_indices1 = [site_indices1]
-    if site_indices2 is None:
-        site_indices1, site_indices2 = zip(*itertools.product(site_indices1, site_indices1))
-    elif isinstance(site_indices2, int):
-        site_indices2 = [site_indices2]
+    site_indices1, site_indices2 = _prepare_combined_indices(site_indices1, site_indices2)
 
     dist_out = []
     pos_out = []
@@ -222,8 +252,6 @@ def _calc_atomic_distance_sc(structure, site_indices1, site_indices2, r_max):
         dist_out.append(dist)
         pos_out.append(pos)
 
-    if len(site_indices1) == 1 and len(site_indices2) == 1:
-        dist_out = dist_out[0]
-        pos_out = pos_out[0]
-
-    return dist_out, pos_out
+    return _parse_calc_atomic_distance_output(
+        is_int, dist_out, pos_out, site_indices1, site_indices2
+    )

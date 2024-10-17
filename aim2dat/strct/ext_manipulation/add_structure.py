@@ -424,6 +424,8 @@ def _add_mol(
         )
         if isinstance(dists, float):
             dists = [dists]
+        elif isinstance(dists, dict):
+            dists = [dists[tuple(idx)] for idx in zip(list(host_indices), list(guest_indices))]
         score = sum(abs(dist - ref_dist) for dist, ref_dist in zip(dists, ref_dists))
     return new_structure, score
 
@@ -465,7 +467,7 @@ def _check_distances(
     dists = new_structure.calculate_distance(
         list(indices1), list(indices2), backfold_positions=True
     )
-    if any(d0 < dist_threshold for d0 in dists):
+    if any(d0 < dist_threshold for d0 in dists.values()):
         if not silent:
             raise ValueError("Atoms are too close to each other.")
         return False
