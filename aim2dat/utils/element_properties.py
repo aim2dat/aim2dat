@@ -1,8 +1,5 @@
 """Module to retrieve physical and chemical properties of elements."""
 
-# Standard library imports
-import os
-
 # Third party library imports
 import numpy as np
 from ase.data import (
@@ -15,16 +12,7 @@ from ase.data import (
 )
 
 # Internal libraray imports
-from aim2dat.io.yaml import load_yaml_file
-
-
-_groups_data = dict(load_yaml_file(os.path.dirname(__file__) + "/data_files/element_groups.yaml"))
-
-
-element_groups = []
-for groups in _groups_data.values():
-    element_groups += groups
-element_groups = set(element_groups)
+import aim2dat.utils.data as internal_data
 
 
 def _check_element(element):
@@ -48,8 +36,6 @@ def _check_element(element):
             raise TypeError(f"Element '{element}' needs to have the type str or int.")
         el_symbol = chemical_symbols[el_number]
         el_name = atomic_names[el_number]
-    # else:
-    #     raise TypeError(f"Element {element} needs to have the type str or int.")
     return el_number, el_symbol, el_name
 
 
@@ -87,9 +73,8 @@ def get_atomic_radius(element, radius_type="covalent"):
         radius = covalent_radii[el_number]
     elif radius_type == "vdw":
         radius = vdw_radii[el_number]
-    elif radius_type in ["chen_manz", "vdw_charry_tkatchenko"]:
-        file_path = os.path.dirname(__file__) + "/data_files/atomic_radii.yaml"
-        radius = load_yaml_file(file_path)[radius_type][element]
+    elif radius_type in dir(internal_data.atomic_radii):
+        radius = getattr(internal_data.atomic_radii, radius_type)[element]
     else:
         raise ValueError(f"Radius type '{radius_type}' not supported.")
 
@@ -115,11 +100,9 @@ def get_electronegativity(element, scale="pauling"):
         Electronegativity of the element.
     """
     _, element, _ = _check_element(element)
-    file_path = os.path.dirname(__file__) + "/data_files/electronegativity.yaml"
-    en_dict = load_yaml_file(file_path)
 
-    if scale in en_dict:
-        electronegativity = en_dict[scale][element]
+    if scale in dir(internal_data.electronegativity):
+        electronegativity = getattr(internal_data.electronegativity, scale)[element]
     else:
         raise ValueError(f"Scale '{scale}' not supported.")
     return electronegativity
@@ -194,7 +177,7 @@ def get_element_groups(element):
         Set of groups.
     """
     _, element, _ = _check_element(element)
-    return set(_groups_data[element])
+    return set(internal_data.element_groups[element])
 
 
 def get_group(group_label):
@@ -212,7 +195,7 @@ def get_group(group_label):
         Set of element symbols..
     """
     elements = []
-    for el, groups in _groups_data.items():
+    for el, groups in internal_data.element_groups.items():
         if group_label in groups:
             elements.append(el)
     return set(elements)
