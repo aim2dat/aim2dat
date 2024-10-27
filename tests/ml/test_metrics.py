@@ -36,7 +36,4 @@ def test_ffprint_cosine(create_structure_collection_object, structure1, structur
         sigma=sigma,
         use_weights=use_weights,
     )
-    assert (
-        abs(ffprint_cosine(fingerprints[0], fingerprints[1]) - comp[(structure1, structure2)])
-        < 1.0e-5
-    )
+    assert abs(ffprint_cosine(fingerprints[0], fingerprints[1]) - comp) < 1.0e-5
