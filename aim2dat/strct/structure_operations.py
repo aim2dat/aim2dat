@@ -583,12 +583,14 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
     ):
         index_pairs = _create_index_combinations(confined, self.structures, keys)
         if len(index_pairs) == 1:
-            return compare_structures(
-                (self.structures[index_pairs[0][0]], self.structures[index_pairs[0][1]]),
-                compare_function,
-                comp_kwargs,
-                threshold,
-            )
+            output_list = [
+                compare_structures(
+                    (self.structures[index_pairs[0][0]], self.structures[index_pairs[0][1]]),
+                    compare_function,
+                    comp_kwargs,
+                    threshold,
+                )
+            ]
 
         strct_comb = [(self.structures[idx0], self.structures[idx1]) for idx0, idx1 in index_pairs]
         if self.n_procs > 1:
@@ -627,7 +629,9 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
                     compare_structures(strct_pair, compare_function, comp_kwargs, threshold)
                 )
         output = {idx: comp for idx, comp in zip(index_pairs, output_list)}
-        if parse_output:
+        if keys is not None and all(isinstance(key, (str, int)) for key in keys):
+            return output[index_pairs[0]]
+        elif parse_output:
             return self._parse_output(output, desc)
         else:
             return output
