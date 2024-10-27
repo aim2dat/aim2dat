@@ -47,9 +47,7 @@ def test_compare_structures_via_ffingerprint(
     strct_ops = StructureOperations(strct_collect)
     assert (
         abs(
-            strct_ops.compare_structures_via_ffingerprint(structure1, structure2, **ffprint_args)[
-                (structure1, structure2)
-            ]
+            strct_ops.compare_structures_via_ffingerprint(structure1, structure2, **ffprint_args)
             - ref_value
         )
         < 1.0e-4
