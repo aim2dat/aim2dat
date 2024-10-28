@@ -2,6 +2,7 @@
 
 # Standard library imports
 import os
+import numpy as np
 
 # Third party library imports
 import pytest
@@ -9,6 +10,7 @@ import pytest
 # Internal library imports
 from aim2dat.strct import Structure
 from aim2dat.strct.ext_manipulation import add_structure_coord, add_structure_random
+from aim2dat.strct.strct_manipulation import scale_unit_cell
 from aim2dat.io.yaml import load_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
@@ -156,3 +158,59 @@ def test_add_structure_random_molecules_error():
         str(error.value)
         == "Could not add guest structure, host structure seems to be too aggregated."
     )
+
+
+def test_scale_unit_cell_uniform_scaling():
+    """Test scale_unit_cell with uniform scaling factors."""
+    structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
+    scaling_factors = 1.1
+    scaled_structure = scale_unit_cell(structure, scaling_factors=scaling_factors)
+    expected_cell = np.array(structure["cell"]) * scaling_factors
+    assert np.allclose(scaled_structure["cell"], expected_cell), "Uniform scaling failed"
+
+
+def test_scale_unit_cell_anisotropic_scaling():
+    """Test scale_unit_cell with anisotropic scaling factors."""
+    structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
+    scaling_factors = [1.1, 1.2, 1.3]
+    scaled_structure = scale_unit_cell(structure, scaling_factors=scaling_factors)
+    expected_cell = np.dot(np.array(structure["cell"]), np.diag(scaling_factors))
+    assert np.allclose(scaled_structure["cell"], expected_cell), "Anisotropic scaling failed"
+
+
+def test_scale_unit_cell_pressure_based_scaling():
+    """Test scale_unit_cell with pressure and bulk modulus."""
+    structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
+    pressure = 10  # GPa
+    bulk_modulus = 100  # GPa
+    scaled_structure = scale_unit_cell(structure, pressure=pressure, bulk_modulus=bulk_modulus)
+    strain = -pressure / bulk_modulus
+    expected_cell = np.array(structure["cell"]) * (1 + strain)
+    assert np.allclose(scaled_structure["cell"], expected_cell), "Pressure-based scaling failed"
+
+
+def test_scale_unit_cell_uniform_strain():
+    """Test scale_unit_cell with uniform strain."""
+    structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
+    strain = 0.05  # 5% strain
+    scaled_structure = scale_unit_cell(structure, strain=strain)
+    expected_cell = np.array(structure["cell"]) * (1 + strain)
+    assert np.allclose(scaled_structure["cell"], expected_cell), "Uniform strain failed"
+
+
+def test_scale_unit_cell_anisotropic_strain():
+    """Test scale_unit_cell with anisotropic strain."""
+    structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
+    strain = [0.02, -0.01, 0.03]
+    scaled_structure = scale_unit_cell(structure, strain=strain)
+    expected_cell = np.dot(np.array(structure["cell"]), np.diag([1 + s for s in strain]))
+    assert np.allclose(scaled_structure["cell"], expected_cell), "Anisotropic strain failed"
+
+
+def test_scale_unit_cell_full_strain_matrix():
+    """Test scale_unit_cell with a 3x3 strain matrix."""
+    structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
+    strain_matrix = np.array([[0.02, 0.01, 0.0], [0.01, -0.01, 0.0], [0.0, 0.02, 0.03]])
+    scaled_structure = scale_unit_cell(structure, strain=strain_matrix)
+    expected_cell = np.dot(np.array(structure["cell"]), np.eye(3) + strain_matrix)
+    assert np.allclose(scaled_structure["cell"], expected_cell), "3x3 strain matrix failed"
