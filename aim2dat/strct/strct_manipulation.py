@@ -120,9 +120,70 @@ def substitute_elements(
         return _add_label_suffix(new_structure, "_subst-" + "-".join(str_el_pairs), change_label)
 
 
-def scale_unit_cell(structure: Structure, scaling_factor: float, change_label: bool) -> Structure:
-    """Scale unit cell of the structure."""
-    if scaling_factor != 1.0 and structure["cell"] is not None:
-        new_structure = structure.to_dict(cartesian=False)
-        new_structure["cell"] = np.array(structure["cell"]) * scaling_factor
-        return _add_label_suffix(new_structure, f"_scaled-{scaling_factor}", change_label)
+def scale_unit_cell(
+    structure,
+    scaling_factors: Union[float, List[float], np.ndarray] = None,
+    pressure: float = None,
+    bulk_modulus: float = None,
+    strain: Union[float, np.ndarray, list] = None,
+    change_label: bool = True,
+) -> Structure:
+    """
+    Scale the unit cell of the structure, supporting anisotropic scaling,
+    pressure-based scaling, and strain application.
+
+    Parameters:
+        structure (Structure): The structure to be scaled.
+        scaling_factors (float, list, or 3x3 matrix, optional): Scaling factor(s)
+        for the unit cell.
+        pressure (float, optional): Hydrostatic pressure to apply in GPa.
+        bulk_modulus (float, optional): Bulk modulus in GPa,
+        required if `pressure` is provided.
+        strain (float, list of 3 floats, or 3x3 matrix, optional):
+        Strain to apply. Can be uniform (float),
+        anisotropic (list of 3 values), or a 3x3 strain matrix.
+        change_label (bool): Whether to change the label of the structure.
+
+    Returns:
+        Structure: The scaled structure.
+    """
+    from aim2dat.strct import Structure
+
+    def get_strain_tensor(strain):
+        """Convert strain input into a 3x3 strain tensor."""
+        if isinstance(strain, (float, int)):
+            return np.eye(3) * (1 + strain)
+        elif isinstance(strain, list) and len(strain) == 3:
+            return np.diag([1 + s for s in strain])
+        elif isinstance(strain, np.ndarray) and strain.shape == (3, 3):
+            return np.eye(3) + strain
+        raise ValueError("Strain must be a float (uniform), a list of 3 values, or a 3x3 matrix.")
+
+    # Determine scaling tensor based on provided input
+    if pressure is not None:
+        if bulk_modulus is None:
+            raise ValueError("Bulk modulus must be provided when applying pressure.")
+        strain = -pressure / bulk_modulus  # Calculate uniform strain from pressure
+        scaling_tensor = get_strain_tensor(strain)
+    elif strain is not None:
+        scaling_tensor = get_strain_tensor(strain)
+    elif isinstance(scaling_factors, (float, int)):
+        scaling_tensor = np.eye(3) * scaling_factors
+    elif isinstance(scaling_factors, list) and len(scaling_factors) == 3:
+        scaling_tensor = np.diag(scaling_factors)
+    elif isinstance(scaling_factors, np.ndarray) and scaling_factors.shape == (3, 3):
+        scaling_tensor = scaling_factors
+    else:
+        raise ValueError("Scaling factors must be a float, list of 3 values, or a 3x3 matrix.")
+
+    # Apply the scaling tensor to the lattice
+    scaled_cell = np.dot(np.array(structure["cell"]), scaling_tensor)
+
+    # Update the structure with the new scaled cell
+    new_structure = structure.to_dict(cartesian=False)
+    new_structure["cell"] = scaled_cell
+
+    # Return the modified structure
+    return Structure(
+        **_add_label_suffix(new_structure, f"_scaled-{scaling_factors}", change_label)
+    )
