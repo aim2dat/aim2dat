@@ -31,13 +31,13 @@ def test_calculate_distance_indices_check(create_structure_collection_object):
     strct_c, _ = create_structure_collection_object(["Benzene"])
     strct_ops = StructureOperations(strct_c)
     with pytest.raises(ValueError) as error:
-        strct_ops[0].calculate_distance(1, [0, 2, 20])
+        strct_ops[0].calculate_distance([1] * 3, [0, 2, 20])
     assert str(error.value) == "`site_index` needs to be smaller than the number of sites."
     with pytest.raises(TypeError) as error:
-        strct_ops[0].calculate_distance(1.0, [0, 2, 3])
+        strct_ops[0].calculate_distance([1.0] * 3, [0, 2, 3])
     assert str(error.value) == "`site_index` needs to be of type int."
     with pytest.raises(TypeError) as error:
-        strct_ops[0].calculate_distance([0, 2.0, 3], 1)
+        strct_ops[0].calculate_distance([0, 2.0, 3], [1] * 3)
     assert str(error.value) == "`site_index` needs to be of type int."
 
 
@@ -51,8 +51,12 @@ def test_calculate_distance(structure, file_suffix):
     dist = strct_ops["test"].calculate_distance(**ref_outputs["distance"]["function_args"])
     if isinstance(ref_outputs["distance"]["reference"], list):
         assert [
-            abs(dist[idx0] - val) < 1e-5
-            for idx0, val in enumerate(ref_outputs["distance"]["reference"])
+            abs(dist[(idx0, idx1)] - val) < 1e-5
+            for (idx0, idx1, val) in zip(
+                ref_outputs["distance"]["function_args"]["site_index1"],
+                ref_outputs["distance"]["function_args"]["site_index2"],
+                ref_outputs["distance"]["reference"],
+            )
         ], "Wrong distance."
     else:
         assert abs(dist - ref_outputs["distance"]["reference"]) < 1e-5, "Wrong distance."
@@ -73,8 +77,14 @@ def test_calculate_distance_sc(structure, file_suffix):
     dist = strct_ops[0].calculate_distance(**ref_outputs["distance_sc"]["function_args"])
     for idx0, dist_list in enumerate(ref_outputs["distance_sc"]["reference"]):
         if isinstance(dist_list, list):
-            for idx1, dist_ref in enumerate(dist_list):
-                assert abs(dist[idx0][idx1] - dist_ref) < 1e-5, f"Distance {idx0}/{idx1} is wrong."
+            site_index1, site_index2 = (
+                ref_outputs["distance_sc"]["function_args"]["site_index1"][idx0],
+                ref_outputs["distance_sc"]["function_args"]["site_index2"][idx0],
+            )
+            for dist_idx, dist_ref in enumerate(dist_list):
+                assert (
+                    abs(dist[(site_index1, site_index2)][dist_idx] - dist_ref) < 1e-5
+                ), f"Distance {(site_index1, site_index2)}/{dist_idx} is wrong."
         else:
             assert abs(dist[idx0] - dist_list) < 1e-5, f"Distance {idx0} is wrong."
 

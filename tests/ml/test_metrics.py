@@ -28,17 +28,12 @@ def test_ffprint_cosine(create_structure_collection_object, structure1, structur
     )
 
     fingerprints = transf.fit_transform(strct_c)
-    assert (
-        abs(
-            ffprint_cosine(fingerprints[0], fingerprints[1])
-            - StructureOperations(structures=strct_c).compare_structures_via_ffingerprint(
-                structure1,
-                structure2,
-                r_max=r_max,
-                delta_bin=delta_bin,
-                sigma=sigma,
-                use_weights=use_weights,
-            )
-        )
-        < 1.0e-5
+    comp = StructureOperations(structures=strct_c).compare_structures_via_ffingerprint(
+        structure1,
+        structure2,
+        r_max=r_max,
+        delta_bin=delta_bin,
+        sigma=sigma,
+        use_weights=use_weights,
     )
+    assert abs(ffprint_cosine(fingerprints[0], fingerprints[1]) - comp) < 1.0e-5

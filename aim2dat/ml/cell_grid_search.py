@@ -309,18 +309,18 @@ class CellGridSearch:
 
     def _compare_with_target_structure_ffprint(self, labels):
         scores = []
+        comparisons = self._strct_ops.compare_structures_via_ffingerprint(
+            labels,
+            ["target"] * len(labels),
+            r_max=self.ffprint_r_max,
+            delta_bin=self.ffprint_delta_bin,
+            sigma=self.ffprint_sigma,
+            use_weights=self.ffprint_use_weights,
+            distinguish_kinds=self.ffprint_distinguish_kinds,
+        )
+
         for label in labels:
-            scores.append(
-                self._strct_ops.compare_structures_via_ffingerprint(
-                    label,
-                    "target",
-                    r_max=self.ffprint_r_max,
-                    delta_bin=self.ffprint_delta_bin,
-                    sigma=self.ffprint_sigma,
-                    use_weights=self.ffprint_use_weights,
-                    distinguish_kinds=self.ffprint_distinguish_kinds,
-                )
-            )
+            scores.append(comparisons[(label, "target")])
         return scores
 
     def _get_model_predictions(self, labels):
