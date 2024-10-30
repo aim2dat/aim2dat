@@ -307,17 +307,6 @@ def add_structure_coord(
                         score = score0
                         new_structure = new_strct0
     else:
-        # TODO reomve commented code.
-        # new_structure, _ = _add_mol(
-        #     structure,
-        #     guest_strct,
-        #     wrap,
-        #     host_pos_np,
-        #     bond_length,
-        #     [0.0, 0.0, 0.0],
-        #     ref_dirs,
-        #     dist_constraints,
-        # )
         _check_distances(new_structure, len(guest_strct["elements"]), dist_threshold, False)
     return new_structure, "_added-" + guest_strct_label
 
