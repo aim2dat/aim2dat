@@ -49,6 +49,23 @@ def test_add_structure_coord_molecules(structure_comparison):
     structure_comparison(new_strct, ref_p)
 
 
+def test_add_structure_coord_molecules_2(structure_comparison):
+    """Test add_structure_coord method."""
+    inputs = dict(load_yaml_file(STRUCTURES_PATH + "NH3.yaml"))
+    new_strct = add_structure_coord(
+        Structure(**inputs),
+        host_indices=[1, 2, 3],
+        guest_index=0,
+        guest_structure="H2O",
+        guest_dir=None,
+        min_dist_delta=0.1,
+        bond_length=1.5,
+        dist_constraints=[(2, 1, 1.5)],
+    )
+    ref_p = load_yaml_file(STRUCTURE_MANIPULATION_PATH + "NH3-H2O_ref.yaml")
+    structure_comparison(new_strct, ref_p)
+
+
 def test_add_structure_random_molecule(structure_comparison):
     """Test add_structure_random method for molecules."""
     inputs = dict(load_yaml_file(STRUCTURES_PATH + "NH3.yaml"))
