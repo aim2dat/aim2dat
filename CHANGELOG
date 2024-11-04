@@ -32,6 +32,7 @@ Version 0.2.0
 * ``strct.Structure.from_file`` interfaces functions from the ``io`` sub-package via the internal ``'backend'`` and adds more parameters to control the ``'ase'`` backend (`PR #56 <https://github.com/aim2dat/aim2dat/pull/56>`_).
 * The methods to find duplicate structures of ``strct.StructureOperations`` are sped up by comparing the chemical formulas prior to more expensive checks (`PR #61 <https://github.com/aim2dat/aim2dat/pull/61>`_).
 * ``strct.ext_manipulation.add_structure_coord`` allows to set the direction of the added structure/molecule, the interface to the coordination analysis is updated and H2 is added to the pre-defined structures (`PR #65 <https://github.com/aim2dat/aim2dat/pull/65>`_).
+* ``plots.simple_plot`` added new argument `hatch` to add hatches for importing bar plot data with `import_bar_data_set` (`PR #89 <https://github.com/aim2dat/aim2dat/pull/89>`_).
 
 **Depreciations:**
 
