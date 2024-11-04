@@ -112,7 +112,7 @@ class _BasePlot(abc.ABC):
         "_add_hline",
         "_add_text",
     ]
-    _legendolors = [f"C{idx}" for idx in range(10)]
+    _default_colors = [f"C{idx}" for idx in range(10)]
     _default_linestyles = ["solid", "dashed", "dotted", "dashdot", "solid", "solid"]
     _default_linewidths = [None]
     _default_markers = ["*", "o", ">", "s", "v", "h", "D"]
