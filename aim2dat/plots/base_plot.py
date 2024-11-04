@@ -112,12 +112,12 @@ class _BasePlot(abc.ABC):
         "_add_hline",
         "_add_text",
     ]
-    _default_colors = [f"C{idx}" for idx in range(10)]
+    _legendolors = [f"C{idx}" for idx in range(10)]
     _default_linestyles = ["solid", "dashed", "dotted", "dashdot", "solid", "solid"]
     _default_linewidths = [None]
     _default_markers = ["*", "o", ">", "s", "v", "h", "D"]
-    _default_hatch = [0.5]
-    _default_alpha = []
+    _default_hatch = []
+    _default_alpha = [0.5]
 
     def __init__(self, **kwargs):
         """Initialize class."""
