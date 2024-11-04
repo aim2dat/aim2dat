@@ -104,6 +104,7 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
         heights,
         plot_label=None,
         color=None,
+        hatch=None,
         alpha=None,
         bottom=0.0,
         width=0.8,
@@ -126,6 +127,8 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
             Label of the data set shown in the legend.
         color : str (optional)
             Color of the data set.
+        hatch : str (optional)
+            Hatch of the data set.
         alpha : float (optional)
             Transparency of the data set.
         bottom : float
@@ -151,6 +154,8 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
             data_set["label"] = plot_label
         if color is not None:
             data_set["color"] = color
+        if hatch is not None:
+            data_set["hatch"] = hatch
         if alpha is not None:
             data_set["alpha"] = alpha
         self._data[data_label] = data_set
