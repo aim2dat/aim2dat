@@ -70,6 +70,69 @@ def test_structure_print():
     )
 
 
+def test_structure_validation():
+    """Test validation."""
+    strct_dict = load_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml")
+    pbc = strct_dict["pbc"]
+
+    with pytest.raises(ValueError) as error:
+        strct_dict["pbc"] = [True, 1, 2]
+        strct = Structure(**strct_dict)
+    assert str(error.value) == "`pbc` must have a length of 3 and consist of boolean variables."
+    with pytest.raises(ValueError) as error:
+        strct_dict["pbc"] = [True, False]
+        strct = Structure(**strct_dict)
+    assert str(error.value) == "`pbc` must have a length of 3 and consist of boolean variables."
+    with pytest.raises(TypeError) as error:
+        strct_dict["pbc"] = 0.0
+        strct = Structure(**strct_dict)
+    assert str(error.value) == "`pbc` must be a list, tuple or a boolean."
+    strct_dict["pbc"] = pbc
+
+    cell = strct_dict["cell"]
+    with pytest.raises(TypeError) as error:
+        strct_dict["cell"] = 0.0
+        strct = Structure(**strct_dict)
+    assert str(error.value) == "`cell` must be a list or numpy array for periodic boundaries."
+    with pytest.raises(ValueError) as error:
+        del strct_dict["cell"]
+        strct_dict["pbc"] = False
+        strct_dict["is_cartesian"] = False
+        strct = Structure(**strct_dict)
+    assert str(error.value) == "`cell` must be set if `is_cartesian` is False."
+    strct_dict["pbc"] = pbc
+    strct_dict["cell"] = cell
+    strct_dict["is_cartesian"] = True
+
+    elements = strct_dict["elements"]
+    strct_dict["elements"] = "".join(elements)
+    strct = Structure(**strct_dict)
+    assert list(strct.elements) == list(
+        elements
+    ), "Transformation from str to list for elements not working."
+    with pytest.raises(TypeError) as error:
+        strct_dict["elements"] = 0.0
+        strct = Structure(**strct_dict)
+    assert str(error.value) == "`elements` must be a list, tuple, numpy array or str."
+    with pytest.raises(ValueError) as error:
+        strct_dict["elements"] = []
+        strct = Structure(**strct_dict)
+    assert str(error.value) == "`elements` must have a length greater than 0."
+    with pytest.raises(ValueError) as error:
+        strct_dict["elements"] = ["Si", "Si", "Si"]
+        strct = Structure(**strct_dict)
+    assert str(error.value) == "`elements` and `positions` must have the same length."
+    strct_dict["elements"] = elements
+    with pytest.raises(ValueError) as error:
+        strct_dict["positions"][0] = [0.0, 0.0]
+        strct = Structure(**strct_dict)
+    assert str(error.value) == "Length of one position must be 3."
+    with pytest.raises(ValueError) as error:
+        strct_dict["positions"][0] = [0.0, 0.0, float("nan")]
+        strct = Structure(**strct_dict)
+    assert str(error.value) == "`positions` must not contain 'nan' values."
+
+
 def test_to_dict(structure_comparison):
     """Test to_dict function."""
     calc_keys = ["extras", "function_args"]

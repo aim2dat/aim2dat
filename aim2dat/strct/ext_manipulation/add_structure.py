@@ -20,7 +20,7 @@ from aim2dat.strct.ext_manipulation.decorator import (
 from aim2dat.strct.strct import Structure
 from aim2dat.strct.strct_misc import _calc_atomic_distance
 from aim2dat.utils.element_properties import get_element_symbol
-from aim2dat.utils.maths import calc_angle
+from aim2dat.utils.maths import calc_angle, create_lin_ind_vector
 from aim2dat.io.yaml import load_yaml_file
 
 
@@ -202,7 +202,7 @@ def add_structure_coord(
     )
 
     if guest_dir is None:
-        guest_dir = np.array([1.0, 0.0, 0.0])
+        guest_dir = [1.0, 0.0, 0.0]
         if len(guest_strct) > 1:
             # Get vector of guest atoms for rotation
             guest_strct_coord = guest_strct.calculate_coordination(
@@ -219,6 +219,7 @@ def add_structure_coord(
                 okeeffe_weight_threshold=okeeffe_weight_threshold,
             )
             guest_dir = -1.0 * _derive_bond_dir(guest_index, guest_strct_coord)
+    guest_dir /= np.linalg.norm(np.array(guest_dir))
 
     # Calculate coordination:
     coord = structure.calculate_coordination(
@@ -245,9 +246,11 @@ def add_structure_coord(
     bond_dir /= np.linalg.norm(bond_dir)
     host_pos_np = np.mean(np.array(host_positions), axis=0)
     if len(guest_strct) > 1:
+        rot_angle = -calc_angle(guest_dir, bond_dir)
+        if np.isclose(abs(rot_angle), 0.0) or np.isclose(abs(rot_angle), np.pi):
+            guest_dir = create_lin_ind_vector(guest_dir)
         rot_dir = np.cross(bond_dir, guest_dir)
         rot_dir /= np.linalg.norm(rot_dir)
-        rot_angle = -calc_angle(guest_dir, bond_dir)
         rotation = Rotation.from_rotvec(rot_angle * rot_dir)
         rot_matrix = rotation.as_matrix()
         guest_strct.set_positions(
@@ -266,9 +269,7 @@ def add_structure_coord(
 
     # # Define reference directions for rotations:
     ref_dir_alpha = bond_dir
-    aux_dir = bond_dir.copy()
-    aux_dir[0] += 1.0
-    ref_dir_beta = np.cross(bond_dir, aux_dir)
+    ref_dir_beta = np.cross(bond_dir, create_lin_ind_vector(bond_dir))
     ref_dir_beta /= np.linalg.norm(ref_dir_beta)
     ref_dir_gamma = np.cross(bond_dir, ref_dir_beta)
     ref_dir_gamma /= np.linalg.norm(ref_dir_gamma)
