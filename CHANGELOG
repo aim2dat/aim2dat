@@ -36,7 +36,7 @@ Version 0.2.0
 
 **Depreciations:**
 
-* ``strct.ext_manipulation.add_structure_coord`` replaces ``strct.ext_manipulation.add_functional_group`` function (`PR #37 <https://github.com/aim2dat/aim2dat/pull/37>`_).
+* ``strct.ext_manipulation.add_functional_group`` is replaced by ``strct.ext_manipulation.add_structure_coord`` (`PR #37 <https://github.com/aim2dat/aim2dat/pull/37>`_).
 * ``aim2dat.io.cp2k.read_optimized_structure`` is replaced by ``aim2dat.io.cp2k.read_restart_structure`` (`PR #56 <https://github.com/aim2dat/aim2dat/pull/56>`_).
 
 **Breaking Changes:**
@@ -45,9 +45,10 @@ Version 0.2.0
 * Space group and symmetry related keys now conform to the attributes returned by spglib (`PR #54 <https://github.com/aim2dat/aim2dat/pull/54>`_).
   As such, the keys ``'sg_number'``, ``'int_symbol'``, ``'point_group_symbol'``, ``'schoenflies_symbol'`` are replaced by ``'number'``, ``'international'``, ``'pointgroup'``, ``'schoenflies'``, respectively.
 * ``utils.chem_formula.reduce_formula`` tries now to find a formula only having natural numbers as quantities; this way utils.chem_formula.compare_formulas`` works for all use-cases (`PR #60 <https://github.com/aim2dat/aim2dat/pull/60>`_).
-* Structure manipulation methods now in general maintain ``kinds``, ``attributes`` and ``site_attributes`` if not otherwise noted (`PR #63 <https://github.com/aim2dat/aim2dat/pull/63>`_)
-* ``strct.Structure.kinds`` now always returns a tuple instead of ``None`` (`PR #73 <https://github.com/aim2dat/aim2dat/pull/73>`_)
-* ``io.critic2.read_stdout`` now returns the value of 'version' as string  (`PR #74 <https://github.com/aim2dat/aim2dat/pull/74>`_)
+* Structure manipulation methods now in general maintain ``kinds``, ``attributes`` and ``site_attributes`` if not otherwise noted (`PR #63 <https://github.com/aim2dat/aim2dat/pull/63>`_).
+* ``strct.Structure.kinds`` now always returns a tuple instead of ``None`` (`PR #73 <https://github.com/aim2dat/aim2dat/pull/73>`_).
+* ``io.critic2.read_stdout`` now returns the value of 'version' as string  (`PR #74 <https://github.com/aim2dat/aim2dat/pull/74>`_).
+* ``strct.Structure.calculate_distance`` treats ``r_max`` as a cut-off value for the distance (`PR #83 <https://github.com/aim2dat/aim2dat/pull/83>`_, `PR #90 <https://github.com/aim2dat/aim2dat/pull/90>`_).
 
 
 Version 0.1.0
