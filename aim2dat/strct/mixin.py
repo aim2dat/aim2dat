@@ -175,11 +175,12 @@ class AnalysisMixin:
 
         Returns
         -------
-        float
+        float or None
             Distance between the two atoms or a list of distances (if ``use_super_cell`` is
             set to ``True``). If multiple indices are provided, a dictionary with the index pairs
             as keys is returned. If ``return_pos`` is set to ``True``, the positions are
-            returned as well.
+            returned as well. In case ``use_super_cell`` is set to ``True`` and the distance
+            between the two sites exceeds ``r_max``, ``None`` is returned.
         """
         kwargs = {
             "site_index1": site_index1,

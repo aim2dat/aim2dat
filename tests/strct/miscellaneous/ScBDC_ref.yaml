@@ -2,9 +2,9 @@ distance_sc:
   function_args:
     site_index1: 1
     site_index2: 40
-    r_max: 12.0
+    r_max: 8.0
     use_supercell: True
-  reference: [9.2464402558097,   11.524683322646483, 11.835123163801029]
+  reference:
 dihedral_angle:
   function_args:
     site_index1: 61

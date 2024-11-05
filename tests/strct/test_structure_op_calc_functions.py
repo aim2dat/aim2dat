@@ -75,18 +75,21 @@ def test_calculate_distance_sc(structure, file_suffix):
     )
     strct_ops = StructureOperations(strct_c)
     dist = strct_ops[0].calculate_distance(**ref_outputs["distance_sc"]["function_args"])
-    for idx0, dist_list in enumerate(ref_outputs["distance_sc"]["reference"]):
-        if isinstance(dist_list, list):
-            site_index1, site_index2 = (
-                ref_outputs["distance_sc"]["function_args"]["site_index1"][idx0],
-                ref_outputs["distance_sc"]["function_args"]["site_index2"][idx0],
-            )
-            for dist_idx, dist_ref in enumerate(dist_list):
-                assert (
-                    abs(dist[(site_index1, site_index2)][dist_idx] - dist_ref) < 1e-5
-                ), f"Distance {(site_index1, site_index2)}/{dist_idx} is wrong."
-        else:
-            assert abs(dist[idx0] - dist_list) < 1e-5, f"Distance {idx0} is wrong."
+    if ref_outputs["distance_sc"]["reference"] is None:
+        assert dist is None
+    else:
+        for idx0, dist_list in enumerate(ref_outputs["distance_sc"]["reference"]):
+            if isinstance(dist_list, list):
+                site_index1, site_index2 = (
+                    ref_outputs["distance_sc"]["function_args"]["site_index1"][idx0],
+                    ref_outputs["distance_sc"]["function_args"]["site_index2"][idx0],
+                )
+                for dist_idx, dist_ref in enumerate(dist_list):
+                    assert (
+                        abs(dist[(site_index1, site_index2)][dist_idx] - dist_ref) < 1e-5
+                    ), f"Distance {(site_index1, site_index2)}/{dist_idx} is wrong."
+            else:
+                assert abs(dist[idx0] - dist_list) < 1e-5, f"Distance {idx0} is wrong."
 
 
 @pytest.mark.parametrize("structure, file_suffix", [("Benzene", "xyz"), ("ZIF-8", "cif")])
