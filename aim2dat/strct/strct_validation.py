@@ -4,6 +4,7 @@
 # import copy
 import re
 from typing import List, Tuple
+import math
 
 # Third party library imports
 import numpy as np
@@ -40,6 +41,8 @@ def _structure_validate_positions(positions, is_cartesian, cell, inv_cell, pbc):
     for position in positions:
         if len(position) != 3:
             raise ValueError("Length of one position must be 3.")
+        if any([math.isnan(p) for p in position]):
+            raise ValueError("`positions` must not contain 'nan' values.")
 
         if cell is None:
             positions_cart.append(tuple(float(p) for p in position))

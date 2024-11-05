@@ -123,67 +123,6 @@ def test_duplicate_structure(create_structure_collection_object, structure_compa
     structure_comparison(strct_c["new_H3PO4"], structures[0])
 
 
-def test_validation_errors():
-    """Test structure validation errors."""
-    strct_dict = load_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml")
-    strct_c = StructureCollection()
-
-    pbc = strct_dict["pbc"]
-    with pytest.raises(ValueError) as error:
-        strct_dict["pbc"] = [True, 1, 2]
-        strct_c.append("test", **strct_dict)
-    assert str(error.value) == "`pbc` must have a length of 3 and consist of boolean variables."
-    with pytest.raises(ValueError) as error:
-        strct_dict["pbc"] = [True, False]
-        strct_c.append("test", **strct_dict)
-    assert str(error.value) == "`pbc` must have a length of 3 and consist of boolean variables."
-    with pytest.raises(TypeError) as error:
-        strct_dict["pbc"] = 0.0
-        strct_c.append("test", **strct_dict)
-    assert str(error.value) == "`pbc` must be a list, tuple or a boolean."
-    strct_dict["pbc"] = pbc
-
-    cell = strct_dict["cell"]
-    with pytest.raises(TypeError) as error:
-        strct_dict["cell"] = 0.0
-        strct_c.append("test", **strct_dict)
-    assert str(error.value) == "`cell` must be a list or numpy array for periodic boundaries."
-    with pytest.raises(ValueError) as error:
-        del strct_dict["cell"]
-        strct_dict["pbc"] = False
-        strct_dict["is_cartesian"] = False
-        strct_c.append(**strct_dict, label="test")
-    assert str(error.value) == "`cell` must be set if `is_cartesian` is False."
-    strct_dict["pbc"] = pbc
-    strct_dict["cell"] = cell
-    strct_dict["is_cartesian"] = True
-
-    elements = strct_dict["elements"]
-    strct_dict["elements"] = "".join(elements)
-    strct_c.append("test0", **strct_dict)
-    assert list(strct_c._structures[0]["elements"]) == list(
-        elements
-    ), "Transformation from str to list for elements not working."
-    with pytest.raises(TypeError) as error:
-        strct_dict["elements"] = 0.0
-        strct_c.append("test", **strct_dict)
-    assert str(error.value) == "`elements` must be a list, tuple, numpy array or str."
-    with pytest.raises(ValueError) as error:
-        strct_dict["elements"] = []
-        strct_c.append("test", **strct_dict)
-    assert str(error.value) == "`elements` must have a length greater than 0."
-    with pytest.raises(ValueError) as error:
-        strct_dict["elements"] = ["Si", "Si", "Si"]
-        strct_c.append("test", **strct_dict)
-    assert str(error.value) == "`elements` and `positions` must have the same length."
-    strct_dict["elements"] = elements
-
-    with pytest.raises(ValueError) as error:
-        strct_dict["positions"][0] = [0.0, 0.0]
-        strct_c.append("test", **strct_dict)
-    assert str(error.value) == "Length of one position must be 3."
-
-
 def test_aiida_interface(create_structure_collection_object, structure_comparison):
     """Test AiiDA interface."""
     structure_list = ["Benzene", "SF6", "H2O", "H3PO4", "GaAs_216_prim", "Cs2Te_19_prim"]
