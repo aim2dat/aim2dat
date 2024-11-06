@@ -196,6 +196,35 @@ def calc_reflection_matrix(n_vector):
     return sigma
 
 
+def create_lin_ind_vector(vector):
+    """
+    Create linearly independent vector with reference to the input vector.
+    The method adds one to the first element of the vector which is zero.
+    In case all elements are non-zero, one is added to the first element of
+    the vector.
+
+    Parameters
+    ----------
+    vector : list, tuple or np.array
+        Input vector
+
+    Returns
+    -------
+    : np.array
+        Linearly independent vector.
+    """
+    vector = np.array(vector)
+    is_ind = False
+    for i, v in enumerate(vector):
+        if math.isclose(v, 0.0, rel_tol=0.0, abs_tol=1e-05):
+            vector[i] += 1.0
+            is_ind = True
+            break
+    if not is_ind:
+        vector[0] += 1
+    return vector
+
+
 def gaussian_function(x, mu, sigma):
     """
     Calculate the Gaussian function with a certain sigma-value.

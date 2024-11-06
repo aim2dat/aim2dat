@@ -20,7 +20,7 @@ from aim2dat.strct.ext_manipulation.decorator import (
 from aim2dat.strct.strct import Structure
 from aim2dat.strct.strct_misc import _calc_atomic_distance
 from aim2dat.utils.element_properties import get_element_symbol
-from aim2dat.utils.maths import calc_angle
+from aim2dat.utils.maths import calc_angle, create_lin_ind_vector
 from aim2dat.io.yaml import load_yaml_file
 
 
@@ -202,7 +202,7 @@ def add_structure_coord(
     )
 
     if guest_dir is None:
-        guest_dir = np.array([1.0, 0.0, 0.0])
+        guest_dir = [1.0, 0.0, 0.0]
         if len(guest_strct) > 1:
             # Get vector of guest atoms for rotation
             guest_strct_coord = guest_strct.calculate_coordination(
@@ -219,6 +219,7 @@ def add_structure_coord(
                 okeeffe_weight_threshold=okeeffe_weight_threshold,
             )
             guest_dir = -1.0 * _derive_bond_dir(guest_index, guest_strct_coord)
+    guest_dir /= np.linalg.norm(np.array(guest_dir))
 
     # Calculate coordination:
     coord = structure.calculate_coordination(
@@ -245,9 +246,11 @@ def add_structure_coord(
     bond_dir /= np.linalg.norm(bond_dir)
     host_pos_np = np.mean(np.array(host_positions), axis=0)
     if len(guest_strct) > 1:
+        rot_angle = -calc_angle(guest_dir, bond_dir)
+        if np.isclose(abs(rot_angle), 0.0) or np.isclose(abs(rot_angle), np.pi):
+            guest_dir = create_lin_ind_vector(guest_dir)
         rot_dir = np.cross(bond_dir, guest_dir)
         rot_dir /= np.linalg.norm(rot_dir)
-        rot_angle = -calc_angle(guest_dir, bond_dir)
         rotation = Rotation.from_rotvec(rot_angle * rot_dir)
         rot_matrix = rotation.as_matrix()
         guest_strct.set_positions(
@@ -266,11 +269,10 @@ def add_structure_coord(
 
     # # Define reference directions for rotations:
     ref_dir_alpha = bond_dir
-    aux_dir = bond_dir.copy()
-    aux_dir[0] += 1.0
-    ref_dir_beta = np.cross(bond_dir, aux_dir)
+    ref_dir_beta = np.cross(bond_dir, create_lin_ind_vector(bond_dir))
     ref_dir_beta /= np.linalg.norm(ref_dir_beta)
-    ref_dir_gamma = bond_dir
+    ref_dir_gamma = np.cross(bond_dir, ref_dir_beta)
+    ref_dir_gamma /= np.linalg.norm(ref_dir_gamma)
     ref_dirs = [ref_dir_alpha, ref_dir_beta, ref_dir_gamma]
 
     # # Create new structure
@@ -287,9 +289,9 @@ def add_structure_coord(
 
     # Optimize positions to reduce score
     if len(dist_constraints) > 0:
-        for alpha in np.linspace(-0.5 * np.pi, 0.5 * np.pi, num=5):
-            for beta in np.linspace(-0.5 * np.pi, 0.5 * np.pi, num=5):
-                for gamma in np.linspace(0.0, 2.0 * np.pi, num=10):
+        for alpha in np.linspace(0.0, 2.0 * np.pi, num=10):
+            for beta in np.linspace(-1.0 * np.pi, 1.0 * np.pi, num=10):
+                for gamma in np.linspace(-1.0 * np.pi, 1.0 * np.pi, num=10):
                     new_strct0, score0 = _add_mol(
                         structure,
                         guest_strct,
@@ -306,16 +308,6 @@ def add_structure_coord(
                         score = score0
                         new_structure = new_strct0
     else:
-        new_structure, _ = _add_mol(
-            structure,
-            guest_strct,
-            wrap,
-            host_pos_np,
-            bond_length,
-            [0.0, 0.0, 0.0],
-            ref_dirs,
-            dist_constraints,
-        )
         _check_distances(new_structure, len(guest_strct["elements"]), dist_threshold, False)
     return new_structure, "_added-" + guest_strct_label
 
@@ -401,7 +393,7 @@ def _add_mol(
     # Reorient and shift guest structure:
     guest_strct = copy.deepcopy(guest_strct)
     guest_pos = [list(pos) for pos in guest_strct["positions"]]
-    shifts = [bond_length * ref_dirs[2], np.zeros(3), np.zeros(3)]
+    shifts = [np.zeros(3), np.zeros(3), bond_length * ref_dirs[0]]
     for p0, ref_dir, shift in zip(angle_pars, ref_dirs, shifts):
         rotation = Rotation.from_rotvec(p0 * ref_dir)
         for idx, pos in enumerate(guest_pos):
@@ -427,6 +419,7 @@ def _add_mol(
         elif isinstance(dists, dict):
             dists = [dists[tuple(idx)] for idx in zip(list(host_indices), list(guest_indices))]
         score = sum(abs(dist - ref_dist) for dist, ref_dist in zip(dists, ref_dists))
+    # print(score, angle_pars)
     return new_structure, score
 
 
