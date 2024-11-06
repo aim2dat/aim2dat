@@ -246,12 +246,15 @@ def _calc_atomic_distance_sc(structure, site_indices1, site_indices2, r_max):
             dist0 = np.linalg.norm(np.array(pos1) - pos)
             if dist0 <= r_max:
                 dist.append(dist0)
-        zipped = list(zip(dist, pos2.tolist()))
-        zipped.sort(key=lambda point: point[0])
-        dist, pos = zip(*zipped)
+        if len(dist) > 0:
+            zipped = list(zip(dist, pos2.tolist()))
+            zipped.sort(key=lambda point: point[0])
+            dist, pos = zip(*zipped)
+        else:
+            dist = None
+            pos = None
         dist_out.append(dist)
         pos_out.append(pos)
-
     return _parse_calc_atomic_distance_output(
         is_int, dist_out, pos_out, site_indices1, site_indices2
     )
