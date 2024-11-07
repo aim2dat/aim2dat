@@ -116,6 +116,7 @@ class _BasePlot(abc.ABC):
     _default_linestyles = ["solid", "dashed", "dotted", "dashdot", "solid", "solid"]
     _default_linewidths = [None]
     _default_markers = ["*", "o", ">", "s", "v", "h", "D"]
+    _default_hatch = []
     _default_alpha = [0.5]
 
     def __init__(self, **kwargs):
@@ -155,6 +156,7 @@ class _BasePlot(abc.ABC):
         self._custom_linestyles = None
         self._custom_linewidths = None
         self._custom_markers = None
+        self._custom_hatch = None
         self._custom_alpha = None
         self._custom_xticks = None
         self._custom_xticklabels = None
@@ -485,6 +487,17 @@ class _BasePlot(abc.ABC):
     @custom_markers.setter
     def custom_markers(self, value):
         self._custom_markers = value
+
+    @property
+    def custom_hatch(self):
+        """float, list or tuple: Hatch value(s) controlling the hatch of plot elements."""
+        return self._custom_hatch
+
+    @custom_hatch.setter
+    def custom_hatch(self, value):
+        if not isinstance(value, (list, tuple)):
+            value = (value,)
+        self._custom_hatch = value
 
     @property
     def custom_alpha(self):
@@ -981,6 +994,8 @@ class _BasePlot(abc.ABC):
             data_set["linewidth"] = swap_attr(data_set["linewidth"], "linewidths")
         if "marker" in data_set:
             data_set["marker"] = swap_attr(data_set["marker"], "markers")
+        if "hatch" in data_set:
+            data_set["hatch"] = swap_attr(data_set["hatch"], "hatch")
         if "alpha" in data_set:
             data_set["alpha"] = swap_attr(data_set["alpha"], "alpha")
 
