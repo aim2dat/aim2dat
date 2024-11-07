@@ -16,6 +16,7 @@ MATPLOTLIB_ARGS = [
     "linewidth",
     "color",
     "facecolor",
+    "hatch",
     "alpha",
 ]
 
@@ -343,6 +344,7 @@ def _add_bar(obj, axes, bar):
         bottom=bar.get("bottom", 0),
         align=bar.get("align", "center"),
         color=bar.get("color", None),
+        hatch=bar.get("hatch", None),
         alpha=bar.get("alpha", None),
         label=bar.get("label", None),
     )
