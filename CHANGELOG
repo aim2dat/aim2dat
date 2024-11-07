@@ -8,31 +8,42 @@ Version 0.2.0
 **Fixes:**
 
 * ``utils.chem_formula.transform_str_to_dict`` supports now recurring elements and nested brackets (`PR #13 <https://github.com/aim2dat/aim2dat/pull/13>`_).
+* ``strct.Structure.calculate_voronoi_tessellation`` now sorts the the neighbouring sites (`PR #31 <https://github.com/aim2dat/aim2dat/pull/31>`_).
+* ``io.fhi_aims.read_atom_proj_density_of_states`` supports now higher azimuth quantum numbers up to i (`PR #33 <https://github.com/aim2dat/aim2dat/pull/33>`_).
 * External structure manipulation methods now share the same interface as their internal counterparts (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
 * A few smaller bug fixes in CP2K output parser (`PR #36 <https://github.com/aim2dat/aim2dat/pull/36>`_).
+* Fix interface to spglib to support version 2.5 and above (`PR #54 <https://github.com/aim2dat/aim2dat/pull/54>`_).
+* Small fixes to the Materials Project open-api interface (`PR #58 <https://github.com/aim2dat/aim2dat/pull/58>`_).
+* The optimade interface was not working as soon as one supplier could not be reached (`PR #62 <https://github.com/aim2dat/aim2dat/pull/62>`_).
 * ``strct.Structure.calculate_distance`` now correctly backfolds positions into the unit cell (`PR #63 <https://github.com/aim2dat/aim2dat/pull/63>`_).
 * ``strct.ext_manipulation.add_structure_coord`` or ``strct.ext_manipulation.add_functional_group`` were not in all cases dealing correctly with planar coordination geometry (`PR #64 <https://github.com/aim2dat/aim2dat/pull/64>`_).
+* Fixed error in ``strct.StructureOperations`` when index slices were used (`PR #71 <https://github.com/aim2dat/aim2dat/pull/71>`_).
+* Fixed bug in ``plots.PartialChargesPlot`` occurring when a data labels was part of another data label (`PR #77 <https://github.com/aim2dat/aim2dat/pull/77>`_).
 
 **Enhancements:**
 
-* ``plots.base_plot`` added new property `subplot_align_ylabels` to adjust y labels in subplots for backend `matplotlib` (`PR #23 <https://github.com/aim2dat/aim2dat/pull/23>`_).
 * All larger parser functions moved from ``aiida_workflows`` to ``io`` such that they can used outside of the AiiDA framework (`PR #20 <https://github.com/aim2dat/aim2dat/pull/20>`_).
 * ``io.qe.read_total_density_of_states`` parses now the Fermi energy as well (`PR #20 <https://github.com/aim2dat/aim2dat/pull/20>`_).
+* ``plots.base_plot`` added new property `subplot_align_ylabels` to adjust y labels in subplots for backend `matplotlib` (`PR #23 <https://github.com/aim2dat/aim2dat/pull/23>`_).
 * ``strct.Structure`` added new file formats `.cssr`, `.v1` and `.cuc` to `to_file` for postprocessing in Zeo++ (`PR #26 <https://github.com/aim2dat/aim2dat/pull/26>`_).
-* ``io.fhi_aims.read_atom_proj_density_of_states`` supports now higher azimuth quantum numbers up to i (`PR #33 <https://github.com/aim2dat/aim2dat/pull/33>`_).
+* ``strct.StructureOperaions`` now supports, in addition to a ``strct.StructureCollection`` object, a list of ``Structure`` objects upon initialization (`PR #29 <https://github.com/aim2dat/aim2dat/pull/29>`_).
+* ``fct.smearing`` functions have a new parameter ``sampling_width`` to control the distance between x-values (`PR #32 <https://github.com/aim2dat/aim2dat/pull/32>`_).
 * ``strct.Structure.to_dict`` returns a dictionary of a ``Structure`` object (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
 * Structure manipulation methods maintain ``kinds`` information and ``strct.Structure.substitute_elements`` has now the addiational ``remove_kind`` parameter (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
 * ``utils.element_properties.get_atomic_radius`` supports now the set of radii determined in :doi:`10.1039/C9RA07327B` (`PR #35 <https://github.com/aim2dat/aim2dat/pull/35>`_).
 * ``strct.Structure.calculate_coordination`` supports the calculation of the coordination environment based on the sum of the corresponding atomic radii (`PR #35 <https://github.com/aim2dat/aim2dat/pull/35>`_).
-* ``strct.ext_manipulation.add_structure_coord`` replaces the ``strct.ext_manipulation.add_functional_group`` function allowing ``Structure`` objects as input and adding methods to define the orientation and position of the guest structure in more detail (`PR #37 <https://github.com/aim2dat/aim2dat/pull/37>`_).
+* ``strct.ext_manipulation.add_structure_coord`` replaces the ``strct.ext_manipulation.add_functional_group`` function allowing ``Structure`` objects as input and adding methods to define the orientation and position of the guest structure in more detail (`PR #37 <https://github.com/aim2dat/aim2dat/pull/37>`_, `PR #65 <https://github.com/aim2dat/aim2dat/pull/65>`_, `PR #85 <https://github.com/aim2dat/aim2dat/pull/85>`_).
 * ``strct.Structure`` has now site attributes which store site specific information (`PR #39 <https://github.com/aim2dat/aim2dat/pull/39>`_).
 * ``utils.element_properties.get_atomic_radius`` supports now Van der Waals radii determined in :doi:`10.26434/chemrxiv-2024-m3rtp-v2` (`PR #44 <https://github.com/aim2dat/aim2dat/pull/44>`_).
+* An internal cif-parser is added to parse additional information (`PR #47 <https://github.com/aim2dat/aim2dat/pull/47>`_).
 * Support CP2K versions 2022.1-2024.1 (`PR #51 <https://github.com/aim2dat/aim2dat/pull/51>`_).
-* The newly implemented``strct.ext_manipulation.add_structure_random`` adds a guest structure at a random position and orientation (`PR #53 <https://github.com/aim2dat/aim2dat/pull/53>`_).
+* The newly implemented``strct.ext_manipulation.add_structure_random`` function adds a guest structure at a random position and orientation (`PR #53 <https://github.com/aim2dat/aim2dat/pull/53>`_).
 * ``strct.Structure.from_file`` interfaces functions from the ``io`` sub-package via the internal ``'backend'`` and adds more parameters to control the ``'ase'`` backend (`PR #56 <https://github.com/aim2dat/aim2dat/pull/56>`_).
 * The methods to find duplicate structures of ``strct.StructureOperations`` are sped up by comparing the chemical formulas prior to more expensive checks (`PR #61 <https://github.com/aim2dat/aim2dat/pull/61>`_).
-* ``strct.ext_manipulation.add_structure_coord`` allows to set the direction of the added structure/molecule, the interface to the coordination analysis is updated and H2 is added to the pre-defined structures (`PR #65 <https://github.com/aim2dat/aim2dat/pull/65>`_).
-* ``plots.simple_plot`` added new argument `hatch` to add hatches for importing bar plot data with `import_bar_data_set` (`PR #89 <https://github.com/aim2dat/aim2dat/pull/89>`_).
+* H2 is added to the pre-defined structures (`PR #65 <https://github.com/aim2dat/aim2dat/pull/65>`_).
+* ``io.cp2k.read_atom_proj_density_of_states`` now also supports LDOS files (`PR #76 <https://github.com/aim2dat/aim2dat/pull/76>`_).
+* ``strct.StructureOperations.compare_*`` functions can now be run in parallel (`PR #78 <https://github.com/aim2dat/aim2dat/pull/78>`_).
+* Added ``custom_hatch`` to all ``plots`` classes to allow plotting hatched bars using the matplotlib backend (`PR #89 <https://github.com/aim2dat/aim2dat/pull/89>`_).
 
 **Depreciations:**
 
@@ -46,6 +57,7 @@ Version 0.2.0
   As such, the keys ``'sg_number'``, ``'int_symbol'``, ``'point_group_symbol'``, ``'schoenflies_symbol'`` are replaced by ``'number'``, ``'international'``, ``'pointgroup'``, ``'schoenflies'``, respectively.
 * ``utils.chem_formula.reduce_formula`` tries now to find a formula only having natural numbers as quantities; this way utils.chem_formula.compare_formulas`` works for all use-cases (`PR #60 <https://github.com/aim2dat/aim2dat/pull/60>`_).
 * Structure manipulation methods now in general maintain ``kinds``, ``attributes`` and ``site_attributes`` if not otherwise noted (`PR #63 <https://github.com/aim2dat/aim2dat/pull/63>`_).
+* The interface of``strct.StructureOperations`` was changed in order to be more consistent with ``strct.Structure`` (`PR #72 <https://github.com/aim2dat/aim2dat/pull/72>`_).
 * ``strct.Structure.kinds`` now always returns a tuple instead of ``None`` (`PR #73 <https://github.com/aim2dat/aim2dat/pull/73>`_).
 * ``io.critic2.read_stdout`` now returns the value of 'version' as string  (`PR #74 <https://github.com/aim2dat/aim2dat/pull/74>`_).
 * ``strct.Structure.calculate_distance`` treats ``r_max`` as a cut-off value for the distance (`PR #83 <https://github.com/aim2dat/aim2dat/pull/83>`_, `PR #90 <https://github.com/aim2dat/aim2dat/pull/90>`_).
