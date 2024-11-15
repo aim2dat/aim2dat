@@ -327,6 +327,13 @@ class StructureCoordinationTransformer(_BaseStructureTransformer):
     n_nearest_neighbours : int (optional)
         Number of neighbours that are considered coordinated for the ``'n_neighbours'``
         method.
+    radius_type : str (optional)
+        Type of the atomic radius used for the ``'atomic_radius'`` method (``'covalent'`` is
+        used as fallback in the radius for an element is not defined).
+    atomic_radius_delta : float (optional)
+        Tolerance relative to the sum of the atomic radii for the ``'atomic_radius'`` method.
+        If set to ``0.0`` the maximum threshold is defined by the sum of the atomic radii,
+        positive (negative) values increase (decrease) the threshold.
     econ_tolerance : float (optional)
         Tolerance parameter for the econ method.
     econ_conv_threshold : float (optional)
@@ -366,6 +373,8 @@ class StructureCoordinationTransformer(_BaseStructureTransformer):
         "method",
         "min_dist_delta",
         "n_nearest_neighbours",
+        "radius_type",
+        "atomic_radius_delta",
         "econ_tolerance",
         "econ_conv_threshold",
         "voronoi_weight_type",
@@ -378,6 +387,8 @@ class StructureCoordinationTransformer(_BaseStructureTransformer):
         method="minimum_distance",
         min_dist_delta=0.1,
         n_nearest_neighbours=5,
+        radius_type="chen_manz",
+        atomic_radius_delta=0.0,
         econ_tolerance=0.5,
         econ_conv_threshold=0.001,
         voronoi_weight_type="rel_solid_angle",
@@ -403,6 +414,8 @@ class StructureCoordinationTransformer(_BaseStructureTransformer):
         self.method = method
         self.min_dist_delta = min_dist_delta
         self.n_nearest_neighbours = n_nearest_neighbours
+        self.radius_type = radius_type
+        self.atomic_radius_delta = atomic_radius_delta
         self.econ_tolerance = econ_tolerance
         self.econ_conv_threshold = econ_conv_threshold
         self.voronoi_weight_type = voronoi_weight_type

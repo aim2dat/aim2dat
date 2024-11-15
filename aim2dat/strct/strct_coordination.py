@@ -257,10 +257,7 @@ def _coord_calculate_n_nearest_neighbours(
     el_idx_sc = indices_sc.index(site_idx)
     position = np.array(structure.positions[site_idx])
     neighbours = []
-    zipped = list(zip(dist_matrix[site_idx].tolist(), range(len(elements_sc))))
-    zipped.sort(key=lambda point: point[0])
-    _, sc_indices = zip(*zipped)
-
+    sc_indices = np.argsort(dist_matrix[site_idx])
     for idx in sc_indices[1 : n_neighbours + 1]:
         neigh_pos = position + (np.array(positions_sc[idx]) - np.array(positions_sc[el_idx_sc]))
         neighbours.append((mapping[idx], neigh_pos, dist_matrix[site_idx][idx]))
