@@ -727,6 +727,8 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         cn_method: str = "minimum_distance",
         min_dist_delta: float = 0.1,
         n_nearest_neighbours: int = 5,
+        radius_type: str = "chen_manz",
+        atomic_radius_delta: float = 0.0,
         econ_tolerance: float = 0.5,
         econ_conv_threshold: float = 0.001,
         voronoi_weight_type: float = "rel_solid_angle",
@@ -759,6 +761,13 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         n_nearest_neighbours : int (optional)
             Number of neighbours that are considered coordinated for the ``'n_neighbours'``
             method.
+        radius_type : str (optional)
+            Type of the atomic radius used for the ``'atomic_radius'`` method (``'covalent'`` is
+            used as fallback in the radius for an element is not defined).
+        atomic_radius_delta : float (optional)
+            Tolerance relative to the sum of the atomic radii for the ``'atomic_radius'`` method.
+            If set to ``0.0`` the maximum threshold is defined by the sum of the atomic radii,
+            positive (negative) values increase (decrease) the threshold.
         econ_tolerance : float (optional)
             Tolerance parameter for the econ method.
         econ_conv_threshold : float (optional)
@@ -884,6 +893,8 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         cn_method: str = "minimum_distance",
         min_dist_delta: float = 0.1,
         n_nearest_neighbours: int = 5,
+        radius_type: str = "chen_manz",
+        atomic_radius_delta: float = 0.0,
         econ_tolerance: float = 0.5,
         econ_conv_threshold: float = 0.001,
         voronoi_weight_type: float = "rel_solid_angle",
@@ -910,6 +921,13 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         n_nearest_neighbours : int (optional)
             Number of neighbours that are considered coordinated for the ``'n_neighbours'``
             method.
+        radius_type : str (optional)
+            Type of the atomic radius used for the ``'atomic_radius'`` method (``'covalent'`` is
+            used as fallback in the radius for an element is not defined).
+        atomic_radius_delta : float (optional)
+            Tolerance relative to the sum of the atomic radii for the ``'atomic_radius'`` method.
+            If set to ``0.0`` the maximum threshold is defined by the sum of the atomic radii,
+            positive (negative) values increase (decrease) the threshold.
         econ_tolerance : float (optional)
             Tolerance parameter for the econ method.
         econ_conv_threshold : float (optional)
