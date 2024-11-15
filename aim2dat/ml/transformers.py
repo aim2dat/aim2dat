@@ -414,6 +414,8 @@ class StructureCoordinationTransformer(_BaseStructureTransformer):
         self.method = method
         self.min_dist_delta = min_dist_delta
         self.n_nearest_neighbours = n_nearest_neighbours
+        self.radius_type = radius_type
+        self.atomic_radius_delta = atomic_radius_delta
         self.econ_tolerance = econ_tolerance
         self.econ_conv_threshold = econ_conv_threshold
         self.voronoi_weight_type = voronoi_weight_type
