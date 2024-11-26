@@ -28,6 +28,6 @@
       max_step: 0.019600364, rms_step: 0.0083283176, max_grad: 0.0011773278, rms_grad: 0.0003878434}
     - {scf_converged: true, nr_scf_steps: 9, energy: -65.9863705297548, pressure: 159.2088699343,
       max_step: 0.0368724737, rms_step: 0.0131528619, max_grad: 0.0008830957, rms_grad: 0.0003680398}
-    - {}
+    - {nr_scf_steps: 9, scf_converged: True}
 - [energy_units, a.u.]
 - [interrupted, true]

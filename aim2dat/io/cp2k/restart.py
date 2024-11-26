@@ -10,12 +10,12 @@ import re
 import numpy as np
 
 # Internal library imports
-from aim2dat.io.base_parser import parse_function, _BasePattern
+from aim2dat.io.base_parser import parse_pattern_function, _BasePattern
 from aim2dat.io.utils import read_multiple
 
 
 class _CellPattern(_BasePattern):
-    _pattern = r"^\s*&CELL\n(.*\n)*?\s*&END\sCELL"
+    pattern = r"^\s*&CELL\n(.*\n)*?\s*&END\sCELL"
     _dir_mapping = {"A": 0, "B": 1, "C": 2}
 
     def process_data(self, output: dict, matches: List[re.Match]):
@@ -37,7 +37,7 @@ class _CellPattern(_BasePattern):
 
 
 class _CoordPattern(_BasePattern):
-    _pattern = r"^\s*&COORD\n(.*\n)*?\s*&END\sCOORD"
+    pattern = r"^\s*&COORD\n(.*\n)*?\s*&END\sCOORD"
 
     def process_data(self, output: dict, matches: List[re.Match]):
         output["kinds"] = []
@@ -56,7 +56,7 @@ class _CoordPattern(_BasePattern):
 
 
 class _KindPattern(_BasePattern):
-    _pattern = r"\s*&KIND\s(?P<kind>\S+)\n(.*\n)*?\s*&END\sKIND"
+    pattern = r"\s*&KIND\s(?P<kind>\S+)\n(.*\n)*?\s*&END\sKIND"
 
     def process_data(self, output: dict, matches: List[re.Match]):
         output["kind_info"] = {}
@@ -124,7 +124,7 @@ def read_restart_structure(folder_path: str) -> Union[dict, List[dict]]:
     structures = []
     for file_p, file_n in zip(folder_path["file"], folder_path["file_name"]):
         proj = file_n.rsplit("-", 1)[0]
-        output = parse_function(file_p, [_CellPattern, _CoordPattern, _KindPattern])
+        output = parse_pattern_function(file_p, [_CellPattern, _CoordPattern, _KindPattern])
         kind_info = output.pop("kind_info")
         output["elements"] = [kind_info[kind] for kind in output["kinds"]]
         output["label"] = proj

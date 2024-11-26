@@ -7,7 +7,7 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.io.cp2k.stdout import read_stdout
+from aim2dat.io.cp2k import read_stdout
 from aim2dat.io.yaml import load_yaml_file
 
 
