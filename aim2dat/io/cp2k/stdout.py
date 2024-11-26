@@ -572,7 +572,8 @@ class EigenvaluesBlock(_BaseDataBlock):
             else:
                 ev_output["gap"] = max(min(gap_info["cbm"][0]) - max(gap_info["vbm"][0]), 0.0)
                 ev_output["direct_gap"] = max(min(gap_info["gap"][0]), 0.0)
-        return {"fermi_energy": fermi_energy, "eigenvalues_info": ev_output}
+        if len(ev_output["eigenvalues"]) > 0:
+            return {"fermi_energy": fermi_energy, "eigenvalues_info": ev_output}
 
 
 class RuntimeBlock(_BaseDataBlock):
