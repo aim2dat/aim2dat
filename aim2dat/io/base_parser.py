@@ -35,11 +35,12 @@ def transform_str_value(value: str) -> Union[str, int, float, bool]:
         Detected and transformed value.
     """
     value = value.strip()
+    # print(value)
     for sl in ["'", '"']:
         value = value.strip(sl)
-    if any(bv == value.lower() for bv in ["y", "yes", "true"]):
+    if any(bv == value.lower() for bv in ["yes", "true"]):
         return True
-    elif any(bv == value.lower() for bv in ["n", "no", "false"]):
+    elif any(bv == value.lower() for bv in ["no", "false"]):
         return False
     for pattern, t in TYPE_PATTERNS:
         match = pattern.match(value)

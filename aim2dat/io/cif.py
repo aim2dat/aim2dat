@@ -360,7 +360,7 @@ class _CIFDataBlock:
         return key.strip("_").lower()
 
     def _extract_element(self, value):
-        value = re.split(r"(\d)|(_)|(-)|(\+)", value)[0]
+        value = re.split(r"(\d)|(_)|(-)|(\+)", str(value))[0]
         el = self._pred_element_mapping.get(value, None)
         if el is None:
             try:
