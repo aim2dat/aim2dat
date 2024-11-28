@@ -226,6 +226,97 @@ class StructureImporter(ConstraintsMixin):
         else:
             return self._import_from_odb("mp", formulas, {}, download_kwargs)
 
+    def import_from_mofxdb(
+        self,
+        mofid: str = None,
+        mofkey: str = None,
+        vf_min: float = None,
+        vf_max: float = None,
+        lcd_min: float = None,
+        lcd_max: float = None,
+        pld_min: float = None,
+        pld_max: float = None,
+        sa_m2g_min: float = None,
+        sa_m2g_max: float = None,
+        sa_m2cm3_min: float = None,
+        sa_m2cm3_max: float = None,
+        name: str = None,
+        database: str = None,
+        telemetry: bool = True,
+        pressure_unit: str = None,
+        loading_unit: str = None,
+        query_limit: int = 1000,
+    ) -> StructureCollection:
+        """
+        Import structures from the MOFX database using the fetch function.
+
+        Parameters
+        ----------
+        mofid : str
+            The unique ID for the MOF.
+        mofkey : str
+            A specific key, often used for subcategorization or indexing.
+        vf_min : float
+            Minimum value for the void fraction (VF) (fraction of empty space).
+        vf_max : float
+            Maximum value for the void fraction (VF).
+        lcd_min : float
+            Minimum value for the largest cavity diameter (LCD).
+        lcd_max : float
+            Maximum value for the largest cavity diameter (LCD).
+        pld_min : float
+            Minimum value for the pore limiting diameter (PLD).
+        pld_max : float
+            Maximum value for the pore limiting diameter (PLD).
+        sa_m2g_min : float
+            Minimum value for the surface area (SA) per gram (m²/g).
+        sa_m2g_max : float
+            Maximum value for the surface area (SA) per gram (m²/g).
+        sa_m2cm3_min : float
+            Minimum value for the surface area (SA) in square meters (m²/cm³).
+        sa_m2cm3_max : float
+            Maximum value for the surface area (SA) in square meters (m²/cm³).
+        name : str
+            The name or alias of the MOF, used for identification or display purposes.
+        database : str
+            The database from which MOF information is retrieved (e.g., "CoREMOF 2019" or "CSD").
+        telemetry : bool
+            If True, enables telemetry to log query usage or performance metrics.
+        pressure_unit : str
+            The unit of pressure used in the queries (e.g., "bar" or "atm").
+        loading_unit : str
+            The unit of gas loading used in the queries (e.g., "cm3/cm3" or "mmol/g").
+        query_limit : int
+            The maximum number of results to retrieve for the query.
+        """
+        backend_module = _return_ext_interface_modules("mofxdb")
+        structures = backend_module._download_structures(
+            mofid,
+            mofkey,
+            vf_min,
+            vf_max,
+            lcd_min,
+            lcd_max,
+            pld_min,
+            pld_max,
+            sa_m2g_min,
+            sa_m2g_max,
+            sa_m2cm3_min,
+            sa_m2cm3_max,
+            name,
+            database,
+            telemetry,
+            pressure_unit,
+            loading_unit,
+            query_limit,
+        )
+
+        structures_collect = StructureCollection()
+        for structure in structures:
+            structures_collect._add_structure(structure.label, structure)
+        self.structures += structures_collect
+        return structures_collect
+
     def import_from_oqmd(
         self, formulas: Union[str, List[str]], query_limit=1000
     ) -> StructureCollection:
