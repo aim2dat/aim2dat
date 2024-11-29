@@ -10,7 +10,7 @@ from scipy.spatial.distance import cdist
 
 # Internal library imports
 from aim2dat.io.utils import read_structure
-from aim2dat.io.base_parser import FLOAT
+from aim2dat.io.base_parser import FLOAT, transform_str_value
 from aim2dat.strct.strct_misc import _get_cell_from_lattice_p
 from aim2dat.utils.element_properties import get_element_symbol
 from aim2dat.utils.space_groups import get_space_group_details
@@ -45,10 +45,6 @@ class _CIFDataBlock:
     ]
     _chem_formula_fields = ["chemical_formula_sum"]
     _pred_element_mapping = {"Ow": "O", "Hw": "H"}
-    _patterns = [
-        (re.compile(r"^([+-]?[0-9]+)$"), int),
-        (re.compile(r"^" + FLOAT), float),
-    ]
     _sym_op_pattern = re.compile(
         rf"(?P<sign>[-+])?(?P<num>({FLOAT}))?(\/(?P<den>{FLOAT}))?(?P<coord>[x-z])?"
     )
@@ -105,7 +101,7 @@ class _CIFDataBlock:
 
             line_split = line.split()
             if len(line_split) > 1:
-                self.fields[self._transf_key(line_split[0])] = self._transf_value(
+                self.fields[self._transf_key(line_split[0])] = transform_str_value(
                     " ".join(line_split[1:])
                 )
             else:
@@ -339,7 +335,7 @@ class _CIFDataBlock:
             else:
                 loop_values.append(val)
 
-        return [self._transf_value(val) for val in loop_values]
+        return [transform_str_value(val) for val in loop_values]
 
     def _finalize_current_loop(self, line_idx, line):
         if self.current_loop is None:
@@ -363,18 +359,8 @@ class _CIFDataBlock:
     def _transf_key(key):
         return key.strip("_").lower()
 
-    def _transf_value(self, value):
-        value = value.strip()
-        for sl in self._string_limiters:
-            value = value.strip(sl)
-        for pattern, t in self._patterns:
-            match = pattern.match(value)
-            if match and len(match.group(1)) > 0:
-                return t(match.group(1))
-        return value
-
     def _extract_element(self, value):
-        value = re.split(r"(\d)|(_)|(-)|(\+)", value)[0]
+        value = re.split(r"(\d)|(_)|(-)|(\+)", str(value))[0]
         el = self._pred_element_mapping.get(value, None)
         if el is None:
             try:

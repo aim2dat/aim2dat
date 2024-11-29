@@ -1,609 +1,721 @@
 """Functions to read the standard output file of CP2K."""
 
-# Standard library imports
-from typing import List
-import re
-
 # Internal library imports
-from aim2dat.io.base_parser import parse_function, _BasePattern, FLOAT
+from aim2dat.io.base_parser import transform_str_value, parse_block_function, _BaseDataBlock
 
 
-class _CP2KPattern(_BasePattern):
-    _pattern = r"^\s*CP2K\|\sversion\sstring:\s+CP2K\sversion\s(?P<cp2k_version>\S+)$"
+class CP2KBlock(_BaseDataBlock):
+    """CP2K| data block."""
+
+    start_str = "CP2K|"
+    use_once = True
+
+    def _parse_line(self, line):
+        if "version string:" in line:
+            self.current_data["cp2k_version"] = " ".join(line.split()[5:])
 
 
-class _GlobalPattern(_BasePattern):
-    _pattern = r"^\s*GLOBAL\|\sRun\stype\s+(?P<run_type>\S+)$"
+class GlobalBlock(_BaseDataBlock):
+    """GLOBAL| data block."""
+
+    start_str = "GLOBAL|"
+    use_once = True
+
+    def _parse_line(self, line):
+        if "Run type" in line:
+            self.current_data["run_type"] = " ".join(line.split()[3:])
 
 
-class _BrillouinPattern(_BasePattern):
-    _pattern = rf"""
-        ^\s*BRILLOUIN\|\s+(
-            (K-point\sscheme\s*(?P<scheme>\S+))
-            |(K-Point\sgrid\s*(?P<kx>\d+)\s+(?P<ky>\d+)\s+(?P<kz>\d+))
-            |(\s*(?P<kpt_nr>\d+)\s+(?P<kpt_w>{FLOAT})\s+(?P<kpt_x>{FLOAT})\s+(?P<kpt_y>{FLOAT})\s+(?P<kpt_z>{FLOAT}))
-        )$
-    """
+class BrillouinBlock(_BaseDataBlock):
+    """BRILLOUIN| data block."""
 
-    def process_data(self, output: dict, matches: List[re.Match]):
-        for m in matches:
-            data = m.groupdict()
-            if data["scheme"] is not None:
-                output["kpoint_scheme"] = data["scheme"]
-            elif data["kx"] is not None:
-                output["kpoint_grid"] = [int(data["kx"]), int(data["ky"]), int(data["kz"])]
-            else:
-                kpts = output.setdefault("kpoints", [])
-                kpts.append(
-                    (
-                        float(data["kpt_w"]),
-                        float(data["kpt_x"]),
-                        float(data["kpt_y"]),
-                        float(data["kpt_z"]),
-                    )
-                )
+    start_str = "BRILLOUIN|"
+    end_str = "***"
+    use_once = True
 
+    def __init__(self):
+        """Initialize class."""
+        _BaseDataBlock.__init__(self)
+        self.in_kpoint_block = False
 
-class _DFTPattern(_BasePattern):
-    _pattern = r"""
-        ^\s*DFT\|[\S\s]+\s+(?P<dft_type>\S+)\n
-        \s*DFT\|\sMultiplicity\s+(?P<multiplicity>\d+)\n
-        \s*DFT\|[\s\S]+\n
-        \s*DFT\|\sCharge\s+(?P<charge>[+-]*\d+)$
-    """
-
-    def process_data(self, output: dict, matches: List[re.Match]):
-        data = matches[-1].groupdict()
-        output["dft_type"] = data["dft_type"]
-        output["multiplicity"] = int(data["multiplicity"])
-        output["charge"] = float(data["charge"])
-
-
-class _FunctionalPattern(_BasePattern):
-    _pattern = r"""
-        ^(^\s*FUNCTIONAL\|\s(?P<functional>.+):$)|
-        (^\s*vdW\sPOTENTIAL\|\s*(?P<vdw_type>[\w\s]+)\n
-         \s*vdW\sPOTENTIAL\|\s*(?P<vdw_method>[\w-]+).*$)
-    """
-
-    def process_data(self, output: dict, matches: List[re.Match]):
-        output["xc"] = {}
-        for m in matches:
-            data = m.groupdict()
-            fct = data.get("functional", None)
-            if fct is None:
-                for k0 in ["vdw_type", "vdw_method"]:
-                    output["xc"][k0] = data[k0]
-                break
-
-            output["xc"]["functional"] = (
-                [output["xc"]["functional"], fct] if "functional" in output["xc"] else fct
-            )
-
-
-class _MDPattern(_BasePattern):
-    _pattern = r"^\s*MD_PAR\|\sEnsemble\stype\s+(?P<md_ensemble>\w+)$"
-
-
-class _NumbersPattern(_BasePattern):
-    _pattern = r"""
-        ^\s*TOTAL\sNUMBERS\sAND\sMAXIMUM\sNUMBERS\n\n
-        [\S\s]*\n
-        \s*-\sAtoms:\s+(?P<natoms>\d+)$
-    """
-
-    def process_data(self, output: dict, matches: List[re.Match]):
-        output["natoms"] = int(matches[-1].groupdict()["natoms"])
-
-
-class _KindInfoPattern(_BasePattern):
-    _pattern = rf"""
-        ^\s*Atom\s+Kind\s+Element\s+X\s+Y\s+Z\s+Z\(eff\)\s+Mass(\n)+
-        (\s*(\d+\s+){{2}}\S+\s+\d+\s+({FLOAT}\s*){{5}}\n)+$
-    """
-
-    def process_data(self, output: dict, matches: List[re.Match]):
-        m = matches[-1]
-        output["kind_info"] = []
-        for line in m.string[m.start() : m.end()].splitlines():
+    def _parse_line(self, line):
+        if "K-point scheme" in line:
+            self.current_data["kpoint_scheme"] = line.split()[-1]
+        elif "K-Point grid" in line:
             line_sp = line.split()
-            if len(line_sp) == 9:
-                output["kind_info"].append(
-                    {
-                        "kind": int(line_sp[1]),
-                        "element": line_sp[2],
-                        "atomic_nr": int(line_sp[3]),
-                        "core_electrons": int(int(line_sp[3]) - float(line_sp[7])),
-                        "valence_electrons": int(float(line_sp[7])),
-                        "mass": float(line_sp[8]),
-                    }
-                )
-
-
-class _SPGRPattern(_BasePattern):
-    _pattern = r"""
-        ^\s*SPGR\|\sSPACE\sGROUP\sNUMBER:\s+(?P<sg_number>\d+)\n
-        \s*SPGR\|\sINTERNATIONAL\sSYMBOL:\s+(?P<int_symbol>.+)\n
-        \s*SPGR\|\sPOINT\sGROUP\sSYMBOL:\s+(?P<point_group_symbol>.+)\n
-        \s*SPGR\|\sSCHOENFLIES\sSYMBOL:\s+(?P<schoenflies_symbol>.+)$
-    """
-
-    def process_data(self, output: dict, matches: List[re.Match]):
-        data = matches[-1].groupdict()
-        data["sg_number"] = int(data["sg_number"])
-        output["spgr_info"] = data
-
-
-class _SCFParametersPattern(_BasePattern):
-    _pattern = rf"^\s*added\sMOs\s*(?P<added_mos1>{FLOAT})\s*(?P<added_mos2>{FLOAT})$"
-
-    def process_data(self, output: dict, matches: List[re.Match]):
-        data = matches[-1].groupdict()
-        if data["added_mos2"] != "0":
-            output["nr_unocc_orbitals"] = [int(data["added_mos1"]), int(data["added_mos2"])]
-        else:
-            output["nr_unocc_orbitals"] = int(data["added_mos1"])
-
-
-class _SCFPattern(_BasePattern):
-    _pattern = rf"""
-        (\s*Spin\s1\n\n)?
-        \s*Number\sof\selectrons:\s+\d+\n
-        \s*Number\sof\soccupied\sorbitals:\s+\d+\n
-        (.*\n)*?
-        (\s*ENERGY\|\sTotal\sFORCE_EVAL\s
-         \(\sQS\s\)\senergy\s\[(?P<energy_units>\S+)\]:\s+(?P<energy>{FLOAT}))
-    """
-
-    def process_data(self, output: dict, matches: List[re.Match]):
-        output["scf_steps"] = []
-        for m in matches:
-            data = m.groupdict()
-            m_step_dict = {
-                "energy": float(data["energy"]),
-                "span": (m.start(), m.end()),
-            }
-
-            lines = m.string[m.start() : m.end()].splitlines()
-            line_idx = 0
-            while line_idx < len(lines):
-                line = lines[line_idx]
-                line_idx = self._extract_n_electrons(line_idx, lines, output)
-                self._extract_scf_details(line, m_step_dict)
-                self._extract_total_energy(line, output)
-                line_idx = self._extract_partial_charges(line_idx, lines, m_step_dict)
-                line_idx += 1
-            output["scf_steps"].append(m_step_dict)
-
-        output["scf_converged"] = m_step_dict["scf_converged"]
-        output["energy_units"] = data["energy_units"]
-        output["energy"] = float(data["energy"])
-
-    @staticmethod
-    def _extract_n_electrons(start_idx, lines, outp_dict):
-        line_indices = [start_idx]
-        if "Spin 1" in lines[start_idx]:
-            line_indices = [start_idx + 2, start_idx + 8]
-        end_idx = line_indices[-1]
-
-        nrs = [[], []]
-        for line_idx in line_indices:
-            if "Number of electrons:" in lines[line_idx]:
-                nrs[0].append(int(float(lines[line_idx].split()[-1])))
-                nrs[1].append(int(float(lines[line_idx + 1].split()[-1])))
-                end_idx += 1
-
-        if len(nrs[0]) > 0:
-            for label, nr in zip(["nelectrons", "nr_occ_orbitals"], nrs):
-                outp_dict[label] = nr[0] if len(nr) == 1 else nr
-        return end_idx
-
-    @staticmethod
-    def _extract_scf_details(line, outp_dict):
-        if "SCF run converged in" in line:
-            outp_dict["nr_scf_steps"] = int(line.split()[-3])
-            outp_dict["scf_converged"] = True
-        elif "Leaving inner SCF loop after" in line:
-            outp_dict["nr_scf_steps"] = int(line.split()[-2])
-            outp_dict["scf_converged"] = False
-        elif "outer SCF loop converged in" in line:
-            outp_dict["nr_scf_steps"] = int(line.split()[-2])
-            outp_dict["scf_converged"] = True
-        elif "outer SCF loop FAILED to converge after" in line:
-            outp_dict["nr_scf_steps"] = int(line.split()[-2])
-            outp_dict["scf_converged"] = False
-
-    @staticmethod
-    def _extract_total_energy(line, outp_dict):
-        if "Total energy:" in line:
-            outp_dict["energy_scf"] = float(line.split()[-1])
-
-    @staticmethod
-    def _extract_partial_charges(start_idx, lines, outp_dict):
-        if "Mulliken Population Analysis" in lines[start_idx]:
-            charge_type = "mulliken"
-        elif "Hirshfeld Charges" in lines[start_idx]:
-            charge_type = "hirshfeld"
-        else:
-            return start_idx
-
-        start_idx += 3
-        outp_dict[charge_type] = []
-        for line_idx, line in enumerate(lines[start_idx:]):
+            self.current_data["kpoint_grid"] = [
+                int(line_sp[-3]),
+                int(line_sp[-2]),
+                int(line_sp[-1]),
+            ]
+        elif "Number" in line and "Weight" in line:
+            self.in_kpoint_block = True
+            self.current_data["kpoints"] = []
+        elif self.in_kpoint_block:
+            if self.end_str in line:
+                self.in_kpoint_block = False
+                return None
             line_sp = line.split()
-            if len(line_sp) > 4 and "#" != line_sp[0]:
-                if charge_type == "mulliken" and len(line_sp) == 7:
-                    pop = [float(line_sp[-4]), float(line_sp[-3])]
-                    chrg = float(line_sp[-2])
-                elif charge_type == "hirshfeld" and len(line_sp) == 8:
-                    pop = [float(line_sp[-4]), float(line_sp[-3])]
-                    chrg = float(line_sp[-1])
-                else:
-                    pop = float(line_sp[-2])
-                    chrg = float(line_sp[-1])
-
-                outp_dict[charge_type].append(
-                    {
-                        "kind": int(line_sp[2]),
-                        "element": line_sp[1],
-                        "population": pop,
-                        "charge": chrg,
-                    }
-                )
-            if "!---------------" in line:
-                break
-
-        return start_idx + line_idx
-
-
-class _OptStepPattern(_BasePattern):
-    _pattern = rf"""
-        ^(
-            (\s*\*{{3}}\s+STARTING\s+\S+\s+OPTIMIZATION\s+\*{{3}}\n)|
-            (\s*OPTIMIZATION\sSTEP:\s+\d+\n)
-        )
-        (
-            (.*\n)*?
-            \s*-+\s\sInformations\sat\sstep\s=\s+(?P<nr_steps>\d+)\s*-+\n
-            (.*\n)*?
-            \s*Total\sEnergy\s+=\s+{FLOAT}\n
-            (\s*Internal\sPressure\s\[\S+\]\s+=\s+(?P<pressure>{FLOAT})\n)?
-            (.*\n)*?
-            \s*Used\stime\s+=\s+{FLOAT}\n
-            (
-                \n\s*Convergence\scheck\s:\n
-                \s*Max.\sstep\ssize\s+=\s+(?P<max_step>{FLOAT})\n
-                (.*\n)*?
-                \s*RMS\sstep\ssize\s+=\s+(?P<rms_step>{FLOAT})\n
-                (.*\n)*?
-                \s*Max.\sgradient\s+=\s+(?P<max_grad>{FLOAT})\n
-                (.*\n)*?
-                \s*RMS\sgradient\s+=\s+(?P<rms_grad>{FLOAT})\n
-                (.*\n)*?
-            )?
-            \s*-{{51}}\n
-        )?
-        (
-            ((.*\n)*?\s*-{{26}})|
-            ((.*\n)?\n\s*\*{{79}}\s*\*{{3}}\s+GEOMETRY\sOPTIMIZATION\s(?P<opt_success>\S+)\s+\*{{3}})|
-            ((.*\n)?\n\s*\*{{3}}\s+MAXIMUM\sNUMBER\sOF\sOPTIMIZATION\sSTEPS\s(?P<max_steps>\S+)\s+\*{{3}})
-        )?
-        $
-    """
-
-    def process_data(self, output: dict, matches: List[re.Match]):
-        output["motion_step_info"] = []
-        for m in matches:
-            m_step_dict = {"span": (m.start(), m.end())}
-            data = m.groupdict()
-            opt_success = data.pop("opt_success")
-            max_steps_reached = data.pop("max_steps")
-            if data["nr_steps"] is not None:
-                output["nr_steps"] = int(data.pop("nr_steps"))
-            for key, val in data.items():
-                if val is not None:
-                    m_step_dict[key] = float(val)
-            output["motion_step_info"].append(m_step_dict)
-            if opt_success == "COMPLETED":
-                output["motion_step_info"].append({"span": (m.end(), None)})
-            if max_steps_reached == "REACHED":
-                output["geo_not_converged"] = True
-
-
-class _MDStepPattern(_BasePattern):
-    _pattern = rf"""
-        ^(
-            \s*MD\|\sStep\snumber\s*(?P<step_nr>\d+)\n
-            \s*MD\|\sTime\s\[fs\]\s*(?P<time_fs>{FLOAT})\n
-            (\s*MD\|.*\n)*
-            \s*MD\|\sEnergy\sdrift\sper\satom\s\[\S+\]\s+(?P<energy_drift_p_atom>{FLOAT})\s+{FLOAT}\n
-        )?
-        \s*MD(_INI)?\|\sPotential\senergy\s\[\S+\]\s+(?P<potential_energy>{FLOAT})(\s+{FLOAT})?\n
-        \s*MD(_INI)?\|\sKinetic\senergy\s\[\S+\]\s+(?P<kinetic_energy>{FLOAT})(\s+{FLOAT})?\n
-        \s*MD(_INI)?\|\sTemperature\s\[\S+\]\s+(?P<temperature>{FLOAT})(\s+{FLOAT})?$
-    """
-
-    def process_data(self, output: dict, matches: List[re.Match]):
-        output["motion_step_info"] = []
-        span_start = None
-        for m in matches:
-            data = m.groupdict()
-            step_nr = data.pop("step_nr")
-            time_fs = data.pop("time_fs")
-            m_step_dict = {
-                "step_nr": 0 if step_nr is None else int(step_nr),
-                "time_fs": 0.0 if time_fs is None else float(time_fs),
-                "span": [span_start, None],
-            }
-            for key, val in data.items():
-                if val is not None:
-                    m_step_dict[key] = float(val)
-            output["motion_step_info"].append(m_step_dict)
-            span_start = m.start()
-
-
-class _BandsPattern(_BasePattern):
-    _pattern = rf"""
-        ^\s*KPOINTS\|\sSpecial\spoint\s+1\s+(?P<label1>(\S+)|(not\sspecifi))
-            \s+{FLOAT}\s+{FLOAT}\s+{FLOAT}\n
-        \s*KPOINTS\|\sSpecial\spoint\s+2\s+(?P<label2>(\S+)|(not\sspecifi))
-            \s+{FLOAT}\s+{FLOAT}\s+{FLOAT}\n
-        (.*\n)*?
-        \s*KPOINTS\|\sTime\sfor\sk-point\sline\s+{FLOAT}$
-    """
-
-    def process_data(self, output: dict, matches: List[re.Match]):
-        output["kpoint_data"] = {
-            "labels": [],
-            "kpoints": [],
-            "bands": [[], []],
-            "occupations": [[], []],
-        }
-        for m in matches:
-            labels = [None if val == "not specifi" else val for val in m.groupdict().values()]
-            spin = 0
-            kpoint_counter = 0
-            for line in m.string[m.start() : m.end()].splitlines()[2:]:
-                line_sp = line.split()
-                if "KPOINTS" in line:
-                    continue
-                elif line.startswith("#"):
-                    if line_sp[2] == "Energy":
-                        output["kpoint_data"]["bands_unit"] = line_sp[3][1:-1]
-                    elif line_sp[4] == "1:":
-                        output["kpoint_data"]["kpoints"].append(
-                            [float(line_sp[5]), float(line_sp[6]), float(line_sp[7])]
-                        )
-                        kpoint_counter += 1
-                        for idx in range(2):
-                            output["kpoint_data"]["bands"][idx].append([])
-                            output["kpoint_data"]["occupations"][idx].append([])
-                        spin = 0
-                    elif line_sp[4] == "2:":
-                        spin = 1
-                else:
-                    output["kpoint_data"]["bands"][spin][-1].append(float(line_sp[1]))
-                    output["kpoint_data"]["occupations"][spin][-1].append(float(line_sp[2]))
-            output["kpoint_data"]["labels"].append(
-                [len(output["kpoint_data"]["kpoints"]) - kpoint_counter, labels[0]]
-            )
-            output["kpoint_data"]["labels"].append(
-                [len(output["kpoint_data"]["kpoints"]) - 1, labels[1]]
-            )
-        if spin == 0:
-            output["kpoint_data"]["bands"] = output["kpoint_data"]["bands"][0]
-            output["kpoint_data"]["occupations"] = output["kpoint_data"]["occupations"][0]
-
-
-class _EigenvaluesPattern(_BasePattern):
-    _pattern = rf"""
-        ^\s*(MO\|)?(\s(?P<spin>\S+))?(\sMO)?\sEIGENVALUES\sAND(\sMO)?\sOCCUPATION\sNUMBERS.*\n
-        (.*\n)+?
-        \s*((Fermi\senergy:\s+)|(MO\|\sE\(Fermi\):\s+))(?P<fermi_energy>{FLOAT})
-    """
-
-    def process_data(self, output: dict, matches: List[re.Match]):
-        output["eigenvalues_info"] = {
-            "eigenvalues": [],
-        }
-        vbms = [[], []]
-        cbms = [[], []]
-        gaps = [[], []]
-        ev_counter = 0
-        ev0 = None
-        for m in matches:
-            data = m.groupdict()
-            if data["spin"] == "BETA":
-                energies, occs, vbm, cbm = self._extract_eigenvalues(m)
-                ev0["energies"] = [ev0["energies"], energies]
-                ev0["occupations"] = [ev0["occupations"], occs]
-                if cbm is not None:
-                    ev0["gap"] = [ev0["gap"], cbm - vbm]
-                    cbms[1].append(cbm)
-                    gaps[1].append(ev0["gap"][1])
-                vbms[1].append(vbm)
-            else:
-                ev0 = {
-                    "energies": [],
-                    "occupations": [],
+            self.current_data["kpoints"].append(
+                {
+                    "idx": int(line_sp[1]),
+                    "weight": float(line_sp[2]),
+                    "kpoint": [float(line_sp[3]), float(line_sp[4]), float(line_sp[5])],
                 }
-                if "kpoints" in output:
-                    ev0["weight"] = output["kpoints"][ev_counter][0]
-                    ev0["kpoint"] = list(output["kpoints"][ev_counter][1:])
-                ev0["energies"], ev0["occupations"], vbm, cbm = self._extract_eigenvalues(m)
-                if cbm is not None:
-                    ev0["gap"] = cbm - vbm
-                    cbms[0].append(cbm)
-                    gaps[0].append(ev0["gap"])
-                vbms[0].append(vbm)
-                output["eigenvalues_info"]["eigenvalues"].append(ev0)
-                ev_counter += 1
-            output["fermi_energy"] = float(data["fermi_energy"])
-
-        if len(cbms[0]) > 0:
-            if len(vbms[1]) > 0:
-                output["eigenvalues_info"]["gap"] = min(
-                    [max(min(cbms[idx]) - max(vbms[idx]), 0.0) for idx in range(2)]
-                )
-                output["eigenvalues_info"]["direct_gap"] = min(
-                    [max(min(gaps[idx]), 0.0) for idx in range(2)]
-                )
-            else:
-                output["eigenvalues_info"]["gap"] = max(min(cbms[0]) - max(vbms[0]), 0.0)
-                output["eigenvalues_info"]["direct_gap"] = max(min(gaps[0]), 0.0)
-
-    @staticmethod
-    def _extract_eigenvalues(m):
-        homo_idx = 0
-        start_ev = False
-        energies = []
-        occs = []
-        for line in m.string[m.start() : m.end()].splitlines():
-            if "# MO index" in line or "Index" in line:
-                start_ev = True
-            elif "Sum" in line:
-                start_ev = False
-            elif start_ev:
-                line_sp = line.split()
-                occ = float(line_sp[-1])
-                if occ >= 0.5:
-                    homo_idx = len(occs)
-                if line_sp[0] == "MO|":
-                    energies.append(float(line_sp[2]))
-                else:
-                    energies.append(float(line_sp[1]))
-                occs.append(occ)
-        vbm = energies[homo_idx]
-        cbm = energies[homo_idx + 1] if len(energies) > homo_idx + 1 else None
-        return energies, occs, vbm, cbm
-
-
-class _WarningsPattern(_BasePattern):
-    _pattern = r"""
-        ^\s*\*{3}\sWARNING\sin\s(?P<file_name>\S+):(?P<line_number>\d+)\s::\s(?P<message>.*)\*{3}\n
-        ((\s\*{3}.*\*{3}\n)*)?$
-    """
-
-    def process_data(self, output: dict, matches: List[re.Match]):
-        output["nwarnings"] = len(matches)
-        output["warnings"] = []
-        if output["nwarnings"] > 0:
-            for m in matches:
-                warn_dict = m.groupdict()
-                message = warn_dict["message"].rstrip()
-                for line in m.string[m.start() : m.end()].splitlines()[2:]:
-                    message += line[4:-4].rstrip()
-                output["warnings"].append(
-                    (warn_dict["file_name"], int(warn_dict["line_number"]), message)
-                )
-
-
-class _ErrorPattern(_BasePattern):
-    _pattern = r"""
-        ^\s*\*\s\[ABORT\].*\n
-        \s*\*\s{2}\\___\/\s+(?P<message>.+)\s*\*\n
-        (\s*\*.*\*\n)*?
-        \s*\*\s\/\s\\\s+(?P<file_name>\S+):(?P<line_number>\d+)\s\*$
-    """
-
-    def process_data(self, output: dict, matches: List[re.Match]):
-        output["aborted"] = True
-        output["errors"] = []
-
-        for m in matches:
-            data = m.groupdict()
-            output["errors"].append(
-                (data["file_name"], int(data["line_number"]), data["message"].rstrip())
             )
 
 
-class _RuntimePattern(_BasePattern):
-    _pattern = rf"""
-        \s*-\s*T\sI\sM\s*I\s*N\s*G\s*-\n
-        (.*\n)*?
-        \s*CP2K\s*\d+\s*{FLOAT}\s*{FLOAT}\s*{FLOAT}\s*{FLOAT}\s*(?P<rt_cp2k>{FLOAT})$
-    """
+class DFTBlock(_BaseDataBlock):
+    """DFT| data block."""
 
-    def process_data(self, output: dict, matches: List[re.Match]):
-        output["runtime"] = float(matches[-1].groupdict()["rt_cp2k"])
+    start_str = "DFT|"
+    use_once = True
+
+    def _parse_line(self, line):
+        if "Kohn-Sham" in line:
+            self.current_data["dft_type"] = line.split()[-1]
+        elif "Multiplicity" in line:
+            self.current_data["multiplicity"] = int(line.split()[-1])
+        elif "Charge" in line:
+            self.current_data["charge"] = float(line.split()[-1])
 
 
-class _WalltimePattern(_BasePattern):
-    _pattern = r"^\s*\*{3}\s.*exceeded\srequested\sexecution\stime:.*$"
+class FunctionalBlock(_BaseDataBlock):
+    """FUNCTIONAL| data block."""
 
-    def process_data(self, output: dict, matches: List[re.Match]):
-        output["exceeded_walltime"] = True
+    start_str = "FUNCTIONAL|"
+    use_once = True
+
+    def _parse_line(self, line):
+        xc_info = self.current_data.setdefault("xc", {})
+        if line.endswith(":\n"):
+            new_value = line[13:-2]
+            fct = xc_info.pop("functional", None)
+            if fct is None:
+                fct = new_value
+            elif isinstance(fct, str):
+                fct = [fct, new_value]
+            else:
+                fct.append(new_value)
+            xc_info["functional"] = fct
+
+
+class VdWBlock(_BaseDataBlock):
+    """vdW POTENTIAL| data block."""
+
+    start_str = "vdW POTENTIAL|"
+    use_once = True
+
+    def _parse_line(self, line):
+        # Get first and second line:
+        xc_info = self.current_data.setdefault("xc", {})
+        if len(xc_info) == 0:
+            xc_info["vdw_type"] = " ".join(line.split()[2:])
+        elif len(xc_info) == 1:
+            xc_info["vdw_method"] = line.split()[2]
+
+
+class MDParBlock(_BaseDataBlock):
+    """MD_PAR| data block."""
+
+    start_str = "MD_PAR|"
+    use_once = True
+
+    def _parse_line(self, line):
+        if "Ensemble type" in line:
+            self.current_data["md_ensemble"] = line.split()[-1]
+
+
+class MDIniBlock(_BaseDataBlock):
+    """MD_INI| data block."""
+
+    _pattern_mapping = [
+        ("Potential energy", "potential_energy"),
+        ("Kinetic energy", "kinetic_energy"),
+        ("Temperature", "temperature"),
+    ]
+    start_str = "MD_INI|"
+    use_once = True
+
+    def _parse_line(self, line):
+        md_ini = self.current_data.setdefault(
+            "md_ini", {"step_nr": 0, "time_fs": 0.0, "index": self.line_indices[0]}
+        )
+        for pattern, key in self._pattern_mapping:
+            if pattern in line:
+                md_ini[key] = float(line.split()[-1])
+
+
+class MDBlock(_BaseDataBlock):
+    """MD| data block."""
+
+    _pattern_mapping = [
+        ("Energy drift per atom", "energy_drift_p_atom"),
+        ("Potential energy", "potential_energy"),
+        ("Kinetic energy", "kinetic_energy"),
+        ("Temperature", "temperature"),
+    ]
+    start_str = "MD|"
+
+    def _parse_line(self, line):
+        if "Step number" in line:
+            self.current_data["step_nr"] = int(line.split()[-1])
+        elif "Time [fs]" in line:
+            self.current_data["time_fs"] = float(line.split()[-1])
+        for pattern, key in self._pattern_mapping:
+            if pattern in line:
+                self.current_data[key] = float(line.split()[-2])
+
+    def _process_output(self):
+        if len(self.line_indices) > 0:
+            return {"md_steps": self.all_data, "motion_indices": self.line_indices}
+
+
+class NumbersBlock(_BaseDataBlock):
+    """Numbers data block."""
+
+    start_str = "TOTAL NUMBERS AND MAXIMUM NUMBERS"
+    end_str = "SCF PARAMETERS"
+    use_once = True
+
+    def _parse_line(self, line):
+        if "Atoms:" in line:
+            self.current_data["natoms"] = int(line.split()[-1])
+
+
+class KindInfoBlock(_BaseDataBlock):
+    """Kind info data block."""
+
+    start_str = "ATOMIC COORDINATES IN"
+    end_str = "SCF PARAMETERS"
+    use_once = True
+
+    def _parse_line(self, line):
+        line = line.strip()
+        if line == "" or line.startswith(("Atom", "SCF", "MODULE")):
+            return None
+
+        ki_list = self.current_data.setdefault("kind_info", [])
+        line_sp = line.split()
+        ki_list.append(
+            {
+                "kind": int(line_sp[1]),
+                "element": line_sp[2],
+                "atomic_nr": int(line_sp[3]),
+                "core_electrons": int(int(line_sp[3]) - float(line_sp[7])),
+                "valence_electrons": int(float(line_sp[7])),
+                "mass": float(line_sp[8]),
+            }
+        )
+
+
+class SCFParametersBlock(_BaseDataBlock):
+    """SCF parameters data block."""
+
+    start_str = "SCF PARAMETERS"
+
+    def _parse_line(self, line):
+        if "added MOs" in line:
+            line_sp = line.split()
+            if line_sp[-1] != "0":
+                self.current_data["nr_unocc_orbitals"] = [int(line_sp[-2]), int(line_sp[-1])]
+            else:
+                self.current_data["nr_unocc_orbitals"] = int(line_sp[-2])
+
+
+class SPGRBlock(_BaseDataBlock):
+    """SPGR| data block."""
+
+    _pattern_mapping = [
+        ("SPACE GROUP NUMBER:", "sg_number"),
+        ("INTERNATIONAL SYMBOL:", "int_symbol"),
+        ("POINT GROUP SYMBOL:", "point_group_symbol"),
+        ("SCHOENFLIES SYMBOL:", "schoenflies_symbol"),
+    ]
+    start_str = "SPGR|"
+
+    def _parse_line(self, line):
+        sg_info = self.current_data.setdefault("spgr_info", {})
+        for pattern, key in self._pattern_mapping:
+            if pattern in line:
+                sg_info[key] = line.split()[-1]
+        if "sg_number" in sg_info:
+            sg_info["sg_number"] = int(sg_info["sg_number"])
+
+
+class SCFBlock(_BaseDataBlock):
+    """SCF cycles data block."""
+
+    _pattern_mapping = [
+        ("Number of electrons:", "nelectrons"),
+        ("Number of occupied orbitals:", "nr_occ_orbitals"),
+    ]
+    _all_keys = [
+        "nelectrons",
+        "nr_occ_orbitals",
+        "scf_converged",
+        "energy_scf",
+        "energy",
+        "energy_units",
+    ]  # , "nr_scf_steps"
+    start_str = "Number of electrons:"
+    end_str = "ENERGY| Total FORCE_EVAL"
+
+    def _parse_line(self, line):
+        for pattern, key in self._pattern_mapping:
+            if pattern in line:
+                self.current_data.setdefault(key, []).append(int(line.split()[-1]))
+                return None
+
+        if "SCF run converged in" in line:
+            self.current_data["nr_scf_steps"] = int(line.split()[-3])
+            self.current_data["scf_converged"] = True
+            return True
+        elif "Leaving inner SCF loop after" in line:
+            self.current_data["nr_scf_steps"] = int(line.split()[-2])
+            self.current_data["scf_converged"] = False
+            return True
+        elif "outer SCF loop converged in" in line:
+            self.current_data["nr_scf_steps"] = int(line.split()[-2])
+            self.current_data["scf_converged"] = True
+            return True
+        elif "outer SCF loop FAILED to converge after" in line:
+            self.current_data["nr_scf_steps"] = int(line.split()[-2])
+            self.current_data["scf_converged"] = False
+            return True
+        elif "Total energy:" in line:
+            self.current_data["energy_scf"] = float(line.split()[-1])
+            return True
+        elif "ENERGY| Total FORCE_EVAL" in line:
+            self.current_data["energy"] = float(line.split()[-1])
+            line = line.replace("]", "[")
+            self.current_data["energy_units"] = line.split("[")[1]
+
+    def _process_output(self):
+        for scf_step in self.all_data:
+            for _, key in self._pattern_mapping:
+                val = scf_step.get(key, [])
+                if len(val) == 1:
+                    scf_step[key] = val[0]
+        output = {"scf_steps": self.all_data, "scf_indices": self.line_indices}
+
+        # Adds the last complete SCF-step here:
+        c0 = len(self.all_data) - 1
+        while c0 > -1:
+            if all(key in self.all_data[c0] for key in self._all_keys):
+                for key in self._all_keys:
+                    output[key] = self.all_data[c0][key]
+                break
+            c0 -= 1
+        return output
+
+
+class MullikenBlock(_BaseDataBlock):
+    """Mulliken charges data block."""
+
+    start_str = "Mulliken Population Analysis"
+    end_str = "# Total charge"
+    current_data_type = list
+
+    def _parse_line(self, line):
+        line = line.strip()
+        if line == "" or line.startswith("#") or line.startswith("Mulliken"):
+            return None
+
+        line_sp = line.split()
+        pc_dict = {
+            "kind": int(line_sp[2]),
+            "element": line_sp[1],
+        }
+        if len(line_sp) == 7:
+            pc_dict["population"] = [float(line_sp[3]), float(line_sp[4])]
+            pc_dict["charge"] = float(line_sp[5])
+        else:
+            pc_dict["population"] = float(line_sp[3])
+            pc_dict["charge"] = float(line_sp[4])
+        self.current_data.append(pc_dict)
+
+    def _process_output(self):
+        return {"mulliken": self.all_data}
+
+
+class HirshfeldBlock(_BaseDataBlock):
+    """Hirshfeld charges data block."""
+
+    start_str = "Hirshfeld Charges"
+    end_str = "Total Charge"
+    current_data_type = list
+
+    def _parse_line(self, line):
+        line = line.strip()
+        if (
+            line == ""
+            or line.startswith("#")
+            or line.startswith("Hirshfeld")
+            or line.startswith("Total")
+        ):
+            return None
+        line_sp = line.split()
+        pc_dict = {
+            "kind": int(line_sp[2]),
+            "element": line_sp[1],
+        }
+        if len(line_sp) == 8:
+            pc_dict["population"] = [float(line_sp[4]), float(line_sp[5])]
+            pc_dict["charge"] = float(line_sp[7])
+        else:
+            pc_dict["population"] = float(line_sp[4])
+            pc_dict["charge"] = float(line_sp[5])
+        self.current_data.append(pc_dict)
+
+    def _process_output(self):
+        return {"hirshfeld": self.all_data}
+
+
+class OptStepBlock(_BaseDataBlock):
+    """Optimization step data block."""
+
+    start_str = "OPTIMIZATION STEP:"
+    end_str = "--------------------------"
+    current_data_type = list
+
+    def _parse_line(self, line):
+        pass
+
+    def _process_output(self):
+        if len(self.line_indices) > 0:
+            return {"motion_indices": self.line_indices}
+
+
+class StepInformationBlock(_BaseDataBlock):
+    """Opt step information data block."""
+
+    start_str = "--------  Informations at step ="
+    end_str = "---------------------------------------------------"
+
+    def _parse_line(self, line):
+        line_sp = line.split("=")
+        if len(line_sp) < 2:
+            return None
+
+        if "---" in line_sp[0]:
+            self.current_data["nr_steps"] = int(line_sp[1].split()[0])
+        else:
+            value = transform_str_value(line_sp[1])
+            self.current_data["_".join(line_sp[0].split()).lower()] = value
+
+    def _process_output(self):
+        if len(self.all_data) > 0:
+            return {"nr_steps": self.all_data[-1]["nr_steps"], "motion_steps": self.all_data}
+
+
+class OptSuccessBlock(_BaseDataBlock):
+    """Opt success data block."""
+
+    start_str = "GEOMETRY OPTIMIZATION COMPLETED"
+    end_str = "***"
+    use_once = True
+
+    def _parse_line(self, line):
+        if self.start_str in line:
+            self.current_data["geo_converged"] = self.line_indices[-1]
+
+
+class MaxOptStepsBlock(_BaseDataBlock):
+    """Opt max steps reched data block."""
+
+    start_str = "MAXIMUM NUMBER OF OPTIMIZATION STEPS REACHED"
+    end_str = "EXITING GEOMETRY OPTIMIZATION"
+    use_once = True
+
+    def _parse_line(self, line):
+        if self.start_str in line:
+            self.current_data["geo_not_converged"] = True
+
+
+class WalltimeBlock(_BaseDataBlock):
+    """Walltime exceeded data block."""
+
+    start_str = "GEO run terminated - exceeded requested execution time:"
+    use_once = True
+
+    def _parse_line(self, line):
+        if self.start_str in line:
+            self.current_data["exceeded_walltime"] = True
+
+
+class BandsBlock(_BaseDataBlock):
+    """Band structure data block."""
+
+    start_str = "Band Structure Calculation"
+    end_str = "ENERGY|"
+
+    def _parse_line(self, line):
+        line_sp = line.split()
+        if "KPOINTS|" in line:
+            if "Special point" in line:
+                if "not specifi" in line:
+                    self.current_data.setdefault("labels", []).append(None)
+                else:
+                    self.current_data.setdefault("labels", []).append(line_sp[4])
+            elif "Number of k-points in set" in line:
+                self.current_data.setdefault("label_pos", []).append(int(line_sp[-1]))
+        elif line.startswith("#"):
+            if line_sp[2] == "Energy":
+                self.current_data["bands_unit"] = line_sp[3][1:-1]
+            elif line_sp[4] == "1:":
+                self.current_data.setdefault("kpoints", []).append(
+                    [float(line_sp[5]), float(line_sp[6]), float(line_sp[7])]
+                )
+                for idx in range(2):
+                    self.current_data.setdefault("bands", [[], []])[idx].append([])
+                    self.current_data.setdefault("occupations", [[], []])[idx].append([])
+                self.current_data["spin"] = 0
+            elif line_sp[4] == "2:":
+                self.current_data["spin"] = 1
+        elif len(line_sp) < 3:
+            return None
+        elif line_sp[0].isdigit():
+            self.current_data["bands"][self.current_data["spin"]][-1].append(float(line_sp[1]))
+            self.current_data["occupations"][self.current_data["spin"]][-1].append(
+                float(line_sp[2])
+            )
+
+    def _process_output(self):
+        if len(self.all_data) > 0 and len(self.all_data[0]) > 0:
+            kpt_data = self.all_data[0]
+            if kpt_data.pop("spin") == 0:
+                kpt_data["bands"] = kpt_data["bands"][0]
+                kpt_data["occupations"] = kpt_data["occupations"][0]
+            label_pos = kpt_data.pop("label_pos")
+            labels = kpt_data.pop("labels")
+            last_pos = -1
+            labels_w_pos = []
+            for idx, pos in enumerate(label_pos):
+                labels_w_pos.append([last_pos + 1, labels[idx * 2]])
+                last_pos += pos
+                labels_w_pos.append([last_pos, labels[idx * 2 + 1]])
+            kpt_data["labels"] = labels_w_pos
+            return {"kpoint_data": kpt_data}
+
+
+class EigenvaluesBlock(_BaseDataBlock):
+    """Eigenvalues data block."""
+
+    start_str = "EIGENVALUES AND"
+    end_str = ["Fermi energy:", "E(Fermi):"]
+
+    def _parse_line(self, line):
+        line_sp = line.split()
+        if len(line_sp) < 3:
+            return None
+
+        if "EIGENVALUES" in line:
+            self.current_data["idx"] = int(line_sp[-1]) if "POINT" in line else 0
+            self.current_data["alpha"] = "ALPHA" in line
+            self.current_data["beta"] = "BETA" in line
+        elif line_sp[1].isdigit() or line_sp[0].isdigit():
+            energies = self.current_data.setdefault("energies", [])
+            occupations = self.current_data.setdefault("occupations", [])
+            if "MO|" in line:
+                energy = float(line_sp[-3])
+            else:
+                energy = float(line_sp[-2])
+            occ = float(line_sp[-1])
+            if occ >= 0.5:
+                self.current_data["vbm"] = energy
+            elif "cbm" not in self.current_data:
+                self.current_data["cbm"] = energy
+            energies.append(energy)
+            occupations.append(occ)
+
+        elif "E(Fermi):" in line or "Fermi energy:" in line:
+            self.current_data["fermi_energy"] = float(line_sp[2])
+
+    def _process_output(self):
+        ev_output = {"eigenvalues": []}
+        gap_keys = ["vbm", "cbm", "gap"]
+        gap_info = {key: [[], []] for key in gap_keys}
+        fermi_energy = None
+        for ev_data in self.all_data:
+            ev_data["gap"] = ev_data["cbm"] - ev_data["vbm"]
+            gap_info0 = {key: ev_data[key] for key in gap_keys}
+            del ev_data["vbm"]
+            del ev_data["cbm"]
+            idx = 0
+            if ev_data.pop("beta", False):
+                # Double-check that k-points are in right order:
+                if ev_data["idx"] != ev_output["eigenvalues"][-1]["idx"]:
+                    raise ValueError("Wrong order of k-points.")
+                idx = 1
+                for key in ["energies", "occupations", "gap"]:
+                    ev_output["eigenvalues"][-1][key].append(ev_data[key])
+            else:
+                if ev_data.pop("alpha", False):
+                    for key in ["energies", "occupations", "gap"]:
+                        ev_data[key] = [ev_data[key]]
+                ev_output["eigenvalues"].append(ev_data)
+            for key, val in gap_info0.items():
+                gap_info[key][idx].append(val)
+            fermi_energy = ev_data.pop("fermi_energy")
+        if len(gap_info["cbm"][0]) > 0:
+            if len(gap_info["vbm"][1]) > 0:
+                ev_output["gap"] = min(
+                    [
+                        max(min(gap_info["cbm"][idx]) - max(gap_info["vbm"][idx]), 0.0)
+                        for idx in range(2)
+                    ]
+                )
+                ev_output["direct_gap"] = min(
+                    [max(min(gap_info["gap"][idx]), 0.0) for idx in range(2)]
+                )
+            else:
+                ev_output["gap"] = max(min(gap_info["cbm"][0]) - max(gap_info["vbm"][0]), 0.0)
+                ev_output["direct_gap"] = max(min(gap_info["gap"][0]), 0.0)
+        if len(ev_output["eigenvalues"]) > 0:
+            return {"fermi_energy": fermi_energy, "eigenvalues_info": ev_output}
+
+
+class RuntimeBlock(_BaseDataBlock):
+    """Runtime data block."""
+
+    start_str = "T I M I N G"
+    end_str = "The number of warnings for this run is"
+    use_once = True
+
+    def _parse_line(self, line):
+        if "CP2K" in line:
+            self.current_data["runtime"] = float(line.split()[-1])
+
+
+class WarningBlock(_BaseDataBlock):
+    """Warning data block."""
+
+    start_str = "*** WARNING"
+
+    def _parse_line(self, line):
+        line_sp = line.split()
+        if self.start_str in line:
+            file_name, line_number = line_sp[3].split(":")
+            self.current_data["file_name"] = file_name
+            self.current_data["line_number"] = line_number
+            self.current_data["message"] = " ".join(line_sp[5:-1])
+        elif len(line_sp) > 1:
+            self.current_data["message"] += " " + " ".join(line_sp[1:-1])
+
+    def _process_output(self):
+        output = {"warnings": self.all_data}
+        if len(self.all_data) > 0:
+            output["nwarnings"] = len(self.all_data)
+        return output
+
+
+class ErrorBlock(_BaseDataBlock):
+    """Error data block."""
+
+    start_str = "[ABORT]"
+    end_str = "* / \\"
+    use_once = True
+
+    def _parse_line(self, line):
+        if self.start_str in line:
+            self.current_data["message"] = ""
+        elif self.end_str in line:
+            file_name, line_number = line.split()[3].split(":")
+            self.current_data["file_name"] = file_name
+            self.current_data["line_number"] = line_number
+        else:
+            message = " ".join(line[12:78].split())
+            if self.current_data["message"] != "" and len(message) > 0:
+                self.current_data["message"] += " "
+            self.current_data["message"] += message
+
+    def _process_output(self):
+        if len(self.all_data) > 0:
+            return {"errors": self.all_data, "aborted": True}
 
 
 _BLOCKS = {
     "standard": [
-        _CP2KPattern,
-        _GlobalPattern,
-        _BrillouinPattern,
-        _DFTPattern,
-        _FunctionalPattern,
-        _MDPattern,
-        _SPGRPattern,
-        _NumbersPattern,
-        _SCFParametersPattern,
-        _SCFPattern,
-        _OptStepPattern,
-        _BandsPattern,
-        _EigenvaluesPattern,
-        _WarningsPattern,
-        _ErrorPattern,
-        _RuntimePattern,
-        _WalltimePattern,
+        CP2KBlock,
+        GlobalBlock,
+        BrillouinBlock,
+        DFTBlock,
+        FunctionalBlock,
+        VdWBlock,
+        MDParBlock,
+        NumbersBlock,
+        SCFParametersBlock,
+        SPGRBlock,
+        RuntimeBlock,
+        SCFBlock,
+        StepInformationBlock,
+        MaxOptStepsBlock,
+        BandsBlock,
+        EigenvaluesBlock,
+        WalltimeBlock,
+        WarningBlock,
+        ErrorBlock,
     ],
     "trajectory": [
-        _CP2KPattern,
-        _GlobalPattern,
-        _BrillouinPattern,
-        _DFTPattern,
-        _FunctionalPattern,
-        _MDPattern,
-        _SPGRPattern,
-        _NumbersPattern,
-        _KindInfoPattern,
-        _SCFParametersPattern,
-        _SCFPattern,
-        _OptStepPattern,
-        _MDStepPattern,
-        _WarningsPattern,
-        _ErrorPattern,
-        _RuntimePattern,
-        _WalltimePattern,
+        CP2KBlock,
+        GlobalBlock,
+        BrillouinBlock,
+        DFTBlock,
+        FunctionalBlock,
+        VdWBlock,
+        MDParBlock,
+        NumbersBlock,
+        KindInfoBlock,
+        SCFParametersBlock,
+        SPGRBlock,
+        RuntimeBlock,
+        SCFBlock,
+        MullikenBlock,
+        HirshfeldBlock,
+        OptStepBlock,
+        StepInformationBlock,
+        OptSuccessBlock,
+        MaxOptStepsBlock,
+        MDIniBlock,
+        MDBlock,
+        WalltimeBlock,
+        WarningBlock,
+        ErrorBlock,
     ],
     "partial_charges": [
-        _CP2KPattern,
-        _GlobalPattern,
-        _BrillouinPattern,
-        _DFTPattern,
-        _FunctionalPattern,
-        _MDPattern,
-        _SPGRPattern,
-        _NumbersPattern,
-        _KindInfoPattern,
-        _SCFParametersPattern,
-        _SCFPattern,
-        _OptStepPattern,
-        _BandsPattern,
-        _EigenvaluesPattern,
-        _WarningsPattern,
-        _ErrorPattern,
-        _RuntimePattern,
-        _WalltimePattern,
+        CP2KBlock,
+        GlobalBlock,
+        BrillouinBlock,
+        DFTBlock,
+        FunctionalBlock,
+        VdWBlock,
+        MDParBlock,
+        NumbersBlock,
+        KindInfoBlock,
+        SCFParametersBlock,
+        SPGRBlock,
+        RuntimeBlock,
+        SCFBlock,
+        MullikenBlock,
+        HirshfeldBlock,
+        StepInformationBlock,
+        MaxOptStepsBlock,
+        WalltimeBlock,
+        WarningBlock,
+        ErrorBlock,
     ],
 }
 
-_WARNINGS = [
+
+_WARNING_MAPPING = [
     ("Using a non-square number of", "Using a non-square number of MPI ranks."),
     ("SCF run NOT converged", "One or more SCF run did not converge."),
     ("Specific L-BFGS convergence criteria", "LBFGS converged with specific criteria."),
     ("Add more MOs for proper smearing", "Add more MOs for proper smearing."),
 ]
 
-_ERRORS = [
+_ERROR_MAPPING = [
     ("exceeded requested execution time", "exceeded_walltime"),
     ("Use the LSD option for an odd number of electrons", "odd_nr_electrons"),
     ("Extra MOs (ADDED_MOS) are required for smearing", "need_added_mos"),
@@ -611,6 +723,20 @@ _ERRORS = [
     ("Cholesky decompose failed", "cholesky_decompose_failed"),
     ("Bad condition number R_COND", "bad_condition_number"),
 ]
+
+_MOTION_STEP_MAPPING = {
+    "max._step_size": "max_step",
+    "rms_step_size": "rms_step",
+    "max._gradient": "max_grad",
+    "rms_gradient": "rms_grad",
+    "internal_pressure_[bar]": "pressure",
+    "potential_energy": "potential_energy",
+    "kinetic_energy": "kinetic_energy",
+    "temperature": "temperature",
+    "energy_drift_p_atom": "energy_drift_p_atom",
+    "step_nr": "step_nr",
+    "time_fs": "time_fs",
+}
 
 
 def read_stdout(file_name: str, parser_type: str = "standard") -> dict:
@@ -630,7 +756,7 @@ def read_stdout(file_name: str, parser_type: str = "standard") -> dict:
     dict
         Dictionary containing the parsed values.
     """
-    output = parse_function(file_name, _BLOCKS[parser_type])
+    output, n_lines = parse_block_function(file_name, _BLOCKS[parser_type])
     output["cp2k_version"] = float(output["cp2k_version"])
     if "exceeded_walltime" not in output:
         output["exceeded_walltime"] = False
@@ -640,54 +766,81 @@ def read_stdout(file_name: str, parser_type: str = "standard") -> dict:
         output.pop("nwarnings", None)
         output["energy_units"] = "a.u."
         output["interrupted"] = True
-    output.pop("kpoints", None)
 
     warnings = []
     for warn0 in output.get("warnings", []):
-        for warn1 in _WARNINGS:
-            if warn1[0] in warn0[2]:
+        for warn1 in _WARNING_MAPPING:
+            if warn1[0] in warn0["message"]:
                 warnings.append(warn1[1])
     output["warnings"] = warnings
 
     errors = output.pop("errors", [])
     for err0 in errors:
-        if err0[2] == "SCF run NOT converged. To continue the calculation regardless,":
+        if "SCF run NOT converged." in err0["message"]:
             output["scf_converged"] = False
-        for err1 in _ERRORS:
-            if err1[0] in err0[2]:
+        for err1 in _ERROR_MAPPING:
+            if err1[0] in err0["message"]:
                 output[err1[1]] = True
 
-    scf_steps = output.pop("scf_steps", None)
-    if parser_type == "partial_charges" and scf_steps is not None:
-        for pc_type in ["mulliken", "hirshfeld"]:
-            if pc_type in scf_steps[-1]:
-                output[pc_type] = scf_steps[-1][pc_type]
-
-    if parser_type == "trajectory" and scf_steps is not None:
-        motion_steps = output.setdefault("motion_step_info", [])
-        if len(motion_steps) > 0:
-            scf_idx = 0
-            for m_step_idx, m_step in enumerate(motion_steps[1:]):
-                motion_steps[m_step_idx]["scf_steps"] = []
-                while scf_idx < len(scf_steps):
-                    scf_step = scf_steps[scf_idx]
-                    if scf_step["span"][1] > m_step["span"][0]:
+    kpoints = output.pop("kpoints", [])
+    if "eigenvalues_info" in output:
+        for ev in output["eigenvalues_info"]["eigenvalues"]:
+            if len(kpoints) > 0:
+                for idx, kpt in enumerate(kpoints):
+                    if kpt["idx"] == ev["idx"]:
                         break
-                    motion_steps[m_step_idx]["scf_steps"].append(scf_step)
-                    scf_idx += 1
-            if scf_idx < len(scf_steps):
-                motion_steps[-1]["scf_steps"] = scf_steps[scf_idx:]
-        else:
-            motion_steps.append({"scf_steps": [scf_steps[-1]]})
-        del scf_steps
+                ev["weight"] = kpt["weight"]
+                ev["kpoint"] = kpt["kpoint"]
+                del kpoints[idx]
+            del ev["idx"]
 
-        for m_step in motion_steps:
-            m_step.pop("span", None)
-            for scf_step in m_step.get("scf_steps", []):
-                scf_step.pop("span", None)
-            if len(m_step.get("scf_steps", [])) == 1:
-                scf_steps = m_step.pop("scf_steps")
-                m_step.update(scf_steps[0])
+    motion_steps = output.pop("motion_steps", [])
+    motion_indices = output.pop("motion_indices", [])
+    if "geo_converged" in output:
+        motion_indices.append(output.pop("geo_converged"))
+    motion_indices.append(n_lines)
+    if "md_ini" in output:
+        md_ini = output.pop("md_ini")
+        motion_indices = [md_ini.pop("index")] + motion_indices[:-1]
+        motion_steps = [md_ini] + output.pop("md_steps", [])
+    scf_steps = output.pop("scf_steps", [])
+    scf_indices = output.pop("scf_indices", [])
+    pc = {}
+    for pc_type in ["mulliken", "hirshfeld"]:
+        if pc_type in output and len(output[pc_type]) > 0:
+            pc[pc_type] = output.pop(pc_type)
+            if parser_type == "partial_charges":
+                output[pc_type] = pc[pc_type][-1]
+
+    if parser_type == "trajectory":
+        output["motion_step_info"] = []
+        c_scf_steps = 0
+        for step_idx, line_idx in enumerate(motion_indices):
+            m_step = {"scf_steps": []}
+            if step_idx < len(motion_steps):
+                for key, val in motion_steps[step_idx].items():
+                    if key in _MOTION_STEP_MAPPING:
+                        m_step[_MOTION_STEP_MAPPING[key]] = val
+
+            while c_scf_steps < len(scf_steps):
+                if scf_indices[c_scf_steps] > line_idx:
+                    break
+
+                scf_step = {}
+                for key in ["nr_scf_steps", "scf_converged", "energy"]:
+                    if key in scf_steps[c_scf_steps]:
+                        scf_step[key] = scf_steps[c_scf_steps][key]
+                for pc_type, values in pc.items():
+                    if c_scf_steps < len(values):
+                        scf_step[pc_type] = values[c_scf_steps]
+                m_step["scf_steps"].append(scf_step)
+                c_scf_steps += 1
+
+            if len(m_step["scf_steps"]) == 1:
+                m_step.update(m_step.pop("scf_steps")[0])
+            elif len(m_step["scf_steps"]) == 0:
+                del m_step["scf_steps"]
+            output["motion_step_info"].append(m_step)
     else:
         output.pop("motion_step_info", None)
     return output
