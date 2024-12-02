@@ -228,6 +228,7 @@ class StructureImporter(ConstraintsMixin):
 
     def import_from_mofxdb(
         self,
+<<<<<<< HEAD
         mofid: str = None,
         mofkey: str = None,
         vf_min: float = None,
@@ -245,10 +246,23 @@ class StructureImporter(ConstraintsMixin):
         telemetry: bool = True,
         pressure_unit: str = None,
         loading_unit: str = None,
+=======
+        mofid: int = None,
+        mofkey: str = None,
+        vf_min_max: tuple = (None, None),
+        lcd_min_max: tuple = (None, None),
+        pld_min_max: tuple = (None, None),
+        sa_m2g_min_max: tuple = (None, None),
+        sa_m2cm3_min_max: tuple = (None, None),
+        adsorbates: Union[str, List[str]] = None,
+        database: str = None,
+        store_json: bool = False,
+>>>>>>> 65c51a4 (added comments and adjust data structure)
         query_limit: int = 1000,
     ) -> StructureCollection:
         """
         Import structures from the MOFX database using the fetch function.
+<<<<<<< HEAD
 
         Parameters
         ----------
@@ -314,6 +328,56 @@ class StructureImporter(ConstraintsMixin):
         structures_collect = StructureCollection()
         for structure in structures:
             structures_collect._add_structure(structure.label, structure)
+=======
+        If no parameters are set, the whole dabatabse will be imported.
+
+        Parameters
+        ----------
+        mofid : int (optional)
+            The unique ID for the MOF.
+        mofkey : str (optional)
+            A specific key, often used for subcategorization or indexing.
+        vf_min_max : tuple (optional)
+            Minimum and maximum values for the void fraction (VF).
+        lcd_min_max : tuple (optional)
+            Minimum and maximum values for the largest cavity diameter (LCD).
+        pld_min_max : tuple (optional)
+            Minimum and maximum values for the pore limiting diameter (PLD).
+        sa_m2g_min_max : tuple (optional)
+            Minimum and maximum values for the surface area (SA) per gram (m^3/g^3).
+        sa_m2cm3_min_max : tuple (optional)
+            Minimum and maximum values for the surface area (SA) in square meters (m^2/cm^3).
+        name : str (optional)
+            The name or alias of the MOF, used for identification or display purposes.
+        adsorbates: str or list of str (optional)
+            The adsorbates included for heat and isotherm analysis.  E.g. ``'Hydrogen'``.
+            If not defined, all adsorbates studied are considered.
+        database : str (optional)
+            The database from which MOF information is retrieved. E.g. ``'CoREMOF 2019'``.
+        store_json : bool (optional)
+            If True the json data will be stored.
+        query_limit : int (optional)
+            The maximum number of results to retrieve for the query.
+        """
+        if isinstance(adsorbates, str):
+            adsorbates = [adsorbates]
+        if adsorbates is not None:
+            adsorbates = [adsorb.title() for adsorb in adsorbates]
+        backend_module = _return_ext_interface_modules("mofxdb")
+        structures_collect = backend_module._download_structures(
+            mofid,
+            mofkey,
+            vf_min_max,
+            lcd_min_max,
+            pld_min_max,
+            sa_m2g_min_max,
+            sa_m2cm3_min_max,
+            adsorbates,
+            database,
+            store_json,
+            query_limit,
+        )
+>>>>>>> 65c51a4 (added comments and adjust data structure)
         self.structures += structures_collect
         return structures_collect
 
