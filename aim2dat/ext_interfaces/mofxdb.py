@@ -105,32 +105,22 @@ def _get_isotherms_heats(adsorbates, entry) -> List[dict]:
             if adsorb in adsorbs_heat:
                 heats.setdefault(adsorb, [])
                 data = heat["isotherm_data"]
+                heat_dict = {
+                    "adsorbates": adsorbs_heat,
+                    "temperature": heat["temperature"],
+                    "pressure": [press["pressure"] for press in data],
+                    "total_adsorption": [adsorb_data["total_adsorption"] for adsorb_data in data],
+                    "pressureUnits": heat["pressureUnits"],
+                    "adsorptionUnits": heat["adsorptionUnits"],
+                }
                 if len(adsorbs_heat) > 1:
-                    frac_adsorb = _get_frac_adsorption(data)
-                else:
-                    frac_adsorb = None
-                    heat_dict = {
-                        "adsorbates": adsorbs_heat,
-                        "temperature": heat["temperature"],
-                        "pressure": [press["pressure"] for press in data],
-                        "total_adsorption": [
-                            adsorb_data["total_adsorption"] for adsorb_data in data
-                        ],
-                        "pressureUnits": heat["pressureUnits"],
-                        "adsorptionUnits": heat["adsorptionUnits"],
-                    }
-                if frac_adsorb is not None:
-                    heat_dict["frac_adsorption"] = frac_adsorb
+                    heat_dict["frac_adsorption"] = _get_frac_adsorption(data)
                 heats[adsorb].append(heat_dict)
         for isotherm in isotherms_data:
             adsorbs_isot = [ads["name"] for ads in isotherm["adsorbates"]]
             if adsorb in adsorbs_isot:
                 isotherms.setdefault(adsorb, [])
                 data = isotherm["isotherm_data"]
-                if len(adsorbs_isot) > 1:
-                    frac_adsorb = _get_frac_adsorption(data)
-                else:
-                    frac_adsorb = None
                 iso_dict = {
                     "adsorbates": adsorbs_isot,
                     "temperature": isotherm["temperature"],
@@ -139,8 +129,8 @@ def _get_isotherms_heats(adsorbates, entry) -> List[dict]:
                     "pressureUnits": isotherm["pressureUnits"],
                     "adsorptionUnits": isotherm["adsorptionUnits"],
                 }
-                if frac_adsorb is not None:
-                    iso_dict["frac_adsorption"] = frac_adsorb
+                if len(adsorbs_isot) > 1:
+                    iso_dict["frac_adsorption"] = _get_frac_adsorption(data)
                 isotherms[adsorb].append(iso_dict)
     return isotherms, heats
 
