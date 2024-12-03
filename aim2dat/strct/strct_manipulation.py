@@ -128,25 +128,7 @@ def scale_unit_cell(
     strain: Union[float, np.ndarray, list] = None,
     change_label: bool = True,
 ) -> Structure:
-    """
-    Scale the unit cell of the structure, supporting anisotropic scaling,
-    pressure-based scaling, and strain application.
-
-    Parameters:
-        structure (Structure): The structure to be scaled.
-        scaling_factors (float, list, or 3x3 matrix, optional): Scaling factor(s)
-        for the unit cell.
-        pressure (float, optional): Hydrostatic pressure to apply in GPa.
-        bulk_modulus (float, optional): Bulk modulus in GPa,
-        required if `pressure` is provided.
-        strain (float, list of 3 floats, or 3x3 matrix, optional):
-        Strain to apply. Can be uniform (float),
-        anisotropic (list of 3 values), or a 3x3 strain matrix.
-        change_label (bool): Whether to change the label of the structure.
-
-    Returns:
-        Structure: The scaled structure.
-    """
+    """Scale the unit cell of a structure."""
     from aim2dat.strct import Structure
 
     def get_strain_tensor(strain):
