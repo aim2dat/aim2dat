@@ -6,6 +6,7 @@ from typing import List, Tuple, Union
 import abc
 from typing import TYPE_CHECKING
 from collections.abc import Callable
+import numpy as np
 
 # Internal library imports
 import aim2dat.utils.chem_formula as utils_cf
@@ -457,23 +458,42 @@ class ManipulationMixin:
     @manipulates_structure
     def scale_unit_cell(
         self,
-        scaling_factor: float = 1.0,
-        change_label: bool = False,
+        scaling_factors: Union[float, List[float], np.ndarray] = None,
+        pressure: float = None,
+        bulk_modulus: float = None,
+        strain: Union[float, np.ndarray, list] = None,
+        change_label: bool = True,
     ) -> Union["Structure", "StructureCollection"]:
         """
-        Scale unit cell of the structure.
+        Scale the unit cell of the structure, supporting anisotropic scaling,
+        pressure-based scaling, and strain application.
 
         Parameters
         ----------
-        scaling_factor : float
-            Scaling factor.
+        scaling_factors : float, list, or 3x3 matrix, optional
+            Scaling factor(s) for the unit cell.
+        pressure : float, optional
+            Hydrostatic pressure to apply in GPa.
+        bulk_modulus : float, optional
+            Bulk modulus in GPa, required if `pressure` is provided.
+        strain : float, list of 3 floats, or 3x3 matrix, optional
+            Strain to apply. Can be uniform (float), anisotropic (list of 3 values),
+            or a 3x3 strain matrix.
+        change_label : bool
+            Whether to change the label of the structure.
 
         Returns
         -------
-        aim2dat.strct.Structure
-            Structure with scaled unit cell.
+        Structure
+            The scaled structure.
         """
-        kwargs = {"scaling_factor": scaling_factor, "change_label": change_label}
+        kwargs = {
+            "scaling_factors": scaling_factors,
+            "pressure": pressure,
+            "bulk_modulus": bulk_modulus,
+            "strain": strain,
+            "change_label": change_label,
+        }
         return self._perform_strct_manipulation(scale_unit_cell, kwargs)
 
     @manipulates_structure
