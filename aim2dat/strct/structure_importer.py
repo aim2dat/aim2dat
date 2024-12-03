@@ -228,7 +228,7 @@ class StructureImporter(ConstraintsMixin):
 
     def import_from_mofxdb(
         self,
-        mofid: int = None,
+        mofid: str = None,
         mofkey: str = None,
         vf_min_max: tuple = (None, None),
         lcd_min_max: tuple = (None, None),
@@ -239,6 +239,8 @@ class StructureImporter(ConstraintsMixin):
         database: str = None,
         store_json: bool = False,
         query_limit: int = 1000,
+        pressure_unit: str = None,
+        loading_unit: str = None,
     ) -> StructureCollection:
         """
         Import structures from the MOFX database using the fetch function.
@@ -260,8 +262,6 @@ class StructureImporter(ConstraintsMixin):
             Minimum and maximum values for the surface area (SA) per gram (m^3/g^3).
         sa_m2cm3_min_max : tuple (optional)
             Minimum and maximum values for the surface area (SA) in square meters (m^2/cm^3).
-        name : str (optional)
-            The name or alias of the MOF, used for identification or display purposes.
         adsorbates: str or list of str (optional)
             The adsorbates included for heat and isotherm analysis.  E.g. ``'Hydrogen'``.
             If not defined, all adsorbates studied are considered.
@@ -271,11 +271,17 @@ class StructureImporter(ConstraintsMixin):
             If True the json data will be stored.
         query_limit : int (optional)
             The maximum number of results to retrieve for the query.
+        pressure_unit : str (optional)
+            Convert all isotherm loading units. E.g. ``'mmol/g'``.
+        loading_unit : str (optional)
+            Convert all pressuresunits. E.g. ``'atm'``.
         """
         if isinstance(adsorbates, str):
             adsorbates = [adsorbates]
         if adsorbates is not None:
             adsorbates = [adsorb.title() for adsorb in adsorbates]
+        if mofid or mofkey:
+            query_limit = 1
         backend_module = _return_ext_interface_modules("mofxdb")
         structures_collect = backend_module._download_structures(
             mofid,
@@ -289,6 +295,8 @@ class StructureImporter(ConstraintsMixin):
             database,
             store_json,
             query_limit,
+            pressure_unit,
+            loading_unit,
         )
         self.structures += structures_collect
         return structures_collect

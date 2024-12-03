@@ -21,13 +21,13 @@ def _download_structures(
     database,
     store_json,
     query_limit,
+    pressure_unit,
+    loading_unit,
 ) -> list:
     """Download entries from mofx database."""
     structures_collect = StructureCollection()
     name = None
     telemetry = None
-    pressure_unit = None
-    loading_unit = None
     for entry in fetch(
         mofid,
         mofkey,
@@ -86,9 +86,11 @@ def _parse_entry(adsorbates, store_json, entry) -> Structure:
         "lcd": entry.lcd,
         "pxrd": entry.pxrd,
         "pore_size_distribution": entry.pore_size_distribution,
-        "heats": heats,
-        "isotherms": isotherms,
     }
+    if heats:
+        structure._attributes.update({"heats": heats})
+    if isotherms:
+        structure._attributes.update({"isotherms": isotherms})
     return structure
 
 
