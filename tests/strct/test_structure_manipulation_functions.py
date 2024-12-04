@@ -192,25 +192,25 @@ def test_scale_unit_cell_pressure_based_scaling():
 def test_scale_unit_cell_uniform_strain():
     """Test scale_unit_cell with uniform strain."""
     structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
-    strain = 0.05  # 5% strain
-    scaled_structure = scale_unit_cell(structure, strain=strain)
-    expected_cell = np.array(structure["cell"]) * (1 + strain)
+    scaling_factors = 1.05  # 5% strain
+    scaled_structure = scale_unit_cell(structure, scaling_factors)
+    expected_cell = np.array(structure["cell"]) * (scaling_factors)
     assert np.allclose(scaled_structure["cell"], expected_cell), "Uniform strain failed"
 
 
 def test_scale_unit_cell_anisotropic_strain():
     """Test scale_unit_cell with anisotropic strain."""
     structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
-    strain = [0.02, -0.01, 0.03]
-    scaled_structure = scale_unit_cell(structure, strain=strain)
-    expected_cell = np.dot(np.array(structure["cell"]), np.diag([1 + s for s in strain]))
+    scaling_factors = [1.02, 0.99, 1.03]
+    scaled_structure = scale_unit_cell(structure, scaling_factors)
+    expected_cell = np.dot(np.array(structure["cell"]), np.diag(scaling_factors))
     assert np.allclose(scaled_structure["cell"], expected_cell), "Anisotropic strain failed"
 
 
 def test_scale_unit_cell_full_strain_matrix():
     """Test scale_unit_cell with a 3x3 strain matrix."""
     structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
-    strain_matrix = np.array([[0.02, 0.01, 0.0], [0.01, -0.01, 0.0], [0.0, 0.02, 0.03]])
-    scaled_structure = scale_unit_cell(structure, strain=strain_matrix)
-    expected_cell = np.dot(np.array(structure["cell"]), np.eye(3) + strain_matrix)
-    assert np.allclose(scaled_structure["cell"], expected_cell), "3x3 strain matrix failed"
+    scaling_matrix = [[1.02, 0.01, 0.0], [0.01, 0.99, 0.0], [0.0, 0.02, 1.03]]
+    scaled_structure = scale_unit_cell(structure, scaling_factors=scaling_matrix)
+    expected_cell = np.dot(np.array(structure["cell"]), scaling_matrix)
+    assert np.allclose(scaled_structure["cell"], expected_cell), "3x3 scaling matrix failed"

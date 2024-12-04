@@ -5,9 +5,6 @@ from __future__ import annotations
 import os
 from typing import List, Tuple, Union, TYPE_CHECKING
 
-# Third party library imports
-import numpy as np
-
 # Internal library imports
 from aim2dat.utils.element_properties import get_atomic_radius, get_element_symbol
 
@@ -114,58 +111,58 @@ def substitute_elements(
             new_structure["elements"]
         )
         if structure["cell"] is not None:
-            new_structure["cell"] = np.array(structure["cell"])
-            for dir_idx in range(3):
-                new_structure["cell"][dir_idx] *= scaling_factor
+            new_structure["cell"] = [
+                [value * scaling_factor if i == dir_idx else value for i, value in enumerate(row)]
+                for dir_idx, row in enumerate(structure["cell"])
+            ]
         return _add_label_suffix(new_structure, "_subst-" + "-".join(str_el_pairs), change_label)
 
 
 def scale_unit_cell(
     structure,
-    scaling_factors: Union[float, List[float], np.ndarray] = None,
+    scaling_factors: Union[float, List[float]] = None,
     pressure: float = None,
     bulk_modulus: float = None,
-    strain: Union[float, np.ndarray, list] = None,
     change_label: bool = True,
-) -> Structure:
+) -> "Structure":
     """Scale the unit cell of a structure."""
     from aim2dat.strct import Structure
 
-    def get_strain_tensor(strain):
-        """Convert strain input into a 3x3 strain tensor."""
-        if isinstance(strain, (float, int)):
-            return np.eye(3) * (1 + strain)
-        elif isinstance(strain, list) and len(strain) == 3:
-            return np.diag([1 + s for s in strain])
-        elif isinstance(strain, np.ndarray) and strain.shape == (3, 3):
-            return np.eye(3) + strain
-        raise ValueError("Strain must be a float (uniform), a list of 3 values, or a 3x3 matrix.")
+    def get_scaling_matrix(scaling_factors):
+        """Construct a 3x3 scaling matrix."""
+        if isinstance(scaling_factors, (float, int)):
+            return [[scaling_factors if i == j else 0 for j in range(3)] for i in range(3)]
+        if isinstance(scaling_factors, list):
+            if len(scaling_factors) == 3 and all(
+                isinstance(val, (float, int)) for val in scaling_factors
+            ):
+                return [[scaling_factors[i] if i == j else 0 for j in range(3)] for i in range(3)]
+            if len(scaling_factors) == 3 and all(
+                isinstance(row, list) and len(row) == 3 for row in scaling_factors
+            ):
+                return scaling_factors
+        raise ValueError(
+            "Scaling factors must be a float, a list of 3 values, or a 3x3 nested list."
+        )
 
-    # Determine scaling tensor based on provided input
     if pressure is not None:
         if bulk_modulus is None:
             raise ValueError("Bulk modulus must be provided when applying pressure.")
-        strain = -pressure / bulk_modulus  # Calculate uniform strain from pressure
-        scaling_tensor = get_strain_tensor(strain)
-    elif strain is not None:
-        scaling_tensor = get_strain_tensor(strain)
-    elif isinstance(scaling_factors, (float, int)):
-        scaling_tensor = np.eye(3) * scaling_factors
-    elif isinstance(scaling_factors, list) and len(scaling_factors) == 3:
-        scaling_tensor = np.diag(scaling_factors)
-    elif isinstance(scaling_factors, np.ndarray) and scaling_factors.shape == (3, 3):
-        scaling_tensor = scaling_factors
-    else:
-        raise ValueError("Scaling factors must be a float, list of 3 values, or a 3x3 matrix.")
+        scaling_factors = 1 - pressure / bulk_modulus
 
-    # Apply the scaling tensor to the lattice
-    scaled_cell = np.dot(np.array(structure["cell"]), scaling_tensor)
+    if scaling_factors is None:
+        raise ValueError("Provide either scaling_factors or pressure (with bulk_modulus).")
 
-    # Update the structure with the new scaled cell
+    scaling_matrix = get_scaling_matrix(scaling_factors)
+
+    scaled_cell = [
+        [sum(row[k] * scaling_matrix[k][j] for k in range(3)) for j in range(3)]
+        for row in structure["cell"]
+    ]
+
     new_structure = structure.to_dict(cartesian=False)
     new_structure["cell"] = scaled_cell
 
-    # Return the modified structure
     return Structure(
         **_add_label_suffix(new_structure, f"_scaled-{scaling_factors}", change_label)
     )
