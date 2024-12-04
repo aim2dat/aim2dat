@@ -274,12 +274,24 @@ class StructureImporter(ConstraintsMixin):
         pressure_unit : str (optional)
             Convert all isotherm loading units. E.g. ``'mmol/g'``.
         loading_unit : str (optional)
-            Convert all pressuresunits. E.g. ``'atm'``.
+            Convert all pressure units. E.g. ``'atm'``.
         """
+        adsorb_names = {
+            ("Argon", "Ar"),
+            ("CarbonDioxide", "CO2"),
+            ("Hydrogen", "H2"),
+            ("Krypton", "Kr"),
+            ("Methane", "CH4"),
+            ("Nitrogen", "N2"),
+            ("Xenon", "Xe"),
+        }
         if isinstance(adsorbates, str):
             adsorbates = [adsorbates]
         if adsorbates is not None:
-            adsorbates = [adsorb.title() for adsorb in adsorbates]
+            for i, ads in enumerate(adsorbates):
+                for ads_name in adsorb_names:
+                    if any(ads.lower() == value.lower() for value in ads_name):
+                        adsorbates[i] = ads_name[0]
         if mofid or mofkey:
             query_limit = 1
         backend_module = _return_ext_interface_modules("mofxdb")
