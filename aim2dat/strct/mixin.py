@@ -6,7 +6,6 @@ from typing import List, Tuple, Union
 import abc
 from typing import TYPE_CHECKING
 from collections.abc import Callable
-import numpy as np
 
 # Internal library imports
 import aim2dat.utils.chem_formula as utils_cf
@@ -450,40 +449,54 @@ class ManipulationMixin:
     @manipulates_structure
     def scale_unit_cell(
         self,
-        scaling_factors: Union[float, List[float], np.ndarray] = None,
+        scaling_factors: Union[float, List[float]] = None,
         pressure: float = None,
         bulk_modulus: float = None,
-        strain: Union[float, np.ndarray, list] = None,
         change_label: bool = True,
     ) -> Union["Structure", "StructureCollection"]:
         """
-        Scale the unit cell of the structure, supporting anisotropic scaling,
-        pressure-based scaling, and strain application.
+        Scale the unit cell of the structure, supporting isotropic and anisotropic strain,
+        as well as pressure-based strain.
 
         Parameters
         ----------
-        scaling_factors : float, list, or 3x3 matrix, optional
-            Scaling factor(s) for the unit cell.
+        scaling_factors : float or list of floats, optional
+            Scaling factor(s) to scale the unit cell. If a single float,
+            isotropic scaling is applied.
+            If a list of 3 floats, anisotropic scaling is applied along the principal axes.
+            Alternatively, a 3x3 nested list can define a full transformation matrix.
+            Scaling factors are interpreted as 1 + strain. For example:
+            - A 1% strain corresponds to a scaling factor of 1.01.
+            - A -2% strain (compression) corresponds to a scaling factor of 0.98.
         pressure : float, optional
-            Hydrostatic pressure to apply in GPa.
+            Hydrostatic pressure to apply, in GPa. Requires `bulk_modulus` to calculate scaling.
         bulk_modulus : float, optional
-            Bulk modulus in GPa, required if `pressure` is provided.
-        strain : float, list of 3 floats, or 3x3 matrix, optional
-            Strain to apply. Can be uniform (float), anisotropic (list of 3 values),
-            or a 3x3 strain matrix.
-        change_label : bool
-            Whether to change the label of the structure.
+            Bulk modulus in GPa. Necessary if `pressure` is provided.
+        change_label : bool, optional
+            If True, appends a suffix to the structure's label to reflect the scaling applied.
 
         Returns
         -------
-        Structure
-            The scaled structure.
+        Structure or StructureCollection
+            The scaled structure or a collection of scaled structures.
+
+        Raises
+        ------
+        ValueError
+            If required parameters are missing or invalid, such as when `pressure` is given
+            without `bulk_modulus`, or invalid `scaling_factors` inputs.
+
+        Notes
+        -----
+        - The `pressure` and `bulk_modulus` inputs are mutually exclusive with direct
+        `scaling_factors` input.
+        - Scaling factors directly modify the unit cell dimensions and are applied such that
+          fractional atomic positions remain unchanged.
         """
         kwargs = {
             "scaling_factors": scaling_factors,
             "pressure": pressure,
             "bulk_modulus": bulk_modulus,
-            "strain": strain,
             "change_label": change_label,
         }
         return self._perform_strct_manipulation(scale_unit_cell, kwargs)
