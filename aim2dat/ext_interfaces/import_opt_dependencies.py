@@ -14,6 +14,7 @@ _ext_interfaces_deps = {
     "dscribe": [("dscribe", "1.2.2", None)],
     "graphs": [],
     "hdf5": [("h5py", "3.7.0", None)],
+    "mofxdb": [("mofdb_client", None, None)],
     "mp": [("pymatgen", "2022.02.03", None)],
     "mp_openapi": [("requests", None, None), ("msgpack", "1.0.2", None), ("boto3", "1.25", None)],
     "oqmd": [("qmpy_rester", None, None)],

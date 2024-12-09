@@ -226,6 +226,85 @@ class StructureImporter(ConstraintsMixin):
         else:
             return self._import_from_odb("mp", formulas, {}, download_kwargs)
 
+    def import_from_mofxdb(
+        self,
+        mofid: str = None,
+        mofkey: str = None,
+        vf_min_max: tuple = (None, None),
+        lcd_min_max: tuple = (None, None),
+        pld_min_max: tuple = (None, None),
+        sa_m2g_min_max: tuple = (None, None),
+        sa_m2cm3_min_max: tuple = (None, None),
+        adsorbates: Union[str, List[str]] = None,
+        database: str = None,
+        store_json: bool = False,
+        query_limit: int = 1000,
+    ) -> StructureCollection:
+        """
+        Import structures from the MOFX database using the fetch function.
+        If no parameters are set, the whole dabatabse will be imported.
+
+        Parameters
+        ----------
+        mofid : int (optional)
+            The unique ID for the MOF.
+        mofkey : str (optional)
+            A specific key, often used for subcategorization or indexing.
+        vf_min_max : tuple (optional)
+            Minimum and maximum values for the void fraction (VF).
+        lcd_min_max : tuple (optional)
+            Minimum and maximum values for the largest cavity diameter (LCD).
+        pld_min_max : tuple (optional)
+            Minimum and maximum values for the pore limiting diameter (PLD).
+        sa_m2g_min_max : tuple (optional)
+            Minimum and maximum values for the surface area (SA) per gram (m^3/g^3).
+        sa_m2cm3_min_max : tuple (optional)
+            Minimum and maximum values for the surface area (SA) in square meters (m^2/cm^3).
+        adsorbates: str or list of str (optional)
+            The adsorbates included for heat and isotherm analysis.  E.g. ``'Hydrogen'``.
+            If not defined, all adsorbates studied are considered.
+        database : str (optional)
+            The database from which MOF information is retrieved. E.g. ``'CoREMOF 2019'``.
+        store_json : bool (optional)
+            If True the json data will be stored.
+        query_limit : int (optional)
+            The maximum number of results to retrieve for the query.
+        """
+        adsorb_names = {
+            ("Argon", "Ar"),
+            ("CarbonDioxide", "CO2"),
+            ("Hydrogen", "H2"),
+            ("Krypton", "Kr"),
+            ("Methane", "CH4"),
+            ("Nitrogen", "N2"),
+            ("Xenon", "Xe"),
+        }
+        if isinstance(adsorbates, str):
+            adsorbates = [adsorbates]
+        if adsorbates is not None:
+            for i, ads in enumerate(adsorbates):
+                for ads_name in adsorb_names:
+                    if any(ads.lower() == value.lower() for value in ads_name):
+                        adsorbates[i] = ads_name[0]
+        if mofid or mofkey:
+            query_limit = 1
+        backend_module = _return_ext_interface_modules("mofxdb")
+        structures_collect = backend_module._download_structures(
+            mofid,
+            mofkey,
+            vf_min_max,
+            lcd_min_max,
+            pld_min_max,
+            sa_m2g_min_max,
+            sa_m2cm3_min_max,
+            adsorbates,
+            database,
+            store_json,
+            query_limit,
+        )
+        self.structures += structures_collect
+        return structures_collect
+
     def import_from_oqmd(
         self, formulas: Union[str, List[str]], query_limit=1000
     ) -> StructureCollection:
