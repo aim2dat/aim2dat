@@ -78,15 +78,15 @@ def _parse_entry(adsorbates, store_json, entry) -> Structure:
     }
     if store_json:
         structure._extras.update(entry.json_repr)
-        structure._attributes = {
-            "void_fraction": _value_none_check(entry.void_fraction, ""),
-            "surface_area_m2g": _value_none_check(entry.surface_area_m2g, "m2/g"),
-            "surface_area_m2cm3": _value_none_check(entry.surface_area_m2cm3, "m2/cm3"),
-            "pld": _value_none_check(entry.pld, "angstrom"),
-            "lcd": _value_none_check(entry.lcd, "angstrom"),
-            "pxrd": _value_none_check(entry.pxrd, "angstrom"),
-            "pore_size_distribution": _value_none_check(entry.pore_size_distribution, ""),
-        }
+    structure._attributes = {
+        "void_fraction": _value_none_check(entry.void_fraction, ""),
+        "surface_area_m2g": _value_none_check(entry.surface_area_m2g, "m2/g"),
+        "surface_area_m2cm3": _value_none_check(entry.surface_area_m2cm3, "m2/cm3"),
+        "pld": _value_none_check(entry.pld, "angstrom"),
+        "lcd": _value_none_check(entry.lcd, "angstrom"),
+        "pxrd": _value_none_check(entry.pxrd, "angstrom"),
+        "pore_size_distribution": _value_none_check(entry.pore_size_distribution, ""),
+    }
     if heats:
         structure._attributes.update({"heats": heats})
     if isotherms:
