@@ -21,13 +21,13 @@ def _download_structures(
     database,
     store_json,
     query_limit,
-    pressure_unit,
-    loading_unit,
 ) -> list:
     """Download entries from mofx database."""
     structures_collect = StructureCollection()
     name = None
     telemetry = None
+    pressure_unit = "bar"
+    loading_unit = "cm3(STP)/g"
     for entry in fetch(
         mofid,
         mofkey,
@@ -78,20 +78,29 @@ def _parse_entry(adsorbates, store_json, entry) -> Structure:
     }
     if store_json:
         structure._extras.update(entry.json_repr)
-    structure._attributes = {
-        "void_fraction": entry.void_fraction,
-        "surface_area_m2g": entry.surface_area_m2g,
-        "surface_area_m2cm3": entry.surface_area_m2cm3,
-        "pld": entry.pld,
-        "lcd": entry.lcd,
-        "pxrd": entry.pxrd,
-        "pore_size_distribution": entry.pore_size_distribution,
-    }
+        structure._attributes = {
+            "void_fraction": _value_none_check(entry.void_fraction, ""),
+            "surface_area_m2g": _value_none_check(entry.surface_area_m2g, "m2/g"),
+            "surface_area_m2cm3": _value_none_check(entry.surface_area_m2cm3, "m2/cm3"),
+            "pld": _value_none_check(entry.pld, "angstrom"),
+            "lcd": _value_none_check(entry.lcd, "angstrom"),
+            "pxrd": _value_none_check(entry.pxrd, "angstrom"),
+            "pore_size_distribution": _value_none_check(entry.pore_size_distribution, ""),
+        }
     if heats:
         structure._attributes.update({"heats": heats})
     if isotherms:
         structure._attributes.update({"isotherms": isotherms})
     return structure
+
+
+def _value_none_check(value, unit):
+    if value is None:
+        return None
+    elif isinstance(value, list):
+        return {"value": [float(val) for val in value], "unit": unit}
+    else:
+        return {"value": float(value), "unit": unit}
 
 
 def _get_isotherms_heats(adsorbates, entry) -> List[dict]:
@@ -107,14 +116,19 @@ def _get_isotherms_heats(adsorbates, entry) -> List[dict]:
                 data = heat["isotherm_data"]
                 heat_dict = {
                     "adsorbates": adsorbs_heat,
-                    "temperature": heat["temperature"],
-                    "pressure": [press["pressure"] for press in data],
-                    "total_adsorption": [adsorb_data["total_adsorption"] for adsorb_data in data],
-                    "pressureUnits": heat["pressureUnits"],
-                    "adsorptionUnits": heat["adsorptionUnits"],
+                    "temperature": _value_none_check(heat["temperature"], "K"),
+                    "pressure": _value_none_check(
+                        [press["pressure"] for press in data], heat["pressureUnits"]
+                    ),
+                    "total_adsorption": _value_none_check(
+                        [adsorb_data["total_adsorption"] for adsorb_data in data],
+                        heat["adsorptionUnits"],
+                    ),
                 }
                 if len(adsorbs_heat) > 1:
-                    heat_dict["frac_adsorption"] = _get_frac_adsorption(data)
+                    heat_dict["frac_adsorption"] = _get_frac_adsorption(
+                        data, heat["adsorptionUnits"]
+                    )
                 heats[adsorb].append(heat_dict)
         for isotherm in isotherms_data:
             adsorbs_isot = [ads["name"] for ads in isotherm["adsorbates"]]
@@ -123,22 +137,30 @@ def _get_isotherms_heats(adsorbates, entry) -> List[dict]:
                 data = isotherm["isotherm_data"]
                 iso_dict = {
                     "adsorbates": adsorbs_isot,
-                    "temperature": isotherm["temperature"],
-                    "pressure": [press["pressure"] for press in data],
-                    "total_adsorption": [adsorb_data["total_adsorption"] for adsorb_data in data],
-                    "pressureUnits": isotherm["pressureUnits"],
-                    "adsorptionUnits": isotherm["adsorptionUnits"],
+                    "temperature": _value_none_check(isotherm["temperature"], "K"),
+                    "pressure": _value_none_check(
+                        [press["pressure"] for press in data], isotherm["pressureUnits"]
+                    ),
+                    "total_adsorption": _value_none_check(
+                        [adsorb_data["total_adsorption"] for adsorb_data in data],
+                        isotherm["adsorptionUnits"],
+                    ),
                 }
                 if len(adsorbs_isot) > 1:
-                    iso_dict["frac_adsorption"] = _get_frac_adsorption(data)
+                    iso_dict["frac_adsorption"] = _get_frac_adsorption(
+                        data, isotherm["adsorptionUnits"]
+                    )
                 isotherms[adsorb].append(iso_dict)
     return isotherms, heats
 
 
-def _get_frac_adsorption(data) -> list:
-    frac_adsorption = {}
+def _get_frac_adsorption(data, unit) -> dict:
+    temp_dict = {}
     for d in data:
         for value in d["species_data"]:
-            frac_adsorption.setdefault(value["name"], [])
-            frac_adsorption[value["name"]].append(value["adsorption"])
+            temp_dict.setdefault(value["name"], [])
+            temp_dict[value["name"]].append(float(value["adsorption"]))
+    frac_adsorption = {}
+    for k, v in temp_dict.items():
+        frac_adsorption[k] = _value_none_check(v, unit)
     return frac_adsorption

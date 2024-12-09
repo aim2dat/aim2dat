@@ -239,8 +239,6 @@ class StructureImporter(ConstraintsMixin):
         database: str = None,
         store_json: bool = False,
         query_limit: int = 1000,
-        pressure_unit: str = None,
-        loading_unit: str = None,
     ) -> StructureCollection:
         """
         Import structures from the MOFX database using the fetch function.
@@ -271,10 +269,6 @@ class StructureImporter(ConstraintsMixin):
             If True the json data will be stored.
         query_limit : int (optional)
             The maximum number of results to retrieve for the query.
-        pressure_unit : str (optional)
-            Convert all isotherm loading units. E.g. ``'mmol/g'``.
-        loading_unit : str (optional)
-            Convert all pressure units. E.g. ``'atm'``.
         """
         adsorb_names = {
             ("Argon", "Ar"),
@@ -307,8 +301,6 @@ class StructureImporter(ConstraintsMixin):
             database,
             store_json,
             query_limit,
-            pressure_unit,
-            loading_unit,
         )
         self.structures += structures_collect
         return structures_collect
