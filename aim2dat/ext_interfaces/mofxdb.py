@@ -25,7 +25,6 @@ def _download_structures(
 ) -> list:
     """Download entries from mofx database."""
     structures_collect = StructureCollection()
-    name = None
     telemetry = None
     pressure_unit = "bar"
     loading_unit = "mg/g"
