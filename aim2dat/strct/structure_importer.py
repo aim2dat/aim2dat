@@ -228,6 +228,7 @@ class StructureImporter(ConstraintsMixin):
 
     def import_from_mofxdb(
         self,
+        name: str = None,
         mofid: str = None,
         mofkey: str = None,
         vf_min_max: tuple = (None, None),
@@ -246,7 +247,9 @@ class StructureImporter(ConstraintsMixin):
 
         Parameters
         ----------
-        mofid : int (optional)
+        name : str (optional)
+            Name of the MOF in the corresponding DB.
+        mofid : str (optional)
             The unique ID for the MOF.
         mofkey : str (optional)
             A specific key, often used for subcategorization or indexing.
@@ -290,6 +293,7 @@ class StructureImporter(ConstraintsMixin):
             query_limit = 1
         backend_module = _return_ext_interface_modules("mofxdb")
         structures_collect = backend_module._download_structures(
+            name,
             mofid,
             mofkey,
             vf_min_max,

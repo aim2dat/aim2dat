@@ -10,6 +10,7 @@ from aim2dat.strct import Structure, StructureCollection
 
 
 def _download_structures(
+    name,
     mofid,
     mofkey,
     vf_min_max,
@@ -27,7 +28,7 @@ def _download_structures(
     name = None
     telemetry = None
     pressure_unit = "bar"
-    loading_unit = "cm3(STP)/g"
+    loading_unit = "mg/g"
     for entry in fetch(
         mofid,
         mofkey,
