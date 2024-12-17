@@ -4,7 +4,7 @@ Overview
 
 .. grid::
 
-    .. grid-item-card:: :doc:`Structural Analysis<stra-overview>`
+    .. grid-item-card:: :doc:`Structural Analysis & Manipulation<stram-overview>`
 
     .. grid-item-card:: :doc:`High-throughput Workflows<htw-overview>`
 
