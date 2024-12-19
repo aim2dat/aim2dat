@@ -1,15 +1,16 @@
-===================
-Structural Analysis
-===================
+==================================
+Structural Analysis & Manipulation
+==================================
 
 .. toctree::
     :maxdepth: 1
     :hidden:
 
-    stra-structure
-    stra-multiple_structures
-    stra-structure_importer
-    stra-surfaces
+    stram-structure
+    stram-multiple_structures
+    stram-analysis
+    stram-structure_importer
+    stram-surfaces
 
 .. figure:: Images/structure_analysis.svg
     :width: 500px
@@ -19,17 +20,17 @@ Structural Analysis
     Flowchart showing the relations between the different classes of the :mod:`strct <aim2dat.strct>` subpackage.
 
 
-The central object storing all structural information is the :class:`Structure <aim2dat.strct.Structure>` object (:doc:`more details <stra-structure>`).
+The central object storing all structural information is the :class:`Structure <aim2dat.strct.Structure>` object (:doc:`more details <stram-structure>`).
 Due to the initial high-throughput background of this library, one usually works with multiple structures and not a single one.
 To avoid frequent implementations of loops by the user to call methods on all the structures, we provide the
 :class:`StructureOperations <aim2dat.strct.StructureOperations>` and
 :class:`StructureCollection <aim2dat.strct.StructureCollection>` classes to wrap analysis and manipulation methods
-and as a datacontainer for multiple structures, respectively (:doc:`more details <stra-multiple_structures>`).
+and as a datacontainer for multiple structures, respectively (:doc:`more details <stram-multiple_structures>`).
 
 The :class:`StructureImporter <aim2dat.strct.StructureImporter>` class has the purpose to "obtain" input structures and as such it acts as an interface
-to online databases but also offers  the capability to randomly generate crystals (:doc:`more details <stra-structure_importer>`).
+to online databases but also offers  the capability to randomly generate crystals (:doc:`more details <stram-structure_importer>`).
 Last but not least, the :class:`SurfaceGeneration <aim2dat.strct.SurfaceGeneration>` class aims to create surface related structures and data
-(:doc:`more details <stra-surfaces>`).
+(:doc:`more details <stram-surfaces>`).
 
 .. note::
    All classes in the `structure_analysis` subpackage underly the principle of object-oriented programming.

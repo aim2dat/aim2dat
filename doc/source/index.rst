@@ -17,7 +17,7 @@ ranging data-mining and workflow management to post-processing routines and plot
 
 The main functionalities related to each of the steps are the following:
 
-1. **Create initial structure pool:** The `strct` subpackage (:doc:`more details <stra-overview>`) implements several classes to
+1. **Create initial structure pool:** The `strct` subpackage (:doc:`more details <stram-overview>`) implements several classes to
    handle larger quantities of crystals, molecules or related atomic structures. It interfaces with online
    databases and has several analysis methods implemented.
 2. **Run high-throughput workflow:** The high-throughput capabilities are driven by the |aiida_page| python
@@ -28,7 +28,7 @@ The main functionalities related to each of the steps are the following:
    (:doc:`more details <plots-simple_plot>`). Two backends are implemented: The |plotly_page| package is used to visualize plots interactively
    and the |matplotlib_page| package is used for high-quality and publication-ready plots. The `fct` sub-package implements methods to compare and analyse
    2-dimensional functions in a quantitative fashion (:doc:`more details <fa-overview>`). Structural properties can be then be analysed using the infrastructure
-   of the `strct` subpackage (:doc:`more details <stra-overview>`).
+   of the `strct` subpackage (:doc:`more details <stram-overview>`).
 4. **Train ML models:**
    To exploit the produced data, a direct interface to the |sklearn_page| package is given by the `StructureTransformer`
    classes that allow to extract features from crystalline or molecular structures and can be integrated in pipelines (:doc:`more details <ml-overview>`).
@@ -84,7 +84,7 @@ The package |precommit_pypi| can be used to run style checks before every commit
     :caption: User Guide
 
     user_guide
-    stra-overview
+    stram-overview
     htw-overview
     plots-overview
     fa-overview
