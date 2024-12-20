@@ -67,6 +67,7 @@ database_interfaces = [
     "pymatgen>=2022.02.03",
     "msgpack>=1.0.2",
     "qmpy_rester>=0.2.0",
+    "mofdb_client>=0.10.0",
     "requests>=2.24.0",
     "boto3>=1.25",
 ]
@@ -89,6 +90,7 @@ tests = [
     "boto3>=1.25",
     "phonopy>=2.17.1",
     "qmpy_rester>=0.2.0",
+    "mofdb_client>=0.10.0",
     "h5py>=3.7.0",
     "msgpack>=1.0.2",
     "scikit-learn>=1.2.1",

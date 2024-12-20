@@ -553,6 +553,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         cls,
         file_path: str,
         attributes: dict = None,
+        extras: dict = None,
         label: str = None,
         backend: str = "ase",
         file_format: str = None,
@@ -567,6 +568,8 @@ class Structure(AnalysisMixin, ManipulationMixin):
             File path.
         attributes : dict
             Attributes stored within the structure object(s).
+        extras : dict
+            Extras stored within the structure object(s).
         label : str
             Label used internally to store the structure in the object.
         backend : str (optional)
@@ -602,13 +605,19 @@ class Structure(AnalysisMixin, ManipulationMixin):
         if len(structure_dicts) == 1:
             if label is not None:
                 structure_dicts[0]["label"] = label
-            strct = cls(**structure_dicts[0], attributes=attributes)
+            strct = cls(**structure_dicts[0], attributes=attributes, extras=extras)
         else:
             strct = []
             for idx, structure_dict in enumerate(structure_dicts):
                 if label is not None:
                     structure_dict["label"] = label + f"_{idx}"
-                strct.append(cls(**structure_dict, attributes=copy.deepcopy(attributes)))
+                strct.append(
+                    cls(
+                        **structure_dict,
+                        attributes=copy.deepcopy(attributes),
+                        extras=copy.deepcopy(extras),
+                    )
+                )
         return strct
 
     @import_method
