@@ -15,8 +15,14 @@ Version 0.3.0
 =======
 **Fixes:**
 
+<<<<<<< HEAD
 * ``io.cp2k.read_restart_structure`` function now supports parsing files with "" delimiters for string values (`PR #100 <https://github.com/aim2dat/aim2dat/pull/100>`_).
 >>>>>>> 931e5c1 (Fix io.cp2k.read_restart_structure function to support new cp2k versions.)
+=======
+**Enhancements:**
+
+* Added interface to MOFXDB (https://mof.tech.northwestern.edu/) to the ``strct.StructureImporter`` class (`PR #94 <https://github.com/aim2dat/aim2dat/pull/94>`_).
+>>>>>>> 526212c (Fixed tests and updated CHANGELOG.)
 
 Version 0.2.0
 =============
