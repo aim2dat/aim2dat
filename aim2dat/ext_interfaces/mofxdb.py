@@ -3,7 +3,6 @@
 # Third party library imports
 from mofdb_client import fetch
 from io import StringIO
-from typing import List
 
 # Internal library imports
 from aim2dat.strct import Structure, StructureCollection
@@ -13,85 +12,77 @@ def _download_structures(
     dbname,
     mofid,
     mofkey,
-    vf_min_max,
-    lcd_min_max,
-    pld_min_max,
-    sa_m2g_min_max,
-    sa_m2cm3_min_max,
+    vf_range,
+    lcd_range,
+    pld_range,
+    sa_m2g_range,
+    sa_m2cm3_range,
     adsorbates,
     database,
-    store_json,
+    store_uptake,
     query_limit,
 ) -> list:
     """Download entries from mofx database."""
     structures_collect = StructureCollection()
-    telemetry = None
-    pressure_unit = "bar"
-    loading_unit = "mg/g"
     for entry in fetch(
-        mofid,
-        mofkey,
-        vf_min_max[0],
-        vf_min_max[1],
-        lcd_min_max[0],
-        lcd_min_max[1],
-        pld_min_max[0],
-        pld_min_max[1],
-        sa_m2g_min_max[0],
-        sa_m2g_min_max[1],
-        sa_m2cm3_min_max[0],
-        sa_m2cm3_min_max[1],
-        dbname,
-        database,
-        telemetry,
-        pressure_unit,
-        loading_unit,
-        query_limit,
+        mofid=mofid,
+        mofkey=mofkey,
+        vf_min=vf_range[0],
+        vf_max=vf_range[1],
+        lcd_min=lcd_range[0],
+        lcd_max=lcd_range[1],
+        pld_min=pld_range[0],
+        pld_max=pld_range[1],
+        sa_m2g_min=sa_m2g_range[0],
+        sa_m2g_max=sa_m2g_range[1],
+        sa_m2cm3_min=sa_m2cm3_range[0],
+        sa_m2cm3_max=sa_m2cm3_range[1],
+        name=dbname,
+        database=database,
+        telemetry=None,
+        pressure_unit="bar",
+        loading_unit="mg/g",
+        limit=query_limit,
     ):
-        strct = _parse_entry(adsorbates, store_json, entry)
+        strct = _parse_entry(adsorbates, store_uptake, entry)
         if strct is not None:
             structures_collect.append_structure(strct)
 
     return structures_collect
 
 
-def _parse_entry(adsorbates, store_json, entry) -> Structure:
+def _parse_entry(adsorbates, store_uptake, entry) -> Structure:
     """Parse entry to structure list."""
+    entry = entry.json_repr
     if adsorbates is None:
-        adsorbates = [adsorb["name"] for adsorb in entry.json_repr["adsorbates"]]
-    else:
-        if not set(adsorbates) & set([adsorb["name"] for adsorb in entry.json_repr["adsorbates"]]):
-            return None
-    isotherms, heats = _get_isotherms_heats(adsorbates, entry)
-    cif_entry = StringIO(entry.cif)
-    # structure = Structure.from_file(cif_entry, file_format="cif", backend="internal")
-    structure = Structure.from_file(cif_entry, file_format="cif")
-    structure.label = str(entry.name)
-    structure._extras = {
-        "source_id": entry.id,
-        "source": "mofdb",
-        "database": entry.database,
-        "url": entry.url,
-        "name": entry.name,
-        "mofid": entry.mofid,
-        "mofkey": entry.mofkey,
+        adsorbates = [adsorb["name"] for adsorb in entry["adsorbates"]]
+    elif all([adsorb["name"] not in adsorbates for adsorb in entry["adsorbates"]]):
+        return None
+
+    attributes = {
+        "mofid": entry["mofid"],
+        "mofkey": entry["mofkey"],
+        "source_id": entry["id"],
+        "source": f"MOFX-DB_{entry['mofdb_version']}-{entry['database']}",
+        "void_fraction": _value_none_check(entry["void_fraction"], None),
+        "surface_area_m2g": _value_none_check(entry["surface_area_m2g"], "m2/g"),
+        "surface_area_m2cm3": _value_none_check(entry["surface_area_m2cm3"], "m2/cm3"),
+        "pld": _value_none_check(entry["pld"], "angstrom"),
+        "lcd": _value_none_check(entry["lcd"], "angstrom"),
+        "pxrd": _value_none_check(entry["pxrd"], "angstrom"),
+        "pore_size_distribution": _value_none_check(entry["pore_size_distribution"], None),
     }
-    if store_json:
-        structure._extras.update(entry.json_repr)
-    structure._attributes = {
-        "void_fraction": _value_none_check(entry.void_fraction, ""),
-        "surface_area_m2g": _value_none_check(entry.surface_area_m2g, "m2/g"),
-        "surface_area_m2cm3": _value_none_check(entry.surface_area_m2cm3, "m2/cm3"),
-        "pld": _value_none_check(entry.pld, "angstrom"),
-        "lcd": _value_none_check(entry.lcd, "angstrom"),
-        "pxrd": _value_none_check(entry.pxrd, "angstrom"),
-        "pore_size_distribution": _value_none_check(entry.pore_size_distribution, ""),
-    }
-    if heats:
-        structure._attributes.update({"heats": heats})
-    if isotherms:
-        structure._attributes.update({"isotherms": isotherms})
-    return structure
+    extras = {}
+    if store_uptake:
+        _get_isotherms_heats(adsorbates, entry, extras)
+    return Structure.from_file(
+        file_path=StringIO(entry["cif"]),
+        file_format="cif",
+        backend="ase",
+        label=entry["name"],
+        attributes=attributes,
+        extras=extras,
+    )
 
 
 def _value_none_check(value, unit):
@@ -103,55 +94,33 @@ def _value_none_check(value, unit):
         return {"value": float(value), "unit": unit}
 
 
-def _get_isotherms_heats(adsorbates, entry) -> List[dict]:
-    isotherms = {}
-    heats = {}
-    isotherms_data = entry.json_repr["isotherms"]
-    heats_data = entry.json_repr["heats"]
-    for adsorb in adsorbates:
-        for heat in heats_data:
-            adsorbs_heat = [ads["name"] for ads in heat["adsorbates"]]
-            if adsorb in adsorbs_heat:
-                heats.setdefault(adsorb, [])
-                data = heat["isotherm_data"]
-                heat_dict = {
-                    "adsorbates": adsorbs_heat,
-                    "temperature": _value_none_check(heat["temperature"], "K"),
+def _get_isotherms_heats(adsorbates, entry, extras):
+    for data_type in ["isotherms", "heats"]:
+        for data_set in entry[data_type]:
+            ds_adsorbates = [ads["name"] for ads in data_set["adsorbates"]]
+            if any(ads in ds_adsorbates for ads in adsorbates):
+                data_set_list = extras.setdefault(data_type, [])
+                conv_ds = {
+                    "adsorbates": ds_adsorbates,
+                    "temperature": _value_none_check(data_set["temperature"], "K"),
                     "pressure": _value_none_check(
-                        [press["pressure"] for press in data], heat["pressureUnits"]
+                        [press["pressure"] for press in data_set["isotherm_data"]],
+                        data_set["pressureUnits"],
                     ),
                     "total_adsorption": _value_none_check(
-                        [adsorb_data["total_adsorption"] for adsorb_data in data],
-                        heat["adsorptionUnits"],
+                        [
+                            adsorb_data["total_adsorption"]
+                            for adsorb_data in data_set["isotherm_data"]
+                        ],
+                        data_set["adsorptionUnits"],
                     ),
+                    "simin": data_set["simin"],
                 }
-                if len(adsorbs_heat) > 1:
-                    heat_dict["frac_adsorption"] = _get_frac_adsorption(
-                        data, heat["adsorptionUnits"]
+                if len(ds_adsorbates) > 1:
+                    conv_ds["frac_adsorption"] = _get_frac_adsorption(
+                        data_set["isotherm_data"], data_set["adsorptionUnits"]
                     )
-                heats[adsorb].append(heat_dict)
-        for isotherm in isotherms_data:
-            adsorbs_isot = [ads["name"] for ads in isotherm["adsorbates"]]
-            if adsorb in adsorbs_isot:
-                isotherms.setdefault(adsorb, [])
-                data = isotherm["isotherm_data"]
-                iso_dict = {
-                    "adsorbates": adsorbs_isot,
-                    "temperature": _value_none_check(isotherm["temperature"], "K"),
-                    "pressure": _value_none_check(
-                        [press["pressure"] for press in data], isotherm["pressureUnits"]
-                    ),
-                    "total_adsorption": _value_none_check(
-                        [adsorb_data["total_adsorption"] for adsorb_data in data],
-                        isotherm["adsorptionUnits"],
-                    ),
-                }
-                if len(adsorbs_isot) > 1:
-                    iso_dict["frac_adsorption"] = _get_frac_adsorption(
-                        data, isotherm["adsorptionUnits"]
-                    )
-                isotherms[adsorb].append(iso_dict)
-    return isotherms, heats
+                data_set_list.append(conv_ds)
 
 
 def _get_frac_adsorption(data, unit) -> dict:
