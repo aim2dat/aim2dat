@@ -13,6 +13,7 @@ from aim2dat.io.yaml import load_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 ZEO_PATH = os.path.dirname(__file__) + "/zeo/"
+IO_PATH = os.path.dirname(__file__) + "/io/"
 
 
 def test_structure_print():
@@ -246,3 +247,18 @@ def test_wrap_positions(structure_comparison):
     structure = Structure(**strct_dict, wrap=True)
     strct_dict["positions"][1][1] -= strct_dict["cell"][1][1]
     structure_comparison(structure, strct_dict)
+
+
+@pytest.mark.parametrize(
+    "system, file_path",
+    [
+        ("cp2k_restart", IO_PATH + "cp2k_restart/aiida-1.restart"),
+        ("qe_input", IO_PATH + "qe_input/imidazole.in"),
+        ("cif", STRUCTURES_PATH + "ZIF-8.cif"),
+    ],
+)
+def test_internal_io(structure_comparison, system, file_path):
+    """Test internal structure parsers."""
+    ref = load_yaml_file(IO_PATH + system + "/ref.yaml")
+    structure = Structure.from_file(file_path, **ref["parameters"])
+    structure_comparison(structure, ref["structure"])
