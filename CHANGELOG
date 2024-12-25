@@ -8,6 +8,9 @@ Version 0.3.0
 **Enhancements:**
 
 * Added interface to MOFXDB (https://mof.tech.northwestern.edu/) to the ``strct.StructureImporter`` class (`PR #94 <https://github.com/aim2dat/aim2dat/pull/94>`_).
+**Fixes:**
+
+* The ``internal`` backend of ``strct.Structure`` was not properly identifying the correct function to parse the file in all cases. Additionally, the ``io.cif.read_file`` function now uses the ``io.utils.custom_open`` function, allowing to pass on a string instead of the file path.
 
 Version 0.2.0
 =============
