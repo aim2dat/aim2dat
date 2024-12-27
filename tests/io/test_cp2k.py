@@ -98,5 +98,9 @@ def test_read_restart_structure_multiple(nested_dict_comparison):
     """Test read_restart_structure function."""
     structures = read_restart_structure(STRUCTURES_PATH + "multiple_structures/")
     ref_structures = list(load_yaml_file(STRUCTURES_PATH + "multiple_structures/ref.yaml"))
-    for strct, ref in zip(structures, ref_structures):
+    assert len(structures) == len(ref_structures), "Number of structures is wrong."
+    for ref in ref_structures:
+        for strct in structures:
+            if ref["label"] == strct["label"]:
+                break
         nested_dict_comparison(strct, ref)
