@@ -11,7 +11,7 @@ from aim2dat.io.yaml import load_yaml_file
 from aim2dat.io.cp2k import (
     read_band_structure,
     read_atom_proj_density_of_states,
-    read_optimized_structure,
+    read_restart_structure,
 )
 
 cwd = os.path.dirname(__file__) + "/"
@@ -81,42 +81,22 @@ def test_read_atom_proj_density_of_states(system):
             "/cell_opt_incomplete_numbers/aiida-1.restart",
             "/cell_opt_incomplete_numbers/ref.yaml",
         ),
+        ("/cell_opt_v2024.1/CAU-23_CELL_OPT-1.restart", "/cell_opt_v2024.1/ref.yaml"),
         ("/md-nvt/aiida-1.restart", "/md-nvt/ref.yaml"),
     ],
 )
-def test_read_optimized_structure_single(restart_file, reference_file):
+def test_read_restart_structure_single(nested_dict_comparison, restart_file, reference_file):
     """
-    Test read_optimized_structure function for single calculations.
+    Test read_restart_structure function for single calculations.
     """
-    reference_values = list(load_yaml_file(STRUCTURES_PATH + reference_file))
-    structure = read_optimized_structure(STRUCTURES_PATH + restart_file)
-    for ref_value in reference_values:
-        assert structure[ref_value[0]] == ref_value[1]
+    ref = dict(load_yaml_file(STRUCTURES_PATH + reference_file))
+    structure = read_restart_structure(STRUCTURES_PATH + restart_file)
+    nested_dict_comparison(structure, ref)
 
 
-def test_read_optimized_structure_multiple():
-    """Test read_optimized_structure function."""
-    structures = read_optimized_structure(STRUCTURES_PATH + "multiple_structures/")
-    ref_structures = dict(load_yaml_file(STRUCTURES_PATH + "multiple_structures/ref.yaml"))
-
-    for str_label, str1 in ref_structures.items():
-        for str0 in structures:
-            if str0["label"] == str_label:
-                break
-        assert all(
-            [pbc0 == pbc1 for pbc0, pbc1 in zip(str0["pbc"], str1["pbc"])]
-        ), "Periodic boundary conditions don't match."
-        for idx0, (cell0, cell1) in enumerate(zip(str0["cell"], str1["cell"])):
-            assert all(
-                [abs(coord0 - coord1) < 1e-5 for coord0, coord1 in zip(cell0, cell1)]
-            ), f"Cell vectors {idx0} don't match."
-        for idx0, (pos0, pos1) in enumerate(zip(str0["positions"], str1["positions"])):
-            assert all(
-                [abs(coord0 - coord1) < 1e-5 for coord0, coord1 in zip(pos0, pos1)]
-            ), f"Positions {idx0} don't match."
-        assert all(
-            [sym0 == sym1 for sym0, sym1 in zip(str0["symbols"], str1["symbols"])]
-        ), "Symbols don't match."
-        assert all(
-            [kind0 == kind1 for kind0, kind1 in zip(str0["kinds"], str1["kinds"])]
-        ), "Kinds don't match."
+def test_read_restart_structure_multiple(nested_dict_comparison):
+    """Test read_restart_structure function."""
+    structures = read_restart_structure(STRUCTURES_PATH + "multiple_structures/")
+    ref_structures = list(load_yaml_file(STRUCTURES_PATH + "multiple_structures/ref.yaml"))
+    for strct, ref in zip(structures, ref_structures):
+        nested_dict_comparison(strct, ref)

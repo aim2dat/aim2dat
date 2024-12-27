@@ -61,7 +61,7 @@ class _KindPattern(_BasePattern):
     def process_data(self, output: dict, matches: List[re.Match]):
         output["kind_info"] = {}
         for m in matches:
-            kind = m.groupdict()["kind"]
+            kind = m.groupdict()["kind"].strip('"')
             element = kind
             for line in m.string[m.start() : m.end()].splitlines()[1:-1]:
                 line_sp = line.split()
