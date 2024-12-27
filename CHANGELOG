@@ -2,6 +2,13 @@
 Changelog
 =========
 
+Version 0.3.0
+=============
+
+**Fixes:**
+
+* ``io.cp2k.read_restart_structure`` function now supports parsing files with "" delimiters for string values (`PR #100 <https://github.com/aim2dat/aim2dat/pull/100>`_).
+
 Version 0.2.0
 =============
 
