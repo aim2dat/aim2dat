@@ -9,7 +9,7 @@ from aim2dat.strct import Structure, StructureCollection
 
 
 def _download_structures(
-    dbname,
+    name,
     mofid,
     mofkey,
     vf_range,
@@ -37,7 +37,7 @@ def _download_structures(
         sa_m2g_max=sa_m2g_range[1],
         sa_m2cm3_min=sa_m2cm3_range[0],
         sa_m2cm3_max=sa_m2cm3_range[1],
-        name=dbname,
+        name=name,
         database=database,
         telemetry=None,
         pressure_unit="bar",

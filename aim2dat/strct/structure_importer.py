@@ -291,7 +291,7 @@ class StructureImporter(ConstraintsMixin):
                         adsorbates[idx] = ads_key
             adsorbates = set(adsorbates)
 
-        if mofid or mofkey:
+        if name or mofid or mofkey:
             query_limit = 1
         backend_module = _return_ext_interface_modules("mofxdb")
         structures_collect = backend_module._download_structures(
