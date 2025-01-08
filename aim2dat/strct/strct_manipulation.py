@@ -126,23 +126,21 @@ def scale_unit_cell(
     change_label: bool = True,
 ) -> "Structure":
     """Scale the unit cell of a structure."""
-    from aim2dat.strct import Structure
 
     def get_scaling_matrix(scaling_factors):
         """Construct a 3x3 scaling matrix."""
         if isinstance(scaling_factors, (float, int)):
-            return [[scaling_factors if i == j else 0 for j in range(3)] for i in range(3)]
-        if isinstance(scaling_factors, list):
-            if len(scaling_factors) == 3 and all(
-                isinstance(val, (float, int)) for val in scaling_factors
-            ):
-                return [[scaling_factors[i] if i == j else 0 for j in range(3)] for i in range(3)]
-            if len(scaling_factors) == 3 and all(
-                isinstance(row, list) and len(row) == 3 for row in scaling_factors
-            ):
-                return scaling_factors
+            return np.eye(3) * scaling_factors
+        
+        scaling_factors = np.array(scaling_factors)
+        if not (np.issubdtype(scaling_factors.dtype, np.floating) or np.issubdtype(scaling_factors.dtype, np.integer)):
+            raise TypeError("`scaling_factors` must be of type float/int or a list of float/int values.")
+        elif scaling_factors.size == 9:
+            return scaling_factors.reshape((3, 3))
+        elif scaling_factors.size == 3:
+            return np.eye(3) * scaling_factors
         raise ValueError(
-            "Scaling factors must be a float, a list of 3 values, or a 3x3 nested list."
+            "`scaling_factors` must be a single value, a list of 3 values, or a 3x3 nested list."
         )
 
     if pressure is not None:
@@ -163,6 +161,4 @@ def scale_unit_cell(
     new_structure = structure.to_dict(cartesian=False)
     new_structure["cell"] = scaled_cell
 
-    return Structure(
-        **_add_label_suffix(new_structure, f"_scaled-{scaling_factors}", change_label)
-    )
+    return _add_label_suffix(new_structure, f"_scaled-{scaling_factors}", change_label)
