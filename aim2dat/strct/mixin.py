@@ -456,24 +456,28 @@ class ManipulationMixin:
     ) -> Union["Structure", "StructureCollection"]:
         """
         Scale the unit cell of the structure, supporting isotropic and anisotropic strain,
-        as well as pressure-based strain.
+        and pressure-based strain.
 
         Parameters
         ----------
-        scaling_factors : float or list of floats, optional
-            Scaling factor(s) to scale the unit cell. If a single float,
-            isotropic scaling is applied.
-            If a list of 3 floats, anisotropic scaling is applied along the principal axes.
-            Alternatively, a 3x3 nested list can define a full transformation matrix.
+        scaling_factors : float, list of floats, or arry-like, optional
+            Scaling factor(s) to scale the unit cell.
+            - If a single float, isotropic scaling is applied.
+            - If a list of 3 floats or a 1D array, anisotropic scaling is
+              applied along the principal axes.
+            - If a 3x3 nested list or a 2D array, it defines a full
+              transformation matrix.
             Scaling factors are interpreted as 1 + strain. For example:
             - A 1% strain corresponds to a scaling factor of 1.01.
             - A -2% strain (compression) corresponds to a scaling factor of 0.98.
         pressure : float, optional
-            Hydrostatic pressure to apply, in GPa. Requires `bulk_modulus` to calculate scaling.
+            Hydrostatic pressure to apply. Requires `bulk_modulus` to calculate scaling.
         bulk_modulus : float, optional
-            Bulk modulus in GPa. Necessary if `pressure` is provided.
+            Bulk modulus of the material. Required if `pressure` is provided. Ensure the units
+            of `bulk_modulus` and `pressure` are consistent.
         change_label : bool, optional
-            If True, appends a suffix to the structure's label to reflect the scaling applied.
+            If True, appends a suffix to the structure's label to reflect
+            the scaling applied. Defaults to True
 
         Returns
         -------
