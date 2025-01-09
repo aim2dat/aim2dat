@@ -4,9 +4,8 @@
 from __future__ import annotations
 import os
 from typing import List, Tuple, Union, TYPE_CHECKING
-
-# Third party library imports
 import numpy as np
+
 
 # Internal library imports
 from aim2dat.utils.element_properties import get_atomic_radius, get_element_symbol
@@ -114,15 +113,59 @@ def substitute_elements(
             new_structure["elements"]
         )
         if structure["cell"] is not None:
-            new_structure["cell"] = np.array(structure["cell"])
-            for dir_idx in range(3):
-                new_structure["cell"][dir_idx] *= scaling_factor
+            new_structure["cell"] = [
+                [value * scaling_factor if i == dir_idx else value for i, value in enumerate(row)]
+                for dir_idx, row in enumerate(structure["cell"])
+            ]
         return _add_label_suffix(new_structure, "_subst-" + "-".join(str_el_pairs), change_label)
 
 
-def scale_unit_cell(structure: Structure, scaling_factor: float, change_label: bool) -> Structure:
-    """Scale unit cell of the structure."""
-    if scaling_factor != 1.0 and structure["cell"] is not None:
-        new_structure = structure.to_dict(cartesian=False)
-        new_structure["cell"] = np.array(structure["cell"]) * scaling_factor
-        return _add_label_suffix(new_structure, f"_scaled-{scaling_factor}", change_label)
+def scale_unit_cell(
+    structure,
+    scaling_factors: Union[float, List[float]] = None,
+    pressure: float = None,
+    bulk_modulus: float = None,
+    change_label: bool = True,
+) -> "Structure":
+    """Scale the unit cell of a structure."""
+
+    def get_scaling_matrix(scaling_factors):
+        """Construct a 3x3 scaling matrix."""
+        if isinstance(scaling_factors, (float, int)):
+            return np.eye(3) * scaling_factors
+
+        scaling_factors = np.array(scaling_factors)
+        if not (
+            np.issubdtype(scaling_factors.dtype, np.floating)
+            or np.issubdtype(scaling_factors.dtype, np.integer)
+        ):
+            raise TypeError(
+                "`scaling_factors` must be of type float/int or a list of float/int values."
+            )
+        elif scaling_factors.size == 9:
+            return scaling_factors.reshape((3, 3))
+        elif scaling_factors.size == 3:
+            return np.eye(3) * scaling_factors
+        raise ValueError(
+            "`scaling_factors` must be a single value, a list of 3 values, or a 3x3 nested list."
+        )
+
+    if pressure is not None:
+        if bulk_modulus is None:
+            raise ValueError("Bulk modulus must be provided when applying pressure.")
+        scaling_factors = 1 - pressure / bulk_modulus
+
+    if scaling_factors is None:
+        raise ValueError("Provide either scaling_factors or pressure (with bulk_modulus).")
+
+    scaling_matrix = get_scaling_matrix(scaling_factors)
+
+    scaled_cell = [
+        [sum(row[k] * scaling_matrix[k][j] for k in range(3)) for j in range(3)]
+        for row in structure["cell"]
+    ]
+
+    new_structure = structure.to_dict(cartesian=False)
+    new_structure["cell"] = scaled_cell
+
+    return _add_label_suffix(new_structure, f"_scaled-{scaling_factors}", change_label)

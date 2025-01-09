@@ -457,23 +457,60 @@ class ManipulationMixin:
     @manipulates_structure
     def scale_unit_cell(
         self,
-        scaling_factor: float = 1.0,
-        change_label: bool = False,
+        scaling_factors: Union[float, List[float]] = None,
+        pressure: float = None,
+        bulk_modulus: float = None,
+        change_label: bool = True,
     ) -> Union["Structure", "StructureCollection"]:
         """
-        Scale unit cell of the structure.
+        Scale the unit cell of the structure, supporting isotropic and anisotropic strain,
+        and pressure-based strain.
 
         Parameters
         ----------
-        scaling_factor : float
-            Scaling factor.
+        scaling_factors : float, list of floats, or arry-like, optional
+            Scaling factor(s) to scale the unit cell.
+            - If a single float, isotropic scaling is applied.
+            - If a list of 3 floats or a 1D array, anisotropic scaling is
+              applied along the principal axes.
+            - If a 3x3 nested list or a 2D array, it defines a full
+              transformation matrix.
+            Scaling factors are interpreted as 1 + strain. For example:
+            - A 1% strain corresponds to a scaling factor of 1.01.
+            - A -2% strain (compression) corresponds to a scaling factor of 0.98.
+        pressure : float, optional
+            Hydrostatic pressure to apply. Requires `bulk_modulus` to calculate scaling.
+        bulk_modulus : float, optional
+            Bulk modulus of the material. Required if `pressure` is provided. Ensure the units
+            of `bulk_modulus` and `pressure` are consistent.
+        change_label : bool, optional
+            If True, appends a suffix to the structure's label to reflect
+            the scaling applied. Defaults to True
 
         Returns
         -------
-        aim2dat.strct.Structure
-            Structure with scaled unit cell.
+        Structure or StructureCollection
+            The scaled structure or a collection of scaled structures.
+
+        Raises
+        ------
+        ValueError
+            If required parameters are missing or invalid, such as when `pressure` is given
+            without `bulk_modulus`, or invalid `scaling_factors` inputs.
+
+        Notes
+        -----
+        - The `pressure` and `bulk_modulus` inputs are mutually exclusive with direct
+        `scaling_factors` input.
+        - Scaling factors directly modify the unit cell dimensions and are applied such that
+          fractional atomic positions remain unchanged.
         """
-        kwargs = {"scaling_factor": scaling_factor, "change_label": change_label}
+        kwargs = {
+            "scaling_factors": scaling_factors,
+            "pressure": pressure,
+            "bulk_modulus": bulk_modulus,
+            "change_label": change_label,
+        }
         return self._perform_strct_manipulation(scale_unit_cell, kwargs)
 
     @manipulates_structure
