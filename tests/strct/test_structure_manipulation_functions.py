@@ -10,7 +10,6 @@ import pytest
 # Internal library imports
 from aim2dat.strct import Structure
 from aim2dat.strct.ext_manipulation import add_structure_coord, add_structure_random
-from aim2dat.strct.strct_manipulation import scale_unit_cell
 from aim2dat.io.yaml import load_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
@@ -122,7 +121,7 @@ def test_scale_unit_cell_pressure_based_scaling():
     structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
     pressure = 10  # GPa
     bulk_modulus = 100  # GPa
-    scaled_structure = structure.scale_unit_cell(scaling_factors=scaling_factors)
+    scaled_structure = structure.scale_unit_cell(pressure=pressure, bulk_modulus=bulk_modulus)
     strain = -pressure / bulk_modulus
     expected_cell = np.array(structure["cell"]) * (1 + strain)
     assert np.allclose(scaled_structure["cell"], expected_cell), "Pressure-based scaling failed"
@@ -150,6 +149,6 @@ def test_scale_unit_cell_full_strain_matrix():
     """Test scale_unit_cell with a 3x3 strain matrix."""
     structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
     scaling_matrix = [[1.02, 0.01, 0.0], [0.01, 0.99, 0.0], [0.0, 0.02, 1.03]]
-    scaled_structure = structure.scale_unit_cell(scaling_factors=scaling_factors)
+    scaled_structure = structure.scale_unit_cell(scaling_factors=scaling_matrix)
     expected_cell = np.dot(np.array(structure["cell"]), scaling_matrix)
     assert np.allclose(scaled_structure["cell"], expected_cell), "3x3 scaling matrix failed"

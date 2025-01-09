@@ -4,6 +4,8 @@
 from __future__ import annotations
 import os
 from typing import List, Tuple, Union, TYPE_CHECKING
+import numpy as np
+
 
 # Internal library imports
 from aim2dat.utils.element_properties import get_atomic_radius, get_element_symbol
@@ -131,10 +133,15 @@ def scale_unit_cell(
         """Construct a 3x3 scaling matrix."""
         if isinstance(scaling_factors, (float, int)):
             return np.eye(3) * scaling_factors
-        
+
         scaling_factors = np.array(scaling_factors)
-        if not (np.issubdtype(scaling_factors.dtype, np.floating) or np.issubdtype(scaling_factors.dtype, np.integer)):
-            raise TypeError("`scaling_factors` must be of type float/int or a list of float/int values.")
+        if not (
+            np.issubdtype(scaling_factors.dtype, np.floating)
+            or np.issubdtype(scaling_factors.dtype, np.integer)
+        ):
+            raise TypeError(
+                "`scaling_factors` must be of type float/int or a list of float/int values."
+            )
         elif scaling_factors.size == 9:
             return scaling_factors.reshape((3, 3))
         elif scaling_factors.size == 3:
