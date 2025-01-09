@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 function_args:
-  scaling_factor: 0.7
+  scaling_factors: 0.7
 structure:
   pbc: [True, True, True]
   elements: ['Ga', 'As']
