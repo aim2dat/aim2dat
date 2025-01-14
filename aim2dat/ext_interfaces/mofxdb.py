@@ -2,7 +2,6 @@
 
 # Third party library imports
 from mofdb_client import fetch
-from io import StringIO
 
 # Internal library imports
 from aim2dat.strct import Structure, StructureCollection
@@ -76,9 +75,9 @@ def _parse_entry(adsorbates, store_uptake, entry) -> Structure:
     if store_uptake:
         _get_isotherms_heats(adsorbates, entry, extras)
     return Structure.from_file(
-        file_path=StringIO(entry["cif"]),
+        file_path=entry["cif"],
         file_format="cif",
-        backend="ase",
+        backend="internal",
         label=entry["name"],
         attributes=attributes,
         extras=extras,
