@@ -13,10 +13,10 @@ cell:
 - [5.399018,  1.400467, -0.187523]
 - [5.095247,  0.000000,  2.22186]
 source_id: mp-35925
-source: MP_2023.11.1
+source: MP_2024.12.18
 icsd_ids: [76650]
-formation_energy: {value: -0.6846903050000002, unit: eV/atom}
-stability: {value: 0.12753631888888783, unit: eV/atom}
+formation_energy: {value: -0.6875587833333331, unit: eV/atom}
+stability: {value: 0.126580159444444, unit: eV/atom}
 band_gap: {value: 1.8142, unit: eV}
 space_group: 166
 extras:

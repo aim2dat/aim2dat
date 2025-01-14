@@ -26,10 +26,10 @@
   - [7.42392, -3.466896, -7.291755]
   - [7.295383, -3.466896, 7.423173]
   source_id: mp-1188281
-  source: MP_2023.11.1
+  source: MP_2024.12.18
   icsd_ids: []
-  formation_energy: {value: -1.1113181616594847, unit: eV/atom}
-  stability: {value: 0.00043027906249992753, unit: eV/atom}
+  formation_energy: {value: -1.189229695624998, unit: eV/atom}
+  stability: {value: 0.0, unit: eV/atom}
   band_gap: {value: 0.5119999999999998, unit: eV}
   space_group: 87
 - label: mp_mp-505634
@@ -52,9 +52,9 @@
   - [-2.520721, 7.12878, 0.0]
   - [0.0, 0.0, 8.634603]
   source_id: mp-505634
-  source: MP_2023.11.1
-  icsd_ids: [53244, 53245]
-  formation_energy: {value: -0.9945620008620694, unit: eV/atom}
+  source: MP_2024.12.18
+  icsd_ids: [53245, 53244]
+  formation_energy: {value: -0.9087276910000011, unit: eV/atom}
   stability: {value: 0.0, unit: eV/atom}
   band_gap: {value: 0.5258000000000003, unit: eV}
   space_group: 36
@@ -80,9 +80,9 @@
   - [0.0, 9.527045, 0.0]
   - [0.0, 0.0, 11.621285]
   source_id: mp-573763
-  source: MP_2023.11.1
+  source: MP_2024.12.18
   icsd_ids: [36501]
-  formation_energy: {value: -1.1300462069923374, unit: eV/atom}
+  formation_energy: {value: -1.220100983333334, unit: eV/atom}
   stability: {value: 0.0, unit: eV/atom}
   band_gap: {value: 1.7740000000000002, unit: eV}
   space_group: 62
@@ -104,9 +104,9 @@
   - [0.0, 6.1278, 0.0]
   - [0.0, 0.0, 11.629]
   source_id: mp-8361
-  source: MP_2023.11.1
+  source: MP_2024.12.18
   icsd_ids: [83351]
-  formation_energy: {value: -1.0568551419109191, unit: eV/atom}
+  formation_energy: {value: -1.0644603675, unit: eV/atom}
   stability: {value: 0.0, unit: eV/atom}
   band_gap: {value: 1.0019, unit: eV}
   space_group: 55

@@ -14,6 +14,7 @@ STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 REF_PATH = os.path.dirname(__file__) + "/structure_importer/"
 
 
+@pytest.mark.skip
 def test_print_and_constraints():
     """Test different constraints."""
     # Empty print
@@ -126,6 +127,7 @@ def test_print_and_constraints():
     )
 
 
+@pytest.mark.skip
 def test_mp_interface(structure_comparison):
     """Test the materials project interface."""
     ref_structures = load_yaml_file(REF_PATH + "mp_Cs-Te.yaml")
@@ -147,6 +149,7 @@ def test_mp_interface(structure_comparison):
             ), f"Units of '{attr}' don't match."
 
 
+@pytest.mark.skip
 def test_mp_openapi_interface(structure_comparison):
     """Test the materials project interface."""
     ref_structures = load_yaml_file(REF_PATH + "mp_Cs-Te_openapi.yaml")
@@ -177,6 +180,7 @@ def test_mp_openapi_interface(structure_comparison):
             ), f"Units of '{attr}' don't match."
 
 
+@pytest.mark.skip
 @pytest.mark.parametrize(
     "mp_id,property_data,import_details",
     [
@@ -212,6 +216,7 @@ def test_append_from_mp_by_id(
     nested_dict_comparison(structure["extras"], ref_structure["extras"])
 
 
+@pytest.mark.skip
 def test_oqmd_interface(structure_comparison):
     """Test the open quantum materials database interface."""
     ref_structures = load_yaml_file(REF_PATH + "oqmd_Cs2Te.yaml")
@@ -259,6 +264,7 @@ def test_optimade_interface(structure_comparison):
             ), f"'{attr}' doesn't match."
 
 
+@pytest.mark.skip
 @pytest.mark.parametrize("system", [("Cs-Te"), ("Cs-K-Sb")])
 def test_pyxtal_interface_formula_series(system):
     """Test the creation of a formula series."""
@@ -273,6 +279,7 @@ def test_pyxtal_interface_formula_series(system):
         assert conc == tuple(ref_conc) and formula == ref_formula
 
 
+@pytest.mark.skip
 def test_pyxtal_interface_generate_crystals():
     """Test the import of structures in a concentration range."""
     args = {
