@@ -78,6 +78,7 @@ def _parse_entry(adsorbates, store_uptake, entry) -> Structure:
         file_path=entry["cif"],
         file_format="cif",
         backend="internal",
+        backend_kwargs={"strct_wrap": True},
         label=entry["name"],
         attributes=attributes,
         extras=extras,

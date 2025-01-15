@@ -10,11 +10,11 @@ structures:
   - [12.2836, 0.0, 0.0]
   - [-5.933584660205628, 11.326730654525711, 0.0]
   - [0.596885683494154, 0.10620121326316143, 12.516726199096198]
-  kinds: [null, null, null, null, null, null, null, null, null, null, null, null,
-    null, null, null, null, null, null, null, null, null, null, null, null, null,
-    null, null, null, null, null, null, null, null, null, null, null, null, null,
-    null, null, null, null, null, null, null, null, null, null, null, null, null,
-    null, null, null, null, null]
+  kinds: ['O1', 'O2', 'C3', 'O4', 'O5', 'C6', 'O7', 'O8', 'C9', 'O10', 'O11', 'C12',
+    'O13', 'O14', 'C15', 'O16', 'O17', 'C18', 'Cr19', 'Cr20', 'Cr21', 'O22', 'O23',
+    'O24', 'C25', 'O26', 'O27', 'C28', 'O29', 'O30', 'C31', 'O32', 'O33', 'C34', 'O35',
+    'O36', 'C37', 'O38', 'O39', 'C40', 'Cr41', 'Cr42', 'Cr43', 'O44', 'N45', 'N46', 'N47',
+    'N48', 'N49', 'N50', 'N51', 'N52', 'N53', 'N54', 'N55', 'N56']
   site_attributes: {}
   attributes:
     mofid: '[Cr][O]([Cr])[Cr].[O-]C(=O)N=NC(=O)[O-].[O-]C(=O)[N][N]C(=O)[O-] MOFid-v1.acs,ERROR.cat0'

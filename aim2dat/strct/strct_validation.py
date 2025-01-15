@@ -57,7 +57,6 @@ def _structure_validate_positions(positions, is_cartesian, cell, inv_cell, pbc):
                 positions_cart.append(
                     tuple(float(p) for p in np.transpose(cell).dot(np.array(position)))
                 )
-        ###
     if len(positions_scaled) == 0:
         return tuple(positions_cart), None
     else:
