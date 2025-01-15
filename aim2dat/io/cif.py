@@ -376,6 +376,7 @@ def read_file(
     extract_structures=False,
     strct_check_chem_formula=True,
     strct_get_sym_op_from_sg=True,
+    strct_wrap=False,
 ):
     """
     Read cif file.
@@ -436,6 +437,7 @@ def read_file(
                         "positions": positions,
                         "pbc": True,
                         "is_cartesian": False,
+                        "wrap": strct_wrap,
                     }
                 )
         output_dict[block.title] = block.get_output()

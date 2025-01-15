@@ -1,0 +1,279 @@
+%YAML 1.2
+---
+structures:
+- label: tobmof-11
+  elements: [O, O, C, O, O, C, O, O, C, O, O, C, O, O, C, O, O, C, Cr, Cr, Cr, O,
+    O, O, C, O, O, C, O, O, C, O, O, C, O, O, C, O, O, C, Cr, Cr, Cr, O, N, N, N,
+    N, N, N, N, N, N, N, N, N]
+  pbc: [true, true, true]
+  cell:
+  - [12.2836, 0.0, 0.0]
+  - [-5.933584660205628, 11.326730654525711, 0.0]
+  - [0.596885683494154, 0.10620121326316143, 12.516726199096198]
+  kinds: ['O1', 'O2', 'C3', 'O4', 'O5', 'C6', 'O7', 'O8', 'C9', 'O10', 'O11', 'C12',
+    'O13', 'O14', 'C15', 'O16', 'O17', 'C18', 'Cr19', 'Cr20', 'Cr21', 'O22', 'O23',
+    'O24', 'C25', 'O26', 'O27', 'C28', 'O29', 'O30', 'C31', 'O32', 'O33', 'C34', 'O35',
+    'O36', 'C37', 'O38', 'O39', 'C40', 'Cr41', 'Cr42', 'Cr43', 'O44', 'N45', 'N46', 'N47',
+    'N48', 'N49', 'N50', 'N51', 'N52', 'N53', 'N54', 'N55', 'N56']
+  site_attributes: {}
+  attributes:
+    mofid: '[Cr][O]([Cr])[Cr].[O-]C(=O)N=NC(=O)[O-].[O-]C(=O)[N][N]C(=O)[O-] MOFid-v1.acs,ERROR.cat0'
+    mofkey: Cr.USVVENVKYJZFMW.MOFkey-v1.acs
+    source_id: 149536
+    source: MOFX-DB_dc8a0295db-Tobacco
+    void_fraction: {value: 0.67, unit: null}
+    surface_area_m2g: {value: 1982.0, unit: m2/g}
+    surface_area_m2cm3: {value: 1965.0, unit: m2/cm3}
+    pld: {value: 7.6, unit: angstrom}
+    lcd: {value: 8.0, unit: angstrom}
+    pxrd:
+    pore_size_distribution:
+  extras:
+    isotherms:
+    - adsorbates: [Xenon, Krypton]
+      temperature: {value: 298.0, unit: K}
+      pressure:
+        value: [1.0, 5.0]
+        unit: bar
+      total_adsorption:
+        value: [77.65660000000001, 375.1537]
+        unit: mg/g
+      simin: ''
+      frac_adsorption:
+        Xenon:
+          value: [52.51720000000001, 249.4567]
+          unit: mg/g
+        Krypton:
+          value: [25.1394, 125.697]
+          unit: mg/g
+    - adsorbates: [Methane]
+      temperature: {value: 298.0, unit: K}
+      pressure:
+        value: [65.0, 100.0, 6.0]
+        unit: bar
+      total_adsorption:
+        value: [130.59714183774756, 143.5847029044849, 33.19043383721762]
+        unit: mg/g
+      simin: "SimulationType                MonteCarlo\nNumberOfCycles           \
+        \     2000\nNumberOfInitializationCycles  1000\nPrintEvery               \
+        \     250\nRestart File                  no\n\nRemoveAtomNumberCodeFromLabel
+        yes\n\nCutOffVDW                     12.8\nForcefield                   \
+        \ tobacco\n\nFramework 0\nFrameworkName this_name_changes\nUnitCells 1 1 1\nHeliumVoidFraction
+        0.8000\nExternalTemperature 298\nExternalPressure 100E5\n\n\nComponent 0 MoleculeName\
+        \            methane\n            StartingBead             0\n           \
+        \ MoleculeDefinition       TraPPE\n            IdealGasRosenbluthWeight 1.0\n\
+        \            TranslationProbability   1.0\n            ReinsertionProbability\
+        \   1.0\n            SwapProbability          1.0\n            CreateNumberOfMolecules\
+        \  0\n"
+    - adsorbates: [Hydrogen]
+      temperature: {value: 77.0, unit: K}
+      pressure:
+        value: [100.0, 6.0]
+        unit: bar
+      total_adsorption:
+        value: [45.27035649958669, 23.290539758139257]
+        unit: mg/g
+      simin: "SimulationType                MonteCarlo\nNumberOfCycles           \
+        \     2000\nNumberOfInitializationCycles  1000\nPrintEvery               \
+        \     250\nRestart File                  no\n\nRemoveAtomNumberCodeFromLabel
+        yes\n\nCutOffVDW                     12.8\nForcefield                   \
+        \ tobacco_h2\n\nFramework 0\nFrameworkName this_name_changes\nUnitCells 1 1 1\nHeliumVoidFraction
+        0.8000\nExternalTemperature 77.0\nExternalPressure 100E5\n\n\nComponent 0
+        MoleculeName            hydrogen\n            StartingBead             0\n\
+        \            MoleculeDefinition       TraPPE\n            IdealGasRosenbluthWeight
+        1.0\n            Rotationprobability      1.0\n            TranslationProbability\
+        \   1.0\n            ReinsertionProbability   1.0\n            SwapProbability\
+        \          1.0\n            CreateNumberOfMolecules  0\n"
+    - adsorbates: [Hydrogen]
+      temperature: {value: 130.0, unit: K}
+      pressure:
+        value: [100.0]
+        unit: bar
+      total_adsorption:
+        value: [25.911985791522895]
+        unit: mg/g
+      simin: "SimulationType                MonteCarlo\nNumberOfCycles           \
+        \     2000\nNumberOfInitializationCycles  1000\nPrintEvery               \
+        \     250\nRestart File                  no\n\nRemoveAtomNumberCodeFromLabel
+        yes\n\nCutOffVDW                     12.8\nForcefield                   \
+        \ tobacco_h2\n\nFramework 0\nFrameworkName this_name_changes\nUnitCells 1 1 1\nHeliumVoidFraction
+        0.8000\nExternalTemperature 77.0\nExternalPressure 100E5\n\n\nComponent 0
+        MoleculeName            hydrogen\n            StartingBead             0\n\
+        \            MoleculeDefinition       TraPPE\n            IdealGasRosenbluthWeight
+        1.0\n            Rotationprobability      1.0\n            TranslationProbability\
+        \   1.0\n            ReinsertionProbability   1.0\n            SwapProbability\
+        \          1.0\n            CreateNumberOfMolecules  0\n"
+    - adsorbates: [Hydrogen]
+      temperature: {value: 200.0, unit: K}
+      pressure:
+        value: [100.0]
+        unit: bar
+      total_adsorption:
+        value: [12.905580472042532]
+        unit: mg/g
+      simin: "SimulationType                MonteCarlo\nNumberOfCycles           \
+        \     2000\nNumberOfInitializationCycles  1000\nPrintEvery               \
+        \     250\nRestart File                  no\n\nRemoveAtomNumberCodeFromLabel
+        yes\n\nCutOffVDW                     12.8\nForcefield                   \
+        \ tobacco_h2\n\nFramework 0\nFrameworkName this_name_changes\nUnitCells 1 1 1\nHeliumVoidFraction
+        0.8000\nExternalTemperature 77.0\nExternalPressure 100E5\n\n\nComponent 0
+        MoleculeName            hydrogen\n            StartingBead             0\n\
+        \            MoleculeDefinition       TraPPE\n            IdealGasRosenbluthWeight
+        1.0\n            Rotationprobability      1.0\n            TranslationProbability\
+        \   1.0\n            ReinsertionProbability   1.0\n            SwapProbability\
+        \          1.0\n            CreateNumberOfMolecules  0\n"
+    - adsorbates: [Hydrogen]
+      temperature: {value: 243.0, unit: K}
+      pressure:
+        value: [100.0]
+        unit: bar
+      total_adsorption:
+        value: [9.578360506594066]
+        unit: mg/g
+      simin: "SimulationType                MonteCarlo\nNumberOfCycles           \
+        \     2000\nNumberOfInitializationCycles  1000\nPrintEvery               \
+        \     250\nRestart File                  no\n\nRemoveAtomNumberCodeFromLabel
+        yes\n\nCutOffVDW                     12.8\nForcefield                   \
+        \ tobacco_h2\n\nFramework 0\nFrameworkName this_name_changes\nUnitCells 1 1 1\nHeliumVoidFraction
+        0.8000\nExternalTemperature 77.0\nExternalPressure 100E5\n\n\nComponent 0
+        MoleculeName            hydrogen\n            StartingBead             0\n\
+        \            MoleculeDefinition       TraPPE\n            IdealGasRosenbluthWeight
+        1.0\n            Rotationprobability      1.0\n            TranslationProbability\
+        \   1.0\n            ReinsertionProbability   1.0\n            SwapProbability\
+        \          1.0\n            CreateNumberOfMolecules  0\n"
+    - adsorbates: [Hydrogen]
+      temperature: {value: 160.0, unit: K}
+      pressure:
+        value: [5.0]
+        unit: bar
+      total_adsorption:
+        value: [1.9156721013188132]
+        unit: mg/g
+      simin: "SimulationType                MonteCarlo\nNumberOfCycles           \
+        \     2000\nNumberOfInitializationCycles  1000\nPrintEvery               \
+        \     250\nRestart File                  no\n\nRemoveAtomNumberCodeFromLabel
+        yes\n\nCutOffVDW                     12.8\nForcefield                   \
+        \ tobacco_h2\n\nFramework 0\nFrameworkName this_name_changes\nUnitCells 1 1 1\nHeliumVoidFraction
+        0.8000\nExternalTemperature 77.0\nExternalPressure 100E5\n\n\nComponent 0
+        MoleculeName            hydrogen\n            StartingBead             0\n\
+        \            MoleculeDefinition       TraPPE\n            IdealGasRosenbluthWeight
+        1.0\n            Rotationprobability      1.0\n            TranslationProbability\
+        \   1.0\n            ReinsertionProbability   1.0\n            SwapProbability\
+        \          1.0\n            CreateNumberOfMolecules  0\n"
+    heats:
+    - adsorbates: [Methane]
+      temperature: {value: 298.0, unit: K}
+      pressure:
+        value: [6.0]
+        unit: bar
+      total_adsorption:
+        value: [13.3]
+        unit: kj/mol
+      simin: "SimulationType                MonteCarlo\nNumberOfCycles           \
+        \     2000\nNumberOfInitializationCycles  1000\nPrintEvery               \
+        \     250\nRestart File                  no\n\nRemoveAtomNumberCodeFromLabel
+        yes\n\nCutOffVDW                     12.8\nForcefield                   \
+        \ tobacco\n\nFramework 0\nFrameworkName this_name_changes\nUnitCells 1 1 1\nHeliumVoidFraction
+        0.8000\nExternalTemperature 298\nExternalPressure 100E5\n\n\nComponent 0 MoleculeName\
+        \            methane\n            StartingBead             0\n           \
+        \ MoleculeDefinition       TraPPE\n            IdealGasRosenbluthWeight 1.0\n\
+        \            TranslationProbability   1.0\n            ReinsertionProbability\
+        \   1.0\n            SwapProbability          1.0\n            CreateNumberOfMolecules\
+        \  0\n"
+    - adsorbates: [Hydrogen]
+      temperature: {value: 77.0, unit: K}
+      pressure:
+        value: [6.0]
+        unit: bar
+      total_adsorption:
+        value: [4.2]
+        unit: kj/mol
+      simin: "SimulationType                MonteCarlo\nNumberOfCycles           \
+        \     2000\nNumberOfInitializationCycles  1000\nPrintEvery               \
+        \     250\nRestart File                  no\n\nRemoveAtomNumberCodeFromLabel
+        yes\n\nCutOffVDW                     12.8\nForcefield                   \
+        \ tobacco_h2\n\nFramework 0\nFrameworkName this_name_changes\nUnitCells 1 1 1\nHeliumVoidFraction
+        0.8000\nExternalTemperature 77.0\nExternalPressure 100E5\n\n\nComponent 0
+        MoleculeName            hydrogen\n            StartingBead             0\n\
+        \            MoleculeDefinition       TraPPE\n            IdealGasRosenbluthWeight
+        1.0\n            Rotationprobability      1.0\n            TranslationProbability\
+        \   1.0\n            ReinsertionProbability   1.0\n            SwapProbability\
+        \          1.0\n            CreateNumberOfMolecules  0\n"
+    - adsorbates: [Hydrogen]
+      temperature: {value: 160.0, unit: K}
+      pressure:
+        value: [5.0]
+        unit: bar
+      total_adsorption:
+        value: [4.5]
+        unit: kj/mol
+      simin: "SimulationType                MonteCarlo\nNumberOfCycles           \
+        \     2000\nNumberOfInitializationCycles  1000\nPrintEvery               \
+        \     250\nRestart File                  no\n\nRemoveAtomNumberCodeFromLabel
+        yes\n\nCutOffVDW                     12.8\nForcefield                   \
+        \ tobacco_h2\n\nFramework 0\nFrameworkName this_name_changes\nUnitCells 1 1 1\nHeliumVoidFraction
+        0.8000\nExternalTemperature 77.0\nExternalPressure 100E5\n\n\nComponent 0
+        MoleculeName            hydrogen\n            StartingBead             0\n\
+        \            MoleculeDefinition       TraPPE\n            IdealGasRosenbluthWeight
+        1.0\n            Rotationprobability      1.0\n            TranslationProbability\
+        \   1.0\n            ReinsertionProbability   1.0\n            SwapProbability\
+        \          1.0\n            CreateNumberOfMolecules  0\n"
+  function_args: {}
+  positions:
+  - [1.240347387226504, 5.614865521509739, 4.576365432913552]
+  - [-1.3128059035866384, 5.768622021395834, 4.262195605316237]
+  - [-1.958560378315004, 6.680923940258426, 4.895166449204533]
+  - [-2.0272023360332128, 7.892602677403919, 4.514908307275989]
+  - [-0.7399569331707775, 10.11104179172512, 3.9925853229877055]
+  - [0.2129643958643737, 10.25966669735439, 4.80905137295475]
+  - [1.2539207321091461, 9.536791886975001, 4.782015244364702]
+  - [2.6481922481295377, 7.326488389279388, 4.474354114390919]
+  - [2.27284615824575, 6.218147426036715, 4.965885952229426]
+  - [1.6526647713244536, 5.680034585771028, 1.8845182965359237]
+  - [-0.8976084867387304, 5.742441675967457, 1.537053977249013]
+  - [-2.0173254842730928, 6.285201448886981, 1.3748372057087264]
+  - [-2.3077378265294883, 7.386830995736733, 1.9211923042992751]
+  - [-0.7503418869817108, 9.506582425693034, 1.3951143021512624]
+  - [0.36073207979380306, 10.127308053886438, 1.304117702683833]
+  - [1.3236975403957947, 9.96420858775757, 2.119081745506987]
+  - [2.591155620285853, 7.718811341251313, 1.813673626249039]
+  - [2.449705591424474, 6.5398199819279235, 1.3740862021367806]
+  - [0.1714620869436731, 5.773987868416709, 3.065721747944632]
+  - [-1.3924699636615143, 8.684786210759205, 2.9520698740568387]
+  - [1.8909052712302163, 8.600348976449967, 3.292900328458227]
+  - [0.23055645276184658, 7.673804512881124, 3.1038977628518754]
+  - [4.445614040974122, 4.263383312963532, 7.889793192338299]
+  - [5.7990570517337545, 2.0211033464589714, 7.537948018881703]
+  - [6.855003982663112, 1.3147560047259963, 7.509785384933737]
+  - [7.794153590537544, 1.4425107255945209, 8.349532545631103]
+  - [9.162500187973018, 3.64472043836054, 8.1972039877881]
+  - [9.121343224451632, 4.864566145673557, 7.858376209578567]
+  - [8.433130059786599, 5.747857459911193, 8.476326982027947]
+  - [5.927595585684391, 5.919239823381264, 7.876650629829246]
+  - [4.884770944025855, 5.365572837215189, 7.434184358691197]
+  - [4.3209946260900525, 3.707129972073347, 10.519932868554381]
+  - [5.51957681834727, 1.434068174520632, 10.144556249843488]
+  - [6.431494005936505, 1.1905953232496287, 10.99168827899832]
+  - [7.554103754432875, 1.785498581492237, 10.99444195876212]
+  - [9.093175530263816, 3.8954868144300843, 10.89293130928745]
+  - [8.636500268574123, 4.867783277299827, 11.561574822843166]
+  - [7.710677324769, 5.607204904973633, 11.135880964811907]
+  - [5.230879182563768, 5.756470733356506, 10.506039302473386]
+  - [4.430322502107105, 4.880866104757245, 10.980923894467093]
+  - [5.085922988541987, 2.8955055093369197, 9.030567618123927]
+  - [8.343339280070401, 2.738355858071482, 9.598952154824884]
+  - [6.830600855609095, 5.686252082333704, 9.492309647608582]
+  - [6.751776337898993, 3.7799100866819755, 9.365890712997711]
+  - [0.09724835209524435, 11.310162499989575, 5.763326578373844]
+  - [6.990941620639813, 0.28571690161480634, 6.534607246762152]
+  - [-2.6542948154116526, 6.3348585312464785, 6.092641644672066]
+  - [9.855785971580598, 5.23820297469313, 6.693194167704702]
+  - [3.0377588168841765, 5.590233496040036, 5.998515863654863]
+  - [4.161985374259739, 6.0332910143635745, 6.393794077022322]
+  - [0.5530015375835725, 11.099558149808741, 0.28525619007740344]
+  - [6.1782221527670425, 0.18673511074132934, 11.969494929671711]
+  - [9.358996541512916, 5.623141772517206, 0.812711032107318]
+  - [8.444678089221384, 4.901247389803046, 0.40729427051859324]
+  - [3.2319723092620594, 6.1836911590295545, 0.237442295996854]
+  - [3.6224349603506654, 5.217534885192968, 12.106803416075797]
+parameters: {"mofkey": "Cr.USVVENVKYJZFMW.MOFkey-v1.acs", "store_uptake": True}
