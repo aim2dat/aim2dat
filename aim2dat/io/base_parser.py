@@ -34,6 +34,9 @@ def transform_str_value(value: str) -> Union[str, int, float, bool]:
     str, int, float bool
         Detected and transformed value.
     """
+    if value is None:
+        return value
+
     value = value.strip()
     # print(value)
     for sl in ["'", '"']:

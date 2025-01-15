@@ -602,13 +602,17 @@ class Structure(AnalysisMixin, ManipulationMixin):
         if len(structure_dicts) == 1:
             if label is not None:
                 structure_dicts[0]["label"] = label
-            strct = cls(**structure_dicts[0], attributes=attributes)
+            if attributes is not None:
+                structure_dicts[0].setdefault("attributes", {}).update(attributes)
+            strct = cls(**structure_dicts[0])
         else:
             strct = []
             for idx, structure_dict in enumerate(structure_dicts):
                 if label is not None:
                     structure_dict["label"] = label + f"_{idx}"
-                strct.append(cls(**structure_dict, attributes=copy.deepcopy(attributes)))
+                if attributes is not None:
+                    structure_dict.setdefault("attributes", {}).update(copy.deepcopy(attributes))
+                strct.append(cls(**structure_dict))
         return strct
 
     @import_method

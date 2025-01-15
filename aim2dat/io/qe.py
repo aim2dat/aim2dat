@@ -4,10 +4,285 @@ Module of functions to read output-files of Quantum ESPRESSO.
 
 # Standard library imports
 import re
+import xml.etree.ElementTree as ET
+
+# Third party library imports
+import numpy as np
 
 # Internal library imports
 from aim2dat.io.utils import read_structure, read_multiple, custom_open
+from aim2dat.io.base_parser import transform_str_value
 from aim2dat.utils.units import length
+from aim2dat.utils.dict_tools import dict_create_tree
+
+
+@read_structure(r".*\.xml", preset_kwargs={"extract_structures": True})
+def read_xml(file_name: str, extract_structures: bool = False, strct_type: str = None):
+    """
+    Read xml output file.
+
+    Parameters
+    ----------
+    file_name : str
+        Path of the xml-file of Quantum ESPRESSO.
+    extract_structures : bool
+        Whether to extract alls crystal structures and add them to the output dictionary with the
+        key ``'structures'``.
+    strct_type : str
+        Type of extracted structure(s). Supported options are ``'input'``, ``'output'`` or
+        ``'steps'``.
+
+    Returns
+    -------
+    dict
+        Output dictionary.
+    """
+
+    def _parse_atomic_structure(element):
+        outp_dict = {
+            "system": {
+                "nat": int(element.attrib["nat"]),
+                "alat": float(element.attrib["alat"]),
+            }
+        }
+        if "bravais_index" in element.attrib:
+            outp_dict["system"]["ibrav"] = int(element.attrib["bravais_index"])
+        for c1 in element:
+            if c1.tag == "atomic_positions":
+                outp_dict["atomic_positions"] = [
+                    [c.attrib["name"]] + [float(val) for val in c.text.split()] for c in c1
+                ]
+            elif c1.tag == "cell":
+                outp_dict["cell"] = [[float(val) for val in c.text.split()] for c in c1]
+        return outp_dict
+
+    def _parse_kpoints(element):
+        if element[0].tag == "nks":
+            return {
+                "nks": int(element[0].text),
+                "k_points": [
+                    [float(v) for v in c.text.split()] + [float(c.attrib["weight"])]
+                    for c in element[1:]
+                ],
+            }
+        elif element[0].tag == "monkhorst_pack":
+            return {
+                "automatic": [
+                    int(element[0].attrib[k]) for k in ["nk1", "nk2", "nk3", "k1", "k2", "k3"]
+                ]
+            }
+
+    def _parse_array(element):
+        dims = [int(val) for val in element.attrib["dims"].split()]
+        arr = np.array([float(val) for val in element.text.split()]).reshape(dims)
+        return [v.tolist() for v in arr]
+
+    def _parse_general_info(element, outp_dict):
+        outp_dict["general_info"] = {
+            c.tag: c.attrib for c in element if c.tag in ["creator", "created"]
+        }
+
+    def _parse_parallel_info(element, outp_dict):
+        outp_dict["parallel_info"] = {c.tag: int(c.text) for c in element}
+
+    def _parse_input(element, outp_dict):
+        bfgs_mapping = {
+            "ndim": "bfgs_ndim",
+            "trust_radius_min": "trust_radius_min",
+            "trust_radius_max": "trust_radius_max",
+            "trust_radius_init": "trust_radius_ini",
+            "w1": "w_1",
+            "w2": "w_2",
+        }
+        inp_dict = outp_dict.setdefault("input", {"system": {}})
+        for child in element:
+            if child.tag == "control_variables":
+                inp_dict["control"] = {c.tag: transform_str_value(c.text) for c in child}
+            elif child.tag == "atomic_species":
+                inp_dict["system"]["ntyp"] = int(child.attrib["ntyp"])
+                inp_dict["atomic_species"] = {
+                    c.attrib["name"]: (float(c[0].text), c[1].text) for c in child
+                }
+            elif child.tag == "atomic_structure":
+                strct_dict = _parse_atomic_structure(child)
+                strct_dict["cell_parameters"] = strct_dict.pop("cell")
+                inp_dict["system"].update(strct_dict.pop("system"))
+                inp_dict.update(strct_dict)
+            elif child.tag == "dft":
+                for c1 in child:
+                    if c1.tag == "functional":
+                        inp_dict["system"]["input_dft"] = c1.text
+                    elif c1.tag == "vdW":
+                        inp_dict["system"].update({c.tag: transform_str_value(c.text) for c in c1})
+            elif child.tag in ["spin", "bands"]:
+                inp_dict[child.tag] = {c.tag: transform_str_value(c.text) for c in child}
+            elif child.tag == "basis":
+                inp_dict["system"].update({c.tag: transform_str_value(c.text) for c in child})
+            elif child.tag == "electron_control":
+                inp_dict["electrons"] = {c.tag: transform_str_value(c.text) for c in child}
+            elif child.tag == "k_points_IBZ":
+                inp_dict["k_points"] = _parse_kpoints(child)
+            elif child.tag == "ion_control":
+                inp_dict["ions"] = {}
+                for c1 in child:
+                    # TODO take care of molecular dynamics:
+                    if c1.tag == "bfgs":
+                        inp_dict["ions"].update(
+                            {bfgs_mapping[c.tag]: transform_str_value(c.text) for c in c1}
+                        )
+                    else:
+                        inp_dict["ions"][c1.tag] = transform_str_value(c1.text)
+            elif child.tag == "cell_control":
+                inp_dict["cell"] = {}
+                for c1 in child:
+                    if c1.tag == "cell_do_free":
+                        inp_dict["cell"]["cell_dofree"] = transform_str_value(c1.text)
+                    else:
+                        inp_dict["cell"][c1.tag] = transform_str_value(c1.text)
+            elif child.tag == "symmetry_flags":
+                inp_dict["system"].update({c.tag: transform_str_value(c.text) for c in child})
+            elif child.tag == "free_positions":
+                inp_dict["free_positions"] = _parse_array(child)
+
+    def _parse_step(element, outp_dict):
+        step_dict = {}
+        for c1 in element:
+            if c1.tag == "scf_conv":
+                step_dict["scf_conv"] = {c.tag: transform_str_value(c.text) for c in c1}
+            elif c1.tag == "atomic_structure":
+                step_dict.update(_parse_atomic_structure(c1))
+            elif c1.tag == "total_energy":
+                step_dict["total_energy"] = {c.tag: float(c.text) for c in c1}
+            elif c1.tag == "forces":
+                step_dict["forces"] = _parse_array(c1)
+        outp_dict.setdefault("steps", []).append(step_dict)
+
+    def _parse_output(element, outp_dict):
+        output = outp_dict.setdefault("output", {})
+        for c1 in element:
+            if c1.tag == "convergence_info":
+                for c2 in c1:
+                    output[c2.tag] = {c.tag: transform_str_value(c.text) for c in c2}
+            elif c1.tag in [
+                "algorithmic_info",
+                "boundary_conditions",
+                "magnetization",
+                "total_energy",
+            ]:
+                output[c1.tag] = {c.tag: transform_str_value(c.text) for c in c1}
+            elif c1.tag == "atomic_structure":
+                output.update(_parse_atomic_structure(c1))
+            elif c1.tag == "symmetries":
+                output["symmetry_operations"] = []
+                for c2 in c1:
+                    if c2.tag == "symmetry":
+                        for c3 in c2:
+                            if c3.tag == "rotation":
+                                rotation = _parse_array(c3)
+                            elif c3.tag == "fractional_translation":
+                                translation = [float(val) for val in c3.text.split()]
+                        output["symmetry_operations"].append([rotation, translation])
+            elif c1.tag == "basis_set":
+                output[c1.tag] = {}
+                dict_create_tree(outp_dict, ["input", "system"])
+                for c2 in c1:
+                    if c2.tag == "fft_grid":
+                        outp_dict["input"]["system"].update(
+                            {f"nr{i}": int(c2.attrib[f"nr{i}"]) for i in range(1, 4)}
+                        )
+                    elif c2.tag == "fft_smooth":
+                        outp_dict["input"]["system"].update(
+                            {f"nrs{i}": int(c2.attrib[f"nr{i}"]) for i in range(1, 4)}
+                        )
+                    elif c2.tag == "reciprocal_lattice":
+                        output[c1.tag][c2.tag] = [
+                            [float(val) for val in c3.text.split()] for c3 in c2
+                        ]
+                    else:
+                        output[c1.tag][c2.tag] = transform_str_value(c2.text)
+            elif c1.tag == "band_structure":
+                output[c1.tag] = {}
+                for c2 in c1:
+                    if c2.tag == "starting_k_points":
+                        output[c1.tag][c2.tag] = _parse_kpoints(c2)
+                    elif c2.tag == "ks_energies":
+                        for c3 in c2:
+                            if c3.tag in ["eigenvalues", "occupations"]:
+                                output[c1.tag].setdefault(c3.tag, []).append(
+                                    [float(val) for val in c3.text.split()]
+                                )
+                            elif c3.tag == "k_point":
+                                output[c1.tag].setdefault("kpoints", []).append(
+                                    [float(val) for val in c3.text.split()]
+                                )
+                                output[c1.tag].setdefault("weights", []).append(
+                                    float(c3.attrib["weight"])
+                                )
+                    else:
+                        output[c1.tag][c2.tag] = transform_str_value(c2.text)
+            elif c1.tag == "forces":
+                output["forces"] = _parse_array(c1)
+
+    def _parse_timing_info(element, outp_dict):
+        outp_dict["timing_info"] = {
+            c1.attrib["label"]: {c.tag: float(c.text) for c in c1} for c1 in element
+        }
+
+    def _extract_structure(inp_dict, label=None):
+        cell_key = "cell_parameters" if "cell_parameters" in inp_dict else "cell"
+        strct_dict = {
+            "label": label,
+            "elements": [],
+            "positions": [],
+            "cell": [[v1 * length.Bohr for v1 in v0] for v0 in inp_dict[cell_key]],
+            "pbc": True,
+            "is_cartesian": False,
+            "attributes": {
+                k: val
+                for k, val in inp_dict.items()
+                if k not in ["atomic_positions", cell_key, "forces"]
+            },
+        }
+        for el, p1, p2, p3 in inp_dict["atomic_positions"]:
+            strct_dict["elements"].append(el)
+            strct_dict["positions"].append((p1 * length.Bohr, p2 * length.Bohr, p3 * length.Bohr))
+        if "forces" in inp_dict:
+            strct_dict["site_attributes"] = {"forces": [tuple(val) for val in inp_dict["forces"]]}
+        return strct_dict
+
+    tree = ET.parse(file_name)
+    outp_dict = {}
+    for child in tree.getroot():
+        if child.tag == "exit_status":
+            outp_dict["exit_status"] = int(child.text)
+        elif child.tag == "closed":
+            pass
+        else:
+            locals()[f"_parse_{child.tag}"](child, outp_dict)
+    if extract_structures:
+        if strct_type is None:
+            if "steps" in outp_dict:
+                strct_type = "steps"
+            elif "output" in outp_dict:
+                strct_type = "output"
+            else:
+                strct_type = "input"
+
+        label = (
+            ""
+            if outp_dict["input"]["control"]["prefix"] is None
+            else outp_dict["input"]["control"]["prefix"]
+        )
+        if strct_type == "steps":
+            outp_dict["structures"] = [
+                _extract_structure(d, label="_".join([label, f"step_{i}"]))
+                for i, d in enumerate(outp_dict[strct_type])
+            ]
+        else:
+            outp_dict["structures"] = [
+                _extract_structure(outp_dict[strct_type], label="_".join([label, strct_type]))
+            ]
+    return outp_dict
 
 
 @read_structure(r".*\.in(p)?$")
