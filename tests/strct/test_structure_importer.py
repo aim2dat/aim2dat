@@ -303,3 +303,16 @@ def test_pyxtal_interface_generate_crystals():
         assert structure["attributes"]["space_group"] not in args["excl_space_groups"]
         assert c_range[0] <= concentration
         assert concentration <= c_range[1]
+
+
+@pytest.mark.parametrize("system", ["tobmof-11", "coremof2019"])
+def test_mofxdb_interface(nested_dict_comparison, structure_comparison, system):
+    """Test the MOFXDB interface."""
+    data = load_yaml_file(REF_PATH + "mofxdb_" + system + ".yaml")
+    strct_import = StructureImporter()
+    structures = strct_import.import_from_mofxdb(**data["parameters"])
+    assert len(structures) == len(data["structures"]), "Number of queried MOFs is wrong."
+    for strct, ref_strct in zip(structures, data["structures"]):
+        structure_comparison(strct, ref_strct)
+        nested_dict_comparison(strct.attributes, ref_strct["attributes"])
+        nested_dict_comparison(strct.extras, ref_strct["extras"])

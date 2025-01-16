@@ -9,7 +9,7 @@ import re
 from scipy.spatial.distance import cdist
 
 # Internal library imports
-from aim2dat.io.utils import read_structure
+from aim2dat.io.utils import read_structure, custom_open
 from aim2dat.io.base_parser import FLOAT, transform_str_value
 from aim2dat.strct.strct_misc import _get_cell_from_lattice_p
 from aim2dat.utils.element_properties import get_element_symbol
@@ -376,6 +376,7 @@ def read_file(
     extract_structures=False,
     strct_check_chem_formula=True,
     strct_get_sym_op_from_sg=True,
+    strct_wrap=False,
 ):
     """
     Read cif file.
@@ -400,7 +401,7 @@ def read_file(
     """
     cif_blocks = []
     current_block = None
-    with open(file_name, "r") as f_obj:
+    with custom_open(file_name, "r") as f_obj:
         for line_idx, line in enumerate(f_obj):
             line = line.strip()
             if line.startswith("data_"):
@@ -436,6 +437,7 @@ def read_file(
                         "positions": positions,
                         "pbc": True,
                         "is_cartesian": False,
+                        "wrap": strct_wrap,
                     }
                 )
         output_dict[block.title] = block.get_output()

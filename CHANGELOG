@@ -8,6 +8,12 @@ Version 0.3.0
 **Enhancements:**
 
 * A parser for xml output files of Quantum ESPRESSO is added (`PR #102 <https://github.com/aim2dat/aim2dat/pull/102>`_).
+* Added interface to MOFXDB (https://mof.tech.northwestern.edu/) to the ``strct.StructureImporter`` class (`PR #94 <https://github.com/aim2dat/aim2dat/pull/94>`_).
+
+**Fixes:**
+
+* The ``internal`` backend of ``strct.Structure`` was not properly identifying the correct function to parse the file in all cases. Additionally, the ``io.cif.read_file`` function now uses the ``io.utils.custom_open`` function, allowing to pass on a string instead of the file path (`PR #99 <https://github.com/aim2dat/aim2dat/pull/99>`_).
+* ``io.cp2k.read_restart_structure`` function now supports parsing files with "" delimiters for string values (`PR #100 <https://github.com/aim2dat/aim2dat/pull/100>`_).
 
 
 Version 0.2.0
@@ -45,7 +51,7 @@ Version 0.2.0
 * ``utils.element_properties.get_atomic_radius`` supports now Van der Waals radii determined in :doi:`10.26434/chemrxiv-2024-m3rtp-v2` (`PR #44 <https://github.com/aim2dat/aim2dat/pull/44>`_).
 * An internal cif-parser is added to parse additional information (`PR #47 <https://github.com/aim2dat/aim2dat/pull/47>`_).
 * Support CP2K versions 2022.1-2024.1 (`PR #51 <https://github.com/aim2dat/aim2dat/pull/51>`_).
-* The newly implemented``strct.ext_manipulation.add_structure_random`` function adds a guest structure at a random position and orientation (`PR #53 <https://github.com/aim2dat/aim2dat/pull/53>`_).
+* The newly implemented ``strct.ext_manipulation.add_structure_random`` function adds a guest structure at a random position and orientation (`PR #53 <https://github.com/aim2dat/aim2dat/pull/53>`_).
 * ``strct.Structure.from_file`` interfaces functions from the ``io`` sub-package via the internal ``'backend'`` and adds more parameters to control the ``'ase'`` backend (`PR #56 <https://github.com/aim2dat/aim2dat/pull/56>`_).
 * The methods to find duplicate structures of ``strct.StructureOperations`` are sped up by comparing the chemical formulas prior to more expensive checks (`PR #61 <https://github.com/aim2dat/aim2dat/pull/61>`_).
 * H2 is added to the pre-defined structures (`PR #65 <https://github.com/aim2dat/aim2dat/pull/65>`_).
