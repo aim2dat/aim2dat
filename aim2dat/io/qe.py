@@ -5,6 +5,7 @@ Module of functions to read output-files of Quantum ESPRESSO.
 # Standard library imports
 import re
 import xml.etree.ElementTree as ET
+import copy
 
 # Third party library imports
 import numpy as np
@@ -17,7 +18,12 @@ from aim2dat.utils.dict_tools import dict_create_tree
 
 
 @read_structure(r".*\.xml", preset_kwargs={"extract_structures": True})
-def read_xml(file_name: str, extract_structures: bool = False, strct_type: str = None):
+def read_xml(
+    file_name: str,
+    extract_structures: bool = False,
+    strct_type: str = None,
+    strct_include: list = None,
+):
     """
     Read xml output file.
 
@@ -31,6 +37,8 @@ def read_xml(file_name: str, extract_structures: bool = False, strct_type: str =
     strct_type : str
         Type of extracted structure(s). Supported options are ``'input'``, ``'output'`` or
         ``'steps'``.
+    strct_include : list
+        List of dictionary keys that are included in the structure attributes.
 
     Returns
     -------
@@ -73,7 +81,7 @@ def read_xml(file_name: str, extract_structures: bool = False, strct_type: str =
             }
 
     def _parse_array(element):
-        dims = [int(val) for val in element.attrib["dims"].split()]
+        dims = [int(val) for val in reversed(element.attrib["dims"].split())]
         arr = np.array([float(val) for val in element.text.split()]).reshape(dims)
         return [v.tolist() for v in arr]
 
@@ -228,7 +236,7 @@ def read_xml(file_name: str, extract_structures: bool = False, strct_type: str =
             c1.attrib["label"]: {c.tag: float(c.text) for c in c1} for c1 in element
         }
 
-    def _extract_structure(inp_dict, label=None):
+    def _extract_structure(inp_dict, label=None, incl=None):
         cell_key = "cell_parameters" if "cell_parameters" in inp_dict else "cell"
         strct_dict = {
             "label": label,
@@ -243,6 +251,8 @@ def read_xml(file_name: str, extract_structures: bool = False, strct_type: str =
                 if k not in ["atomic_positions", cell_key, "forces"]
             },
         }
+        if incl is not None:
+            strct_dict["attributes"].update(copy.deepcopy(incl))
         for el, p1, p2, p3 in inp_dict["atomic_positions"]:
             strct_dict["elements"].append(el)
             strct_dict["positions"].append((p1 * length.Bohr, p2 * length.Bohr, p3 * length.Bohr))
@@ -273,14 +283,21 @@ def read_xml(file_name: str, extract_structures: bool = False, strct_type: str =
             if outp_dict["input"]["control"]["prefix"] is None
             else outp_dict["input"]["control"]["prefix"]
         )
+        incl = (
+            {}
+            if strct_include is None
+            else {k: v for k, v in outp_dict.items() if k in strct_include}
+        )
         if strct_type == "steps":
             outp_dict["structures"] = [
-                _extract_structure(d, label="_".join([label, f"step_{i}"]))
+                _extract_structure(d, label="_".join([label, f"step_{i}"]), incl=incl)
                 for i, d in enumerate(outp_dict[strct_type])
             ]
         else:
             outp_dict["structures"] = [
-                _extract_structure(outp_dict[strct_type], label="_".join([label, strct_type]))
+                _extract_structure(
+                    outp_dict[strct_type], label="_".join([label, strct_type]), incl=incl
+                )
             ]
     return outp_dict
 

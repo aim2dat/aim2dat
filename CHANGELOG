@@ -2,6 +2,14 @@
 Changelog
 =========
 
+Version 0.3.0
+=============
+
+**Enhancements:**
+
+* A parser for xml output files of Quantum ESPRESSO is added (`PR #102 <https://github.com/aim2dat/aim2dat/pull/102>`_).
+
+
 Version 0.2.0
 =============
 
