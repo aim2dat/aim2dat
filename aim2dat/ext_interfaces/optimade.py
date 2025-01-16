@@ -62,8 +62,6 @@ def _return_database_ids(api_version, url, timeout):
     """
     Update the list of providers.
     """
-    import requests
-
     providers_url = {}
     with requests.Session() as session:
         response = session.get(url=url, timeout=timeout)
@@ -83,7 +81,11 @@ def _return_database_ids(api_version, url, timeout):
                         timeout=timeout,
                     )
                     provider_json = response.json()
-                except (ValueError, requests.exceptions.ConnectTimeout):
+                except (
+                    ValueError,
+                    requests.exceptions.ConnectTimeout,
+                    requests.exceptions.SSLError,
+                ):
                     from warnings import warn
 
                     warn(
