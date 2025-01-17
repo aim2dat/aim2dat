@@ -67,6 +67,18 @@ def _check_calculated_properties(structure, func, func_args):
     return calc_extra
 
 
+def _update_label_attributes_extras(strct_dict, label, attributes, site_attributes, extras):
+    # TODO handle deepcopy.
+    if label is not None:
+        strct_dict["label"] = label
+    if attributes is not None:
+        strct_dict.setdefault("attributes", {}).update(attributes)
+    if site_attributes is not None:
+        strct_dict.setdefault("site_attributes", {}).update(site_attributes)
+    if extras is not None:
+        strct_dict.setdefault("extras", {}).update(extras)
+
+
 def import_method(func):
     """Mark function as import function."""
     func._is_import_method = True
@@ -553,6 +565,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         cls,
         file_path: str,
         attributes: dict = None,
+        site_attributes: dict = None,
         extras: dict = None,
         label: str = None,
         backend: str = "ase",
@@ -568,6 +581,8 @@ class Structure(AnalysisMixin, ManipulationMixin):
             File path.
         attributes : dict
             Attributes stored within the structure object(s).
+        site_attributes : dict
+            Site attributes stored within the structure object(s).
         extras : dict
             Extras stored within the structure object(s).
         label : str
@@ -603,30 +618,37 @@ class Structure(AnalysisMixin, ManipulationMixin):
         if isinstance(structure_dicts, dict):
             structure_dicts = [structure_dicts]
         if len(structure_dicts) == 1:
-            if label is not None:
-                structure_dicts[0]["label"] = label
-            strct = cls(**structure_dicts[0], attributes=attributes, extras=extras)
+            _update_label_attributes_extras(
+                structure_dicts[0], label, attributes, site_attributes, extras
+            )
+            strct = cls(**structure_dicts[0])
         else:
             strct = []
             for idx, structure_dict in enumerate(structure_dicts):
-                if label is not None:
-                    structure_dict["label"] = label + f"_{idx}"
-                strct.append(
-                    cls(
-                        **structure_dict,
-                        attributes=copy.deepcopy(attributes),
-                        extras=copy.deepcopy(extras),
-                    )
+                label = None if label is None else label + f"_{idx}"
+                _update_label_attributes_extras(
+                    structure_dicts[0],
+                    label,
+                    copy.deepcopy(attributes),
+                    copy.deepcopy(site_attributes),
+                    copy.deepcopy(extras),
                 )
+                strct.append(cls(**structure_dict))
         return strct
 
     @import_method
     @classmethod
     def from_ase_atoms(
-        cls, ase_atoms: Atoms, attributes: dict = None, label: str = None
+        cls,
+        ase_atoms: Atoms,
+        attributes: dict = None,
+        site_attributes: dict = None,
+        extras: dict = None,
+        label: str = None,
     ) -> "Structure":
         """
-        Get structure from ase atoms object.
+        Get structure from ase atoms object. Attributes and site attributes
+        are obtained from the ``info`` and ``arrays`` properties, respectively.
 
         Parameters
         ----------
@@ -634,6 +656,10 @@ class Structure(AnalysisMixin, ManipulationMixin):
             ase Atoms object.
         attributes : dict
             Attributes stored within the structure object.
+        site_attributes : dict
+            Site attributes stored within the structure object.
+        extras : dict
+            Extras stored within the structure object.
         label : str
             Label used internally to store the structure in the object.
 
@@ -643,11 +669,9 @@ class Structure(AnalysisMixin, ManipulationMixin):
             Structure.
         """
         backend_module = _return_ext_interface_modules("ase_atoms")
-        return cls(
-            **backend_module._extract_structure_from_atoms(ase_atoms),
-            label=label,
-            attributes=attributes,
-        )
+        strct_dict = backend_module._extract_structure_from_atoms(ase_atoms)
+        _update_label_attributes_extras(strct_dict, label, attributes, site_attributes, extras)
+        return cls(**strct_dict)
 
     @import_method
     @classmethod
@@ -655,6 +679,8 @@ class Structure(AnalysisMixin, ManipulationMixin):
         cls,
         pymatgen_structure: Union["pymatgen.core.Molecule", "pymatgen.core.Structure"],
         attributes: dict = None,
+        site_attributes: dict = None,
+        extras: dict = None,
         label: str = None,
     ) -> "Structure":
         """
@@ -665,7 +691,11 @@ class Structure(AnalysisMixin, ManipulationMixin):
         pymatgen_structure : pymatgen.core.Structure or pymatgen.core.Molecule
             pymatgen structure or molecule object.
         attributes : dict
-            Additional information about the structure.
+            Attributes stored within the structure object.
+        site_attributes : dict
+            Site attributes stored within the structure object.
+        extras : dict
+            Extras stored within the structure object.
         label : str
             Label used internally to store the structure in the object.
 
@@ -675,11 +705,9 @@ class Structure(AnalysisMixin, ManipulationMixin):
             Structure.
         """
         backend_module = _return_ext_interface_modules("pymatgen")
-        return cls(
-            **backend_module._extract_structure_from_pymatgen(pymatgen_structure),
-            label=label,
-            attributes=attributes,
-        )
+        strct_dict = backend_module._extract_structure_from_pymatgen(pymatgen_structure)
+        _update_label_attributes_extras(strct_dict, label, attributes, site_attributes, extras)
+        return cls(**strct_dict)
 
     @import_method
     @classmethod
