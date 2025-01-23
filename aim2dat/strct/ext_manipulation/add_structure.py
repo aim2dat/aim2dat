@@ -312,6 +312,54 @@ def add_structure_coord(
     return new_structure, "_added-" + guest_strct_label
 
 
+@external_manipulation_method
+def add_structure_at_position(
+    structure: Structure,
+    position: List[float],
+    guest_structure: Union[Structure, str] = "CH3",
+    wrap: bool = False,
+    dist_threshold: Union[float, None] = 0.8,
+    change_label: bool = False,
+):
+    """
+    Add structure at a defined position.
+
+    Parameters
+    ----------
+    structure : aim2dat.strct.Structure
+        Structure to which the guest structure is added.
+    position : list of floats
+        Position of the guest structure.
+    guest_structure : str or aim2dat.strct.Structure (optional)
+        A representation of the guest structure given as a string of a functional group or molecule
+        (viable options are ``'CH3'``, ``'COOH'``, ``'H2O'``, ``'NH2'``, ``'NO2'`` or ``'OH'``), a
+        ``Structure`` object (bond direction is assumed to be the ``[-1.0, 0.0, 0.0]`` direction)
+        or the element symbol to add one single atom.
+    wrap : bool (optional)
+        Wrap atomic positions back into the unit cell.
+    dist_threshold : float or None (optional)
+        Check the distances between all site pairs of the host and guest structure to ensure that
+        none of the added atoms collide.
+
+    Returns
+    -------
+    aim2dat.strct.Structure
+        Structure with added sub structure at defined postion.
+    """
+    guest_strct, guest_strct_label = _check_guest_structure(guest_structure)
+
+    guest_positions = np.array(guest_strct["positions"])
+    guest_center = np.mean(guest_positions, axis=0)
+    guest_positions -= guest_center 
+    guest_positions += np.array(position)
+    guest_strct0 = copy.deepcopy(guest_strct)
+    guest_strct0.set_positions(guest_positions)
+
+    new_structure = _merge_structures(structure, guest_strct0, wrap)
+
+    return new_structure, "_added-" + guest_strct_label
+    
+
 def _check_guest_structure(guest_strct: Union[Structure, str]) -> Structure:
     if isinstance(guest_strct, Structure):
         label = "" if guest_strct.label is None else guest_strct.label
