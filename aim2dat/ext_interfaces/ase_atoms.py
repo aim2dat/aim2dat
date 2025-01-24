@@ -4,12 +4,15 @@
 import re
 
 # Third party library imports
+import numpy as np
 from ase import Atoms
 from ase.io import read, write
 
 
 def _extract_structure_from_atoms(atoms):
     """Extract a dictionary with structural parameters from the ase Atoms object."""
+    keys2neglect = ["numbers", "positions", "tags"]
+
     positions = []
     elements = []
     kinds = []
@@ -25,7 +28,12 @@ def _extract_structure_from_atoms(atoms):
         "positions": positions,
         "pbc": atoms.get_pbc().tolist(),
         "is_cartesian": True,
+        "attributes": atoms.info,
+        "site_attributes": {},
     }
+    for key, val in atoms.arrays.items():
+        if len(val) == len(structure_dict["elements"]) and key not in keys2neglect:
+            structure_dict["site_attributes"][key] = val.tolist()
     if any(structure_dict["pbc"]):
         structure_dict["cell"] = [cell_v.tolist() for cell_v in atoms.cell.array]
     return structure_dict
@@ -38,14 +46,17 @@ def _create_atoms_from_structure(structure):
         tag = None if k is None else re.findall(r"\d+", k)
         tag = int(tag[0]) if tag else 0
         tags.append(tag)
-
-    return Atoms(
+    atoms = Atoms(
         structure.elements,
         positions=structure.positions,
         cell=structure.cell,
         pbc=structure.pbc,
         tags=tags,
+        info=structure.attributes,
     )
+    for key, val in structure.site_attributes.items():
+        atoms.set_array(key, np.array(val))
+    return atoms
 
 
 def _load_structure_from_file(file_path, kwargs):
