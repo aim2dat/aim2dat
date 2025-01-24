@@ -23,6 +23,7 @@ def rotate_structure_around_point(
     site_indices: List[int],
     angles: List[float],
     rotation_center: Union[None, List[float]] = None,
+    wrap: bool = False,
     change_label: bool = False,
 ):
     """
@@ -38,6 +39,10 @@ def rotate_structure_around_point(
         Angles for the rotation in degree or around direction of `rotation_vector` if given.
     rotation_center : list of float (optional)
         Rotation center for the rotation in cartesian coordinates. If not given, the center of molecule is used.
+    wrap : bool (optional)
+        Wrap atomic positions back into the unit cell.
+    change_label : bool (optional)
+        Add suffix to the label of the new structure highlighting the performed manipulation.
 
     Returns
     -------
@@ -60,6 +65,8 @@ def rotate_structure_around_point(
     for idx, pos in zip(site_indices, rotated_points):
         all_positions[idx] = pos
     new_structure.set_positions(all_positions)
+    if wrap:
+        new_structure = Structure(**new_structure, wrap=wrap)
 
     return new_structure, "_rotated-" + f"{angles}"
 
@@ -71,6 +78,7 @@ def rotate_structure_around_vector(
     angle: float,
     rotation_vector: List[List[float]],
     origin: Union[None, List[float]] = None,
+    wrap: bool = False,
     change_label: bool = False,
 ):
     """
@@ -88,6 +96,10 @@ def rotate_structure_around_vector(
         Rotation vector for the rotation in cartesian coordinates.
     origin : list of float (optional)
         Origin for the rotation in cartesian coordinates. If not given, the center of molecule is used.
+    wrap : bool (optional)
+        Wrap atomic positions back into the unit cell.
+    change_label : bool (optional)
+        Add suffix to the label of the new structure highlighting the performed manipulation.
 
     Returns
     -------
@@ -109,5 +121,7 @@ def rotate_structure_around_vector(
     for idx, pos in zip(site_indices, rotated_points):
         all_positions[idx] = pos
     new_structure.set_positions(all_positions)
+    if wrap:
+        new_structure = Structure(**new_structure, wrap=wrap)
 
     return new_structure, "_rotated-" + f"{angle}"

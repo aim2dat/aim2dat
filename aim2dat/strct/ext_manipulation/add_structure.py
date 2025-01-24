@@ -336,6 +336,8 @@ def add_structure_at_position(
         or the element symbol to add one single atom.
     wrap : bool (optional)
         Wrap atomic positions back into the unit cell.
+    change_label : bool (optional)
+        Add suffix to the label of the new structure highlighting the performed manipulation.
 
     Returns
     -------
