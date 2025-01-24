@@ -165,7 +165,7 @@ class _CIFDataBlock:
         # Remove atoms that occupy the same site:
         scaled_coords_bf = [[round(p0, 15) % 1 for p0 in pos] for pos in scaled_coords]
         dists = cdist(np.array(scaled_coords_bf), np.array(scaled_coords_bf))
-        ind2del = [j for i, j in zip(*np.where(dists <= 1e-3)) if i < j]
+        ind2del = set([j for i, j in zip(*np.where(dists <= 1e-3)) if i < j])
         if len(ind2del) > 0:
             warn(
                 f"The sites {ind2del} are omitted as they are duplicate of other sites.",

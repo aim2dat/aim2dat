@@ -41,7 +41,7 @@ def test_errors_and_warnings(structure_comparison):
         read_file(PATH + "warning_space_group.cif", extract_structures=True)
     with pytest.warns(
         UserWarning,
-        match=r"The sites \[8\] are omitted as they are duplicate of other sites.",
+        match=r"The sites \{8, 9, 10\} are omitted as they are duplicate of other sites.",
     ):
         outp_dict = read_file(PATH + "warning_duplicate_sites.cif", extract_structures=True)
         strct = Structure(**outp_dict["structures"][0])
