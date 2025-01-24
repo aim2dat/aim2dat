@@ -318,7 +318,6 @@ def add_structure_at_position(
     position: List[float],
     guest_structure: Union[Structure, str] = "CH3",
     wrap: bool = False,
-    dist_threshold: Union[float, None] = 0.8,
     change_label: bool = False,
 ):
     """
@@ -337,9 +336,6 @@ def add_structure_at_position(
         or the element symbol to add one single atom.
     wrap : bool (optional)
         Wrap atomic positions back into the unit cell.
-    dist_threshold : float or None (optional)
-        Check the distances between all site pairs of the host and guest structure to ensure that
-        none of the added atoms collide.
 
     Returns
     -------
