@@ -162,17 +162,31 @@ class _CIFDataBlock:
             if len(val) == len(kinds):
                 site_attributes[key] = val
 
+        # Remove atoms that occupy the same site:
+        scaled_coords_bf = [[round(p0, 15) % 1 for p0 in pos] for pos in scaled_coords]
+        dists = cdist(np.array(scaled_coords_bf), np.array(scaled_coords_bf))
+        ind2del = [j for i, j in zip(*np.where(dists <= 1e-3)) if i < j]
+        if len(ind2del) > 0:
+            warn(
+                f"The sites {ind2del} are omitted as they are duplicate of other sites.",
+                UserWarning,
+            )
+            for idx in reversed(sorted(ind2del)):
+                del kinds[idx]
+                del scaled_coords[idx]
+                del scaled_coords_bf[idx]
+                for val in site_attributes.values():
+                    del val[idx]
+
         # Add sites from symmetry operations:
         sym_ops = self.get_symmetry_operations(get_sym_op_from_sg)
         sym_ops = [(np.array(rot), np.array(trans)) for rot, trans in sym_ops]
-        scaled_coords_bf = [[round(p0, 15) % 1 for p0 in pos] for pos in scaled_coords]
         n_sites = len(kinds)
         for sym_op in sym_ops:
             for idx in range(n_sites):
                 new_pos = np.dot(sym_op[0], np.array(scaled_coords[idx])) + sym_op[1]
                 new_pos_bf = [round(val, 15) % 1 for val in new_pos]
-                mask = [kind == kinds[idx] for kind in kinds]
-                dists = cdist(np.array([new_pos_bf]), np.array(scaled_coords_bf)[mask])[0]
+                dists = cdist(np.array([new_pos_bf]), np.array(scaled_coords_bf))[0]
                 if any(dist < 1e-3 for dist in dists):
                     continue
                 kinds.append(kinds[idx])
