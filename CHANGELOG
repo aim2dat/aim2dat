@@ -15,6 +15,7 @@ Version 0.3.0
 * ``io.cp2k.read_restart_structure`` function now supports parsing files with "" delimiters for string values (`PR #100 <https://github.com/aim2dat/aim2dat/pull/100>`_).
 * Improve the interface of ``strct.Structure`` to the ase ``Atoms`` class by transferring ``attributes`` to ``info`` and ``site_attributes`` to ``arrays`` (`PR #103 <https://github.com/aim2dat/aim2dat/pull/103>`_).
 * Expose ``strct.Structure.attributes``, ``strct.Structure.site_attributes`` and ``strct.Structure.extras`` to ``strct.StructureCollection.append``, ``strct.Structure.from_ase_atoms`` and ``strct.Structure.from_pymatgen_structure`` functions (`PR #103 <https://github.com/aim2dat/aim2dat/pull/103>`_).
+* Fix positions returned from ``strct.Structure.calculate_distance`` function (`PR #106 <https://github.com/aim2dat/aim2dat/pull/106>`_).
 
 
 Version 0.2.0
