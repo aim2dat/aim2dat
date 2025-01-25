@@ -132,6 +132,12 @@ def test_structure_validation():
         strct_dict["positions"][0] = [0.0, 0.0, float("nan")]
         strct = Structure(**strct_dict)
     assert str(error.value) == "`positions` must not contain 'nan' values."
+    with pytest.raises(ValueError) as error:
+        strct_dict["positions"][0] = [0.0] * 3
+        strct_dict["elements"].append("Ga")
+        strct_dict["positions"].append([14.2310] * 3)
+        strct = Structure(**strct_dict)
+    assert str(error.value) == "Sites 2 and 1 have the same position."
 
 
 def test_to_dict(structure_comparison):
