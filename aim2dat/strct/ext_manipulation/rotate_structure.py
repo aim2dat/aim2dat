@@ -38,7 +38,8 @@ def rotate_structure_around_point(
     angles : list of float
         Angles for the rotation in degree or around direction of `rotation_vector` if given.
     rotation_center : list of float (optional)
-        Rotation center for the rotation in cartesian coordinates. If not given, the center of molecule is used.
+        Rotation center for the rotation in cartesian coordinates. If not given, the center of
+        molecule is used.
     wrap : bool (optional)
         Wrap atomic positions back into the unit cell.
     change_label : bool (optional)
@@ -49,8 +50,7 @@ def rotate_structure_around_point(
     aim2dat.strct.Structure
         Structure with rotated sub structure.
     """
-
-    r = Rotation.from_euler('xyz', angles, degrees=True)
+    r = Rotation.from_euler("xyz", angles, degrees=True)
 
     positions = np.array([structure["positions"][idx] for idx in site_indices])
     if rotation_center is None:
@@ -95,7 +95,8 @@ def rotate_structure_around_vector(
     rotation_vector : list of float (optional)
         Rotation vector for the rotation in cartesian coordinates.
     origin : list of float (optional)
-        Origin for the rotation in cartesian coordinates. If not given, the center of molecule is used.
+        Origin for the rotation in cartesian coordinates. If not given, the center of molecule is
+        used.
     wrap : bool (optional)
         Wrap atomic positions back into the unit cell.
     change_label : bool (optional)
@@ -106,7 +107,6 @@ def rotate_structure_around_vector(
     aim2dat.strct.Structure
         Structure with rotated sub structure around vector.
     """
-
     positions = np.array([structure["positions"][idx] for idx in site_indices])
     if origin is None:
         origin = np.mean(positions, axis=0)

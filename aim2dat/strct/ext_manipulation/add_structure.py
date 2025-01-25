@@ -35,7 +35,7 @@ def add_structure_random(
     dist_threshold: Union[float, None] = 0.8,
     random_state: Union[float, None] = None,
     change_label: bool = False,
-):
+) -> Structure:
     """
     Add structure at random position and orientation.
 
@@ -319,7 +319,7 @@ def add_structure_at_position(
     guest_structure: Union[Structure, str] = "CH3",
     wrap: bool = False,
     change_label: bool = False,
-):
+) -> Structure:
     """
     Add structure at a defined position.
 
@@ -348,7 +348,7 @@ def add_structure_at_position(
 
     guest_positions = np.array(guest_strct["positions"])
     guest_center = np.mean(guest_positions, axis=0)
-    guest_positions -= guest_center 
+    guest_positions -= guest_center
     guest_positions += np.array(position)
     guest_strct0 = copy.deepcopy(guest_strct)
     guest_strct0.set_positions(guest_positions)
@@ -356,7 +356,7 @@ def add_structure_at_position(
     new_structure = _merge_structures(structure, guest_strct0, wrap)
 
     return new_structure, "_added-" + guest_strct_label
-    
+
 
 def _check_guest_structure(guest_strct: Union[Structure, str]) -> Structure:
     if isinstance(guest_strct, Structure):
