@@ -482,7 +482,7 @@ ref:
     - [0.0, 2.8749933261328207, 2.8749933261328207]
     - [-2.8749933261328207, 2.8749933261328207, 0.0]
     pbc: true
-    is_cartesian: false
+    is_cartesian: true
     attributes:
       system: *id002
       control: *id003

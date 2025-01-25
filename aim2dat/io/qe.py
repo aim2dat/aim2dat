@@ -161,8 +161,10 @@ def read_xml(
                 step_dict.update(_parse_atomic_structure(c1))
             elif c1.tag == "total_energy":
                 step_dict["total_energy"] = {c.tag: float(c.text) for c in c1}
-            elif c1.tag == "forces":
-                step_dict["forces"] = _parse_array(c1)
+            elif "rank" in c1.attrib and "dims" in c1.attrib:
+                step_dict[c1.tag] = _parse_array(c1)
+            # elif c1.tag == "stress":
+
         outp_dict.setdefault("steps", []).append(step_dict)
 
     def _parse_output(element, outp_dict):
@@ -244,7 +246,7 @@ def read_xml(
             "positions": [],
             "cell": [[v1 * length.Bohr for v1 in v0] for v0 in inp_dict[cell_key]],
             "pbc": True,
-            "is_cartesian": False,
+            "is_cartesian": True,
             "attributes": {
                 k: val
                 for k, val in inp_dict.items()

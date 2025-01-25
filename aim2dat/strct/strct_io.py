@@ -32,7 +32,7 @@ def _find_io_function(file_path, file_format):
                 continue
             if file_type not in f_name:
                 continue
-            if os.path.exists(file_path) and not re.search(func._pattern, file_path):
+            if not re.search(func._pattern, file_path):
                 continue
 
             return func
@@ -45,6 +45,8 @@ def get_structure_from_file(
     file_path: str, file_format: str, kwargs: dict = {}
 ) -> Union[dict, list]:
     """Get function to read structure file."""
+    if not os.path.exists(file_path):
+        raise ValueError(f"File path is invalid: '{file_path}'.")
     func = _find_io_function(file_path, file_format)
     kwargs.update(func._preset_kwargs)
     output = func(file_path, **kwargs)
