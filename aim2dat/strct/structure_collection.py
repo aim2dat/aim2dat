@@ -261,6 +261,7 @@ class StructureCollection:
         wrap: bool = False,
         kinds: list = None,
         attributes: dict = None,
+        site_attributes: dict = None,
         extras: dict = None,
     ):
         """
@@ -286,9 +287,11 @@ class StructureCollection:
             List of kind names (this allows custom kinds like Ni0, Ni1, ...). If None,
             the elements will be used as the kind names.
         attributes : dict
-            Additional information about the structure.
+            Attributes stored within the structure object.
+        site_attributes : dict
+            Site attributes stored within the structure object.
         extras : dict
-            Extras of the structure.
+            Extras stored within the structure object.
         """
         structure = Structure(
             label=label,
