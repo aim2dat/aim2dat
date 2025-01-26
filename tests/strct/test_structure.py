@@ -262,3 +262,28 @@ def test_internal_io(structure_comparison, system, file_path):
     ref = load_yaml_file(IO_PATH + system + "/ref.yaml")
     structure = Structure.from_file(file_path, **ref["parameters"])
     structure_comparison(structure, ref["structure"])
+
+
+def test_internal_io_str_input(structure_comparison):
+    """Test internal structure parser for the case string input."""
+    with open(STRUCTURES_PATH + "ZIF-8.cif") as fobj:
+        file_content = fobj.read()
+    ref = load_yaml_file(IO_PATH + "cif/ref.yaml")
+    structure = Structure.from_file(file_content, **ref["parameters"])
+    structure_comparison(structure, ref["structure"])
+
+
+def test_internal_io_errors():
+    """Test internal structure parser errors."""
+    with pytest.raises(ValueError) as error:
+        Structure.from_file("testtest", backend="internal")
+    assert (
+        str(error.value)
+        == "If `file_path` is not the path to a file, `file_format` needs to be set."
+    )
+    with pytest.raises(ValueError) as error:
+        Structure.from_file("testtest", backend="internal", file_format="test")
+    assert str(error.value) == "File format 'test' is not supported."
+    with pytest.raises(ValueError) as error:
+        Structure.from_file(STRUCTURES_PATH + "ZIF-8_complex.xyz", backend="internal")
+    assert str(error.value) == "Could not find a suitable io function."
