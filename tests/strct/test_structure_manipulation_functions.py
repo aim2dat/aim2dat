@@ -12,9 +12,8 @@ from aim2dat.strct import Structure
 from aim2dat.strct.ext_manipulation import (
     add_structure_coord,
     add_structure_random,
-    add_structure_at_position,
-    rotate_structure_around_point,
-    rotate_structure_around_vector,
+    add_structure_position,
+    rotate_structure,
 )
 from aim2dat.io.yaml import load_yaml_file
 
@@ -165,13 +164,13 @@ def test_add_structure_random_molecules_error():
     )
 
 
-def test_add_structure_at_position(structure_comparison):
+def test_add_structure_position(structure_comparison):
     """Test add_structure_random method for a crystal."""
     inputs = [
         dict(load_yaml_file(STRUCTURE_MANIPULATION_PATH + "PBI3.yaml")),
         dict(load_yaml_file(STRUCTURE_MANIPULATION_PATH + "CN2H5.yaml")),
     ]
-    new_strct = add_structure_at_position(
+    new_strct = add_structure_position(
         Structure(**inputs[0]),
         position=[2.88759377, 3.244215, 3.25149],
         guest_structure=Structure(**inputs[1]),
@@ -236,27 +235,26 @@ def test_scale_unit_cell_full_strain_matrix():
     assert np.allclose(scaled_structure["cell"], expected_cell), "3x3 scaling matrix failed"
 
 
-def test_rotate_structure_around_point(structure_comparison):
-    """Test rotate_structure_around_point method for a crystal."""
-    inputs = dict(load_yaml_file(STRUCTURE_MANIPULATION_PATH + "PBI3+CN2H5_ref.yaml"))
-    new_strct = rotate_structure_around_point(
-        Structure(**inputs),
-        site_indices=[4, 5, 6, 7, 8, 9, 10, 11],
+def test_rotate_structure(structure_comparison):
+    """Test rotate_structure method for a crystal."""
+    inputs = (
+        dict(load_yaml_file(STRUCTURE_MANIPULATION_PATH + "PBI3+CN2H5_ref.yaml")),
+        Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf"),
+    )
+    new_strct = rotate_structure(
+        Structure(**inputs[0]),
         angles=[90, 0, 0],
+        site_indices=[4, 5, 6, 7, 8, 9, 10, 11],
     )
     ref_p = load_yaml_file(STRUCTURE_MANIPULATION_PATH + "PBI3+CN2H5_rot_ref.yaml")
     structure_comparison(new_strct, ref_p)
 
-
-def test_rotate_structure_around_vector(structure_comparison):
-    """Test rotate_structure_around_vector method for a crystal."""
-    inputs = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
-    new_strct = rotate_structure_around_vector(
-        Structure(**inputs),
+    new_strct = rotate_structure(
+        Structure(**inputs[1]),
+        angles=90,
         site_indices=[44, 56, 76, 81, 57, 45, 77, 80, 104, 101, 105, 100],
-        angle=90,
-        rotation_vector=[1.00000000e00, 2.44932357e-15, 2.44932357e-15],
         origin=[2.90097537349613, 6.52064699916667, 6.52064699916667],
+        rotation_vector=[1.00000000e00, 2.44932357e-15, 2.44932357e-15],
     )
     ref_p = load_yaml_file(STRUCTURE_MANIPULATION_PATH + "MOF-5_prim.yaml")
     structure_comparison(new_strct, ref_p)

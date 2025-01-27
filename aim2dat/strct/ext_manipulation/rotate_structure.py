@@ -18,28 +18,31 @@ from aim2dat.strct.strct import Structure
 
 
 @external_manipulation_method
-def rotate_structure_around_point(
+def rotate_structure(
     structure: Structure,
-    site_indices: List[int],
-    angles: List[float],
-    rotation_center: Union[None, List[float]] = None,
+    angles: Union[float, List[float]],
+    site_indices: Union[None, List[int]] = None,
+    origin: Union[None, List[float]] = None,
+    rotation_vector: Union[None, List[List[float]]] = None,
     wrap: bool = False,
     change_label: bool = False,
 ):
     """
-    Rotate sub structure around a point.
+    Rotate sub structure around a point or a vector.
 
     Parameters
     ----------
     structure : aim2dat.strct.Structure
-        Structure to which the guest structure is added.
-    site_indices : list of int
-        Indices of the atoms to rotate.
-    angles : list of float
-        Angles for the rotation in degree or around direction of `rotation_vector` if given.
-    rotation_center : list of float (optional)
+        Structure in which the sub structure is rotated.
+    angles : float or list of float
+        Angles for the rotation in degree. Type `list` for point and type `float` for vector.
+    site_indices : list of int (optional)
+        Indices of the atoms to rotate. If not given, all atoms are rotated.
+    origin : list of float (optional)
         Rotation center for the rotation in cartesian coordinates. If not given, the center of
-        molecule is used.
+        the structure is used.
+    rotation_vector : list of float (optional)
+        Rotation vector for the rotation in cartesian coordinates.
     wrap : bool (optional)
         Wrap atomic positions back into the unit cell.
     change_label : bool (optional)
@@ -50,69 +53,22 @@ def rotate_structure_around_point(
     aim2dat.strct.Structure
         Structure with rotated sub structure.
     """
-    r = Rotation.from_euler("xyz", angles, degrees=True)
+    if isinstance(angles, (list, tuple, np.ndarray)):
+        rotation = Rotation.from_euler("xyz", angles, degrees=True)
+    elif isinstance(angles, (int, float)):
+        rotation_vector /= np.linalg.norm(rotation_vector)
+        rotation = Rotation.from_rotvec(angles * rotation_vector, degrees=True)
+    else:
+        raise TypeError("angles must be type list or type float.")
+    
+    if site_indices is None:
+        site_indices = list(range(len(structure)))
 
-    positions = np.array([structure["positions"][idx] for idx in site_indices])
-    if rotation_center is None:
-        rotation_center = np.mean(positions, axis=0)
-    rotation_center = np.array(rotation_center)
-    positions -= rotation_center
-    rotated_points = r.apply(positions)
-    rotated_points += rotation_center
-
-    new_structure = copy.deepcopy(structure)
-    all_positions = list(new_structure["positions"])
-    for idx, pos in zip(site_indices, rotated_points):
-        all_positions[idx] = pos
-    new_structure.set_positions(all_positions)
-    if wrap:
-        new_structure = Structure(**new_structure, wrap=wrap)
-
-    return new_structure, "_rotated-" + f"{angles}"
-
-
-@external_manipulation_method
-def rotate_structure_around_vector(
-    structure: Structure,
-    site_indices: List[int],
-    angle: float,
-    rotation_vector: List[List[float]],
-    origin: Union[None, List[float]] = None,
-    wrap: bool = False,
-    change_label: bool = False,
-):
-    """
-    Rotate sub structure around a vector.
-
-    Parameters
-    ----------
-    structure : aim2dat.strct.Structure
-        Structure to which the guest structure is added.
-    site_indices : list of int
-        Indices of the atoms to rotate.
-    angle : float or list of float
-        Angles for the rotation in degree or around direction of `rotation_vector` if given.
-    rotation_vector : list of float (optional)
-        Rotation vector for the rotation in cartesian coordinates.
-    origin : list of float (optional)
-        Origin for the rotation in cartesian coordinates. If not given, the center of molecule is
-        used.
-    wrap : bool (optional)
-        Wrap atomic positions back into the unit cell.
-    change_label : bool (optional)
-        Add suffix to the label of the new structure highlighting the performed manipulation.
-
-    Returns
-    -------
-    aim2dat.strct.Structure
-        Structure with rotated sub structure around vector.
-    """
     positions = np.array([structure["positions"][idx] for idx in site_indices])
     if origin is None:
         origin = np.mean(positions, axis=0)
+    origin = np.array(origin)
     positions -= origin
-    rotation_vector /= np.linalg.norm(rotation_vector)
-    rotation = Rotation.from_rotvec(angle * rotation_vector, degrees=True)
     rotated_points = rotation.apply(positions)
     rotated_points += origin
 
@@ -121,7 +77,5 @@ def rotate_structure_around_vector(
     for idx, pos in zip(site_indices, rotated_points):
         all_positions[idx] = pos
     new_structure.set_positions(all_positions)
-    if wrap:
-        new_structure = Structure(**new_structure, wrap=wrap)
 
-    return new_structure, "_rotated-" + f"{angle}"
+    return Structure(**new_structure, wrap=wrap), "_rotated-" + f"{angles}"

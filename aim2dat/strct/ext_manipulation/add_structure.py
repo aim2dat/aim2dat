@@ -18,6 +18,7 @@ from aim2dat.strct.ext_manipulation.decorator import (
     external_manipulation_method,
 )
 from aim2dat.strct.strct import Structure
+from aim2dat.strct.ext_manipulation import rotate_structure
 from aim2dat.strct.strct_misc import _calc_atomic_distance
 from aim2dat.utils.element_properties import get_element_symbol
 from aim2dat.utils.maths import calc_angle, create_lin_ind_vector
@@ -82,22 +83,23 @@ def add_structure_random(
     max_tries = 1000
     for _ in range(max_tries):
         guest_positions = np.array(guest_strct["positions"])
-        rot_v = np.array([random.random(), random.random(), random.random()])
-        rotation = Rotation.from_rotvec(2.0 * random.random() * np.pi * rot_v)
-        rot_matrix = rotation.as_matrix()
-        guest_positions = (rot_matrix.dot(guest_positions.T)).T
+
         shift = np.array([random.random(), random.random(), random.random()])
         shift = (cell.T).dot(shift)
         guest_positions += shift - min_pos
         guest_strct0 = copy.deepcopy(guest_strct)
         guest_strct0.set_positions(guest_positions)
+        shift_structure = _merge_structures(structure, guest_strct0, wrap)
 
-        new_structure = _merge_structures(structure, guest_strct0, wrap)
+        rot_v = np.array([random.random(), random.random(), random.random()])
+        site_indices = list(range(len(structure), len(shift_structure)))
+        rot_strct = rotate_structure(shift_structure, 360*random.random(), site_indices, [0,0,0], rot_v)
+
         is_added = _check_distances(
-            new_structure, len(guest_strct["elements"]), dist_threshold, True
+            rot_strct, len(guest_strct["elements"]), dist_threshold, True
         )
         if is_added:
-            return new_structure, "_added-" + guest_strct_label
+            return rot_strct, "_added-" + guest_strct_label
     raise ValueError("Could not add guest structure, host structure seems to be too aggregated.")
 
 
@@ -313,7 +315,7 @@ def add_structure_coord(
 
 
 @external_manipulation_method
-def add_structure_at_position(
+def add_structure_position(
     structure: Structure,
     position: List[float],
     guest_structure: Union[Structure, str] = "CH3",
