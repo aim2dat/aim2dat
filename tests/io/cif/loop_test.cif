@@ -29,3 +29,9 @@ loop_
   _platon_squeeze_void_content
    1 -0.01 -0.025
    -0.5     10     20 ' '
+
+loop_
+  _symmetry_equiv_pos_site_id
+  _symmetry_equiv_pos_as_xyz
+1 x,y,z
+2 1/2+x,1/2-y,1/2-z

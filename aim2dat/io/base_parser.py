@@ -16,7 +16,7 @@ FLOAT = r"(([+-]?\d+)?\.?\d+([eE][-+]?\d+)?)"
 
 TYPE_PATTERNS = [
     (re.compile(r"^([+-]?[0-9]+)$"), int),
-    (re.compile(r"^" + FLOAT), float),
+    (re.compile(r"^" + FLOAT + r"(\(\d*\))?$"), float),
 ]
 
 
