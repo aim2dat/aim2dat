@@ -7,6 +7,7 @@ Version 0.3.0
 
 **Enhancements:**
 
+* A parser for xml output files of Quantum ESPRESSO is added (`PR #102 <https://github.com/aim2dat/aim2dat/pull/102>`_).
 * Added interface to MOFXDB (https://mof.tech.northwestern.edu/) to the ``strct.StructureImporter`` class (`PR #94 <https://github.com/aim2dat/aim2dat/pull/94>`_).
 
 **Fixes:**
