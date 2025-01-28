@@ -18,7 +18,7 @@ from aim2dat.strct.ext_manipulation.decorator import (
     external_manipulation_method,
 )
 from aim2dat.strct.strct import Structure
-from aim2dat.strct.ext_manipulation import rotate_structure
+from aim2dat.strct.ext_manipulation.rotate_structure import rotate_structure
 from aim2dat.strct.strct_misc import _calc_atomic_distance
 from aim2dat.utils.element_properties import get_element_symbol
 from aim2dat.utils.maths import calc_angle, create_lin_ind_vector
@@ -82,24 +82,24 @@ def add_structure_random(
     random.seed(a=random_state)
     max_tries = 1000
     for _ in range(max_tries):
-        guest_positions = np.array(guest_strct["positions"])
+        rot_v = np.array([random.random(), random.random(), random.random()])
+        site_indices = list(range(len(guest_strct)))
+        guest_strct0 = rotate_structure(guest_strct, 360*random.random(), site_indices, [0,0,0], rot_v)
 
+        guest_positions = np.array(guest_strct0["positions"])
         shift = np.array([random.random(), random.random(), random.random()])
         shift = (cell.T).dot(shift)
         guest_positions += shift - min_pos
-        guest_strct0 = copy.deepcopy(guest_strct)
-        guest_strct0.set_positions(guest_positions)
-        shift_structure = _merge_structures(structure, guest_strct0, wrap)
+        guest_strct1 = copy.deepcopy(guest_strct)
+        guest_strct1.set_positions(guest_positions)
 
-        rot_v = np.array([random.random(), random.random(), random.random()])
-        site_indices = list(range(len(structure), len(shift_structure)))
-        rot_strct = rotate_structure(shift_structure, 360*random.random(), site_indices, [0,0,0], rot_v)
+        new_structure = _merge_structures(structure, guest_strct1, wrap)
 
         is_added = _check_distances(
-            rot_strct, len(guest_strct["elements"]), dist_threshold, True
+            new_structure, len(guest_strct["elements"]), dist_threshold, True
         )
         if is_added:
-            return rot_strct, "_added-" + guest_strct_label
+            return new_structure, "_added-" + guest_strct_label
     raise ValueError("Could not add guest structure, host structure seems to be too aggregated.")
 
 
