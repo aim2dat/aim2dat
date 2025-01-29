@@ -7,6 +7,7 @@ from typing import List, Tuple
 import math
 
 # Third party library imports
+from scipy.spatial.distance import cdist
 import numpy as np
 
 # Internal library imports
@@ -57,6 +58,24 @@ def _structure_validate_positions(positions, is_cartesian, cell, inv_cell, pbc):
                 positions_cart.append(
                     tuple(float(p) for p in np.transpose(cell).dot(np.array(position)))
                 )
+    if cell is None:
+        pos2check = positions_cart
+    else:
+        pos2check = []
+        for pos in positions_scaled:
+            pos2check.append([round(pos[i], 15) % 1 if pbc[i] else pos[i] for i in range(3)])
+
+    dist_m = cdist(pos2check, pos2check)
+    sites = set()
+    for i in range(len(pos2check)):
+        for j in range(i):
+            if dist_m[i][j] < 1e-3:
+                sites.add((i, j))
+    if sites:
+        raise ValueError(
+            "Sites with the same position: " + ", ".join([f"{i}" for i in sites]) + "."
+        )
+
     if len(positions_scaled) == 0:
         return tuple(positions_cart), None
     else:
