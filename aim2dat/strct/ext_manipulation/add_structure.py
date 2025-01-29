@@ -49,8 +49,7 @@ def add_structure_random(
     guest_structure : str or aim2dat.strct.Structure (optional)
         A representation of the guest structure given as a string of a functional group or molecule
         (viable options are ``'CH3'``, ``'COOH'``, ``'H2O'``, ``'NH2'``, ``'NO2'`` or ``'OH'``), a
-        ``Structure`` object (bond direction is assumed to be the ``[-1.0, 0.0, 0.0]`` direction)
-        or the element symbol to add one single atom.
+        ``Structure`` object or the element symbol to add one single atom.
     dist_threshold : float or None (optional)
         Check the distances between all site pairs of the host and guest structure to ensure that
         none of the added atoms collide.
@@ -83,9 +82,8 @@ def add_structure_random(
     max_tries = 1000
     for _ in range(max_tries):
         rot_v = np.array([random.random(), random.random(), random.random()])
-        site_indices = list(range(len(guest_strct)))
         guest_strct0 = rotate_structure(
-            guest_strct, 360 * random.random(), site_indices, [0, 0, 0], rot_v
+            guest_strct, 360 * random.random(), angles=[0, 0, 0], rotation_vector=rot_v
         )
 
         guest_positions = np.array(guest_strct0["positions"])
@@ -127,7 +125,7 @@ def add_structure_coord(
     structure : aim2dat.strct.Structure
         Structure to which the guest structure is added.
     wrap : bool (optional)
-        Wrap atomic positions back into the unit cell.
+        Wrap atomic positgit ions back into the unit cell.
     host_indices : int or list (optional)
         Index or indices of the host site(s). In case several indices are given the center of the
         sites is defined as host site as reference point for the bond length.
@@ -136,8 +134,7 @@ def add_structure_coord(
     guest_structure : str or aim2dat.strct.Structure (optional)
         A representation of the guest structure given as a string of a functional group or molecule
         (viable options are ``'CH3'``, ``'COOH'``, ``'H2O'``, ``'NH2'``, ``'NO2'`` or ``'OH'``), a
-        ``Structure`` object (bond direction is assumed to be the ``[-1.0, 0.0, 0.0]`` direction)
-        or the element symbol to add one single atom.
+        ``Structure`` object or the element symbol to add one single atom.
     guest_dir: list of floats (optional)
         Defines the orientation of the guest molecule. If not defined, a vector of nearest
         neighbors is constructed based on the guest index.
