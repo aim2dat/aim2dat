@@ -60,7 +60,7 @@ def rotate_structure(
         rotation = Rotation.from_rotvec(angles * rotation_vector, degrees=True)
     else:
         raise TypeError("angles must be type list or type float.")
-    
+
     if site_indices is None:
         site_indices = list(range(len(structure)))
 

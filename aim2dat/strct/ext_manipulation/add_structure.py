@@ -84,7 +84,9 @@ def add_structure_random(
     for _ in range(max_tries):
         rot_v = np.array([random.random(), random.random(), random.random()])
         site_indices = list(range(len(guest_strct)))
-        guest_strct0 = rotate_structure(guest_strct, 360*random.random(), site_indices, [0,0,0], rot_v)
+        guest_strct0 = rotate_structure(
+            guest_strct, 360 * random.random(), site_indices, [0, 0, 0], rot_v
+        )
 
         guest_positions = np.array(guest_strct0["positions"])
         shift = np.array([random.random(), random.random(), random.random()])
