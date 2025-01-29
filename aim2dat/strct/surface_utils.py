@@ -178,6 +178,8 @@ def _surface_create(
 
     # Create rpeating structure
     rep_structure = _extract_structure_from_atoms(surf_1l)
+    del rep_structure["attributes"]
+    del rep_structure["site_attributes"]
     rep_cell_np, rep_inv_cell_np = _structure_validate_cell(rep_structure["cell"])
     backfolded_positions = []
     for pos in rep_structure["positions"]:

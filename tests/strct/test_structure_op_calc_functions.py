@@ -78,6 +78,17 @@ def test_calculate_distance_sc(structure, file_suffix):
     if ref_outputs["distance_sc"]["reference"] is None:
         assert dist is None
     else:
+        if isinstance(dist, tuple):
+            dist, pos = dist
+            for idx0, pos_list in enumerate(ref_outputs["distance_sc"]["reference_pos"]):
+                site_idx = (
+                    ref_outputs["distance_sc"]["function_args"]["site_index1"][idx0],
+                    ref_outputs["distance_sc"]["function_args"]["site_index2"][idx0],
+                )
+                for pos_idx, pos_ref in enumerate(pos_list):
+                    assert all(
+                        [abs(p0 - p1) < 1e-5 for p0, p1 in zip(pos[site_idx][pos_idx], pos_ref)]
+                    ), f"Position {site_idx}/{pos_idx} is wrong."
         for idx0, dist_list in enumerate(ref_outputs["distance_sc"]["reference"]):
             if isinstance(dist_list, list):
                 site_index1, site_index2 = (

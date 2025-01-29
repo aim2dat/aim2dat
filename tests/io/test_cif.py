@@ -16,7 +16,7 @@ PATH = cwd + "cif/"
 STRUCTURES_PATH = cwd + "../strct/structures/"
 
 
-def test_errors_and_warnings():
+def test_errors_and_warnings(structure_comparison):
     """Test errors and warnings."""
     with pytest.raises(ValueError) as error:
         read_file(PATH + "error_chem_f.cif", extract_structures=True)
@@ -39,6 +39,15 @@ def test_errors_and_warnings():
         match="Could not determine symmetry operations directly, using space group details.",
     ):
         read_file(PATH + "warning_space_group.cif", extract_structures=True)
+    with pytest.warns(
+        UserWarning,
+        match=r"The sites \{8, 9, 10\} are omitted as they are duplicate of other sites.",
+    ):
+        outp_dict = read_file(PATH + "warning_duplicate_sites.cif", extract_structures=True)
+        strct = Structure(**outp_dict["structures"][0])
+        ref_strct = load_yaml_file(STRUCTURES_PATH + f"{strct.label}.yaml")
+        ref_strct["label"] = strct.label
+        structure_comparison(strct, ref_strct)
 
 
 def test_loops():
@@ -64,6 +73,10 @@ def test_loops():
                     "platon_squeeze_void_volume": [10],
                     "platon_squeeze_void_count_electrons": [20],
                     "platon_squeeze_void_content": [""],
+                },
+                {
+                    "symmetry_equiv_pos_site_id": [1, 2],
+                    "symmetry_equiv_pos_as_xyz": ["x,y,z", "1/2+x,1/2-y,1/2-z"],
                 },
             ]
         }
