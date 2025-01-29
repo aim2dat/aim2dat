@@ -618,21 +618,22 @@ class Structure(AnalysisMixin, ManipulationMixin):
         if isinstance(structure_dicts, dict):
             structure_dicts = [structure_dicts]
         if len(structure_dicts) == 1:
-            _update_label_attributes_extras(
-                structure_dicts[0], label, attributes, site_attributes, extras
-            )
+            if label is not None:
+                structure_dicts[0]["label"] = label
+            if attributes is not None:
+                structure_dicts[0].setdefault("attributes", {}).update(attributes)
+            if extras is not None:
+                structure_dicts[0].setdefault("extras", {}).update(extras)
             strct = cls(**structure_dicts[0])
         else:
             strct = []
             for idx, structure_dict in enumerate(structure_dicts):
-                label = None if label is None else label + f"_{idx}"
-                _update_label_attributes_extras(
-                    structure_dicts[0],
-                    label,
-                    copy.deepcopy(attributes),
-                    copy.deepcopy(site_attributes),
-                    copy.deepcopy(extras),
-                )
+                if label is not None:
+                    structure_dict["label"] = label + f"_{idx}"
+                if attributes is not None:
+                    structure_dict.setdefault("attributes", {}).update(copy.deepcopy(attributes))
+                if extras is not None:
+                    structure_dict.setdefault("extras", {}).update(copy.deepcopy(extras))
                 strct.append(cls(**structure_dict))
         return strct
 
