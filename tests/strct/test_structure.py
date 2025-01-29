@@ -137,7 +137,7 @@ def test_structure_validation():
         strct_dict["elements"].append("Ga")
         strct_dict["positions"].append([14.2310] * 3)
         strct = Structure(**strct_dict)
-    assert str(error.value) == "Sites 2 and 1 have the same position."
+    assert str(error.value) == "Sites with the same position: (2, 1)."
 
 
 def test_to_dict(structure_comparison):

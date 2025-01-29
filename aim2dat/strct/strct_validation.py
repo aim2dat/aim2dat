@@ -69,10 +69,12 @@ def _structure_validate_positions(positions, is_cartesian, cell, inv_cell, pbc):
     sites = set()
     for i in range(len(pos2check)):
         for j in range(i):
-            if dist_m[i][j] < 1e-3
-                sites.add((i,j))
+            if dist_m[i][j] < 1e-3:
+                sites.add((i, j))
     if sites:
-        raise ValueError("Sites with the same position: " + ", ".join([f"{i}" for i in sites]))
+        raise ValueError(
+            "Sites with the same position: " + ", ".join([f"{i}" for i in sites]) + "."
+        )
 
     if len(positions_scaled) == 0:
         return tuple(positions_cart), None
