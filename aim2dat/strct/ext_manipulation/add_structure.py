@@ -11,7 +11,6 @@ import copy
 
 # Third party library imports
 import numpy as np
-from scipy.spatial.transform import Rotation
 
 # Internal library imports
 from aim2dat.strct.ext_manipulation.decorator import (
@@ -83,7 +82,7 @@ def add_structure_random(
     for _ in range(max_tries):
         rot_v = np.array([random.random(), random.random(), random.random()])
         guest_strct0 = rotate_structure(
-            guest_strct, 360 * random.random(), angles=[0, 0, 0], rotation_vector=rot_v
+            guest_strct, angles=360 * random.random(), origin=np.zeros(3), vector=rot_v
         )
 
         guest_positions = np.array(guest_strct0["positions"])
@@ -112,10 +111,20 @@ def add_structure_coord(
     guest_structure: Union[Structure, str] = "CH3",
     guest_dir: Union[None, List[float]] = None,
     bond_length: float = 1.25,
+    r_max: float = 15.0,
+    cn_method: str = "minimum_distance",
+    min_dist_delta: float = 0.1,
+    n_nearest_neighbours: int = 5,
+    radius_type: str = "chen_manz",
+    atomic_radius_delta: float = 0.0,
+    econ_tolerance: float = 0.5,
+    econ_conv_threshold: float = 0.001,
+    voronoi_weight_type: float = "rel_solid_angle",
+    voronoi_weight_threshold: float = 0.5,
+    okeeffe_weight_threshold: float = 0.5,
     dist_constraints=[],
     dist_threshold: Union[float, None] = 0.8,
     change_label: bool = False,
-    **kwargs,
 ) -> Structure:
     """
     Add a functional group or an atom to a host site.
@@ -125,7 +134,7 @@ def add_structure_coord(
     structure : aim2dat.strct.Structure
         Structure to which the guest structure is added.
     wrap : bool (optional)
-        Wrap atomic positgit ions back into the unit cell.
+        Wrap atomic positions back into the unit cell.
     host_indices : int or list (optional)
         Index or indices of the host site(s). In case several indices are given the center of the
         sites is defined as host site as reference point for the bond length.
@@ -140,6 +149,26 @@ def add_structure_coord(
         neighbors is constructed based on the guest index.
     bond_length : float
         Bond length between the host atom and the base atom of the functional group.
+    r_max : float (optional)
+        Cut-off value for the maximum distance between two atoms in angstrom.
+    cn_method : str (optional)
+        Method used to calculate the coordination environment.
+    min_dist_delta : float (optional)
+        Tolerance parameter that defines the relative distance from the nearest neighbour atom
+        for the ``'minimum_distance'`` method.
+    n_nearest_neighbours : int (optional)
+        Number of neighbours that are considered coordinated for the ``'n_neighbours'``
+        method.
+    econ_tolerance : float (optional)
+        Tolerance parameter for the econ method.
+    econ_conv_threshold : float (optional)
+        Convergence threshold for the econ method.
+    voronoi_weight_type : str (optional)
+        Weight type of the Voronoi facets. Supported options are ``'covalent_atomic_radius'``,
+        ``'area'`` and ``'solid_angle'``. The prefix ``'rel_'`` specifies that the relative
+        weights with respect to the maximum value of the polyhedron are calculated.
+    voronoi_weight_threshold : float (optional)
+        Weight threshold to consider a neighbouring atom coordinated.
     dist_constraints : list (optional)
         List of three-fold tuples containing the index of the site of the host structure, the index
         of the site of the guest structure and the target distance. The position of the guest
@@ -150,29 +179,12 @@ def add_structure_coord(
         none of the added atoms collide.
     change_label : bool (optional)
         Add suffix to the label of the new structure highlighting the performed manipulation.
-    kwargs : kwarg (optional)
-        ``r_max``, ``cn_method``, ``min_dist_delta``,``n_nearest_neighbours``, ``radius_type``,
-        ``atomic_radius_delta``, ``econ_tolerance``,``econ_conv_threshold``,
-        ``voronoi_weight_type``, ``voronoi_weight_threshold``, and ``okeeffe_weight_threshold``.
 
     Returns
     -------
     aim2dat.strct.Structure
         Structure with attached functional group.
     """
-    # Set default values for the coordination calculation if not given:
-    r_max = kwargs.get("r_max", 15.0)
-    cn_method = kwargs.get("cn_method", "minimum_distance")
-    min_dist_delta = kwargs.get("min_dist_delta", 0.1)
-    n_nearest_neighbours = kwargs.get("n_nearest_neighbours", 5)
-    radius_type = kwargs.get("radius_type", "chen_manz")
-    atomic_radius_delta = kwargs.get("atomic_radius_delta", 0.0)
-    econ_tolerance = kwargs.get("econ_tolerance", 0.5)
-    econ_conv_threshold = kwargs.get("econ_conv_threshold", 0.001)
-    voronoi_weight_type = kwargs.get("voronoi_weight_type", "rel_solid_angle")
-    voronoi_weight_threshold = kwargs.get("voronoi_weight_threshold", 0.5)
-    okeeffe_weight_threshold = kwargs.get("okeeffe_weight_threshold", 0.5)
-
     guest_strct, guest_strct_label = _check_guest_structure(guest_structure)
     if isinstance(host_indices, int):
         host_indices = [host_indices]
@@ -226,18 +238,15 @@ def add_structure_coord(
     bond_dir /= np.linalg.norm(bond_dir)
     host_pos_np = np.mean(np.array(host_positions), axis=0)
     if len(guest_strct) > 1:
-        rot_angle = -calc_angle(guest_dir, bond_dir)
-        rot_angle = np.rad2deg(rot_angle)
+        rot_angle = np.rad2deg(-calc_angle(guest_dir, bond_dir))
         if np.isclose(abs(rot_angle), 0.0) or np.isclose(abs(rot_angle), 180.0):
             guest_dir = create_lin_ind_vector(guest_dir)
-        rot_dir = np.cross(bond_dir, guest_dir)
-        rot_strct = rotate_structure(
+        guest_strct = rotate_structure(
             structure=guest_strct,
+            vector=np.cross(bond_dir, guest_dir),
             angles=rot_angle,
             origin=guest_strct["positions"][guest_index],
-            rotation_vector=rot_dir,
         )
-        guest_strct.set_positions(rot_strct["positions"])
 
     # Check bond length and adjusts if necessary
     if all(host_pos_np == host_positions[0]):
@@ -419,16 +428,13 @@ def _add_mol(
     structure, guest_strct, wrap, host_pos, bond_length, angle_pars, ref_dirs, dist_constraints
 ):
     # Reorient and shift guest structure:
-    guest_strct = copy.deepcopy(guest_strct)
-    guest_pos = [list(pos) for pos in guest_strct["positions"]]
-    shifts = [np.zeros(3), np.zeros(3), bond_length * ref_dirs[0]]
-    for p0, ref_dir, shift in zip(angle_pars, ref_dirs, shifts):
-        rotation = Rotation.from_rotvec(p0 * ref_dir)
-        for idx, pos in enumerate(guest_pos):
-            guest_pos[idx] = rotation.as_matrix().dot(np.array(pos).T) + shift
-    for idx in range(len(guest_pos)):
-        guest_pos[idx] += host_pos
-    guest_strct.set_positions(guest_pos)
+    for p0, ref_dir in zip(angle_pars, ref_dirs):
+        guest_strct = rotate_structure(
+            guest_strct, angles=p0 * 180.0 / np.pi, vector=ref_dir, origin=np.zeros(3)
+        )
+    guest_strct.set_positions(
+        [np.array(pos) + bond_length * ref_dirs[0] + host_pos for pos in guest_strct.positions]
+    )
 
     # Add guest structure to host:
     new_structure = _merge_structures(structure, guest_strct, wrap)

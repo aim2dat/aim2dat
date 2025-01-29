@@ -21,28 +21,32 @@ from aim2dat.strct.strct import Structure
 def rotate_structure(
     structure: Structure,
     angles: Union[float, List[float]],
-    site_indices: Union[None, List[int]] = None,
+    vector: Union[None, List[float]] = None,
     origin: Union[None, List[float]] = None,
-    rotation_vector: Union[None, List[List[float]]] = None,
+    site_indices: Union[None, List[int]] = None,
     wrap: bool = False,
     change_label: bool = False,
 ):
     """
-    Rotate sub structure around a point or a vector.
+    Rotate structure. The rotation is either defined by a list of 3 angles or a rotation
+    vector and one angle.
 
     Parameters
     ----------
     structure : aim2dat.strct.Structure
-        Structure in which the sub structure is rotated.
+        Structure to rotate.
     angles : float or list of float
-        Angles for the rotation in degree. Type `list` for point and type `float` for vector.
-    site_indices : list of int (optional)
-        Indices of the atoms to rotate. If not given, all atoms are rotated.
+        Angles for the rotation in degree. Type ``list`` for 3 individual rotations around
+        the x, y, and z directions, respectively. Type ``float`` for a rotation around a
+        roation vector given by ``vector``..
+    vector : list of float (optional)
+        Rotation vector in cartesian coordinates, needs to be given if ``angles`` is single
+        number.
     origin : list of float (optional)
-        Rotation center for the rotation in cartesian coordinates. If not given, the center of
-        the structure is used.
-    rotation_vector : list of float (optional)
-        Rotation vector for the rotation in cartesian coordinates.
+        Rotation center for the rotation in cartesian coordinates. If not given, the mean position
+        of all sites that are rotated is used.
+    site_indices : list of int (optional)
+        Indices of the sites to rotate. If not given, all sites of the structure are rotated.
     wrap : bool (optional)
         Wrap atomic positions back into the unit cell.
     change_label : bool (optional)
@@ -51,13 +55,13 @@ def rotate_structure(
     Returns
     -------
     aim2dat.strct.Structure
-        Structure with rotated sub structure.
+        Rotated structure.
     """
     if isinstance(angles, (list, tuple, np.ndarray)):
         rotation = Rotation.from_euler("xyz", angles, degrees=True)
     elif isinstance(angles, (int, float)):
-        rotation_vector /= np.linalg.norm(rotation_vector)
-        rotation = Rotation.from_rotvec(angles * rotation_vector, degrees=True)
+        vector /= np.linalg.norm(vector)
+        rotation = Rotation.from_rotvec(angles * vector, degrees=True)
     else:
         raise TypeError("angles must be type list or type float.")
 

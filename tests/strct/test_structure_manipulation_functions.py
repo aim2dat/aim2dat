@@ -254,7 +254,7 @@ def test_rotate_structure(structure_comparison):
         angles=90,
         site_indices=[44, 56, 76, 81, 57, 45, 77, 80, 104, 101, 105, 100],
         origin=[2.90097537349613, 6.52064699916667, 6.52064699916667],
-        rotation_vector=[1.00000000e00, 2.44932357e-15, 2.44932357e-15],
+        vector=[1.00000000e00, 2.44932357e-15, 2.44932357e-15],
     )
     ref_p = load_yaml_file(STRUCTURE_MANIPULATION_PATH + "MOF-5_prim.yaml")
     structure_comparison(new_strct, ref_p)
