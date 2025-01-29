@@ -184,14 +184,6 @@ def add_structure_coord(
         idx = max(host_indices)
         return structure
 
-    # Shift guest site to [0.0, 0.0, 0.0]
-    guest_strct.set_positions(
-        [
-            np.array(pos0) - np.array(guest_strct["positions"][guest_index])
-            for pos0 in guest_strct["positions"]
-        ]
-    )
-
     if guest_dir is None:
         guest_dir = [1.0, 0.0, 0.0]
         if len(guest_strct) > 1:
@@ -238,15 +230,17 @@ def add_structure_coord(
     host_pos_np = np.mean(np.array(host_positions), axis=0)
     if len(guest_strct) > 1:
         rot_angle = -calc_angle(guest_dir, bond_dir)
-        if np.isclose(abs(rot_angle), 0.0) or np.isclose(abs(rot_angle), np.pi):
+        rot_angle = np.rad2deg(rot_angle)
+        if np.isclose(abs(rot_angle), 0.0) or np.isclose(abs(rot_angle), 180.0):
             guest_dir = create_lin_ind_vector(guest_dir)
         rot_dir = np.cross(bond_dir, guest_dir)
-        rot_dir /= np.linalg.norm(rot_dir)
-        rotation = Rotation.from_rotvec(rot_angle * rot_dir)
-        rot_matrix = rotation.as_matrix()
-        guest_strct.set_positions(
-            [rot_matrix.dot(np.array(pos).T) for pos in guest_strct["positions"]]
+        rot_strct = rotate_structure(
+            structure=guest_strct,
+            angles=rot_angle,
+            origin=guest_strct["positions"][guest_index],
+            rotation_vector=rot_dir,
         )
+        guest_strct.set_positions(rot_strct["positions"])
 
     # Check bond length and adjusts if necessary
     if all(host_pos_np == host_positions[0]):
