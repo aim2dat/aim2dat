@@ -11,13 +11,13 @@ import copy
 
 # Third party library imports
 import numpy as np
-from scipy.spatial.transform import Rotation
 
 # Internal library imports
 from aim2dat.strct.ext_manipulation.decorator import (
     external_manipulation_method,
 )
 from aim2dat.strct.strct import Structure
+from aim2dat.strct.ext_manipulation.rotate_structure import rotate_structure
 from aim2dat.strct.strct_misc import _calc_atomic_distance
 from aim2dat.utils.element_properties import get_element_symbol
 from aim2dat.utils.maths import calc_angle, create_lin_ind_vector
@@ -35,7 +35,7 @@ def add_structure_random(
     dist_threshold: Union[float, None] = 0.8,
     random_state: Union[float, None] = None,
     change_label: bool = False,
-):
+) -> Structure:
     """
     Add structure at random position and orientation.
 
@@ -48,8 +48,7 @@ def add_structure_random(
     guest_structure : str or aim2dat.strct.Structure (optional)
         A representation of the guest structure given as a string of a functional group or molecule
         (viable options are ``'CH3'``, ``'COOH'``, ``'H2O'``, ``'NH2'``, ``'NO2'`` or ``'OH'``), a
-        ``Structure`` object (bond direction is assumed to be the ``[-1.0, 0.0, 0.0]`` direction)
-        or the element symbol to add one single atom.
+        ``Structure`` object or the element symbol to add one single atom.
     dist_threshold : float or None (optional)
         Check the distances between all site pairs of the host and guest structure to ensure that
         none of the added atoms collide.
@@ -81,18 +80,20 @@ def add_structure_random(
     random.seed(a=random_state)
     max_tries = 1000
     for _ in range(max_tries):
-        guest_positions = np.array(guest_strct["positions"])
         rot_v = np.array([random.random(), random.random(), random.random()])
-        rotation = Rotation.from_rotvec(2.0 * random.random() * np.pi * rot_v)
-        rot_matrix = rotation.as_matrix()
-        guest_positions = (rot_matrix.dot(guest_positions.T)).T
+        guest_strct0 = rotate_structure(
+            guest_strct, angles=360 * random.random(), origin=np.zeros(3), vector=rot_v
+        )
+
+        guest_positions = np.array(guest_strct0["positions"])
         shift = np.array([random.random(), random.random(), random.random()])
         shift = (cell.T).dot(shift)
         guest_positions += shift - min_pos
-        guest_strct0 = copy.deepcopy(guest_strct)
-        guest_strct0.set_positions(guest_positions)
+        guest_strct1 = copy.deepcopy(guest_strct)
+        guest_strct1.set_positions(guest_positions)
 
-        new_structure = _merge_structures(structure, guest_strct0, wrap)
+        new_structure = _merge_structures(structure, guest_strct1, wrap)
+
         is_added = _check_distances(
             new_structure, len(guest_strct["elements"]), dist_threshold, True
         )
@@ -142,8 +143,7 @@ def add_structure_coord(
     guest_structure : str or aim2dat.strct.Structure (optional)
         A representation of the guest structure given as a string of a functional group or molecule
         (viable options are ``'CH3'``, ``'COOH'``, ``'H2O'``, ``'NH2'``, ``'NO2'`` or ``'OH'``), a
-        ``Structure`` object (bond direction is assumed to be the ``[-1.0, 0.0, 0.0]`` direction)
-        or the element symbol to add one single atom.
+        ``Structure`` object or the element symbol to add one single atom.
     guest_dir: list of floats (optional)
         Defines the orientation of the guest molecule. If not defined, a vector of nearest
         neighbors is constructed based on the guest index.
@@ -193,14 +193,6 @@ def add_structure_coord(
         idx = max(host_indices)
         return structure
 
-    # Shift guest site to [0.0, 0.0, 0.0]
-    guest_strct.set_positions(
-        [
-            np.array(pos0) - np.array(guest_strct["positions"][guest_index])
-            for pos0 in guest_strct["positions"]
-        ]
-    )
-
     if guest_dir is None:
         guest_dir = [1.0, 0.0, 0.0]
         if len(guest_strct) > 1:
@@ -246,15 +238,14 @@ def add_structure_coord(
     bond_dir /= np.linalg.norm(bond_dir)
     host_pos_np = np.mean(np.array(host_positions), axis=0)
     if len(guest_strct) > 1:
-        rot_angle = -calc_angle(guest_dir, bond_dir)
-        if np.isclose(abs(rot_angle), 0.0) or np.isclose(abs(rot_angle), np.pi):
+        rot_angle = np.rad2deg(-calc_angle(guest_dir, bond_dir))
+        if np.isclose(abs(rot_angle), 0.0) or np.isclose(abs(rot_angle), 180.0):
             guest_dir = create_lin_ind_vector(guest_dir)
-        rot_dir = np.cross(bond_dir, guest_dir)
-        rot_dir /= np.linalg.norm(rot_dir)
-        rotation = Rotation.from_rotvec(rot_angle * rot_dir)
-        rot_matrix = rotation.as_matrix()
-        guest_strct.set_positions(
-            [rot_matrix.dot(np.array(pos).T) for pos in guest_strct["positions"]]
+        guest_strct = rotate_structure(
+            structure=guest_strct,
+            vector=np.cross(bond_dir, guest_dir),
+            angles=rot_angle,
+            origin=guest_strct["positions"][guest_index],
         )
 
     # Check bond length and adjusts if necessary
@@ -309,6 +300,52 @@ def add_structure_coord(
                         new_structure = new_strct0
     else:
         _check_distances(new_structure, len(guest_strct["elements"]), dist_threshold, False)
+    return new_structure, "_added-" + guest_strct_label
+
+
+@external_manipulation_method
+def add_structure_position(
+    structure: Structure,
+    position: List[float],
+    guest_structure: Union[Structure, str] = "CH3",
+    wrap: bool = False,
+    change_label: bool = False,
+) -> Structure:
+    """
+    Add structure at a defined position.
+
+    Parameters
+    ----------
+    structure : aim2dat.strct.Structure
+        Structure to which the guest structure is added.
+    position : list of floats
+        Position of the guest structure.
+    guest_structure : str or aim2dat.strct.Structure (optional)
+        A representation of the guest structure given as a string of a functional group or molecule
+        (viable options are ``'CH3'``, ``'COOH'``, ``'H2O'``, ``'NH2'``, ``'NO2'`` or ``'OH'``), a
+        ``Structure`` object (bond direction is assumed to be the ``[-1.0, 0.0, 0.0]`` direction)
+        or the element symbol to add one single atom.
+    wrap : bool (optional)
+        Wrap atomic positions back into the unit cell.
+    change_label : bool (optional)
+        Add suffix to the label of the new structure highlighting the performed manipulation.
+
+    Returns
+    -------
+    aim2dat.strct.Structure
+        Structure with added sub structure at defined postion.
+    """
+    guest_strct, guest_strct_label = _check_guest_structure(guest_structure)
+
+    guest_positions = np.array(guest_strct["positions"])
+    guest_center = np.mean(guest_positions, axis=0)
+    guest_positions -= guest_center
+    guest_positions += np.array(position)
+    guest_strct0 = copy.deepcopy(guest_strct)
+    guest_strct0.set_positions(guest_positions)
+
+    new_structure = _merge_structures(structure, guest_strct0, wrap)
+
     return new_structure, "_added-" + guest_strct_label
 
 
@@ -391,16 +428,13 @@ def _add_mol(
     structure, guest_strct, wrap, host_pos, bond_length, angle_pars, ref_dirs, dist_constraints
 ):
     # Reorient and shift guest structure:
-    guest_strct = copy.deepcopy(guest_strct)
-    guest_pos = [list(pos) for pos in guest_strct["positions"]]
-    shifts = [np.zeros(3), np.zeros(3), bond_length * ref_dirs[0]]
-    for p0, ref_dir, shift in zip(angle_pars, ref_dirs, shifts):
-        rotation = Rotation.from_rotvec(p0 * ref_dir)
-        for idx, pos in enumerate(guest_pos):
-            guest_pos[idx] = rotation.as_matrix().dot(np.array(pos).T) + shift
-    for idx in range(len(guest_pos)):
-        guest_pos[idx] += host_pos
-    guest_strct.set_positions(guest_pos)
+    for p0, ref_dir in zip(angle_pars, ref_dirs):
+        guest_strct = rotate_structure(
+            guest_strct, angles=p0 * 180.0 / np.pi, vector=ref_dir, origin=np.zeros(3)
+        )
+    guest_strct.set_positions(
+        [np.array(pos) + bond_length * ref_dirs[0] + host_pos for pos in guest_strct.positions]
+    )
 
     # Add guest structure to host:
     new_structure = _merge_structures(structure, guest_strct, wrap)

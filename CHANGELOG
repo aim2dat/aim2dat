@@ -9,7 +9,10 @@ Version 0.3.0
 
 * A parser for xml output files of Quantum ESPRESSO is added (`PR #102 <https://github.com/aim2dat/aim2dat/pull/102>`_).
 * Added interface to MOFXDB (https://mof.tech.northwestern.edu/) to the ``strct.StructureImporter`` class (`PR #94 <https://github.com/aim2dat/aim2dat/pull/94>`_).
+* The newly implemented ``strct.ext_manipulation.add_structure_position`` function adds a guest structure at a given position (`PR #105 <https://github.com/aim2dat/aim2dat/pull/105>`_).
+* The newly implemented ``strct.ext_manipulation.rotate_structure`` function rotates a sub structure around a certain point or vector (`PR #105 <https://github.com/aim2dat/aim2dat/pull/105>`_).
 * The ``strct.Structure`` class checks now for duplicate positions upon initialization (`PR #107 <https://github.com/aim2dat/aim2dat/pull/107>`_).
+
 
 **Fixes:**
 
