@@ -132,6 +132,12 @@ def test_structure_validation():
         strct_dict["positions"][0] = [0.0, 0.0, float("nan")]
         strct = Structure(**strct_dict)
     assert str(error.value) == "`positions` must not contain 'nan' values."
+    with pytest.raises(ValueError) as error:
+        strct_dict["positions"][0] = [0.0] * 3
+        strct_dict["elements"].append("Ga")
+        strct_dict["positions"].append([14.2310] * 3)
+        strct = Structure(**strct_dict)
+    assert str(error.value) == "Sites with the same position: (2, 1)."
 
 
 def test_to_dict(structure_comparison):
@@ -262,3 +268,28 @@ def test_internal_io(structure_comparison, system, file_path):
     ref = load_yaml_file(IO_PATH + system + "/ref.yaml")
     structure = Structure.from_file(file_path, **ref["parameters"])
     structure_comparison(structure, ref["structure"])
+
+
+def test_internal_io_str_input(structure_comparison):
+    """Test internal structure parser for the case string input."""
+    with open(STRUCTURES_PATH + "ZIF-8.cif") as fobj:
+        file_content = fobj.read()
+    ref = load_yaml_file(IO_PATH + "cif/ref.yaml")
+    structure = Structure.from_file(file_content, **ref["parameters"])
+    structure_comparison(structure, ref["structure"])
+
+
+def test_internal_io_errors():
+    """Test internal structure parser errors."""
+    with pytest.raises(ValueError) as error:
+        Structure.from_file("testtest", backend="internal")
+    assert (
+        str(error.value)
+        == "If `file_path` is not the path to a file, `file_format` needs to be set."
+    )
+    with pytest.raises(ValueError) as error:
+        Structure.from_file("testtest", backend="internal", file_format="test")
+    assert str(error.value) == "File format 'test' is not supported."
+    with pytest.raises(ValueError) as error:
+        Structure.from_file(STRUCTURES_PATH + "ZIF-8_complex.xyz", backend="internal")
+    assert str(error.value) == "Could not find a suitable io function."

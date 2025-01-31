@@ -22,9 +22,9 @@ cell:
 - [0.0, 9.527045, 0.0]
 - [0.0, 0.0, 11.621285]
 source_id: mp-573763
-source: MP_2024.11.14
+source: MP_2024.12.18
 icsd_ids: [36501]
-formation_energy: {value: -1.226266616666668, unit: eV/atom}
+formation_energy: {value: -1.220100983333334, unit: eV/atom}
 stability: {value: 0.0, unit: eV/atom}
 band_gap: {value: 1.7740000000000002, unit: eV}
 space_group: 62

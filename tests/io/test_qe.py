@@ -4,6 +4,7 @@
 import os
 
 # Third party library imports
+import pytest
 import h5py
 import numpy as np
 
@@ -12,11 +13,14 @@ from aim2dat.io.qe import (
     read_band_structure,
     read_total_density_of_states,
     read_atom_proj_density_of_states,
+    read_xml,
 )
+from aim2dat.io.yaml import load_yaml_file
 
 BAND_STRUCTURE_PATH = os.path.dirname(__file__) + "/qe_band_structure/"
 TDOS_PATH = os.path.dirname(__file__) + "/qe_tdos/"
 PDOS_PATH = os.path.dirname(__file__) + "/qe_pdos/"
+XML_PATH = os.path.dirname(__file__) + "/qe_xml/"
 
 
 def test_read_band_structure(nested_dict_comparison):
@@ -49,3 +53,24 @@ def test_read_atom_proj_density_of_states(nested_dict_comparison):
             for orb, pdos0 in pdos.items():
                 label = kind + ":" + orb
                 np.testing.assert_allclose(pdos0, fobj[label][:], atol=1.0e-5)
+
+
+@pytest.mark.parametrize("system", ["SCF", "H2O"])
+def test_read_xml(nested_dict_comparison, system):
+    """Test read_xml function."""
+    ref = load_yaml_file(XML_PATH + system + "_ref.yaml")
+    outp_dict = read_xml(XML_PATH + system + ".xml", **ref["parameters"])
+    ref["ref"]["input"]["atomic_species"] = {
+        k: tuple(v) for k, v in ref["ref"]["input"]["atomic_species"].items()
+    }
+    for strct in ref["ref"]["structures"]:
+        strct["positions"] = [tuple(v) for v in strct["positions"]]
+        if "atomic_species" in strct["attributes"]:
+            strct["attributes"]["atomic_species"] = {
+                k: tuple(v) for k, v in strct["attributes"]["atomic_species"].items()
+            }
+        if "site_attributes" in strct:
+            strct["site_attributes"]["forces"] = [
+                tuple(v) for v in strct["site_attributes"]["forces"]
+            ]
+    nested_dict_comparison(outp_dict, ref["ref"])

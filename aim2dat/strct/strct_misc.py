@@ -242,19 +242,21 @@ def _calc_atomic_distance_sc(structure, site_indices1, site_indices2, r_max):
         mask = np.where(np.array(mapping) == site_index2, True, False)
         pos2 = np.array(positions_sc)[mask]
         dist = []
+        final_pos = []
         for pos in pos2:
             dist0 = np.linalg.norm(np.array(pos1) - pos)
             if dist0 <= r_max:
                 dist.append(dist0)
+                final_pos.append(pos.tolist())
         if len(dist) > 0:
-            zipped = list(zip(dist, pos2.tolist()))
+            zipped = list(zip(dist, final_pos))
             zipped.sort(key=lambda point: point[0])
-            dist, pos = zip(*zipped)
+            dist, final_pos = zip(*zipped)
         else:
             dist = None
-            pos = None
+            final_pos = None
         dist_out.append(dist)
-        pos_out.append(pos)
+        pos_out.append(final_pos)
     return _parse_calc_atomic_distance_output(
         is_int, dist_out, pos_out, site_indices1, site_indices2
     )
