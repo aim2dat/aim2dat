@@ -179,6 +179,31 @@ def test_add_structure_position(structure_comparison):
     structure_comparison(new_strct, ref_p)
 
 
+def test_scale_unit_cell_errors():
+    """Test appropriate error rasing of scale_unit_cell function."""
+    structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
+    with pytest.raises(TypeError) as error:
+        structure.scale_unit_cell(scaling_factors=[0.0, 1.0, "c"])
+    assert (
+        str(error.value)
+        == "`scaling_factors` must be of type float/int or a list of float/int values."
+    )
+    with pytest.raises(ValueError) as error:
+        structure.scale_unit_cell(scaling_factors=[[0.0, 1.0, 1.0], [0.0, 0.0, 0.0]])
+    assert (
+        str(error.value)
+        == "`scaling_factors` must be a single value, a list of 3 values, or a 3x3 nested list."
+    )
+    with pytest.raises(ValueError) as error:
+        structure.scale_unit_cell(pressure=10.0)
+    assert str(error.value) == "`bulk_modulus` must be provided when applying `pressure`."
+    with pytest.raises(ValueError) as error:
+        structure.scale_unit_cell()
+    assert (
+        str(error.value) == "Provide either `scaling_factors` or `pressure` (with `bulk_modulus`)."
+    )
+
+
 def test_scale_unit_cell_uniform_scaling():
     """Test scale_unit_cell with uniform scaling factors."""
     structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")

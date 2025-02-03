@@ -152,11 +152,11 @@ def scale_unit_cell(
 
     if pressure is not None:
         if bulk_modulus is None:
-            raise ValueError("Bulk modulus must be provided when applying pressure.")
+            raise ValueError("`bulk_modulus` must be provided when applying `pressure`.")
         scaling_factors = 1 - pressure / bulk_modulus
 
     if scaling_factors is None:
-        raise ValueError("Provide either scaling_factors or pressure (with bulk_modulus).")
+        raise ValueError("Provide either `scaling_factors` or `pressure` (with `bulk_modulus`).")
 
     scaling_matrix = get_scaling_matrix(scaling_factors)
 
