@@ -12,6 +12,7 @@ Version 0.3.0
 * The newly implemented ``strct.ext_manipulation.add_structure_position`` function adds a guest structure at a given position (`PR #105 <https://github.com/aim2dat/aim2dat/pull/105>`_).
 * The newly implemented ``strct.ext_manipulation.rotate_structure`` function rotates a sub structure around a certain point or vector (`PR #105 <https://github.com/aim2dat/aim2dat/pull/105>`_).
 * The ``strct.Structure`` class checks now for duplicate positions upon initialization (`PR #107 <https://github.com/aim2dat/aim2dat/pull/107>`_).
+* ``strct.ext_analysis.determine_molecular_fragments`` offers additional parameters, allowing to exclude sites and restricting the size of the fragments (`PR #111 <https://github.com/aim2dat/aim2dat/pull/111>`_).
 
 
 **Fixes:**
@@ -22,6 +23,11 @@ Version 0.3.0
 * Expose ``strct.Structure.attributes``, ``strct.Structure.site_attributes`` and ``strct.Structure.extras`` to ``strct.StructureCollection.append``, ``strct.Structure.from_ase_atoms`` and ``strct.Structure.from_pymatgen_structure`` functions (`PR #103 <https://github.com/aim2dat/aim2dat/pull/103>`_).
 * Some str values were sometimes wrongly transformed into float numbers in the output parsers and cif parser checks more rigorously whether two atoms are occupying the same site (`PR #104 <https://github.com/aim2dat/aim2dat/pull/104>`_).
 * Fix positions returned from ``strct.Structure.calculate_distance`` function (`PR #106 <https://github.com/aim2dat/aim2dat/pull/106>`_).
+
+**Breaking Changes:**
+
+* ``strct.ext_analysis.determine_molecular_fragments`` now considers the same site multiple times if it is connected, returns a list of ``strct.Structure`` objects and does not shift the position of the first atom to zero (`PR #111 <https://github.com/aim2dat/aim2dat/pull/111>`_).
+
 
 Version 0.2.0
 =============

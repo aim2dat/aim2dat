@@ -8,58 +8,12 @@ import pytest
 
 # Internal library imports
 from aim2dat.strct import StructureCollection, StructureOperations
-from aim2dat.strct.ext_analysis import (
-    determine_molecular_fragments,
-    create_graph,
-)
+from aim2dat.strct.ext_analysis import create_graph
 from aim2dat.io.yaml import load_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
-FRAG_ANALYSIS_PATH = os.path.dirname(__file__) + "/fragment_analysis/"
 SPACE_GROUP_PATH = os.path.dirname(__file__) + "/space_group_analysis/"
 POINT_GROUP_PATH = os.path.dirname(__file__) + "/point_group_analysis/"
-
-
-@pytest.mark.parametrize(
-    "structure, file_suffix, backend, excl_elements",
-    [
-        ("Benzene", "xyz", "ase", []),
-        ("ZIF-8", "cif", "internal", ["Zn"]),
-    ],
-)
-def test_determine_molecular_fragments(structure, file_suffix, backend, excl_elements):
-    """Test determine_molecular_fragments function."""
-    kwargs = {
-        "exclude_elements": excl_elements,
-        "cn_method": "econ",
-        "econ_tolerance": 0.001,
-        "econ_conv_threshold": 0.0001,
-    }
-    ref_outputs = load_yaml_file(FRAG_ANALYSIS_PATH + structure + ".yaml")
-    strct_c = StructureCollection()
-    strct_c.append_from_file(
-        "test", STRUCTURES_PATH + structure + "." + file_suffix, backend=backend
-    )
-    strct_ops = StructureOperations(strct_c)
-    fragments = strct_ops["test"].perform_analysis(
-        method=determine_molecular_fragments, kwargs=kwargs
-    )
-    assert len(fragments) == len(ref_outputs), "Number of fragments differ."
-    for frag, ref_frag in zip(fragments, ref_outputs):
-        assert len(frag["elements"]) == len(ref_frag["elements"]), "Fragment size differs."
-        for pos, pos_ref, el, el_ref, at_idx, at_idx_ref in zip(
-            frag["positions"],
-            ref_frag["positions"],
-            frag["elements"],
-            ref_frag["elements"],
-            frag["site_indices"],
-            ref_frag["site_indices"],
-        ):
-            assert all(
-                abs(coord0 - coord1) < 1e-5 for coord0, coord1 in zip(pos, pos_ref)
-            ), "Fragment positions differ."
-            assert el == el_ref, "Fragment elements differ."
-            assert at_idx == at_idx_ref, "Fragment indices differ."
 
 
 @pytest.mark.parametrize(
