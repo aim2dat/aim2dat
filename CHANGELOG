@@ -13,7 +13,7 @@ Version 0.3.0
 * The newly implemented ``strct.ext_manipulation.rotate_structure`` function rotates a sub structure around a certain point or vector (`PR #105 <https://github.com/aim2dat/aim2dat/pull/105>`_).
 * The ``strct.Structure`` class checks now for duplicate positions upon initialization (`PR #107 <https://github.com/aim2dat/aim2dat/pull/107>`_).
 * ``strct.ext_analysis.determine_molecular_fragments`` offers additional parameters, allowing to exclude sites and restricting the size of the fragments (`PR #111 <https://github.com/aim2dat/aim2dat/pull/111>`_).
-
+* Slight speed-up in distance based methods to calculate the coordination environment by sorting the pair-wise distances first (`PR #112 <https://github.com/aim2dat/aim2dat/pull/112>`_),
 
 **Fixes:**
 
