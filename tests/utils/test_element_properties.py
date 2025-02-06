@@ -73,3 +73,9 @@ def test_get_element_symbol(test_input, test_result):
 def test_get_atomic_mass(element, value):
     """Test invalid input for get_atomic_mass."""
     assert value == el_properties.get_atomic_mass(element)
+
+
+@pytest.mark.parametrize("element,value", [("Cs", 1), ("C", 4), (100, 14)])
+def test_get_val_electrons(element, value):
+    """Test invalid input for get_atomic_mass."""
+    assert value == el_properties.get_val_electrons(element)
