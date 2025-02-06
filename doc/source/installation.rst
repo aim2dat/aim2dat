@@ -23,6 +23,7 @@ This package comes with the following core dependencies:
 * |h5py_page| is used to write and read (hdf5) data files.
 * |ase_page| and |spglib_page| are used to handle atomic structures.
 * |tqdm_page| for visualizing progress bars.
+* |nx_page| to transform crystals or molecules to graphs.
 
 Some features demand additional dependencies:
 
@@ -35,7 +36,7 @@ Some features demand additional dependencies:
   * |pymatgen_page|, |msgpack_page| and |boto3_page| are used for the interface to materials project.
   * |qmpy_rester_page| is used the interface to the open quantum materials database.
 
-* *graphs*: To create graphs from atomic structures the |nx_page| and |graphviz_page| package are needed.
+* *graphviz*: To create graphviz graphs from atomic structures the |graphviz_page| package is needed.
 * *plots*: The |plotly_page| package serves as a secondary plotting engine.
 * *ml*: The machine learning routines are based on |dscribe_page| and |sklearn_page|.
 * *tests*: Includes all packages for the testing infrastructure.

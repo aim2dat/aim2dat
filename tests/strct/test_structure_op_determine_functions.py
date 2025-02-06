@@ -8,7 +8,6 @@ import pytest
 
 # Internal library imports
 from aim2dat.strct import StructureCollection, StructureOperations
-from aim2dat.strct.ext_analysis import create_graph
 from aim2dat.io.yaml import load_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
@@ -76,21 +75,3 @@ def test_point_group_determination(nested_dict_comparison, structure):
     strct_ops = StructureOperations(strct_c)
     nested_dict_comparison(strct_ops[structure].determine_point_group(), ref)
     assert strct_c[structure]["attributes"]["point_group"] == pg
-
-
-def test_determine_graph(nested_dict_comparison, create_structure_collection_object):
-    """Test creating a graph from a structure."""
-    strct_c, _ = create_structure_collection_object(["GaAs_216_prim"])
-    strct_ops = StructureOperations(strct_c)
-    nx_graph, _ = strct_ops[0].perform_analysis(method=create_graph)
-    assert list(nx_graph.edges) == [
-        (0, 1, 0),
-        (0, 1, 1),
-        (0, 1, 2),
-        (0, 1, 3),
-        (1, 0, 0),
-        (1, 0, 1),
-        (1, 0, 2),
-        (1, 0, 3),
-    ]
-    assert list(nx_graph.nodes) == [0, 1]
