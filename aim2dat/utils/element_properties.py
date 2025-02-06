@@ -96,7 +96,7 @@ def get_electronegativity(element, scale="pauling"):
 
     Returns
     -------
-    electronegativity : float or None
+    float or None
         Electronegativity of the element.
     """
     _, element, _ = _check_element(element)
@@ -155,11 +155,30 @@ def get_atomic_mass(element):
 
     Returns
     -------
-    element_number : int
-        Atomic number of the element.
+    int
+        Atomic mass of the element.
     """
     element_number, _, _ = _check_element(element)
     return atomic_masses[element_number]
+
+
+def get_val_electrons(element):
+    """
+    Return number of valence electrons of the element from the atomic number, element symbol
+    or name.
+
+    Parameters
+    ----------
+    element : str or int
+        Atomic number, name or symbol of the element.
+
+    Returns
+    -------
+    int
+        Number of valence electrons of the element.
+    """
+    _, element, _ = _check_element(element)
+    return internal_data.val_electrons[element]
 
 
 def get_element_groups(element):
