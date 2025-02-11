@@ -128,9 +128,7 @@ class OutputParserTester:
         ("cell_opt_interrupted", "low", 9.1),
         ("cell_opt_max_steps", "low", 9.1),
         ("cell_opt", "low", 2024.1),
-        # ("geo_opt", "low", 2024.1), # TODO remove
         ("geo_opt", "low", 2025.1),
-        # ("geo_opt", "medium", 2024.1), # TODO remove
         ("geo_opt", "medium", 2025.1),
         ("cell_opt", "low", 2025.1),
         ("cell_opt", "medium", 2025.1),
@@ -141,33 +139,21 @@ class OutputParserTester:
         ("cell_opt_cg_spgr", "medium", 2025.1),
         ("cell_opt_max_steps", "low", 2025.1),
         ("cell_opt_walltime", "low", 2025.1),
-        # ("md_nvt", "low", 2024.1), # TODO remove
         ("md_nvt", "low", 2025.1),
-        # ("md_nvt", "medium", 2024.1), # TODO remove
         ("md_nvt", "medium", 2025.1),
-        # ("eigenvalues", "low", 2024.1), # TODO remove
         ("eigenvalues", "low", 2025.1),
-        # ("eigenvalues", "medium", 2024.1), # TODO remove here but keep for comparisons
         ("eigenvalues", "medium", 2025.1),
-        # ("eigenvalues_spin_pol", "low", 2024.1), # TODO remove
         ("eigenvalues_spin_pol", "low", 2025.1),
-        # ("eigenvalues_spin_pol", "medium", 2024.1), # TODO remove
         ("eigenvalues_spin_pol", "medium", 2025.1),
-        # ("eigenvalues_changing_character", "low", 2024.1), # TODO remove
         ("eigenvalues_changing_character", "low", 2025.1),
-        # ("eigenvalues_no_kpoints", "low", 2024.1), # TODO remove
         ("eigenvalues_no_kpoints", "low", 2025.1),
-        # ("eigenvalues_spin_pol_no_kpoints", "low", 2024.1), # TODO remove
         ("eigenvalues_spin_pol_no_kpoints", "low", 2025.1),
         ("bands", "low", 2025.1),
         ("bands", "medium", 2025.1),
         ("bands_spin_pol", "low", 2025.1),
         ("bands_spin_pol", "medium", 2025.1),
-        # ("smearing_need_added_mos", "medium", 2024.1), # TODO remove
         ("smearing_need_added_mos", "medium", 2025.1),
-        # ("need_lsd", "medium", 2024.1), # TODO remove
         ("need_lsd", "medium", 2025.1),
-        # ("unconverged_scf", "medium", 2024.1), # TODO remove
         ("unconverged_scf", "medium", 2025.1),
     ],
 )
