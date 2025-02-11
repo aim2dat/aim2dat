@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+- [cp2k_version, 2025.1]
+- [run_type, CELL_OPT]
+- [natoms, 4]
+- [nelectrons, 32]
+- [nr_occ_orbitals, 16]
+- [energy_scf, -65.98720976130207]
+- [scf_converged, true]
+- [energy_units, hartree]
+- [energy, -65.98709484984226]
+- [nr_steps, 3]
+- [geo_not_converged, true]
+- [nwarnings, 1]
+- - warnings
+  - []
+- [runtime, 13.804]
+- [exceeded_walltime, false]

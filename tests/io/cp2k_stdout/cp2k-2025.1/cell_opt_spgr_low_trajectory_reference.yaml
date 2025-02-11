@@ -1,0 +1,29 @@
+%YAML 1.2
+---
+- [cp2k_version, 2025.1]
+- [run_type, CELL_OPT]
+- - spgr_info
+  - {sg_number: 225, int_symbol: Fm-3m, point_group_symbol: m-3m, schoenflies_symbol: Oh^5}
+- [natoms, 4]
+- [nelectrons, 32]
+- [nr_occ_orbitals, 16]
+- [energy_scf, -65.9870173103357]
+- [scf_converged, true]
+- [energy_units, hartree]
+- [energy, -65.9870173103357]
+- - motion_step_info
+  - - {pressure: 1721.753214236, nr_scf_steps: 12, scf_converged: true, energy: -65.9869751138215}
+    - {pressure: 1706.8279628338, max_step: 0.0004302877, rms_step: 0.0002484267,
+      max_grad: 0.0004264036, rms_grad: 0.0002461755, nr_scf_steps: 13, scf_converged: true,
+      energy: -65.98697627151762}
+    - {pressure: 155.1683617411, max_step: 0.047054365, rms_step: 0.027165886, max_grad: 1.52708e-05,
+      rms_grad: 8.7036e-06, nr_scf_steps: 13, scf_converged: true, energy: -65.98701863295659}
+    - {pressure: 101.34007466, max_step: 0.0017247345, rms_step: 0.0009956235, max_grad: 7.333e-07,
+      rms_grad: 3.413e-07, nr_scf_steps: 13, scf_converged: true, energy: -65.98701709141926}
+    - {nr_scf_steps: 2, scf_converged: true, energy: -65.9870173103357}
+- [nr_steps, 3]
+- [nwarnings, 1]
+- - warnings
+  - []
+- [runtime, 104.101]
+- [exceeded_walltime, false]

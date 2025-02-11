@@ -127,33 +127,48 @@ class OutputParserTester:
         ("cholesky_decompose_failed", "medium", 8.2),
         ("cell_opt_interrupted", "low", 9.1),
         ("cell_opt_max_steps", "low", 9.1),
-        ("geo_opt", "low", 2024.1),
-        ("geo_opt", "medium", 2024.1),
         ("cell_opt", "low", 2024.1),
-        ("cell_opt", "medium", 2024.1),
-        ("cell_opt_1kpoint", "medium", 2024.1),
-        ("cell_opt_interrupted", "low", 2024.1),
-        ("cell_opt_spgr", "low", 2024.1),
-        ("cell_opt_spgr", "medium", 2024.1),
-        ("cell_opt_cg_spgr", "medium", 2024.1),
-        ("cell_opt_max_steps", "low", 2024.1),
-        ("cell_opt_walltime", "low", 2024.1),
-        ("md_nvt", "low", 2024.1),
-        ("md_nvt", "medium", 2024.1),
-        ("eigenvalues", "low", 2024.1),
-        ("eigenvalues", "medium", 2024.1),
-        ("eigenvalues_spin_pol", "low", 2024.1),
-        ("eigenvalues_spin_pol", "medium", 2024.1),
-        ("eigenvalues_changing_character", "low", 2024.1),
-        ("eigenvalues_no_kpoints", "low", 2024.1),
-        ("eigenvalues_spin_pol_no_kpoints", "low", 2024.1),
-        ("bands", "low", 2024.1),
-        ("bands", "medium", 2024.1),
-        ("bands_spin_pol", "low", 2024.1),
-        ("bands_spin_pol", "medium", 2024.1),
-        ("smearing_need_added_mos", "medium", 2024.1),
-        ("need_lsd", "medium", 2024.1),
-        ("unconverged_scf", "medium", 2024.1),
+        # ("geo_opt", "low", 2024.1), # TODO remove
+        ("geo_opt", "low", 2025.1),
+        # ("geo_opt", "medium", 2024.1), # TODO remove
+        ("geo_opt", "medium", 2025.1),
+        ("cell_opt", "low", 2025.1),
+        ("cell_opt", "medium", 2025.1),
+        ("cell_opt_1kpoint", "low", 2025.1),
+        ("cell_opt_interrupted", "low", 2025.1),
+        ("cell_opt_spgr", "low", 2025.1),
+        ("cell_opt_spgr", "medium", 2025.1),
+        ("cell_opt_cg_spgr", "medium", 2025.1),
+        ("cell_opt_max_steps", "low", 2025.1),
+        ("cell_opt_walltime", "low", 2025.1),
+        # ("md_nvt", "low", 2024.1), # TODO remove
+        ("md_nvt", "low", 2025.1),
+        # ("md_nvt", "medium", 2024.1), # TODO remove
+        ("md_nvt", "medium", 2025.1),
+        # ("eigenvalues", "low", 2024.1), # TODO remove
+        ("eigenvalues", "low", 2025.1),
+        # ("eigenvalues", "medium", 2024.1), # TODO remove here but keep for comparisons
+        ("eigenvalues", "medium", 2025.1),
+        # ("eigenvalues_spin_pol", "low", 2024.1), # TODO remove
+        ("eigenvalues_spin_pol", "low", 2025.1),
+        # ("eigenvalues_spin_pol", "medium", 2024.1), # TODO remove
+        ("eigenvalues_spin_pol", "medium", 2025.1),
+        # ("eigenvalues_changing_character", "low", 2024.1), # TODO remove
+        ("eigenvalues_changing_character", "low", 2025.1),
+        # ("eigenvalues_no_kpoints", "low", 2024.1), # TODO remove
+        ("eigenvalues_no_kpoints", "low", 2025.1),
+        # ("eigenvalues_spin_pol_no_kpoints", "low", 2024.1), # TODO remove
+        ("eigenvalues_spin_pol_no_kpoints", "low", 2025.1),
+        ("bands", "low", 2025.1),
+        ("bands", "medium", 2025.1),
+        ("bands_spin_pol", "low", 2025.1),
+        ("bands_spin_pol", "medium", 2025.1),
+        # ("smearing_need_added_mos", "medium", 2024.1), # TODO remove
+        ("smearing_need_added_mos", "medium", 2025.1),
+        # ("need_lsd", "medium", 2024.1), # TODO remove
+        ("need_lsd", "medium", 2025.1),
+        # ("unconverged_scf", "medium", 2024.1), # TODO remove
+        ("unconverged_scf", "medium", 2025.1),
     ],
 )
 def test_mainoutput(test_case, print_level, cp2k_version):
@@ -176,14 +191,14 @@ def test_mainoutput(test_case, print_level, cp2k_version):
     "test_case, print_level, cp2k_version_1, cp2k_version_2, exclude_keys",
     [
         ("eigenvalues_spin_pol", "medium", 8.1, 8.2, ["nwarnings", "runtime"]),
-        ("geo_opt", "medium", 9.1, 2024.1, ["runtime"]),
+        ("geo_opt", "medium", 9.1, 2025.1, ["runtime", "energy_units"]),
         ("cell_opt", "medium", 8.2, 9.1, ["runtime"]),
-        ("md_nvt", "low", 9.1, 2024.1, ["runtime"]),
-        ("eigenvalues", "low", 9.1, 2024.1, ["runtime"]),
-        ("eigenvalues", "medium", 9.1, 2024.1, ["runtime"]),
-        ("eigenvalues_spin_pol", "medium", 9.1, 2024.1, ["runtime"]),
-        ("bands", "medium", 9.1, 2024.1, ["runtime", "xc", "nwarnings"]),
-        ("bands_spin_pol", "medium", 9.1, 2024.1, ["runtime"]),
+        ("md_nvt", "low", 9.1, 2025.1, ["runtime", "energy_units"]),
+        ("eigenvalues", "low", 9.1, 2025.1, ["runtime", "energy_units"]),
+        ("eigenvalues", "medium", 9.1, 2025.1, ["runtime", "energy_units"]),
+        ("eigenvalues_spin_pol", "medium", 9.1, 2025.1, ["runtime", "energy_units"]),
+        ("bands", "medium", 9.1, 2025.1, ["runtime", "xc", "nwarnings", "energy_units"]),
+        ("bands_spin_pol", "medium", 9.1, 2025.1, ["runtime", "energy_units"]),
     ],
 )
 def test_comp_standard_parser_versions(
@@ -201,10 +216,10 @@ def test_comp_standard_parser_versions(
 @pytest.mark.parametrize(
     "test_case, print_level, cp2k_version_1, cp2k_version_2, exclude_keys",
     [
-        ("geo_opt", "medium", 9.1, 2024.1, ["runtime"]),
+        ("geo_opt", "medium", 9.1, 2025.1, ["runtime", "energy_units"]),
         ("cell_opt_spgr", "medium", 8.2, 9.1, ["runtime"]),
-        ("md_nvt", "medium", 9.1, 2024.1, ["runtime"]),
-        ("eigenvalues_spin_pol", "medium", 9.1, 2024.1, ["runtime"]),
+        ("md_nvt", "medium", 9.1, 2025.1, ["runtime", "energy_units"]),
+        ("eigenvalues_spin_pol", "medium", 9.1, 2025.1, ["runtime", "energy_units"]),
     ],
 )
 def test_comp_partial_charges_parser_versions(
@@ -222,10 +237,10 @@ def test_comp_partial_charges_parser_versions(
 @pytest.mark.parametrize(
     "test_case, print_level, cp2k_version_1, cp2k_version_2, exclude_keys",
     [
-        ("eigenvalues_spin_pol", "medium", 9.1, 2024.1, ["runtime"]),
-        ("geo_opt", "medium", 9.1, 2024.1, ["runtime"]),
+        ("eigenvalues_spin_pol", "medium", 9.1, 2025.1, ["runtime", "energy_units"]),
+        ("geo_opt", "medium", 9.1, 2025.1, ["runtime", "energy_units"]),
         ("cell_opt", "medium", 8.2, 9.1, ["runtime"]),
-        ("md_nvt", "medium", 9.1, 2024.1, ["runtime"]),
+        ("md_nvt", "medium", 9.1, 2025.1, ["runtime", "energy_units"]),
     ],
 )
 def test_comp_trajectory_parser_versions(
