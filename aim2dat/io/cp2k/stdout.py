@@ -390,19 +390,26 @@ class OptStepBlock(_BaseDataBlock):
 class StepInformationBlock(_BaseDataBlock):
     """Opt step information data block."""
 
-    start_str = "--------  Informations at step ="
-    end_str = "---------------------------------------------------"
+    start_str = ["--------  Informations at step =", "OPT| Step number"]
+    end_str = ["---------------------------------------------------", "OPT| Estimated peak"]
 
     def _parse_line(self, line):
-        line_sp = line.split("=")
-        if len(line_sp) < 2:
-            return None
-
-        if "---" in line_sp[0]:
-            self.current_data["nr_steps"] = int(line_sp[1].split()[0])
-        else:
-            value = transform_str_value(line_sp[1])
-            self.current_data["_".join(line_sp[0].split()).lower()] = value
+        if "=" in line:
+            # Pre 2025.1 output files:
+            line_sp = line.split("=")
+            if "---" in line_sp[0]:
+                self.current_data["nr_steps"] = int(line_sp[1].split()[0])
+            else:
+                value = transform_str_value(line_sp[1])
+                self.current_data["_".join(line_sp[0].split()).lower()] = value
+        elif "OPT|" in line:
+            # Post 2025.1 output files:
+            line_sp = line.split()
+            if "OPT| Step number" in line:
+                self.current_data["nr_steps"] = int(line_sp[-1])
+            else:
+                value = transform_str_value(line_sp[-1])
+                self.current_data["_".join(line_sp[1:-1]).lower()] = value
 
     def _process_output(self):
         if len(self.all_data) > 0:
@@ -726,8 +733,10 @@ _ERROR_MAPPING = [
 
 _MOTION_STEP_MAPPING = {
     "max._step_size": "max_step",
+    "maximum_step_size": "max_step",
     "rms_step_size": "rms_step",
     "max._gradient": "max_grad",
+    "maximum_gradient": "max_grad",
     "rms_gradient": "rms_grad",
     "internal_pressure_[bar]": "pressure",
     "potential_energy": "potential_energy",
@@ -764,7 +773,7 @@ def read_stdout(file_name: str, parser_type: str = "standard") -> dict:
         output["run_type"] += "-" + output.pop("md_ensemble")
     if "runtime" not in output:
         output.pop("nwarnings", None)
-        output["energy_units"] = "a.u."
+        output["energy_units"] = "a.u." if output["cp2k_version"] < 2025.0 else "hartree"
         output["interrupted"] = True
 
     warnings = []

@@ -1,0 +1,49 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - []
+- [cp2k_version, 2025.1]
+- [run_type, CELL_OPT]
+- [natoms, 4]
+- [nelectrons, 32]
+- [nr_occ_orbitals, 16]
+- [scf_converged, true]
+- [energy_scf, -65.98702829215827]
+- [energy, -65.98702829215827]
+- [nr_steps, 3]
+- - motion_step_info
+  - - pressure: 1726.230254435
+      energy: -65.9869785898307
+      nr_scf_steps: 10
+      scf_converged: true
+    - pressure: 1711.1943320703
+      max_step: 0.0004314776
+      rms_step: 0.0002457095
+      max_grad: 0.0004281649
+      rms_grad: 0.000242548
+      energy: -65.9869797368248
+      nr_scf_steps: 9
+      scf_converged: true
+    - pressure: 616.1166344767
+      max_step: 0.0332949152
+      rms_step: 0.0188611045
+      max_grad: 0.0001737719
+      rms_grad: 6.96563e-05
+      energy: -65.98702780608122
+      nr_scf_steps: 9
+      scf_converged: true
+    - pressure: 560.2399236487
+      max_step: 0.001935889
+      rms_step: 0.0010084268
+      max_grad: 0.0001604758
+      rms_grad: 7.14936e-05
+      energy: -65.9870282921583
+      nr_scf_steps: 4
+      scf_converged: true
+    - energy: -65.98702829215827
+      nr_scf_steps: 1
+      scf_converged: true
+- [runtime, 33.074]
+- [nwarnings, 1]
+- [energy_units, hartree]

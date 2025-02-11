@@ -15,6 +15,7 @@ Version 0.3.0
 * ``strct.ext_analysis.determine_molecular_fragments`` offers additional parameters, allowing to exclude sites and restricting the size of the fragments (`PR #111 <https://github.com/aim2dat/aim2dat/pull/111>`_).
 * Slight speed-up in distance based methods to calculate the coordination environment by sorting the pair-wise distances first.
 * Added ``utils.element_properties.get_val_electrons`` function to return the number of valence electrons of the element (`PR #113 <https://github.com/aim2dat/aim2dat/pull/113>`_).
+* Support CP2K versions 2025.1 (`PR #114 <https://github.com/aim2dat/aim2dat/pull/114>`_).
 
 **Fixes:**
 

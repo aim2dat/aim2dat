@@ -1,0 +1,402 @@
+%YAML 1.2
+---
+- [cp2k_version, 2025.1]
+- [run_type, MD-NVT]
+- [dft_type, RKS]
+- [multiplicity, 1]
+- [charge, 0.0]
+- - xc
+  - {functional: PBE, vdw_type: Pair Potential, vdw_method: DFT-D3}
+- [natoms, 192]
+- - kind_info
+  - - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 1, element: O, atomic_nr: 8, core_electrons: 2, valence_electrons: 6,
+      mass: 15.9994}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+    - {kind: 2, element: H, atomic_nr: 1, core_electrons: 0, valence_electrons: 1,
+      mass: 1.0079}
+- [aborted, true]
+- [exceeded_walltime, false]
+- [energy_units, hartree]
+- [interrupted, true]
+- - warnings
+  - []
+- [scf_converged, false]

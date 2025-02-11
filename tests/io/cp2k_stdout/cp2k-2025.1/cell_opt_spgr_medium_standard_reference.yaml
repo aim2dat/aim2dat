@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+- [cp2k_version, 2025.1]
+- [run_type, CELL_OPT]
+- [kpoint_scheme, Monkhorst-Pack]
+- - kpoint_grid
+  - [4, 4, 4]
+- [dft_type, RKS]
+- [multiplicity, 1]
+- [charge, 0.0]
+- - xc
+  - {functional: PBE}
+- - spgr_info
+  - {sg_number: 225, int_symbol: Fm-3m, point_group_symbol: m-3m, schoenflies_symbol: Oh^5}
+- [natoms, 4]
+- [nelectrons, 32]
+- [nr_occ_orbitals, 16]
+- [energy_scf, -65.98701740774344]
+- [scf_converged, true]
+- [energy_units, hartree]
+- [energy, -65.98701740774344]
+- [nr_steps, 3]
+- [nwarnings, 1]
+- - warnings
+  - []
+- [runtime, 99.307]
+- [exceeded_walltime, false]

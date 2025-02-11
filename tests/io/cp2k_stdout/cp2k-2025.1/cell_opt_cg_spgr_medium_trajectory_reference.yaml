@@ -1,0 +1,1219 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - []
+- [cp2k_version, 2025.1]
+- [run_type, CELL_OPT]
+- [kpoint_scheme, Monkhorst-Pack]
+- - kpoint_grid
+  - [6, 4, 4]
+- [dft_type, RKS]
+- [multiplicity, 1]
+- [charge, 0.0]
+- - xc
+  - functional: [MGGA_X_SCAN, MGGA_C_SCAN]
+- [natoms, 16]
+- - spgr_info
+  - {sg_number: 17, int_symbol: P222_1, point_group_symbol: '222', schoenflies_symbol: D2^2}
+- [nelectrons, 96]
+- [nr_occ_orbitals, 48]
+- [scf_converged, true]
+- [energy_scf, -130.95494541234314]
+- [energy, -130.95494541234314]
+- [nr_steps, 14]
+- - kind_info
+  - - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+    - {kind: 1, element: Te, atomic_nr: 52, core_electrons: 46, valence_electrons: 6,
+      mass: 127.6}
+- - motion_step_info
+  - - pressure: 786.7710415142
+      nr_scf_steps: 13
+      scf_converged: true
+      energy: -130.95460121295238
+      mulliken:
+      - {kind: 1, element: Te, population: 5.998351, charge: 0.001649}
+      - {kind: 1, element: Te, population: 5.998353, charge: 0.001647}
+      - {kind: 1, element: Te, population: 5.998351, charge: 0.001649}
+      - {kind: 1, element: Te, population: 5.998353, charge: 0.001647}
+      - {kind: 1, element: Te, population: 6.011652, charge: -0.011652}
+      - {kind: 1, element: Te, population: 6.011652, charge: -0.011652}
+      - {kind: 1, element: Te, population: 6.018652, charge: -0.018652}
+      - {kind: 1, element: Te, population: 6.01865, charge: -0.01865}
+      - {kind: 1, element: Te, population: 6.018652, charge: -0.018652}
+      - {kind: 1, element: Te, population: 6.01865, charge: -0.01865}
+      - {kind: 1, element: Te, population: 5.968181, charge: 0.031819}
+      - {kind: 1, element: Te, population: 5.968181, charge: 0.031819}
+      - {kind: 1, element: Te, population: 5.968181, charge: 0.031819}
+      - {kind: 1, element: Te, population: 5.968181, charge: 0.031819}
+      - {kind: 1, element: Te, population: 6.017982, charge: -0.017982}
+      - {kind: 1, element: Te, population: 6.017981, charge: -0.017981}
+      hirshfeld:
+      - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+      - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+      - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+      - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+      - {kind: 1, element: Te, population: 6.022, charge: -0.022}
+      - {kind: 1, element: Te, population: 6.022, charge: -0.022}
+      - {kind: 1, element: Te, population: 6.04, charge: -0.04}
+      - {kind: 1, element: Te, population: 6.04, charge: -0.04}
+      - {kind: 1, element: Te, population: 6.04, charge: -0.04}
+      - {kind: 1, element: Te, population: 6.04, charge: -0.04}
+      - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+      - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+      - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+      - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+      - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+    - scf_steps:
+      - nr_scf_steps: 8
+        scf_converged: true
+        energy: -130.95463801193304
+        mulliken:
+        - {kind: 1, element: Te, population: 5.99834, charge: 0.00166}
+        - {kind: 1, element: Te, population: 5.998343, charge: 0.001657}
+        - {kind: 1, element: Te, population: 5.99834, charge: 0.00166}
+        - {kind: 1, element: Te, population: 5.998343, charge: 0.001657}
+        - {kind: 1, element: Te, population: 6.011642, charge: -0.011642}
+        - {kind: 1, element: Te, population: 6.011642, charge: -0.011642}
+        - {kind: 1, element: Te, population: 6.018751, charge: -0.018751}
+        - {kind: 1, element: Te, population: 6.01875, charge: -0.01875}
+        - {kind: 1, element: Te, population: 6.018751, charge: -0.018751}
+        - {kind: 1, element: Te, population: 6.01875, charge: -0.01875}
+        - {kind: 1, element: Te, population: 5.968081, charge: 0.031919}
+        - {kind: 1, element: Te, population: 5.96808, charge: 0.03192}
+        - {kind: 1, element: Te, population: 5.968081, charge: 0.031919}
+        - {kind: 1, element: Te, population: 5.96808, charge: 0.03192}
+        - {kind: 1, element: Te, population: 6.018012, charge: -0.018012}
+        - {kind: 1, element: Te, population: 6.018012, charge: -0.018012}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+        - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+        - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+        - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+        - {kind: 1, element: Te, population: 6.022, charge: -0.022}
+        - {kind: 1, element: Te, population: 6.022, charge: -0.022}
+        - {kind: 1, element: Te, population: 6.041, charge: -0.041}
+        - {kind: 1, element: Te, population: 6.041, charge: -0.041}
+        - {kind: 1, element: Te, population: 6.041, charge: -0.041}
+        - {kind: 1, element: Te, population: 6.041, charge: -0.041}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - nr_scf_steps: 10
+        scf_converged: true
+        energy: -130.9547204813104
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998293, charge: 0.001707}
+        - {kind: 1, element: Te, population: 5.998289, charge: 0.001711}
+        - {kind: 1, element: Te, population: 5.998293, charge: 0.001707}
+        - {kind: 1, element: Te, population: 5.998289, charge: 0.001711}
+        - {kind: 1, element: Te, population: 6.011597, charge: -0.011597}
+        - {kind: 1, element: Te, population: 6.011597, charge: -0.011597}
+        - {kind: 1, element: Te, population: 6.019234, charge: -0.019234}
+        - {kind: 1, element: Te, population: 6.019233, charge: -0.019233}
+        - {kind: 1, element: Te, population: 6.019233, charge: -0.019233}
+        - {kind: 1, element: Te, population: 6.019233, charge: -0.019233}
+        - {kind: 1, element: Te, population: 5.9676, charge: 0.0324}
+        - {kind: 1, element: Te, population: 5.967599, charge: 0.032401}
+        - {kind: 1, element: Te, population: 5.9676, charge: 0.0324}
+        - {kind: 1, element: Te, population: 5.967599, charge: 0.032401}
+        - {kind: 1, element: Te, population: 6.018156, charge: -0.018156}
+        - {kind: 1, element: Te, population: 6.018156, charge: -0.018156}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+        - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+        - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+        - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+        - {kind: 1, element: Te, population: 6.022, charge: -0.022}
+        - {kind: 1, element: Te, population: 6.022, charge: -0.022}
+        - {kind: 1, element: Te, population: 6.041, charge: -0.041}
+        - {kind: 1, element: Te, population: 6.041, charge: -0.041}
+        - {kind: 1, element: Te, population: 6.041, charge: -0.041}
+        - {kind: 1, element: Te, population: 6.041, charge: -0.041}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      pressure: 500.4647004081
+      max_step: 0.0097379281
+      rms_step: 0.0050262383
+      max_grad: 0.0016657486
+      rms_grad: 0.0008597773
+    - scf_steps:
+      - nr_scf_steps: 8
+        scf_converged: true
+        energy: -130.9547265108896
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998291, charge: 0.001709}
+        - {kind: 1, element: Te, population: 5.998287, charge: 0.001713}
+        - {kind: 1, element: Te, population: 5.998291, charge: 0.001709}
+        - {kind: 1, element: Te, population: 5.998287, charge: 0.001713}
+        - {kind: 1, element: Te, population: 6.011604, charge: -0.011604}
+        - {kind: 1, element: Te, population: 6.011603, charge: -0.011603}
+        - {kind: 1, element: Te, population: 6.019274, charge: -0.019274}
+        - {kind: 1, element: Te, population: 6.019274, charge: -0.019274}
+        - {kind: 1, element: Te, population: 6.019273, charge: -0.019273}
+        - {kind: 1, element: Te, population: 6.019273, charge: -0.019273}
+        - {kind: 1, element: Te, population: 5.967559, charge: 0.032441}
+        - {kind: 1, element: Te, population: 5.967558, charge: 0.032442}
+        - {kind: 1, element: Te, population: 5.967559, charge: 0.032441}
+        - {kind: 1, element: Te, population: 5.967557, charge: 0.032443}
+        - {kind: 1, element: Te, population: 6.018156, charge: -0.018156}
+        - {kind: 1, element: Te, population: 6.018156, charge: -0.018156}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+        - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+        - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+        - {kind: 1, element: Te, population: 5.972, charge: 0.028}
+        - {kind: 1, element: Te, population: 6.022, charge: -0.022}
+        - {kind: 1, element: Te, population: 6.022, charge: -0.022}
+        - {kind: 1, element: Te, population: 6.041, charge: -0.041}
+        - {kind: 1, element: Te, population: 6.041, charge: -0.041}
+        - {kind: 1, element: Te, population: 6.041, charge: -0.041}
+        - {kind: 1, element: Te, population: 6.041, charge: -0.041}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - nr_scf_steps: 10
+        scf_converged: true
+        energy: -130.95477831760616
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998243, charge: 0.001757}
+        - {kind: 1, element: Te, population: 5.998239, charge: 0.001761}
+        - {kind: 1, element: Te, population: 5.998243, charge: 0.001757}
+        - {kind: 1, element: Te, population: 5.998239, charge: 0.001761}
+        - {kind: 1, element: Te, population: 6.011733, charge: -0.011733}
+        - {kind: 1, element: Te, population: 6.011731, charge: -0.011731}
+        - {kind: 1, element: Te, population: 6.020045, charge: -0.020045}
+        - {kind: 1, element: Te, population: 6.020044, charge: -0.020044}
+        - {kind: 1, element: Te, population: 6.020044, charge: -0.020044}
+        - {kind: 1, element: Te, population: 6.020043, charge: -0.020043}
+        - {kind: 1, element: Te, population: 5.966773, charge: 0.033227}
+        - {kind: 1, element: Te, population: 5.966774, charge: 0.033226}
+        - {kind: 1, element: Te, population: 5.966773, charge: 0.033227}
+        - {kind: 1, element: Te, population: 5.966773, charge: 0.033227}
+        - {kind: 1, element: Te, population: 6.018152, charge: -0.018152}
+        - {kind: 1, element: Te, population: 6.018152, charge: -0.018152}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.971, charge: 0.029}
+        - {kind: 1, element: Te, population: 5.971, charge: 0.029}
+        - {kind: 1, element: Te, population: 5.971, charge: 0.029}
+        - {kind: 1, element: Te, population: 5.971, charge: 0.029}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.042, charge: -0.042}
+        - {kind: 1, element: Te, population: 6.042, charge: -0.042}
+        - {kind: 1, element: Te, population: 6.042, charge: -0.042}
+        - {kind: 1, element: Te, population: 6.042, charge: -0.042}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      pressure: -869.2540171095
+      max_step: 0.0262378169
+      rms_step: 0.0073903963
+      max_grad: 0.0013206709
+      rms_grad: 0.0003719929
+    - scf_steps:
+      - nr_scf_steps: 8
+        scf_converged: true
+        energy: -130.95478640535015
+        mulliken:
+        - {kind: 1, element: Te, population: 5.99824, charge: 0.00176}
+        - {kind: 1, element: Te, population: 5.998236, charge: 0.001764}
+        - {kind: 1, element: Te, population: 5.99824, charge: 0.00176}
+        - {kind: 1, element: Te, population: 5.998236, charge: 0.001764}
+        - {kind: 1, element: Te, population: 6.011723, charge: -0.011723}
+        - {kind: 1, element: Te, population: 6.011722, charge: -0.011722}
+        - {kind: 1, element: Te, population: 6.0201, charge: -0.0201}
+        - {kind: 1, element: Te, population: 6.0201, charge: -0.0201}
+        - {kind: 1, element: Te, population: 6.020099, charge: -0.020099}
+        - {kind: 1, element: Te, population: 6.020099, charge: -0.020099}
+        - {kind: 1, element: Te, population: 5.966734, charge: 0.033266}
+        - {kind: 1, element: Te, population: 5.966736, charge: 0.033264}
+        - {kind: 1, element: Te, population: 5.966734, charge: 0.033266}
+        - {kind: 1, element: Te, population: 5.966735, charge: 0.033265}
+        - {kind: 1, element: Te, population: 6.018133, charge: -0.018133}
+        - {kind: 1, element: Te, population: 6.018133, charge: -0.018133}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.971, charge: 0.029}
+        - {kind: 1, element: Te, population: 5.971, charge: 0.029}
+        - {kind: 1, element: Te, population: 5.971, charge: 0.029}
+        - {kind: 1, element: Te, population: 5.971, charge: 0.029}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.042, charge: -0.042}
+        - {kind: 1, element: Te, population: 6.042, charge: -0.042}
+        - {kind: 1, element: Te, population: 6.042, charge: -0.042}
+        - {kind: 1, element: Te, population: 6.042, charge: -0.042}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - nr_scf_steps: 10
+        scf_converged: true
+        energy: -130.95488346080714
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998192, charge: 0.001808}
+        - {kind: 1, element: Te, population: 5.998192, charge: 0.001808}
+        - {kind: 1, element: Te, population: 5.998193, charge: 0.001807}
+        - {kind: 1, element: Te, population: 5.998192, charge: 0.001808}
+        - {kind: 1, element: Te, population: 6.011482, charge: -0.011482}
+        - {kind: 1, element: Te, population: 6.011481, charge: -0.011481}
+        - {kind: 1, element: Te, population: 6.021589, charge: -0.021589}
+        - {kind: 1, element: Te, population: 6.021589, charge: -0.021589}
+        - {kind: 1, element: Te, population: 6.021586, charge: -0.021586}
+        - {kind: 1, element: Te, population: 6.021588, charge: -0.021588}
+        - {kind: 1, element: Te, population: 5.96567, charge: 0.03433}
+        - {kind: 1, element: Te, population: 5.96567, charge: 0.03433}
+        - {kind: 1, element: Te, population: 5.96567, charge: 0.03433}
+        - {kind: 1, element: Te, population: 5.965669, charge: 0.034331}
+        - {kind: 1, element: Te, population: 6.017618, charge: -0.017618}
+        - {kind: 1, element: Te, population: 6.017618, charge: -0.017618}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 6.024, charge: -0.024}
+        - {kind: 1, element: Te, population: 6.024, charge: -0.024}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      pressure: -804.7249959073
+      max_step: 0.0739660358
+      rms_step: 0.0183221134
+      max_grad: 0.0027071656
+      rms_grad: 0.0006705915
+    - scf_steps:
+      - nr_scf_steps: 8
+        scf_converged: true
+        energy: -130.95488780373816
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998248, charge: 0.001752}
+        - {kind: 1, element: Te, population: 5.998247, charge: 0.001753}
+        - {kind: 1, element: Te, population: 5.998249, charge: 0.001751}
+        - {kind: 1, element: Te, population: 5.998247, charge: 0.001753}
+        - {kind: 1, element: Te, population: 6.011414, charge: -0.011414}
+        - {kind: 1, element: Te, population: 6.011413, charge: -0.011413}
+        - {kind: 1, element: Te, population: 6.021589, charge: -0.021589}
+        - {kind: 1, element: Te, population: 6.02159, charge: -0.02159}
+        - {kind: 1, element: Te, population: 6.021586, charge: -0.021586}
+        - {kind: 1, element: Te, population: 6.021589, charge: -0.021589}
+        - {kind: 1, element: Te, population: 5.965625, charge: 0.034375}
+        - {kind: 1, element: Te, population: 5.965625, charge: 0.034375}
+        - {kind: 1, element: Te, population: 5.965625, charge: 0.034375}
+        - {kind: 1, element: Te, population: 5.965624, charge: 0.034376}
+        - {kind: 1, element: Te, population: 6.017664, charge: -0.017664}
+        - {kind: 1, element: Te, population: 6.017665, charge: -0.017665}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 6.024, charge: -0.024}
+        - {kind: 1, element: Te, population: 6.024, charge: -0.024}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - nr_scf_steps: 10
+        scf_converged: true
+        energy: -130.95490008254546
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998631, charge: 0.001369}
+        - {kind: 1, element: Te, population: 5.998633, charge: 0.001367}
+        - {kind: 1, element: Te, population: 5.998632, charge: 0.001368}
+        - {kind: 1, element: Te, population: 5.998634, charge: 0.001366}
+        - {kind: 1, element: Te, population: 6.010939, charge: -0.010939}
+        - {kind: 1, element: Te, population: 6.010938, charge: -0.010938}
+        - {kind: 1, element: Te, population: 6.021588, charge: -0.021588}
+        - {kind: 1, element: Te, population: 6.021589, charge: -0.021589}
+        - {kind: 1, element: Te, population: 6.021585, charge: -0.021585}
+        - {kind: 1, element: Te, population: 6.021588, charge: -0.021588}
+        - {kind: 1, element: Te, population: 5.965317, charge: 0.034683}
+        - {kind: 1, element: Te, population: 5.965317, charge: 0.034683}
+        - {kind: 1, element: Te, population: 5.965317, charge: 0.034683}
+        - {kind: 1, element: Te, population: 5.965316, charge: 0.034684}
+        - {kind: 1, element: Te, population: 6.017988, charge: -0.017988}
+        - {kind: 1, element: Te, population: 6.017989, charge: -0.017989}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 6.024, charge: -0.024}
+        - {kind: 1, element: Te, population: 6.024, charge: -0.024}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 5.966, charge: 0.034}
+        - {kind: 1, element: Te, population: 5.966, charge: 0.034}
+        - {kind: 1, element: Te, population: 5.966, charge: 0.034}
+        - {kind: 1, element: Te, population: 5.966, charge: 0.034}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      pressure: -255.3924285633
+      max_step: 0.0173955556
+      rms_step: 0.0038073838
+      max_grad: 0.00216654
+      rms_grad: 0.0004741929
+    - scf_steps:
+      - nr_scf_steps: 6
+        scf_converged: true
+        energy: -130.9549011000208
+        mulliken:
+        - {kind: 1, element: Te, population: 5.99863, charge: 0.00137}
+        - {kind: 1, element: Te, population: 5.998632, charge: 0.001368}
+        - {kind: 1, element: Te, population: 5.998631, charge: 0.001369}
+        - {kind: 1, element: Te, population: 5.998633, charge: 0.001367}
+        - {kind: 1, element: Te, population: 6.010946, charge: -0.010946}
+        - {kind: 1, element: Te, population: 6.010945, charge: -0.010945}
+        - {kind: 1, element: Te, population: 6.02157, charge: -0.02157}
+        - {kind: 1, element: Te, population: 6.021571, charge: -0.021571}
+        - {kind: 1, element: Te, population: 6.021567, charge: -0.021567}
+        - {kind: 1, element: Te, population: 6.02157, charge: -0.02157}
+        - {kind: 1, element: Te, population: 5.965324, charge: 0.034676}
+        - {kind: 1, element: Te, population: 5.965324, charge: 0.034676}
+        - {kind: 1, element: Te, population: 5.965324, charge: 0.034676}
+        - {kind: 1, element: Te, population: 5.965323, charge: 0.034677}
+        - {kind: 1, element: Te, population: 6.018005, charge: -0.018005}
+        - {kind: 1, element: Te, population: 6.018006, charge: -0.018006}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 6.024, charge: -0.024}
+        - {kind: 1, element: Te, population: 6.024, charge: -0.024}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 5.966, charge: 0.034}
+        - {kind: 1, element: Te, population: 5.966, charge: 0.034}
+        - {kind: 1, element: Te, population: 5.966, charge: 0.034}
+        - {kind: 1, element: Te, population: 5.966, charge: 0.034}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - nr_scf_steps: 10
+        scf_converged: true
+        energy: -130.95493023133005
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998561, charge: 0.001439}
+        - {kind: 1, element: Te, population: 5.998563, charge: 0.001437}
+        - {kind: 1, element: Te, population: 5.998561, charge: 0.001439}
+        - {kind: 1, element: Te, population: 5.998564, charge: 0.001436}
+        - {kind: 1, element: Te, population: 6.011394, charge: -0.011394}
+        - {kind: 1, element: Te, population: 6.011395, charge: -0.011395}
+        - {kind: 1, element: Te, population: 6.020488, charge: -0.020488}
+        - {kind: 1, element: Te, population: 6.020488, charge: -0.020488}
+        - {kind: 1, element: Te, population: 6.020485, charge: -0.020485}
+        - {kind: 1, element: Te, population: 6.020484, charge: -0.020484}
+        - {kind: 1, element: Te, population: 5.965737, charge: 0.034263}
+        - {kind: 1, element: Te, population: 5.965744, charge: 0.034256}
+        - {kind: 1, element: Te, population: 5.965737, charge: 0.034263}
+        - {kind: 1, element: Te, population: 5.965742, charge: 0.034258}
+        - {kind: 1, element: Te, population: 6.019028, charge: -0.019028}
+        - {kind: 1, element: Te, population: 6.01903, charge: -0.01903}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      pressure: 62.8757420721
+      max_step: 0.0623266617
+      rms_step: 0.0102384808
+      max_grad: 0.0010355727
+      rms_grad: 0.0001701149
+    - scf_steps:
+      - nr_scf_steps: 8
+        scf_converged: true
+        energy: -130.9549337072722
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998562, charge: 0.001438}
+        - {kind: 1, element: Te, population: 5.998563, charge: 0.001437}
+        - {kind: 1, element: Te, population: 5.998562, charge: 0.001438}
+        - {kind: 1, element: Te, population: 5.998564, charge: 0.001436}
+        - {kind: 1, element: Te, population: 6.011406, charge: -0.011406}
+        - {kind: 1, element: Te, population: 6.011406, charge: -0.011406}
+        - {kind: 1, element: Te, population: 6.020476, charge: -0.020476}
+        - {kind: 1, element: Te, population: 6.020476, charge: -0.020476}
+        - {kind: 1, element: Te, population: 6.020473, charge: -0.020473}
+        - {kind: 1, element: Te, population: 6.020473, charge: -0.020473}
+        - {kind: 1, element: Te, population: 5.965742, charge: 0.034258}
+        - {kind: 1, element: Te, population: 5.965748, charge: 0.034252}
+        - {kind: 1, element: Te, population: 5.965742, charge: 0.034258}
+        - {kind: 1, element: Te, population: 5.965747, charge: 0.034253}
+        - {kind: 1, element: Te, population: 6.019028, charge: -0.019028}
+        - {kind: 1, element: Te, population: 6.01903, charge: -0.01903}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - nr_scf_steps: 10
+        scf_converged: true
+        energy: -130.9549405391128
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998564, charge: 0.001436}
+        - {kind: 1, element: Te, population: 5.998567, charge: 0.001433}
+        - {kind: 1, element: Te, population: 5.998564, charge: 0.001436}
+        - {kind: 1, element: Te, population: 5.998567, charge: 0.001433}
+        - {kind: 1, element: Te, population: 6.011458, charge: -0.011458}
+        - {kind: 1, element: Te, population: 6.011459, charge: -0.011459}
+        - {kind: 1, element: Te, population: 6.020423, charge: -0.020423}
+        - {kind: 1, element: Te, population: 6.020424, charge: -0.020424}
+        - {kind: 1, element: Te, population: 6.02042, charge: -0.02042}
+        - {kind: 1, element: Te, population: 6.020421, charge: -0.020421}
+        - {kind: 1, element: Te, population: 5.965767, charge: 0.034233}
+        - {kind: 1, element: Te, population: 5.965771, charge: 0.034229}
+        - {kind: 1, element: Te, population: 5.965767, charge: 0.034233}
+        - {kind: 1, element: Te, population: 5.96577, charge: 0.03423}
+        - {kind: 1, element: Te, population: 6.019027, charge: -0.019027}
+        - {kind: 1, element: Te, population: 6.019029, charge: -0.019029}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      pressure: -116.7263681623
+      max_step: 0.0034422185
+      rms_step: 0.0015079376
+      max_grad: 0.000619551
+      rms_grad: 0.000271407
+    - scf_steps:
+      - nr_scf_steps: 7
+        scf_converged: true
+        energy: -130.95494096033246
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998563, charge: 0.001437}
+        - {kind: 1, element: Te, population: 5.998566, charge: 0.001434}
+        - {kind: 1, element: Te, population: 5.998563, charge: 0.001437}
+        - {kind: 1, element: Te, population: 5.998567, charge: 0.001433}
+        - {kind: 1, element: Te, population: 6.011463, charge: -0.011463}
+        - {kind: 1, element: Te, population: 6.011464, charge: -0.011464}
+        - {kind: 1, element: Te, population: 6.020421, charge: -0.020421}
+        - {kind: 1, element: Te, population: 6.020422, charge: -0.020422}
+        - {kind: 1, element: Te, population: 6.020418, charge: -0.020418}
+        - {kind: 1, element: Te, population: 6.020418, charge: -0.020418}
+        - {kind: 1, element: Te, population: 5.965769, charge: 0.034231}
+        - {kind: 1, element: Te, population: 5.965774, charge: 0.034226}
+        - {kind: 1, element: Te, population: 5.965769, charge: 0.034231}
+        - {kind: 1, element: Te, population: 5.965772, charge: 0.034228}
+        - {kind: 1, element: Te, population: 6.019024, charge: -0.019024}
+        - {kind: 1, element: Te, population: 6.019026, charge: -0.019026}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 6.045, charge: -0.045}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - nr_scf_steps: 9
+        scf_converged: true
+        energy: -130.9549440776962
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998553, charge: 0.001447}
+        - {kind: 1, element: Te, population: 5.998556, charge: 0.001444}
+        - {kind: 1, element: Te, population: 5.998553, charge: 0.001447}
+        - {kind: 1, element: Te, population: 5.998555, charge: 0.001445}
+        - {kind: 1, element: Te, population: 6.011541, charge: -0.011541}
+        - {kind: 1, element: Te, population: 6.011543, charge: -0.011543}
+        - {kind: 1, element: Te, population: 6.020377, charge: -0.020377}
+        - {kind: 1, element: Te, population: 6.020376, charge: -0.020376}
+        - {kind: 1, element: Te, population: 6.020374, charge: -0.020374}
+        - {kind: 1, element: Te, population: 6.020374, charge: -0.020374}
+        - {kind: 1, element: Te, population: 5.965813, charge: 0.034187}
+        - {kind: 1, element: Te, population: 5.965817, charge: 0.034183}
+        - {kind: 1, element: Te, population: 5.965813, charge: 0.034187}
+        - {kind: 1, element: Te, population: 5.965816, charge: 0.034184}
+        - {kind: 1, element: Te, population: 6.018968, charge: -0.018968}
+        - {kind: 1, element: Te, population: 6.018969, charge: -0.018969}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      pressure: 131.7515214214
+      max_step: 0.005627607
+      rms_step: 0.001633918
+      max_grad: 0.0003162669
+      rms_grad: 9.18248e-05
+    - scf_steps:
+      - nr_scf_steps: 7
+        scf_converged: true
+        energy: -130.95494449711623
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998566, charge: 0.001434}
+        - {kind: 1, element: Te, population: 5.998569, charge: 0.001431}
+        - {kind: 1, element: Te, population: 5.998566, charge: 0.001434}
+        - {kind: 1, element: Te, population: 5.998568, charge: 0.001432}
+        - {kind: 1, element: Te, population: 6.01154, charge: -0.01154}
+        - {kind: 1, element: Te, population: 6.011542, charge: -0.011542}
+        - {kind: 1, element: Te, population: 6.020363, charge: -0.020363}
+        - {kind: 1, element: Te, population: 6.020362, charge: -0.020362}
+        - {kind: 1, element: Te, population: 6.02036, charge: -0.02036}
+        - {kind: 1, element: Te, population: 6.020359, charge: -0.020359}
+        - {kind: 1, element: Te, population: 5.965819, charge: 0.034181}
+        - {kind: 1, element: Te, population: 5.965823, charge: 0.034177}
+        - {kind: 1, element: Te, population: 5.965819, charge: 0.034181}
+        - {kind: 1, element: Te, population: 5.965821, charge: 0.034179}
+        - {kind: 1, element: Te, population: 6.018961, charge: -0.018961}
+        - {kind: 1, element: Te, population: 6.018963, charge: -0.018963}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 5.969, charge: 0.031}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - nr_scf_steps: 9
+        scf_converged: true
+        energy: -130.9549557259724
+        mulliken:
+        - {kind: 1, element: Te, population: 5.99913, charge: 0.00087}
+        - {kind: 1, element: Te, population: 5.999128, charge: 0.000872}
+        - {kind: 1, element: Te, population: 5.999135, charge: 0.000865}
+        - {kind: 1, element: Te, population: 5.999126, charge: 0.000874}
+        - {kind: 1, element: Te, population: 6.011497, charge: -0.011497}
+        - {kind: 1, element: Te, population: 6.011498, charge: -0.011498}
+        - {kind: 1, element: Te, population: 6.019729, charge: -0.019729}
+        - {kind: 1, element: Te, population: 6.019713, charge: -0.019713}
+        - {kind: 1, element: Te, population: 6.019724, charge: -0.019724}
+        - {kind: 1, element: Te, population: 6.019716, charge: -0.019716}
+        - {kind: 1, element: Te, population: 5.966062, charge: 0.033938}
+        - {kind: 1, element: Te, population: 5.966064, charge: 0.033936}
+        - {kind: 1, element: Te, population: 5.966063, charge: 0.033937}
+        - {kind: 1, element: Te, population: 5.966059, charge: 0.033941}
+        - {kind: 1, element: Te, population: 6.018678, charge: -0.018678}
+        - {kind: 1, element: Te, population: 6.018677, charge: -0.018677}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      pressure: -78.1126752873
+      max_step: 0.0299950456
+      rms_step: 0.006164937
+      max_grad: 0.0006628753
+      rms_grad: 0.0001362419
+    - scf_steps:
+      - nr_scf_steps: 7
+        scf_converged: true
+        energy: -130.95495595809632
+        mulliken:
+        - {kind: 1, element: Te, population: 5.999125, charge: 0.000875}
+        - {kind: 1, element: Te, population: 5.999122, charge: 0.000878}
+        - {kind: 1, element: Te, population: 5.99913, charge: 0.00087}
+        - {kind: 1, element: Te, population: 5.999121, charge: 0.000879}
+        - {kind: 1, element: Te, population: 6.011513, charge: -0.011513}
+        - {kind: 1, element: Te, population: 6.011515, charge: -0.011515}
+        - {kind: 1, element: Te, population: 6.019715, charge: -0.019715}
+        - {kind: 1, element: Te, population: 6.019698, charge: -0.019698}
+        - {kind: 1, element: Te, population: 6.01971, charge: -0.01971}
+        - {kind: 1, element: Te, population: 6.019702, charge: -0.019702}
+        - {kind: 1, element: Te, population: 5.966074, charge: 0.033926}
+        - {kind: 1, element: Te, population: 5.966076, charge: 0.033924}
+        - {kind: 1, element: Te, population: 5.966075, charge: 0.033925}
+        - {kind: 1, element: Te, population: 5.966071, charge: 0.033929}
+        - {kind: 1, element: Te, population: 6.018677, charge: -0.018677}
+        - {kind: 1, element: Te, population: 6.018676, charge: -0.018676}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - nr_scf_steps: 8
+        scf_converged: true
+        energy: -130.95495557796926
+        mulliken:
+        - {kind: 1, element: Te, population: 5.999074, charge: 0.000926}
+        - {kind: 1, element: Te, population: 5.99907, charge: 0.00093}
+        - {kind: 1, element: Te, population: 5.999081, charge: 0.000919}
+        - {kind: 1, element: Te, population: 5.999069, charge: 0.000931}
+        - {kind: 1, element: Te, population: 6.011678, charge: -0.011678}
+        - {kind: 1, element: Te, population: 6.011684, charge: -0.011684}
+        - {kind: 1, element: Te, population: 6.019573, charge: -0.019573}
+        - {kind: 1, element: Te, population: 6.019556, charge: -0.019556}
+        - {kind: 1, element: Te, population: 6.019568, charge: -0.019568}
+        - {kind: 1, element: Te, population: 6.019557, charge: -0.019557}
+        - {kind: 1, element: Te, population: 5.966192, charge: 0.033808}
+        - {kind: 1, element: Te, population: 5.966192, charge: 0.033808}
+        - {kind: 1, element: Te, population: 5.966193, charge: 0.033807}
+        - {kind: 1, element: Te, population: 5.966188, charge: 0.033812}
+        - {kind: 1, element: Te, population: 6.018663, charge: -0.018663}
+        - {kind: 1, element: Te, population: 6.018662, charge: -0.018662}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      pressure: -0.9893389977
+      max_step: 0.0075647668
+      rms_step: 0.0013276356
+      max_grad: 0.0006941451
+      rms_grad: 0.0001218242
+    - scf_steps:
+      - nr_scf_steps: 6
+        scf_converged: true
+        energy: -130.95495568589172
+        mulliken:
+        - {kind: 1, element: Te, population: 5.999069, charge: 0.000931}
+        - {kind: 1, element: Te, population: 5.999066, charge: 0.000934}
+        - {kind: 1, element: Te, population: 5.999076, charge: 0.000924}
+        - {kind: 1, element: Te, population: 5.999064, charge: 0.000936}
+        - {kind: 1, element: Te, population: 6.011693, charge: -0.011693}
+        - {kind: 1, element: Te, population: 6.011699, charge: -0.011699}
+        - {kind: 1, element: Te, population: 6.019565, charge: -0.019565}
+        - {kind: 1, element: Te, population: 6.019547, charge: -0.019547}
+        - {kind: 1, element: Te, population: 6.01956, charge: -0.01956}
+        - {kind: 1, element: Te, population: 6.019549, charge: -0.019549}
+        - {kind: 1, element: Te, population: 5.966193, charge: 0.033807}
+        - {kind: 1, element: Te, population: 5.966193, charge: 0.033807}
+        - {kind: 1, element: Te, population: 5.966193, charge: 0.033807}
+        - {kind: 1, element: Te, population: 5.966188, charge: 0.033812}
+        - {kind: 1, element: Te, population: 6.018674, charge: -0.018674}
+        - {kind: 1, element: Te, population: 6.018673, charge: -0.018673}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - nr_scf_steps: 9
+        scf_converged: true
+        energy: -130.95494423393376
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998875, charge: 0.001125}
+        - {kind: 1, element: Te, population: 5.998868, charge: 0.001132}
+        - {kind: 1, element: Te, population: 5.998894, charge: 0.001106}
+        - {kind: 1, element: Te, population: 5.998867, charge: 0.001133}
+        - {kind: 1, element: Te, population: 6.012297, charge: -0.012297}
+        - {kind: 1, element: Te, population: 6.012327, charge: -0.012327}
+        - {kind: 1, element: Te, population: 6.019222, charge: -0.019222}
+        - {kind: 1, element: Te, population: 6.019207, charge: -0.019207}
+        - {kind: 1, element: Te, population: 6.01922, charge: -0.01922}
+        - {kind: 1, element: Te, population: 6.019187, charge: -0.019187}
+        - {kind: 1, element: Te, population: 5.966204, charge: 0.033796}
+        - {kind: 1, element: Te, population: 5.966205, charge: 0.033795}
+        - {kind: 1, element: Te, population: 5.966203, charge: 0.033797}
+        - {kind: 1, element: Te, population: 5.966199, charge: 0.033801}
+        - {kind: 1, element: Te, population: 6.019111, charge: -0.019111}
+        - {kind: 1, element: Te, population: 6.019114, charge: -0.019114}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      pressure: 98.3035377261
+      max_step: 0.0261648957
+      rms_step: 0.0046460074
+      max_grad: 0.0006060995
+      rms_grad: 0.0001076229
+    - scf_steps:
+      - nr_scf_steps: 8
+        scf_converged: true
+        energy: -130.95494453329044
+        mulliken:
+        - {kind: 1, element: Te, population: 5.99888, charge: 0.00112}
+        - {kind: 1, element: Te, population: 5.998874, charge: 0.001126}
+        - {kind: 1, element: Te, population: 5.9989, charge: 0.0011}
+        - {kind: 1, element: Te, population: 5.998873, charge: 0.001127}
+        - {kind: 1, element: Te, population: 6.012302, charge: -0.012302}
+        - {kind: 1, element: Te, population: 6.012333, charge: -0.012333}
+        - {kind: 1, element: Te, population: 6.019223, charge: -0.019223}
+        - {kind: 1, element: Te, population: 6.019208, charge: -0.019208}
+        - {kind: 1, element: Te, population: 6.019221, charge: -0.019221}
+        - {kind: 1, element: Te, population: 6.019187, charge: -0.019187}
+        - {kind: 1, element: Te, population: 5.9662, charge: 0.0338}
+        - {kind: 1, element: Te, population: 5.966202, charge: 0.033798}
+        - {kind: 1, element: Te, population: 5.9662, charge: 0.0338}
+        - {kind: 1, element: Te, population: 5.966196, charge: 0.033804}
+        - {kind: 1, element: Te, population: 6.019099, charge: -0.019099}
+        - {kind: 1, element: Te, population: 6.019102, charge: -0.019102}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - nr_scf_steps: 8
+        scf_converged: true
+        energy: -130.95494380040077
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998909, charge: 0.001091}
+        - {kind: 1, element: Te, population: 5.998903, charge: 0.001097}
+        - {kind: 1, element: Te, population: 5.99893, charge: 0.00107}
+        - {kind: 1, element: Te, population: 5.998902, charge: 0.001098}
+        - {kind: 1, element: Te, population: 6.01233, charge: -0.01233}
+        - {kind: 1, element: Te, population: 6.012364, charge: -0.012364}
+        - {kind: 1, element: Te, population: 6.019228, charge: -0.019228}
+        - {kind: 1, element: Te, population: 6.019211, charge: -0.019211}
+        - {kind: 1, element: Te, population: 6.019226, charge: -0.019226}
+        - {kind: 1, element: Te, population: 6.01919, charge: -0.01919}
+        - {kind: 1, element: Te, population: 5.966182, charge: 0.033818}
+        - {kind: 1, element: Te, population: 5.966185, charge: 0.033815}
+        - {kind: 1, element: Te, population: 5.966182, charge: 0.033818}
+        - {kind: 1, element: Te, population: 5.966179, charge: 0.033821}
+        - {kind: 1, element: Te, population: 6.019037, charge: -0.019037}
+        - {kind: 1, element: Te, population: 6.01904, charge: -0.01904}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      pressure: -42.9597743509
+      max_step: 0.0022071406
+      rms_step: 0.0005450022
+      max_grad: 0.0003510256
+      rms_grad: 8.66774e-05
+    - scf_steps:
+      - nr_scf_steps: 7
+        scf_converged: true
+        energy: -130.95494401995205
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998906, charge: 0.001094}
+        - {kind: 1, element: Te, population: 5.9989, charge: 0.0011}
+        - {kind: 1, element: Te, population: 5.998928, charge: 0.001072}
+        - {kind: 1, element: Te, population: 5.998899, charge: 0.001101}
+        - {kind: 1, element: Te, population: 6.012333, charge: -0.012333}
+        - {kind: 1, element: Te, population: 6.012368, charge: -0.012368}
+        - {kind: 1, element: Te, population: 6.019233, charge: -0.019233}
+        - {kind: 1, element: Te, population: 6.019215, charge: -0.019215}
+        - {kind: 1, element: Te, population: 6.01923, charge: -0.01923}
+        - {kind: 1, element: Te, population: 6.019194, charge: -0.019194}
+        - {kind: 1, element: Te, population: 5.966183, charge: 0.033817}
+        - {kind: 1, element: Te, population: 5.966185, charge: 0.033815}
+        - {kind: 1, element: Te, population: 5.966182, charge: 0.033818}
+        - {kind: 1, element: Te, population: 5.966179, charge: 0.033821}
+        - {kind: 1, element: Te, population: 6.019031, charge: -0.019031}
+        - {kind: 1, element: Te, population: 6.019034, charge: -0.019034}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - nr_scf_steps: 8
+        scf_converged: true
+        energy: -130.95494905758972
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998842, charge: 0.001158}
+        - {kind: 1, element: Te, population: 5.99884, charge: 0.00116}
+        - {kind: 1, element: Te, population: 5.998873, charge: 0.001127}
+        - {kind: 1, element: Te, population: 5.998839, charge: 0.001161}
+        - {kind: 1, element: Te, population: 6.012393, charge: -0.012393}
+        - {kind: 1, element: Te, population: 6.012441, charge: -0.012441}
+        - {kind: 1, element: Te, population: 6.019319, charge: -0.019319}
+        - {kind: 1, element: Te, population: 6.019293, charge: -0.019293}
+        - {kind: 1, element: Te, population: 6.019314, charge: -0.019314}
+        - {kind: 1, element: Te, population: 6.019266, charge: -0.019266}
+        - {kind: 1, element: Te, population: 5.966187, charge: 0.033813}
+        - {kind: 1, element: Te, population: 5.966189, charge: 0.033811}
+        - {kind: 1, element: Te, population: 5.966187, charge: 0.033813}
+        - {kind: 1, element: Te, population: 5.966182, charge: 0.033818}
+        - {kind: 1, element: Te, population: 6.018916, charge: -0.018916}
+        - {kind: 1, element: Te, population: 6.018919, charge: -0.018919}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      pressure: 70.7189509129
+      max_step: 0.0029043019
+      rms_step: 0.0008671533
+      max_grad: 0.0001414125
+      rms_grad: 4.22222e-05
+    - scf_steps:
+      - nr_scf_steps: 6
+        scf_converged: true
+        energy: -130.95495004269964
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998831, charge: 0.001169}
+        - {kind: 1, element: Te, population: 5.998829, charge: 0.001171}
+        - {kind: 1, element: Te, population: 5.998863, charge: 0.001137}
+        - {kind: 1, element: Te, population: 5.998828, charge: 0.001172}
+        - {kind: 1, element: Te, population: 6.012392, charge: -0.012392}
+        - {kind: 1, element: Te, population: 6.012442, charge: -0.012442}
+        - {kind: 1, element: Te, population: 6.019326, charge: -0.019326}
+        - {kind: 1, element: Te, population: 6.0193, charge: -0.0193}
+        - {kind: 1, element: Te, population: 6.019321, charge: -0.019321}
+        - {kind: 1, element: Te, population: 6.019272, charge: -0.019272}
+        - {kind: 1, element: Te, population: 5.96619, charge: 0.03381}
+        - {kind: 1, element: Te, population: 5.966192, charge: 0.033808}
+        - {kind: 1, element: Te, population: 5.966191, charge: 0.033809}
+        - {kind: 1, element: Te, population: 5.966184, charge: 0.033816}
+        - {kind: 1, element: Te, population: 6.018919, charge: -0.018919}
+        - {kind: 1, element: Te, population: 6.018921, charge: -0.018921}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - nr_scf_steps: 9
+        scf_converged: true
+        energy: -130.9549573732452
+        mulliken:
+        - {kind: 1, element: Te, population: 5.998558, charge: 0.001442}
+        - {kind: 1, element: Te, population: 5.998549, charge: 0.001451}
+        - {kind: 1, element: Te, population: 5.998618, charge: 0.001382}
+        - {kind: 1, element: Te, population: 5.998547, charge: 0.001453}
+        - {kind: 1, element: Te, population: 6.012354, charge: -0.012354}
+        - {kind: 1, element: Te, population: 6.012451, charge: -0.012451}
+        - {kind: 1, element: Te, population: 6.019513, charge: -0.019513}
+        - {kind: 1, element: Te, population: 6.019469, charge: -0.019469}
+        - {kind: 1, element: Te, population: 6.019503, charge: -0.019503}
+        - {kind: 1, element: Te, population: 6.019413, charge: -0.019413}
+        - {kind: 1, element: Te, population: 5.966269, charge: 0.033731}
+        - {kind: 1, element: Te, population: 5.966263, charge: 0.033737}
+        - {kind: 1, element: Te, population: 5.966269, charge: 0.033731}
+        - {kind: 1, element: Te, population: 5.96625, charge: 0.03375}
+        - {kind: 1, element: Te, population: 6.018983, charge: -0.018983}
+        - {kind: 1, element: Te, population: 6.018991, charge: -0.018991}
+        hirshfeld:
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+        - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      pressure: 63.4165136002
+      max_step: 0.0087290979
+      rms_step: 0.0021848508
+      max_grad: 0.0003322445
+      rms_grad: 8.31591e-05
+    - pressure: 135.8924264719
+      max_step: 0.0011528656
+      rms_step: 0.0005679072
+      max_grad: 9.43019e-05
+      rms_grad: 4.64535e-05
+      nr_scf_steps: 6
+      scf_converged: true
+      energy: -130.95495644974056
+      mulliken:
+      - {kind: 1, element: Te, population: 5.998555, charge: 0.001445}
+      - {kind: 1, element: Te, population: 5.998545, charge: 0.001455}
+      - {kind: 1, element: Te, population: 5.998617, charge: 0.001383}
+      - {kind: 1, element: Te, population: 5.998543, charge: 0.001457}
+      - {kind: 1, element: Te, population: 6.012355, charge: -0.012355}
+      - {kind: 1, element: Te, population: 6.012455, charge: -0.012455}
+      - {kind: 1, element: Te, population: 6.019516, charge: -0.019516}
+      - {kind: 1, element: Te, population: 6.01947, charge: -0.01947}
+      - {kind: 1, element: Te, population: 6.019505, charge: -0.019505}
+      - {kind: 1, element: Te, population: 6.019413, charge: -0.019413}
+      - {kind: 1, element: Te, population: 5.966266, charge: 0.033734}
+      - {kind: 1, element: Te, population: 5.96626, charge: 0.03374}
+      - {kind: 1, element: Te, population: 5.966266, charge: 0.033734}
+      - {kind: 1, element: Te, population: 5.966247, charge: 0.033753}
+      - {kind: 1, element: Te, population: 6.018988, charge: -0.018988}
+      - {kind: 1, element: Te, population: 6.018997, charge: -0.018997}
+      hirshfeld:
+      - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+      - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+      - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+      - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+      - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+      - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+      - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+      - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+      - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+      - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+      - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+      - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+      - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+      - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+      - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+    - nr_scf_steps: 8
+      scf_converged: true
+      energy: -130.95494541234314
+      mulliken:
+      - {kind: 1, element: Te, population: 5.998525, charge: 0.001475}
+      - {kind: 1, element: Te, population: 5.9985, charge: 0.0015}
+      - {kind: 1, element: Te, population: 5.998601, charge: 0.001399}
+      - {kind: 1, element: Te, population: 5.998499, charge: 0.001501}
+      - {kind: 1, element: Te, population: 6.012372, charge: -0.012372}
+      - {kind: 1, element: Te, population: 6.012501, charge: -0.012501}
+      - {kind: 1, element: Te, population: 6.019547, charge: -0.019547}
+      - {kind: 1, element: Te, population: 6.019488, charge: -0.019488}
+      - {kind: 1, element: Te, population: 6.019538, charge: -0.019538}
+      - {kind: 1, element: Te, population: 6.019415, charge: -0.019415}
+      - {kind: 1, element: Te, population: 5.966234, charge: 0.033766}
+      - {kind: 1, element: Te, population: 5.966226, charge: 0.033774}
+      - {kind: 1, element: Te, population: 5.966234, charge: 0.033766}
+      - {kind: 1, element: Te, population: 5.966209, charge: 0.033791}
+      - {kind: 1, element: Te, population: 6.019048, charge: -0.019048}
+      - {kind: 1, element: Te, population: 6.019066, charge: -0.019066}
+      hirshfeld:
+      - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+      - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+      - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+      - {kind: 1, element: Te, population: 5.97, charge: 0.03}
+      - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+      - {kind: 1, element: Te, population: 6.023, charge: -0.023}
+      - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+      - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+      - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+      - {kind: 1, element: Te, population: 6.044, charge: -0.044}
+      - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+      - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+      - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+      - {kind: 1, element: Te, population: 5.967, charge: 0.033}
+      - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+      - {kind: 1, element: Te, population: 6.015, charge: -0.015}
+- [nr_unocc_orbitals, 72]
+- [runtime, 763.053]
+- [nwarnings, 1]
+- [energy_units, hartree]
