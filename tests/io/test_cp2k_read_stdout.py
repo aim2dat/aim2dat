@@ -152,6 +152,7 @@ class OutputParserTester:
         ("bands", "medium", 2025.1),
         ("bands_spin_pol", "low", 2025.1),
         ("bands_spin_pol", "medium", 2025.1),
+        ("bsse", "low", 2025.1),
         ("smearing_need_added_mos", "medium", 2025.1),
         ("need_lsd", "medium", 2025.1),
         ("unconverged_scf", "medium", 2025.1),

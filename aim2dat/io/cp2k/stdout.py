@@ -259,7 +259,7 @@ class SCFBlock(_BaseDataBlock):
         "energy_units",
     ]  # , "nr_scf_steps"
     start_str = "Number of electrons:"
-    end_str = "ENERGY| Total FORCE_EVAL"
+    end_str = ["ENERGY| Total FORCE_EVAL", "BSSE"]
 
     def _parse_line(self, line):
         for pattern, key in self._pattern_mapping:
@@ -270,22 +270,29 @@ class SCFBlock(_BaseDataBlock):
         if "SCF run converged in" in line:
             self.current_data["nr_scf_steps"] = int(line.split()[-3])
             self.current_data["scf_converged"] = True
-            return True
         elif "Leaving inner SCF loop after" in line:
             self.current_data["nr_scf_steps"] = int(line.split()[-2])
             self.current_data["scf_converged"] = False
-            return True
         elif "outer SCF loop converged in" in line:
             self.current_data["nr_scf_steps"] = int(line.split()[-2])
             self.current_data["scf_converged"] = True
-            return True
         elif "outer SCF loop FAILED to converge after" in line:
             self.current_data["nr_scf_steps"] = int(line.split()[-2])
             self.current_data["scf_converged"] = False
-            return True
+        elif "Overlap energy of the core charge distribution:" in line:
+            self.current_data["energy_overlap_ccd"] = float(line.split()[-1])
+        elif "Self energy of the core charge distribution:" in line:
+            self.current_data["energy_self_ccd"] = float(line.split()[-1])
+        elif "Core Hamiltonian energy:" in line:
+            self.current_data["energy_core_hamiltonian"] = float(line.split()[-1])
+        elif "Hartree energy:" in line:
+            self.current_data["energy_hartree"] = float(line.split()[-1])
+        elif "Exchange-correlation energy:" in line:
+            self.current_data["energy_xc"] = float(line.split()[-1])
+        elif "Dispersion energy:" in line:
+            self.current_data["energy_dispersion"] = float(line.split()[-1])
         elif "Total energy:" in line:
             self.current_data["energy_scf"] = float(line.split()[-1])
-            return True
         elif "ENERGY| Total FORCE_EVAL" in line:
             self.current_data["energy"] = float(line.split()[-1])
             line = line.replace("]", "[")
@@ -583,6 +590,57 @@ class EigenvaluesBlock(_BaseDataBlock):
             return {"fermi_energy": fermi_energy, "eigenvalues_info": ev_output}
 
 
+class BSSECalculationBlock(_BaseDataBlock):
+    """BSSE calculation block."""
+
+    start_str = "BSSE CALCULATION"
+    end_str = "-------------------------------------------------------------------------------"
+
+    def _parse_line(self, line):
+        line_sp = line.split()
+        if len(line_sp) < 3:
+            return None
+        elif self.start_str in line:
+            self.current_data["fragment_conf"] = line_sp[5]
+            self.current_data["fragment_subconf"] = line_sp[8]
+        elif "MULTIPLICITY" in line:
+            self.current_data["charge"] = int(line_sp[3])
+            self.current_data["multiplicity"] = int(line_sp[-2])
+        elif all(pattern not in line for pattern in ["----------", "ATOM INDEX"]):
+            self.current_data.setdefault("site_indices", []).append(int(line_sp[1]))
+            self.current_data.setdefault("site_labels", []).append(line_sp[2])
+
+    def _process_output(self):
+        if len(self.line_indices) > 0:
+            return {"bsse_indices": self.line_indices, "bsse_steps": self.all_data}
+
+
+class BSSEResultsBlock(_BaseDataBlock):
+    """BSSE results block."""
+
+    start_str = "BSSE RESULTS"
+    end_str = "BSSE-free interaction energy:"
+    use_once = True
+
+    def _parse_line(self, line):
+        line_sp = line.split()
+        if len(line_sp) < 3 or self.start_str in line:
+            return None
+
+        if "CP-corrected Total energy:" in line:
+            self.current_data["total_energy"] = float(line_sp[-2])
+        elif "BSSE-free interaction energy:" in line:
+            self.current_data["interaction_energy"] = float(line_sp[-2])
+        else:
+            key = "_".join([v.lower() for v in line_sp[1:-2]])
+            self.current_data.setdefault(key, []).append(float(line_sp[-2]))
+
+    def _process_output(self):
+        if len(self.all_data) > 0:
+            self.all_data[-1]["bsse_last_index"] = self.line_indices[-1]
+            return self.all_data[-1]
+
+
 class RuntimeBlock(_BaseDataBlock):
     """Runtime data block."""
 
@@ -660,6 +718,8 @@ _BLOCKS = {
         MaxOptStepsBlock,
         BandsBlock,
         EigenvaluesBlock,
+        BSSECalculationBlock,
+        BSSEResultsBlock,
         WalltimeBlock,
         WarningBlock,
         ErrorBlock,
@@ -747,6 +807,69 @@ _MOTION_STEP_MAPPING = {
     "time_fs": "time_fs",
 }
 
+_MOTION_SCF_KEYS = ["nr_scf_steps", "scf_converged", "energy"]
+
+_BSSE_STEP_MAPPING = {
+    "fragment_conf": "fragment_conf",
+    "fragment_subconf": "fragment_subconf",
+    "charge": "charge",
+    "multiplicity": "multiplicity",
+    "site_indices": "site_indices",
+    "site_labels": "site_labels",
+}
+
+_BSSE_SCF_KEYS = [
+    "nr_scf_steps",
+    "scf_converged",
+    "energy_overlap_ccd",
+    "energy_self_ccd",
+    "energy_core_hamiltonian",
+    "energy_hartree",
+    "energy_xc",
+    "energy_dispersion",
+    "energy_scf",
+]
+
+
+def _create_step_info_dict(
+    steps: list,
+    step_indices: list,
+    step_mapping: list,
+    scf_steps: list,
+    scf_indices: list,
+    scf_keys: list,
+    pc: dict,
+):
+    outp_list = []
+    c_scf_steps = 0
+    for step_idx, line_idx in enumerate(step_indices):
+        m_step = {"scf_steps": []}
+        if step_idx < len(steps):
+            for key, val in steps[step_idx].items():
+                if key in step_mapping:
+                    m_step[step_mapping[key]] = val
+
+        while c_scf_steps < len(scf_steps):
+            if scf_indices[c_scf_steps] > line_idx:
+                break
+
+            scf_step = {}
+            for key in scf_keys:
+                if key in scf_steps[c_scf_steps]:
+                    scf_step[key] = scf_steps[c_scf_steps][key]
+            for pc_type, values in pc.items():
+                if c_scf_steps < len(values):
+                    scf_step[pc_type] = values[c_scf_steps]
+            m_step["scf_steps"].append(scf_step)
+            c_scf_steps += 1
+
+        if len(m_step["scf_steps"]) == 1:
+            m_step.update(m_step.pop("scf_steps")[0])
+        elif len(m_step["scf_steps"]) == 0:
+            del m_step["scf_steps"]
+        outp_list.append(m_step)
+    return outp_list
+
 
 def read_stdout(file_name: str, parser_type: str = "standard") -> dict:
     """
@@ -814,6 +937,7 @@ def read_stdout(file_name: str, parser_type: str = "standard") -> dict:
         motion_steps = [md_ini] + output.pop("md_steps", [])
     scf_steps = output.pop("scf_steps", [])
     scf_indices = output.pop("scf_indices", [])
+
     pc = {}
     for pc_type in ["mulliken", "hirshfeld"]:
         if pc_type in output and len(output[pc_type]) > 0:
@@ -821,35 +945,31 @@ def read_stdout(file_name: str, parser_type: str = "standard") -> dict:
             if parser_type == "partial_charges":
                 output[pc_type] = pc[pc_type][-1]
 
+    if output["run_type"] == "BSSE":
+        bsse_indices = output.pop("bsse_indices", [])[1:]
+        if "bsse_last_index" in output:
+            bsse_indices.append(output.pop("bsse_last_index"))
+        bsse_steps = output.pop("bsse_steps", [])
+        output["bsse_step_info"] = _create_step_info_dict(
+            bsse_steps,
+            bsse_indices,
+            _BSSE_STEP_MAPPING,
+            scf_steps,
+            scf_indices,
+            _BSSE_SCF_KEYS,
+            pc,
+        )
+
     if parser_type == "trajectory":
-        output["motion_step_info"] = []
-        c_scf_steps = 0
-        for step_idx, line_idx in enumerate(motion_indices):
-            m_step = {"scf_steps": []}
-            if step_idx < len(motion_steps):
-                for key, val in motion_steps[step_idx].items():
-                    if key in _MOTION_STEP_MAPPING:
-                        m_step[_MOTION_STEP_MAPPING[key]] = val
-
-            while c_scf_steps < len(scf_steps):
-                if scf_indices[c_scf_steps] > line_idx:
-                    break
-
-                scf_step = {}
-                for key in ["nr_scf_steps", "scf_converged", "energy"]:
-                    if key in scf_steps[c_scf_steps]:
-                        scf_step[key] = scf_steps[c_scf_steps][key]
-                for pc_type, values in pc.items():
-                    if c_scf_steps < len(values):
-                        scf_step[pc_type] = values[c_scf_steps]
-                m_step["scf_steps"].append(scf_step)
-                c_scf_steps += 1
-
-            if len(m_step["scf_steps"]) == 1:
-                m_step.update(m_step.pop("scf_steps")[0])
-            elif len(m_step["scf_steps"]) == 0:
-                del m_step["scf_steps"]
-            output["motion_step_info"].append(m_step)
+        output["motion_step_info"] = _create_step_info_dict(
+            motion_steps,
+            motion_indices,
+            _MOTION_STEP_MAPPING,
+            scf_steps,
+            scf_indices,
+            _MOTION_SCF_KEYS,
+            pc,
+        )
     else:
         output.pop("motion_step_info", None)
     return output
