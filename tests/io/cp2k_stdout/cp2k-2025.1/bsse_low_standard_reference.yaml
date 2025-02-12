@@ -4,7 +4,7 @@
 - [run_type, BSSE]
 - [natoms, 4]
 - [runtime, 1.264]
-- [total_energy, -2.310275]
+- [energy, -2.310275]
 - - '1-body_contribution:'
   - [-1.161266, -1.161266]
 - - '2-body_contribution:'

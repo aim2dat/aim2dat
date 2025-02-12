@@ -628,7 +628,7 @@ class BSSEResultsBlock(_BaseDataBlock):
             return None
 
         if "CP-corrected Total energy:" in line:
-            self.current_data["total_energy"] = float(line_sp[-2])
+            self.current_data["energy"] = float(line_sp[-2])
         elif "BSSE-free interaction energy:" in line:
             self.current_data["interaction_energy"] = float(line_sp[-2])
         else:
