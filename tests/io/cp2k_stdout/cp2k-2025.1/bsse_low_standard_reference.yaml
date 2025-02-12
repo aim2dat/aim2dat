@@ -1,0 +1,87 @@
+%YAML 1.2
+---
+- [cp2k_version, 2025.1]
+- [run_type, BSSE]
+- [natoms, 4]
+- [runtime, 1.264]
+- [total_energy, -2.310275]
+- - '1-body_contribution:'
+  - [-1.161266, -1.161266]
+- - '2-body_contribution:'
+  - [0.012257]
+- [interaction_energy, 0.012257]
+- - warnings
+  - [Using a non-square number of MPI ranks.]
+- [nwarnings, 1]
+- [exceeded_walltime, false]
+- - bsse_step_info
+  - - fragment_conf: '10'
+      fragment_subconf: '10'
+      charge: 0
+      multiplicity: 0
+      site_indices: [1, 2]
+      site_labels: [H, H]
+      nr_scf_steps: 8
+      scf_converged: true
+      energy_overlap_ccd: 6.0512959e-07
+      energy_self_ccd: -2.82094791773878
+      energy_core_hamiltonian: 1.07895243975225
+      energy_hartree: 1.30341176126354
+      energy_xc: -0.72268272960888
+      energy_scf: -1.16126584120227
+    - fragment_conf: '01'
+      fragment_subconf: '01'
+      charge: 0
+      multiplicity: 0
+      site_indices: [3, 4]
+      site_labels: [H, H]
+      nr_scf_steps: 8
+      scf_converged: true
+      energy_overlap_ccd: 6.0512959e-07
+      energy_self_ccd: -2.82094791773878
+      energy_core_hamiltonian: 1.07895243975225
+      energy_hartree: 1.30341176126354
+      energy_xc: -0.72268272960889
+      energy_scf: -1.16126584120229
+    - fragment_conf: '11'
+      fragment_subconf: '10'
+      charge: 0
+      multiplicity: 0
+      site_indices: [1, 2, 3, 4]
+      site_labels: [H, H, H_ghost, H_ghost]
+      nr_scf_steps: 7
+      scf_converged: true
+      energy_overlap_ccd: 6.0512959e-07
+      energy_self_ccd: -2.82094791773878
+      energy_core_hamiltonian: 1.06464106126705
+      energy_hartree: 1.31229861492308
+      energy_xc: -0.71781386978552
+      energy_scf: -1.16182150620458
+    - fragment_conf: '11'
+      fragment_subconf: '01'
+      charge: 0
+      multiplicity: 0
+      site_indices: [1, 2, 3, 4]
+      site_labels: [H_ghost, H_ghost, H, H]
+      nr_scf_steps: 7
+      scf_converged: true
+      energy_overlap_ccd: 6.0512959e-07
+      energy_self_ccd: -2.82094791773878
+      energy_core_hamiltonian: 1.06464106120056
+      energy_hartree: 1.31229861496767
+      energy_xc: -0.71781386976889
+      energy_scf: -1.16182150620985
+    - fragment_conf: '11'
+      fragment_subconf: '11'
+      charge: 0
+      multiplicity: 0
+      site_indices: [1, 2, 3, 4]
+      site_labels: [H, H, H, H]
+      nr_scf_steps: 7
+      scf_converged: true
+      energy_overlap_ccd: 1.21025918e-06
+      energy_self_ccd: -5.64189583547756
+      energy_core_hamiltonian: 2.14023205688723
+      energy_hartree: 2.63170602823471
+      energy_xc: -1.44142937847687
+      energy_scf: -2.31138591857332

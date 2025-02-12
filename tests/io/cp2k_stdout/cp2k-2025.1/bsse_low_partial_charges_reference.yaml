@@ -1,0 +1,16 @@
+%YAML 1.2
+---
+- [cp2k_version, 2025.1]
+- [run_type, BSSE]
+- [natoms, 4]
+- [runtime, 1.264]
+- - mulliken
+  - []
+- - hirshfeld
+  - []
+- - warnings
+  - [Using a non-square number of MPI ranks.]
+- [nwarnings, 1]
+- [exceeded_walltime, false]
+- - bsse_step_info
+  - []

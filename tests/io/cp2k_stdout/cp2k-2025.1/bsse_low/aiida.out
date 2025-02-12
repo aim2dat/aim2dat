@@ -1,0 +1,929 @@
+ DBCSR| CPU Multiplication driver                                           XSMM (U)
+ DBCSR| Multrec recursion limit                                              512 (U)
+ DBCSR| Multiplication stack size                                           1000 (D)
+ DBCSR| Maximum elements for images                                    UNLIMITED (U)
+ DBCSR| Multiplicative factor virtual images                                   1 (U)
+ DBCSR| Use multiplication densification                                       T (D)
+ DBCSR| Multiplication size stacks                                             3 (U)
+ DBCSR| Use memory pool for CPU allocation                                     F (U)
+ DBCSR| Number of 3D layers                                               SINGLE (U)
+ DBCSR| Use MPI memory allocation                                              F (U)
+ DBCSR| Use RMA algorithm                                                      F (U)
+ DBCSR| Use Communication thread                                               T (U)
+ DBCSR| Communication thread load                                             83 (D)
+ DBCSR| MPI: My process id                                                     0
+ DBCSR| MPI: Number of processes                                              48
+ DBCSR| OMP: Current number of threads                                         2
+ DBCSR| OMP: Max number of threads                                             2
+ DBCSR| Split modifier for TAS multiplication algorithm                  1.0E+00 (U)
+
+
+  **** **** ******  **  PROGRAM STARTED AT               2025-02-11 13:05:49.324
+ ***** ** ***  *** **   PROGRAM STARTED ON                                 c0424
+ **    ****   ******    PROGRAM STARTED BY                                u12591
+ ***** **    ** ** **   PROGRAM PROCESS ID                                 20741
+  **** **  *******  **  PROGRAM STARTED IN /mnt/lustre-grete/usr/u12591/cp2k_par
+                                           ser_tests/cp2k-2025.1/bsse_low
+
+ CP2K| version string:                                       CP2K version 2025.1
+ CP2K| source code revision number:                                  git:9635df4
+ CP2K| cp2kflags: omp libint fftw3 libxc libgrpp parallel scalapack mpi_f08 xsmm
+ CP2K|             spglib libdftd4 libvori libbqb hdf5
+ CP2K| is freely available from                            https://www.cp2k.org/
+ CP2K| Program compiled at                          Tue Jan  7 11:11:50 CET 2025
+ CP2K| Program compiled on                                              glogin11
+ CP2K| Program compiled for                                                local
+ CP2K| Data directory path    /mnt/lustre-grete/usr/u12591/software/cp2k/cp2k-20
+ CP2K| Input file name                                                 aiida.inp
+
+ GLOBAL| Force Environment number                                              1
+ GLOBAL| Basis set file name                                        BASIS_MOLOPT
+ GLOBAL| Potential file name                                      GTH_POTENTIALS
+ GLOBAL| MM Potential file name                                     MM_POTENTIAL
+ GLOBAL| Coordinate file name                                      __STD_INPUT__
+ GLOBAL| Method name                                                        CP2K
+ GLOBAL| Project name                                                      aiida
+ GLOBAL| Run type                                                           BSSE
+ GLOBAL| FFT library                                                       FFTW3
+ GLOBAL| Diagonalization library                                       ScaLAPACK
+ GLOBAL| DGEMM library                                                      BLAS
+ GLOBAL| Orthonormality check for eigenvectors                          DISABLED
+ GLOBAL| Matrix multiplication library                                 ScaLAPACK
+ GLOBAL| All-to-all communication in single precision                          F
+ GLOBAL| FFTs using library dependent lengths                                  F
+ GLOBAL| Grid backend                                                       AUTO
+ GLOBAL| Global print level                                                  LOW
+ GLOBAL| MPI I/O enabled                                                       T
+ GLOBAL| Total number of message passing processes                            48
+ GLOBAL| Number of threads for this process                                    2
+ GLOBAL| This output is from process                                           0
+ GLOBAL| OpenMP stack size per thread (OMP_STACKSIZE)                    default
+ GLOBAL| CPU model name                           Intel(R) Xeon(R) Platinum 8468
+ GLOBAL| CPUID                                                              1003
+
+ MEMORY| system memory details [Kb]
+ MEMORY|                        rank 0           min           max       average
+ MEMORY| MemTotal            527928748     527928748     527928748     527928748
+ MEMORY| MemFree             515755604     515755604     515755604     515755604
+ MEMORY| Buffers                 11712         11712         11712         11712
+ MEMORY| Cached                3635912       3635912       3635912       3635912
+ MEMORY| Slab                  1183004       1183004       1183004       1183004
+ MEMORY| SReclaimable           189932        189932        189932        189932
+ MEMORY| MemLikelyFree       519593160     519593160     519593160     519593160
+
+
+ GENERATE|  Preliminary Number of Bonds generated:                             0
+ GENERATE|  Achieved consistency in connectivity generation.
+
+ *******************************************************************************
+ *******************************************************************************
+ **                                                                           **
+ **     #####                         ##              ##                      **
+ **    ##   ##            ##          ##              ##                      **
+ **   ##     ##                       ##            ######                    **
+ **   ##     ##  ##   ##  ##   #####  ##  ##   ####   ##    #####    #####    **
+ **   ##     ##  ##   ##  ##  ##      ## ##   ##      ##   ##   ##  ##   ##   **
+ **   ##  ## ##  ##   ##  ##  ##      ####     ###    ##   ######   ######    **
+ **    ##  ###   ##   ##  ##  ##      ## ##      ##   ##   ##       ##        **
+ **     #######   #####   ##   #####  ##  ##  ####    ##    #####   ##        **
+ **           ##                                                    ##        **
+ **                                                                           **
+ **                                                ... make the atoms dance   **
+ **                                                                           **
+ **            Copyright (C) by CP2K developers group (2000-2025)             **
+ **                      J. Chem. Phys. 152, 194103 (2020)                    **
+ **                                                                           **
+ *******************************************************************************
+
+
+ TOTAL NUMBERS AND MAXIMUM NUMBERS
+
+  Total number of            - Atomic kinds:                                   1
+                             - Atoms:                                          4
+                             - Shell sets:                                     4
+                             - Shells:                                        12
+                             - Primitive Cartesian functions:                 20
+                             - Cartesian basis functions:                     20
+                             - Spherical basis functions:                     20
+
+  Maximum angular momentum of- Orbital basis functions:                        1
+                             - Local part of the GTH pseudopotential:          2
+
+
+ SCF PARAMETERS         Density guess:                                    ATOMIC
+                        --------------------------------------------------------
+                        max_scf:                                              50
+                        max_scf_history:                                       0
+                        max_diis:                                              4
+                        --------------------------------------------------------
+                        eps_scf:                                        1.00E-05
+                        eps_scf_history:                                0.00E+00
+                        eps_diis:                                       1.00E-01
+                        eps_eigval:                                     1.00E-05
+                        --------------------------------------------------------
+                        level_shift [a.u.]:                             0.000000
+                        --------------------------------------------------------
+                        Mixing method:                           DIRECT_P_MIXING
+                        --------------------------------------------------------
+                        No outer SCF
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -  BSSE CALCULATION         FRAGMENT CONF: 10        FRAGMENT SUBCONF: 10     -
+ -                           CHARGE =     0           MULTIPLICITY =     0     -
+ -                                                                             -
+ -                 ATOM INDEX                              ATOM NAME           -
+ -                 ----------                              ---------           -
+ -                      1                                   H                  -
+ -                      2                                   H                  -
+ -------------------------------------------------------------------------------
+
+ *******************************************************************************
+ *******************************************************************************
+ **                                                                           **
+ **     #####                         ##              ##                      **
+ **    ##   ##            ##          ##              ##                      **
+ **   ##     ##                       ##            ######                    **
+ **   ##     ##  ##   ##  ##   #####  ##  ##   ####   ##    #####    #####    **
+ **   ##     ##  ##   ##  ##  ##      ## ##   ##      ##   ##   ##  ##   ##   **
+ **   ##  ## ##  ##   ##  ##  ##      ####     ###    ##   ######   ######    **
+ **    ##  ###   ##   ##  ##  ##      ## ##      ##   ##   ##       ##        **
+ **     #######   #####   ##   #####  ##  ##  ####    ##    #####   ##        **
+ **           ##                                                    ##        **
+ **                                                                           **
+ **                                                ... make the atoms dance   **
+ **                                                                           **
+ **            Copyright (C) by CP2K developers group (2000-2025)             **
+ **                      J. Chem. Phys. 152, 194103 (2020)                    **
+ **                                                                           **
+ *******************************************************************************
+
+
+ TOTAL NUMBERS AND MAXIMUM NUMBERS
+
+  Total number of            - Atomic kinds:                                   1
+                             - Atoms:                                          2
+                             - Shell sets:                                     2
+                             - Shells:                                         6
+                             - Primitive Cartesian functions:                 10
+                             - Cartesian basis functions:                     10
+                             - Spherical basis functions:                     10
+
+  Maximum angular momentum of- Orbital basis functions:                        1
+                             - Local part of the GTH pseudopotential:          2
+
+
+ SCF PARAMETERS         Density guess:                                    ATOMIC
+                        --------------------------------------------------------
+                        max_scf:                                              50
+                        max_scf_history:                                       0
+                        max_diis:                                              4
+                        --------------------------------------------------------
+                        eps_scf:                                        1.00E-05
+                        eps_scf_history:                                0.00E+00
+                        eps_diis:                                       1.00E-01
+                        eps_eigval:                                     1.00E-05
+                        --------------------------------------------------------
+                        level_shift [a.u.]:                             0.000000
+                        --------------------------------------------------------
+                        Mixing method:                           DIRECT_P_MIXING
+                        --------------------------------------------------------
+                        No outer SCF
+
+ Number of electrons:                                                          2
+ Number of occupied orbitals:                                                  1
+ Number of molecular orbitals:                                                 1
+
+ Number of orbital functions:                                                 10
+ Number of independent orbital functions:                                     10
+
+ Extrapolation method: initial_guess
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 P_Mix/Diag. 0.40E+00    0.1     0.58121584        -0.8983427201 -8.98E-01
+     2 P_Mix/Diag. 0.40E+00    0.0     0.34916566        -1.0035111347 -1.05E-01
+     3 P_Mix/Diag. 0.40E+00    0.0     0.20971412        -1.0666066838 -6.31E-02
+     4 P_Mix/Diag. 0.40E+00    0.0     0.12592910        -1.1044662697 -3.79E-02
+     5 P_Mix/Diag. 0.40E+00    0.0     0.07560447        -1.1271841360 -2.27E-02
+     6 DIIS/Diag.  0.56E-03    0.0     0.04540474        -1.1408159758 -1.36E-02
+     7 DIIS/Diag.  0.50E-04    0.0     0.00001049        -1.1612658415 -2.04E-02
+     8 DIIS/Diag.  0.79E-04    0.0     0.00000897        -1.1612658412  3.15E-10
+
+  *** SCF run converged in     8 steps ***
+
+
+  Electronic density on regular grids:         -1.9999999990        0.0000000010
+  Core density on regular grids:                1.9999999875       -0.0000000125
+  Total charge density on r-space grids:       -0.0000000115
+  Total charge density g-space grids:          -0.0000000115
+
+  Overlap energy of the core charge distribution:               0.00000060512959
+  Self energy of the core charge distribution:                 -2.82094791773878
+  Core Hamiltonian energy:                                      1.07895243975225
+  Hartree energy:                                               1.30341176126354
+  Exchange-correlation energy:                                 -0.72268272960888
+
+  Total energy:                                                -1.16126584120227
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -  BSSE CALCULATION         FRAGMENT CONF: 01        FRAGMENT SUBCONF: 01     -
+ -                           CHARGE =     0           MULTIPLICITY =     0     -
+ -                                                                             -
+ -                 ATOM INDEX                              ATOM NAME           -
+ -                 ----------                              ---------           -
+ -                      3                                   H                  -
+ -                      4                                   H                  -
+ -------------------------------------------------------------------------------
+
+ *******************************************************************************
+ *******************************************************************************
+ **                                                                           **
+ **     #####                         ##              ##                      **
+ **    ##   ##            ##          ##              ##                      **
+ **   ##     ##                       ##            ######                    **
+ **   ##     ##  ##   ##  ##   #####  ##  ##   ####   ##    #####    #####    **
+ **   ##     ##  ##   ##  ##  ##      ## ##   ##      ##   ##   ##  ##   ##   **
+ **   ##  ## ##  ##   ##  ##  ##      ####     ###    ##   ######   ######    **
+ **    ##  ###   ##   ##  ##  ##      ## ##      ##   ##   ##       ##        **
+ **     #######   #####   ##   #####  ##  ##  ####    ##    #####   ##        **
+ **           ##                                                    ##        **
+ **                                                                           **
+ **                                                ... make the atoms dance   **
+ **                                                                           **
+ **            Copyright (C) by CP2K developers group (2000-2025)             **
+ **                      J. Chem. Phys. 152, 194103 (2020)                    **
+ **                                                                           **
+ *******************************************************************************
+
+
+ TOTAL NUMBERS AND MAXIMUM NUMBERS
+
+  Total number of            - Atomic kinds:                                   1
+                             - Atoms:                                          2
+                             - Shell sets:                                     2
+                             - Shells:                                         6
+                             - Primitive Cartesian functions:                 10
+                             - Cartesian basis functions:                     10
+                             - Spherical basis functions:                     10
+
+  Maximum angular momentum of- Orbital basis functions:                        1
+                             - Local part of the GTH pseudopotential:          2
+
+
+ SCF PARAMETERS         Density guess:                                    ATOMIC
+                        --------------------------------------------------------
+                        max_scf:                                              50
+                        max_scf_history:                                       0
+                        max_diis:                                              4
+                        --------------------------------------------------------
+                        eps_scf:                                        1.00E-05
+                        eps_scf_history:                                0.00E+00
+                        eps_diis:                                       1.00E-01
+                        eps_eigval:                                     1.00E-05
+                        --------------------------------------------------------
+                        level_shift [a.u.]:                             0.000000
+                        --------------------------------------------------------
+                        Mixing method:                           DIRECT_P_MIXING
+                        --------------------------------------------------------
+                        No outer SCF
+
+ Number of electrons:                                                          2
+ Number of occupied orbitals:                                                  1
+ Number of molecular orbitals:                                                 1
+
+ Number of orbital functions:                                                 10
+ Number of independent orbital functions:                                     10
+
+ Extrapolation method: initial_guess
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 P_Mix/Diag. 0.40E+00    0.0     0.58121584        -0.8983427201 -8.98E-01
+     2 P_Mix/Diag. 0.40E+00    0.0     0.34916566        -1.0035111347 -1.05E-01
+     3 P_Mix/Diag. 0.40E+00    0.0     0.20971412        -1.0666066838 -6.31E-02
+     4 P_Mix/Diag. 0.40E+00    0.0     0.12592910        -1.1044662697 -3.79E-02
+     5 P_Mix/Diag. 0.40E+00    0.0     0.07560447        -1.1271841360 -2.27E-02
+     6 DIIS/Diag.  0.56E-03    0.0     0.04540474        -1.1408159758 -1.36E-02
+     7 DIIS/Diag.  0.50E-04    0.0     0.00001049        -1.1612658415 -2.04E-02
+     8 DIIS/Diag.  0.79E-04    0.0     0.00000897        -1.1612658412  3.15E-10
+
+  *** SCF run converged in     8 steps ***
+
+
+  Electronic density on regular grids:         -1.9999999990        0.0000000010
+  Core density on regular grids:                1.9999999875       -0.0000000125
+  Total charge density on r-space grids:       -0.0000000115
+  Total charge density g-space grids:          -0.0000000115
+
+  Overlap energy of the core charge distribution:               0.00000060512959
+  Self energy of the core charge distribution:                 -2.82094791773878
+  Core Hamiltonian energy:                                      1.07895243975225
+  Hartree energy:                                               1.30341176126354
+  Exchange-correlation energy:                                 -0.72268272960889
+
+  Total energy:                                                -1.16126584120229
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -  BSSE CALCULATION         FRAGMENT CONF: 11        FRAGMENT SUBCONF: 10     -
+ -                           CHARGE =     0           MULTIPLICITY =     0     -
+ -                                                                             -
+ -                 ATOM INDEX                              ATOM NAME           -
+ -                 ----------                              ---------           -
+ -                      1                                   H                  -
+ -                      2                                   H                  -
+ -                      3                                   H_ghost            -
+ -                      4                                   H_ghost            -
+ -------------------------------------------------------------------------------
+
+ *******************************************************************************
+ *******************************************************************************
+ **                                                                           **
+ **     #####                         ##              ##                      **
+ **    ##   ##            ##          ##              ##                      **
+ **   ##     ##                       ##            ######                    **
+ **   ##     ##  ##   ##  ##   #####  ##  ##   ####   ##    #####    #####    **
+ **   ##     ##  ##   ##  ##  ##      ## ##   ##      ##   ##   ##  ##   ##   **
+ **   ##  ## ##  ##   ##  ##  ##      ####     ###    ##   ######   ######    **
+ **    ##  ###   ##   ##  ##  ##      ## ##      ##   ##   ##       ##        **
+ **     #######   #####   ##   #####  ##  ##  ####    ##    #####   ##        **
+ **           ##                                                    ##        **
+ **                                                                           **
+ **                                                ... make the atoms dance   **
+ **                                                                           **
+ **            Copyright (C) by CP2K developers group (2000-2025)             **
+ **                      J. Chem. Phys. 152, 194103 (2020)                    **
+ **                                                                           **
+ *******************************************************************************
+
+
+ TOTAL NUMBERS AND MAXIMUM NUMBERS
+
+  Total number of            - Atomic kinds:                                   2
+                             - Atoms:                                          4
+                             - Shell sets:                                     4
+                             - Shells:                                        12
+                             - Primitive Cartesian functions:                 20
+                             - Cartesian basis functions:                     20
+                             - Spherical basis functions:                     20
+
+  Maximum angular momentum of- Orbital basis functions:                        1
+                             - Local part of the GTH pseudopotential:          2
+
+
+ SCF PARAMETERS         Density guess:                                    ATOMIC
+                        --------------------------------------------------------
+                        max_scf:                                              50
+                        max_scf_history:                                       0
+                        max_diis:                                              4
+                        --------------------------------------------------------
+                        eps_scf:                                        1.00E-05
+                        eps_scf_history:                                0.00E+00
+                        eps_diis:                                       1.00E-01
+                        eps_eigval:                                     1.00E-05
+                        --------------------------------------------------------
+                        level_shift [a.u.]:                             0.000000
+                        --------------------------------------------------------
+                        Mixing method:                           DIRECT_P_MIXING
+                        --------------------------------------------------------
+                        No outer SCF
+
+ Number of electrons:                                                          2
+ Number of occupied orbitals:                                                  1
+ Number of molecular orbitals:                                                 1
+
+ Number of orbital functions:                                                 20
+ Number of independent orbital functions:                                     20
+
+ Extrapolation method: initial_guess
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 P_Mix/Diag. 0.40E+00    0.0     0.57274905        -0.8983427201 -8.98E-01
+     2 P_Mix/Diag. 0.40E+00    0.0     0.34365419        -1.0037110121 -1.05E-01
+     3 P_Mix/Diag. 0.40E+00    0.0     0.20613572        -1.0669402100 -6.32E-02
+     4 P_Mix/Diag. 0.40E+00    0.0     0.12361384        -1.1048853684 -3.79E-02
+     5 P_Mix/Diag. 0.40E+00    0.0     0.07411278        -1.1276566375 -2.28E-02
+     6 DIIS/Diag.  0.45E-03    0.0     0.04435743        -1.1413212922 -1.37E-02
+     7 DIIS/Diag.  0.33E-04    0.0     0.00000166        -1.1618215062 -2.05E-02
+
+  *** SCF run converged in     7 steps ***
+
+
+  Electronic density on regular grids:         -1.9999999990        0.0000000010
+  Core density on regular grids:                1.9999999875       -0.0000000125
+  Total charge density on r-space grids:       -0.0000000115
+  Total charge density g-space grids:          -0.0000000115
+
+  Overlap energy of the core charge distribution:               0.00000060512959
+  Self energy of the core charge distribution:                 -2.82094791773878
+  Core Hamiltonian energy:                                      1.06464106126705
+  Hartree energy:                                               1.31229861492308
+  Exchange-correlation energy:                                 -0.71781386978552
+
+  Total energy:                                                -1.16182150620458
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -  BSSE CALCULATION         FRAGMENT CONF: 11        FRAGMENT SUBCONF: 01     -
+ -                           CHARGE =     0           MULTIPLICITY =     0     -
+ -                                                                             -
+ -                 ATOM INDEX                              ATOM NAME           -
+ -                 ----------                              ---------           -
+ -                      1                                   H_ghost            -
+ -                      2                                   H_ghost            -
+ -                      3                                   H                  -
+ -                      4                                   H                  -
+ -------------------------------------------------------------------------------
+
+ *******************************************************************************
+ *******************************************************************************
+ **                                                                           **
+ **     #####                         ##              ##                      **
+ **    ##   ##            ##          ##              ##                      **
+ **   ##     ##                       ##            ######                    **
+ **   ##     ##  ##   ##  ##   #####  ##  ##   ####   ##    #####    #####    **
+ **   ##     ##  ##   ##  ##  ##      ## ##   ##      ##   ##   ##  ##   ##   **
+ **   ##  ## ##  ##   ##  ##  ##      ####     ###    ##   ######   ######    **
+ **    ##  ###   ##   ##  ##  ##      ## ##      ##   ##   ##       ##        **
+ **     #######   #####   ##   #####  ##  ##  ####    ##    #####   ##        **
+ **           ##                                                    ##        **
+ **                                                                           **
+ **                                                ... make the atoms dance   **
+ **                                                                           **
+ **            Copyright (C) by CP2K developers group (2000-2025)             **
+ **                      J. Chem. Phys. 152, 194103 (2020)                    **
+ **                                                                           **
+ *******************************************************************************
+
+
+ TOTAL NUMBERS AND MAXIMUM NUMBERS
+
+  Total number of            - Atomic kinds:                                   2
+                             - Atoms:                                          4
+                             - Shell sets:                                     4
+                             - Shells:                                        12
+                             - Primitive Cartesian functions:                 20
+                             - Cartesian basis functions:                     20
+                             - Spherical basis functions:                     20
+
+  Maximum angular momentum of- Orbital basis functions:                        1
+                             - Local part of the GTH pseudopotential:          2
+
+
+ SCF PARAMETERS         Density guess:                                    ATOMIC
+                        --------------------------------------------------------
+                        max_scf:                                              50
+                        max_scf_history:                                       0
+                        max_diis:                                              4
+                        --------------------------------------------------------
+                        eps_scf:                                        1.00E-05
+                        eps_scf_history:                                0.00E+00
+                        eps_diis:                                       1.00E-01
+                        eps_eigval:                                     1.00E-05
+                        --------------------------------------------------------
+                        level_shift [a.u.]:                             0.000000
+                        --------------------------------------------------------
+                        Mixing method:                           DIRECT_P_MIXING
+                        --------------------------------------------------------
+                        No outer SCF
+
+ Number of electrons:                                                          2
+ Number of occupied orbitals:                                                  1
+ Number of molecular orbitals:                                                 1
+
+ Number of orbital functions:                                                 20
+ Number of independent orbital functions:                                     20
+
+ Extrapolation method: initial_guess
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 P_Mix/Diag. 0.40E+00    0.0     0.57274905        -0.8983427201 -8.98E-01
+     2 P_Mix/Diag. 0.40E+00    0.0     0.34365419        -1.0037110121 -1.05E-01
+     3 P_Mix/Diag. 0.40E+00    0.0     0.20613572        -1.0669402100 -6.32E-02
+     4 P_Mix/Diag. 0.40E+00    0.0     0.12361384        -1.1048853684 -3.79E-02
+     5 P_Mix/Diag. 0.40E+00    0.0     0.07411278        -1.1276566375 -2.28E-02
+     6 DIIS/Diag.  0.45E-03    0.0     0.04435743        -1.1413212922 -1.37E-02
+     7 DIIS/Diag.  0.33E-04    0.0     0.00000166        -1.1618215062 -2.05E-02
+
+  *** SCF run converged in     7 steps ***
+
+
+  Electronic density on regular grids:         -1.9999999990        0.0000000010
+  Core density on regular grids:                1.9999999875       -0.0000000125
+  Total charge density on r-space grids:       -0.0000000115
+  Total charge density g-space grids:          -0.0000000115
+
+  Overlap energy of the core charge distribution:               0.00000060512959
+  Self energy of the core charge distribution:                 -2.82094791773878
+  Core Hamiltonian energy:                                      1.06464106120056
+  Hartree energy:                                               1.31229861496767
+  Exchange-correlation energy:                                 -0.71781386976889
+
+  Total energy:                                                -1.16182150620985
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -  BSSE CALCULATION         FRAGMENT CONF: 11        FRAGMENT SUBCONF: 11     -
+ -                           CHARGE =     0           MULTIPLICITY =     0     -
+ -                                                                             -
+ -                 ATOM INDEX                              ATOM NAME           -
+ -                 ----------                              ---------           -
+ -                      1                                   H                  -
+ -                      2                                   H                  -
+ -                      3                                   H                  -
+ -                      4                                   H                  -
+ -------------------------------------------------------------------------------
+
+ *******************************************************************************
+ *******************************************************************************
+ **                                                                           **
+ **     #####                         ##              ##                      **
+ **    ##   ##            ##          ##              ##                      **
+ **   ##     ##                       ##            ######                    **
+ **   ##     ##  ##   ##  ##   #####  ##  ##   ####   ##    #####    #####    **
+ **   ##     ##  ##   ##  ##  ##      ## ##   ##      ##   ##   ##  ##   ##   **
+ **   ##  ## ##  ##   ##  ##  ##      ####     ###    ##   ######   ######    **
+ **    ##  ###   ##   ##  ##  ##      ## ##      ##   ##   ##       ##        **
+ **     #######   #####   ##   #####  ##  ##  ####    ##    #####   ##        **
+ **           ##                                                    ##        **
+ **                                                                           **
+ **                                                ... make the atoms dance   **
+ **                                                                           **
+ **            Copyright (C) by CP2K developers group (2000-2025)             **
+ **                      J. Chem. Phys. 152, 194103 (2020)                    **
+ **                                                                           **
+ *******************************************************************************
+
+
+ TOTAL NUMBERS AND MAXIMUM NUMBERS
+
+  Total number of            - Atomic kinds:                                   1
+                             - Atoms:                                          4
+                             - Shell sets:                                     4
+                             - Shells:                                        12
+                             - Primitive Cartesian functions:                 20
+                             - Cartesian basis functions:                     20
+                             - Spherical basis functions:                     20
+
+  Maximum angular momentum of- Orbital basis functions:                        1
+                             - Local part of the GTH pseudopotential:          2
+
+
+ SCF PARAMETERS         Density guess:                                    ATOMIC
+                        --------------------------------------------------------
+                        max_scf:                                              50
+                        max_scf_history:                                       0
+                        max_diis:                                              4
+                        --------------------------------------------------------
+                        eps_scf:                                        1.00E-05
+                        eps_scf_history:                                0.00E+00
+                        eps_diis:                                       1.00E-01
+                        eps_eigval:                                     1.00E-05
+                        --------------------------------------------------------
+                        level_shift [a.u.]:                             0.000000
+                        --------------------------------------------------------
+                        Mixing method:                           DIRECT_P_MIXING
+                        --------------------------------------------------------
+                        No outer SCF
+
+ Number of electrons:                                                          4
+ Number of occupied orbitals:                                                  2
+ Number of molecular orbitals:                                                 2
+
+ Number of orbital functions:                                                 20
+ Number of independent orbital functions:                                     20
+
+ Extrapolation method: initial_guess
+
+
+ SCF WAVEFUNCTION OPTIMIZATION
+
+  Step     Update method      Time    Convergence         Total energy    Change
+  ------------------------------------------------------------------------------
+     1 P_Mix/Diag. 0.40E+00    0.0     0.56982461        -1.8005959335 -1.80E+00
+     2 P_Mix/Diag. 0.40E+00    0.0     0.34206139        -2.0049412792 -2.04E-01
+     3 P_Mix/Diag. 0.40E+00    0.0     0.20526188        -2.1275147075 -1.23E-01
+     4 P_Mix/Diag. 0.40E+00    0.0     0.12313241        -2.2010571458 -7.35E-02
+     5 P_Mix/Diag. 0.40E+00    0.0     0.07384657        -2.2451852466 -4.41E-02
+     6 DIIS/Diag.  0.46E-03    0.0     0.04422554        -2.2716639485 -2.65E-02
+     7 DIIS/Diag.  0.49E-04    0.0     0.00000231        -2.3113859186 -3.97E-02
+
+  *** SCF run converged in     7 steps ***
+
+
+  Electronic density on regular grids:         -3.9999999980        0.0000000020
+  Core density on regular grids:                3.9999999749       -0.0000000251
+  Total charge density on r-space grids:       -0.0000000231
+  Total charge density g-space grids:          -0.0000000231
+
+  Overlap energy of the core charge distribution:               0.00000121025918
+  Self energy of the core charge distribution:                 -5.64189583547756
+  Core Hamiltonian energy:                                      2.14023205688723
+  Hartree energy:                                               2.63170602823471
+  Exchange-correlation energy:                                 -1.44142937847687
+
+  Total energy:                                                -2.31138591857332
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                 BSSE RESULTS                                -
+ -                                                                             -
+ -                 CP-corrected Total energy:       -2.310275                  -
+ -                                                                             -
+ -                       1-body contribution:       -1.161266                  -
+ -                       1-body contribution:       -1.161266                  -
+ -                                                                             -
+ -                       2-body contribution:        0.012257                  -
+ -                 BSSE-free interaction energy:        0.012257               -
+ -------------------------------------------------------------------------------
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                DBCSR STATISTICS                             -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ COUNTER                                    TOTAL       BLAS       SMM       ACC
+ flops     5 x     5 x     2                 7000       0.0%    100.0%      0.0%     
+ flops inhomo. stacks                        9400     100.0%      0.0%      0.0%
+ flops total                        16.400000E+03      57.3%     42.7%      0.0%
+ flops max/rank                      4.400000E+03      68.2%     31.8%      0.0%
+ matmuls inhomo. stacks                       188     100.0%      0.0%      0.0%
+ matmuls total                                258      72.9%     27.1%      0.0%
+ number of processed stacks                   242      71.1%     28.9%      0.0%
+ average stack size                                     1.1       1.0       0.0
+ marketing flops                    25.600002E+03
+ -------------------------------------------------------------------------------
+ # multiplications                             37
+ max memory usage/rank             247.046144E+06
+ # max total images/rank                        3
+ # max 3D layers                                1
+ # MPI messages exchanged                   35520
+ MPI messages size (bytes):
+  total size                        80.640000E+03
+  min size                           0.000000E+00
+  max size                         160.000000E+00
+  average size                       2.270270E+00
+ MPI breakdown and total messages size (bytes):
+             size <=      128               35443                    68320
+       128 < size <=     8192                  77                    12320
+      8192 < size <=    32768                   0                        0
+     32768 < size <=   131072                   0                        0
+    131072 < size <=  4194304                   0                        0
+   4194304 < size <= 16777216                   0                        0
+  16777216 < size                               0                        0
+ -------------------------------------------------------------------------------
+
+ *** WARNING in dbcsr_mm.F:301 :: Using a non-square number of MPI ranks ***
+ *** might lead to poor performance. Used ranks: 48 Suggested: 49 100    ***
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                      DBCSR MESSAGE PASSING PERFORMANCE                      -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ ROUTINE             CALLS      AVE VOLUME [Bytes]
+ MP_Bcast                2                     12.
+ MP_Allreduce          285                      9.
+ MP_Alltoall          1221                   5917.
+ MP_ISend             1702                     63.
+ MP_IRecv             1628                     60.
+ -------------------------------------------------------------------------------
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                DBM STATISTICS                               -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+    M  x    N  x    K                                          COUNT     PERCENT
+ -------------------------------------------------------------------------------
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                GRID STATISTICS                              -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ LP    KERNEL             BACKEND                              COUNT     PERCENT
+ 2     collocate ortho    CPU                                   6966      53.21%
+ 2     integrate ortho    CPU                                   6114      46.70%
+ 0     collocate general  CPU                                     12       0.09%
+ -------------------------------------------------------------------------------
+
+ MEMORY| Estimated peak process memory [MiB]                                 236
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                         MESSAGE PASSING PERFORMANCE                         -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+
+ ROUTINE             CALLS      AVE VOLUME [Bytes]
+ MP_Group               30
+ MP_Bcast              157                4422962.
+ MP_Allreduce         1183                    492.
+ MP_Sync               377
+ MP_Alltoall           758
+ MP_SendRecv          8131                  10601.
+ MP_ISendRecv         6956                   9888.
+ MP_Wait              7272
+ MP_comm_split          37
+ MP_ISend             2459                     78.
+ MP_IRecv             2439                     81.
+ -------------------------------------------------------------------------------
+
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                           R E F E R E N C E S                               -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ 
+ CP2K version 2025.1, the CP2K developers group (2025).
+ CP2K is freely available from https://www.cp2k.org/ .
+ 
+ T. D. Kuehne, M. Iannuzzi, M. Del Ben, V. V. Rybkin, P. Seewald, F. Stein, T. 
+ Laino, R. Z. Khaliullin, O. Schuett, F. Schiffmann, D. Golze, J. Wilhelm, S. 
+ Chulkov, M. H. Bani-Hashemian, V. Weber, U. Borstnik, M. Taillefumier, A. S. 
+ Jakobovits, A. Lazzaro, H. Pabst, T. Mueller, R. Schade, M. Guidon, S. 
+ Andermatt, N. Holmberg, G. K. Schenter, A. Hehn, A. Bussy, F. Belleflamme, G. 
+ Tabacchi, A. Gloess, M. Lass, I. Bethune, C. J. Mundy, C. Plessl, M. Watkins, 
+ J. VandeVondele, M. Krack, J. Hutter.
+ J. Chem. Phys. 152, 194103 (2020).
+ CP2K: An electronic structure and molecular dynamics software package - 
+ Quickstep: Efficient and accurate electronic structure calculations.
+ https://doi.org/10.1063/5.0007045
+
+ O. Schuett, P. Messmer, J. Hutter, J. VandeVondele.
+ Electronic Structure Calculations on Graphics Processing Units, 173-190 (2016).
+ GPU-Accelerated Sparse Matrix-Matrix Multiplication for Linear Scaling Density 
+ Functional Theory.
+ https://doi.org/10.1002/9781118670712.ch8
+
+ A. Heinecke, G. Henry, M. Hutchinson, H. Pabst.
+ Proceedings of Intl. Supercomputing Conference, 981-991 (2016).
+ LIBXSMM: Accelerating Small Matrix Multiplications by Runtime Code Generation.
+ https://doi.org/10.1109/SC.2016.83
+
+ J. Hutter, M. Iannuzzi, F. Schiffmann, J. VandeVondele.
+ WIREs Comput Mol Sci. 4, 15-25 (2014).
+ CP2K: atomistic simulations of condensed matter systems.
+ https://doi.org/10.1002/wcms.1159
+
+ U. Borstnik, J. VandeVondele, V. Weber, J. Hutter.
+ Parallel Comput. 40, 47-58 (2014).
+ Sparse matrix multiplication: The distributed block-compressed sparse row 
+ library.
+ https://doi.org/10.1016/j.parco.2014.03.012
+
+ J. VandeVondele, J. Hutter.
+ J. Chem. Phys. 127, 114105 (2007).
+ Gaussian basis sets for accurate calculations on molecular systems in gas and 
+ condensed phases.
+ https://doi.org/10.1063/1.2770708
+
+ J. VandeVondele, M. Krack, F. Mohamed, M. Parrinello, T. Chassaing, J. Hutter.
+ Comput. Phys. Commun. 167, 103-128 (2005).
+ QUICKSTEP: Fast and accurate density functional calculations using a mixed 
+ Gaussian and plane waves approach.
+ https://doi.org/10.1016/j.cpc.2004.12.014
+
+ M. Krack.
+ Theor. Chem. Acc. 114, 145-152 (2005).
+ Pseudopotentials for H to Kr optimized for gradient-corrected 
+ exchange-correlation functionals.
+ https://doi.org/10.1007/s00214-005-0655-y
+
+ M. Frigo, S. G. Johnson.
+ Proc. IEEE 93, 216-231 (2005).
+ The design and implementation of FFTW3.
+ https://doi.org/10.1109/JPROC.2004.840301
+
+ G. J. Martyna, M. E. Tuckerman.
+ J. Chem. Phys. 110, 2810-2821 (1999).
+ A reciprocal space based method for treating long range interactions in ab 
+ initio and force-field-based calculations in clusters.
+ https://doi.org/10.1063/1.477923
+
+ C. Hartwigsen, S. Goedecker, J. Hutter.
+ Phys. Rev. B 58, 3641-3662 (1998).
+ Relativistic separable dual-space Gaussian pseudopotentials from H to Rn.
+ https://doi.org/10.1103/PhysRevB.58.3641
+
+ G. Lippert, J. Hutter, M. Parrinello.
+ Mol. Phys. 92, 477-487 (1997).
+ A hybrid Gaussian and plane wave density functional scheme.
+ https://doi.org/10.1080/002689797170220
+
+ S. Goedecker, M. Teter, J. Hutter.
+ Phys. Rev. B 54, 1703-1710 (1996).
+ Separable dual-space Gaussian pseudopotentials.
+ https://doi.org/10.1103/PhysRevB.54.1703
+
+ J. P. Perdew, K. Burke, M. Ernzerhof.
+ Phys. Rev. Lett. 77, 3865-3868 (1996).
+ Generalized gradient approximation made simple.
+ https://doi.org/10.1103/PhysRevLett.77.3865
+
+
+ -------------------------------------------------------------------------------
+ -                                                                             -
+ -                                T I M I N G                                  -
+ -                                                                             -
+ -------------------------------------------------------------------------------
+ SUBROUTINE                       CALLS  ASD         SELF TIME        TOTAL TIME
+                                MAXIMUM       AVERAGE  MAXIMUM  AVERAGE  MAXIMUM
+ CP2K                                 1  1.0    0.135    0.148    1.263    1.264
+ qs_energies                          5  2.0    0.004    0.005    0.857    0.862
+ scf_env_do_scf                       5  3.0    0.002    0.002    0.697    0.702
+ scf_env_do_scf_inner_loop           37  4.0    0.002    0.003    0.695    0.700
+ qs_ks_update_qs_env                 37  5.0    0.000    0.000    0.292    0.303
+ rebuild_ks_matrix                   37  6.0    0.000    0.001    0.291    0.300
+ qs_ks_build_kohn_sham_matrix        37  7.0    0.006    0.007    0.290    0.300
+ qs_rho_update_rho_low               42  5.0    0.000    0.000    0.205    0.206
+ calculate_rho_elec                  42  6.0    0.001    0.001    0.205    0.206
+ fft_wrap_pw1pw2                    664 10.2    0.002    0.002    0.196    0.203
+ qs_scf_new_mos                      37  5.0    0.001    0.001    0.192    0.200
+ density_rs2pw                       42  7.0    0.001    0.002    0.184    0.186
+ fft3d_ps                           664 12.2    0.025    0.031    0.178    0.186
+ sum_up_and_integrate                37  8.0    0.000    0.001    0.150    0.160
+ integrate_v_rspace                  37  9.0    0.001    0.001    0.149    0.160
+ potential_pw2rs                     37 10.0    0.003    0.003    0.147    0.148
+ fft_wrap_pw1pw2_140                422 11.6    0.005    0.006    0.127    0.134
+ transfer_rs2pw                     173  7.9    0.001    0.002    0.127    0.130
+ create_qs_kind_set                   6  2.0    0.000    0.001    0.117    0.121
+ read_qs_kind                         8  3.0    0.041    0.061    0.116    0.121
+ transfer_pw2rs                     148 11.0    0.000    0.000    0.111    0.113
+ qs_vxc_create                       37  8.0    0.001    0.001    0.108    0.110
+ xc_vxc_pw_create                    37  9.0    0.002    0.002    0.107    0.109
+ mp_sendrecv_dv                    8131  9.9    0.102    0.106    0.102    0.106
+ mp_alltoall_z22v                   664 14.2    0.086    0.100    0.086    0.100
+ transfer_rs2pw_140                  47  8.8    0.016    0.020    0.092    0.097
+ qs_init_subsys                       6  2.0    0.017    0.019    0.092    0.093
+ init_scf_run                         5  3.0    0.000    0.001    0.089    0.089
+ transfer_pw2rs_140                  37 12.0    0.033    0.036    0.078    0.080
+ parser_read_line                  6198  4.0    0.001    0.002    0.075    0.079
+ parser_read_line_low                11  5.0    0.012    0.020    0.074    0.078
+ eigensolver                         37  6.0    0.010    0.011    0.075    0.076
+ mp_waitall_1                     10232 12.8    0.063    0.076    0.063    0.076
+ xc_pw_derive                       222 11.0    0.000    0.000    0.069    0.076
+ qs_env_setup                         6  3.0    0.002    0.003    0.068    0.069
+ scf_env_initial_rho_setup            5  4.0    0.001    0.001    0.068    0.068
+ broadcast_input_information         11  6.0    0.016    0.017    0.061    0.065
+ calculate_dm_sparse                 37  6.0    0.000    0.000    0.057    0.064
+ cp_dbcsr_plus_fm_fm_t_native        37  7.0    0.001    0.001    0.057    0.064
+ xc_rho_set_and_dset_create          37 10.0    0.003    0.004    0.051    0.063
+ cp_fm_syevd                         37  7.0    0.003    0.003    0.060    0.061
+ qs_env_rebuild_pw_env               11  3.5    0.002    0.003    0.060    0.061
+ qs_energies_init_hamiltonians        5  3.0    0.002    0.002    0.060    0.060
+ yz_to_x                            200 13.8    0.003    0.004    0.049    0.058
+ dbcsr_multiply_generic              37  8.0    0.004    0.005    0.051    0.057
+ copy_dbcsr_to_fm                    74  6.3    0.001    0.001    0.052    0.056
+ xc_pw_divergence                    37 10.0    0.000    0.000    0.050    0.056
+ pw_env_rebuild                       6  5.0    0.008    0.009    0.055    0.056
+ x_to_yz                            227 13.4    0.005    0.007    0.038    0.041
+ mp_bcast_i_src                      44  7.0    0.033    0.039    0.033    0.039
+ cp_fm_redistribute_end              37  8.0    0.024    0.036    0.025    0.037
+ pw_grid_setup                       30  6.0    0.002    0.002    0.037    0.037
+ pw_grid_setup_internal              30  7.0    0.003    0.003    0.035    0.035
+ qs_env_update_s_mstruct              5  4.0    0.001    0.001    0.034    0.035
+ topology_control                     1  2.0    0.005    0.007    0.033    0.034
+ write_mo_set_to_restart             37  5.0    0.002    0.031    0.028    0.033
+ dbcsr_complete_redistribute        111  7.9    0.004    0.006    0.030    0.033
+ xc_functional_eval                  37 11.0    0.000    0.001    0.019    0.031
+ pbe_lda_eval                        37 12.0    0.019    0.030    0.019    0.030
+ qs_diis_b_step                      32  6.0    0.006    0.007    0.030    0.030
+ multiply_cannon                     37  9.0    0.004    0.005    0.023    0.029
+ calculate_first_density_matrix       5  5.0    0.001    0.001    0.027    0.028
+ dbcsr_desymmetrize_deep             74  7.3    0.002    0.004    0.023    0.028
+ fft_wrap_pw1pw2_50                  79 10.4    0.000    0.000    0.026    0.028
+ write_mo_set_low                     5  6.0    0.001    0.001    0.026    0.027
+ calculate_rho_core                   5  5.0    0.004    0.005    0.027    0.027
+ calculate_atomic_block_dm            5  6.0    0.006    0.007    0.026    0.027
+ cp_fm_write_unformatted              5  7.0    0.025    0.026    0.025    0.026
+ cp_fm_syevd_base                    37  8.0    0.012    0.026    0.012    0.026
+ -------------------------------------------------------------------------------
+
+ The number of warnings for this run is : 1
+ 
+ -------------------------------------------------------------------------------
+  **** **** ******  **  PROGRAM ENDED AT                 2025-02-11 13:05:52.349
+ ***** ** ***  *** **   PROGRAM RAN ON                                     c0424
+ **    ****   ******    PROGRAM RAN BY                                    u12591
+ ***** **    ** ** **   PROGRAM PROCESS ID                                 20741
+  **** **  *******  **  PROGRAM STOPPED IN /mnt/lustre-grete/usr/u12591/cp2k_par
+                                           ser_tests/cp2k-2025.1/bsse_low
