@@ -28,6 +28,7 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
         marker_edge_width=None,
         use_fill=False,
         use_fill_between=False,
+        legend_group=None,
     ):
         """
         Import data set for a scatter plot.
@@ -64,6 +65,8 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
             Whether to fill the area between the x-axis and the data points.
         use_fill_between : bool (optional)
             Whether to fill the area between the deta sets.
+        legend_group : str (optional)
+            Label to group data sets by color.
         """
         self._check_data_label(data_label)
         data_set = {
@@ -94,6 +97,10 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
             data_set["markerfacecolor"] = marker_face_color
         if marker_edge_width is not None:
             data_set["markeredgewidth"] = marker_edge_width
+        if legend_group is not None:
+            data_set["legendgrouptitle_text"] = legend_group
+            data_set["legendgroup"] = legend_group
+            data_set["group_by"] = "color"
         self._data[data_label] = data_set
 
     def import_bar_data_set(
