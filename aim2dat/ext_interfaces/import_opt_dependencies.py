@@ -20,6 +20,7 @@ _ext_interfaces_deps = {
     "oqmd": [("qmpy_rester", None, None)],
     "optimade": [("requests", None, None)],
     "pandas": [("pandas", None, None)],
+    "phonopy": [("phonopy", "2.17.1", None)],
     "pymatgen": [("pymatgen", "2022.02.03", None)],
     "pyxtal": [("pyxtal", None, None)],
     "spglib": [("spglib", "1.16.1", None)],

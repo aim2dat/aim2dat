@@ -2,15 +2,8 @@
 Module of functions to read output-files from phonopy.
 """
 
-from aim2dat.ext_interfaces.phonopy import (
-    _read_v_e_file,
-    _read_thermal_properties_yaml_files,
-    _extract_band_structure,
-    _extract_projected_dos,
-    _extract_total_dos,
-    _extract_thermal_properties,
-    _extract_qha_properties,
-)
+# Internal library imports
+from aim2dat.ext_interfaces import _return_ext_interface_modules
 
 
 def _create_load_parameters(
@@ -66,7 +59,7 @@ def read_band_structure(
     load_parameters = _create_load_parameters(
         parameter_file_name, force_sets_file_name, force_constants_file_name, phonopy_kwargs
     )
-    ph_bands, reference_cell = _extract_band_structure(
+    ph_bands, reference_cell = _return_ext_interface_modules("phonopy")._extract_band_structure(
         load_parameters, path, path_labels, npoints, False
     )
     output_bands = {
@@ -129,7 +122,9 @@ def read_total_density_of_states(
     load_parameters = _create_load_parameters(
         parameter_file_name, force_sets_file_name, force_constants_file_name, phonopy_kwargs
     )
-    phonopy_tdos = _extract_total_dos(load_parameters, mesh)
+    phonopy_tdos = _return_ext_interface_modules("phonopy")._extract_total_dos(
+        load_parameters, mesh
+    )
     return {
         "energy": phonopy_tdos["frequency_points"].tolist(),
         "tdos": phonopy_tdos["total_dos"].tolist(),
@@ -168,7 +163,9 @@ def read_atom_proj_density_of_states(
     load_parameters = _create_load_parameters(
         parameter_file_name, force_sets_file_name, force_constants_file_name, phonopy_kwargs
     )
-    phonopy_pdos, symbols = _extract_projected_dos(load_parameters, mesh)
+    phonopy_pdos, symbols = _return_ext_interface_modules("phonopy")._extract_projected_dos(
+        load_parameters, mesh
+    )
     # TODO: check equivalent sites?
     pdos = {
         "energy": phonopy_pdos["frequency_points"].tolist(),
@@ -219,7 +216,9 @@ def read_thermal_properties(
     load_parameters = _create_load_parameters(
         parameter_file_name, force_sets_file_name, force_constants_file_name, phonopy_kwargs
     )
-    thermal_properties = _extract_thermal_properties(load_parameters, mesh, t_min, t_max, t_step)
+    thermal_properties = _return_ext_interface_modules("phonopy")._extract_thermal_properties(
+        load_parameters, mesh, t_min, t_max, t_step
+    )
     return {
         "temperatures": thermal_properties["temperatures"].tolist(),
         "free_energy": thermal_properties["free_energy"].tolist(),
@@ -287,9 +286,13 @@ def read_qha_properties(
             qha_kwargs["free_energy"],
             num_modes,
             num_integrated_modes,
-        ) = _read_thermal_properties_yaml_files(thermal_properties_file_names)
+        ) = _return_ext_interface_modules("phonopy")._read_thermal_properties_yaml_files(
+            thermal_properties_file_names
+        )
     if ev_file_name is not None:
-        qha_kwargs["volumes"], qha_kwargs["electronic_energies"] = _read_v_e_file(ev_file_name)
+        qha_kwargs["volumes"], qha_kwargs["electronic_energies"] = _return_ext_interface_modules(
+            "phonopy"
+        )._read_v_e_file(ev_file_name)
     if calculation_folders is not None:
         if thermal_properties_file_names is None:
             qha_kwargs["cv"] = [[] for idx0 in range(int(t_min), int(t_max + t_step), int(t_step))]
@@ -319,7 +322,7 @@ def read_qha_properties(
             raise ValueError(
                 "Parsing volumes and energies from output files is not yet supported."
             )
-    qha_properties = _extract_qha_properties(**qha_kwargs)
+    qha_properties = _return_ext_interface_modules("phonopy")._extract_qha_properties(**qha_kwargs)
     qha_properties["temperatures"] = qha_kwargs["temperatures"][
         : len(qha_properties["thermal_expansion"])
     ]
