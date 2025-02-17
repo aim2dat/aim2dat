@@ -335,20 +335,18 @@ class _CIFDataBlock:
         line_split = line.split()
         loop_values = []
         str_val_limiter = None
-        string_val = None
         for val in line_split:
-            if val[0] in self._string_limiters and string_val is None:
+            if val[0] in self._string_limiters and str_val_limiter is None:
                 str_val_limiter = val[0]
-                string_val = val[1:] if len(val) > 1 else ""
-            elif string_val is not None:
-                string_val += " " + val
+                val = val[1:] if len(val) > 1 else ""
+                loop_values.append("")
+            if str_val_limiter is not None:
                 if val.endswith(str_val_limiter):
-                    string_val = string_val[:-1]
-                    loop_values.append(string_val)
-                    string_val = None
+                    val = val[:-1]
+                    str_val_limiter = None
+                loop_values[-1] += " " + val
             else:
                 loop_values.append(val)
-
         return [transform_str_value(val) for val in loop_values]
 
     def _finalize_current_loop(self, line_idx, line):
@@ -360,6 +358,7 @@ class _CIFDataBlock:
             len(self.current_loop["values"][0]) != len(self.current_loop["values"][idx])
             for idx in range(len(self.current_loop["values"]))
         ):
+            print(self.current_loop)
             raise ValueError(f"Number of values differ for loop finishing on line {line_idx}.")
         self.loops.append(
             {
