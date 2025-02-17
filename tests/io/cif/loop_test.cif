@@ -28,7 +28,7 @@ loop_
   _platon_squeeze_void_count_electrons
   _platon_squeeze_void_content
    1 -0.01 -0.025
-   -0.5     10     20 ' '
+   -0.5     '10'     20 ' '
 
 loop_
   _symmetry_equiv_pos_site_id

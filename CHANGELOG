@@ -26,6 +26,7 @@ Version 0.3.0
 * Expose ``strct.Structure.attributes``, ``strct.Structure.site_attributes`` and ``strct.Structure.extras`` to ``strct.StructureCollection.append``, ``strct.Structure.from_ase_atoms`` and ``strct.Structure.from_pymatgen_structure`` functions (`PR #103 <https://github.com/aim2dat/aim2dat/pull/103>`_).
 * Some str values were sometimes wrongly transformed into float numbers in the output parsers and cif parser checks more rigorously whether two atoms are occupying the same site (`PR #104 <https://github.com/aim2dat/aim2dat/pull/104>`_).
 * Fix positions returned from ``strct.Structure.calculate_distance`` function (`PR #106 <https://github.com/aim2dat/aim2dat/pull/106>`_).
+* ``io.cif.read_file`` was not properly parsing string values in loops with delimiters ("" or '') and without spaces (`PR #118 <https://github.com/aim2dat/aim2dat/pull/118>`_).
 
 **Breaking Changes:**
 
