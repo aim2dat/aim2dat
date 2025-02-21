@@ -178,6 +178,15 @@ def test_add_structure_position(structure_comparison):
     ref_p = load_yaml_file(STRUCTURE_MANIPULATION_PATH + "PBI3+CN2H5_ref.yaml")
     structure_comparison(new_strct, ref_p)
 
+    with pytest.raises(ValueError) as error:
+        new_strct = add_structure_position(
+            Structure(**inputs[0]),
+            position=[2.88759377, 3.244215, 3.25149],
+            guest_structure=Structure(**inputs[1]),
+            dist_threshold=10.0,
+        )
+    assert str(error.value) == "Atoms are too close to each other."
+
 
 def test_scale_unit_cell_errors():
     """Test appropriate error rasing of scale_unit_cell function."""
