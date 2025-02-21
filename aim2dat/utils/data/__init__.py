@@ -5,6 +5,32 @@ from aim2dat.utils.data import atomic_radii, electronegativity
 
 __all__ = ["atomic_radii", "electronegativity"]
 
+
+constants = {
+    "CODATA_2022": {
+        "sources": ["https://physics.nist.gov/cuu/Constants/index.html"],
+        "units": {
+            "am": "kg",
+            "c": "ms-1",
+            "e": "C",
+            "eps0": "Fm-1",
+            "h": "JHz-1",
+            "hbar": "Js",
+            "kb": "JK-1",
+            "me": "kg",
+        },
+        "am": 1.660_539_068_92e-27,  # kg 0.000 000 000 52 e-27
+        "c": 299_792_458.0,  # m s^-1 (exact)
+        "e": 1.602_176_634e-19,  # C (exact)
+        "eps0": 8.854_187_8188e-12,  # F m^-1 0.000 000 0014 e-12
+        "h": 6.626_070_15e-34,  # J Hz^-1 (exact)
+        "hbar": 1.054_571_817e-34,  # J s (exact)
+        "kb": 1.380_649e-23,  # J K^-1 (exact)
+        "me": 9.109_383_7139e-31,  # kg (0.000 000 0028 e-31)
+    }
+}
+
+
 element_groups = {
     "H": ["non-metal"],
     "He": ["non-metal", "noble gas"],
