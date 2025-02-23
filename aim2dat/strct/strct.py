@@ -374,6 +374,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
     def site_attributes(self, value: dict):
         if value is None:
             value = {}
+        self._site_attributes = {}
         for key, val in value.items():
             self.set_site_attribute(key, val)
 

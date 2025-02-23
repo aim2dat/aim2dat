@@ -27,6 +27,7 @@ Version 0.3.0
 * Some str values were sometimes wrongly transformed into float numbers in the output parsers and cif parser checks more rigorously whether two atoms are occupying the same site (`PR #104 <https://github.com/aim2dat/aim2dat/pull/104>`_).
 * Fix positions returned from ``strct.Structure.calculate_distance`` function (`PR #106 <https://github.com/aim2dat/aim2dat/pull/106>`_).
 * ``io.cif.read_file`` was not properly parsing string values in loops with delimiters ("" or '') and without spaces (`PR #118 <https://github.com/aim2dat/aim2dat/pull/118>`_).
+* Setting ``strct.Structure.site_attributes`` was not resetting the dictionary but instead adding the new key/value pairs (`PR #125 <https://github.com/aim2dat/aim2dat/pull/125>`_).
 
 **Breaking Changes:**
 
