@@ -17,6 +17,7 @@ Version 0.3.0
 * Added ``utils.element_properties.get_val_electrons`` function to return the number of valence electrons of the element (`PR #113 <https://github.com/aim2dat/aim2dat/pull/113>`_).
 * Support CP2K versions 2025.1 (`PR #114 <https://github.com/aim2dat/aim2dat/pull/114>`_).
 * Implemented BSSE parsing to ``io.cp2k.read_stdout`` function (`PR #115 <https://github.com/aim2dat/aim2dat/pull/115>`_ and `PR #116 <https://github.com/aim2dat/aim2dat/pull/116>`_).
+* Added more units and fundamental constants to ``utils.units`` (`PR #122 <https://github.com/aim2dat/aim2dat/pull/122>`_).
 
 **Fixes:**
 
@@ -33,6 +34,7 @@ Version 0.3.0
 
 * ``strct.ext_analysis.determine_molecular_fragments`` now considers the same site multiple times if it is connected, returns a list of ``strct.Structure`` objects and does not shift the position of the first atom to zero (`PR #111 <https://github.com/aim2dat/aim2dat/pull/111>`_).
 * ``strct.ext_analysis.create_graph`` now only outputs the graphviz graph if the ``get_graphviz_graph`` parameter is set to ``True`` and networkx is added to the core dependencies (`PR #112 <https://github.com/aim2dat/aim2dat/pull/112>`_).
+* All units and constants now rely on an internal implementation which is based on CODATA 2022 instead of 2014 (`PR #122 <https://github.com/aim2dat/aim2dat/pull/122>`_).
 
 
 Version 0.2.0
