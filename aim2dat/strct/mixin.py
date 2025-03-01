@@ -216,7 +216,7 @@ class AnalysisMixin:
 
         Returns
         -------
-        float
+        float or dict
             Angle calculated via the vectors from atom 2 to atom 1 and atom 3. If one of the
             indices is a list, a dictionary with all index pairs as keys and angles as values is
             returned.
@@ -256,7 +256,7 @@ class AnalysisMixin:
 
         Returns
         --------
-        float
+        float or dict
             Dihedral angle. If one of the indices is a list, a dictionary with all
             index pairs as keys and angles as values is returned.
         """
