@@ -158,9 +158,9 @@ class AnalysisMixin:
 
         Parameters
         ----------
-        site_index1 : int
+        site_index1 : int, list or None
             Index of the site.
-        site_index2 : int
+        site_index2 : int, list or None
             Index of the site.
         backfold_positions : bool
             Whether to backfold the atomic sites and return the smallest distance.
@@ -175,12 +175,12 @@ class AnalysisMixin:
 
         Returns
         -------
-        float or None
+        float, dict or None
             Distance between the two atoms or a list of distances (if ``use_super_cell`` is
-            set to ``True``). If multiple indices are provided, a dictionary with the index pairs
-            as keys is returned. If ``return_pos`` is set to ``True``, the positions are
-            returned as well. In case ``use_super_cell`` is set to ``True`` and the distance
-            between the two sites exceeds ``r_max``, ``None`` is returned.
+            set to ``True``). If one of the indices is a list, a dictionary with all index pairs
+            as keys and distances as values is returned. If ``return_pos`` is set to ``True``, the
+            positions are returned as well. In case ``use_super_cell`` is set to ``True`` and the
+            distance between the two sites exceeds ``r_max``, ``None`` is returned.
         """
         kwargs = {
             "site_index1": site_index1,
@@ -195,9 +195,9 @@ class AnalysisMixin:
     @analysis_method
     def calculate_angle(
         self,
-        site_index1: int = 0,
-        site_index2: int = 1,
-        site_index3: int = 2,
+        site_index1: Union[int, List[int]] = 0,
+        site_index2: Union[int, List[int]] = 1,
+        site_index3: Union[int, List[int]] = 2,
         backfold_positions: bool = True,
     ) -> float:
         """
@@ -205,19 +205,21 @@ class AnalysisMixin:
 
         Parameters
         ----------
-        site_index1 : int
+        site_index1 : int, list or None
             Index of the site.
-        site_index2 : int
+        site_index2 : int, list or None
             Index of the site.
-        site_index3 : int
+        site_index3 : int, list or None
             Index of the site.
         backfold_positions : bool
             Whether to backfold the atomic sites and return the smallest distance.
 
         Returns
         -------
-        float
-            Angle calculated via the vectors from atom 2 to atom 1 and atom 3.
+        float or dict
+            Angle calculated via the vectors from atom 2 to atom 1 and atom 3. If one of the
+            indices is a list, a dictionary with all index pairs as keys and angles as values is
+            returned.
         """
         kwargs = {
             "site_index1": site_index1,
@@ -230,10 +232,10 @@ class AnalysisMixin:
     @analysis_method
     def calculate_dihedral_angle(
         self,
-        site_index1: int = 0,
-        site_index2: int = 1,
-        site_index3: int = 2,
-        site_index4: int = 3,
+        site_index1: Union[int, List[int]] = 0,
+        site_index2: Union[int, List[int]] = 1,
+        site_index3: Union[int, List[int]] = 2,
+        site_index4: Union[int, List[int]] = 3,
         backfold_positions: bool = True,
     ) -> float:
         """
@@ -241,21 +243,22 @@ class AnalysisMixin:
 
         Parameters
         ----------
-        site_index1 : int
+        site_index1 : int, list or None
             Index of the site.
-        site_index2 : int
+        site_index2 : int, list or None
             Index of the site.
-        site_index3 : int
+        site_index3 : int, list or None
             Index of the site.
-        site_index4 : int
+        site_index4 : int, list or None
             Index of the site.
         backfold_positions : bool
             Whether to backfold the atomic sites and return the smallest distance.
 
         Returns
         --------
-        float
-            Dihedral angle.
+        float or dict
+            Dihedral angle. If one of the indices is a list, a dictionary with all
+            index pairs as keys and angles as values is returned.
         """
         kwargs = {
             "site_index1": site_index1,

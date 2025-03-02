@@ -37,56 +37,83 @@ def calculate_distance(
 
 def calculate_angle(structure, site_index1, site_index2, site_index3, backfold_positions):
     """Calculate angle between three atomic positions."""
-    _check_site_indices(structure, (site_index1, site_index2, site_index3))
-
-    *_, pos2 = _calc_atomic_distance(structure, site_index1, site_index2, backfold_positions)
-    *_, pos3 = _calc_atomic_distance(structure, site_index1, site_index3, backfold_positions)
-    pos1 = np.array(structure["positions"][site_index1])
-    return None, calc_angle(pos2 - pos1, pos3 - pos1) * 180.0 / np.pi
+    comb_indices, is_int = _check_site_indices(structure, [site_index1, site_index2, site_index3])
+    site_index1, site_index2, site_index3 = zip(*comb_indices)
+    *_, positions = _calc_atomic_distance(
+        structure, list(site_index1), list(site_index2) + list(site_index3), backfold_positions
+    )
+    output = []
+    for idx1, idx2, idx3 in comb_indices:
+        pos1 = np.array(structure["positions"][idx1])
+        output.append(
+            calc_angle(positions[(idx1, idx2)] - pos1, positions[(idx1, idx3)] - pos1)
+            * 180.0
+            / np.pi
+        )
+    return None, _parse_calc_output(comb_indices, output, is_int)
 
 
 def calculate_dihedral_angle(
     structure, site_index1, site_index2, site_index3, site_index4, backfold_positions
 ):
     """Calculate dihedral angle between four atomic positions."""
-    _check_site_indices(structure, (site_index1, site_index2, site_index3, site_index4))
-
-    _, pos2 = _calc_atomic_distance(structure, site_index1, site_index2, backfold_positions)
-    _, pos3 = _calc_atomic_distance(structure, site_index1, site_index3, backfold_positions)
-    _, pos4 = _calc_atomic_distance(structure, site_index1, site_index4, backfold_positions)
-    pos1 = np.array(structure["positions"][site_index1])
-    n_vector1 = np.cross(pos2 - pos1, pos3 - pos2)
-    n_vector2 = np.cross(pos3 - pos2, pos4 - pos3)
-    return None, calc_angle(n_vector1, n_vector2) * 180.0 / np.pi
+    comb_indices, is_int = _check_site_indices(
+        structure, [site_index1, site_index2, site_index3, site_index4]
+    )
+    site_index1, site_index2, site_index3, site_index4 = zip(*comb_indices)
+    *_, positions = _calc_atomic_distance(
+        structure,
+        list(site_index1),
+        list(site_index2) + list(site_index3) + list(site_index4),
+        backfold_positions,
+    )
+    output = []
+    for idx1, idx2, idx3, idx4 in comb_indices:
+        pos1 = np.array(structure["positions"][idx1])
+        n_vector1 = np.cross(
+            positions[(idx1, idx2)] - pos1, positions[(idx1, idx3)] - positions[(idx1, idx2)]
+        )
+        n_vector2 = np.cross(
+            positions[(idx1, idx3)] - positions[(idx1, idx2)],
+            positions[(idx1, idx4)] - positions[(idx1, idx3)],
+        )
+        output.append(calc_angle(n_vector1, n_vector2) * 180.0 / np.pi)
+    return None, _parse_calc_output(comb_indices, output, is_int)
 
 
 def _check_site_indices(structure, site_indices):
-    is_int = (
-        True if isinstance(site_indices[0], int) and isinstance(site_indices[1], int) else False
-    )
+    def recursive_combinations(site_indices, curr_indices, final_indices):
+        last = len(site_indices) == 1
+        for i in range(len(site_indices[0])):
+            if site_indices[0][i] not in curr_indices:
+                new_indices = curr_indices.copy() + [site_indices[0][i]]
+                if last:
+                    if list(reversed(new_indices)) not in final_indices:
+                        final_indices.append(new_indices)
+                else:
+                    recursive_combinations(site_indices[1:], new_indices, final_indices)
 
-    if site_indices[1] is None:
-        site_indices = np.array(site_indices[0])
-    else:
-        if isinstance(site_indices[0], (tuple, list)) and isinstance(
-            site_indices[1], (tuple, list)
-        ):
-            if len(site_indices[0]) != len(site_indices[1]):
-                raise ValueError("The number of site indices must be equal.")
-        elif isinstance(site_indices[0], (tuple, list)):
-            if len(site_indices[0]) != 1:
-                raise ValueError("The number of site indices must be equal.")
-        elif isinstance(site_indices[1], (tuple, list)):
-            if len(site_indices[1]) != 1:
-                raise ValueError("The number of site indices must be equal.")
-        site_indices = np.concatenate(site_indices, axis=None).flatten()
-
-    if site_indices.dtype not in ["int32", "int64"]:
-        raise TypeError("`site_index` needs to be of type int.")
-    if len(structure["elements"]) <= site_indices.max():
+    is_int = True
+    none_indices = []
+    for idx, indices in enumerate(site_indices):
+        if indices is None:
+            site_indices[idx] = []
+            none_indices.append(idx)
+        elif isinstance(indices, (tuple, list, np.ndarray)):
+            is_int = False
+        elif isinstance(indices, int):
+            site_indices[idx] = [indices]
+        else:
+            raise TypeError("`site_index` must be of type int, list, tuple, np.ndarray or None.")
+    for idx in none_indices:
+        site_indices[idx] = list(set([i for idx in site_indices for i in idx]))
+    final_indices = []
+    recursive_combinations(site_indices, [], final_indices)
+    if any(i >= len(structure) for idx in final_indices for i in idx):
         raise ValueError("`site_index` needs to be smaller than the number of sites.")
-
-    return is_int
+    if any(not isinstance(i, int) for idx in final_indices for i in idx):
+        raise TypeError("`site_index` must be of type int, list, tuple, np.ndarray or None.")
+    return final_indices, is_int
 
 
 def _get_cell_from_lattice_p(
@@ -166,44 +193,25 @@ def _calc_reciprocal_cell(cell):
     return reciprocal_cell.tolist()
 
 
-def _prepare_combined_indices(site_indices1, site_indices2):
-    """Prepare combined indices for `calc_atomic_distance` methods.
-
-    Can be applied to other methods requiring two sets of site indices, with the second
-    set being optional. If the second set is not provided, the first one is used to create
-    all unique combinations of pairs.
-    """
-    if isinstance(site_indices1, int):
-        site_indices1 = [site_indices1]
-    if site_indices2 is None:
-        site_indices1, site_indices2 = zip(*itertools.combinations(site_indices1, 2))
-        site_indices1 = list(site_indices1)
-        site_indices2 = list(site_indices2)
-    elif isinstance(site_indices2, int):
-        site_indices2 = [site_indices2]
-
-    return site_indices1, site_indices2
-
-
-def _parse_calc_atomic_distance_output(is_int, distance, pos, site_indices1, site_indices2):
+def _parse_calc_output(comb_indices, output, is_int, positions=None):
     if is_int:
-        return distance[0], pos[0]
+        if positions is None:
+            return output[0]
+        return output[0], positions[0]
     else:
-        distance_dict = {
-            tuple(idx): dist for *idx, dist in zip(site_indices1, site_indices2, distance)
-        }
-        pos_dict = {tuple(idx): pos_ for *idx, pos_ in zip(site_indices1, site_indices2, pos)}
-        return distance_dict, pos_dict
+        output = {tuple(idx): outp for idx, outp in zip(comb_indices, output)}
+        if positions is None:
+            return output
+        positions = {tuple(idx): pos for idx, pos in zip(comb_indices, positions)}
+        return output, positions
 
 
 def _calc_atomic_distance(structure, site_indices1, site_indices2, backfold_positions):
     """Calculate distance between two atoms."""
-    is_int = _check_site_indices(structure, (site_indices1, site_indices2))
-
-    site_indices1, site_indices2 = _prepare_combined_indices(site_indices1, site_indices2)
-
-    pos1 = np.array(structure["positions"])[site_indices1]
-    pos2 = np.array(structure["positions"])[site_indices2]
+    comb_indices, is_int = _check_site_indices(structure, [site_indices1, site_indices2])
+    site_indices1, site_indices2 = zip(*comb_indices)
+    pos1 = np.array(structure["positions"])[list(site_indices1)]
+    pos2 = np.array(structure["positions"])[list(site_indices2)]
     dist = np.linalg.norm(pos1 - pos2, axis=1)
 
     if structure["cell"] is not None and backfold_positions:
@@ -221,7 +229,7 @@ def _calc_atomic_distance(structure, site_indices1, site_indices2, backfold_posi
         pos2 = pos2_cart[np.arange(dist.shape[0]), dist.argmin(axis=1), :]
         dist = dist.min(axis=1)
 
-    return _parse_calc_atomic_distance_output(is_int, dist, pos2, site_indices1, site_indices2)
+    return _parse_calc_output(comb_indices, dist, is_int, pos2)
 
 
 def _calc_atomic_distance_sc(structure, site_indices1, site_indices2, r_max):
@@ -229,15 +237,13 @@ def _calc_atomic_distance_sc(structure, site_indices1, site_indices2, r_max):
     Calculate distance between two atoms, considering the
     replicates in a supercell.
     """
-    is_int = _check_site_indices(structure, (site_indices1, site_indices2))
-
-    site_indices1, site_indices2 = _prepare_combined_indices(site_indices1, site_indices2)
+    comb_indices, is_int = _check_site_indices(structure, [site_indices1, site_indices2])
+    _, _, positions_sc, _, mapping, _ = _create_supercell_positions(structure, r_max)
 
     dist_out = []
     pos_out = []
 
-    for site_index1, site_index2 in zip(site_indices1, site_indices2):
-        _, _, positions_sc, _, mapping, _ = _create_supercell_positions(structure, r_max)
+    for site_index1, site_index2 in comb_indices:
         pos1 = np.array(structure["positions"][site_index1])
         mask = np.where(np.array(mapping) == site_index2, True, False)
         pos2 = np.array(positions_sc)[mask]
@@ -257,6 +263,4 @@ def _calc_atomic_distance_sc(structure, site_indices1, site_indices2, r_max):
             final_pos = None
         dist_out.append(dist)
         pos_out.append(final_pos)
-    return _parse_calc_atomic_distance_output(
-        is_int, dist_out, pos_out, site_indices1, site_indices2
-    )
+    return _parse_calc_output(comb_indices, dist_out, is_int, pos_out)
