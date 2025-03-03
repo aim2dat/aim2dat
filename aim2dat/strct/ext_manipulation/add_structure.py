@@ -117,7 +117,7 @@ def add_structure_coord(
     **cn_kwarks,
 ) -> Structure:
     """
-    Add a functional group or an atom to a host site.
+    Add a guest structure to a host structure at defined sites.
 
     Parameters
     ----------
@@ -161,7 +161,7 @@ def add_structure_coord(
     Returns
     -------
     aim2dat.strct.Structure
-        Structure with attached functional group.
+        Structure with attached guest structure.
     """
     guest_strct, guest_strct_label = _check_guest_structure(guest_structure)
     if isinstance(host_indices, int):
