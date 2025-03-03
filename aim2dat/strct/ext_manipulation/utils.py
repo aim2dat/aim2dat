@@ -6,7 +6,7 @@ from typing import Union, Dict, List
 from aim2dat.strct import Structure
 
 
-# TODO Add doc strings.
+# TODO add tests for this function
 def _check_distances(
     structure: Structure,
     indices: List[int],
