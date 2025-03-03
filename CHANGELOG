@@ -29,12 +29,14 @@ Version 0.3.0
 * Fix positions returned from ``strct.Structure.calculate_distance`` function (`PR #106 <https://github.com/aim2dat/aim2dat/pull/106>`_).
 * ``io.cif.read_file`` was not properly parsing string values in loops with delimiters ("" or '') and without spaces (`PR #118 <https://github.com/aim2dat/aim2dat/pull/118>`_).
 * Setting ``strct.Structure.site_attributes`` was not resetting the dictionary but instead adding the new key/value pairs (`PR #125 <https://github.com/aim2dat/aim2dat/pull/125>`_).
+* The ``strct.StructureOperations.compare_sites_via_coordination``, ``strct.StructureOperations.find_eq_sites_via_coordination``, ``strct.ext_analysis.decorator.external_analysis_method`` decorator now properly handles unset keyword arguments (`PR #128 <https://github.com/aim2dat/aim2dat/pull/128>`_).
 
 **Breaking Changes:**
 
 * ``strct.ext_analysis.determine_molecular_fragments`` now considers the same site multiple times if it is connected, returns a list of ``strct.Structure`` objects and does not shift the position of the first atom to zero (`PR #111 <https://github.com/aim2dat/aim2dat/pull/111>`_).
 * ``strct.ext_analysis.create_graph`` now only outputs the graphviz graph if the ``get_graphviz_graph`` parameter is set to ``True`` and networkx is added to the core dependencies (`PR #112 <https://github.com/aim2dat/aim2dat/pull/112>`_).
 * All units and constants now rely on an internal implementation which is based on CODATA 2022 instead of 2014 (`PR #122 <https://github.com/aim2dat/aim2dat/pull/122>`_).
+* The ``strct.ext_analysis.determine_molecular_fragments``, ``strct.ext_analysis.create_graph`` and ``strct.ext_manipulation.add_structure_coord`` functions now implement ``**cn_kwargs`` as container for the arguments forwarded to the ``strct.Structure.calculate_coordination`` function (`PR #128 <https://github.com/aim2dat/aim2dat/pull/128>`_).
 
 
 Version 0.2.0
