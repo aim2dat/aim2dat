@@ -4,17 +4,17 @@ Module that implements routines to add a functional group or adsorbed molecule t
 
 # Standard library imports
 from typing import Union, List
-import copy
 
 # Third party library imports
 import numpy as np
 from scipy.spatial.transform import Rotation
 
 # Internal library imports
+from aim2dat.strct import Structure
 from aim2dat.strct.ext_manipulation.decorator import (
     external_manipulation_method,
 )
-from aim2dat.strct.strct import Structure
+from aim2dat.strct.ext_manipulation.utils import _check_distances
 
 
 @external_manipulation_method
@@ -25,6 +25,7 @@ def rotate_structure(
     origin: Union[None, List[float]] = None,
     site_indices: Union[None, List[int]] = None,
     wrap: bool = False,
+    dist_threshold: float = None,
     change_label: bool = False,
 ):
     """
@@ -49,6 +50,8 @@ def rotate_structure(
         Indices of the sites to rotate. If not given, all sites of the structure are rotated.
     wrap : bool (optional)
         Wrap atomic positions back into the unit cell.
+    dist_threshold : float or None (optional)
+        Check the distances between all site pairs to ensure that none of the atoms collide.
     change_label : bool (optional)
         Add suffix to the label of the new structure highlighting the performed manipulation.
 
@@ -76,10 +79,11 @@ def rotate_structure(
     rotated_points = rotation.apply(positions)
     rotated_points += origin
 
-    new_structure = copy.deepcopy(structure)
+    new_structure = structure.to_dict()
     all_positions = list(new_structure["positions"])
     for idx, pos in zip(site_indices, rotated_points):
         all_positions[idx] = pos
-    new_structure.set_positions(all_positions)
-
-    return Structure(**new_structure, wrap=wrap), "_rotated-" + f"{angles}"
+    new_structure["positions"] = all_positions
+    new_structure = Structure(**new_structure, wrap=wrap)
+    _check_distances(new_structure, site_indices, dist_threshold, False)
+    return new_structure, "_rotated-" + f"{angles}"
