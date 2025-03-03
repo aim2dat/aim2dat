@@ -4,8 +4,7 @@ Module that implements routines to add a functional group or adsorbed molecule t
 
 # Standard library imports
 import os
-from typing import Union, List
-import itertools
+from typing import Union, Dict, List
 import random
 import copy
 
@@ -13,10 +12,9 @@ import copy
 import numpy as np
 
 # Internal library imports
-from aim2dat.strct.ext_manipulation.decorator import (
-    external_manipulation_method,
-)
-from aim2dat.strct.strct import Structure
+from aim2dat.strct import Structure
+from aim2dat.strct.ext_manipulation.decorator import external_manipulation_method
+from aim2dat.strct.ext_manipulation.utils import _check_distances
 from aim2dat.strct.ext_manipulation.rotate_structure import rotate_structure
 from aim2dat.strct.strct_misc import _calc_atomic_distance
 from aim2dat.utils.element_properties import get_element_symbol
@@ -32,7 +30,9 @@ def add_structure_random(
     structure: Structure,
     wrap: bool = False,
     guest_structure: Union[Structure, str] = "CH3",
-    dist_threshold: Union[float, None] = 0.8,
+    dist_threshold: Union[
+        Dict[str, Dict[str, List[float]]], Dict[str, Dict[str, float]], List[float], float, None
+    ] = 0.8,
     random_state: Union[float, None] = None,
     change_label: bool = False,
 ) -> Structure:
@@ -49,9 +49,12 @@ def add_structure_random(
         A representation of the guest structure given as a string of a functional group or molecule
         (viable options are ``'CH3'``, ``'COOH'``, ``'H2O'``, ``'NH2'``, ``'NO2'`` or ``'OH'``), a
         ``Structure`` object or the element symbol to add one single atom.
-    dist_threshold : float or None (optional)
+    dist_threshold : dict, list of float, or float (optional)
         Check the distances between all site pairs of the host and guest structure to ensure that
-        none of the added atoms collide.
+        none of the added atoms collide or are too far apart.
+        Example: dist_threshold = 0.8
+        Example: dist_threshold = [0.8, 1.5]
+        Example: dist_threshold = {"C": {"H": 0.8, "C": [0.8, 1.5]}}
     random_state : float or None (optional)
         Specify the initial random state to ensure reproducible results.
     change_label : bool (optional)
@@ -66,7 +69,8 @@ def add_structure_random(
 
     # In case no cell is given we would like to have the structure reasonably close:
     if structure.cell is None:
-        threshold = 1.5 if dist_threshold is None else dist_threshold + 1.5
+        if dist_threshold is None:
+            threshold = 1.5
         positions = np.array(structure.positions)
         min_pos = np.amin(positions, axis=0) - threshold
         max_pos = np.amax(positions, axis=0)
@@ -93,10 +97,11 @@ def add_structure_random(
         guest_strct1.set_positions(guest_positions)
 
         new_structure = _merge_structures(structure, guest_strct1, wrap)
-
-        is_added = _check_distances(
-            new_structure, len(guest_strct["elements"]), dist_threshold, True
+        new_indices = list(
+            range(len(new_structure) - len(guest_strct["elements"]), len(new_structure))
         )
+
+        is_added = _check_distances(new_structure, new_indices, dist_threshold, True)
         if is_added:
             return new_structure, "_added-" + guest_strct_label
     raise ValueError("Could not add guest structure, host structure seems to be too aggregated.")
@@ -123,7 +128,9 @@ def add_structure_coord(
     voronoi_weight_threshold: float = 0.5,
     okeeffe_weight_threshold: float = 0.5,
     dist_constraints=[],
-    dist_threshold: Union[float, None] = 0.8,
+    dist_threshold: Union[
+        Dict[str, Dict[str, List[float]]], Dict[str, Dict[str, float]], List[float], float, None
+    ] = 0.8,
     change_label: bool = False,
 ) -> Structure:
     """
@@ -174,9 +181,12 @@ def add_structure_coord(
         of the site of the guest structure and the target distance. The position of the guest
         structure is varied based on a grid search until the sum of the absolute errors in
         minimized.
-    dist_threshold : float or None (optional)
+    dist_threshold : dict, list of float, or float (optional)
         Check the distances between all site pairs of the host and guest structure to ensure that
-        none of the added atoms collide.
+        none of the added atoms collide or are too far apart.
+        Example: dist_threshold = 0.8
+        Example: dist_threshold = [0.8, 1.5]
+        Example: dist_threshold = {"C": {"H": 0.8, "C": [0.8, 1.5]}}
     change_label : bool (optional)
         Add suffix to the label of the new structure highlighting the performed manipulation.
 
@@ -277,6 +287,9 @@ def add_structure_coord(
         ref_dirs,
         dist_constraints,
     )
+    new_indices = list(
+        range(len(new_structure) - len(guest_strct["elements"]), len(new_structure))
+    )
 
     # Optimize positions to reduce score
     if len(dist_constraints) > 0:
@@ -294,12 +307,12 @@ def add_structure_coord(
                         dist_constraints,
                     )
                     if score0 < score and _check_distances(
-                        new_strct0, len(guest_strct["elements"]), dist_threshold, True
+                        new_strct0, new_indices, dist_threshold, True
                     ):
                         score = score0
                         new_structure = new_strct0
     else:
-        _check_distances(new_structure, len(guest_strct["elements"]), dist_threshold, False)
+        _check_distances(new_structure, new_indices, dist_threshold, False)
     return new_structure, "_added-" + guest_strct_label
 
 
@@ -309,7 +322,9 @@ def add_structure_position(
     position: List[float],
     guest_structure: Union[Structure, str] = "CH3",
     wrap: bool = False,
-    dist_threshold: float = None,
+    dist_threshold: Union[
+        Dict[str, Dict[str, List[float]]], Dict[str, Dict[str, float]], List[float], float, None
+    ] = None,
     change_label: bool = False,
 ) -> Structure:
     """
@@ -328,9 +343,12 @@ def add_structure_position(
         or the element symbol to add one single atom.
     wrap : bool (optional)
         Wrap atomic positions back into the unit cell.
-    dist_threshold : float or None (optional)
+    dist_threshold : dict, list of float, or float (optional)
         Check the distances between all site pairs of the host and guest structure to ensure that
-        none of the added atoms collide.
+        none of the added atoms collide or are too far apart.
+        Example: dist_threshold = 0.8
+        Example: dist_threshold = [0.8, 1.5]
+        Example: dist_threshold = {"C": {"H": 0.8, "C": [0.8, 1.5]}}
     change_label : bool (optional)
         Add suffix to the label of the new structure highlighting the performed manipulation.
 
@@ -349,7 +367,10 @@ def add_structure_position(
     guest_strct0.set_positions(guest_positions)
 
     new_structure = _merge_structures(structure, guest_strct0, wrap)
-    _check_distances(new_structure, len(guest_strct["elements"]), dist_threshold, False)
+    new_indices = list(
+        range(len(new_structure) - len(guest_strct["elements"]), len(new_structure))
+    )
+    _check_distances(new_structure, new_indices, dist_threshold, False)
 
     return new_structure, "_added-" + guest_strct_label
 
@@ -485,22 +506,3 @@ def _merge_structures(host_strct, guest_strct, wrap):
         for site_attr, val in new_structure["site_attributes"].items():
             val.append(guest_strct["site_attributes"].get(site_attr, None))
     return Structure(**new_structure, wrap=wrap)
-
-
-def _check_distances(
-    new_structure: Structure, n_atoms: int, dist_threshold: Union[float, None], silent: bool
-):
-    if dist_threshold is None:
-        return True
-
-    indices_old = list(range(len(new_structure) - n_atoms))
-    indices_new = list(range(len(new_structure) - n_atoms, len(new_structure)))
-    indices1, indices2 = zip(*itertools.product(indices_old, indices_new))
-    dists = new_structure.calculate_distance(
-        list(indices1), list(indices2), backfold_positions=True
-    )
-    if any(d0 < dist_threshold for d0 in dists.values()):
-        if not silent:
-            raise ValueError("Atoms are too close to each other.")
-        return False
-    return True
