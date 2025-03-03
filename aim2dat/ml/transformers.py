@@ -455,8 +455,8 @@ class StructureCoordinationTransformer(_BaseStructureTransformer):
             f_labels += [feature + "_" + "-".join(el_pair) for el_pair in self.el_pairs_]
         self._features_out = np.asarray(f_labels, dtype=object)
 
-    def _get_strct_op_properties(self, label_list, strct_op, input_p):
-        return strct_op[label_list].calculate_coordination(**input_p)
+    def _get_strct_op_properties(self, label_list, strct_op, cn_kwarks):
+        return strct_op[label_list].calculate_coordination(**cn_kwarks)
 
     def _get_features(self, label_list, strct_op, input_p):
         check_is_fitted(self, attributes="el_pairs_")

@@ -137,7 +137,7 @@ def test_aiida_interface(create_structure_collection_object, structure_compariso
 
 def test_create_pandas_df(nested_dict_comparison):
     """Test pandas data frame creation."""
-    coord_kwargs = {
+    cn_kwargs = {
         "r_max": 5.0,
         "method": "minimum_distance",
         "min_dist_delta": 0.1,
@@ -149,7 +149,7 @@ def test_create_pandas_df(nested_dict_comparison):
     for strct in structures:
         strct_collect.append(strct, **dict(load_yaml_file(STRUCTURES_PATH + strct + ".yaml")))
     strct_ops = StructureOperations(strct_collect)
-    strct_ops[strct_collect.labels].calculate_coordination(**coord_kwargs)
+    strct_ops[strct_collect.labels].calculate_coordination(**cn_kwargs)
     df = strct_collect.create_pandas_df()
     df_dict = {}
     for column in df.columns:
@@ -355,7 +355,7 @@ def test_store_calc_properties(create_structure_collection_object, nested_dict_c
     """Test storage of calculated data."""
     strct_list = ["GaAs_216_prim", "Cs2Te_19_prim"]
     strct_c, structures = create_structure_collection_object(strct_list, "")
-    function_args = {
+    cn_kwarks = {
         "r_max": 10.0,
         "method": "minimum_distance",
         "min_dist_delta": 0.1,
@@ -369,16 +369,16 @@ def test_store_calc_properties(create_structure_collection_object, nested_dict_c
         "okeeffe_weight_threshold": 0.5,
     }
     strct_ops = StructureOperations(strct_c)
-    coord = strct_ops[0].calculate_coordination(**function_args)
+    coord = strct_ops[0].calculate_coordination(**cn_kwarks)
     assert (
-        strct_ops.structures._structures[0]._function_args["coordination"] == function_args
+        strct_ops.structures._structures[0]._function_args["coordination"] == cn_kwarks
     ), "Function parameters are wrong."
     assert (
         strct_ops.structures._structures[0]["extras"]["coordination"] == coord
     ), "Calculated extra is wrong."
-    assert strct_ops[0].calculate_coordination(**function_args) == coord, "Recalculation is wrong."
+    assert strct_ops[0].calculate_coordination(**cn_kwarks) == coord, "Recalculation is wrong."
 
-    function_args = {
+    cn_kwarks = {
         "symprec": 0.005,
         "angle_tolerance": -1.0,
         "hall_number": 0,
@@ -387,9 +387,9 @@ def test_store_calc_properties(create_structure_collection_object, nested_dict_c
         "return_primitive_structure": False,
         "return_standardized_structure": False,
     }
-    space_group = strct_ops[0].determine_space_group(**function_args)
+    space_group = strct_ops[0].determine_space_group(**cn_kwarks)
     assert (
-        strct_ops.structures._structures[0]._function_args["space_group"] == function_args
+        strct_ops.structures._structures[0]._function_args["space_group"] == cn_kwarks
     ), "Function parameters are wrong."
     assert (
         strct_ops.structures._structures[0]["attributes"]["space_group"]
@@ -399,12 +399,12 @@ def test_store_calc_properties(create_structure_collection_object, nested_dict_c
         strct_ops.structures._structures[0]["extras"]["space_group"] == space_group
     ), "Calculated extra is wrong."
     assert (
-        strct_ops[0].determine_space_group(**function_args) == space_group
+        strct_ops[0].determine_space_group(**cn_kwarks) == space_group
     ), "Recalculation is wrong."
-    function_args["return_sym_operations"] = False
-    space_group = strct_ops[0].determine_space_group(**function_args)
+    cn_kwarks["return_sym_operations"] = False
+    space_group = strct_ops[0].determine_space_group(**cn_kwarks)
     assert (
-        strct_ops.structures._structures[0]._function_args["space_group"] == function_args
+        strct_ops.structures._structures[0]._function_args["space_group"] == cn_kwarks
     ), "Function parameters are wrong."
     assert (
         strct_ops.structures._structures[0]["attributes"]["space_group"]
@@ -423,7 +423,7 @@ def test_store_calc_properties(create_structure_collection_object, nested_dict_c
     assert not strct_ops.structures._structures[
         1
     ].store_calculated_properties, "Setting `store_calculated_properties` to False not working."
-    space_group = strct_ops[1].determine_space_group(**function_args)
+    space_group = strct_ops[1].determine_space_group(**cn_kwarks)
     assert (
         strct_ops.structures._structures[1]._function_args == {}
     ), "Function parameters are wrong."
