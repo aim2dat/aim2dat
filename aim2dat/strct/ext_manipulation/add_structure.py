@@ -150,14 +150,14 @@ def add_structure_coord(
     change_label : bool (optional)
         Add suffix to the label of the new structure highlighting the performed manipulation.
     cn_kwarks : keyword argument pair (optional)
-        Keys and arguments used for the coordination method implemented in 
-        `aim2dat.strct.strct_coordination.calculate_coordination`. 
+        Keys and arguments used for the coordination method implemented in
+        `aim2dat.strct.strct_coordination.calculate_coordination`.
         Supported arguments are:
         ``'r_max'``, ``'method'``, ``'min_dist_delta'``, ``'n_nearest_neighbours'``,
         ``'radius_type'``, ``'atomic_radius_delta'``, ``'econ_tolerance'``,
         ``'econ_conv_threshold'``, ``'voronoi_weight_type'``, ``'voronoi_weight_threshold'``,
         ``'okeeffe_weight_threshold'``
-        
+
     Returns
     -------
     aim2dat.strct.Structure

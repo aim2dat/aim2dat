@@ -18,7 +18,7 @@ def create_graph(
     get_graphviz_graph: bool = False,
     graphviz_engine: str = "circo",
     graphviz_edge_rank_colors: List[str] = ["blue", "red", "green", "orange", "darkblue"],
-    **cn_kwarks
+    **cn_kwarks,
 ):
     """
     Create graph based on the coordination.
@@ -34,8 +34,8 @@ def create_graph(
     graphviz_edge_rank_colors : list
         List of colors of the different edge ranks.
     cn_kwarks : keyword argument pair (optional)
-        Keys and arguments used for the coordination method implemented in 
-        `aim2dat.strct.strct_coordination.calculate_coordination`. 
+        Keys and arguments used for the coordination method implemented in
+        `aim2dat.strct.strct_coordination.calculate_coordination`.
         Supported arguments are:
         ``'r_max'``, ``'method'``, ``'min_dist_delta'``, ``'n_nearest_neighbours'``,
         ``'radius_type'``, ``'atomic_radius_delta'``, ``'econ_tolerance'``,

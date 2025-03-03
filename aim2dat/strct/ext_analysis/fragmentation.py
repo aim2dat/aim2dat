@@ -18,7 +18,7 @@ def determine_molecular_fragments(
     exclude_elements: List[str] = None,
     exclude_sites: List[int] = None,
     end_point_elements: List[str] = None,
-    **cn_kwarks
+    **cn_kwarks,
 ) -> List[Structure]:
     """
     Find molecular fragments in a larger molecule/cluster of periodic crystal.
@@ -36,8 +36,8 @@ def determine_molecular_fragments(
     end_point_elements : list
         List of elements that serve as an end point for a fragment.
     cn_kwarks : keyword argument pair (optional)
-        Keys and arguments used for the coordination method implemented in 
-        `aim2dat.strct.strct_coordination.calculate_coordination`. 
+        Keys and arguments used for the coordination method implemented in
+        `aim2dat.strct.strct_coordination.calculate_coordination`.
         Supported arguments are:
         ``'r_max'``, ``'method'``, ``'min_dist_delta'``, ``'n_nearest_neighbours'``,
         ``'radius_type'``, ``'atomic_radius_delta'``, ``'econ_tolerance'``,
