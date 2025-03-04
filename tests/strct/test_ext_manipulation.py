@@ -1,4 +1,4 @@
-"""Test structure manipulation functions."""
+"""Test external structure manipulation functions."""
 
 # Standard library imports
 import os
@@ -14,11 +14,119 @@ from aim2dat.strct.ext_manipulation import (
     add_structure_random,
     add_structure_position,
     rotate_structure,
+    translate_structure,
+    DistanceThresholdError,
 )
+from aim2dat.strct.ext_manipulation.utils import _build_distance_dict
 from aim2dat.io.yaml import load_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 STRUCTURE_MANIPULATION_PATH = os.path.dirname(__file__) + "/structure_manipulation/"
+
+
+def test_build_distance_dict_fct(nested_dict_comparison):
+    """Test _build_distance_dict function."""
+    strct_1 = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
+    strct_2 = Structure.from_file(STRUCTURES_PATH + "Benzene.xyz")
+
+    dist_dict, min_dist = _build_distance_dict(None, strct_1, strct_2)
+    assert dist_dict is None
+    assert min_dist == 0.0
+
+    dist_dict, min_dist = _build_distance_dict(0.3, strct_1, strct_2)
+    nested_dict_comparison(
+        dist_dict,
+        {
+            ("Zn", "Zn"): [0.3, None],
+            ("O", "Zn"): [0.3, None],
+            ("H", "Zn"): [0.3, None],
+            ("C", "Zn"): [0.3, None],
+            ("O", "O"): [0.3, None],
+            ("H", "O"): [0.3, None],
+            ("C", "O"): [0.3, None],
+            ("H", "H"): [0.3, None],
+            ("C", "H"): [0.3, None],
+            ("C", "C"): [0.3, None],
+        },
+    )
+    assert min_dist == 0.3
+
+    dist_dict, min_dist = _build_distance_dict("covalent+10", strct_1, strct_2)
+    nested_dict_comparison(
+        dist_dict,
+        {
+            ("C", "C"): [1.672, None],
+            ("C", "O"): [1.562, None],
+            ("C", "Zn"): [2.178, None],
+            ("C", "H"): [1.177, None],
+            ("O", "O"): [1.452, None],
+            ("O", "Zn"): [2.068, None],
+            ("H", "O"): [1.067, None],
+            ("Zn", "Zn"): [2.684, None],
+            ("H", "Zn"): [1.683, None],
+            ("H", "H"): [0.682, None],
+        },
+    )
+    assert min_dist == 0.682
+
+    dist_dict, min_dist = _build_distance_dict("covalent-20", strct_1, strct_2)
+    nested_dict_comparison(
+        dist_dict,
+        {
+            ("O", "O"): [1.056, None],
+            ("C", "O"): [1.136, None],
+            ("H", "O"): [0.776, None],
+            ("O", "Zn"): [1.504, None],
+            ("C", "C"): [1.216, None],
+            ("C", "H"): [0.856, None],
+            ("C", "Zn"): [1.584, None],
+            ("H", "H"): [0.496, None],
+            ("H", "Zn"): [1.224, None],
+            ("Zn", "Zn"): [1.952, None],
+        },
+    )
+    assert min_dist == 0.496
+
+    dist_dict, min_dist = _build_distance_dict([0.5, 1.0], strct_1)
+    assert dist_dict == {
+        ("O", "O"): [0.5, 1.0],
+        ("H", "O"): [0.5, 1.0],
+        ("O", "Zn"): [0.5, 1.0],
+        ("C", "O"): [0.5, 1.0],
+        ("H", "H"): [0.5, 1.0],
+        ("H", "Zn"): [0.5, 1.0],
+        ("C", "H"): [0.5, 1.0],
+        ("Zn", "Zn"): [0.5, 1.0],
+        ("C", "Zn"): [0.5, 1.0],
+        ("C", "C"): [0.5, 1.0],
+    }
+    assert min_dist == 0.5
+
+    dist_dict, min_dist = _build_distance_dict({("Zn", "Zn"): 0.9, (0, 5): [0.3, 2.4]}, strct_1)
+    assert dist_dict == {("Zn", "Zn"): [0.9, None], (0, 5): [0.3, 2.4]}
+    assert min_dist == 0.3
+
+    with pytest.raises(ValueError) as error:
+        _build_distance_dict({("Zn", "Zn", "O"): 0.9, (0, 5): [0.3, 2.4]}, strct_1)
+    assert (
+        str(error.value)
+        == "`dist_threshold` needs to have keys with length 2 containing site "
+        + "indices or element symbols."
+    )
+
+    with pytest.raises(ValueError) as error:
+        _build_distance_dict({(0.5, 1): 0.9, (0, 5): [0.3, 2.4]}, strct_1)
+    assert (
+        str(error.value)
+        == "`dist_threshold` needs to have keys of type List[str/int] containing "
+        + "site indices or element symbols."
+    )
+    with pytest.raises(TypeError) as error:
+        _build_distance_dict(set(["test", "test2"]), strct_1)
+    assert (
+        str(error.value)
+        == "`dist_threshold` needs to be of type int/float/list/tuple/dict or None."
+    )
 
 
 def test_add_structure_coord_planar(structure_comparison):
@@ -178,95 +286,14 @@ def test_add_structure_position(structure_comparison):
     ref_p = load_yaml_file(STRUCTURE_MANIPULATION_PATH + "PBI3+CN2H5_ref.yaml")
     structure_comparison(new_strct, ref_p)
 
-    with pytest.raises(ValueError) as error:
+    with pytest.raises(DistanceThresholdError) as error:
         new_strct = add_structure_position(
             Structure(**inputs[0]),
             position=[2.88759377, 3.244215, 3.25149],
             guest_structure=Structure(**inputs[1]),
             dist_threshold=10.0,
         )
-    assert str(error.value) == "Atoms are too close to each other."
-
-
-def test_scale_unit_cell_errors():
-    """Test appropriate error rasing of scale_unit_cell function."""
-    structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
-    with pytest.raises(TypeError) as error:
-        structure.scale_unit_cell(scaling_factors=[0.0, 1.0, "c"])
-    assert (
-        str(error.value)
-        == "`scaling_factors` must be of type float/int or a list of float/int values."
-    )
-    with pytest.raises(ValueError) as error:
-        structure.scale_unit_cell(scaling_factors=[[0.0, 1.0, 1.0], [0.0, 0.0, 0.0]])
-    assert (
-        str(error.value)
-        == "`scaling_factors` must be a single value, a list of 3 values, or a 3x3 nested list."
-    )
-    with pytest.raises(ValueError) as error:
-        structure.scale_unit_cell(pressure=10.0)
-    assert str(error.value) == "`bulk_modulus` must be provided when applying `pressure`."
-    with pytest.raises(ValueError) as error:
-        structure.scale_unit_cell()
-    assert (
-        str(error.value) == "Provide either `scaling_factors` or `pressure` (with `bulk_modulus`)."
-    )
-
-
-def test_scale_unit_cell_uniform_scaling():
-    """Test scale_unit_cell with uniform scaling factors."""
-    structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
-    scaling_factors = 1.1
-    scaled_structure = structure.scale_unit_cell(scaling_factors=scaling_factors)
-    expected_cell = np.array(structure["cell"]) * scaling_factors
-    assert np.allclose(scaled_structure["cell"], expected_cell), "Uniform scaling failed"
-
-
-def test_scale_unit_cell_anisotropic_scaling():
-    """Test scale_unit_cell with anisotropic scaling factors."""
-    structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
-    scaling_factors = [1.1, 1.2, 1.3]
-    scaled_structure = structure.scale_unit_cell(scaling_factors=scaling_factors)
-    expected_cell = np.dot(np.array(structure["cell"]), np.diag(scaling_factors))
-    assert np.allclose(scaled_structure["cell"], expected_cell), "Anisotropic scaling failed"
-
-
-def test_scale_unit_cell_pressure_based_scaling():
-    """Test scale_unit_cell with pressure and bulk modulus."""
-    structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
-    pressure = 10  # GPa
-    bulk_modulus = 100  # GPa
-    scaled_structure = structure.scale_unit_cell(pressure=pressure, bulk_modulus=bulk_modulus)
-    strain = -pressure / bulk_modulus
-    expected_cell = np.array(structure["cell"]) * (1 + strain)
-    assert np.allclose(scaled_structure["cell"], expected_cell), "Pressure-based scaling failed"
-
-
-def test_scale_unit_cell_uniform_strain():
-    """Test scale_unit_cell with uniform strain."""
-    structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
-    scaling_factors = 1.05  # 5% strain
-    scaled_structure = structure.scale_unit_cell(scaling_factors=scaling_factors)
-    expected_cell = np.array(structure["cell"]) * (scaling_factors)
-    assert np.allclose(scaled_structure["cell"], expected_cell), "Uniform strain failed"
-
-
-def test_scale_unit_cell_anisotropic_strain():
-    """Test scale_unit_cell with anisotropic strain."""
-    structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
-    scaling_factors = [1.02, 0.99, 1.03]
-    scaled_structure = structure.scale_unit_cell(scaling_factors=scaling_factors)
-    expected_cell = np.dot(np.array(structure["cell"]), np.diag(scaling_factors))
-    assert np.allclose(scaled_structure["cell"], expected_cell), "Anisotropic strain failed"
-
-
-def test_scale_unit_cell_full_strain_matrix():
-    """Test scale_unit_cell with a 3x3 strain matrix."""
-    structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
-    scaling_matrix = [[1.02, 0.01, 0.0], [0.01, 0.99, 0.0], [0.0, 0.02, 1.03]]
-    scaled_structure = structure.scale_unit_cell(scaling_factors=scaling_matrix)
-    expected_cell = np.dot(np.array(structure["cell"]), scaling_matrix)
-    assert np.allclose(scaled_structure["cell"], expected_cell), "3x3 scaling matrix failed"
+    assert str(error.value) == "Atoms 0 and 4 are too close to each other."
 
 
 def test_rotate_structure(structure_comparison):
@@ -292,3 +319,15 @@ def test_rotate_structure(structure_comparison):
     )
     ref_p = load_yaml_file(STRUCTURE_MANIPULATION_PATH + "MOF-5_prim.yaml")
     structure_comparison(new_strct, ref_p)
+
+
+def test_translate_structure(structure_comparison):
+    """Test translate_structure method for a crystal."""
+    vector = np.array([1.0, 0.4, 0.6])
+    strct = Structure.from_file(STRUCTURES_PATH + "Benzene.xyz")
+    strct.label = "Test"
+    ref_strct = strct.copy()
+    ref_strct.label = "Test_translated-[1.0, 0.4, 0.6]"
+    ref_strct.set_positions([np.array(pos) + vector for pos in ref_strct.positions])
+    new_strct = translate_structure(strct, vector=vector, change_label=True)
+    structure_comparison(new_strct, ref_strct)
