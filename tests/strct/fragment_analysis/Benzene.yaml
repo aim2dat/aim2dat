@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-- cn_method: atomic_radius
+- method: atomic_radius
   radius_type: chen_manz
   atomic_radius_delta: 0.0
 - - elements: ['C', 'C', 'C', 'C', 'C', 'C', 'H', 'H', 'H', 'H', 'H', 'H']

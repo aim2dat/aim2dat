@@ -74,7 +74,12 @@ def test_compare_sites_via_coordination(
     strct_ops = StructureOperations(strct_collect)
     assert (
         strct_ops.compare_sites_via_coordination(
-            structure1, structure2, site_index1, site_index2, distinguish_kinds=distinguish_kinds
+            structure1,
+            structure2,
+            site_index1,
+            site_index2,
+            distinguish_kinds=distinguish_kinds,
+            method="minimum_distance",
         )
         == ref_value
     )

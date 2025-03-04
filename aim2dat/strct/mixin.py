@@ -290,7 +290,7 @@ class AnalysisMixin:
     def calculate_coordination(
         self,
         r_max: float = 10.0,
-        method: str = "minimum_distance",
+        method: str = "atomic_radius",
         min_dist_delta: float = 0.1,
         n_nearest_neighbours: int = 5,
         radius_type: str = "chen_manz",
@@ -309,8 +309,7 @@ class AnalysisMixin:
         r_max : float (optional)
             Cut-off value for the maximum distance between two atoms in angstrom.
         method : str (optional)
-            Method used to calculate the coordination environment. The default value is
-            ``'minimum_distance'``.
+            Method used to calculate the coordination environment.
         min_dist_delta : float (optional)
             Tolerance parameter that defines the relative distance from the nearest neighbour atom
             for the ``'minimum_distance'`` method.

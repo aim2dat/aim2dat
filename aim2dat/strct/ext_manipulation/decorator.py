@@ -15,15 +15,16 @@ def external_manipulation_method(func):
         """Wrap manipulation method and create output."""
         sig_pars = inspect.signature(func).parameters
         extracted_args = []
-        for key, pos in [("structure", 0), ("change_label", len(sig_pars) - 1)]:
-            if key in kwargs:
+        for key in ["structure", "change_label"]:
+            if key not in sig_pars:
+                raise TypeError(f"`{key}` not in function arguments.")
+            idx = list(sig_pars.keys()).index(key)
+            if idx < len(args):
+                extracted_args.append(args[idx])
+            elif key in kwargs:
                 extracted_args.append(kwargs[key])
-            elif len(args) > pos:
-                extracted_args.append(args[pos])
-            elif key in sig_pars:
-                extracted_args.append(sig_pars[key].default)
             else:
-                raise TypeError(f"'{key}' not in arguments.")
+                extracted_args.append(sig_pars[key].default)
 
         output = func(*args, **kwargs)
         if output is not None:

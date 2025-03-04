@@ -1,6 +1,6 @@
 function_args:
   r_max: 5.0
-  cn_method: "econ"
+  method: "econ"
   min_dist_delta: 0.1
   n_nearest_neighbours: 5
   econ_tolerance: 0.001

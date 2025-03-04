@@ -36,6 +36,9 @@ from aim2dat.utils.maths import calc_angle
 
 def _compare_function_args(args1, args2):
     """Compare function arguments to check if a property needs to be recalculated."""
+    if len(args1) != len(args2):
+        return False
+
     for kwarg, value1 in args1.items():
         if value1 != args2[kwarg]:
             return False

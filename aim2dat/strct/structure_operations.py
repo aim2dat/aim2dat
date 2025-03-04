@@ -723,19 +723,9 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         key2: Union[str, int],
         site_index1: int,
         site_index2: int,
-        r_max: float = 10.0,
-        cn_method: str = "minimum_distance",
-        min_dist_delta: float = 0.1,
-        n_nearest_neighbours: int = 5,
-        radius_type: str = "chen_manz",
-        atomic_radius_delta: float = 0.0,
-        econ_tolerance: float = 0.5,
-        econ_conv_threshold: float = 0.001,
-        voronoi_weight_type: float = "rel_solid_angle",
-        voronoi_weight_threshold: float = 0.5,
-        okeeffe_weight_threshold: float = 0.5,
         distinguish_kinds: bool = False,
         threshold: float = 1e-2,
+        **cn_kwargs,
     ):
         """
         Compare two atomic sites based on their coordination and the distances to their neighbour
@@ -751,57 +741,19 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             Index of the site.
         site_index2 : int
             Index of the site.
-        r_max : float (optional)
-            Cut-off value for the maximum distance between two atoms in angstrom.
-        cn_method : str (optional)
-            Method used to calculate the coordination environment.
-        min_dist_delta : float (optional)
-            Tolerance parameter that defines the relative distance from the nearest neighbour atom
-            for the ``'minimum_distance'`` method.
-        n_nearest_neighbours : int (optional)
-            Number of neighbours that are considered coordinated for the ``'n_neighbours'``
-            method.
-        radius_type : str (optional)
-            Type of the atomic radius used for the ``'atomic_radius'`` method (``'covalent'`` is
-            used as fallback in the radius for an element is not defined).
-        atomic_radius_delta : float (optional)
-            Tolerance relative to the sum of the atomic radii for the ``'atomic_radius'`` method.
-            If set to ``0.0`` the maximum threshold is defined by the sum of the atomic radii,
-            positive (negative) values increase (decrease) the threshold.
-        econ_tolerance : float (optional)
-            Tolerance parameter for the econ method.
-        econ_conv_threshold : float (optional)
-            Convergence threshold for the econ method.
-        voronoi_weight_type : str (optional)
-            Weight type of the Voronoi facets. Supported options are ``'covalent_atomic_radius'``,
-            ``'area'`` and ``'solid_angle'``. The prefix ``'rel_'`` specifies that the relative
-            weights with respect to the maximum value of the polyhedron are calculated.
-        voronoi_weight_threshold : float (optional)
-            Weight threshold to consider a neighbouring atom coordinated.
-        okeeffe_weight_threshold : float (optional)
-            Threshold parameter to distinguish indirect and direct neighbour atoms for the
-            ``'okeeffe'``.
         distinguish_kinds: bool (optional)
             Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
             different elements if ``True``.
         threshold : float (optional)
             Threshold to consider two sites equivalent.
+        cn_kwargs :
+            Optional keyword arguments passed on to the ``calculate_coordination`` function.
 
         Returns
         -------
         bool
             Whether the two sites are equivalent or not.
         """
-        calc_f_kwargs = {
-            "r_max": r_max,
-            "method": cn_method,
-            "min_dist_delta": min_dist_delta,
-            "econ_tolerance": econ_tolerance,
-            "econ_conv_threshold": econ_conv_threshold,
-            "voronoi_weight_type": voronoi_weight_type,
-            "voronoi_weight_threshold": voronoi_weight_threshold,
-            "okeeffe_weight_threshold": okeeffe_weight_threshold,
-        }
         compare_f_kwargs = {
             "distinguish_kinds": distinguish_kinds,
             "threshold": threshold,
@@ -812,7 +764,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             site_index1,
             site_index2,
             "calculate_coordination",
-            calc_f_kwargs,
+            cn_kwargs,
             _coordination_compare_sites,
             compare_f_kwargs,
         )
@@ -889,19 +841,9 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
     def find_eq_sites_via_coordination(
         self,
         key: Union[str, int],
-        r_max: float = 10.0,
-        cn_method: str = "minimum_distance",
-        min_dist_delta: float = 0.1,
-        n_nearest_neighbours: int = 5,
-        radius_type: str = "chen_manz",
-        atomic_radius_delta: float = 0.0,
-        econ_tolerance: float = 0.5,
-        econ_conv_threshold: float = 0.001,
-        voronoi_weight_type: float = "rel_solid_angle",
-        voronoi_weight_threshold: float = 0.5,
-        okeeffe_weight_threshold: float = 0.5,
         distinguish_kinds: bool = False,
         threshold: float = 1e-2,
+        **cn_kwargs,
     ):
         """
         Find equivalent sites by comparing the coordination of each site and its distance to the
@@ -911,54 +853,22 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         ----------
         key : str or int
             Index or label of the structure.
-        r_max : float (optional)
-            Cut-off value for the maximum distance between two atoms in angstrom.
-        cn_method : str (optional)
-            Method used to calculate the coordination environment.
-        min_dist_delta : float (optional)
-            Tolerance parameter that defines the relative distance from the nearest neighbour atom
-            for the ``'minimum_distance'`` method.
-        n_nearest_neighbours : int (optional)
-            Number of neighbours that are considered coordinated for the ``'n_neighbours'``
-            method.
-        radius_type : str (optional)
-            Type of the atomic radius used for the ``'atomic_radius'`` method (``'covalent'`` is
-            used as fallback in the radius for an element is not defined).
-        atomic_radius_delta : float (optional)
-            Tolerance relative to the sum of the atomic radii for the ``'atomic_radius'`` method.
-            If set to ``0.0`` the maximum threshold is defined by the sum of the atomic radii,
-            positive (negative) values increase (decrease) the threshold.
-        econ_tolerance : float (optional)
-            Tolerance parameter for the econ method.
-        econ_conv_threshold : float (optional)
-            Convergence threshold for the econ method.
-        okeeffe_weight_threshold : float (optional)
-            Threshold parameter to distinguish indirect and direct neighbour atoms for the
-            ``'okeeffe'``.
         distinguish_kinds: bool (optional)
             Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
             different elements if ``True``.
         threshold : float (optional)
             Threshold to consider two sites equivalent.
+        cn_kwargs :
+            Optional keyword arguments passed on to the ``calculate_coordination`` function.
 
         Returns
         --------
         dict :
             Dictionary grouping equivalent sites.
         """
-        coord_kwargs = {
-            "r_max": r_max,
-            "cn_method": cn_method,
-            "min_dist_delta": min_dist_delta,
-            "econ_tolerance": econ_tolerance,
-            "econ_conv_threshold": econ_conv_threshold,
-            "voronoi_weight_type": voronoi_weight_type,
-            "voronoi_weight_threshold": voronoi_weight_threshold,
-            "okeeffe_weight_threshold": okeeffe_weight_threshold,
-            "threshold": threshold,
-        }
+        cn_kwargs["threshold"] = threshold
         return self._find_equivalent_sites(
-            key, self.compare_sites_via_coordination, coord_kwargs, None, distinguish_kinds
+            key, self.compare_sites_via_coordination, cn_kwargs, None, distinguish_kinds
         )
 
     def find_eq_sites_via_ffingerprint(

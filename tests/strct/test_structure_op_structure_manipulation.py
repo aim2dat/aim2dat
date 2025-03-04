@@ -70,6 +70,7 @@ def test_add_structure_coord(structure_comparison):
             "bond_length": 1.0,
             "change_label": False,
             "guest_dir": [1.0, 0.0, 0.0],
+            "method": "minimum_distance",
         },
     )
     new_strct = new_strct.perform_manipulation(
@@ -81,6 +82,7 @@ def test_add_structure_coord(structure_comparison):
             "bond_length": 1.1,
             "change_label": False,
             "guest_dir": [1.0, 0.0, 0.0],
+            "method": "minimum_distance",
         },
     )
     new_strct = new_strct.perform_manipulation(
@@ -90,6 +92,7 @@ def test_add_structure_coord(structure_comparison):
             "guest_structure": "COOH",
             "change_label": False,
             "guest_dir": [1.0, 0.0, 0.0],
+            "method": "minimum_distance",
         },
     )
     new_strct = new_strct.perform_manipulation(
@@ -99,6 +102,7 @@ def test_add_structure_coord(structure_comparison):
             "guest_structure": "NH2",
             "change_label": False,
             "guest_dir": [1.0, 0.0, 0.0],
+            "method": "minimum_distance",
         },
     )
     new_strct = new_strct.perform_manipulation(
@@ -108,6 +112,7 @@ def test_add_structure_coord(structure_comparison):
             "guest_structure": "NO2",
             "change_label": False,
             "guest_dir": [1.0, 0.0, 0.0],
+            "method": "minimum_distance",
         },
     )
     new_strct = new_strct.perform_manipulation(
@@ -118,6 +123,7 @@ def test_add_structure_coord(structure_comparison):
             "change_label": False,
             "dist_threshold": None,
             "guest_dir": [1.0, 0.0, 0.0],
+            "method": "minimum_distance",
         },
     )
     new_strct.set_positions(new_strct.positions, wrap=True)
