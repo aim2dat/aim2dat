@@ -1,18 +1,24 @@
 """Module to check interatomic distances."""
 
+# Standard library imports
 import itertools
 from typing import Union, Dict, List
 
+# Internal library imports
 from aim2dat.strct import Structure
+from aim2dat.utils.element_properties import get_atomic_radius
 
 
-# TODO add tests for this function
+class DistanceThresholdError(ValueError):
+    """Error in case distances between atom sites are too short or too long."""
+
+    pass
+
+
 def _check_distances(
     structure: Structure,
     indices: List[int],
-    dist_threshold: Union[
-        Dict[str, Dict[str, List[float]]], Dict[str, Dict[str, float]], List[float], float, None
-    ],
+    dist_threshold: Union[Dict, List, float, None],
     silent: bool,
 ) -> bool:
     """
@@ -50,57 +56,83 @@ def _check_distances(
     if dist_threshold is None:
         return True
 
+    # Calculate pair-wise distances:
     other_indices = [i for i in range(len(structure)) if i not in indices]
     if len(other_indices) == 0:
         indices1, indices2 = zip(*itertools.combinations(indices, 2))
     else:
         indices1, indices2 = zip(*itertools.product(other_indices, indices))
     dists = structure.calculate_distance(list(indices1), list(indices2), backfold_positions=True)
-    if isinstance(dist_threshold, (int, float)):
-        if any(d0 < dist_threshold for d0 in dists.values()):
-            if not silent:
-                raise ValueError("Atoms are too close to each other.")
-            return False
-    elif isinstance(dist_threshold, list):
-        if any(d0 < dist_threshold[0] for d0 in dists.values()):
-            if not silent:
-                raise ValueError("Atoms are too close to each other.")
-            return False
-        if all(d0 > dist_threshold[1] for d0 in dists.values()):
-            if not silent:
-                raise ValueError("Atoms are too far from each other.")
-            return False
-    elif isinstance(dist_threshold, dict):
-        for el1, el2_dist_thresh in dist_threshold.items():
-            # Find indicies for first element type in first index list
-            el1_idx1 = [idx for idx in other_indices if structure.elements[idx] == el1]
-            # Find indicies for first element type in second index list
-            el1_idx2 = [idx for idx in indices if structure.elements[idx] == el1]
-            for el2, dist_thresh in el2_dist_thresh.items():
-                # Find indicies for second element in first index lists
-                el2_idx1 = [idx for idx in other_indices if structure.elements[idx] == el2]
-                # Find indicies for second element in second index lists
-                el2_idx2 = [idx for idx in indices if structure.elements[idx] == el2]
 
-                # Get element pairs
-                el1_el2_pair = []
-                if el1_idx1 and el2_idx2:
-                    el1_el2_pair += [(idx1, idx2) for idx1 in el1_idx1 for idx2 in el2_idx2]
-                elif el1_idx2 and el2_idx1:
-                    el1_el2_pair += [(idx1, idx2) for idx1 in el1_idx2 for idx2 in el2_idx1]
+    el_pairs = itertools.combinations_with_replacement(structure._element_dict.keys(), 2)
+    # If dist_threshold is dict, make sure that it contains index or element pairs and check that
+    # value is list:
+    if isinstance(dist_threshold, dict):
+        new_dict = {}
+        for key, val in dist_threshold.items():
+            if len(key) != 2:
+                raise ValueError(
+                    "`dist_threshold` needs to have keys with length 2 containing site "
+                    + "indices or element symbols."
+                )
+            if not (all(isinstance(k, int) for k in key) or all(isinstance(k, str) for k in key)):
+                raise ValueError(
+                    "`dist_threshold` needs to have keys of type List[str/int] containing "
+                    + "site indices or element symbols."
+                )
+            if isinstance(val, (float, int)):
+                val = [val, None]
+            new_dict[tuple(sorted(key))] = val
+        dist_threshold = new_dict
+    # Transfer string to element-pair dict:
+    elif isinstance(dist_threshold, str):
+        tol = 1.0
+        if "+" in dist_threshold:
+            dist_threshold, tol = dist_threshold.split("+")
+            tol = 1.0 + float(tol) / 100.0
+        elif "-" in dist_threshold:
+            dist_threshold, tol = dist_threshold.split("-")
+            tol = 1.0 - float(tol) / 100.0
+        print(tol)
 
-                if isinstance(dist_thresh, (int, float)):
-                    if any(dists.get(d0) < dist_thresh for d0 in el1_el2_pair):
-                        if not silent:
-                            raise ValueError("Atoms are too close to each other.")
-                        return False
-                elif isinstance(dist_thresh, list):
-                    if any(dists.get(d0) < dist_thresh[0] for d0 in el1_el2_pair):
-                        if not silent:
-                            raise ValueError("Atoms are too close to each other.")
-                        return False
-                    if all(dists.get(d0) > dist_thresh[1] for d0 in el1_el2_pair):
-                        if not silent:
-                            raise ValueError("Atoms are too far from each other.")
-                        return False
+        atomic_radii = {
+            el: get_atomic_radius(el, radius_type=dist_threshold)
+            for el in structure._element_dict.keys()
+        }
+        dist_threshold = {
+            tuple(sorted(pair)): [(atomic_radii[pair[0]] + atomic_radii[pair[1]]) * tol, None]
+            for pair in el_pairs
+        }
+        print(dist_threshold, tol)
+    # Transfer list of min/max values to element-pair dict:
+    elif isinstance(dist_threshold, (list, tuple)):
+        dist_threshold = {tuple(sorted(pair)): dist_threshold for pair in el_pairs}
+    # Transfer float/int to element-pair dict:
+    elif isinstance(dist_threshold, (list, tuple)):
+        dist_threshold = {tuple(sorted(pair)): [dist_threshold, None] for pair in el_pairs}
+    else:
+        raise TypeError("`dist_threshold` needs to be of type int/float/list/tuple/dict.")
+
+    for idx_pair, dist in dists.items():
+        threshold = dist_threshold.get(tuple(sorted(idx_pair)), None)
+        if threshold is None:
+            el_pair = tuple(
+                sorted([structure.elements[idx_pair[0]], structure.elements[idx_pair[1]]])
+            )
+            threshold = dist_threshold.get(el_pair, None)
+        if threshold is None:
+            continue
+
+        if dist < dist_threshold[el_pair][0]:
+            if silent:
+                return False
+            raise DistanceThresholdError(
+                f"Atoms {idx_pair[0]} and {idx_pair[1]} are too close to each other."
+            )
+        if dist_threshold[el_pair][1] is not None and dist > dist_threshold[el_pair][1]:
+            if silent:
+                return False
+            raise DistanceThresholdError(
+                f"Atoms {idx_pair[0]} and {idx_pair[1]} are too far from each other."
+            )
     return True
