@@ -9,8 +9,6 @@ Version 0.3.0
 
 * A parser for xml output files of Quantum ESPRESSO is added (`PR #102 <https://github.com/aim2dat/aim2dat/pull/102>`_).
 * Added interface to MOFXDB (https://mof.tech.northwestern.edu/) to the ``strct.StructureImporter`` class (`PR #94 <https://github.com/aim2dat/aim2dat/pull/94>`_).
-* The newly implemented ``strct.ext_manipulation.add_structure_position`` function adds a guest structure at a given position (`PR #105 <https://github.com/aim2dat/aim2dat/pull/105>`_ and `PR #123 <https://github.com/aim2dat/aim2dat/pull/123>`_).
-* The newly implemented ``strct.ext_manipulation.rotate_structure`` function rotates a sub structure around a certain point or vector (`PR #105 <https://github.com/aim2dat/aim2dat/pull/105>`_).
 * The ``strct.Structure`` class checks now for duplicate positions upon initialization (`PR #107 <https://github.com/aim2dat/aim2dat/pull/107>`_).
 * ``strct.ext_analysis.determine_molecular_fragments`` offers additional parameters, allowing to exclude sites and restricting the size of the fragments (`PR #111 <https://github.com/aim2dat/aim2dat/pull/111>`_).
 * Slight speed-up in distance based methods to calculate the coordination environment by sorting the pair-wise distances first.
@@ -18,6 +16,7 @@ Version 0.3.0
 * Support CP2K versions 2025.1 (`PR #114 <https://github.com/aim2dat/aim2dat/pull/114>`_).
 * Implemented BSSE parsing to ``io.cp2k.read_stdout`` function (`PR #115 <https://github.com/aim2dat/aim2dat/pull/115>`_ and `PR #116 <https://github.com/aim2dat/aim2dat/pull/116>`_).
 * Added more units and fundamental constants to ``utils.units`` (`PR #122 <https://github.com/aim2dat/aim2dat/pull/122>`_).
+* Several new functions have been added to the ``strct.ext_manipulation`` module, including ``add_structure_position``, ``translate_structure`` or ``rotate_structure``, each of the functions in this module now implement a common ``dist_threshold`` parameter to control the inter-atomic distances of the altered structures (`PR #105 <https://github.com/aim2dat/aim2dat/pull/105>`_, `PR #123 <https://github.com/aim2dat/aim2dat/pull/123>`_, `PR #129 <https://github.com/aim2dat/aim2dat/pull/129>`_).
 
 **Fixes:**
 
