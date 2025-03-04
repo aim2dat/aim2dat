@@ -14,30 +14,66 @@ from aim2dat.strct.ext_manipulation.utils import _check_distances
 from aim2dat.strct import Structure
 
 
-# TODO add tests for this function
 @external_manipulation_method
 def translate_structure(
     structure: Structure,
     vector: List[float],
     site_indices: Union[None, List[int]] = None,
     wrap: bool = False,
-    dist_threshold: float = None,
+    dist_threshold: Union[dict, list, float, int, None] = None,
     change_label: bool = False,
 ) -> Structure:
     """
-    Work in progress
-    """
-    # TODO add doc-string
+    Translate structure.
 
-    # TODO include checks that vector has length of 3 and float type
+    Parameters
+    ----------
+    structure : aim2dat.strct.Structure
+        Structure to translate.
+    vector : list of float (optional)
+        Translation vector.
+    site_indices : list of int (optional)
+        Indices of the sites to rotate. If not given, all sites of the structure are rotated.
+    wrap : bool (optional)
+        Wrap atomic positions back into the unit cell.
+    dist_threshold : dict, list, float or None (optional)
+        Check the distances between all site pairs to ensure that none of the changed atoms
+        collide or are too far apart. For example, ``0.8`` to ensure a minimum distance of
+        ``0.8`` for all site pairs. A list ``[0.8, 1.5]`` adds a check for the maximum distance
+        as well. Giving a dictionary ``{("C", "H"): 0.8, (0, 4): 0.8}`` allows distance checks
+        for individual pairs of elements or site indices. Specifying an atomic radius type as
+        str, e.g. ``covalent+10`` sets the minimum threshold to the sum of covalent radii plus
+        10%.
+    change_label : bool (optional)
+        Add suffix to the label of the new structure highlighting the performed manipulation.
+
+    Returns
+    -------
+    aim2dat.strct.Structure
+        Translated structure.
+
+    Raises
+    ------
+    ValueError
+        `dist_threshold` needs to have keys with length 2 containing site indices or element
+        symbols.
+    ValueError
+        `dist_threshold` needs to have keys of type List[str/int] containing site indices or
+        element symbols.
+    TypeError
+        `dist_threshold` needs to be of type int/float/list/tuple/dict or None.
+    ValueError
+        If any distance between atoms is outside the threshold.
+    """
     if site_indices is None:
         site_indices = list(range(len(structure)))
 
+    vector = np.array(vector)
     positions = np.array(structure.positions)
     for idx in site_indices:
-        positions[idx] += np.array(vector)
+        positions[idx] += vector
     new_structure = structure.to_dict()
     new_structure["positions"] = positions
     new_structure = Structure(**new_structure, wrap=wrap)
-    _check_distances(new_structure, site_indices, dist_threshold, False)
-    return new_structure, "_translated"  # TODO add length of vector??
+    _check_distances(new_structure, site_indices, dist_threshold, None, False)
+    return new_structure, f"_translated-{[round(v, 2) for v in vector]}"

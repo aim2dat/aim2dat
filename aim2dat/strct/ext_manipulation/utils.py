@@ -2,7 +2,7 @@
 
 # Standard library imports
 import itertools
-from typing import Union, Dict, List
+from typing import Union, List, Tuple
 
 # Internal library imports
 from aim2dat.strct import Structure
@@ -15,59 +15,20 @@ class DistanceThresholdError(ValueError):
     pass
 
 
-def _check_distances(
-    structure: Structure,
-    indices: List[int],
-    dist_threshold: Union[Dict, List, float, None],
-    silent: bool,
-) -> bool:
-    """
-    Check if the distance between the specified atoms and all other atoms in the structure
-    is in the given threshold.
+def _build_distance_dict(
+    dist_threshold: Union[list, dict, tuple, str, float, int], structure, guest_structure=None
+) -> Tuple[Union[dict, None], float]:
+    """Construct dictionary from disth_threshold parameter."""
+    elements = set(structure._element_dict.keys())
 
-    Parameters
-    ----------
-    structure : aim2dat.strct.Structure
-        The structure containing the atom positions.
-    indices : list of int
-        A list of indices identifying the atoms in the structure whose distances are to be
-        checked.
-    dist_threshold : dict, list of float, or float (optional)
-        Check the distances between all site pairs of the host and guest structure to ensure that
-        none of the added atoms collide or are too far apart.
-        Example: dist_threshold = 0.8
-        Example: dist_threshold = [0.8, 1.5]
-        Example: dist_threshold = {"C": {"H": 0.8, "C": [0.8, 1.5]}}
-    silent : bool (optional)
-        If True, no error is raised when atoms are too close. If False, a ValueError is raised
-        when atoms are too close to each other.
-
-    Returns
-    ----------
-    bool
-        True if all distances are in between the threshold, or no check was performed.
-        False if any distance outside the threshold and `silent` is False.
-
-    Raises
-    ----------
-    ValueError
-        If any distance between atoms is outside the threshold and `silent` is False.
-    """
+    if guest_structure is not None:
+        elements = elements.union(guest_structure._element_dict.keys())
+    el_pairs = itertools.combinations_with_replacement(elements, 2)
     if dist_threshold is None:
-        return True
-
-    # Calculate pair-wise distances:
-    other_indices = [i for i in range(len(structure)) if i not in indices]
-    if len(other_indices) == 0:
-        indices1, indices2 = zip(*itertools.combinations(indices, 2))
-    else:
-        indices1, indices2 = zip(*itertools.product(other_indices, indices))
-    dists = structure.calculate_distance(list(indices1), list(indices2), backfold_positions=True)
-
-    el_pairs = itertools.combinations_with_replacement(structure._element_dict.keys(), 2)
+        return None, 0.0
     # If dist_threshold is dict, make sure that it contains index or element pairs and check that
     # value is list:
-    if isinstance(dist_threshold, dict):
+    elif isinstance(dist_threshold, dict):
         new_dict = {}
         for key, val in dist_threshold.items():
             if len(key) != 2:
@@ -93,43 +54,88 @@ def _check_distances(
         elif "-" in dist_threshold:
             dist_threshold, tol = dist_threshold.split("-")
             tol = 1.0 - float(tol) / 100.0
-        print(tol)
-
-        atomic_radii = {
-            el: get_atomic_radius(el, radius_type=dist_threshold)
-            for el in structure._element_dict.keys()
-        }
+        atomic_radii = {el: get_atomic_radius(el, radius_type=dist_threshold) for el in elements}
         dist_threshold = {
             tuple(sorted(pair)): [(atomic_radii[pair[0]] + atomic_radii[pair[1]]) * tol, None]
             for pair in el_pairs
         }
-        print(dist_threshold, tol)
     # Transfer list of min/max values to element-pair dict:
     elif isinstance(dist_threshold, (list, tuple)):
         dist_threshold = {tuple(sorted(pair)): dist_threshold for pair in el_pairs}
     # Transfer float/int to element-pair dict:
-    elif isinstance(dist_threshold, (list, tuple)):
+    elif isinstance(dist_threshold, (float, int)):
         dist_threshold = {tuple(sorted(pair)): [dist_threshold, None] for pair in el_pairs}
     else:
-        raise TypeError("`dist_threshold` needs to be of type int/float/list/tuple/dict.")
+        raise TypeError("`dist_threshold` needs to be of type int/float/list/tuple/dict or None.")
+    return dist_threshold, min(val[0] for val in dist_threshold.values())
+
+
+def _check_distances(
+    structure: Structure,
+    indices: List[int],
+    dist_threshold: Union[dict, list, float, int, None],
+    distance_dict: Union[dict, None],
+    silent: bool,
+) -> bool:
+    """
+    Check if the distance between the specified atoms and all other atoms in the structure
+    is in the given threshold.
+
+    Parameters
+    ----------
+    structure : aim2dat.strct.Structure
+        The structure containing the atom positions.
+    indices : list of int
+        A list of indices identifying the atoms in the structure whose distances are to be
+        checked.
+    distance_dict : dict
+        Dictionary containing element or index tuples as keys and distance thresholds as values.
+    silent : bool (optional)
+        If True, no error is raised when atoms are too close. If False, a ValueError is raised
+        when atoms are too close to each other.
+
+    Returns
+    ----------
+    bool
+        True if all distances are in between the threshold, or no check was performed.
+        False if any distance outside the threshold and `silent` is False.
+
+    Raises
+    ----------
+    ValueError
+        If any distance between atoms is outside the threshold and `silent` is False.
+    """
+    if dist_threshold is not None:
+        distance_dict, _ = _build_distance_dict(dist_threshold, structure)
+
+    if distance_dict is None:
+        return True
+
+    # Calculate pair-wise distances:
+    other_indices = [i for i in range(len(structure)) if i not in indices]
+    if len(other_indices) == 0:
+        indices1, indices2 = zip(*itertools.combinations(indices, 2))
+    else:
+        indices1, indices2 = zip(*itertools.product(other_indices, indices))
+    dists = structure.calculate_distance(list(indices1), list(indices2), backfold_positions=True)
 
     for idx_pair, dist in dists.items():
-        threshold = dist_threshold.get(tuple(sorted(idx_pair)), None)
+        threshold = distance_dict.get(tuple(sorted(idx_pair)), None)
         if threshold is None:
             el_pair = tuple(
                 sorted([structure.elements[idx_pair[0]], structure.elements[idx_pair[1]]])
             )
-            threshold = dist_threshold.get(el_pair, None)
+            threshold = distance_dict.get(el_pair, None)
         if threshold is None:
             continue
 
-        if dist < dist_threshold[el_pair][0]:
+        if dist < threshold[0]:
             if silent:
                 return False
             raise DistanceThresholdError(
                 f"Atoms {idx_pair[0]} and {idx_pair[1]} are too close to each other."
             )
-        if dist_threshold[el_pair][1] is not None and dist > dist_threshold[el_pair][1]:
+        if threshold[1] is not None and dist > threshold[1]:
             if silent:
                 return False
             raise DistanceThresholdError(

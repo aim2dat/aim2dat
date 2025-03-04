@@ -25,7 +25,7 @@ def rotate_structure(
     origin: Union[None, List[float]] = None,
     site_indices: Union[None, List[int]] = None,
     wrap: bool = False,
-    dist_threshold: float = None,
+    dist_threshold: Union[dict, list, float, int, None] = None,
     change_label: bool = False,
 ):
     """
@@ -50,8 +50,14 @@ def rotate_structure(
         Indices of the sites to rotate. If not given, all sites of the structure are rotated.
     wrap : bool (optional)
         Wrap atomic positions back into the unit cell.
-    dist_threshold : float or None (optional)
-        Check the distances between all site pairs to ensure that none of the atoms collide.
+    dist_threshold : dict, list, float or None (optional)
+        Check the distances between all site pairs to ensure that none of the changed atoms
+        collide or are too far apart. For example, ``0.8`` to ensure a minimum distance of
+        ``0.8`` for all site pairs. A list ``[0.8, 1.5]`` adds a check for the maximum distance
+        as well. Giving a dictionary ``{("C", "H"): 0.8, (0, 4): 0.8}`` allows distance checks
+        for individual pairs of elements or site indices. Specifying an atomic radius type as
+        str, e.g. ``covalent+10`` sets the minimum threshold to the sum of covalent radii plus
+        10%.
     change_label : bool (optional)
         Add suffix to the label of the new structure highlighting the performed manipulation.
 
@@ -59,6 +65,19 @@ def rotate_structure(
     -------
     aim2dat.strct.Structure
         Rotated structure.
+
+    Raises
+    ------
+    ValueError
+        `dist_threshold` needs to have keys with length 2 containing site indices or element
+        symbols.
+    ValueError
+        `dist_threshold` needs to have keys of type List[str/int] containing site indices or
+        element symbols.
+    TypeError
+        `dist_threshold` needs to be of type int/float/list/tuple/dict or None.
+    ValueError
+        If any distance between atoms is outside the threshold.
     """
     if isinstance(angles, (list, tuple, np.ndarray)):
         rotation = Rotation.from_euler("xyz", angles, degrees=True)
@@ -85,5 +104,5 @@ def rotate_structure(
         all_positions[idx] = pos
     new_structure["positions"] = all_positions
     new_structure = Structure(**new_structure, wrap=wrap)
-    _check_distances(new_structure, site_indices, dist_threshold, False)
+    _check_distances(new_structure, site_indices, dist_threshold, None, False)
     return new_structure, "_rotated-" + f"{angles}"
