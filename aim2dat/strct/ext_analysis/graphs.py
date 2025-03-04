@@ -48,6 +48,8 @@ def create_graph(
     for site_idx, site in enumerate(coord["sites"]):
         nx_graph.add_node(site_idx, element=site["element"])
     for site_idx, site in enumerate(coord["sites"]):
+        if len(site["neighbours"]) == 0:
+            continue
         distances = [neigh["distance"] for neigh in site["neighbours"]]
         zipped = list(zip(distances, range(len(site["neighbours"]))))
         zipped.sort(key=lambda point: point[0])

@@ -44,7 +44,7 @@ def test_func_args_extraction():
     assert strct._function_args == {
         "coordination": {
             "r_max": 10.0,
-            "method": "minimum_distance",
+            "method": "atomic_radius",
             "min_dist_delta": 0.1,
             "n_nearest_neighbours": 5,
             "radius_type": "chen_manz",
@@ -87,7 +87,9 @@ def test_determine_molecular_fragments_function(
 def test_determine_graph(nested_dict_comparison):
     """Test creating a graph from a structure."""
     strct = Structure(**load_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml"))
-    nx_graph, graphviz_graph = create_graph(strct, get_graphviz_graph=True)
+    nx_graph, graphviz_graph = create_graph(
+        strct, get_graphviz_graph=True, method="minimum_distance"
+    )
     assert list(nx_graph.edges) == [
         (0, 1, 0),
         (0, 1, 1),
