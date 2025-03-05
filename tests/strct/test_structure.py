@@ -215,8 +215,6 @@ def test_structure_features():
 
 def test_list_methods():
     """Test listing different method categories."""
-    print(Structure)
-    print(Structure.import_methods)
     assert Structure.import_methods == [
         "from_file",
         "from_ase_atoms",
