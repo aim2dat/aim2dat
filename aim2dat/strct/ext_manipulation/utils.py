@@ -88,6 +88,14 @@ def _check_distances(
     indices : list of int
         A list of indices identifying the atoms in the structure whose distances are to be
         checked.
+    dist_threshold : dict, list, float, int, str or None (optional)
+        Check the distances between all site pairs to ensure that none of the changed atoms
+        collide or are too far apart. For example, ``0.8`` to ensure a minimum distance of
+        ``0.8`` for all site pairs. A list ``[0.8, 1.5]`` adds a check for the maximum distance
+        as well. Giving a dictionary ``{("C", "H"): 0.8, (0, 4): 0.8}`` allows distance checks
+        for individual pairs of elements or site indices. Specifying an atomic radius type as
+        str, e.g. ``covalent+10`` sets the minimum threshold to the sum of covalent radii plus
+        10%.
     distance_dict : dict
         Dictionary containing element or index tuples as keys and distance thresholds as values.
     silent : bool (optional)

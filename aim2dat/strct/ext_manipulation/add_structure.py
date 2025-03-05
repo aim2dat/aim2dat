@@ -124,7 +124,7 @@ def add_structure_coord(
     guest_dir: Union[None, List[float]] = None,
     bond_length: float = 1.25,
     dist_constraints=None,
-    dist_threshold: Union[dict, list, float, int, None] = 0.8,
+    dist_threshold: Union[dict, list, float, int, str, None] = 0.8,
     change_label: bool = False,
     **cn_kwargs,
 ) -> Structure:
@@ -156,7 +156,7 @@ def add_structure_coord(
         of the site of the guest structure and the target distance. The position of the guest
         structure is varied based on a grid search until the sum of the absolute errors in
         minimized.
-    dist_threshold : dict, list, float or None (optional)
+    dist_threshold : dict, list, float, int, str or None (optional)
         Check the distances between all site pairs of the host and guest structure to ensure that
         none of the added atoms collide or are too far apart. For example, ``0.8`` to ensure a
         minimum distance of ``0.8`` for all site pairs. A list ``[0.8, 1.5]`` adds a check for
@@ -294,7 +294,7 @@ def add_structure_position(
     position: List[float],
     guest_structure: Union[Structure, str] = "CH3",
     wrap: bool = False,
-    dist_threshold: Union[dict, list, float, int, None] = None,
+    dist_threshold: Union[dict, list, float, int, str, None] = None,
     change_label: bool = False,
 ) -> Structure:
     """
@@ -313,7 +313,7 @@ def add_structure_position(
         or the element symbol to add one single atom.
     wrap : bool (optional)
         Wrap atomic positions back into the unit cell.
-    dist_threshold : dict, list, float or None (optional)
+    dist_threshold : dict, list, float, int, str or None (optional)
         Check the distances between all site pairs of the host and guest structure to ensure that
         none of the added atoms collide or are too far apart. For example, ``0.8`` to ensure a
         minimum distance of ``0.8`` for all site pairs. A list ``[0.8, 1.5]`` adds a check for

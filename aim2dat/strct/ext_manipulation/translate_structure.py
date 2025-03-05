@@ -20,7 +20,7 @@ def translate_structure(
     vector: List[float],
     site_indices: Union[None, List[int]] = None,
     wrap: bool = False,
-    dist_threshold: Union[dict, list, float, int, None] = None,
+    dist_threshold: Union[dict, list, float, int, str, None] = None,
     change_label: bool = False,
 ) -> Structure:
     """
@@ -36,7 +36,7 @@ def translate_structure(
         Indices of the sites to translate. If not given, all sites of the structure are translated.
     wrap : bool (optional)
         Wrap atomic positions back into the unit cell.
-    dist_threshold : dict, list, float or None (optional)
+    dist_threshold : dict, list, float, int, str or None (optional)
         Check the distances between all site pairs to ensure that none of the changed atoms
         collide or are too far apart. For example, ``0.8`` to ensure a minimum distance of
         ``0.8`` for all site pairs. A list ``[0.8, 1.5]`` adds a check for the maximum distance
@@ -70,7 +70,7 @@ def translate_structure(
 
     if site_indices is None:
         positions += vector
-    else:    
+    else:
         for idx in site_indices:
             positions[idx] += vector
     new_structure = structure.to_dict()

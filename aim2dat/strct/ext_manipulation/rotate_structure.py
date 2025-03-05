@@ -25,7 +25,7 @@ def rotate_structure(
     origin: Union[None, List[float]] = None,
     site_indices: Union[None, List[int]] = None,
     wrap: bool = False,
-    dist_threshold: Union[dict, list, float, int, None] = None,
+    dist_threshold: Union[dict, list, float, int, str, None] = None,
     change_label: bool = False,
 ):
     """
@@ -50,7 +50,7 @@ def rotate_structure(
         Indices of the sites to rotate. If not given, all sites of the structure are rotated.
     wrap : bool (optional)
         Wrap atomic positions back into the unit cell.
-    dist_threshold : dict, list, float or None (optional)
+    dist_threshold : dict, list, float, int, str or None (optional)
         Check the distances between all site pairs to ensure that none of the changed atoms
         collide or are too far apart. For example, ``0.8`` to ensure a minimum distance of
         ``0.8`` for all site pairs. A list ``[0.8, 1.5]`` adds a check for the maximum distance
