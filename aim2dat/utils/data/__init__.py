@@ -272,3 +272,6 @@ val_electrons = {
     "Ts": 7,
     "Og": 8,
 }
+
+
+atomic_numbers = {element: number + 1 for number, element in enumerate(val_electrons.keys())}
