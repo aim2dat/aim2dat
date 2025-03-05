@@ -47,7 +47,7 @@ def add_structure_random(
         A representation of the guest structure given as a string of a functional group or molecule
         (viable options are ``'CH3'``, ``'COOH'``, ``'H2O'``, ``'NH2'``, ``'NO2'`` or ``'OH'``), a
         ``Structure`` object or the element symbol to add one single atom.
-    dist_threshold : dict, list, float or None (optional)
+    dist_threshold : dict, list, float, int, str or None (optional)
         Check the distances between all site pairs of the host and guest structure to ensure that
         none of the added atoms collide or are too far apart. For example, ``0.8`` to ensure a
         minimum distance of ``0.8`` for all site pairs. A list ``[0.8, 1.5]`` adds a check for
