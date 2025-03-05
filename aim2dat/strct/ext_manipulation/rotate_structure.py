@@ -23,7 +23,7 @@ def rotate_structure(
     angles: Union[float, List[float]],
     vector: Union[None, List[float]] = None,
     origin: Union[None, List[float]] = None,
-    site_indices: Union[None, List[int]] = None,
+    site_indices: Union[slice, List[int]] = slice(None),
     wrap: bool = False,
     dist_threshold: Union[dict, list, float, int, str, None] = None,
     change_label: bool = False,
@@ -87,22 +87,15 @@ def rotate_structure(
     else:
         raise TypeError("angles must be type list or type float.")
 
-    if site_indices is None:
-        site_indices = list(range(len(structure)))
-
-    positions = np.array([structure["positions"][idx] for idx in site_indices])
+    positions = np.array(structure.positions)
     if origin is None:
-        origin = np.mean(positions, axis=0)
+        origin = np.mean(positions[site_indices], axis=0)
     origin = np.array(origin)
-    positions -= origin
-    rotated_points = rotation.apply(positions)
-    rotated_points += origin
-
+    positions[site_indices] -= origin
+    positions[site_indices] = rotation.apply(positions[site_indices])
+    positions[site_indices] += origin
     new_structure = structure.to_dict()
-    all_positions = list(new_structure["positions"])
-    for idx, pos in zip(site_indices, rotated_points):
-        all_positions[idx] = pos
-    new_structure["positions"] = all_positions
+    new_structure["positions"] = positions
     new_structure = Structure(**new_structure, wrap=wrap)
     _check_distances(new_structure, site_indices, dist_threshold, None, False)
     return new_structure, "_rotated-" + f"{angles}"

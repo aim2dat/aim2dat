@@ -18,7 +18,7 @@ from aim2dat.strct import Structure
 def translate_structure(
     structure: Structure,
     vector: List[float],
-    site_indices: Union[None, List[int]] = None,
+    site_indices: Union[slice, List[int]] = slice(None),
     wrap: bool = False,
     dist_threshold: Union[dict, list, float, int, str, None] = None,
     change_label: bool = False,
@@ -65,14 +65,14 @@ def translate_structure(
     ValueError
         If any distance between atoms is outside the threshold.
     """
-    vector = np.array(vector)
     positions = np.array(structure.positions)
+    positions[site_indices] += np.array(vector)
 
-    if site_indices is None:
-        positions += vector
-    else:
-        for idx in site_indices:
-            positions[idx] += vector
+    # if site_indices is None:
+    #     positions += vector
+    # else:
+    #     for idx in site_indices:
+    #         positions[idx] += vector
     new_structure = structure.to_dict()
     new_structure["positions"] = positions
     new_structure = Structure(**new_structure, wrap=wrap)
