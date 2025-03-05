@@ -32,7 +32,7 @@ from aim2dat.strct.mixin import AnalysisMixin, ManipulationMixin
 import aim2dat.utils.chem_formula as utils_cf
 import aim2dat.utils.print as utils_pr
 from aim2dat.utils.maths import calc_angle
-from aim2dat.utils.data import atomic_numbers
+from aim2dat.utils.element_properties import get_atomic_number
 
 
 def _compare_function_args(args1, args2):
@@ -272,7 +272,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         self._elements = elements
         self._element_dict = _create_index_dict(elements)
         self._chem_formula = utils_cf.transform_list_to_dict(elements)
-        self._numbers = [atomic_numbers[el] for el in elements]
+        self._numbers = tuple(get_atomic_number(el) for el in elements)
 
     @property
     def chem_formula(self) -> dict:
