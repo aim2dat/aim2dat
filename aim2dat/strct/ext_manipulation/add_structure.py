@@ -31,7 +31,7 @@ def add_structure_random(
     change_label: bool = False,
     wrap: bool = False,
     guest_structure: Union[Structure, str] = "CH3",
-    dist_threshold: Union[dict, list, float, int, None] = 0.8,
+    dist_threshold: Union[dict, list, float, int, str, None] = 0.8,
     random_state: Union[float, None] = None,
 ) -> Structure:
     """
