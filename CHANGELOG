@@ -19,6 +19,7 @@ Version 0.3.0
 * Implemented BSSE parsing to ``io.cp2k.read_stdout`` function (`PR #115 <https://github.com/aim2dat/aim2dat/pull/115>`_ and `PR #116 <https://github.com/aim2dat/aim2dat/pull/116>`_).
 * Added more units and fundamental constants to ``utils.units`` (`PR #122 <https://github.com/aim2dat/aim2dat/pull/122>`_).
 * The ``strct.Structure.calculate_angle`` and ``strct.Structure.calculate_dihedral_angle`` now supports lists and ``None`` as input (`PR #126 <https://github.com/aim2dat/aim2dat/pull/126>`_).
+* The ``strct.Structure`` class has now the property ``numbers`` to get the atomic number related to the element (`PR #130 <https://github.com/aim2dat/aim2dat/pull/130>`_).
 
 **Fixes:**
 
