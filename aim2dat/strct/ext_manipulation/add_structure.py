@@ -30,11 +30,11 @@ cwd = os.path.dirname(__file__)
 @external_manipulation_method
 def add_structure_random(
     structure: Structure,
+    change_label: bool = False,
     wrap: bool = False,
     guest_structure: Union[Structure, str] = "CH3",
     dist_threshold: Union[float, None] = 0.8,
     random_state: Union[float, None] = None,
-    change_label: bool = False,
 ) -> Structure:
     """
     Add structure at random position and orientation.
@@ -111,20 +111,10 @@ def add_structure_coord(
     guest_structure: Union[Structure, str] = "CH3",
     guest_dir: Union[None, List[float]] = None,
     bond_length: float = 1.25,
-    r_max: float = 15.0,
-    cn_method: str = "minimum_distance",
-    min_dist_delta: float = 0.1,
-    n_nearest_neighbours: int = 5,
-    radius_type: str = "chen_manz",
-    atomic_radius_delta: float = 0.0,
-    econ_tolerance: float = 0.5,
-    econ_conv_threshold: float = 0.001,
-    voronoi_weight_type: float = "rel_solid_angle",
-    voronoi_weight_threshold: float = 0.5,
-    okeeffe_weight_threshold: float = 0.5,
-    dist_constraints=[],
+    dist_constraints=None,
     dist_threshold: Union[float, None] = 0.8,
     change_label: bool = False,
+    **cn_kwargs,
 ) -> Structure:
     """
     Add a functional group or an atom to a host site.
@@ -149,26 +139,6 @@ def add_structure_coord(
         neighbors is constructed based on the guest index.
     bond_length : float
         Bond length between the host atom and the base atom of the functional group.
-    r_max : float (optional)
-        Cut-off value for the maximum distance between two atoms in angstrom.
-    cn_method : str (optional)
-        Method used to calculate the coordination environment.
-    min_dist_delta : float (optional)
-        Tolerance parameter that defines the relative distance from the nearest neighbour atom
-        for the ``'minimum_distance'`` method.
-    n_nearest_neighbours : int (optional)
-        Number of neighbours that are considered coordinated for the ``'n_neighbours'``
-        method.
-    econ_tolerance : float (optional)
-        Tolerance parameter for the econ method.
-    econ_conv_threshold : float (optional)
-        Convergence threshold for the econ method.
-    voronoi_weight_type : str (optional)
-        Weight type of the Voronoi facets. Supported options are ``'covalent_atomic_radius'``,
-        ``'area'`` and ``'solid_angle'``. The prefix ``'rel_'`` specifies that the relative
-        weights with respect to the maximum value of the polyhedron are calculated.
-    voronoi_weight_threshold : float (optional)
-        Weight threshold to consider a neighbouring atom coordinated.
     dist_constraints : list (optional)
         List of three-fold tuples containing the index of the site of the host structure, the index
         of the site of the guest structure and the target distance. The position of the guest
@@ -179,6 +149,8 @@ def add_structure_coord(
         none of the added atoms collide.
     change_label : bool (optional)
         Add suffix to the label of the new structure highlighting the performed manipulation.
+    cn_kwargs :
+        Optional keyword arguments passed on to the ``calculate_coordination`` function.
 
     Returns
     -------
@@ -193,40 +165,19 @@ def add_structure_coord(
         idx = max(host_indices)
         return structure
 
+    if dist_constraints is None:
+        dist_constraints = []
+
     if guest_dir is None:
         guest_dir = [1.0, 0.0, 0.0]
         if len(guest_strct) > 1:
             # Get vector of guest atoms for rotation
-            guest_strct_coord = guest_strct.calculate_coordination(
-                r_max=r_max,
-                method=cn_method,
-                min_dist_delta=min_dist_delta,
-                n_nearest_neighbours=n_nearest_neighbours,
-                radius_type=radius_type,
-                atomic_radius_delta=atomic_radius_delta,
-                econ_tolerance=econ_tolerance,
-                econ_conv_threshold=econ_conv_threshold,
-                voronoi_weight_type=voronoi_weight_type,
-                voronoi_weight_threshold=voronoi_weight_threshold,
-                okeeffe_weight_threshold=okeeffe_weight_threshold,
-            )
+            guest_strct_coord = guest_strct.calculate_coordination(**cn_kwargs)
             guest_dir = -1.0 * _derive_bond_dir(guest_index, guest_strct_coord)
     guest_dir /= np.linalg.norm(np.array(guest_dir))
 
     # Calculate coordination:
-    coord = structure.calculate_coordination(
-        r_max=r_max,
-        method=cn_method,
-        min_dist_delta=min_dist_delta,
-        n_nearest_neighbours=n_nearest_neighbours,
-        radius_type=radius_type,
-        atomic_radius_delta=atomic_radius_delta,
-        econ_tolerance=econ_tolerance,
-        econ_conv_threshold=econ_conv_threshold,
-        voronoi_weight_type=voronoi_weight_type,
-        voronoi_weight_threshold=voronoi_weight_threshold,
-        okeeffe_weight_threshold=okeeffe_weight_threshold,
-    )
+    coord = structure.calculate_coordination(**cn_kwargs)
 
     # Derive bond directions and rotation to align guest towards bond direction:
     bond_dir = _derive_bond_dir(host_indices[0], coord)

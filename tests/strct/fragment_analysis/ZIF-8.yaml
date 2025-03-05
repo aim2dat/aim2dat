@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 - exclude_elements: [Zn]
-  cn_method: atomic_radius
+  method: atomic_radius
   radius_type: chen_manz
   atomic_radius_delta: 0.0
 - - label:
