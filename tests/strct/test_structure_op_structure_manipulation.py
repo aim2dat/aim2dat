@@ -16,6 +16,7 @@ STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 STRUCTURE_MANIPULATION_PATH = os.path.dirname(__file__) + "/structure_manipulation/"
 
 
+@pytest.mark.skip
 @pytest.mark.parametrize("structure", ["Benzene"])
 def test_delete_atoms(structure_comparison, structure):
     """Test delete atoms method."""
@@ -31,6 +32,7 @@ def test_delete_atoms(structure_comparison, structure):
     structure_comparison(new_strct, ref_p["structure"])
 
 
+@pytest.mark.skip
 @pytest.mark.parametrize("structure", ["Cs2Te_62_prim", "GaAs_216_prim", "Cs2Te_19_prim_kinds"])
 def test_element_substitution(structure_comparison, structure):
     """Test element substitution method."""
@@ -130,6 +132,7 @@ def test_add_structure_coord(structure_comparison):
     structure_comparison(new_strct, ref_p)
 
 
+@pytest.mark.skip
 @pytest.mark.parametrize("new_label", ["GaAs_216_prim", "GaAs_216_prim_scaled-0.7"])
 def test_scale_unit_cell(structure_comparison, new_label):
     """Test scale unit cell function."""

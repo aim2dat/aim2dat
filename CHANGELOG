@@ -18,7 +18,7 @@ Version 0.3.0
 * Added more units and fundamental constants to ``utils.units`` (`PR #122 <https://github.com/aim2dat/aim2dat/pull/122>`_).
 * The ``strct.Structure.calculate_angle`` and ``strct.Structure.calculate_dihedral_angle`` now supports lists and ``None`` as input (`PR #126 <https://github.com/aim2dat/aim2dat/pull/126>`_).
 * Several new functions have been added to the ``strct.ext_manipulation`` module, including ``add_structure_position``, ``translate_structure`` or ``rotate_structure``, each of the functions in this module now implement a common ``dist_threshold`` parameter to control the inter-atomic distances of the altered structures (`PR #105 <https://github.com/aim2dat/aim2dat/pull/105>`_, `PR #123 <https://github.com/aim2dat/aim2dat/pull/123>`_, `PR #129 <https://github.com/aim2dat/aim2dat/pull/129>`_).
-
+* The ``strct.Structure`` class has now the property ``numbers`` to get the atomic number related to the element (`PR #130 <https://github.com/aim2dat/aim2dat/pull/130>`_).
 
 **Fixes:**
 
