@@ -206,6 +206,7 @@ def test_structure_features():
             ), "Positions don't match."
     assert "positions" in structure
     assert structure["kinds"] == tuple(strct_dict["kinds"])
+    assert structure["numbers"] == (55, 55, 55, 55, 55, 55, 55, 55, 52, 52, 52, 52)
 
     with pytest.raises(ValueError) as error:
         structure.set_positions([[0.0, 0.0, 0.0]])
