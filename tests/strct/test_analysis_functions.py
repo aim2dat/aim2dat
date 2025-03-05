@@ -11,7 +11,127 @@ from aim2dat.strct import Structure
 from aim2dat.io.yaml import load_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
+MISC_PATH = os.path.dirname(__file__) + "/miscellaneous/"
 COORDINATION_PATH = os.path.dirname(__file__) + "/coordination/"
+
+
+def test_calculate_distance_angle_dihedral_errors():
+    """Test correct error handling on site indices input."""
+    strct = Structure.from_file(STRUCTURES_PATH + "Benzene.xyz")
+    with pytest.raises(ValueError) as error:
+        strct.calculate_distance([1] * 3, [0, 2, 20])
+    assert str(error.value) == "`site_index` needs to be smaller than the number of sites."
+    with pytest.raises(TypeError) as error:
+        strct.calculate_distance([1.0] * 3, [0, 2, 3])
+    assert str(error.value) == "`site_index` must be of type int, list, tuple, np.ndarray or None."
+    with pytest.raises(TypeError) as error:
+        strct.calculate_distance([0, 2.0, 3], [1] * 3)
+    assert str(error.value) == "`site_index` must be of type int, list, tuple, np.ndarray or None."
+    with pytest.raises(TypeError) as error:
+        strct.calculate_distance([1], "test")
+    assert str(error.value) == "`site_index` must be of type int, list, tuple, np.ndarray or None."
+
+
+@pytest.mark.parametrize("structure, file_suffix", [("Benzene", "xyz"), ("ZIF-8", "cif")])
+def test_calculate_distance(structure, file_suffix):
+    """Test calculate_distance function."""
+    ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
+    strct = Structure.from_file(STRUCTURES_PATH + structure + "." + file_suffix)
+    dist = strct.calculate_distance(**ref_outputs["distance"]["function_args"])
+    if isinstance(ref_outputs["distance"]["reference"], list):
+        assert [
+            abs(dist[(idx0, idx1)] - val) < 1e-5
+            for (idx0, idx1, val) in zip(
+                ref_outputs["distance"]["function_args"]["site_index1"],
+                ref_outputs["distance"]["function_args"]["site_index2"],
+                ref_outputs["distance"]["reference"],
+            )
+        ], "Wrong distance."
+    else:
+        assert abs(dist - ref_outputs["distance"]["reference"]) < 1e-5, "Wrong distance."
+
+
+@pytest.mark.parametrize("structure, file_suffix", [("ZIF-8", "cif"), ("ScBDC", "cif")])
+def test_calculate_distance_sc(structure, file_suffix):
+    """Test calculate_distance function using the super cell."""
+    ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
+    strct = Structure.from_file(
+        STRUCTURES_PATH + structure + "." + file_suffix,
+        backend="internal",
+        backend_kwargs={"strct_check_chem_formula": False},
+    )
+    if isinstance(strct, list):
+        strct = strct[0]
+    dist = strct.calculate_distance(**ref_outputs["distance_sc"]["function_args"])
+    if ref_outputs["distance_sc"]["reference"] is None:
+        assert dist is None
+    else:
+        if isinstance(dist, tuple):
+            dist, pos = dist
+            for idx0, pos_list in enumerate(ref_outputs["distance_sc"]["reference_pos"]):
+                site_idx = (
+                    ref_outputs["distance_sc"]["function_args"]["site_index1"][idx0],
+                    ref_outputs["distance_sc"]["function_args"]["site_index2"][idx0],
+                )
+                for pos_idx, pos_ref in enumerate(pos_list):
+                    assert all(
+                        [abs(p0 - p1) < 1e-5 for p0, p1 in zip(pos[site_idx][pos_idx], pos_ref)]
+                    ), f"Position {site_idx}/{pos_idx} is wrong."
+        for idx0, dist_list in enumerate(ref_outputs["distance_sc"]["reference"]):
+            if isinstance(dist_list, list):
+                site_index1, site_index2 = (
+                    ref_outputs["distance_sc"]["function_args"]["site_index1"][idx0],
+                    ref_outputs["distance_sc"]["function_args"]["site_index2"][idx0],
+                )
+                for dist_idx, dist_ref in enumerate(dist_list):
+                    assert (
+                        abs(dist[(site_index1, site_index2)][dist_idx] - dist_ref) < 1e-5
+                    ), f"Distance {(site_index1, site_index2)}/{dist_idx} is wrong."
+            else:
+                assert abs(dist[idx0] - dist_list) < 1e-5, f"Distance {idx0} is wrong."
+
+
+@pytest.mark.parametrize("structure, file_suffix", [("Benzene", "xyz"), ("ZIF-8", "cif")])
+def test_calculate_angle(structure, file_suffix):
+    """Test calculate_angle function."""
+    ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
+    strct = Structure.from_file(STRUCTURES_PATH + structure + "." + file_suffix)
+    angles = strct.calculate_angle(**ref_outputs["angle"]["function_args"])
+    if isinstance(ref_outputs["angle"]["reference"], list):
+        for angle, ref in zip(angles.values(), ref_outputs["angle"]["reference"]):
+            assert abs(angle - ref) < 1e-3, "Wrong angle."
+    else:
+        assert abs(angles - ref_outputs["angle"]["reference"]) < 1e-3, "Wrong angle."
+
+
+@pytest.mark.parametrize("structure, file_suffix", [("ScBDC", "cif")])
+def test_calculate_dihedral_angle(structure, file_suffix):
+    """Test calculate_dihedral_angle function."""
+    ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
+    strct = Structure.from_file(
+        STRUCTURES_PATH + structure + "." + file_suffix,
+        backend="internal",
+        backend_kwargs={"strct_check_chem_formula": False},
+    )[0]
+    angles = strct.calculate_dihedral_angle(**ref_outputs["dihedral_angle"]["function_args"])
+    assert len(angles) == len(ref_outputs["dihedral_angle"]["reference"])
+    for angle, ref in zip(angles.values(), ref_outputs["dihedral_angle"]["reference"]):
+        assert abs(angle - ref) < 1e-3, "Wrong angle."
+
+
+def test_cn_analysis_error():
+    """Test method validation of coordination analysis."""
+    strct = Structure(**dict(load_yaml_file(STRUCTURES_PATH + "GaAs_216_conv.yaml")))
+    with pytest.raises(ValueError) as error:
+        strct.calculate_coordination(method="test")
+    assert (
+        str(error.value)
+        == "Method 'test' is not supported. Supported methods are: 'minimum_distance', "
+        "'n_nearest_neighbours', 'atomic_radius', 'econ', 'voronoi'."
+    )
+    with pytest.raises(ValueError) as error:
+        strct.calculate_coordination(method="voronoi", voronoi_weight_type="test")
+    assert str(error.value) == "`weight_type` 'test' is not supported."
 
 
 @pytest.mark.parametrize(
