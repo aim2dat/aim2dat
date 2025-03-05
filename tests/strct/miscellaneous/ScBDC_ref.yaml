@@ -7,9 +7,9 @@ distance_sc:
   reference:
 dihedral_angle:
   function_args:
-    site_index1: 61
-    site_index2: 68
-    site_index3: 30
-    site_index4: 22
+    site_index1: [61, 62]
+    site_index2: [68, 63]
+    site_index3: [30, 64]
+    site_index4: [22, 65]
     backfold_positions: True
-  reference: 2.5997
+  reference: [2.5997, 107.09934, 111.30343, 87.62370, 147.00053, 18.95456, 4.42290, 137.10592, 68.09839, 73.88416, 91.46627000756551, 128.90265244972716, 115.44020, 44.93498, 178.90544, 123.18279]
