@@ -22,7 +22,7 @@ cell:
 - [0.0, 9.527045, 0.0]
 - [0.0, 0.0, 11.621285]
 source_id: mp-573763
-source: MP_2025.02.12
+source: MP_2025.02.12.post
 icsd_ids: [36501]
 formation_energy: {value: -1.220100983333334, unit: eV/atom}
 stability: {value: 0.0, unit: eV/atom}
