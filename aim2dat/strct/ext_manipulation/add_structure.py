@@ -5,7 +5,6 @@ Module that implements routines to add a functional group or adsorbed molecule t
 # Standard library imports
 import os
 from typing import Union, List
-import itertools
 import random
 import copy
 
@@ -446,10 +445,7 @@ def _check_distances(
 
     indices_old = list(range(len(new_structure) - n_atoms))
     indices_new = list(range(len(new_structure) - n_atoms, len(new_structure)))
-    indices1, indices2 = zip(*itertools.product(indices_old, indices_new))
-    dists = new_structure.calculate_distance(
-        list(indices1), list(indices2), backfold_positions=True
-    )
+    dists = new_structure.calculate_distance(indices_old, indices_new, backfold_positions=True)
     if any(d0 < dist_threshold for d0 in dists.values()):
         if not silent:
             raise ValueError("Atoms are too close to each other.")
