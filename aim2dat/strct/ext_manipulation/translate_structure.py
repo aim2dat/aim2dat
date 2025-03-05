@@ -65,13 +65,14 @@ def translate_structure(
     ValueError
         If any distance between atoms is outside the threshold.
     """
-    if site_indices is None:
-        site_indices = list(range(len(structure)))
-
     vector = np.array(vector)
     positions = np.array(structure.positions)
-    for idx in site_indices:
-        positions[idx] += vector
+
+    if site_indices is None:
+        positions += vector
+    else:    
+        for idx in site_indices:
+            positions[idx] += vector
     new_structure = structure.to_dict()
     new_structure["positions"] = positions
     new_structure = Structure(**new_structure, wrap=wrap)
