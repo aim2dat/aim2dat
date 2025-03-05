@@ -33,7 +33,7 @@ def translate_structure(
     vector : list of float (optional)
         Translation vector.
     site_indices : list of int (optional)
-        Indices of the sites to rotate. If not given, all sites of the structure are rotated.
+        Indices of the sites to translate. If not given, all sites of the structure are translated.
     wrap : bool (optional)
         Wrap atomic positions back into the unit cell.
     dist_threshold : dict, list, float or None (optional)
