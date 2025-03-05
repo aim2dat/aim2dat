@@ -491,4 +491,3 @@ def _merge_structures(host_strct, guest_strct, wrap):
         for site_attr, val in new_structure["site_attributes"].items():
             val.append(guest_strct["site_attributes"].get(site_attr, None))
     return Structure(**new_structure, wrap=wrap)
-
