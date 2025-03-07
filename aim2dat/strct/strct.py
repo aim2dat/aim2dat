@@ -572,7 +572,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         return cls.list_import_methods()
 
     @classmethod
-    def list_explort_methods(cls) -> list:
+    def list_export_methods(cls) -> list:
         """
         Get a list with the function names of all available export methds.
 
