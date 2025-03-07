@@ -11,7 +11,7 @@ import numpy as np
 
 # Internal library imports
 from aim2dat.io.base_parser import parse_pattern_function, _BasePattern
-from aim2dat.io.utils import read_multiple
+from aim2dat.io.utils import read_structure, read_multiple
 
 
 class _CellPattern(_BasePattern):
@@ -71,6 +71,7 @@ class _KindPattern(_BasePattern):
             output["kind_info"][kind] = element
 
 
+@read_structure(r"*-1\.restart$")
 def read_cp2k_optimized_structure(folder_path: str) -> Union[dict, List[dict]]:
     """
     Read optimized structures from 'restart'-files.
@@ -104,6 +105,7 @@ def read_cp2k_optimized_structure(folder_path: str) -> Union[dict, List[dict]]:
     return structures
 
 
+@read_structure(r"*-1\.restart$")
 @read_multiple(r".*-1\.restart$", is_read_strct_method=True)
 def read_cp2k_restart_structure(folder_path: str) -> Union[dict, List[dict]]:
     """

@@ -11,7 +11,14 @@ import copy
 import numpy as np
 
 # Internal library imports
-from aim2dat.io.utils import read_structure, read_multiple, custom_open
+from aim2dat.io.utils import (
+    read_structure,
+    read_total_density_of_states,
+    read_atom_proj_density_of_states,
+    read_band_structure,
+    read_multiple,
+    custom_open,
+)
 from aim2dat.io.base_parser import transform_str_value
 from aim2dat.utils.units import length
 from aim2dat.utils.dict_tools import dict_create_tree
@@ -463,6 +470,7 @@ def read_qe_input_structure(file_path):
     return struct_dict
 
 
+@read_band_structure(r".*bands\.dat$")
 def read_qe_band_structure(file_path):
     """
     Read band structure file from Quantum ESPRESSO.
@@ -503,6 +511,7 @@ def read_qe_band_structure(file_path):
     return {"kpoints": kpoints, "unit_y": "eV", "bands": bands}
 
 
+@read_total_density_of_states(r".*dos\.dat$")
 def read_qe_total_density_of_states(file_path):
     """
     Read the total density of states from Quantum ESPRESSO.
@@ -531,6 +540,10 @@ def read_qe_total_density_of_states(file_path):
     return {"energy": energy, "tdos": tdos, "unit_x": "eV", "e_fermi": e_fermi}
 
 
+@read_atom_proj_density_of_states(
+    pattern=r"^.*pdos_atm#(?P<at_idx>\d*)?\((?P<el>[a-zA-Z]*)"
+    + r"?\)\_wfc\#(?P<orb_idx>\d*)?\((?P<orb>[a-z])?\)$"
+)
 @read_multiple(
     pattern=r"^.*pdos_atm#(?P<at_idx>\d*)?\((?P<el>[a-zA-Z]*)"
     + r"?\)\_wfc\#(?P<orb_idx>\d*)?\((?P<orb>[a-z])?\)$"

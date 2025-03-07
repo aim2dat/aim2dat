@@ -6,7 +6,13 @@ Module of functions to read output-files of FHI-aims.
 import re
 
 # Internal library imports
-from aim2dat.io.utils import read_multiple, custom_open
+from aim2dat.io.utils import (
+    read_total_density_of_states,
+    read_atom_proj_density_of_states,
+    read_band_structure,
+    read_multiple,
+    custom_open,
+)
 
 
 def _check_for_soc_files(folder_path, soc):
@@ -20,7 +26,8 @@ def _check_for_soc_files(folder_path, soc):
     return no_soc_suffix
 
 
-@read_multiple(r"band.*\.out(?P<soc>\.no_soc)?$")
+@read_band_structure(r".*band.*\.out(?P<soc>\.no_soc)?$")
+@read_multiple(r".*band.*\.out(?P<soc>\.no_soc)?$")
 def read_fhiaims_band_structure(folder_path, soc=False):
     """
     Read band structure files from FHI-aims.
@@ -62,6 +69,7 @@ def read_fhiaims_band_structure(folder_path, soc=False):
     return {"kpoints": kpoints, "unit_y": "eV", "bands": bands, "occupations": occupations}
 
 
+@read_total_density_of_states(r".*KS_DOS_total*\.dat(?P<soc>\.no_soc)?$")
 def read_fhiaims_total_density_of_states(file_path):
     """
     Read the total density of states from FHI-aims.
@@ -86,6 +94,9 @@ def read_fhiaims_total_density_of_states(file_path):
     return {"energy": energy, "tdos": tdos, "unit_x": "eV"}
 
 
+@read_atom_proj_density_of_states(
+    r".*atom_proj[a-z]*_dos_(?P<kind>[a-zA-Z]+\d+)(?P<raw>_raw)?\.dat(?P<soc>\.no_soc)?$"
+)
 @read_multiple(
     r".*atom_proj[a-z]*_dos_(?P<kind>[a-zA-Z]+\d+)(?P<raw>_raw)?\.dat(?P<soc>\.no_soc)?$"
 )

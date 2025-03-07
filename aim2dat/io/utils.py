@@ -25,6 +25,57 @@ def read_structure(pattern, preset_kwargs={}):
     return decorator
 
 
+def read_band_structure(pattern, preset_kwargs={}):
+    """Decorate functions that parse band structure(s)."""
+
+    def decorator(func):
+        func._is_read_band_structure_method = True
+        func._pattern = pattern
+        func._preset_kwargs = preset_kwargs
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+def read_total_density_of_states(pattern, preset_kwargs={}):
+    """Decorate functions that parse band structure(s)."""
+
+    def decorator(func):
+        func._is_read_total_density_of_states = True
+        func._pattern = pattern
+        func._preset_kwargs = preset_kwargs
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+def read_atom_proj_density_of_states(pattern, preset_kwargs={}):
+    """Decorate functions that parse band structure(s)."""
+
+    def decorator(func):
+        func._is_atom_proj_density_of_states = True
+        func._pattern = pattern
+        func._preset_kwargs = preset_kwargs
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
 def read_multiple(pattern, is_read_strct_method=False, preset_kwargs={}):
     """Add support for a list of multiple files or folder paths (decorator)."""
     # The following cases need to be covered:
