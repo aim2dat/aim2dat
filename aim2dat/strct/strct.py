@@ -28,7 +28,7 @@ from aim2dat.strct.strct_validation import (
     _structure_validate_elements,
     _structure_validate_positions,
 )
-from aim2dat.strct.mixin import AnalysisMixin, ManipulationMixin
+from aim2dat.strct.mixin import AnalysisMixin, ManipulationMixin, classproperty
 import aim2dat.utils.chem_formula as utils_cf
 import aim2dat.utils.print as utils_pr
 from aim2dat.utils.maths import calc_angle
@@ -551,24 +551,46 @@ class Structure(AnalysisMixin, ManipulationMixin):
         self._site_attributes[key] = tuple(values)
 
     @classmethod
-    @property
-    def import_methods(cls) -> list:
-        """list: Return import methods."""
+    def list_import_methods(cls) -> list:
+        """
+        Get a list with the function names of all available import methds.
+
+        Returns
+        -------
+        list:
+            Return a list of all available import methods.
+        """
         import_methods = []
         for name, method in cls.__dict__.items():
             if getattr(method, "_is_import_method", False):
                 import_methods.append(name)
         return import_methods
 
+    @classproperty
+    def import_methods(cls) -> list:
+        """list: Return import methods. This property is depreciated and will be removed soon."""
+        return cls.list_import_methods()
+
     @classmethod
-    @property
-    def export_methods(cls) -> list:
-        """list: Return export methods."""
+    def list_explort_methods(cls) -> list:
+        """
+        Get a list with the function names of all available export methds.
+
+        Returns
+        -------
+        list:
+            Return a list of all available export methods.
+        """
         export_methods = []
-        for name, method in Structure.__dict__.items():
+        for name, method in cls.__dict__.items():
             if getattr(method, "_is_export_method", False):
                 export_methods.append(name)
         return export_methods
+
+    @classproperty
+    def export_methods(cls) -> list:
+        """list: Return export methods. This property is depreciated and will be removed soon."""
+        return cls.list_explort_methods()
 
     @import_method
     @classmethod
