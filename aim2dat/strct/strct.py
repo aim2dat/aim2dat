@@ -590,7 +590,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
     @classproperty
     def export_methods(cls) -> list:
         """list: Return export methods. This property is depreciated and will be removed soon."""
-        return cls.list_explort_methods()
+        return cls.list_export_methods()
 
     @import_method
     @classmethod
