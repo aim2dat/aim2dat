@@ -32,6 +32,10 @@ Version 0.3.0
 * Setting ``strct.Structure.site_attributes`` was not resetting the dictionary but instead adding the new key/value pairs (`PR #125 <https://github.com/aim2dat/aim2dat/pull/125>`_).
 * The ``strct.StructureOperations.compare_sites_via_coordination``, ``strct.StructureOperations.find_eq_sites_via_coordination``, ``strct.ext_analysis.decorator.external_analysis_method`` decorator now properly handles unset keyword arguments (`PR #128 <https://github.com/aim2dat/aim2dat/pull/128>`_).
 
+**Deprecations:**
+
+* The ``strct.Structure.import_methods``, ``strct.Structure.export_methods``, ``strct.Structure.analysis_methods``, ``strct.Structure.manipulation_methods``, ``strct.StructureOperations.analysis_methods`` and ``strct.StructureOperaions.manipulation_methods`` functions are now deprecated since Python dropped the support for class properties. The methods are replaced by the ``list_*_methods`` class methods, making this Package compatible with Python 3.13 (`PR #132 <https://github.com/aim2dat/aim2dat/pull/132>`_).
+
 **Breaking Changes:**
 
 * ``strct.ext_analysis.determine_molecular_fragments`` now considers the same site multiple times if it is connected, returns a list of ``strct.Structure`` objects and does not shift the position of the first atom to zero (`PR #111 <https://github.com/aim2dat/aim2dat/pull/111>`_).
@@ -85,7 +89,7 @@ Version 0.2.0
 * ``strct.StructureOperations.compare_*`` functions can now be run in parallel (`PR #78 <https://github.com/aim2dat/aim2dat/pull/78>`_).
 * Added ``custom_hatch`` to all ``plots`` classes to allow plotting hatched bars using the matplotlib backend (`PR #89 <https://github.com/aim2dat/aim2dat/pull/89>`_).
 
-**Depreciations:**
+**Deprecations:**
 
 * ``strct.ext_manipulation.add_functional_group`` is replaced by ``strct.ext_manipulation.add_structure_coord`` (`PR #37 <https://github.com/aim2dat/aim2dat/pull/37>`_).
 * ``aim2dat.io.cp2k.read_optimized_structure`` is replaced by ``aim2dat.io.cp2k.read_restart_structure`` (`PR #56 <https://github.com/aim2dat/aim2dat/pull/56>`_).
