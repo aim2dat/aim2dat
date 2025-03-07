@@ -358,7 +358,6 @@ class _CIFDataBlock:
             len(self.current_loop["values"][0]) != len(self.current_loop["values"][idx])
             for idx in range(len(self.current_loop["values"]))
         ):
-            print(self.current_loop)
             raise ValueError(f"Number of values differ for loop finishing on line {line_idx}.")
         self.loops.append(
             {
