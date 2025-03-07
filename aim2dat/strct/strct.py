@@ -574,7 +574,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
     @classmethod
     def list_export_methods(cls) -> list:
         """
-        Get a list with the function names of all available export methds.
+        Get a list with the function names of all available export methods.
 
         Returns
         -------
