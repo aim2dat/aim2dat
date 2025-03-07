@@ -76,7 +76,7 @@ class AnalysisMixin:
     @classmethod
     def list_analysis_methods(cls) -> list:
         """
-        Get a list with the function names of all available analysis methds.
+        Get a list with the function names of all available analysis methods.
 
         Returns
         -------
@@ -452,7 +452,7 @@ class ManipulationMixin:
     @classmethod
     def list_manipulation_methods(cls) -> list:
         """
-        Get a list with the function names of all available manipulation methds.
+        Get a list with the function names of all available manipulation methods.
 
         Returns
         -------
