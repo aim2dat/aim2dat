@@ -8,7 +8,7 @@ import numpy as np
 import pytest
 
 # Internal library imports
-from aim2dat.strct import Structure
+from aim2dat.strct import Structure, StructureCollection, StructureOperations
 from aim2dat.strct.ext_manipulation import (
     add_structure_coord,
     add_structure_random,
@@ -127,6 +127,84 @@ def test_build_distance_dict_fct(nested_dict_comparison):
         str(error.value)
         == "`dist_threshold` needs to be of type int/float/list/tuple/dict or None."
     )
+
+
+def test_add_structure_coord(structure_comparison):
+    """Test add functional group function."""
+    inputs = dict(load_yaml_file(STRUCTURES_PATH + "Sc2BDC3.yaml"))
+    inputs["kinds"] = ["kind1"] + [None] * (len(inputs["elements"]) - 1)
+    ref_p = load_yaml_file(STRUCTURE_MANIPULATION_PATH + "Sc2BDC3_ref.yaml")
+    ref_p["label"] = "test"
+    strct_collect = StructureCollection()
+    strct_collect.append(**inputs, label="test")
+    strct_ops = StructureOperations(strct_collect)
+    new_strct = strct_ops[0].perform_manipulation(
+        method=add_structure_coord,
+        kwargs={
+            "wrap": True,
+            "host_indices": 37,
+            "guest_structure": "H",
+            "bond_length": 1.0,
+            "change_label": False,
+            "guest_dir": [1.0, 0.0, 0.0],
+            "method": "minimum_distance",
+        },
+    )
+    new_strct = new_strct.perform_manipulation(
+        method=add_structure_coord,
+        kwargs={
+            "wrap": True,
+            "host_indices": 39,
+            "guest_structure": "CH3",
+            "bond_length": 1.1,
+            "change_label": False,
+            "guest_dir": [1.0, 0.0, 0.0],
+            "method": "minimum_distance",
+        },
+    )
+    new_strct = new_strct.perform_manipulation(
+        method=add_structure_coord,
+        kwargs={
+            "host_indices": 41,
+            "guest_structure": "COOH",
+            "change_label": False,
+            "guest_dir": [1.0, 0.0, 0.0],
+            "method": "minimum_distance",
+        },
+    )
+    new_strct = new_strct.perform_manipulation(
+        method=add_structure_coord,
+        kwargs={
+            "host_indices": 42,
+            "guest_structure": "NH2",
+            "change_label": False,
+            "guest_dir": [1.0, 0.0, 0.0],
+            "method": "minimum_distance",
+        },
+    )
+    new_strct = new_strct.perform_manipulation(
+        method=add_structure_coord,
+        kwargs={
+            "host_indices": 62,
+            "guest_structure": "NO2",
+            "change_label": False,
+            "guest_dir": [1.0, 0.0, 0.0],
+            "method": "minimum_distance",
+        },
+    )
+    new_strct = new_strct.perform_manipulation(
+        method=add_structure_coord,
+        kwargs={
+            "host_indices": 74,
+            "guest_structure": "OH",
+            "change_label": False,
+            "dist_threshold": None,
+            "guest_dir": [1.0, 0.0, 0.0],
+            "method": "minimum_distance",
+        },
+    )
+    new_strct.set_positions(new_strct.positions, wrap=True)
+    structure_comparison(new_strct, ref_p)
 
 
 def test_add_structure_coord_planar(structure_comparison):

@@ -121,11 +121,7 @@ def _check_distances(
 
     # Calculate pair-wise distances:
     other_indices = [i for i in range(len(structure)) if i not in indices]
-    if len(other_indices) == 0:
-        indices1, indices2 = zip(*itertools.combinations(indices, 2))
-    else:
-        indices1, indices2 = zip(*itertools.product(other_indices, indices))
-    dists = structure.calculate_distance(list(indices1), list(indices2), backfold_positions=True)
+    dists = structure.calculate_distance(other_indices, indices, backfold_positions=True)
 
     for idx_pair, dist in dists.items():
         threshold = distance_dict.get(tuple(sorted(idx_pair)), None)
