@@ -47,7 +47,7 @@ def read_fhiaims_band_structure(folder_path: str, soc: bool = False) -> dict:
     """
     no_soc_suffix = _check_for_soc_files(folder_path, soc)
 
-    indices = [(val, idx) for idx, val in enumerate(folder_path["file_name"])]
+    indices = [(val, idx) for idx, val in enumerate(folder_path["file_path"])]
     indices.sort(key=lambda point: point[0])
     _, indices = zip(*indices)
     occupations = []
@@ -126,7 +126,7 @@ def read_fhiaims_atom_proj_density_of_states(
     dict_labels = ["s", "p", "d", "f", "g", "h", "i"]
     atomic_pdos = []
     energy = []
-    indices = [(val, idx) for idx, val in enumerate(folder_path["file_name"])]
+    indices = [(val, idx) for idx, val in enumerate(folder_path["file_path"])]
     indices.sort(key=lambda point: point[0])
     _, indices = zip(*indices)
     for idx in indices:

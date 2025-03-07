@@ -124,7 +124,7 @@ def read_cp2k_restart_structure(folder_path: str) -> Union[dict, List[dict]]:
         dictionaries is returned.
     """
     structures = []
-    for file_p, file_n in zip(folder_path["file"], folder_path["file_name"]):
+    for file_p, file_n in zip(folder_path["file"], folder_path["file_path"]):
         proj = file_n.rsplit("-", 1)[0]
         output = parse_pattern_function(file_p, [_CellPattern, _CoordPattern, _KindPattern])
         kind_info = output.pop("kind_info")

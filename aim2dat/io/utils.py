@@ -84,17 +84,17 @@ def read_multiple(pattern, is_read_strct_method=False, preset_kwargs={}):
 
     def _check_file(file_like, file_dict, re_pattern, is_strict):
         if os.path.isfile(file_like):
-            file_name = os.path.split(file_like)[1]
+            file_path = os.path.split(file_like)[1]
         elif hasattr(file_like, "filename"):
             # Support AiiDA single file:
-            file_name = file_like.filename
+            file_path = file_like.filename
         else:
             return None
 
-        match = None if re_pattern is None else re_pattern.match(file_name)
+        match = None if re_pattern is None else re_pattern.match(file_path)
         if match or not is_strict:
             file_dict["file"].append(file_like)
-            file_dict["file_name"].append(file_name)
+            file_dict["file_path"].append(file_path)
             for key, val in match.groupdict().items():
                 file_dict[key].append(val)
 
@@ -120,7 +120,7 @@ def read_multiple(pattern, is_read_strct_method=False, preset_kwargs={}):
             if not isinstance(files, (list, tuple)):
                 files = [files]
             re_pattern = None
-            file_dict = {"file": [], "file_name": []}
+            file_dict = {"file": [], "file_path": []}
             if pattern:
                 re_pattern = re.compile(pattern)
                 for k0 in re_pattern.groupindex.keys():

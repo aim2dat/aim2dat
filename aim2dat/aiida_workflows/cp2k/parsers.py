@@ -150,9 +150,9 @@ class _Cp2kBaseParser(Parser):
         """Parse cube files."""
         if retrieved_temporary_folder is not None:
             pattern = re.compile(r"^\S*-([A-Za-z]*)?_([A-Za-z0-9]+)?_*(\d*)?-\d+_\d+.cube")
-            file_names = os.listdir(retrieved_temporary_folder)
-            for file_name in file_names:
-                found_match = pattern.match(file_name)
+            file_pathes = os.listdir(retrieved_temporary_folder)
+            for file_path in file_pathes:
+                found_match = pattern.match(file_path)
                 if found_match is not None:
                     groups = found_match.groups()
                     label = []
@@ -164,7 +164,7 @@ class _Cp2kBaseParser(Parser):
                         else:
                             label.append(grp.lower())
                     label = "_".join(label)
-                    file_path = os.path.join(retrieved_temporary_folder, file_name)
+                    file_path = os.path.join(retrieved_temporary_folder, file_path)
                     with open(file_path, "r") as fobj:
                         g_cube_data = GCubeData.set_from_file(fobj)
                     self.out("output_cubes." + label, g_cube_data)

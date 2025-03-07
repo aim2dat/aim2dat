@@ -13,13 +13,13 @@ from aim2dat.io.utils import (
 
 
 @read_band_structure((r".*\.bs$"))
-def read_cp2k_band_structure(file_name: str) -> dict:
+def read_cp2k_band_structure(file_path: str) -> dict:
     """
     Read band structure file from CP2K.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path of the output-file of CP2K containing the band structure.
 
     Returns
@@ -35,7 +35,7 @@ def read_cp2k_band_structure(file_name: str) -> dict:
     spin_idx = 0
     special_p2 = None
     is_spin_pol = False
-    with custom_open(file_name, "r") as bands_file:
+    with custom_open(file_path, "r") as bands_file:
         for line in bands_file:
             l_splitted = line.split()
             if line.startswith("#  Special point 1"):
@@ -128,7 +128,7 @@ def read_cp2k_atom_proj_density_of_states(folder_path: str) -> dict:
         "i+5",
     ]
 
-    indices = [(val, idx) for idx, val in enumerate(folder_path["file_name"])]
+    indices = [(val, idx) for idx, val in enumerate(folder_path["file_path"])]
     indices.sort(key=lambda point: point[0])
     _, indices = zip(*indices)
     pdos = []
