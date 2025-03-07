@@ -9,7 +9,7 @@ import re
 from aim2dat.io.utils import read_multiple, custom_open
 
 
-def _check_for_soc_files(soc, folder_path):
+def _check_for_soc_files(folder_path, soc):
     no_soc_suffix = False
     if soc and all(val is None for val in folder_path["soc"]):
         raise ValueError(
@@ -21,7 +21,7 @@ def _check_for_soc_files(soc, folder_path):
 
 
 @read_multiple(r"band.*\.out(?P<soc>\.no_soc)?$")
-def read_band_structure(folder_path, soc=False):
+def read_fhiaims_band_structure(folder_path, soc=False):
     """
     Read band structure files from FHI-aims.
     Spin-polarized calculations are not yet supported.
@@ -38,7 +38,7 @@ def read_band_structure(folder_path, soc=False):
     band_structure : dict
         Dictionary containing the k-path and th eigenvalues as well as the occupations.
     """
-    no_soc_suffix = _check_for_soc_files(soc, folder_path)
+    no_soc_suffix = _check_for_soc_files(folder_path, soc)
 
     indices = [(val, idx) for idx, val in enumerate(folder_path["file_name"])]
     indices.sort(key=lambda point: point[0])
@@ -62,13 +62,13 @@ def read_band_structure(folder_path, soc=False):
     return {"kpoints": kpoints, "unit_y": "eV", "bands": bands, "occupations": occupations}
 
 
-def read_total_density_of_states(file_name):
+def read_fhiaims_total_density_of_states(file_path):
     """
     Read the total density of states from FHI-aims.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path of the output-file of FHI-aims containing the total density of states.
 
     Returns
@@ -78,7 +78,7 @@ def read_total_density_of_states(file_name):
     """
     energy = []
     tdos = []
-    with custom_open(file_name, "r") as tdos_file:
+    with custom_open(file_path, "r") as tdos_file:
         for line in tdos_file:
             if not line.startswith("#"):
                 energy.append(float(line.split()[0]))
@@ -89,7 +89,7 @@ def read_total_density_of_states(file_name):
 @read_multiple(
     r".*atom_proj[a-z]*_dos_(?P<kind>[a-zA-Z]+\d+)(?P<raw>_raw)?\.dat(?P<soc>\.no_soc)?$"
 )
-def read_atom_proj_density_of_states(folder_path, soc=False, load_raw=False):
+def read_fhiaims_atom_proj_density_of_states(folder_path, soc=False, load_raw=False):
     """
     Read the atom projected density of states from FHI-aims.
 
@@ -107,7 +107,7 @@ def read_atom_proj_density_of_states(folder_path, soc=False, load_raw=False):
     pdos : dict
         Dictionary containing the projected density of states for each atom.
     """
-    no_soc_suffix = _check_for_soc_files(soc, folder_path)
+    no_soc_suffix = _check_for_soc_files(folder_path, soc)
 
     # Iterate over files and quantum numbers:
     dict_labels = ["s", "p", "d", "f", "g", "h", "i"]

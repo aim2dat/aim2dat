@@ -11,7 +11,7 @@ import aiida.orm as aiida_orm
 from aiida.engine import run_get_node
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 
 
 BandStructureWC = WorkflowFactory("aim2dat.cp2k.band_structure")

@@ -15,7 +15,7 @@ from aim2dat.utils.dict_tools import (
     dict_retrieve_parameter,
     dict_merge,
 )
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 
 cwd = os.path.dirname(__file__)
 

@@ -10,7 +10,7 @@ import pytest
 from aim2dat.strct import Structure, SurfaceGeneration
 from aim2dat.strct.surface_utils import _transform_slab_to_primitive
 from aim2dat.strct.brillouin_zone_2d import _get_kpath
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 BR_ZONE_PATH = os.path.dirname(__file__) + "/brillouin_zone_2d/"

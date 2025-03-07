@@ -16,7 +16,7 @@ from aim2dat.aiida_workflows.cp2k.surface_opt_utils import (
 )
 from aim2dat.aiida_workflows.utils import obtain_value_from_aiida_node
 from aim2dat.aiida_workflows.cp2k.el_properties_utils import elprop_setup
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 from aim2dat.strct import Structure, SurfaceGeneration
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/../strct/structures/"

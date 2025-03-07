@@ -8,7 +8,7 @@ import pytest
 
 # Internal library imports
 from aim2dat.strct import StructureCollection, StructureOperations
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 SPACE_GROUP_PATH = os.path.dirname(__file__) + "/space_group_analysis/"

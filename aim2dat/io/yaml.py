@@ -28,13 +28,13 @@ def load_yaml_file(file_path, typ="safe"):
     return data
 
 
-def store_in_yaml_file(file_name, content):
+def write_yaml_file(file_path, content):
     """
     Load a yaml-file and returns the content.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path to the yaml-file.
     content :
         Content of the file.
@@ -42,5 +42,5 @@ def store_in_yaml_file(file_name, content):
     yaml = ruamel.yaml.YAML()
     yaml.version = (1, 2)
     yaml.default_flow_style = None
-    with open(file_name, "w") as open_f:
+    with open(file_path, "w") as open_f:
         yaml.dump(content, open_f)

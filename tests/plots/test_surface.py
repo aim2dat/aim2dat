@@ -8,7 +8,7 @@ import pytest
 
 # Internal library imports
 from aim2dat.plots import SurfacePlot
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 from aim2dat.ext_interfaces.pandas import _turn_dict_into_pandas_df
 
 

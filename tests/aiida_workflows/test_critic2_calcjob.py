@@ -9,7 +9,7 @@ from aiida.common import datastructures
 
 # Internal library imports
 from aim2dat.aiida_workflows.utils import create_aiida_node
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 
 
 MAIN_PATH = os.path.dirname(__file__) + "/critic2/"

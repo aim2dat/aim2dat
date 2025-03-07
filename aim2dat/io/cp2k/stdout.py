@@ -871,7 +871,7 @@ def _create_step_info_dict(
     return outp_list
 
 
-def read_stdout(file_name: str, parser_type: str = "standard") -> dict:
+def read_cp2k_stdout(file_name: str, parser_type: str = "standard") -> dict:
     """
     Read standard output file of CP2K.
 

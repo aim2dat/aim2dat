@@ -11,7 +11,7 @@ import pandas as pd
 from aim2dat.plots import PhasePlot
 from aim2dat.strct import StructureCollection
 from aim2dat.ext_interfaces.pandas import _turn_dict_into_pandas_df
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 import aim2dat.utils.chem_formula as utils_cf
 
 PHASES_PATH = os.path.dirname(__file__) + "/phases_files/"

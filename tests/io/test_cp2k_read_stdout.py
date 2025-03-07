@@ -7,8 +7,7 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.io.cp2k import read_stdout
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_cp2k_stdout, load_yaml_file
 
 
 MAIN_PATH = os.path.dirname(__file__) + "/cp2k_stdout/"
@@ -24,14 +23,14 @@ class OutputParserTester:
     def add_output_file(self, test_case, print_level, cp2k_version):
         """Add output-file to the class."""
         self.result_dicts[test_case + "-" + str(cp2k_version)] = {
-            "standard": read_stdout(
+            "standard": read_cp2k_stdout(
                 MAIN_PATH + f"cp2k-{cp2k_version}/{test_case}_{print_level}/aiida.out", "standard"
             ),
-            "partial_charges": read_stdout(
+            "partial_charges": read_cp2k_stdout(
                 MAIN_PATH + f"cp2k-{cp2k_version}/{test_case}_{print_level}/aiida.out",
                 "partial_charges",
             ),
-            "trajectory": read_stdout(
+            "trajectory": read_cp2k_stdout(
                 MAIN_PATH + f"cp2k-{cp2k_version}/{test_case}_{print_level}/aiida.out",
                 "trajectory",
             ),

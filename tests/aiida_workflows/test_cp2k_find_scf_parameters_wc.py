@@ -11,7 +11,7 @@ from aiida.engine import run_get_node
 import aiida.orm.nodes.process.calculation.calcjob as cjob
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 
 
 FindSCFParametersWC = WorkflowFactory("aim2dat.cp2k.find_scf_p")

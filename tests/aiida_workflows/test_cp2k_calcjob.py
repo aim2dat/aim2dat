@@ -7,7 +7,7 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 
 MAIN_PATH = os.path.dirname(__file__) + "/cp2k/"
 OUTPUTS_PATH = MAIN_PATH + "outputs/"

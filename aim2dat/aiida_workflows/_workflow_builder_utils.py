@@ -5,7 +5,7 @@ import os
 import re
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 
 
 def _load_protocol(inp_protocol, folder_path):

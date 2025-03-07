@@ -9,7 +9,7 @@ import pandas as pd
 
 # Internal library imports
 from aim2dat.strct import Structure, StructureCollection, StructureOperations
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 from aim2dat.ext_interfaces.pandas import _turn_dict_into_pandas_df
 
 # from aim2dat.ext_interfaces.ase_atoms import _create_atoms_from_structure

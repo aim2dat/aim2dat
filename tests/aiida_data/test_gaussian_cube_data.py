@@ -7,7 +7,7 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 from aim2dat.aiida_data.gaussian_cube_data import GaussianCubeData
 
 CUBE_PATH = os.path.dirname(__file__) + "/cube_files/"

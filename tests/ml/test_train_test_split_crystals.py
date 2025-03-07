@@ -9,7 +9,7 @@ import pytest
 # Internal library imports
 from aim2dat.ml.utils import _check_train_test_size, train_test_split_crystals
 import aim2dat.utils.chem_formula as utils_cf
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 
 
 REF_PATH = os.path.dirname(__file__) + "/train_test_split_crystals_ref/"

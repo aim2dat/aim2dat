@@ -16,7 +16,11 @@ from aiida.plugins import DataFactory
 from aiida.common import OutputParsingError
 
 # Internal library imports
-from aim2dat.io.cp2k import read_stdout, read_restart_structure, read_atom_proj_density_of_states
+from aim2dat.io import (
+    read_cp2k_stdout,
+    read_cp2k_restart_structure,
+    read_cp2k_atom_proj_density_of_states,
+)
 
 
 StructureData = DataFactory("core.structure")
@@ -99,7 +103,7 @@ class _Cp2kBaseParser(Parser):
             raise OutputParsingError("CP2K output file was not retrieved.")
 
         try:
-            result_dict = read_stdout(
+            result_dict = read_cp2k_stdout(
                 self.retrieved.get_object_content(fname), parser_type=self.parser_type
             )
         # TODO distinguish different exceptions.
@@ -126,7 +130,7 @@ class _Cp2kBaseParser(Parser):
         # Read the restart file.
         # TODO distinguish different exceptions.
         try:
-            structures = read_restart_structure(self.retrieved.get_object_content(fname))
+            structures = read_cp2k_restart_structure(self.retrieved.get_object_content(fname))
         except IOError:
             return self.exit_codes.ERROR_READING_OUTPUT_FILE
 
@@ -187,7 +191,7 @@ class Cp2kStandardParser(_Cp2kBaseParser):
         if retrieved_temporary_folder is not None:
             pdos_data = None
             try:
-                pdos_data = read_atom_proj_density_of_states(retrieved_temporary_folder)
+                pdos_data = read_cp2k_atom_proj_density_of_states(retrieved_temporary_folder)
             except ValueError as e:
                 if str(e) != "No files with the correct naming scheme found.":
                     raise

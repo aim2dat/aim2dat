@@ -3,7 +3,7 @@ Input operations for zeo++.
 """
 
 
-def write_to_file(struct_dict, file_path):
+def write_zeo_file(file_path, struct_dict):
     """Write structure to file."""
     if file_path.endswith(".cssr"):
         output = [" ".join(map(str, struct_dict.cell_lengths))]

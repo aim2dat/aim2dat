@@ -12,7 +12,7 @@ TODO:
 import os
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 from aim2dat.plots import SimplePlot
 
 

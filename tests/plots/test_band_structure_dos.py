@@ -9,7 +9,7 @@ import numpy as np
 
 # Internal library imports
 from aim2dat.plots.band_structure_dos import BandStructurePlot, DOSPlot, BandStructureDOSPlot
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 
 MAIN_PATH = os.path.dirname(__file__)
 BAND_STRUCTURE_PATH = MAIN_PATH + "/band_structure_files/"

@@ -7,7 +7,7 @@ from aim2dat.io.utils import read_multiple, custom_open
 import aim2dat.utils.units as units
 
 
-def read_band_structure(file_name: str) -> dict:
+def read_cp2k_band_structure(file_name: str) -> dict:
     """
     Read band structure file from CP2K.
 
@@ -68,7 +68,7 @@ def read_band_structure(file_name: str) -> dict:
 
 
 @read_multiple(r".*-(?P<spin>[A-Z]+)?_?(?:k\d|list\d).*\.pdos$")
-def read_atom_proj_density_of_states(folder_path: str) -> dict:
+def read_cp2k_atom_proj_density_of_states(folder_path: str) -> dict:
     """
     Read the atom projected density of states from CP2K.
 

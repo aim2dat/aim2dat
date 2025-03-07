@@ -8,7 +8,7 @@ import pytest
 from aiida.orm import SinglefileData
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 from aim2dat.aiida_workflows.cp2k.core_work_chain_inputs import _set_input_parameters
 from aim2dat.aiida_workflows.cp2k.core_work_chain_scf import _initialize_scf_parameters
 

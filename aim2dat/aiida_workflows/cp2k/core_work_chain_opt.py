@@ -7,7 +7,7 @@ import os
 import aiida.orm as aiida_orm
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 from aim2dat.utils.dict_tools import (
     dict_set_parameter,
     dict_retrieve_parameter,

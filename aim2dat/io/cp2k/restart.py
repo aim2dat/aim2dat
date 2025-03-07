@@ -71,7 +71,7 @@ class _KindPattern(_BasePattern):
             output["kind_info"][kind] = element
 
 
-def read_optimized_structure(folder_path: str) -> Union[dict, List[dict]]:
+def read_cp2k_optimized_structure(folder_path: str) -> Union[dict, List[dict]]:
     """
     Read optimized structures from 'restart'-files.
 
@@ -90,12 +90,12 @@ def read_optimized_structure(folder_path: str) -> Union[dict, List[dict]]:
     from warnings import warn
 
     warn(
-        "This function will be removed, please use `read_restart_structure` instead.",
+        "This function will be removed, please use `read_cp2k_restart_structure` instead.",
         DeprecationWarning,
         2,
     )
 
-    structures = read_restart_structure(folder_path)
+    structures = read_cp2k_restart_structure(folder_path)
     if isinstance(structures, list):
         for strct in structures:
             strct["symbols"] = strct.pop("elements")
@@ -105,7 +105,7 @@ def read_optimized_structure(folder_path: str) -> Union[dict, List[dict]]:
 
 
 @read_multiple(r".*-1\.restart$", is_read_strct_method=True)
-def read_restart_structure(folder_path: str) -> Union[dict, List[dict]]:
+def read_cp2k_restart_structure(folder_path: str) -> Union[dict, List[dict]]:
     """
     Read structures from 'restart'-files.
 

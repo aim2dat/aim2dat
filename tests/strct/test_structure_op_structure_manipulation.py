@@ -10,7 +10,7 @@ import pytest
 from aim2dat.strct import StructureOperations, StructureCollection
 from aim2dat.strct.ext_manipulation import add_structure_coord
 
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 STRUCTURE_MANIPULATION_PATH = os.path.dirname(__file__) + "/structure_manipulation/"

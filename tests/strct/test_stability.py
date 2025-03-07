@@ -7,7 +7,7 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 from aim2dat.strct.stability import (
     _find_most_stable_elemental_phases,
     _calculate_stabilities,

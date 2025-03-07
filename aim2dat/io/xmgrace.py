@@ -109,7 +109,7 @@ def read_xmgrace_file(file_path):
     return x_values, y_values, tick_labels
 
 
-def read_band_structure(file_path, kpoints):
+def read_xmgrace_band_structure(file_path, kpoints):
     """
     Read xmgrace band structure file.
 

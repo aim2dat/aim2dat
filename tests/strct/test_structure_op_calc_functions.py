@@ -14,7 +14,7 @@ from aim2dat.strct.ext_analysis import (
     calculate_warren_cowley_order_p,
     calculate_planes,
 )
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"

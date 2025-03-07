@@ -9,7 +9,7 @@ import pytest
 # Internal library imports
 from aim2dat.strct import Structure
 from aim2dat.strct.ext_analysis import determine_molecular_fragments, create_graph
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 FRAG_PATH = os.path.dirname(__file__) + "/fragment_analysis/"

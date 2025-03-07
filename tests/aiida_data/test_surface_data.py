@@ -8,7 +8,7 @@ import pytest
 import aiida.orm as aiida_orm
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 from aim2dat.strct import Structure, SurfaceGeneration
 from aim2dat.aiida_workflows.utils import create_surface_slab
 from aim2dat.ext_interfaces.aiida import (

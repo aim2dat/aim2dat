@@ -7,7 +7,7 @@ import os
 import pytest
 
 # Internal library import
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 from aim2dat.aiida_workflows.utils import create_aiida_node
 from aim2dat.aiida_workflows.cp2k.cube_work_chain import (
     _validate_cube_types,

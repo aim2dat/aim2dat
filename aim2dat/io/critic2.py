@@ -9,13 +9,13 @@ import re
 from aim2dat.io.utils import custom_open
 
 
-def read_stdout(file_name):
+def read_critic2_stdout(file_path):
     """
     Read standard output file.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path to the file.
 
     Returns
@@ -24,7 +24,7 @@ def read_stdout(file_name):
         Results.
     """
     result_dict = {"plane_files": []}
-    with custom_open(file_name, "r") as stdout_file:
+    with custom_open(file_path, "r") as stdout_file:
         pc_section = False
         for line in stdout_file:
             line_splitted = line.split()
@@ -63,13 +63,13 @@ def read_stdout(file_name):
     return result_dict
 
 
-def read_plane(file_name):
+def read_critic2_plane(file_path):
     """
     Read output plane file.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path to the file.
 
     Returns
@@ -79,7 +79,7 @@ def read_plane(file_name):
     """
     unit_pattern = re.compile(r"^[\S\s]+\(units=([a-z]+)?\S+$")
     plane = {"coordinates": [], "values": [], "coordinates_unit": None}
-    with custom_open(file_name, "r") as plane_file:
+    with custom_open(file_path, "r") as plane_file:
         for line in plane_file:
             line_splitted = line.split()
             if line.startswith("#"):

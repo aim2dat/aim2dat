@@ -18,8 +18,8 @@ from aim2dat.utils.dict_tools import dict_create_tree
 
 
 @read_structure(r".*\.xml", preset_kwargs={"extract_structures": True})
-def read_xml(
-    file_name: str,
+def read_qe_xml(
+    file_path: str,
     extract_structures: bool = False,
     strct_type: str = None,
     strct_include: list = None,
@@ -29,7 +29,7 @@ def read_xml(
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path of the xml-file of Quantum ESPRESSO.
     extract_structures : bool
         Whether to extract alls crystal structures and add them to the output dictionary with the
@@ -262,7 +262,7 @@ def read_xml(
             strct_dict["site_attributes"] = {"forces": [tuple(val) for val in inp_dict["forces"]]}
         return strct_dict
 
-    tree = ET.parse(file_name)
+    tree = ET.parse(file_path)
     outp_dict = {}
     for child in tree.getroot():
         if child.tag == "exit_status":
@@ -305,14 +305,14 @@ def read_xml(
 
 
 @read_structure(r".*\.in(p)?$")
-def read_input_structure(file_name):
+def read_qe_input_structure(file_path):
     """
     Read structure from the Quantum ESPRESSO input file.
     ibrav parameters are not yet fully supported.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path of the input-file of Quantum ESPRESSO containing structural data.
 
     Returns
@@ -436,7 +436,7 @@ def read_input_structure(file_name):
         return line_idx, elements, positions, is_cartesian
 
     struct_dict = {"pbc": [True, True, True]}
-    with custom_open(file_name, "r") as input_file:
+    with custom_open(file_path, "r") as input_file:
         file_content = input_file.read().splitlines()
     line_idx = 0
     while line_idx < len(file_content):  # line in enumerate(file_content):
@@ -463,14 +463,14 @@ def read_input_structure(file_name):
     return struct_dict
 
 
-def read_band_structure(file_name):
+def read_qe_band_structure(file_path):
     """
     Read band structure file from Quantum ESPRESSO.
     Spin-polarized calculations are not yet supported.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path of the output-file of Quantum ESPRESSO containing the band structure.
 
     Returns
@@ -480,7 +480,7 @@ def read_band_structure(file_name):
     """
     kpoints = []
     bands = []
-    with custom_open(file_name, "r") as bands_file:
+    with custom_open(file_path, "r") as bands_file:
         nr_bands = 0
         current_bands = []
         parse_kpoint = True
@@ -503,13 +503,13 @@ def read_band_structure(file_name):
     return {"kpoints": kpoints, "unit_y": "eV", "bands": bands}
 
 
-def read_total_density_of_states(file_name):
+def read_qe_total_density_of_states(file_path):
     """
     Read the total density of states from Quantum ESPRESSO.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path of the output-file of Quantum ESPRESSO containing the total density of states.
 
     Returns
@@ -520,7 +520,7 @@ def read_total_density_of_states(file_name):
     energy = []
     tdos = []
     e_fermi = None
-    with custom_open(file_name, "r") as tdos_file:
+    with custom_open(file_path, "r") as tdos_file:
         for line in tdos_file:
             line_split = line.split()
             if not line.startswith("#"):
@@ -535,7 +535,7 @@ def read_total_density_of_states(file_name):
     pattern=r"^.*pdos_atm#(?P<at_idx>\d*)?\((?P<el>[a-zA-Z]*)"
     + r"?\)\_wfc\#(?P<orb_idx>\d*)?\((?P<orb>[a-z])?\)$"
 )
-def read_atom_proj_density_of_states(folder_path):
+def read_qe_atom_proj_density_of_states(folder_path):
     """
     Read the projected density of states from Quantum ESPRESSO.
 

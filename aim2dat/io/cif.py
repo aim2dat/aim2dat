@@ -384,8 +384,8 @@ class _CIFDataBlock:
 
 
 @read_structure(r".*\.cif", preset_kwargs={"extract_structures": True})
-def read_file(
-    file_name,
+def read_cif_file(
+    file_path,
     extract_structures=False,
     strct_check_chem_formula=True,
     strct_get_sym_op_from_sg=True,
@@ -396,7 +396,7 @@ def read_file(
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path to the cif file.
     extract_structures : bool (optional)
         Whether to extract alls crystal structures and add them to the output dictionary with the
@@ -414,7 +414,7 @@ def read_file(
     """
     cif_blocks = []
     current_block = None
-    with custom_open(file_name, "r") as f_obj:
+    with custom_open(file_path, "r") as f_obj:
         for line_idx, line in enumerate(f_obj):
             line = line.strip()
             if line.startswith("data_"):

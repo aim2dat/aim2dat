@@ -6,7 +6,7 @@ import os
 import pytest
 
 # Internal imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import load_yaml_file
 from aim2dat.fct.smearing import apply_smearing
 
 cwd = os.path.dirname(__file__) + "/"

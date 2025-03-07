@@ -20,7 +20,7 @@ from aim2dat.aiida_workflows._workflow_builder_utils import (
     _load_protocol,
     _wf_states_color_map,
 )
-from aim2dat.io.yaml import load_yaml_file, store_in_yaml_file
+from aim2dat.io import load_yaml_file, write_yaml_file
 from aim2dat.aiida_workflows.utils import (
     create_aiida_node,
     obtain_value_from_aiida_node,
@@ -257,7 +257,7 @@ class _BaseWorkflowBuilder(abc.ABC):
                             input_details,
                         )
         self._extract_parent_nodes(content)
-        store_in_yaml_file(file_name, content)
+        write_yaml_file(file_name, content)
 
     @classmethod
     def from_file(cls, file_name="workflow.yaml"):
