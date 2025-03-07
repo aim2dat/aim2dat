@@ -28,10 +28,10 @@ class Critic2Parser(Parser):
             return self.exit_codes.ERROR_INVALID_OUTPUT
 
         planes = {}
-        for file_name in result_dict.pop("plane_files"):
+        for file_path in result_dict.pop("plane_files"):
             try:
-                planes[file_name.split(".")[0]] = read_critic2_plane(
-                    self.retrieved.get_object_content(file_name)
+                planes[file_path.split(".")[0]] = read_critic2_plane(
+                    self.retrieved.get_object_content(file_path)
                 )
             except OSError:
                 return self.exit_codes.ERROR_READING_OUTPUT_FILE

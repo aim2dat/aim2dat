@@ -661,8 +661,8 @@ class WarningBlock(_BaseDataBlock):
     def _parse_line(self, line):
         line_sp = line.split()
         if self.start_str in line:
-            file_name, line_number = line_sp[3].split(":")
-            self.current_data["file_name"] = file_name
+            file_path, line_number = line_sp[3].split(":")
+            self.current_data["file_path"] = file_path
             self.current_data["line_number"] = line_number
             self.current_data["message"] = " ".join(line_sp[5:-1])
         elif len(line_sp) > 1:
@@ -686,8 +686,8 @@ class ErrorBlock(_BaseDataBlock):
         if self.start_str in line:
             self.current_data["message"] = ""
         elif self.end_str in line:
-            file_name, line_number = line.split()[3].split(":")
-            self.current_data["file_name"] = file_name
+            file_path, line_number = line.split()[3].split(":")
+            self.current_data["file_path"] = file_path
             self.current_data["line_number"] = line_number
         else:
             message = " ".join(line[12:78].split())
@@ -871,13 +871,13 @@ def _create_step_info_dict(
     return outp_list
 
 
-def read_cp2k_stdout(file_name: str, parser_type: str = "standard") -> dict:
+def read_cp2k_stdout(file_path: str, parser_type: str = "standard") -> dict:
     """
     Read standard output file of CP2K.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path to the output file.
     parser_type : str
         Defines the quantities that are being parsed. Supported options are ``'standard'``,
@@ -888,7 +888,7 @@ def read_cp2k_stdout(file_name: str, parser_type: str = "standard") -> dict:
     dict
         Dictionary containing the parsed values.
     """
-    output, n_lines = parse_block_function(file_name, _BLOCKS[parser_type])
+    output, n_lines = parse_block_function(file_path, _BLOCKS[parser_type])
     output["cp2k_version"] = float(output["cp2k_version"])
     if "exceeded_walltime" not in output:
         output["exceeded_walltime"] = False

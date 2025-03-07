@@ -198,7 +198,7 @@ class _BaseWorkflowBuilder(abc.ABC):
                     user_input[input_p + "->" + task] = input_details["value"]
         return user_input
 
-    def to_file(self, file_name="workflow.yaml"):
+    def to_file(self, file_path="workflow.yaml"):
         def _transform_namespace(value, new_value):
             for key, val in value.items():
                 if isinstance(val, dict):
@@ -257,10 +257,10 @@ class _BaseWorkflowBuilder(abc.ABC):
                             input_details,
                         )
         self._extract_parent_nodes(content)
-        write_yaml_file(file_name, content)
+        write_yaml_file(file_path, content)
 
     @classmethod
-    def from_file(cls, file_name="workflow.yaml"):
+    def from_file(cls, file_path="workflow.yaml"):
         def _transform_name_space(value):
             for key, val in value.items():
                 if isinstance(val, dict):
@@ -268,7 +268,7 @@ class _BaseWorkflowBuilder(abc.ABC):
                 else:
                     value[key] = _load_data_node(val)
 
-        content = load_yaml_file(file_name)
+        content = load_yaml_file(file_path)
         wf_builder = cls()
         wf_builder.protocol = content["protocol"]
         if "parent_node" in content:
