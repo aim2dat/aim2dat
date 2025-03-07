@@ -28,7 +28,7 @@ def _check_for_soc_files(folder_path, soc):
 
 @read_band_structure(r".*band.*\.out(?P<soc>\.no_soc)?$")
 @read_multiple(r".*band.*\.out(?P<soc>\.no_soc)?$")
-def read_fhiaims_band_structure(folder_path, soc=False):
+def read_fhiaims_band_structure(folder_path: str, soc: bool = False) -> dict:
     """
     Read band structure files from FHI-aims.
     Spin-polarized calculations are not yet supported.
@@ -70,7 +70,7 @@ def read_fhiaims_band_structure(folder_path, soc=False):
 
 
 @read_total_density_of_states(r".*KS_DOS_total*\.dat(?P<soc>\.no_soc)?$")
-def read_fhiaims_total_density_of_states(file_path):
+def read_fhiaims_total_density_of_states(file_path: str) -> dict:
     """
     Read the total density of states from FHI-aims.
 
@@ -100,7 +100,9 @@ def read_fhiaims_total_density_of_states(file_path):
 @read_multiple(
     r".*atom_proj[a-z]*_dos_(?P<kind>[a-zA-Z]+\d+)(?P<raw>_raw)?\.dat(?P<soc>\.no_soc)?$"
 )
-def read_fhiaims_atom_proj_density_of_states(folder_path, soc=False, load_raw=False):
+def read_fhiaims_atom_proj_density_of_states(
+    folder_path: str, soc: bool = False, load_raw: bool = False
+) -> dict:
     """
     Read the atom projected density of states from FHI-aims.
 

@@ -1,10 +1,14 @@
 """Functions to read plot-files of xmgrace."""
 
-import re
+# Standard library imports
+from typing import Union
+
+# Third party library imports
 import numpy as np
+import re
 
 
-def read_xmgrace_file(file_path):
+def read_xmgrace_file(file_path: str) -> Union[list, tuple]:
     """
     Read xmgrace plot filies.
 
@@ -109,7 +113,7 @@ def read_xmgrace_file(file_path):
     return x_values, y_values, tick_labels
 
 
-def read_xmgrace_band_structure(file_path, kpoints):
+def read_xmgrace_band_structure(file_path: str, kpoints: list) -> list:
     """
     Read xmgrace band structure file.
 

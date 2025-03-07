@@ -30,7 +30,7 @@ def read_qe_xml(
     extract_structures: bool = False,
     strct_type: str = None,
     strct_include: list = None,
-):
+) -> dict:
     """
     Read xml output file.
 
@@ -312,7 +312,7 @@ def read_qe_xml(
 
 
 @read_structure(r".*\.in(p)?$")
-def read_qe_input_structure(file_path):
+def read_qe_input_structure(file_path: str) -> dict:
     """
     Read structure from the Quantum ESPRESSO input file.
     ibrav parameters are not yet fully supported.
@@ -471,7 +471,7 @@ def read_qe_input_structure(file_path):
 
 
 @read_band_structure(r".*bands\.dat$")
-def read_qe_band_structure(file_path):
+def read_qe_band_structure(file_path: str) -> dict:
     """
     Read band structure file from Quantum ESPRESSO.
     Spin-polarized calculations are not yet supported.
@@ -512,7 +512,7 @@ def read_qe_band_structure(file_path):
 
 
 @read_total_density_of_states(r".*dos\.dat$")
-def read_qe_total_density_of_states(file_path):
+def read_qe_total_density_of_states(file_path: str) -> dict:
     """
     Read the total density of states from Quantum ESPRESSO.
 

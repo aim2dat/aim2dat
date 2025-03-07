@@ -385,12 +385,12 @@ class _CIFDataBlock:
 
 @read_structure(r".*\.cif", preset_kwargs={"extract_structures": True})
 def read_cif_file(
-    file_path,
-    extract_structures=False,
-    strct_check_chem_formula=True,
-    strct_get_sym_op_from_sg=True,
-    strct_wrap=False,
-):
+    file_path: str,
+    extract_structures: bool = False,
+    strct_check_chem_formula: bool = True,
+    strct_get_sym_op_from_sg: bool = True,
+    strct_wrap: bool = False,
+) -> dict:
     """
     Read cif file.
 

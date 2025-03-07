@@ -6,7 +6,7 @@ Input and output operations for yaml-files formated according to YAML 1.2 based 
 import ruamel.yaml
 
 
-def load_yaml_file(file_path, typ="safe"):
+def load_yaml_file(file_path: str, typ: str = "safe"):
     """
     Load a yaml-file and returns the content.
 
@@ -28,9 +28,9 @@ def load_yaml_file(file_path, typ="safe"):
     return data
 
 
-def write_yaml_file(file_path, content):
+def write_yaml_file(file_path: str, content):
     """
-    Load a yaml-file and returns the content.
+    Write conttent to a yaml-file.
 
     Parameters
     ----------

@@ -9,7 +9,7 @@ import re
 from aim2dat.io.utils import custom_open
 
 
-def read_critic2_stdout(file_path):
+def read_critic2_stdout(file_path: str) -> dict:
     """
     Read standard output file.
 
@@ -63,7 +63,7 @@ def read_critic2_stdout(file_path):
     return result_dict
 
 
-def read_critic2_plane(file_path):
+def read_critic2_plane(file_path: str) -> dict:
     """
     Read output plane file.
 
