@@ -457,14 +457,13 @@ def _add_mol(
         guest_indices = [idx + len(structure) for _, idx, _ in dist_constraints]
         ref_dists = [dist for _, _, dist in dist_constraints]
         dists = new_structure.calculate_distance(
-            list(host_indices), list(guest_indices), backfold_positions=True
+            host_indices, guest_indices, backfold_positions=True
         )
         if isinstance(dists, float):
             dists = [dists]
         elif isinstance(dists, dict):
             dists = [dists[tuple(idx)] for idx in zip(list(host_indices), list(guest_indices))]
         score = sum(abs(dist - ref_dist) for dist, ref_dist in zip(dists, ref_dists))
-    # print(score, angle_pars)
     return new_structure, score
 
 

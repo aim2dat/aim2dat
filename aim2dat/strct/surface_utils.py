@@ -3,6 +3,7 @@
 # Standard library imports
 import copy
 from typing import Union, List, Tuple
+import decimal
 
 # Third party library imports
 import numpy as np
@@ -162,9 +163,13 @@ def _surface_create(
     surf_1l.set_cell(cell_1l)
 
     # Determine horizontal shift vector of the repeating unit:
+    dec_tol = abs(decimal.Decimal(str(tol)).as_tuple().exponent)
     positions_1l = surf_1l.get_scaled_positions(wrap=True)
     positions_2l = surf_2l.get_scaled_positions(wrap=True)
-    shifts = [positions_2l[len(surf_1l) + idx] - positions_1l[idx] for idx in range(len(surf_1l))]
+    shifts = [
+        np.round(positions_2l[len(surf_1l) + idx] - positions_1l[idx], dec_tol + 1)
+        for idx in range(len(surf_1l))
+    ]
     for shift_idx, shift in enumerate(shifts):
         shift[2] = 0.0
         for dir0 in range(2):
@@ -174,7 +179,7 @@ def _surface_create(
                 shift[dir0] -= 1.0
         shifts[shift_idx] = shift
     if any(np.linalg.norm(shift - shifts[0]) > tol for shift in shifts):
-        raise TypeError("Could not determine shift vector between two slab-layers..")
+        raise TypeError("Could not determine shift vector between two slab-layers.")
 
     # Create rpeating structure
     rep_structure = _extract_structure_from_atoms(surf_1l)
