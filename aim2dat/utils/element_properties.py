@@ -70,9 +70,9 @@ def get_atomic_radius(element, radius_type="covalent"):
     el_number, element, _ = _check_element(element)
 
     if radius_type == "covalent":
-        radius = covalent_radii[el_number]
+        radius = float(covalent_radii[el_number])
     elif radius_type == "vdw":
-        radius = vdw_radii[el_number]
+        radius = float(vdw_radii[el_number])
     elif radius_type in dir(internal_data.atomic_radii):
         radius = getattr(internal_data.atomic_radii, radius_type)[element]
     else:

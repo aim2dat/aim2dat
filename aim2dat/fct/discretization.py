@@ -483,8 +483,6 @@ class DiscretizedGrid:
 
         y_matrix = (y.flatten() * weights.reshape(-1, 1)).round(8)
 
-        print(x.shape)
-        print(y_matrix.shape)
         grid = [[x_i, y_i.tolist()] for x_i, y_i in zip(x.flatten(), y_matrix)]
 
         self.grid = grid

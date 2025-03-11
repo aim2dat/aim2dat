@@ -31,6 +31,25 @@ if TYPE_CHECKING:
     from aim2dat.strct import StructureCollection
 
 
+class classproperty:
+    """Custom, temporary decorator to depreciate class properties."""
+
+    def __init__(self, func):
+        """Initiate class."""
+        self.fget = func
+
+    def __get__(self, instance, owner):
+        """Get method."""
+        from warnings import warn
+
+        warn(
+            "This function will be removed soon, please use the `list_*_methods` instead.",
+            DeprecationWarning,
+            2,
+        )
+        return self.fget(owner)
+
+
 def analysis_method(func):
     """Mark function as calculation function."""
 
@@ -55,14 +74,27 @@ class AnalysisMixin:
     """Mixin class to perform structural analysis tasks."""
 
     @classmethod
-    @property
-    def analysis_methods(cls) -> list:
-        """list: Return calculation methods."""
+    def list_analysis_methods(cls) -> list:
+        """
+        Get a list with the function names of all available analysis methods.
+
+        Returns
+        -------
+        list:
+            Return a list of all available analysis methods.
+        """
         analysis_methods = []
         for name, method in AnalysisMixin.__dict__.items():
             if getattr(method, "_is_analysis_method", False):
                 analysis_methods.append(name)
         return analysis_methods
+
+    @classproperty
+    def analysis_methods(cls) -> list:
+        """
+        list: Return calculation methods. This property is depreciated and will be removed soon.
+        """
+        return cls.list_analysis_methods()
 
     @analysis_method
     def determine_point_group(
@@ -418,14 +450,27 @@ class ManipulationMixin:
     """Mixin class to perform structural manipulation tasks."""
 
     @classmethod
-    @property
-    def manipulation_methods(cls) -> list:
-        """list: Return manipulation methods."""
+    def list_manipulation_methods(cls) -> list:
+        """
+        Get a list with the function names of all available manipulation methods.
+
+        Returns
+        -------
+        list:
+            Return a list of all available manipulation methods.
+        """
         manipulation_methods = []
         for name, method in ManipulationMixin.__dict__.items():
             if getattr(method, "_manipulates_structure", False):
                 manipulation_methods.append(name)
         return manipulation_methods
+
+    @classproperty
+    def manipulation_methods(cls) -> list:
+        """
+        list: Return manipulation methods. This property is depreciated and will be removed soon.
+        """
+        return cls.list_manipulation_methods()
 
     @manipulates_structure
     def delete_atoms(

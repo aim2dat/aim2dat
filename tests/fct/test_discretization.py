@@ -217,8 +217,6 @@ def test_mul(axis_uniform, axis_custom):
     grid.create_grid()
 
     np.testing.assert_array_equal([g[0] for g in grid], axis_custom.axis.flatten())
-    print(grid.grid)
-    print(grid.y_weights)
     assert all(
         [
             all(g[1] == -np.sort(-axis_uniform.axis.flatten() * x).round(8))
