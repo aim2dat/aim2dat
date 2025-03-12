@@ -3,17 +3,22 @@ Functions to read band structure and pDOS files of CP2K.
 """
 
 # Internal library imports
-from aim2dat.io.utils import read_multiple, custom_open
 import aim2dat.utils.units as units
+from aim2dat.io.utils import (
+    read_band_structure,
+    read_multiple,
+    custom_open,
+)
 
 
-def read_band_structure(file_name: str) -> dict:
+@read_band_structure(r".*\.bs$")
+def read_cp2k_band_structure(file_path: str) -> dict:
     """
     Read band structure file from CP2K.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path of the output-file of CP2K containing the band structure.
 
     Returns
@@ -29,7 +34,7 @@ def read_band_structure(file_name: str) -> dict:
     spin_idx = 0
     special_p2 = None
     is_spin_pol = False
-    with custom_open(file_name, "r") as bands_file:
+    with custom_open(file_path, "r") as bands_file:
         for line in bands_file:
             l_splitted = line.split()
             if line.startswith("#  Special point 1"):
@@ -67,8 +72,8 @@ def read_band_structure(file_name: str) -> dict:
     }
 
 
-@read_multiple(r".*-(?P<spin>[A-Z]+)?_?(?:k\d|list\d).*\.pdos$")
-def read_atom_proj_density_of_states(folder_path: str) -> dict:
+@read_multiple(r".*-(?P<spin>[A-Z]+)?_?(?:k\d|list\d).*\.pdos$", is_read_proj_dos_method=True)
+def read_cp2k_proj_dos(folder_path: str) -> dict:
     """
     Read the atom projected density of states from CP2K.
 
@@ -121,7 +126,7 @@ def read_atom_proj_density_of_states(folder_path: str) -> dict:
         "i+5",
     ]
 
-    indices = [(val, idx) for idx, val in enumerate(folder_path["file_name"])]
+    indices = [(val, idx) for idx, val in enumerate(folder_path["file_path"])]
     indices.sort(key=lambda point: point[0])
     _, indices = zip(*indices)
     pdos = []
@@ -162,3 +167,61 @@ def read_atom_proj_density_of_states(folder_path: str) -> dict:
         "unit_x": "eV",
         "e_fermi": efermi,
     }
+
+
+def read_band_structure(file_path: str) -> dict:
+    """
+    Read band structure file from CP2K.
+
+    Notes
+    -----
+        This function is deprecated and will be removed, please use
+        `aim2dat.io.read_cp2k_band_structure` instead.
+
+    Parameters
+    ----------
+    file_path : str
+        Path of the output-file of CP2K containing the band structure.
+
+    Returns
+    -------
+    band_structure : dict
+        Dictionary containing the k-path and the eigenvalues as well as the occupations.
+    """
+    from warnings import warn
+
+    warn(
+        "This function will be removed, please use `aim2dat.io.read_cp2k_band_structure` instead.",
+        DeprecationWarning,
+        2,
+    )
+    return read_cp2k_band_structure(file_path=file_path)
+
+
+def read_atom_proj_density_of_states(folder_path: str) -> dict:
+    """
+    Read the atom projected density of states from CP2K.
+
+    Notes
+    -----
+        This function is deprecated and will be removed, please use `aim2dat.io.read_cp2k_proj_dos`
+        instead.
+
+    Parameters
+    ----------
+    folder_path : str
+        Path to the folder of the pdos files.
+
+    Returns
+    -------
+    pdos : dict
+        Dictionary containing the projected density of states for each kind.
+    """
+    from warnings import warn
+
+    warn(
+        "This function will be removed, please use `aim2dat.io.read_cp2k_proj_dos` instead.",
+        DeprecationWarning,
+        2,
+    )
+    return read_cp2k_proj_dos(folder_path=folder_path)

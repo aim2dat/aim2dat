@@ -6,7 +6,7 @@ import os
 import pytest
 
 # Internal imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 from aim2dat.fct.smearing import apply_smearing
 
 cwd = os.path.dirname(__file__) + "/"
@@ -14,7 +14,7 @@ cwd = os.path.dirname(__file__) + "/"
 
 def test_smearing():
     """Test smearing methods."""
-    data, gaussian, lorentzian = load_yaml_file(cwd + "reference_data/smearing.yaml")
+    data, gaussian, lorentzian = read_yaml_file(cwd + "reference_data/smearing.yaml")
 
     smeared_gaussian = apply_smearing(np.array(data), sigma=2.5, method="gaussian")
     smeared_lorentzian = apply_smearing(np.array(data), sigma=2.5, method="lorentzian")

@@ -9,7 +9,7 @@ import pytest
 
 # Internal library imports
 from aim2dat.strct import StructureOperations, StructureCollection, Structure
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 
@@ -17,10 +17,10 @@ STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 def test_structure_op_basics():
     """Test basic features of the StructuresOperations class."""
     strct_collect = StructureCollection()
-    inputs = dict(load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim" + ".yaml"))
+    inputs = dict(read_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim" + ".yaml"))
     strct_collect.append("Cs2Te_62_prim", **inputs)
 
-    inputs = dict(load_yaml_file(STRUCTURES_PATH + "NaCl_225_prim" + ".yaml"))
+    inputs = dict(read_yaml_file(STRUCTURES_PATH + "NaCl_225_prim" + ".yaml"))
     strct_collect.append("NaCl_225_prim", **inputs)
 
     strct_ops = StructureOperations(structures=strct_collect)

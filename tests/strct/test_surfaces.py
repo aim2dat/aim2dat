@@ -8,7 +8,7 @@ import pytest
 
 # Internal library imports
 from aim2dat.strct import SurfaceGeneration, Structure
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 SURFACES_PATH = os.path.dirname(__file__) + "/surfaces/"
@@ -27,8 +27,8 @@ STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 def test_generate_surfaces(structure_comparison, bulk_crystal, miller_indices):
     """Test surface generation fucntion."""
     mil_ind_str = "".join(str(mil_idx) for mil_idx in miller_indices)
-    ref_outputs = load_yaml_file(SURFACES_PATH + bulk_crystal + "_" + mil_ind_str + ".yaml")
-    bulk_structure = load_yaml_file(STRUCTURES_PATH + bulk_crystal + ".yaml")
+    ref_outputs = read_yaml_file(SURFACES_PATH + bulk_crystal + "_" + mil_ind_str + ".yaml")
+    bulk_structure = read_yaml_file(STRUCTURES_PATH + bulk_crystal + ".yaml")
     bulk_structure = Structure(**bulk_structure)
 
     bulk_structure.label = bulk_crystal

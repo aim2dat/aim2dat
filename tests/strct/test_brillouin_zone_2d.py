@@ -10,7 +10,7 @@ import pytest
 from aim2dat.strct import Structure, SurfaceGeneration
 from aim2dat.strct.surface_utils import _transform_slab_to_primitive
 from aim2dat.strct.brillouin_zone_2d import _get_kpath
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 BR_ZONE_PATH = os.path.dirname(__file__) + "/brillouin_zone_2d/"
@@ -30,8 +30,8 @@ BR_ZONE_PATH = os.path.dirname(__file__) + "/brillouin_zone_2d/"
 def test_kpath(structure_comparison, nested_dict_comparison, bulk_crystal, miller_indices, ter):
     """Test k-path generation in 2d Brillouin zone."""
     mil_ind_str = "".join(str(mil_idx) for mil_idx in miller_indices)
-    ref_outputs = load_yaml_file(BR_ZONE_PATH + f"{bulk_crystal}_{mil_ind_str}_{ter}.yaml")
-    bulk_structure = Structure(**load_yaml_file(STRUCTURES_PATH + bulk_crystal + ".yaml"))
+    ref_outputs = read_yaml_file(BR_ZONE_PATH + f"{bulk_crystal}_{mil_ind_str}_{ter}.yaml")
+    bulk_structure = Structure(**read_yaml_file(STRUCTURES_PATH + bulk_crystal + ".yaml"))
     bulk_structure.attributes["label"] = bulk_crystal
     surf_gen = SurfaceGeneration(bulk_structure)
 

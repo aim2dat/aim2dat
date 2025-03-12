@@ -6,7 +6,6 @@ from aim2dat.io.cp2k.stdout import read_stdout
 
 __all__ = [
     "read_band_structure",
-    "read_total_density_of_states",
     "read_atom_proj_density_of_states",
     "read_stdout",
     "read_restart_structure",

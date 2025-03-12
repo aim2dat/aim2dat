@@ -15,7 +15,7 @@ from aim2dat.utils.dict_tools import (
     dict_retrieve_parameter,
     dict_merge,
 )
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 cwd = os.path.dirname(__file__)
 
@@ -150,7 +150,7 @@ def _initialize_scf_parameters(inputs, ctx):
         ctx.scf_method_p = inputs.custom_scf_method.get_list()
     else:
         ctx.scf_method_p = list(
-            load_yaml_file(cwd + f"/scf_parameter_files/{inputs.scf_method.value}_p.yaml")
+            read_yaml_file(cwd + f"/scf_parameter_files/{inputs.scf_method.value}_p.yaml")
         )
     _set_scf_method_factors(ctx.scf_method_p, inputs.scf_extended_system.value)
 

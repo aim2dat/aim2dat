@@ -9,7 +9,7 @@ import numpy as np
 
 # Internal library imports
 from aim2dat.plots import SpectrumPlot
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 MAIN_PATH = os.path.dirname(__file__) + "/spectrum/"
@@ -64,19 +64,19 @@ def test_prepare_to_plot(spectrum_data, nested_dict_comparison):
     spectrum_plot.import_spectrum("test", *spectrum_data, "eV")
     spectrum_plot.import_spectrum("test_unit", *spectrum_data, "J")
 
-    ref_init = load_yaml_file(MAIN_PATH + "spectrum_init.yaml")
+    ref_init = read_yaml_file(MAIN_PATH + "spectrum_init.yaml")
     data_sets_init, *unused = spectrum_plot._prepare_to_plot(["test"], [0])
     nested_dict_comparison(
         {"data_sets": _transform_numpy_to_list(data_sets_init)}, ref_init["ref"]
     )
 
-    ref_unit_conv = load_yaml_file(MAIN_PATH + "spectrum_unit_conv.yaml")
+    ref_unit_conv = read_yaml_file(MAIN_PATH + "spectrum_unit_conv.yaml")
     data_sets_unit_conv, *unused = spectrum_plot._prepare_to_plot(["test_unit"], [0])
     nested_dict_comparison(
         {"data_sets": _transform_numpy_to_list(data_sets_unit_conv)}, ref_unit_conv["ref"]
     )
 
-    ref_peaks = load_yaml_file(MAIN_PATH + "spectrum_peaks.yaml")
+    ref_peaks = read_yaml_file(MAIN_PATH + "spectrum_peaks.yaml")
     spectrum_plot.detect_peaks = True
     data_sets_peaks, *unused = spectrum_plot._prepare_to_plot(["test"], [0])
     spectrum_plot.detect_peaks = False
@@ -85,7 +85,7 @@ def test_prepare_to_plot(spectrum_data, nested_dict_comparison):
         ref_peaks["ref"],
     )
 
-    ref_smooth = load_yaml_file(MAIN_PATH + "spectrum_smooth.yaml")
+    ref_smooth = read_yaml_file(MAIN_PATH + "spectrum_smooth.yaml")
     spectrum_plot.smooth_spectra = True
     spectrum_plot.smearing_method = "gaussian"
     spectrum_plot.smearing_sigma = 10
@@ -95,7 +95,7 @@ def test_prepare_to_plot(spectrum_data, nested_dict_comparison):
         {"data_sets": _transform_numpy_to_list(data_sets_smooth)}, ref_smooth["ref"]
     )
 
-    ref_smooth_orig = load_yaml_file(MAIN_PATH + "spectrum_smooth_orig.yaml")
+    ref_smooth_orig = read_yaml_file(MAIN_PATH + "spectrum_smooth_orig.yaml")
     spectrum_plot.plot_original_spectra = True
     data_sets_smooth_orig, *unused = spectrum_plot._prepare_to_plot(["test"], [0])
     nested_dict_comparison(

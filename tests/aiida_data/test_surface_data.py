@@ -8,7 +8,7 @@ import pytest
 import aiida.orm as aiida_orm
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 from aim2dat.strct import Structure, SurfaceGeneration
 from aim2dat.aiida_workflows.utils import create_surface_slab
 from aim2dat.ext_interfaces.aiida import (
@@ -29,7 +29,7 @@ def test_surface_data(structure_comparison):
 
     surf_gen = SurfaceGeneration(
         structure=Structure(
-            **load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim.yaml"), label="Cs2Te_62_prim"
+            **read_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim.yaml"), label="Cs2Te_62_prim"
         )
     )
     ref_data = surf_gen.create_surface(miller_indices, termination, tolerance)
@@ -57,13 +57,13 @@ def test_create_surface_slab(
 ):
     """Test the creation of surface slabs."""
     m_indices_str = "".join(str(idx0) for idx0 in miller_indices)
-    ref_data = load_yaml_file(REF_PATH + f"surf_{m_indices_str}_{termination}_ref.yaml")
+    ref_data = read_yaml_file(REF_PATH + f"surf_{m_indices_str}_{termination}_ref.yaml")
     tolerance = 0.005
     ref_data["slab"]["label"] = "test_label"
 
     surf_gen = SurfaceGeneration(
         structure=Structure(
-            **load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim.yaml"), label="Cs2Te_62_prim"
+            **read_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim.yaml"), label="Cs2Te_62_prim"
         )
     )
     surf_data = surf_gen.to_aiida_surfacedata(miller_indices, termination, tolerance)

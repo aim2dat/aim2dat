@@ -8,13 +8,13 @@ from functools import wraps
 from contextlib import contextmanager
 
 
-def read_structure(pattern, preset_kwargs={}):
+def read_structure(pattern, preset_kwargs=None):
     """Decorate functions that parse structure(s)."""
 
     def decorator(func):
         func._is_read_structure_method = True
         func._pattern = pattern
-        func._preset_kwargs = preset_kwargs
+        func._preset_kwargs = {} if preset_kwargs is None else preset_kwargs
 
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -25,7 +25,64 @@ def read_structure(pattern, preset_kwargs={}):
     return decorator
 
 
-def read_multiple(pattern, is_read_strct_method=False, preset_kwargs={}):
+def read_band_structure(pattern, preset_kwargs=None):
+    """Decorate functions that parse band structure(s)."""
+
+    def decorator(func):
+        func._is_read_band_structure_method = True
+        func._pattern = pattern
+        func._preset_kwargs = {} if preset_kwargs is None else preset_kwargs
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+def read_total_dos(pattern, preset_kwargs=None):
+    """Decorate functions that parse band structure(s)."""
+
+    def decorator(func):
+        func._is_read_total_dos_method = True
+        func._pattern = pattern
+        func._preset_kwargs = {} if preset_kwargs is None else preset_kwargs
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+def read_proj_dos(pattern, preset_kwargs=None):
+    """Decorate functions that parse band structure(s)."""
+
+    def decorator(func):
+        func._is_read_proj_dos_method = True
+        func._pattern = pattern
+        func._preset_kwargs = {} if preset_kwargs is None else preset_kwargs
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+def read_multiple(
+    pattern,
+    is_read_strct_method=False,
+    is_read_band_strct_method=False,
+    is_read_proj_dos_method=False,
+    preset_kwargs=None,
+):
     """Add support for a list of multiple files or folder paths (decorator)."""
     # The following cases need to be covered:
     # Single file as file name/file content/file object
@@ -33,24 +90,26 @@ def read_multiple(pattern, is_read_strct_method=False, preset_kwargs={}):
 
     def _check_file(file_like, file_dict, re_pattern, is_strict):
         if os.path.isfile(file_like):
-            file_name = os.path.split(file_like)[1]
+            file_path = os.path.split(file_like)[1]
         elif hasattr(file_like, "filename"):
             # Support AiiDA single file:
-            file_name = file_like.filename
+            file_path = file_like.filename
         else:
             return None
 
-        match = None if re_pattern is None else re_pattern.match(file_name)
+        match = None if re_pattern is None else re_pattern.match(file_path)
         if match or not is_strict:
             file_dict["file"].append(file_like)
-            file_dict["file_name"].append(file_name)
+            file_dict["file_path"].append(file_path)
             for key, val in match.groupdict().items():
                 file_dict[key].append(val)
 
     def read_func_decorator(func):
         func._is_read_structure_method = is_read_strct_method
+        func._is_read_band_structure_method = is_read_band_strct_method
+        func._is_read_proj_dos_method = is_read_proj_dos_method
         func._pattern = pattern
-        func._preset_kwargs = preset_kwargs
+        func._preset_kwargs = {} if preset_kwargs is None else preset_kwargs
 
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -69,7 +128,7 @@ def read_multiple(pattern, is_read_strct_method=False, preset_kwargs={}):
             if not isinstance(files, (list, tuple)):
                 files = [files]
             re_pattern = None
-            file_dict = {"file": [], "file_name": []}
+            file_dict = {"file": [], "file_path": []}
             if pattern:
                 re_pattern = re.compile(pattern)
                 for k0 in re_pattern.groupindex.keys():

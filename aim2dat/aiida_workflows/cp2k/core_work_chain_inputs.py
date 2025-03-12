@@ -14,7 +14,7 @@ from aim2dat.utils.dict_tools import (
     dict_retrieve_parameter,
 )
 from aim2dat.aiida_workflows.cp2k.auxiliary_functions import estimate_comp_resources
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 cwd = os.path.dirname(__file__)
@@ -38,7 +38,7 @@ def _set_numerical_p_xc_functional(cp2k_dict, input_p, cp2k_version):
     """
     Set the parameters for the exchange-correlation functional in the input-paramters.
     """
-    xc_keyword_dict = load_yaml_file(cwd + "/parameter_files/xc_functionals_p.yaml")
+    xc_keyword_dict = read_yaml_file(cwd + "/parameter_files/xc_functionals_p.yaml")
     xc_functional = input_p.value.upper()
     xc_parameters = xc_keyword_dict.get(xc_functional, [])
     for xc_par in xc_parameters:
@@ -60,7 +60,7 @@ def _set_numerical_p_basis_sets(cp2k_dict, input_p, structure, xc_functional):
         bs_type = input_p.value.split("-")[0].upper()
         bs_size = input_p.value.split("-")[1].upper()
         xc_funct = xc_functional.value.split("-")[0].upper()
-        pred_basis_sets = load_yaml_file(cwd + "/parameter_files/basis_sets.yaml")
+        pred_basis_sets = read_yaml_file(cwd + "/parameter_files/basis_sets.yaml")
         if bs_type not in pred_basis_sets:
             return False, {"parameter": "numerical_p.basis_sets"}
         basis_sets = {

@@ -5,7 +5,7 @@ import os
 import re
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 def _load_protocol(inp_protocol, folder_path):
@@ -32,7 +32,7 @@ def _load_protocol(inp_protocol, folder_path):
                         file_path = folder_path + file
             if file_path is None:
                 raise ValueError(f"No version of protocol {inp_protocol} could be found.")
-        protocol_dict = load_yaml_file(file_path)
+        protocol_dict = read_yaml_file(file_path)
     else:
         raise TypeError("protocol needs to be of type `str` or `dict`.")
     return protocol_dict

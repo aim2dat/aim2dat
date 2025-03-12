@@ -9,7 +9,7 @@ from sklearn.neighbors import KNeighborsRegressor
 
 # Internal library imports
 from aim2dat.strct import Structure
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 from aim2dat.ml.cell_grid_search import CellGridSearch
 from aim2dat.ml.transformers import StructureFFPrintTransformer
 
@@ -21,7 +21,7 @@ REF_PATH = os.path.dirname(__file__) + "/cell_grid_search_ref/"
 )
 def test_cell_grid_search_target_structure(system, structure_comparison):
     """Test CellGridSearch class using a target structure."""
-    ref = load_yaml_file(REF_PATH + system + ".yaml")
+    ref = read_yaml_file(REF_PATH + system + ".yaml")
 
     cell_grid_search = CellGridSearch(**ref["attributes"])
     cell_grid_search.set_initial_structure(Structure(**ref["initial_structure"]))
@@ -64,5 +64,5 @@ def test_cell_grid_search_model(create_structure_collection_object, structure_co
     assert params == [1.0, 0.8, 0.8, 1.0, 0.9, 1.0]
     structure_comparison(
         grid_search.get_optimized_structure(),
-        dict(load_yaml_file(REF_PATH + "model_ref_structure.yaml")),
+        dict(read_yaml_file(REF_PATH + "model_ref_structure.yaml")),
     )

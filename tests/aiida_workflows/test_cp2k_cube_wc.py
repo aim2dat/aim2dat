@@ -7,7 +7,7 @@ import os
 import pytest
 
 # Internal library import
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 from aim2dat.aiida_workflows.utils import create_aiida_node
 from aim2dat.aiida_workflows.cp2k.cube_work_chain import (
     _validate_cube_types,
@@ -40,7 +40,7 @@ def test_validate_cube_types(input_value, return_value):
 
 def test_setup_wc_specific_inputs(aiida_create_wc_inputs, nested_dict_comparison):
     """Test wc_specific_inputs fucntion for cp2k cube work chain."""
-    ref = dict(load_yaml_file(REF_PATH + "Al_225_conv_cube_ref.yaml"))
+    ref = dict(read_yaml_file(REF_PATH + "Al_225_conv_cube_ref.yaml"))
     inputs, ctx, strct_node = aiida_create_wc_inputs("Al_225_conv", ref)
     _setup_wc_specific_inputs(ctx, inputs)
     nested_dict_comparison(ctx.inputs.parameters.get_dict(), ref["ref"]["parameters"])

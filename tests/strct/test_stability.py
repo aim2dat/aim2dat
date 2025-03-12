@@ -7,7 +7,7 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 from aim2dat.strct.stability import (
     _find_most_stable_elemental_phases,
     _calculate_stabilities,
@@ -38,7 +38,7 @@ class Entry:
 @pytest.mark.parametrize("system", ["Cs-Te", "Cs-Te_excl_keys"])
 def test_stability_calculation(system):
     """Test calculation of formation energy and stability."""
-    system_info = dict(load_yaml_file(REF_PATH + system + "_system.yaml"))
+    system_info = dict(read_yaml_file(REF_PATH + system + "_system.yaml"))
     structures = [
         Entry(f"label_{idx}", entry.pop("chem_formula"), entry)
         for idx, entry in enumerate(system_info["entries"])
@@ -55,7 +55,7 @@ def test_stability_calculation(system):
 @pytest.mark.parametrize("unit", [None, "eV", "Hartree", "Rydberg"])
 def test_unit_conversion(unit):
     """Test the use of different units."""
-    system_info = dict(load_yaml_file(REF_PATH + "different_units_system.yaml"))
+    system_info = dict(read_yaml_file(REF_PATH + "different_units_system.yaml"))
     structures = [
         Entry(f"label_{idx}", entry.pop("chem_formula"), entry)
         for idx, entry in enumerate(system_info["entries"])
@@ -74,7 +74,7 @@ def test_unit_conversion(unit):
 
 def test_missing_unit():
     """Test missing unit."""
-    system_info = dict(load_yaml_file(REF_PATH + "missing_unit_system.yaml"))
+    system_info = dict(read_yaml_file(REF_PATH + "missing_unit_system.yaml"))
     structures = [
         Entry(f"label_{idx}", entry.pop("chem_formula"), entry)
         for idx, entry in enumerate(system_info["entries"])
@@ -90,7 +90,7 @@ def test_missing_unit():
 
 def test_exceptions():
     """Test missing information in entries."""
-    system_info = dict(load_yaml_file(REF_PATH + "exceptions_system.yaml"))
+    system_info = dict(read_yaml_file(REF_PATH + "exceptions_system.yaml"))
     structures = [
         Entry(f"label_{idx}", entry.pop("chem_formula"), entry)
         for idx, entry in enumerate(system_info["entries"])
@@ -116,7 +116,7 @@ def test_exceptions():
 
 def test_elemental_phases_only():
     """Test system only consisting of elemental phases."""
-    system_info = dict(load_yaml_file(REF_PATH + "elemental_system.yaml"))
+    system_info = dict(read_yaml_file(REF_PATH + "elemental_system.yaml"))
     structures = [
         Entry(f"label_{idx}", entry.pop("chem_formula"), entry)
         for idx, entry in enumerate(system_info["entries"])

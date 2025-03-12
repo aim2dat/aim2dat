@@ -8,7 +8,7 @@ import pytest
 from aiida.orm import SinglefileData
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 from aim2dat.aiida_workflows.cp2k.core_work_chain_inputs import _set_input_parameters
 from aim2dat.aiida_workflows.cp2k.core_work_chain_scf import _initialize_scf_parameters
 
@@ -32,7 +32,7 @@ def test_inputs_general_features(
     structure, test_case, aiida_create_wc_inputs, nested_dict_comparison
 ):
     """Test function _set_input_parameters."""
-    ref = dict(load_yaml_file(REF_PATH + structure + "_" + test_case + "_ref.yaml"))
+    ref = dict(read_yaml_file(REF_PATH + structure + "_" + test_case + "_ref.yaml"))
     inputs, ctx, strct_node = aiida_create_wc_inputs(structure, ref)
     cp2k_code = ref.get("cp2k_code")
     if cp2k_code is not None:
@@ -52,7 +52,7 @@ def test_inputs_general_features(
 
 def test_inputs_files(aiida_create_wc_inputs, nested_dict_comparison):
     """Test function _set_input_parameters."""
-    ref = dict(load_yaml_file(REF_PATH + "Al_225_conv_inp1" + "_ref.yaml"))
+    ref = dict(read_yaml_file(REF_PATH + "Al_225_conv_inp1" + "_ref.yaml"))
     inputs, ctx, strct_node = aiida_create_wc_inputs("Al_225_conv", ref)
     single_file = SinglefileData(REF_PATH + "Al_225_conv_inp1" + "_ref.yaml")
     inputs.numerical_p.basis_file = single_file
@@ -73,7 +73,7 @@ def test_inputs_files(aiida_create_wc_inputs, nested_dict_comparison):
 
 def test_inputs_resources(aiida_create_wc_inputs, nested_dict_comparison):
     """Test function _set_input_parameters."""
-    ref = dict(load_yaml_file(REF_PATH + "Al_225_conv_inp1" + "_ref.yaml"))
+    ref = dict(read_yaml_file(REF_PATH + "Al_225_conv_inp1" + "_ref.yaml"))
     inputs, ctx, strct_node = aiida_create_wc_inputs("Al_225_conv", ref)
     ctx.inputs.metadata["options"]["resources"] = {
         "coeff": 2.0,
@@ -112,7 +112,7 @@ def test_inputs_resources(aiida_create_wc_inputs, nested_dict_comparison):
 )
 def test_scf_initialization(aiida_create_wc_inputs, nested_dict_comparison, structure, test_case):
     """Test SCF initialization."""
-    ref = dict(load_yaml_file(REF_PATH + structure + "_" + test_case + "_ref.yaml"))
+    ref = dict(read_yaml_file(REF_PATH + structure + "_" + test_case + "_ref.yaml"))
     inputs, ctx, strct_node = aiida_create_wc_inputs(structure, ref)
     _set_input_parameters(inputs, ctx, **ref["add_args"])
     error, reports = _initialize_scf_parameters(inputs, ctx)
