@@ -973,3 +973,35 @@ def read_cp2k_stdout(file_path: str, parser_type: str = "standard") -> dict:
     else:
         output.pop("motion_step_info", None)
     return output
+
+
+def read_stdout(file_name: str, parser_type: str = "standard") -> dict:
+    """
+    Read standard output file of CP2K.
+
+    Notes
+    -----
+        This function is deprecated and will be removed, please use `aim2dat.io.read_cp2k_stdout`
+        instead.
+
+    Parameters
+    ----------
+    file_name : str
+        Path to the output file.
+    parser_type : str
+        Defines the quantities that are being parsed. Supported options are ``'standard'``,
+        ``'partial_charges'`` and ``'trajectory'``.
+
+    Returns
+    -------
+    dict
+        Dictionary containing the parsed values.
+    """
+    from warnings import warn
+
+    warn(
+        "This function will be removed, please use `aim2dat.io.read_cp2k_stdout` instead.",
+        DeprecationWarning,
+        2,
+    )
+    return read_cp2k_stdout(file_path=file_name, parser_type=parser_type)

@@ -10,7 +10,7 @@ import pytest
 from aim2dat.io import (
     read_yaml_file,
     read_cp2k_band_structure,
-    read_cp2k_atom_proj_density_of_states,
+    read_cp2k_proj_dos,
     read_cp2k_restart_structure,
 )
 
@@ -47,15 +47,15 @@ def test_read_cp2k_band_structure(system):
 
 
 @pytest.mark.parametrize("system", ["standard", "uks", "lists"])
-def test_read_cp2k_atom_proj_density_of_states(system):
-    """Test read_cp2k_atom_proj_density_of_states function."""
+def test_read_cp2k_proj_dos(system):
+    """Test read_cp2k_proj_dos function."""
     # Test empty folder
     with pytest.raises(ValueError) as error:
-        read_cp2k_atom_proj_density_of_states(cwd + "empty_folder/")
+        read_cp2k_proj_dos(cwd + "empty_folder/")
     assert str(error.value) == "No files with the correct naming scheme found."
 
     # Test different systems:
-    pdos_data = read_cp2k_atom_proj_density_of_states(PDOS_PATH + system + "/")
+    pdos_data = read_cp2k_proj_dos(PDOS_PATH + system + "/")
     pdos_ref = dict(read_yaml_file(PDOS_PATH + system + "/ref.yaml"))
     assert all(
         [abs(en0 - en1) < 1e-5 for en0, en1 in zip(pdos_data["energy"], pdos_ref["energy"])]

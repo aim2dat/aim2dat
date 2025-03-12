@@ -1,9 +1,6 @@
 """Subpackage containing functions to read or write files."""
 
-from aim2dat.io.cp2k.bands_dos import (
-    read_cp2k_band_structure,
-    read_cp2k_atom_proj_density_of_states,
-)
+from aim2dat.io.cp2k.bands_dos import read_cp2k_band_structure, read_cp2k_proj_dos
 from aim2dat.io.cp2k.restart import read_cp2k_restart_structure
 from aim2dat.io.cp2k.stdout import read_cp2k_stdout
 
@@ -36,7 +33,7 @@ from aim2dat.io.zeo import write_zeo_file
 
 __all__ = [
     "read_cp2k_band_structure",
-    "read_cp2k_atom_proj_density_of_states",
+    "read_cp2k_proj_dos",
     "read_cp2k_restart_structure",
     "read_cp2k_optimized_structure",
     "read_cp2k_stdout",
