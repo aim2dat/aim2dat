@@ -7,9 +7,7 @@ import re
 
 # Internal library imports
 from aim2dat.io.utils import (
-    read_total_density_of_states,
-    read_atom_proj_density_of_states,
-    read_band_structure,
+    read_total_dos,
     read_multiple,
     custom_open,
 )
@@ -26,8 +24,7 @@ def _check_for_soc_files(folder_path, soc):
     return no_soc_suffix
 
 
-@read_band_structure(r".*band.*\.out(?P<soc>\.no_soc)?$")
-@read_multiple(r".*band.*\.out(?P<soc>\.no_soc)?$")
+@read_multiple(r".*band.*\.out(?P<soc>\.no_soc)?$", is_read_band_strct_method=True)
 def read_fhiaims_band_structure(folder_path: str, soc: bool = False) -> dict:
     """
     Read band structure files from FHI-aims.
@@ -69,8 +66,8 @@ def read_fhiaims_band_structure(folder_path: str, soc: bool = False) -> dict:
     return {"kpoints": kpoints, "unit_y": "eV", "bands": bands, "occupations": occupations}
 
 
-@read_total_density_of_states(r".*KS_DOS_total*\.dat(?P<soc>\.no_soc)?$")
-def read_fhiaims_total_density_of_states(file_path: str) -> dict:
+@read_total_dos(r".*KS_DOS_total*\.dat(?P<soc>\.no_soc)?$")
+def read_fhiaims_total_dos(file_path: str) -> dict:
     """
     Read the total density of states from FHI-aims.
 
@@ -94,15 +91,11 @@ def read_fhiaims_total_density_of_states(file_path: str) -> dict:
     return {"energy": energy, "tdos": tdos, "unit_x": "eV"}
 
 
-@read_atom_proj_density_of_states(
-    r".*atom_proj[a-z]*_dos_(?P<kind>[a-zA-Z]+\d+)(?P<raw>_raw)?\.dat(?P<soc>\.no_soc)?$"
-)
 @read_multiple(
-    r".*atom_proj[a-z]*_dos_(?P<kind>[a-zA-Z]+\d+)(?P<raw>_raw)?\.dat(?P<soc>\.no_soc)?$"
+    r".*atom_proj[a-z]*_dos_(?P<kind>[a-zA-Z]+\d+)(?P<raw>_raw)?\.dat(?P<soc>\.no_soc)?$",
+    is_read_proj_dos_method=True,
 )
-def read_fhiaims_atom_proj_density_of_states(
-    folder_path: str, soc: bool = False, load_raw: bool = False
-) -> dict:
+def read_fhiaims_proj_dos(folder_path: str, soc: bool = False, load_raw: bool = False) -> dict:
     """
     Read the atom projected density of states from FHI-aims.
 
@@ -154,3 +147,102 @@ def read_fhiaims_atom_proj_density_of_states(
                             pdos0[dict_labels[value_idx]] = [float(value)]
         atomic_pdos.append(pdos0)
     return {"energy": energy, "pdos": atomic_pdos, "unit_x": "eV"}
+
+
+@read_multiple(r"band.*\.out(?P<soc>\.no_soc)?$")
+def read_band_structure(folder_path: str, soc: bool = False) -> dict:
+    """
+    Read band structure files from FHI-aims.
+    Spin-polarized calculations are not yet supported.
+
+    Notes
+    -----
+        This function is deprecated and will be removed, please use
+        `aim2dat.io.read_fhiaims_band_structure` instead.
+
+    Parameters
+    ----------
+    folder_path : str
+        Path to the folder of the band structure files.
+    soc : bool (optional)
+        Whether spin-orbit coupling is activated. The default value is ``False``.
+
+    Returns
+    -------
+    band_structure : dict
+        Dictionary containing the k-path and th eigenvalues as well as the occupations.
+    """
+    from warnings import warn
+
+    warn(
+        "This function will be removed, please use "
+        + "`aim2dat.io.read_fhiaims_band_structure` instead.",
+        DeprecationWarning,
+        2,
+    )
+    return read_fhiaims_band_structure(folder_path=folder_path, soc=soc)
+
+
+def read_total_density_of_states(file_name):
+    """
+    Read the total density of states from FHI-aims.
+
+    Notes
+    -----
+        This function is deprecated and will be removed, please use
+        `aim2dat.io.read_fhiaims_total_dos` instead.
+
+    Parameters
+    ----------
+    file_name : str
+        Path of the output-file of FHI-aims containing the total density of states.
+
+    Returns
+    -------
+    pdos : dict
+        Dictionary containing the projected density of states for each atom.
+    """
+    from warnings import warn
+
+    warn(
+        "This function will be removed, please use `aim2dat.io.read_fhiaims_total_dos` instead.",
+        DeprecationWarning,
+        2,
+    )
+    return read_fhiaims_total_dos(file_path=file_name)
+
+
+@read_multiple(
+    r".*atom_proj[a-z]*_dos_(?P<kind>[a-zA-Z]+\d+)(?P<raw>_raw)?\.dat(?P<soc>\.no_soc)?$"
+)
+def read_atom_proj_density_of_states(folder_path, soc=False, load_raw=False):
+    """
+    Read the atom projected density of states from FHI-aims.
+
+    Notes
+    -----
+        This function is deprecated and will be removed, please use
+        `aim2dat.io.read_fhiaims_proj_dos` instead.
+
+    Parameters
+    ----------
+    folder_path : str
+        Path to the folder of the pdos files or list of pdos files or path to a pdos file.
+    soc : bool (optional)
+        Whether spin-orbit coupling is activated. The default value is ``False``.
+    load_raw : bool (optional)
+        Load files with appendix 'raw'. The default value is ``False``.
+
+    Returns
+    -------
+    pdos : dict
+        Dictionary containing the projected density of states for each atom.
+    """
+    from warnings import warn
+
+    warn(
+        "This function will be removed, please use `aim2dat.io.read_fhiaims_proj_dos` instead.",
+        DeprecationWarning,
+        2,
+    )
+    return read_fhiaims_proj_dos(folder_path=folder_path, soc=soc, load_raw=load_raw)

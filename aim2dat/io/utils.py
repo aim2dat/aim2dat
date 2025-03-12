@@ -42,11 +42,11 @@ def read_band_structure(pattern, preset_kwargs=None):
     return decorator
 
 
-def read_total_density_of_states(pattern, preset_kwargs=None):
+def read_total_dos(pattern, preset_kwargs=None):
     """Decorate functions that parse band structure(s)."""
 
     def decorator(func):
-        func._is_read_total_density_of_states = True
+        func._is_read_total_dos_method = True
         func._pattern = pattern
         func._preset_kwargs = {} if preset_kwargs is None else preset_kwargs
 
@@ -59,11 +59,11 @@ def read_total_density_of_states(pattern, preset_kwargs=None):
     return decorator
 
 
-def read_atom_proj_density_of_states(pattern, preset_kwargs=None):
+def read_proj_dos(pattern, preset_kwargs=None):
     """Decorate functions that parse band structure(s)."""
 
     def decorator(func):
-        func._is_atom_proj_density_of_states = True
+        func._is_read_proj_dos_method = True
         func._pattern = pattern
         func._preset_kwargs = {} if preset_kwargs is None else preset_kwargs
 
@@ -80,7 +80,7 @@ def read_multiple(
     pattern,
     is_read_strct_method=False,
     is_read_band_strct_method=False,
-    is_read_proj_dos=False,
+    is_read_proj_dos_method=False,
     preset_kwargs=None,
 ):
     """Add support for a list of multiple files or folder paths (decorator)."""
@@ -107,7 +107,7 @@ def read_multiple(
     def read_func_decorator(func):
         func._is_read_structure_method = is_read_strct_method
         func._is_read_band_structure_method = is_read_band_strct_method
-        func._is_read_proj_dos_method = is_read_proj_dos
+        func._is_read_proj_dos_method = is_read_proj_dos_method
         func._pattern = pattern
         func._preset_kwargs = {} if preset_kwargs is None else preset_kwargs
 

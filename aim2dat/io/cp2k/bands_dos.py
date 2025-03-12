@@ -72,7 +72,7 @@ def read_cp2k_band_structure(file_path: str) -> dict:
     }
 
 
-@read_multiple(r".*-(?P<spin>[A-Z]+)?_?(?:k\d|list\d).*\.pdos$", is_read_proj_dos=True)
+@read_multiple(r".*-(?P<spin>[A-Z]+)?_?(?:k\d|list\d).*\.pdos$", is_read_proj_dos_method=True)
 def read_cp2k_proj_dos(folder_path: str) -> dict:
     """
     Read the atom projected density of states from CP2K.

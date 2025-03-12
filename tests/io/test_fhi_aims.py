@@ -12,8 +12,8 @@ import h5py
 from aim2dat.io import (
     read_yaml_file,
     read_fhiaims_band_structure,
-    read_fhiaims_total_density_of_states,
-    read_fhiaims_atom_proj_density_of_states,
+    read_fhiaims_total_dos,
+    read_fhiaims_proj_dos,
 )
 
 cwd = os.path.dirname(__file__) + "/"
@@ -28,7 +28,7 @@ def test_errors():
     assert str(error.value) == "No files with the correct naming scheme found."
 
     with pytest.raises(ValueError) as error:
-        read_fhiaims_atom_proj_density_of_states(cwd + "empty_folder/")
+        read_fhiaims_proj_dos(cwd + "empty_folder/")
     assert str(error.value) == "No files with the correct naming scheme found."
 
     with pytest.raises(ValueError) as error:
@@ -39,7 +39,7 @@ def test_errors():
     )
 
     with pytest.raises(ValueError) as error:
-        read_fhiaims_atom_proj_density_of_states(PDOS_PATH + "g_qantum_number", soc=True)
+        read_fhiaims_proj_dos(PDOS_PATH + "g_qantum_number", soc=True)
     assert (
         str(error.value)
         == "Spin-orbit coupling activated but the files don't have the proper naming scheme."
@@ -61,9 +61,9 @@ def test_read_fhiaims_band_structure(nested_dict_comparison, system, soc):
             np.testing.assert_allclose(bands_data[key], fobj[key][:], atol=1.0e-5)
 
 
-def test_read_fhiaims_total_density_of_states():
-    """Test read_fhiaims_total_density_of_states function."""
-    tdos_data = read_fhiaims_total_density_of_states(PDOS_PATH + "Cs3Sb_soc/KS_DOS_total_raw.dat")
+def test_read_fhiaims_total_dos():
+    """Test read_fhiaims_total_dos function."""
+    tdos_data = read_fhiaims_total_dos(PDOS_PATH + "Cs3Sb_soc/KS_DOS_total_raw.dat")
     assert tdos_data["unit_x"] == "eV"
     with h5py.File(PDOS_PATH + "Cs3Sb_soc/ref_tdos.h5", "r") as fobj:
         for key in ["energy", "tdos"]:
@@ -74,11 +74,9 @@ def test_read_fhiaims_total_density_of_states():
     "system,soc,load_raw",
     [("Cs3Sb_soc", False, False), ("Cs3Sb_soc", True, True), ("g_qantum_number", False, True)],
 )
-def test_read_fhiaims_atom_proj_density_of_states(nested_dict_comparison, system, soc, load_raw):
-    """Test read_fhiaims_atom_proj_density_of_states function."""
-    pdos_data = read_fhiaims_atom_proj_density_of_states(
-        PDOS_PATH + system + "/", soc=soc, load_raw=load_raw
-    )
+def test_read_fhiaims_proj_dos(nested_dict_comparison, system, soc, load_raw):
+    """Test read_fhiaims_proj_dos function."""
+    pdos_data = read_fhiaims_proj_dos(PDOS_PATH + system + "/", soc=soc, load_raw=load_raw)
     ref_label = "/ref"
     if soc:
         ref_label += "_soc"
