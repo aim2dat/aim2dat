@@ -96,3 +96,32 @@ def read_critic2_plane(file_path: str) -> dict:
                 else:
                     plane["values"].append(field_values[0])
     return plane
+
+
+def read_stdout(file_name: str) -> dict:
+    """
+    Read standard output file.
+
+    Notes
+    -----
+        This function is deprecated and will be removed, please use
+        `aim2dat.io.read_critic2_stdout` instead.
+
+    Parameters
+    ----------
+    file_name : str
+        Path to the file.
+
+    Returns
+    -------
+    dict
+        Results.
+    """
+    from warnings import warn
+
+    warn(
+        "This function will be removed, please use `aim2dat.io.read_critic2_stdout` instead.",
+        DeprecationWarning,
+        2,
+    )
+    return read_critic2_stdout(file_path=file_name)
