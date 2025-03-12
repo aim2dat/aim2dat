@@ -8,7 +8,7 @@ import pytest
 
 # Internal library imports
 from aim2dat.strct import StructureCollection, StructureOperations
-from aim2dat.io import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 SPACE_GROUP_PATH = os.path.dirname(__file__) + "/space_group_analysis/"
@@ -25,10 +25,10 @@ POINT_GROUP_PATH = os.path.dirname(__file__) + "/point_group_analysis/"
 )
 def test_determine_space_group(nested_dict_comparison, structure, file_suffix, kwargs):
     """Test determine_space_group function."""
-    ref_outputs = dict(load_yaml_file(SPACE_GROUP_PATH + structure + "_ref.yaml"))
+    ref_outputs = dict(read_yaml_file(SPACE_GROUP_PATH + structure + "_ref.yaml"))
     strct_c = StructureCollection()
     if file_suffix == "yaml":
-        strct_c.append("test", **load_yaml_file(STRUCTURES_PATH + structure + "." + file_suffix))
+        strct_c.append("test", **read_yaml_file(STRUCTURES_PATH + structure + "." + file_suffix))
     else:
         strct_c.append_from_file(
             "test", STRUCTURES_PATH + structure + "." + file_suffix, backend="internal"
@@ -67,9 +67,9 @@ def test_point_group_determination(nested_dict_comparison, structure):
     """
     Test the method to determine the point group.
     """
-    inputs = dict(load_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
+    inputs = dict(read_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
     pg = inputs["attributes"].pop("point_group")
-    ref = dict(load_yaml_file(POINT_GROUP_PATH + structure + "_ref.yaml"))
+    ref = dict(read_yaml_file(POINT_GROUP_PATH + structure + "_ref.yaml"))
     strct_c = StructureCollection()
     strct_c.append(structure, **inputs)
     strct_ops = StructureOperations(strct_c)

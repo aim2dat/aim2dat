@@ -7,7 +7,7 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.io import read_cif_file, load_yaml_file
+from aim2dat.io import read_cif_file, read_yaml_file
 from aim2dat.strct import Structure
 
 cwd = os.path.dirname(__file__) + "/"
@@ -44,7 +44,7 @@ def test_errors_and_warnings(structure_comparison):
     ):
         outp_dict = read_cif_file(PATH + "warning_duplicate_sites.cif", extract_structures=True)
         strct = Structure(**outp_dict["structures"][0])
-        ref_strct = load_yaml_file(STRUCTURES_PATH + f"{strct.label}.yaml")
+        ref_strct = read_yaml_file(STRUCTURES_PATH + f"{strct.label}.yaml")
         ref_strct["label"] = strct.label
         structure_comparison(strct, ref_strct)
 
@@ -87,7 +87,7 @@ def test_extract_structures(structure_comparison):
     outp_dict = read_cif_file(PATH + "crystals.cif", extract_structures=True)
     structures = [Structure(**strct) for strct in outp_dict["structures"]]
     for strct in structures:
-        ref_strct = load_yaml_file(STRUCTURES_PATH + f"{strct.label}.yaml")
+        ref_strct = read_yaml_file(STRUCTURES_PATH + f"{strct.label}.yaml")
         ref_strct["label"] = strct.label
         structure_comparison(strct, ref_strct)
 
@@ -101,7 +101,7 @@ def test_extract_structures_with_site_attributes(structure_comparison):
         strct_get_sym_op_from_sg=False,
     )
     structure = Structure(**outp_dict["structures"][0])
-    ref_strct = load_yaml_file(STRUCTURES_PATH + f"{structure.label}.yaml")
+    ref_strct = read_yaml_file(STRUCTURES_PATH + f"{structure.label}.yaml")
     ref_strct["label"] = structure.label
     structure_comparison(structure, ref_strct)
     assert structure.site_attributes == {

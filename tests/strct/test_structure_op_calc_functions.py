@@ -14,7 +14,7 @@ from aim2dat.strct.ext_analysis import (
     calculate_warren_cowley_order_p,
     calculate_planes,
 )
-from aim2dat.io import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
@@ -53,7 +53,7 @@ STABILITIES_PATH = os.path.dirname(__file__) + "/stabilities/"
 def test_ffingerprint_order_parameters(structure, ref_order_p):
     """Test order F-fingerprint order parameters."""
     strct_collect = StructureCollection()
-    inputs = dict(load_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
+    inputs = dict(read_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
     # inputs["structure_label"] = structure
     strct_collect.append(structure, **inputs)
     strct_ops = StructureOperations(strct_collect)
@@ -76,9 +76,9 @@ def test_ffingerprint_order_parameters(structure, ref_order_p):
 @pytest.mark.parametrize("structure", ["Cs2Te_62_prim", "GaAs_216_conv", "GaAs_216_prim"])
 def test_prdf_functions(structure, nested_dict_comparison):
     """Test partial radial distribution calculation."""
-    ref = load_yaml_file(PRDF_PATH + structure + "_ref.yaml")
+    ref = read_yaml_file(PRDF_PATH + structure + "_ref.yaml")
     strct_c = StructureCollection()
-    inputs = dict(load_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
+    inputs = dict(read_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
     strct_c.append(structure, **inputs)
     strct_ops = StructureOperations(strct_c)
     element_prdf, atomic_prdf = strct_ops[0].perform_analysis(
@@ -124,8 +124,8 @@ def test_prdf_functions(structure, nested_dict_comparison):
 )
 def test_warren_cowley_like_order_parameters(nested_dict_comparison, structure, r_max, max_shells):
     """Test calculation of warren cowley order parameters."""
-    inputs = dict(load_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
-    ref = dict(load_yaml_file(WC_LIKE_ORDER_PATH + structure + "_ref.yaml"))
+    inputs = dict(read_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
+    ref = dict(read_yaml_file(WC_LIKE_ORDER_PATH + structure + "_ref.yaml"))
     strct_c = StructureCollection()
     strct_c.append(structure, **inputs)
     strct_ops = StructureOperations(strct_c)
@@ -143,7 +143,7 @@ def test_planes(structure, file_type):
     """
     Test finding planes.
     """
-    ref = load_yaml_file(PLANES_PATH + structure + "_ref.yaml")
+    ref = read_yaml_file(PLANES_PATH + structure + "_ref.yaml")
     strct_collect = StructureCollection()
     strct_collect.append_from_file("structure", STRUCTURES_PATH + structure + "." + file_type)
     strct_ops = StructureOperations(strct_collect)
@@ -172,7 +172,7 @@ def test_planes(structure, file_type):
 
 def test_stabilities(create_structure_collection_object):
     """Test calculate_stabilities function."""
-    ref = load_yaml_file(STABILITIES_PATH + "MOFs_ref.yaml")
+    ref = read_yaml_file(STABILITIES_PATH + "MOFs_ref.yaml")
     strct_c, _ = create_structure_collection_object(["GaAs_216_conv"])
     for idx0, strct in enumerate(ref["input"]):
         strct_c.append("test_" + str(idx0), **strct)

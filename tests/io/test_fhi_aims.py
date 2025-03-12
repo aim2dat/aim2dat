@@ -10,7 +10,7 @@ import h5py
 
 # Internal library imports
 from aim2dat.io import (
-    load_yaml_file,
+    read_yaml_file,
     read_fhiaims_band_structure,
     read_fhiaims_total_density_of_states,
     read_fhiaims_atom_proj_density_of_states,
@@ -84,5 +84,5 @@ def test_read_fhiaims_atom_proj_density_of_states(nested_dict_comparison, system
         ref_label += "_soc"
     if load_raw:
         ref_label += "_raw"
-    pdos_ref = dict(load_yaml_file(PDOS_PATH + system + ref_label + ".yaml"))
+    pdos_ref = dict(read_yaml_file(PDOS_PATH + system + ref_label + ".yaml"))
     nested_dict_comparison(pdos_data, pdos_ref)

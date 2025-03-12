@@ -7,7 +7,7 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.io import load_yaml_file
+from aim2dat.io import read_yaml_file
 from aim2dat.io.phonopy import (
     read_band_structure,
     read_total_density_of_states,
@@ -22,7 +22,7 @@ cwd = os.path.dirname(__file__) + "/"
 
 def test_read_band_structure(nested_dict_comparison):
     """Test read_band_structure function."""
-    bands_ref = dict(load_yaml_file(cwd + "phonopy_ha/band_structure_ref.yaml"))
+    bands_ref = dict(read_yaml_file(cwd + "phonopy_ha/band_structure_ref.yaml"))
     for idx, label in enumerate(bands_ref["bands"]["path_labels"]):
         bands_ref["bands"]["path_labels"][idx] = tuple(label)
     bands, cell = read_band_structure(
@@ -40,7 +40,7 @@ def test_read_band_structure(nested_dict_comparison):
 
 def test_read_total_density_of_states(nested_dict_comparison):
     """Test read_total_density_of_states function."""
-    tdos_ref = dict(load_yaml_file(cwd + "phonopy_ha/tdos_ref.yaml"))
+    tdos_ref = dict(read_yaml_file(cwd + "phonopy_ha/tdos_ref.yaml"))
     tdos = read_total_density_of_states(
         cwd + "phonopy_ha/phonopy_disp.yaml",
         force_sets_file_name=cwd + "phonopy_ha/FORCE_SETS",
@@ -51,7 +51,7 @@ def test_read_total_density_of_states(nested_dict_comparison):
 
 def test_read_atom_proj_density_of_states(nested_dict_comparison):
     """Test read_atom_proj_density_of_states function."""
-    pdos_ref = dict(load_yaml_file(cwd + "phonopy_ha/pdos_ref.yaml"))
+    pdos_ref = dict(read_yaml_file(cwd + "phonopy_ha/pdos_ref.yaml"))
     pdos = read_atom_proj_density_of_states(
         cwd + "phonopy_ha/phonopy_disp.yaml",
         force_sets_file_name=cwd + "phonopy_ha/FORCE_SETS",
@@ -63,7 +63,7 @@ def test_read_atom_proj_density_of_states(nested_dict_comparison):
 @pytest.mark.skip
 def test_read_thermal_properties(nested_dict_comparison):
     """Test read_thermal_properties function."""
-    thermal_properties_ref = dict(load_yaml_file(cwd + "phonopy_ha/thermal_properties_ref.yaml"))
+    thermal_properties_ref = dict(read_yaml_file(cwd + "phonopy_ha/thermal_properties_ref.yaml"))
     thermal_properties = read_thermal_properties(
         cwd + "phonopy_ha/phonopy_disp.yaml",
         force_sets_file_name=cwd + "phonopy_ha/FORCE_SETS",
@@ -77,7 +77,7 @@ def test_read_thermal_properties(nested_dict_comparison):
 @pytest.mark.skip
 def test_read_qha_properties(nested_dict_comparison):
     """Test read_qha_properties function."""
-    qha_properties_ref = dict(load_yaml_file(cwd + "phonopy_qha/qha_properties_ref.yaml"))
+    qha_properties_ref = dict(read_yaml_file(cwd + "phonopy_qha/qha_properties_ref.yaml"))
     qha_properties = read_qha_properties(
         calculation_folders=[cwd + f"phonopy_qha/energy-{idx0}" for idx0 in range(-5, 6)],
         ev_file_name=cwd + "phonopy_qha/e-v.dat",
@@ -86,7 +86,7 @@ def test_read_qha_properties(nested_dict_comparison):
         t_step=50.0,
     )
     nested_dict_comparison(qha_properties, qha_properties_ref, threshold=1e-3)
-    qha_properties_ref = dict(load_yaml_file(cwd + "phonopy_qha/qha_properties_tp_ref.yaml"))
+    qha_properties_ref = dict(read_yaml_file(cwd + "phonopy_qha/qha_properties_tp_ref.yaml"))
     qha_properties = read_qha_properties(
         thermal_properties_file_names=[
             cwd + f"phonopy_qha/thermal_properties.yaml-{idx0}" for idx0 in range(-5, 6)

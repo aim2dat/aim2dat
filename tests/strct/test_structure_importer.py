@@ -8,7 +8,7 @@ import pytest
 
 # Internal library imports
 from aim2dat.strct import StructureImporter
-from aim2dat.io import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 REF_PATH = os.path.dirname(__file__) + "/structure_importer/"
@@ -128,7 +128,7 @@ def test_print_and_constraints():
 
 def test_mp_interface(structure_comparison):
     """Test the materials project interface."""
-    ref_structures = load_yaml_file(REF_PATH + "mp_Cs-Te.yaml")
+    ref_structures = read_yaml_file(REF_PATH + "mp_Cs-Te.yaml")
     strct_import = StructureImporter()
     strct_import.set_concentration_constraint("Cs", 0.3, 0.8)
     strct_import.set_concentration_constraint("Te", 0.3, 0.8)
@@ -149,7 +149,7 @@ def test_mp_interface(structure_comparison):
 
 def test_mp_openapi_interface(structure_comparison):
     """Test the materials project interface."""
-    ref_structures = load_yaml_file(REF_PATH + "mp_Cs-Te_openapi.yaml")
+    ref_structures = read_yaml_file(REF_PATH + "mp_Cs-Te_openapi.yaml")
     strct_import = StructureImporter()
     strct_import.set_concentration_constraint("Cs", 0.3, 0.8)
     strct_import.set_concentration_constraint("Te", 0.3, 0.8)
@@ -192,7 +192,7 @@ def test_append_from_mp_by_id(
     structure_comparison, nested_dict_comparison, mp_id, property_data, import_details
 ):
     """Test mp interface for append_from_mp_by_id function."""
-    ref_structure = load_yaml_file(REF_PATH + f"mp_{mp_id}.yaml")
+    ref_structure = read_yaml_file(REF_PATH + f"mp_{mp_id}.yaml")
 
     strct_import = StructureImporter()
     structure = strct_import.append_from_mp_by_id(
@@ -214,7 +214,7 @@ def test_append_from_mp_by_id(
 
 def test_oqmd_interface(structure_comparison):
     """Test the open quantum materials database interface."""
-    ref_structures = load_yaml_file(REF_PATH + "oqmd_Cs2Te.yaml")
+    ref_structures = read_yaml_file(REF_PATH + "oqmd_Cs2Te.yaml")
     strct_import = StructureImporter()
     strct_collect = strct_import.import_from_oqmd("Cs2Te")
     assert strct_import._import_details == {"oqmd": [10, ["Cs", "Te"]]}
@@ -240,7 +240,7 @@ def test_oqmd_interface(structure_comparison):
 
 def test_optimade_interface(structure_comparison):
     """Test the optimade interface."""
-    ref_structures = load_yaml_file(REF_PATH + "optimade_SiO2.yaml")
+    ref_structures = read_yaml_file(REF_PATH + "optimade_SiO2.yaml")
     strct_import = StructureImporter()
     strct_collect = strct_import.import_from_optimade("SiO2", "mcloud.mc3d")
     assert strct_import._import_details == {"optimade-mcloud.mc3d": [15, ["O", "Si"]]}
@@ -262,7 +262,7 @@ def test_optimade_interface(structure_comparison):
 @pytest.mark.parametrize("system", [("Cs-Te"), ("Cs-K-Sb")])
 def test_pyxtal_interface_formula_series(system):
     """Test the creation of a formula series."""
-    data = load_yaml_file(REF_PATH + system + "_formula_series.yaml")
+    data = read_yaml_file(REF_PATH + system + "_formula_series.yaml")
     parameters = data["parameters"]
     reference = data["reference"]
     strct_import = StructureImporter()
@@ -308,7 +308,7 @@ def test_pyxtal_interface_generate_crystals():
 @pytest.mark.parametrize("system", ["tobmof-11", "coremof2019"])
 def test_mofxdb_interface(nested_dict_comparison, structure_comparison, system):
     """Test the MOFXDB interface."""
-    data = load_yaml_file(REF_PATH + "mofxdb_" + system + ".yaml")
+    data = read_yaml_file(REF_PATH + "mofxdb_" + system + ".yaml")
     strct_import = StructureImporter()
     structures = strct_import.import_from_mofxdb(**data["parameters"])
     assert len(structures) == len(data["structures"]), "Number of queried MOFs is wrong."

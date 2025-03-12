@@ -7,7 +7,7 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.io import load_yaml_file, read_critic2_plane
+from aim2dat.io import read_yaml_file, read_critic2_plane
 from aim2dat.plots.planar_fields import PlanarFieldPlot
 
 
@@ -25,7 +25,7 @@ def test_import_field(nested_dict_comparison, system):
     for key in ["x_values", "y_values", "z_values"]:
         plane[key] = plane[key].tolist()
 
-    ref_plane = load_yaml_file(MAIN_PATH + system + "_import_ref.yaml")
+    ref_plane = read_yaml_file(MAIN_PATH + system + "_import_ref.yaml")
     nested_dict_comparison(plane, ref_plane)
 
 
@@ -33,7 +33,7 @@ def test_import_field(nested_dict_comparison, system):
 def test_prepare_plot(nested_dict_comparison, system, test_case):
     """Test _prepare_to_plot function for different use cases."""
     plane = read_critic2_plane(MAIN_PATH + system + ".plane")
-    ref_dict = load_yaml_file(MAIN_PATH + system + "_" + test_case + "_ref.yaml")
+    ref_dict = read_yaml_file(MAIN_PATH + system + "_" + test_case + "_ref.yaml")
     pf_plot = PlanarFieldPlot()
     for label, value in ref_dict["attributes"].items():
         setattr(pf_plot, label, value)

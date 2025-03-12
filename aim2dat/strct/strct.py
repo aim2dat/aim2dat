@@ -820,7 +820,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         Export structure to file using the ase interface or certain file formats for Zeo++.
         """
         if file_path.endswith((".cssr", ".v1", ".cuc")):
-            write_zeo_file(self, file_path)
+            write_zeo_file(file_path, self)
         else:
             backend_module = _return_ext_interface_modules("ase_atoms")
             backend_module._write_structure_to_file(self, file_path)

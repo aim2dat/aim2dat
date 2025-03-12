@@ -8,7 +8,7 @@ import pytest
 
 # Internal library imports:
 from aim2dat.strct import Structure
-from aim2dat.io import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 MISC_PATH = os.path.dirname(__file__) + "/miscellaneous/"
@@ -35,7 +35,7 @@ def test_calculate_distance_angle_dihedral_errors():
 @pytest.mark.parametrize("structure, file_suffix", [("Benzene", "xyz"), ("ZIF-8", "cif")])
 def test_calculate_distance(structure, file_suffix):
     """Test calculate_distance function."""
-    ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
+    ref_outputs = read_yaml_file(MISC_PATH + structure + "_ref.yaml")
     strct = Structure.from_file(STRUCTURES_PATH + structure + "." + file_suffix)
     dist = strct.calculate_distance(**ref_outputs["distance"]["function_args"])
     if isinstance(ref_outputs["distance"]["reference"], list):
@@ -54,7 +54,7 @@ def test_calculate_distance(structure, file_suffix):
 @pytest.mark.parametrize("structure, file_suffix", [("ZIF-8", "cif"), ("ScBDC", "cif")])
 def test_calculate_distance_sc(structure, file_suffix):
     """Test calculate_distance function using the super cell."""
-    ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
+    ref_outputs = read_yaml_file(MISC_PATH + structure + "_ref.yaml")
     strct = Structure.from_file(
         STRUCTURES_PATH + structure + "." + file_suffix,
         backend="internal",
@@ -94,7 +94,7 @@ def test_calculate_distance_sc(structure, file_suffix):
 @pytest.mark.parametrize("structure, file_suffix", [("Benzene", "xyz"), ("ZIF-8", "cif")])
 def test_calculate_angle(structure, file_suffix):
     """Test calculate_angle function."""
-    ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
+    ref_outputs = read_yaml_file(MISC_PATH + structure + "_ref.yaml")
     strct = Structure.from_file(STRUCTURES_PATH + structure + "." + file_suffix)
     angles = strct.calculate_angle(**ref_outputs["angle"]["function_args"])
     if isinstance(ref_outputs["angle"]["reference"], list):
@@ -107,7 +107,7 @@ def test_calculate_angle(structure, file_suffix):
 @pytest.mark.parametrize("structure, file_suffix", [("ScBDC", "cif")])
 def test_calculate_dihedral_angle(structure, file_suffix):
     """Test calculate_dihedral_angle function."""
-    ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
+    ref_outputs = read_yaml_file(MISC_PATH + structure + "_ref.yaml")
     strct = Structure.from_file(
         STRUCTURES_PATH + structure + "." + file_suffix,
         backend="internal",
@@ -121,7 +121,7 @@ def test_calculate_dihedral_angle(structure, file_suffix):
 
 def test_cn_analysis_error():
     """Test method validation of coordination analysis."""
-    strct = Structure(**dict(load_yaml_file(STRUCTURES_PATH + "GaAs_216_conv.yaml")))
+    strct = Structure(**dict(read_yaml_file(STRUCTURES_PATH + "GaAs_216_conv.yaml")))
     with pytest.raises(ValueError) as error:
         strct.calculate_coordination(method="test")
     assert (
@@ -156,8 +156,8 @@ def test_cn_analysis(nested_dict_comparison, structure_label, method):
     """
     Test the different methods to determine the coordination number of atomic sites.
     """
-    inputs = dict(load_yaml_file(STRUCTURES_PATH + structure_label + ".yaml"))
-    ref = dict(load_yaml_file(COORDINATION_PATH + structure_label + "_" + method + ".yaml"))
+    inputs = dict(read_yaml_file(STRUCTURES_PATH + structure_label + ".yaml"))
+    ref = dict(read_yaml_file(COORDINATION_PATH + structure_label + "_" + method + ".yaml"))
     structure = Structure(**inputs)
     outputs = structure.calculate_coordination(**ref["parameters"])
     nested_dict_comparison(outputs, ref["ref"])

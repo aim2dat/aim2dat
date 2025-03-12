@@ -10,7 +10,7 @@ import numpy as np
 
 # Internal library imports
 from aim2dat.io import (
-    load_yaml_file,
+    read_yaml_file,
     read_qe_band_structure,
     read_qe_total_density_of_states,
     read_qe_atom_proj_density_of_states,
@@ -58,7 +58,7 @@ def test_read_qe_atom_proj_density_of_states(nested_dict_comparison):
 @pytest.mark.parametrize("system", ["SCF", "H2O"])
 def test_read_qe_xml(nested_dict_comparison, system):
     """Test read_qe_xml function."""
-    ref = load_yaml_file(XML_PATH + system + "_ref.yaml")
+    ref = read_yaml_file(XML_PATH + system + "_ref.yaml")
     outp_dict = read_qe_xml(XML_PATH + system + ".xml", **ref["parameters"])
     ref["ref"]["input"]["atomic_species"] = {
         k: tuple(v) for k, v in ref["ref"]["input"]["atomic_species"].items()

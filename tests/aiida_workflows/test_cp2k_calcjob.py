@@ -7,7 +7,7 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.io import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 MAIN_PATH = os.path.dirname(__file__) + "/cp2k/"
 OUTPUTS_PATH = MAIN_PATH + "outputs/"
@@ -26,7 +26,7 @@ def test_standard_parser(
     version,
 ):
     """Test cp2k parser."""
-    ref_output = load_yaml_file(OUTPUTS_PATH + version + "_standard_" + system + ".yaml")
+    ref_output = read_yaml_file(OUTPUTS_PATH + version + "_standard_" + system + ".yaml")
     node = aiida_create_calcjob(
         "aim2dat.cp2k", MAIN_PATH + f"output_files_{version}_standard_{system}"
     )

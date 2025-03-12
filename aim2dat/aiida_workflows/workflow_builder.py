@@ -20,7 +20,7 @@ from aim2dat.aiida_workflows._workflow_builder_utils import (
     _load_protocol,
     _wf_states_color_map,
 )
-from aim2dat.io import load_yaml_file, write_yaml_file
+from aim2dat.io import read_yaml_file, write_yaml_file
 from aim2dat.aiida_workflows.utils import (
     create_aiida_node,
     obtain_value_from_aiida_node,
@@ -268,7 +268,7 @@ class _BaseWorkflowBuilder(abc.ABC):
                 else:
                     value[key] = _load_data_node(val)
 
-        content = load_yaml_file(file_path)
+        content = read_yaml_file(file_path)
         wf_builder = cls()
         wf_builder.protocol = content["protocol"]
         if "parent_node" in content:

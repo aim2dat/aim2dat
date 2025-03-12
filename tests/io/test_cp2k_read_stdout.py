@@ -7,7 +7,7 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.io import read_cp2k_stdout, load_yaml_file
+from aim2dat.io import read_cp2k_stdout, read_yaml_file
 
 
 MAIN_PATH = os.path.dirname(__file__) + "/cp2k_stdout/"
@@ -166,7 +166,7 @@ def test_mainoutput(test_case, print_level, cp2k_version):
     parser_types = ["standard", "partial_charges", "trajectory"]
     for ptype in parser_types:
         reference_values = list(
-            load_yaml_file(
+            read_yaml_file(
                 MAIN_PATH + f"cp2k-{cp2k_version}/{test_case}_{print_level}_{ptype}_reference.yaml"
             )
         )
