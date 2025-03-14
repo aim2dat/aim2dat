@@ -44,6 +44,7 @@ Version 0.3.0
 * The ``strct.Structure.calculate_distance``, ``strct.Structure.calculate_angle`` and ``strct.Structure.calculate_dihedral_angle`` now return all possible combinations from the given indices instead of pairwise tuples (`PR #126 <https://github.com/aim2dat/aim2dat/pull/126>`_).
 * The ``strct.ext_analysis.determine_molecular_fragments``, ``strct.ext_analysis.create_graph`` and ``strct.ext_manipulation.add_structure_coord`` functions now implement ``**cn_kwargs`` as container for the arguments forwarded to the ``strct.Structure.calculate_coordination`` function (`PR #128 <https://github.com/aim2dat/aim2dat/pull/128>`_).
 * The default value for the ``method`` parameter of the ``strct.Structure.calculate_coordination`` is now set to ``atomic_radius`` as this method seems more reliable and equally fast as ``minimum_distance`` (`PR #128 <https://github.com/aim2dat/aim2dat/pull/128>`_).
+* The ``aim2dat.strct.ext_manipulation.add_structure_random`` function now uses the numpy random number generator and now offers more keyword arguments to control the used random numbers (`PR #134 <https://github.com/aim2dat/aim2dat/pull/134>`_).
 
 
 Version 0.2.0

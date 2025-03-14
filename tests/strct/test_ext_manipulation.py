@@ -308,13 +308,13 @@ def test_add_structure_random_molecule(structure_comparison):
     new_strct = add_structure_random(
         Structure(**inputs),
         guest_structure="H2O",
-        random_state=44,
+        random_seed=44,
         dist_threshold=3.4,
     )
     new_strct = add_structure_random(
         new_strct,
         guest_structure="OH",
-        random_state=44,
+        random_seed=44,
         dist_threshold=1.0,
     )
     ref_p = load_yaml_file(STRUCTURE_MANIPULATION_PATH + "NH3-H2O-OH_ref.yaml")
@@ -327,7 +327,16 @@ def test_add_structure_random_crystal(structure_comparison):
     new_strct = add_structure_random(
         Structure(**inputs),
         guest_structure="H",
-        random_state=44,
+        random_nrs=[
+            0.12256550967387159,
+            0.258113074772773,
+            0.4057707278211311,
+            0.969183948144422,
+            0.1623171247855668,
+            0.8572936735567716,
+            0.16304527107106548,
+        ],
+        max_tries=1,
         dist_threshold=1.0,
     )
     ref_p = load_yaml_file(STRUCTURE_MANIPULATION_PATH + "NaCl_225_conv-H_ref.yaml")
@@ -337,12 +346,13 @@ def test_add_structure_random_crystal(structure_comparison):
 def test_add_structure_random_molecules_error():
     """Test add_structure_random method errors."""
     inputs = dict(load_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml"))
-    with pytest.raises(ValueError) as error:
+    with pytest.raises(DistanceThresholdError) as error:
         add_structure_random(
             Structure(**inputs),
             guest_structure="H2O",
-            random_state=44,
+            random_seed=44,
             dist_threshold=10.0,
+            max_tries=3,
         )
     assert (
         str(error.value)

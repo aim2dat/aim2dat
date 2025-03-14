@@ -5,6 +5,7 @@ from aim2dat.strct.strct import Structure
 from aim2dat.strct.structure_operations import StructureOperations
 from aim2dat.strct.surface import SurfaceGeneration
 from aim2dat.strct.structure_importer import StructureImporter
+from aim2dat.strct.strct_validation import SamePositionsError
 
 __all__ = [
     "StructureCollection",
@@ -12,4 +13,5 @@ __all__ = [
     "StructureOperations",
     "SurfaceGeneration",
     "StructureImporter",
+    "SamePositionsError",
 ]
