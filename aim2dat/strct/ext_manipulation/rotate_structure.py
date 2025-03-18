@@ -87,6 +87,7 @@ def rotate_structure(
     else:
         raise TypeError("angles must be type list or type float.")
 
+    site_indices = list(site_indices) if isinstance(site_indices, tuple) else site_indices
     positions = np.array(structure.positions)
     if origin is None:
         origin = np.mean(positions[site_indices], axis=0)

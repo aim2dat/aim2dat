@@ -28,7 +28,7 @@ def add_functional_group(
     Notes
     -----
         This function is depreciated and will be removed soon. Please use
-        ``aim2dat.strct.ext_manipulation.add_structure`` instead.
+        ``aim2dat.strct.ext_manipulation.add_structure_coord`` instead.
 
     Parameters
     ----------
