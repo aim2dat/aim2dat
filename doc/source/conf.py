@@ -64,6 +64,7 @@ nonpublic_subpackages = [
     "aim2dat.aiida_workflows.critic2",
     "aim2dat.aiida_workflows.enumlib",
     "aim2dat.ext_interfaces",
+    "aim2dat.utils.data",
 ]
 nonpublic_submodules = [
     "aim2dat.function_analysis.discretization",
@@ -110,6 +111,10 @@ nonpublic_submodules = [
     "aim2dat.strct.ext_analysis.prdf",
     "aim2dat.strct.ext_analysis.warren_cowley_order_parameters",
     "aim2dat.strct.ext_manipulation.add_functional_group",
+    "aim2dat.strct.ext_manipulation.add_structure",
+    "aim2dat.strct.ext_manipulation.rotate_structure",
+    "aim2dat.strct.ext_manipulation.translate_structure",
+    "aim2dat.strct.ext_manipulation.utils",
     "aim2dat.strct.stability",
     "aim2dat.utils.print",
 ]
