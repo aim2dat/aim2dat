@@ -4,7 +4,7 @@
 from __future__ import annotations
 import math
 import itertools
-from typing import Tuple, List, TYPE_CHECKING
+from typing import Tuple, List, TYPE_CHECKING, Union
 
 # Third party library imports
 import numpy as np
@@ -14,6 +14,37 @@ from scipy.spatial import Voronoi
 # Internal library imports
 if TYPE_CHECKING:
     from aim2dat.strct.structure import Structure
+
+
+def create_supercell(
+    structure, dimension: Union[tuple,list]=[1, 1, 1], change_label=False
+):
+    strct_dict = structure.to_dict(cartesian=True)
+    for key in ["positions", "elements", "kinds"]:
+        strct_dict[key] = []
+    for key in strct_dict["site_attributes"].keys():
+        strct_dict["site_attributes"][key] = []
+    strct_dict["cell"] = [[v * dim for v in vect] for dim, vect in zip(dimension, structure.cell)]
+    translation_list = []
+    for dir0, (dim, pbc) in enumerate(zip(dimension, structure.pbc)):
+        if pbc:
+            translation_list.append(list(range(0, dim)))
+        else:
+            translation_list.append([0])
+    translational_combinations = list(itertools.product(*translation_list))
+
+    for translation in translational_combinations:
+        for idx0, position in enumerate(structure.scaled_positions):
+            translated_position_scaled = np.array(position)+translation
+            translated_position = (np.transpose(structure.cell).dot(translated_position_scaled)).T
+            strct_dict["positions"].append(translated_position)
+        
+            for key in ["elements", "kinds"]:
+                strct_dict[key].append(structure[key][idx0])
+            for key, val in strct_dict['site_attributes'].items():
+                strct_dict['site_attributes'][key].append(structure['site_attributes'][key][idx0])
+
+    return Structure(**strct_dict), f"supercell-{dimension}"
 
 
 def calculate_voronoi_tessellation(
