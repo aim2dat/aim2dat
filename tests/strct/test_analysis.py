@@ -32,7 +32,10 @@ def test_calculate_distance_angle_dihedral_errors():
     assert str(error.value) == "`site_index` must be of type int, list, tuple, np.ndarray or None."
 
 
-@pytest.mark.parametrize("structure, file_suffix", [("Benzene", "xyz"), ("ZIF-8", "cif")])
+@pytest.mark.parametrize(
+    "structure, file_suffix",
+    [("Benzene", "xyz"), ("ZIF-8", "cif"), ("MOF-303_3xH2O_flawed", "xsf")],
+)
 def test_calculate_distance(structure, file_suffix):
     """Test calculate_distance function."""
     ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
