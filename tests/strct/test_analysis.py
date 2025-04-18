@@ -15,7 +15,6 @@ MISC_PATH = os.path.dirname(__file__) + "/miscellaneous/"
 COORDINATION_PATH = os.path.dirname(__file__) + "/coordination/"
 
 
-@pytest.mark.skip
 def test_calculate_distance_angle_dihedral_errors():
     """Test correct error handling on site indices input."""
     strct = Structure.from_file(STRUCTURES_PATH + "Benzene.xyz")
@@ -33,8 +32,10 @@ def test_calculate_distance_angle_dihedral_errors():
     assert str(error.value) == "`site_index` must be of type int, list, tuple, np.ndarray or None."
 
 
-@pytest.mark.skip
-@pytest.mark.parametrize("structure, file_suffix", [("Benzene", "xyz"), ("ZIF-8", "cif")])
+@pytest.mark.parametrize(
+    "structure, file_suffix",
+    [("Benzene", "xyz"), ("ZIF-8", "cif"), ("MOF-303_3xH2O_flawed", "xsf")],
+)
 def test_calculate_distance(structure, file_suffix):
     """Test calculate_distance function."""
     ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
@@ -53,7 +54,6 @@ def test_calculate_distance(structure, file_suffix):
         assert abs(dist - ref_outputs["distance"]["reference"]) < 1e-5, "Wrong distance."
 
 
-@pytest.mark.skip
 @pytest.mark.parametrize("structure, file_suffix", [("ZIF-8", "cif"), ("ScBDC", "cif")])
 def test_calculate_distance_sc(structure, file_suffix):
     """Test calculate_distance function using the super cell."""
@@ -94,7 +94,6 @@ def test_calculate_distance_sc(structure, file_suffix):
                 assert abs(dist[idx0] - dist_list) < 1e-5, f"Distance {idx0} is wrong."
 
 
-@pytest.mark.skip
 @pytest.mark.parametrize("structure, file_suffix", [("Benzene", "xyz"), ("ZIF-8", "cif")])
 def test_calculate_angle(structure, file_suffix):
     """Test calculate_angle function."""
@@ -124,7 +123,6 @@ def test_calculate_dihedral_angle(structure, file_suffix):
         assert abs(angle - ref) < 1e-3, "Wrong angle."
 
 
-@pytest.mark.skip
 def test_cn_analysis_error():
     """Test method validation of coordination analysis."""
     strct = Structure(**dict(load_yaml_file(STRUCTURES_PATH + "GaAs_216_conv.yaml")))
@@ -169,7 +167,7 @@ def test_cn_analysis(nested_dict_comparison, structure_label, method):
     sites = output.pop("sites")
     sites_ref = ref["ref"].pop("sites")
     assert len(sites) == len(sites_ref)
-    # TODO add nested_dict_comparison(output, ref["ref"])
+    nested_dict_comparison(output, ref["ref"])
     for site_idx, (site, site_ref) in enumerate(zip(sites, sites_ref)):
         neighs = site.pop("neighbours")
         neighs_ref = site_ref.pop("neighbours")

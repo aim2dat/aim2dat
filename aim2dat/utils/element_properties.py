@@ -1,14 +1,11 @@
 """Module to retrieve physical and chemical properties of elements."""
 
 # Third party library imports
-import numpy as np
 from ase.data import (
     chemical_symbols,
     atomic_masses,
     atomic_numbers,
     atomic_names,
-    covalent_radii,
-    vdw_radii,
 )
 
 # Internal libraray imports
@@ -44,8 +41,8 @@ def get_atomic_radius(element, radius_type="covalent"):
     Return the covalent or van der Waals radius of the element. The following sources are
     used for different radius types:
 
-    * ``'covalent'`` are from :doi:`10.1039/B801115J` obtained via ase.
-    * ``'vdw'`` are obtained via ase.
+    * ``'covalent'`` are from :doi:`10.1039/B801115J`.
+    * ``'vdw'`` are from :doi:`10.1039/C3DT50599E`.
     * ``'chen_manz'`` are from :doi:`10.1039/C9RA07327B`.
     * ``'vdw_charry_tkatchenko'`` are from :doi:`10.26434/chemrxiv-2024-m3rtp-v2`.
 
@@ -68,18 +65,10 @@ def get_atomic_radius(element, radius_type="covalent"):
         If ``radius_type`` is not supported or has the wrong format.
     """
     el_number, element, _ = _check_element(element)
-
-    if radius_type == "covalent":
-        radius = float(covalent_radii[el_number])
-    elif radius_type == "vdw":
-        radius = float(vdw_radii[el_number])
-    elif radius_type in dir(internal_data.atomic_radii):
+    if radius_type in dir(internal_data.atomic_radii):
         radius = getattr(internal_data.atomic_radii, radius_type)[element]
     else:
         raise ValueError(f"Radius type '{radius_type}' not supported.")
-
-    if radius is None or np.isnan(radius):
-        return None
     return radius
 
 
