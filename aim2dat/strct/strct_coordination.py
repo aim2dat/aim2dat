@@ -145,20 +145,21 @@ def _create_site_dict(structure, site_idx, neighbours, weights=None):
     site_dict["position"] = list(structure.positions[site_idx])
     site_dict["neighbours"] = []
     distances = []
-    neighbours.sort(key=lambda point: point[0])
-    for idx, (neigh_idx, neigh_pos, distance) in enumerate(neighbours):
+    neigh_map = [(i, neighbours[i][0]) for i in range(len(neighbours))]
+    neigh_map.sort(key=lambda point: point[1])
+    for idx, neigh_idx in neigh_map:
         neigh_dict = {
             "element": structure.elements[neigh_idx],
             "kind": structure.kinds[neigh_idx],
             "site_index": neigh_idx,
-            "distance": float(distance),
-            "position": [float(pos) for pos in neigh_pos],
+            "distance": float(neighbours[idx][2]),
+            "position": [float(pos) for pos in neighbours[idx][1]],
         }
         if weights:
             neigh_dict["weight"] = float(weights[idx])
         site_dict["neighbours"].append(neigh_dict)
         site_dict[neigh_dict["element"]] += 1
-        distances.append(float(distance))
+        distances.append(float(neighbours[idx][2]))
 
     site_dict["total_cn"] = len(distances)
     site_dict["min_dist"] = min(distances, default=0.0)

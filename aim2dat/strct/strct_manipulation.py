@@ -4,10 +4,13 @@
 from __future__ import annotations
 import os
 from typing import List, Tuple, Union, TYPE_CHECKING
+import warnings
+
+# Third party library imports
 import numpy as np
 
-
 # Internal library imports
+from aim2dat.strct.strct_super_cell import _create_supercell_positions
 from aim2dat.utils.element_properties import get_atomic_radius, get_element_symbol
 
 if TYPE_CHECKING:
@@ -169,3 +172,45 @@ def scale_unit_cell(
     new_structure["cell"] = scaled_cell
 
     return _add_label_suffix(new_structure, f"_scaled-{scaling_factors}", change_label)
+
+
+def create_supercell(
+    structure: Structure,
+    size: Union[tuple, list, int] = 2,
+    wrap: bool = True,
+    change_label: bool = False,
+):
+    """Create supercell."""
+    if structure.cell is None:
+        return None
+
+    if isinstance(size, int):
+        size = [size] * 3
+    if len(size) != 3:
+        raise ValueError("`size` must have a length of 3.")
+    if any(not isinstance(dim, int) and dim < 1 for dim in size):
+        raise ValueError("All entries in `size` need to be integer numbers larger than 0.")
+    for i, (pbc, dim) in enumerate(zip(structure.pbc, size)):
+        if not pbc and dim > 1:
+            warnings.warn(
+                f"Direction {i} is non-periodic but size{[i]} is larger than 1. "
+                + "This direction will be ignored."
+            )
+
+    elements_sc, kinds_sc, positions_sc, indices_sc, mapping, rep_cells = (
+        _create_supercell_positions(structure, r_max=None, size=size, wrap=wrap)
+    )
+
+    strct_dict = structure.to_dict(cartesian=True)
+    strct_dict["cell"] = [[v * dim for v in vect] for dim, vect in zip(size, structure.cell)]
+    strct_dict["elements"] = elements_sc
+    strct_dict["kinds"] = kinds_sc
+    strct_dict["positions"] = positions_sc
+    strct_dict["site_attributes"] = {}
+    site_attributes = structure.site_attributes
+    for site_idx in mapping:
+        for attr_key, attr_val in strct_dict["site_attributes"]:
+            strct_dict["site_attributes"].setdefault(attr_key, []).append(
+                site_attributes[attr_key][site_idx]
+            )
+    return _add_label_suffix(strct_dict, f"_supercell-{size}", change_label)
