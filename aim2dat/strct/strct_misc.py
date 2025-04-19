@@ -210,8 +210,12 @@ def _calc_atomic_distance(structure, site_indices1, site_indices2, backfold_posi
     """Calculate distance between two atoms."""
     comb_indices, is_int = _check_site_indices(structure, [site_indices1, site_indices2])
     site_indices1, site_indices2 = zip(*comb_indices)
-    pos1 = np.array(structure["positions"])[list(site_indices1)]
-    pos2 = np.array(structure["positions"])[list(site_indices2)]
+    pos1 = np.array(structure.get_positions(cartesian=True, wrap=backfold_positions))[
+        list(site_indices1)
+    ]
+    pos2 = np.array(structure.get_positions(cartesian=True, wrap=backfold_positions))[
+        list(site_indices2)
+    ]
     dist = np.linalg.norm(pos1 - pos2, axis=1)
 
     if structure["cell"] is not None and backfold_positions:

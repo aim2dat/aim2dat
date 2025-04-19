@@ -455,14 +455,13 @@ class Structure(AnalysisMixin, ManipulationMixin):
             output = [el]
             if get_kind:
                 output.append(self.kinds[idx])
-            pos_cart = self.positions[idx]
-            pos_scaled = None if self.scaled_positions is None else self.scaled_positions[idx]
-            if (get_cart_pos or get_scaled_pos) and wrap:
-                pos_cart, pos_scaled = self._wrap_position(pos_cart, pos_scaled)
-            if get_cart_pos:
-                output.append(pos_cart)
-            if get_scaled_pos:
-                output.append(pos_scaled)
+
+            if get_cart_pos or get_scaled_pos:
+                pos_cart, pos_scaled = self._get_position(idx, wrap)
+                if get_cart_pos:
+                    output.append(pos_cart)
+                if get_scaled_pos:
+                    output.append(pos_scaled)
             for site_attr in site_attributes:
                 output.append(site_attr_dict[site_attr][idx])
 
@@ -475,7 +474,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         self, positions: Union[list, tuple], is_cartesian: bool = True, wrap: bool = False
     ):
         """
-        Set postions of atoms.
+        Set postions of all sites.
 
         Parameters
         ----------
@@ -499,22 +498,38 @@ class Structure(AnalysisMixin, ManipulationMixin):
             self._positions = tuple(cart_positions)
             self._scaled_positions = tuple(scaled_positions)
 
+    def get_position(self, index: int, cartesian: bool = True, wrap: bool = False):
+        """
+        Return position of one site.
+
+        Parameters
+        ----------
+        index : int
+            Site index.
+        cartesian : bool (optional)
+            Get cartesian position. If set to ``False``, the scaled position is returned.
+        wrap : bool (optional)
+            Wrap atomic position into the unit cell.
+        """
+        pos_cart, pos_scaled = self._get_position(index=index, wrap=wrap)
+        if cartesian:
+            return pos_cart
+        return pos_scaled
+
     def get_positions(self, cartesian: bool = True, wrap: bool = False):
         """
-        Return positions of atoms.
+        Return positions of all sites.
 
         Parameters
         ----------
         cartesian : bool (optional)
-            Get cartesian positions. If set to ``False`` scaled positions are returned.
+            Get cartesian positions. If set to ``False``, scaled positions are returned.
         wrap : bool (optional)
             Wrap atomic positions into the unit cell.
         """
         return tuple(
-            pos
-            for _, pos in self.iter_sites(
-                get_cart_pos=cartesian, get_scaled_pos=not cartesian, wrap=wrap
-            )
+            self.get_position(index=idx, cartesian=cartesian, wrap=wrap)
+            for idx in range(len(self))
         )
 
     def set_attribute(self, key: str, value):
@@ -864,23 +879,21 @@ class Structure(AnalysisMixin, ManipulationMixin):
         backend_module = _return_ext_interface_modules("aiida")
         return backend_module._create_structure_node(self)
 
-    def _wrap_position(self, cart_position, scaled_position):
-        """Wrap position back into the unit cell."""
-        if self.cell is None:
-            return cart_position, scaled_position
+    def _get_position(self, index: int, wrap: bool):
+        """Get cartesian and scaled position and (optionally) wrap them back into the unit cell."""
+        cart_pos = self.positions[index]
+        scaled_pos = None if self.scaled_positions is None else self.scaled_positions[index]
 
-        if cart_position is not None:
-            cart_position = np.array(cart_position)
-        if scaled_position is not None:
-            scaled_position = np.array(scaled_position)
-
-        if scaled_position is None:
-            scaled_position = np.transpose(np.array(self._inverse_cell)).dot(cart_position)
-        for direction in range(3):
-            if self.pbc[direction]:
-                scaled_position[direction] = round(scaled_position[direction], 15) % 1
-        cart_position = np.transpose(np.array(self.cell)).dot(scaled_position)
-        return tuple(float(p) for p in cart_position), tuple(float(p) for p in scaled_position)
+        if wrap and scaled_pos is not None:
+            cart_pos = np.array(cart_pos)
+            scaled_pos = np.array(scaled_pos)
+            for direction in range(3):
+                if self.pbc[direction]:
+                    scaled_pos[direction] = round(scaled_pos[direction], 15) % 1
+            cart_pos = np.transpose(np.array(self.cell)).dot(scaled_pos)
+            cart_pos = tuple(float(p) for p in cart_pos)
+            scaled_pos = tuple(float(p) for p in scaled_pos)
+        return cart_pos, scaled_pos
 
     def _perform_strct_analysis(self, method, kwargs):
         return _check_calculated_properties(self, method, kwargs)
