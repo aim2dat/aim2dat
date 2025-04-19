@@ -184,16 +184,20 @@ def create_supercell(
     if structure.cell is None:
         return None
 
-    if isinstance(size, int):
+    if not isinstance(size, (tuple, list, np.ndarray)):
         size = [size] * 3
     if len(size) != 3:
         raise ValueError("`size` must have a length of 3.")
-    if any(not isinstance(dim, int) and dim < 1 for dim in size):
-        raise ValueError("All entries in `size` need to be integer numbers larger than 0.")
-    for i, (pbc, dim) in enumerate(zip(structure.pbc, size)):
-        if not pbc and dim > 1:
+    for i, (pbc, s) in enumerate(zip(structure.pbc, size)):
+        try:
+            s = int(s)
+        except ValueError:
+            raise TypeError("All entries of `size` must be integer numbers.")
+        if s < 1:
+            raise ValueError("All entries of `size` must be greater or equal to 1.")
+        if not pbc and s > 1:
             warnings.warn(
-                f"Direction {i} is non-periodic but size{[i]} is larger than 1. "
+                f"Direction {i} is non-periodic but `size{[i]}` is larger than 1. "
                 + "This direction will be ignored."
             )
 
@@ -202,14 +206,14 @@ def create_supercell(
     )
 
     strct_dict = structure.to_dict(cartesian=True)
-    strct_dict["cell"] = [[v * dim for v in vect] for dim, vect in zip(size, structure.cell)]
+    strct_dict["cell"] = [[v * s for v in vect] for s, vect in zip(size, structure.cell)]
     strct_dict["elements"] = elements_sc
     strct_dict["kinds"] = kinds_sc
     strct_dict["positions"] = positions_sc
     strct_dict["site_attributes"] = {}
     site_attributes = structure.site_attributes
     for site_idx in mapping:
-        for attr_key, attr_val in strct_dict["site_attributes"]:
+        for attr_key, attr_val in site_attributes.items():
             strct_dict["site_attributes"].setdefault(attr_key, []).append(
                 site_attributes[attr_key][site_idx]
             )

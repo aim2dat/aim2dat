@@ -107,7 +107,6 @@ def test_calculate_angle(structure, file_suffix):
         assert abs(angles - ref_outputs["angle"]["reference"]) < 1e-3, "Wrong angle."
 
 
-@pytest.mark.skip
 @pytest.mark.parametrize("structure, file_suffix", [("ScBDC", "cif")])
 def test_calculate_dihedral_angle(structure, file_suffix):
     """Test calculate_dihedral_angle function."""

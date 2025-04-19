@@ -96,7 +96,7 @@ def nested_dict_comparison():
 def structure_comparison():
     """Compre structures."""
 
-    def compare_structures(strct1, strct2, tolerance=1.0e-5):
+    def compare_structures(strct1, strct2, tolerance=1.0e-5, compare_site_attrs=False):
         """
         Compare two structure dicts.
 
@@ -108,6 +108,8 @@ def structure_comparison():
             Dictionary of structure 2.
         tolerance : float
             Allowed tolerance between cell parameters and positions.
+        compare_site_attrs : bool
+            Whether to compare site attributes.
 
         Returns
         -------
@@ -159,6 +161,12 @@ def structure_comparison():
                 assert (
                     abs(positions[0][el_idx][idx0] - positions[1][el_idx][idx0]) < tolerance
                 ), f"Positions don't match for site {el_idx}."
+            if compare_site_attrs and any(
+                "site_attributes" in strct and len(strct["site_attributes"]) > 0
+                for strct in [strct1, strct2]
+            ):
+                for key, val in strct1["site_attributes"].items():
+                    assert val[el_idx] == strct2["site_attributes"][key][el_idx]
 
     # TODO Compare attributes and calculated properties.
     return compare_structures
