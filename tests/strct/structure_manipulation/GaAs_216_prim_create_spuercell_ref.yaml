@@ -1,0 +1,14 @@
+%YAML 1.2
+---
+function_args:
+  size: [2, 1, 1]
+  change_label: true
+structure:
+  label: 'test_supercell-[2, 1, 1]'
+  elements: ['Ga', 'As', 'Ga', 'As']
+  pbc: [True, True, True]
+  cell: [[0.0, 8.132, 8.132], [4.066, 0.0, 4.066], [4.066, 4.066, 0.0]]
+  kinds: ['k1', 'k2', 'k1', 'k2']
+  site_attributes: {test: [true, false, true, false]}
+  attributes: {}
+  positions: [[0.0, 0.0, 0.0], [6.099, 6.099, 6.099], [0.0, 4.066, 4.066], [6.099, 10.165, 10.165]]

@@ -144,3 +144,44 @@ def test_scale_unit_cell_full_strain_matrix():
     scaled_structure = structure.scale_unit_cell(scaling_factors=scaling_matrix)
     expected_cell = np.dot(np.array(structure["cell"]), scaling_matrix)
     assert np.allclose(scaled_structure["cell"], expected_cell), "3x3 scaling matrix failed"
+
+
+def test_create_supercell_errors_and_warnings():
+    """Test appropriate error rasing of create_supercell function."""
+    structure = Structure(**dict(load_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml")))
+    with pytest.raises(TypeError) as error:
+        structure.create_supercell(size="test")
+    assert str(error.value) == "All entries of `size` must be integer numbers."
+    with pytest.raises(ValueError) as error:
+        structure.create_supercell(size=[1, 1, 1, 1])
+    assert str(error.value) == "`size` must have a length of 3."
+    with pytest.raises(ValueError) as error:
+        structure.create_supercell(size=[1, 1, -1])
+    assert str(error.value) == "All entries of `size` must be greater or equal to 1."
+    structure.pbc = [True, False, True]
+    with pytest.warns(UserWarning) as record:
+        structure.create_supercell([1, 2, 1])
+    assert (
+        str(record[0].message)
+        == "Direction 1 is non-periodic but `size[1]` is larger than 1. "
+        + "This direction will be ignored."
+    )
+
+
+def test_create_supercell_npbc(structure_comparison):
+    """Test create_supercell function for non-periodic input structure."""
+    structure = Structure.from_file(STRUCTURES_PATH + "Benzene.xyz")
+    sc = structure.create_supercell(size=2)
+    structure_comparison(sc, structure)
+
+
+def test_create_supercell(structure_comparison):
+    """Test create_supercell function."""
+    ref = load_yaml_file(STRUCTURE_MANIPULATION_PATH + "GaAs_216_prim_create_spuercell_ref.yaml")
+    structure = Structure(
+        **dict(load_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml")), label="test"
+    )
+    structure.kinds = ["k1", "k2"]
+    structure.site_attributes = {"test": [True, False]}
+    sc = structure.create_supercell(**ref["function_args"])
+    structure_comparison(sc, ref["structure"])

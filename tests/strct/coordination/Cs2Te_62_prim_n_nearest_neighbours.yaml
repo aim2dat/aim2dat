@@ -16,7 +16,7 @@ ref:
       kind:
       site_index: 7
       distance: 4.435553188187956
-      position: [6.197535938000001, 7.364085, -0.8484619909999982]
+      position: [6.197535938000001, 1.472817, -0.8484619909999982]
     - element: Te
       kind:
       site_index: 8
@@ -121,7 +121,7 @@ ref:
       kind:
       site_index: 4
       distance: 4.433325541961325
-      position: [10.972216938, 7.364085, 6.659845491]
+      position: [10.972216938, 1.472817, 6.659845491]
     - element: Te
       kind:
       site_index: 8

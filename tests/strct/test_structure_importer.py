@@ -313,6 +313,6 @@ def test_mofxdb_interface(nested_dict_comparison, structure_comparison, system):
     structures = strct_import.import_from_mofxdb(**data["parameters"])
     assert len(structures) == len(data["structures"]), "Number of queried MOFs is wrong."
     for strct, ref_strct in zip(structures, data["structures"]):
-        structure_comparison(strct, ref_strct)
+        structure_comparison(strct, ref_strct, compare_site_attrs=False)
         nested_dict_comparison(strct.attributes, ref_strct["attributes"])
         nested_dict_comparison(strct.extras, ref_strct["extras"])

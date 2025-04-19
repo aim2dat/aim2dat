@@ -26,7 +26,7 @@
   - [7.42392, -3.466896, -7.291755]
   - [7.295383, -3.466896, 7.423173]
   source_id: mp-1188281
-  source: MP_2025.02.12.post
+  source: MP_2025.04.10
   icsd_ids: []
   formation_energy: {value: -1.189229695624998, unit: eV/atom}
   stability: {value: 0.0, unit: eV/atom}
@@ -52,7 +52,7 @@
   - [-2.520721, 7.12878, 0.0]
   - [0.0, 0.0, 8.634603]
   source_id: mp-505634
-  source: MP_2025.02.12.post
+  source: MP_2025.04.10
   icsd_ids: [53245, 53244]
   formation_energy: {value: -0.9087276910000011, unit: eV/atom}
   stability: {value: 0.0, unit: eV/atom}
@@ -80,7 +80,7 @@
   - [0.0, 9.527045, 0.0]
   - [0.0, 0.0, 11.621285]
   source_id: mp-573763
-  source: MP_2025.02.12.post
+  source: MP_2025.04.10
   icsd_ids: [36501]
   formation_energy: {value: -1.220100983333334, unit: eV/atom}
   stability: {value: 0.0, unit: eV/atom}
@@ -104,7 +104,7 @@
   - [0.0, 6.1278, 0.0]
   - [0.0, 0.0, 11.629]
   source_id: mp-8361
-  source: MP_2025.02.12.post
+  source: MP_2025.04.10
   icsd_ids: [83351]
   formation_energy: {value: -1.0644603675, unit: eV/atom}
   stability: {value: 0.0, unit: eV/atom}
