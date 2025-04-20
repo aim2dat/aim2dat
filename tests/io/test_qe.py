@@ -12,8 +12,8 @@ import numpy as np
 from aim2dat.io import (
     read_yaml_file,
     read_qe_band_structure,
-    read_qe_total_density_of_states,
-    read_qe_atom_proj_density_of_states,
+    read_qe_total_dos,
+    read_qe_proj_dos,
     read_qe_xml,
 )
 
@@ -32,9 +32,9 @@ def test_read_qe_band_structure(nested_dict_comparison):
             np.testing.assert_allclose(bands_data[key], fobj[key][:], atol=1.0e-5)
 
 
-def test_read_qe_total_density_of_states(nested_dict_comparison):
-    """Test read_qe_total_density_of_states function."""
-    tdos_data = read_qe_total_density_of_states(TDOS_PATH + "dos.dat")
+def test_read_qe_total_dos(nested_dict_comparison):
+    """Test read_qe_total_dos function."""
+    tdos_data = read_qe_total_dos(TDOS_PATH + "dos.dat")
     assert tdos_data["unit_x"] == "eV"
     assert tdos_data["e_fermi"] == 5.968
     with h5py.File(TDOS_PATH + "ref.h5", "r") as fobj:
@@ -42,9 +42,9 @@ def test_read_qe_total_density_of_states(nested_dict_comparison):
             np.testing.assert_allclose(tdos_data[key], fobj[key][:], atol=1.0e-5)
 
 
-def test_read_qe_atom_proj_density_of_states(nested_dict_comparison):
-    """Test read_qe_atom_proj_density_of_states function."""
-    pdos_data = read_qe_atom_proj_density_of_states(PDOS_PATH)
+def test_read_qe_proj_dos(nested_dict_comparison):
+    """Test read_qe_proj_dos function."""
+    pdos_data = read_qe_proj_dos(PDOS_PATH)
     assert pdos_data["unit_x"] == "eV"
     with h5py.File(PDOS_PATH + "ref.h5", "r") as fobj:
         np.testing.assert_allclose(pdos_data["energy"], fobj["energy"][:], atol=1.0e-5)

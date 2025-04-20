@@ -3,7 +3,6 @@
 from aim2dat.io.cp2k.bands_dos import read_cp2k_band_structure, read_cp2k_proj_dos
 from aim2dat.io.cp2k.restart import read_cp2k_restart_structure
 from aim2dat.io.cp2k.stdout import read_cp2k_stdout
-
 from aim2dat.io.cif import read_cif_file
 from aim2dat.io.critic2 import read_critic2_stdout, read_critic2_plane
 from aim2dat.io.fhi_aims import (
@@ -11,14 +10,13 @@ from aim2dat.io.fhi_aims import (
     read_fhiaims_total_dos,
     read_fhiaims_proj_dos,
 )
-
-# from aim2dat.io.phonopy import (
-#     read_phonopy_band_structure,
-#     read_phonopy_total_density_of_states,
-#     read_phonopy_atom_proj_density_of_states,
-#     read_phonopy_thermal_properties,
-#     read_phonopy_qha_properties,
-# )
+from aim2dat.io.phonopy import (
+    read_phonopy_band_structure,
+    read_phonopy_total_dos,
+    read_phonopy_proj_dos,
+    read_phonopy_thermal_properties,
+    read_phonopy_qha_properties,
+)
 from aim2dat.io.qe import (
     read_qe_xml,
     read_qe_input_structure,
@@ -43,11 +41,11 @@ __all__ = [
     "read_fhiaims_band_structure",
     "read_fhiaims_total_dos",
     "read_fhiaims_proj_dos",
-    # "read_phonopy_band_structure",
-    # "read_phonopy_total_density_of_states",
-    # "read_phonopy_atom_proj_density_of_states",
-    # "read_phonopy_thermal_properties",
-    # "read_phonopy_qha_properties",
+    "read_phonopy_band_structure",
+    "read_phonopy_total_dos",
+    "read_phonopy_proj_dos",
+    "read_phonopy_thermal_properties",
+    "read_phonopy_qha_properties",
     "read_qe_xml",
     "read_qe_input_structure",
     "read_qe_band_structure",
