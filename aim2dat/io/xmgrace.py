@@ -7,6 +7,9 @@ from typing import Union
 import numpy as np
 import re
 
+# Internal library imports
+from aim2dat.io.utils import read_band_structure
+
 
 def read_xmgrace_file(file_path: str) -> Union[list, tuple]:
     """
@@ -113,6 +116,7 @@ def read_xmgrace_file(file_path: str) -> Union[list, tuple]:
     return x_values, y_values, tick_labels
 
 
+@read_band_structure(r".*\.agr$")
 def read_xmgrace_band_structure(file_path: str, kpoints: list) -> list:
     """
     Read xmgrace band structure file.
@@ -158,7 +162,7 @@ def read_xmgrace_band_structure(file_path: str, kpoints: list) -> list:
         # Calculate directional vector
         vector = np.subtract(segment_kpoints[1], segment_kpoints[0])
 
-        # Crate k-path:
+        # Create k-path:
         length = x_values_indices[1] - x_values_indices[0]
         for point_nr in range(length + 1):
             path.append(np.add(segment_kpoints[0], point_nr * vector / (length)).tolist())
