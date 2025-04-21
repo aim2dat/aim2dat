@@ -55,6 +55,17 @@ def test_read_qe_proj_dos(nested_dict_comparison):
                 np.testing.assert_allclose(pdos0, fobj[label][:], atol=1.0e-5)
 
 
+def test_read_qe_xml_error():
+    """Test read_qe_xml error."""
+    with pytest.raises(ValueError) as error:
+        read_qe_xml(XML_PATH + "unconverged.xml")
+    assert (
+        str(error.value)
+        == "Calculation did not finish properly, exit status: 3. To obtain output, set "
+        + "`raise_error` to False."
+    )
+
+
 @pytest.mark.parametrize("system", ["SCF", "H2O"])
 def test_read_qe_xml(nested_dict_comparison, system):
     """Test read_qe_xml function."""

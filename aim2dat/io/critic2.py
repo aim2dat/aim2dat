@@ -9,7 +9,7 @@ import re
 from aim2dat.io.utils import custom_open
 
 
-def read_critic2_stdout(file_path: str) -> dict:
+def read_critic2_stdout(file_path: str, raise_error: bool = True) -> dict:
     """
     Read standard output file.
 
@@ -17,6 +17,8 @@ def read_critic2_stdout(file_path: str) -> dict:
     ----------
     file_path : str
         Path to the file.
+    raise_error : bool
+        Whether to raise an error if a flaw is detected in the output file.
 
     Returns
     -------
@@ -60,6 +62,11 @@ def read_critic2_stdout(file_path: str) -> dict:
                 result_dict["ncomments"] = int(line.split()[-2])
             elif line.startswith("CRITIC2 ended "):
                 result_dict["aborted"] = True
+    if raise_error and result_dict.get("aborted", False):
+        raise ValueError(
+            "Calculation did not finish properly, error message: "
+            f"'{result_dict.get('error', 'none')}'. To obtain output, set `raise_error` to False."
+        )
     return result_dict
 
 

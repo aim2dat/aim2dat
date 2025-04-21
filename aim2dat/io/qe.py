@@ -29,6 +29,7 @@ def read_qe_xml(
     extract_structures: bool = False,
     strct_type: str = None,
     strct_include: list = None,
+    raise_error: bool = True,
 ) -> dict:
     """
     Read xml output file.
@@ -45,6 +46,8 @@ def read_qe_xml(
         ``'steps'``.
     strct_include : list
         List of dictionary keys that are included in the structure attributes.
+    raise_error : bool
+        Whether to raise an error if a flaw is detected in the output file.
 
     Returns
     -------
@@ -272,7 +275,13 @@ def read_qe_xml(
     outp_dict = {}
     for child in tree.getroot():
         if child.tag == "exit_status":
+            exit_status = int(child.text)
             outp_dict["exit_status"] = int(child.text)
+            if raise_error and exit_status != 0:
+                raise ValueError(
+                    f"Calculation did not finish properly, exit status: {exit_status}. "
+                    "To obtain output, set `raise_error` to False."
+                )
         elif child.tag == "closed":
             pass
         else:

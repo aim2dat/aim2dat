@@ -871,7 +871,9 @@ def _create_step_info_dict(
     return outp_list
 
 
-def read_cp2k_stdout(file_path: str, parser_type: str = "standard") -> dict:
+def read_cp2k_stdout(
+    file_path: str, parser_type: str = "standard", raise_error: bool = True
+) -> dict:
     """
     Read standard output file of CP2K.
 
@@ -882,6 +884,8 @@ def read_cp2k_stdout(file_path: str, parser_type: str = "standard") -> dict:
     parser_type : str
         Defines the quantities that are being parsed. Supported options are ``'standard'``,
         ``'partial_charges'`` and ``'trajectory'``.
+    raise_error : bool
+        Whether to raise an error if a flaw is detected in the output file.
 
     Returns
     -------
@@ -913,6 +917,11 @@ def read_cp2k_stdout(file_path: str, parser_type: str = "standard") -> dict:
         for err1 in _ERROR_MAPPING:
             if err1[0] in err0["message"]:
                 output[err1[1]] = True
+        if raise_error:
+            raise ValueError(
+                f"Calculation did not finish properly, error message: '{err0['message']}'. "
+                "To obtain output, set `raise_error` to False."
+            )
 
     kpoints = output.pop("kpoints", [])
     if "eigenvalues_info" in output:

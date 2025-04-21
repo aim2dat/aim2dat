@@ -24,15 +24,19 @@ class OutputParserTester:
         """Add output-file to the class."""
         self.result_dicts[test_case + "-" + str(cp2k_version)] = {
             "standard": read_cp2k_stdout(
-                MAIN_PATH + f"cp2k-{cp2k_version}/{test_case}_{print_level}/aiida.out", "standard"
+                MAIN_PATH + f"cp2k-{cp2k_version}/{test_case}_{print_level}/aiida.out",
+                "standard",
+                raise_error=False,
             ),
             "partial_charges": read_cp2k_stdout(
                 MAIN_PATH + f"cp2k-{cp2k_version}/{test_case}_{print_level}/aiida.out",
                 "partial_charges",
+                raise_error=False,
             ),
             "trajectory": read_cp2k_stdout(
                 MAIN_PATH + f"cp2k-{cp2k_version}/{test_case}_{print_level}/aiida.out",
                 "trajectory",
+                raise_error=False,
             ),
         }
 
@@ -116,6 +120,17 @@ class OutputParserTester:
                 assert abs(value1 - value2) < tolerance, f"Different value for {item['key']}."
             else:
                 assert value1 == value2, f"Different value for {item['key']}."
+
+
+def test_read_cp2k_stdout_error():
+    """Test read_cp2k_stdout error."""
+    with pytest.raises(ValueError) as error:
+        read_cp2k_stdout(MAIN_PATH + "cp2k-2025.1/smearing_need_added_mos_medium/aiida.out")
+    assert (
+        str(error.value)
+        == "Calculation did not finish properly, error message: 'Extra MOs (ADDED_MOS) are "
+        + "required for smearing'. To obtain output, set `raise_error` to False."
+    )
 
 
 @pytest.mark.parametrize(
