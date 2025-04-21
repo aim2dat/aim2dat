@@ -345,7 +345,7 @@ def test_add_structure_random_crystal(structure_comparison):
 
 def test_add_structure_random_molecules_error():
     """Test add_structure_random method errors."""
-    inputs = dict(load_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml"))
+    inputs = dict(read_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml"))
     with pytest.raises(DistanceThresholdError) as error:
         add_structure_random(
             Structure(**inputs),
