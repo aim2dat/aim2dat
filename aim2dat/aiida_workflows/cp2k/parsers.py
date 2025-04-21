@@ -19,7 +19,7 @@ from aiida.common import OutputParsingError
 from aim2dat.io import (
     read_cp2k_stdout,
     read_cp2k_restart_structure,
-    read_cp2k_atom_proj_density_of_states,
+    read_cp2k_proj_dos,
 )
 
 
@@ -191,7 +191,7 @@ class Cp2kStandardParser(_Cp2kBaseParser):
         if retrieved_temporary_folder is not None:
             pdos_data = None
             try:
-                pdos_data = read_cp2k_atom_proj_density_of_states(retrieved_temporary_folder)
+                pdos_data = read_cp2k_proj_dos(retrieved_temporary_folder)
             except ValueError as e:
                 if str(e) != "No files with the correct naming scheme found.":
                     raise
