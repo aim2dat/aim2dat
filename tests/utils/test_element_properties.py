@@ -11,8 +11,8 @@ import aim2dat.utils.element_properties as el_properties
     "element,radius_type,value",
     [
         ("Cs", "covalent", 2.44),
-        ("C", "vdw", 1.7),
-        ("Sc", "vdw", None),
+        ("C", "vdw", 1.77),
+        ("Sc", "vdw", 2.58),
         ("Si", "chen_manz", 1.38),
         ("Ne", "chen_manz", None),
     ],

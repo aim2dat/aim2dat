@@ -2,4 +2,4 @@
 aim2dat package.
 """
 
-__version__ = "0.2.0"
+__version__ = "0.4.0.dev"

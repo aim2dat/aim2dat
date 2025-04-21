@@ -7,9 +7,8 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.strct import Structure
+from aim2dat.strct import Structure, SamePositionsError
 from aim2dat.io import read_yaml_file
-
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 ZEO_PATH = os.path.dirname(__file__) + "/zeo/"
@@ -132,7 +131,7 @@ def test_structure_validation():
         strct_dict["positions"][0] = [0.0, 0.0, float("nan")]
         strct = Structure(**strct_dict)
     assert str(error.value) == "`positions` must not contain 'nan' values."
-    with pytest.raises(ValueError) as error:
+    with pytest.raises(SamePositionsError) as error:
         strct_dict["positions"][0] = [0.0] * 3
         strct_dict["elements"].append("Ga")
         strct_dict["positions"].append([14.2310] * 3)

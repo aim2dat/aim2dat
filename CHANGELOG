@@ -2,6 +2,18 @@
 Changelog
 =========
 
+Version 0.4.0
+=============
+
+**Fixes:**
+
+* The ``strct.Structure.calculate_distance`` method was not always returning the smallest distance when ``backfold_positions=True`` since only the second site position was backfolded (`PR #139 <https://github.com/aim2dat/aim2dat/pull/139>`_).
+
+**Breaking Changes:**
+
+* The ``aim2dat.utils.element_properties.get_atomic_radius`` function now relies entirely internal values taken from :doi:`10.1039/B801115J` (``'covalent'``), :doi:`10.1039/C3DT50599E` (``'vdw'``), :doi:`10.1039/C9RA07327B` (``'chen_manz'``), and :doi:`10.26434/chemrxiv-2024-m3rtp-v2` (``'vdw_charry_tkatchenko'``) instead of ase (`PR #138 <https://github.com/aim2dat/aim2dat/pull/138>`_).
+
+
 Version 0.3.0
 =============
 
@@ -44,25 +56,11 @@ Version 0.3.0
 * The ``strct.Structure.calculate_distance``, ``strct.Structure.calculate_angle`` and ``strct.Structure.calculate_dihedral_angle`` now return all possible combinations from the given indices instead of pairwise tuples (`PR #126 <https://github.com/aim2dat/aim2dat/pull/126>`_).
 * The ``strct.ext_analysis.determine_molecular_fragments``, ``strct.ext_analysis.create_graph`` and ``strct.ext_manipulation.add_structure_coord`` functions now implement ``**cn_kwargs`` as container for the arguments forwarded to the ``strct.Structure.calculate_coordination`` function (`PR #128 <https://github.com/aim2dat/aim2dat/pull/128>`_).
 * The default value for the ``method`` parameter of the ``strct.Structure.calculate_coordination`` is now set to ``atomic_radius`` as this method seems more reliable and equally fast as ``minimum_distance`` (`PR #128 <https://github.com/aim2dat/aim2dat/pull/128>`_).
+* The ``aim2dat.strct.ext_manipulation.add_structure_random`` function now uses the numpy random number generator and now offers more keyword arguments to control the used random numbers (`PR #134 <https://github.com/aim2dat/aim2dat/pull/134>`_).
 
 
 Version 0.2.0
 =============
-
-**Fixes:**
-
-* ``utils.chem_formula.transform_str_to_dict`` supports now recurring elements and nested brackets (`PR #13 <https://github.com/aim2dat/aim2dat/pull/13>`_).
-* ``strct.Structure.calculate_voronoi_tessellation`` now sorts the the neighbouring sites (`PR #31 <https://github.com/aim2dat/aim2dat/pull/31>`_).
-* ``io.fhi_aims.read_atom_proj_density_of_states`` supports now higher azimuth quantum numbers up to i (`PR #33 <https://github.com/aim2dat/aim2dat/pull/33>`_).
-* External structure manipulation methods now share the same interface as their internal counterparts (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
-* A few smaller bug fixes in CP2K output parser (`PR #36 <https://github.com/aim2dat/aim2dat/pull/36>`_).
-* Fix interface to spglib to support version 2.5 and above (`PR #54 <https://github.com/aim2dat/aim2dat/pull/54>`_).
-* Small fixes to the Materials Project open-api interface (`PR #58 <https://github.com/aim2dat/aim2dat/pull/58>`_).
-* The optimade interface was not working as soon as one supplier could not be reached (`PR #62 <https://github.com/aim2dat/aim2dat/pull/62>`_).
-* ``strct.Structure.calculate_distance`` now correctly backfolds positions into the unit cell (`PR #63 <https://github.com/aim2dat/aim2dat/pull/63>`_).
-* ``strct.ext_manipulation.add_structure_coord`` or ``strct.ext_manipulation.add_functional_group`` were not in all cases dealing correctly with planar coordination geometry (`PR #64 <https://github.com/aim2dat/aim2dat/pull/64>`_).
-* Fixed error in ``strct.StructureOperations`` when index slices were used (`PR #71 <https://github.com/aim2dat/aim2dat/pull/71>`_).
-* Fixed bug in ``plots.PartialChargesPlot`` occurring when a data labels was part of another data label (`PR #77 <https://github.com/aim2dat/aim2dat/pull/77>`_).
 
 **Enhancements:**
 
@@ -88,6 +86,21 @@ Version 0.2.0
 * ``io.cp2k.read_atom_proj_density_of_states`` now also supports LDOS files (`PR #76 <https://github.com/aim2dat/aim2dat/pull/76>`_).
 * ``strct.StructureOperations.compare_*`` functions can now be run in parallel (`PR #78 <https://github.com/aim2dat/aim2dat/pull/78>`_).
 * Added ``custom_hatch`` to all ``plots`` classes to allow plotting hatched bars using the matplotlib backend (`PR #89 <https://github.com/aim2dat/aim2dat/pull/89>`_).
+
+**Fixes:**
+
+* ``utils.chem_formula.transform_str_to_dict`` supports now recurring elements and nested brackets (`PR #13 <https://github.com/aim2dat/aim2dat/pull/13>`_).
+* ``strct.Structure.calculate_voronoi_tessellation`` now sorts the the neighbouring sites (`PR #31 <https://github.com/aim2dat/aim2dat/pull/31>`_).
+* ``io.fhi_aims.read_atom_proj_density_of_states`` supports now higher azimuth quantum numbers up to i (`PR #33 <https://github.com/aim2dat/aim2dat/pull/33>`_).
+* External structure manipulation methods now share the same interface as their internal counterparts (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
+* A few smaller bug fixes in CP2K output parser (`PR #36 <https://github.com/aim2dat/aim2dat/pull/36>`_).
+* Fix interface to spglib to support version 2.5 and above (`PR #54 <https://github.com/aim2dat/aim2dat/pull/54>`_).
+* Small fixes to the Materials Project open-api interface (`PR #58 <https://github.com/aim2dat/aim2dat/pull/58>`_).
+* The optimade interface was not working as soon as one supplier could not be reached (`PR #62 <https://github.com/aim2dat/aim2dat/pull/62>`_).
+* ``strct.Structure.calculate_distance`` now correctly backfolds positions into the unit cell (`PR #63 <https://github.com/aim2dat/aim2dat/pull/63>`_).
+* ``strct.ext_manipulation.add_structure_coord`` or ``strct.ext_manipulation.add_functional_group`` were not in all cases dealing correctly with planar coordination geometry (`PR #64 <https://github.com/aim2dat/aim2dat/pull/64>`_).
+* Fixed error in ``strct.StructureOperations`` when index slices were used (`PR #71 <https://github.com/aim2dat/aim2dat/pull/71>`_).
+* Fixed bug in ``plots.PartialChargesPlot`` occurring when a data labels was part of another data label (`PR #77 <https://github.com/aim2dat/aim2dat/pull/77>`_).
 
 **Deprecations:**
 

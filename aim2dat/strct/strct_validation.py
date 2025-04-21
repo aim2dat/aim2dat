@@ -14,6 +14,12 @@ import numpy as np
 from aim2dat.utils.element_properties import get_element_symbol
 
 
+class SamePositionsError(ValueError):
+    """Error raised when two or more atom sites share the same position."""
+
+    pass
+
+
 def _structure_validate_elements(elements):
     if not isinstance(elements, (list, tuple, np.ndarray, str)):
         raise TypeError("`elements` must be a list, tuple, numpy array or str.")
@@ -72,7 +78,7 @@ def _structure_validate_positions(positions, is_cartesian, cell, inv_cell, pbc):
             if dist_m[i][j] < 1e-3:
                 sites.add((i, j))
     if sites:
-        raise ValueError(
+        raise SamePositionsError(
             "Sites with the same position: " + ", ".join([f"{i}" for i in sites]) + "."
         )
 

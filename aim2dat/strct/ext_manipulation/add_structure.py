@@ -5,16 +5,19 @@ Module that implements routines to add a functional group or adsorbed molecule t
 # Standard library imports
 import os
 from typing import Union, List
-import random
 import copy
 
 # Third party library imports
 import numpy as np
 
 # Internal library imports
-from aim2dat.strct import Structure
+from aim2dat.strct import Structure, SamePositionsError
 from aim2dat.strct.ext_manipulation.decorator import external_manipulation_method
-from aim2dat.strct.ext_manipulation.utils import _build_distance_dict, _check_distances
+from aim2dat.strct.ext_manipulation.utils import (
+    _build_distance_dict,
+    _check_distances,
+    DistanceThresholdError,
+)
 from aim2dat.strct.ext_manipulation.rotate_structure import rotate_structure
 from aim2dat.strct.strct_misc import _calc_atomic_distance
 from aim2dat.utils.element_properties import get_element_symbol
@@ -28,11 +31,13 @@ cwd = os.path.dirname(__file__)
 @external_manipulation_method
 def add_structure_random(
     structure: Structure,
-    change_label: bool = False,
-    wrap: bool = False,
     guest_structure: Union[Structure, str] = "CH3",
+    max_tries: int = 1000,
+    random_seed: Union[float, None] = None,
+    random_nrs: Union[list, None] = None,
     dist_threshold: Union[dict, list, float, int, str, None] = 0.8,
-    random_state: Union[float, None] = None,
+    wrap: bool = False,
+    change_label: bool = False,
 ) -> Structure:
     """
     Add structure at random position and orientation.
@@ -41,12 +46,18 @@ def add_structure_random(
     ----------
     structure : aim2dat.strct.Structure
         Structure to which the guest structure is added.
-    wrap : bool (optional)
-        Wrap atomic positions back into the unit cell.
     guest_structure : str or aim2dat.strct.Structure (optional)
         A representation of the guest structure given as a string of a functional group or molecule
         (viable options are ``'CH3'``, ``'COOH'``, ``'H2O'``, ``'NH2'``, ``'NO2'`` or ``'OH'``), a
         ``Structure`` object or the element symbol to add one single atom.
+    max_tries : int
+        Number of tries to add the guest structure. A trie is rejected via the criteria given by
+        the ``dist_treshold`` parameter.
+    random_seed : int or None (optional)
+        Specify the initial random state to ensure reproducible results.
+    random_nrs : list or None (optional)
+        List of random numbers used to derive the position and rotation of the guest molecule. It
+        should contain ``max_tries * 7`` entries to cover the maximum amout of tries.
     dist_threshold : dict, list, float, int, str or None (optional)
         Check the distances between all site pairs of the host and guest structure to ensure that
         none of the added atoms collide or are too far apart. For example, ``0.8`` to ensure a
@@ -55,8 +66,8 @@ def add_structure_random(
         allows distance checks for individual pairs of elements or site indices. Specifying an
         atomic radius type as str, e.g. ``covalent+10`` sets the minimum threshold to the sum
         of covalent radii plus 10%.
-    random_state : float or None (optional)
-        Specify the initial random state to ensure reproducible results.
+    wrap : bool (optional)
+        Wrap atomic positions back into the unit cell.
     change_label : bool (optional)
         Add suffix to the label of the new structure highlighting the performed manipulation.
 
@@ -88,22 +99,30 @@ def add_structure_random(
         min_pos = np.zeros(3)
         cell = np.array(structure.cell)
 
-    random.seed(a=random_state)
-    max_tries = 1000
+    if random_nrs is None:
+        rng = np.random.default_rng(seed=random_seed)
     for _ in range(max_tries):
-        rot_v = np.array([random.random(), random.random(), random.random()])
+        r_nrs = (
+            [rng.random() for _ in range(7)]
+            if random_nrs is None
+            else [random_nrs.pop(0) for _ in range(7)]
+        )
+        rot_v = np.array([v - 0.5 for v in r_nrs[:3]])
         guest_strct0 = rotate_structure(
-            guest_strct, angles=360 * random.random(), origin=np.zeros(3), vector=rot_v
+            guest_strct, angles=360 * r_nrs[3], origin=np.zeros(3), vector=rot_v
         )
 
         guest_positions = np.array(guest_strct0["positions"])
-        shift = np.array([random.random(), random.random(), random.random()])
+        shift = np.array(r_nrs[4:7])
         shift = (cell.T).dot(shift)
         guest_positions += shift - min_pos
-        guest_strct1 = copy.deepcopy(guest_strct)
+        guest_strct1 = guest_strct.copy()
         guest_strct1.set_positions(guest_positions)
 
-        new_structure = _merge_structures(structure, guest_strct1, wrap)
+        try:
+            new_structure = _merge_structures(structure, guest_strct1, wrap)
+        except SamePositionsError:
+            continue
         new_indices = list(
             range(len(new_structure) - len(guest_strct["elements"]), len(new_structure))
         )
@@ -111,7 +130,9 @@ def add_structure_random(
         is_added = _check_distances(new_structure, new_indices, None, distance_dict, True)
         if is_added:
             return new_structure, "_added-" + guest_strct_label
-    raise ValueError("Could not add guest structure, host structure seems to be too aggregated.")
+    raise DistanceThresholdError(
+        "Could not add guest structure, host structure seems to be too aggregated."
+    )
 
 
 @external_manipulation_method
