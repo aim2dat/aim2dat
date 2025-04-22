@@ -206,7 +206,7 @@ def create_supercell(
     )
 
     strct_dict = structure.to_dict(cartesian=True)
-    strct_dict["cell"] = [[v * s for v in vect] for s, vect in zip(size, structure.cell)]
+    strct_dict["cell"] = [[v * s if pbc else v for v in vect] for s, vect, pbc in zip(size, structure.cell, structure.pbc)]
     strct_dict["elements"] = elements_sc
     strct_dict["kinds"] = kinds_sc
     strct_dict["positions"] = positions_sc
