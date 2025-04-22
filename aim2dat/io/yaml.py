@@ -33,7 +33,7 @@ def read_yaml_file(file_path: str, typ: str = "safe"):
 
 def write_yaml_file(file_path: str, content):
     """
-    Write conttent to a yaml-file.
+    Write content to a yaml-file.
 
     Parameters
     ----------
