@@ -589,6 +589,8 @@ class ManipulationMixin:
         ValueError
             If ``size`` is not a positive integer number or a tuple/list of three positive integer
             numbers.
+        Warning
+            If ``size`` is gives a multiple of 1 for a non-periodic direction.
         """
         kwargs = {
             "size": size,

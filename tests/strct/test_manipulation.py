@@ -146,7 +146,7 @@ def test_scale_unit_cell_full_strain_matrix():
     assert np.allclose(scaled_structure["cell"], expected_cell), "3x3 scaling matrix failed"
 
 
-def test_create_supercell_errors_and_warnings():
+def test_create_supercell_errors_and_warnings(structure_comparison):
     """Test appropriate error rasing of create_supercell function."""
     structure = Structure(**dict(load_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml")))
     with pytest.raises(TypeError) as error:
@@ -160,12 +160,13 @@ def test_create_supercell_errors_and_warnings():
     assert str(error.value) == "All entries of `size` must be greater or equal to 1."
     structure.pbc = [True, False, True]
     with pytest.warns(UserWarning) as record:
-        structure.create_supercell([1, 2, 1])
+        sc = structure.create_supercell([1, 2, 1], change_label=False)
     assert (
         str(record[0].message)
         == "Direction 1 is non-periodic but `size[1]` is larger than 1. "
         + "This direction will be ignored."
     )
+    structure_comparison(sc, structure)
 
 
 def test_create_supercell_npbc(structure_comparison):
