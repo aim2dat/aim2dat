@@ -107,8 +107,8 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
         self,
         data_label,
         x_values,
-        y_values,
         heights,
+        y_error=None,
         plot_label=None,
         color=None,
         hatch=None,
@@ -125,11 +125,11 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
         data_label : str
             Internal label of the data set.
         x_values : list
-            List of x-values of the points.
-        y_values : list
-            List of y-values of the points.
+            List of x-values of the bars.
         heights : list
             List of bar heights.
+        y_error : list
+            List of y-error-values of the bars.
         plot_label : str (optional)
             Label of the data set shown in the legend.
         color : str (optional)
@@ -148,15 +148,14 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
         self._check_data_label(data_label)
         data_set = {
             "x_values": x_values,
-            "y_values": y_values,
             "heights": heights,
             "bottom": bottom,
             "width": width,
             "align": align,
             "type": "bar",
         }
-        if plot_label is not None:
-            data_set["label"] = plot_label
+        if y_error is not None:
+            data_set["y_error"] = y_error
         if plot_label is not None:
             data_set["label"] = plot_label
         if color is not None:

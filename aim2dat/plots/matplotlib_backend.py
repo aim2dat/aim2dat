@@ -343,6 +343,7 @@ def _add_bar(obj, axes, bar):
         width=bar.get("width", 0.8),
         bottom=bar.get("bottom", 0),
         align=bar.get("align", "center"),
+        yerr=bar.get("y_error", None),
         color=bar.get("color", None),
         hatch=bar.get("hatch", None),
         alpha=bar.get("alpha", None),
