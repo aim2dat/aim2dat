@@ -108,7 +108,6 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
         data_label,
         x_values,
         heights,
-        y_error=None,
         plot_label=None,
         color=None,
         hatch=None,
@@ -116,6 +115,9 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
         bottom=0.0,
         width=0.8,
         align="center",
+        y_error=None,
+        capsize=None,
+        ecolor=None,
     ):
         """
         Import data set for a bar plot.
@@ -144,6 +146,11 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
             Width of the bars.
         align : str
             Alignment of the bar.
+        capsize : float
+            Length of the error bar caps in points.
+        ecolor : str
+            Color of the error bars.
+
         """
         self._check_data_label(data_label)
         data_set = {
@@ -154,8 +161,6 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
             "align": align,
             "type": "bar",
         }
-        if y_error is not None:
-            data_set["y_error"] = y_error
         if plot_label is not None:
             data_set["label"] = plot_label
         if color is not None:
@@ -164,6 +169,14 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
             data_set["hatch"] = hatch
         if alpha is not None:
             data_set["alpha"] = alpha
+        if y_error is not None:
+            data_set["y_error"] = y_error
+        if capsize is not None:
+            data_set["capsize"] = capsize
+        if y_error is not None and ecolor is None:
+            data_set["ecolor"] = "black"
+        if ecolor is not None:
+            data_set["ecolor"] = ecolor
         self._data[data_label] = data_set
 
     def _prepare_to_plot(self, data_labels, subplot_assignment):
