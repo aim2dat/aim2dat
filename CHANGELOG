@@ -8,6 +8,7 @@ Version 0.4.0
 **Enhancements:**
 
 * The ``strct.Structure`` and ``strct.StructureOperations`` now implement the function ``create_supercell`` which replicates the unit cell forming a supercell (`PR #136 <https://github.com/aim2dat/aim2dat/pull/136>`_).
+* ``plots.simpleplot.import_bar_data_set`` added new parameter `y_error` to add errors to height for backend `matplotlib` (`PR #140 <https://github.com/aim2dat/aim2dat/pull/140>`_).
 
 **Fixes:**
 

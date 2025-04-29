@@ -20,7 +20,6 @@ import_data:
   args:
     data_label: test dataset 3
     x_values: [1.0, 4.0]
-    y_values: [2.0, 3.0]
     heights: [4.0, 1.0]
     plot_label: Bar data set
     width: 0.15

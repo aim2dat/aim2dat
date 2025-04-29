@@ -107,7 +107,6 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
         self,
         data_label,
         x_values,
-        y_values,
         heights,
         plot_label=None,
         color=None,
@@ -116,6 +115,9 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
         bottom=0.0,
         width=0.8,
         align="center",
+        y_error=None,
+        capsize=None,
+        ecolor=None,
     ):
         """
         Import data set for a bar plot.
@@ -125,11 +127,11 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
         data_label : str
             Internal label of the data set.
         x_values : list
-            List of x-values of the points.
-        y_values : list
-            List of y-values of the points.
+            List of x-values of the bars.
         heights : list
             List of bar heights.
+        y_error : list
+            List of y-error-values of the bars.
         plot_label : str (optional)
             Label of the data set shown in the legend.
         color : str (optional)
@@ -144,11 +146,15 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
             Width of the bars.
         align : str
             Alignment of the bar.
+        capsize : float
+            Length of the error bar caps in points.
+        ecolor : str
+            Color of the error bars.
+
         """
         self._check_data_label(data_label)
         data_set = {
             "x_values": x_values,
-            "y_values": y_values,
             "heights": heights,
             "bottom": bottom,
             "width": width,
@@ -157,14 +163,20 @@ class SimplePlot(_BasePlot, _HLineMixin, _VLineMixin):
         }
         if plot_label is not None:
             data_set["label"] = plot_label
-        if plot_label is not None:
-            data_set["label"] = plot_label
         if color is not None:
             data_set["color"] = color
         if hatch is not None:
             data_set["hatch"] = hatch
         if alpha is not None:
             data_set["alpha"] = alpha
+        if y_error is not None:
+            data_set["y_error"] = y_error
+        if capsize is not None:
+            data_set["capsize"] = capsize
+        if y_error is not None and ecolor is None:
+            data_set["ecolor"] = "black"
+        if ecolor is not None:
+            data_set["ecolor"] = ecolor
         self._data[data_label] = data_set
 
     def _prepare_to_plot(self, data_labels, subplot_assignment):
