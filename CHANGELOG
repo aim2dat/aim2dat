@@ -5,6 +5,10 @@ Changelog
 Version 0.4.0
 =============
 
+**Enhancements:**
+
+* ``plots.simpleplot.import_bar_data_set`` added new parameter `y_error` to add errors to height for backend `matplotlib` (`PR #140 <https://github.com/aim2dat/aim2dat/pull/140>`_).
+
 **Fixes:**
 
 * The ``strct.Structure.calculate_distance`` method was not always returning the smallest distance when ``backfold_positions=True`` since only the second site position was backfolded (`PR #139 <https://github.com/aim2dat/aim2dat/pull/139>`_).
