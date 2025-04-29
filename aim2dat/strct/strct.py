@@ -22,7 +22,7 @@ except ImportError:
 # Internal library imports
 from aim2dat.ext_interfaces import _return_ext_interface_modules
 from aim2dat.strct.strct_io import get_structure_from_file
-from aim2dat.io.zeo import write_zeo_file
+from aim2dat.io import write_zeo_file
 from aim2dat.strct.strct_validation import (
     _structure_validate_cell,
     _structure_validate_elements,

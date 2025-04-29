@@ -11,7 +11,7 @@ from scipy.spatial.distance import cdist
 # Internal library imports
 from aim2dat.io.utils import read_structure, custom_open
 from aim2dat.io.base_parser import FLOAT, transform_str_value
-from aim2dat.strct.strct_misc import _get_cell_from_lattice_p
+from aim2dat.utils.strct import _get_cell_from_lattice_p
 from aim2dat.utils.element_properties import get_element_symbol
 from aim2dat.utils.space_groups import get_space_group_details
 import aim2dat.utils.chem_formula as utils_cf
