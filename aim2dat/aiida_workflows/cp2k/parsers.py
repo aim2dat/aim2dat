@@ -130,15 +130,17 @@ class _Cp2kBaseParser(Parser):
         # Read the restart file.
         # TODO distinguish different exceptions.
         try:
-            structures = read_cp2k_restart_structure(self.retrieved.get_object_content(fname))
+            structures = read_cp2k_restart_structure(
+                self.retrieved.get_object_content(fname), pseudo_name=fname
+            )
         except IOError:
             return self.exit_codes.ERROR_READING_OUTPUT_FILE
 
         # For now only one structure is supported
-        if len(structures) > 1:
+        if isinstance(structures, list):
             raise OutputParsingError("Multiple force-evaluations not yet supported.")
         else:
-            structure = structures[0]
+            structure = structures
         structure_node = StructureData(cell=structure["cell"], pbc=structure["pbc"])
         for kind, sym, pos in zip(
             structure["kinds"], structure["elements"], structure["positions"]

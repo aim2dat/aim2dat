@@ -72,7 +72,9 @@ class _KindPattern(_BasePattern):
 
 
 @read_multiple(r".*-1\.restart$", is_read_strct_method=True)
-def read_cp2k_restart_structure(folder_path: str) -> Union[dict, List[dict]]:
+def read_cp2k_restart_structure(
+    folder_path: str, pseudo_name: str = None
+) -> Union[dict, List[dict]]:
     """
     Read structures from 'restart'-files.
 
@@ -80,6 +82,8 @@ def read_cp2k_restart_structure(folder_path: str) -> Union[dict, List[dict]]:
     ----------
     folder_path : str
         Path to the folder containing the CP2K ouput-files.
+    pseudo_name: str
+        Name of the file if a "pseudo file" is passed.
 
     Returns
     -------

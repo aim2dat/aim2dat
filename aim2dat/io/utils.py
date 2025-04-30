@@ -88,12 +88,14 @@ def read_multiple(
     # Single file as file name/file content/file object
     # Multiple files as List of files or folder path
 
-    def _check_file(file_like, file_dict, re_pattern, is_strict):
+    def _check_file(file_like, file_dict, re_pattern, is_strict, pseudo_name):
         if os.path.isfile(file_like):
             file_path = os.path.split(file_like)[1]
         elif hasattr(file_like, "filename"):
             # Support AiiDA single file:
             file_path = file_like.filename
+        elif pseudo_name:
+            file_path = pseudo_name
         else:
             return None
 
@@ -133,14 +135,16 @@ def read_multiple(
                 re_pattern = re.compile(pattern)
                 for k0 in re_pattern.groupindex.keys():
                     file_dict[k0] = []
+
+            pseudo_name = kwargs.get("pseudo_name", None)
             for file_like in files:
                 if os.path.isdir(file_like):
                     [
-                        _check_file(os.path.join(file_like, f0), file_dict, re_pattern, True)
+                        _check_file(os.path.join(file_like, f0), file_dict, re_pattern, True, None)
                         for f0 in os.listdir(file_like)
                     ]
                 else:
-                    _check_file(file_like, file_dict, re_pattern, False)
+                    _check_file(file_like, file_dict, re_pattern, False, pseudo_name)
             # TODO add regex to error message:
             if len(file_dict["file"]) == 0:
                 raise ValueError("No files with the correct naming scheme found.")
