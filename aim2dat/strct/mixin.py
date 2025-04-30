@@ -20,6 +20,7 @@ from aim2dat.strct.strct_coordination import calculate_coordination
 from aim2dat.strct.strct_super_cell import calculate_voronoi_tessellation
 from aim2dat.strct.strct_prdf import calculate_ffingerprint
 from aim2dat.strct.strct_manipulation import (
+    create_supercell,
     delete_atoms,
     scale_unit_cell,
     substitute_elements,
@@ -559,6 +560,44 @@ class ManipulationMixin:
             "change_label": change_label,
         }
         return self._perform_strct_manipulation(scale_unit_cell, kwargs)
+
+    @manipulates_structure
+    def create_supercell(
+        self, size: Union[int, list, tuple] = 2, wrap: bool = True, change_label: bool = True
+    ):
+        """
+        Create supercell.
+
+        Parameters
+        ----------
+        size : int, list, tuple
+            Super cell size, given as a list/tuple of three positive integer values or one integer
+            value, applied to all directions.
+        wrap : bool
+            Wrap atomic positions back into the unit cell.
+        change_label : bool
+
+        Returns
+        -------
+        Structure or StructureCollection
+            Structure or a collection of structures.
+
+        Raises
+        ------
+        TypeError
+            If ``size`` has the wrong type.
+        ValueError
+            If ``size`` is not a positive integer number or a tuple/list of three positive integer
+            numbers.
+        Warning
+            If ``size`` is gives a multiple of 1 for a non-periodic direction.
+        """
+        kwargs = {
+            "size": size,
+            "wrap": wrap,
+            "change_label": change_label,
+        }
+        return self._perform_strct_manipulation(create_supercell, kwargs)
 
     @manipulates_structure
     def substitute_elements(

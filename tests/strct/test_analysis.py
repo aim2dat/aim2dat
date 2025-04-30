@@ -162,5 +162,32 @@ def test_cn_analysis(nested_dict_comparison, structure_label, method):
     inputs = dict(read_yaml_file(STRUCTURES_PATH + structure_label + ".yaml"))
     ref = dict(read_yaml_file(COORDINATION_PATH + structure_label + "_" + method + ".yaml"))
     structure = Structure(**inputs)
-    outputs = structure.calculate_coordination(**ref["parameters"])
-    nested_dict_comparison(outputs, ref["ref"])
+    output = structure.calculate_coordination(**ref["parameters"])
+    sites = output.pop("sites")
+    sites_ref = ref["ref"].pop("sites")
+    assert len(sites) == len(sites_ref)
+    nested_dict_comparison(output, ref["ref"])
+    for site_idx, (site, site_ref) in enumerate(zip(sites, sites_ref)):
+        neighs = site.pop("neighbours")
+        neighs_ref = site_ref.pop("neighbours")
+        assert len(neighs) == len(neighs_ref)
+        nested_dict_comparison(site, site_ref)
+        used_indices = []
+        for neigh in neighs:
+            for idx, neigh_ref in enumerate(neighs_ref):
+                match = True
+                for key in ["element", "kind", "site_index"]:
+                    if neigh[key] != neigh_ref[key]:
+                        match = False
+                if "weight" in neigh_ref and abs(neigh["weight"] - neigh_ref["weight"]) > 1e-5:
+                    match = False
+                if abs(neigh["distance"] - neigh_ref["distance"]) > 1e-5:
+                    match = False
+                if any(
+                    abs(v0 - v1) > 1e-5 for v0, v1 in zip(neigh["position"], neigh_ref["position"])
+                ):
+                    match = False
+                if match and idx not in used_indices:
+                    used_indices.append(idx)
+                    break
+            assert match, f"Neighbour {neigh} of site {site_idx} not found in reference data."
