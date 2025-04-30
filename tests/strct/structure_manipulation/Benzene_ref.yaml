@@ -12,3 +12,4 @@ structure:
   - [-0.7040,    1.2194,    0.0000]
   - [ 0.7040,    1.2194,   -0.0000]
   is_cartesian: true
+  site_attributes: {test: [2, 3, 4, 5]}

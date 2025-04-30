@@ -241,6 +241,7 @@ def test_list_methods():
     assert Structure.manipulation_methods == [
         "delete_atoms",
         "scale_unit_cell",
+        "create_supercell",
         "substitute_elements",
     ]
 

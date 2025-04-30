@@ -4,7 +4,7 @@
 from __future__ import annotations
 import math
 import itertools
-from typing import Tuple, List, TYPE_CHECKING
+from typing import Tuple, List, TYPE_CHECKING, Union
 
 # Third party library imports
 import numpy as np
@@ -59,49 +59,44 @@ def calculate_voronoi_tessellation(
 
 
 def _create_supercell_positions(
-    structure: Structure, r_max: float
-) -> Tuple[List[str], List[str], List[List[float]], List[int], List[np.ndarray[:, :]]]:
-    """Create supercell to calculate the distances to the periodic image atoms."""
+    structure: Structure, r_max: float, size: Union[tuple, list] = None, wrap: bool = True
+):
     if any(pbc0 for pbc0 in structure["pbc"]):
-        elements_uc = structure["elements"]
-        kinds_uc = structure["kinds"]
-        positions_scaled_uc = structure.get_positions(cartesian=False, wrap=True)
         translation_list = []
-
-        for direction in range(3):
-            if structure["pbc"][direction]:
-                max_nr_trans = math.ceil(r_max / structure["cell_lengths"][direction]) + 2
-                translation_list.append(list(range(-max_nr_trans, max_nr_trans)))
+        for direction, pbc in enumerate(structure.pbc):
+            if pbc:
+                if r_max is None:
+                    translation_list.append(list(range(0, size[direction])))
+                else:
+                    max_nr_trans = math.ceil(r_max / structure.cell_lengths[direction]) + 2
+                    translation_list.append(list(range(-max_nr_trans, max_nr_trans)))
             else:
                 translation_list.append([0])
         translational_combinations = list(itertools.product(*translation_list))
+        rep_cells = np.repeat(translational_combinations, len(structure), axis=0)
         num_combinations = len(translational_combinations)
-        elements_sc = []
-        kinds_sc = []
-        positions_sc = []
-        indices_sc = []
-        mapping = []
-        rep_cells = []
-
-        translational_combinations = np.array(translational_combinations).T
-
-        for idx0, (element, kind, position) in enumerate(
-            zip(elements_uc, kinds_uc, positions_scaled_uc)
-        ):
-            positions_sc.extend(
-                (
-                    np.transpose(structure["cell"]).dot(
-                        np.array(position).reshape(3, 1) + translational_combinations
-                    )
-                ).T
+        positions_sc = (
+            np.tile(
+                structure.get_positions(cartesian=False, wrap=wrap),
+                (len(translational_combinations), 1),
             )
-            elements_sc.extend([element] * num_combinations)
-            kinds_sc.extend([kind] * num_combinations)
-            mapping.extend([idx0] * num_combinations)
-            rep_cells.extend(translational_combinations.T)
-            index_sc = -1 * np.ones(num_combinations, dtype=int)
-            index_sc = np.where(np.all(translational_combinations == 0, axis=0), idx0, index_sc)
-            indices_sc.extend(index_sc.tolist())
+            + rep_cells
+        )
+        positions_sc = positions_sc.dot(structure.cell)
+
+        elements_sc = list(structure.elements) * num_combinations
+        kinds_sc = (
+            [None] * (len(structure) * num_combinations)
+            if structure.kinds is None
+            else list(structure.kinds) * num_combinations
+        )
+        mapping = list(range(len(structure))) * num_combinations
+        indices_sc = [
+            idx if trans_comb == (0, 0, 0) else -1
+            for trans_comb in translational_combinations
+            for idx in range(len(structure))
+        ]
+
     else:
         elements_sc = structure["elements"]
         kinds_sc = structure["kinds"]
