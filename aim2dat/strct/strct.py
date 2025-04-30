@@ -336,8 +336,10 @@ class Structure(AnalysisMixin, ManipulationMixin):
                     for i1, i2 in [(1, 2), (0, 2), (0, 1)]
                 ]
             )
-            # if hasattr(self, "_positions"):
-            #     self.set_positions(self.positions, is_cartesian=True)
+            if self.scaled_positions is not None:
+                self.set_positions(self.scaled_positions, is_cartesian=False)
+            elif self.positions is not None:
+                self.set_positions(self.positions, is_cartesian=True)
 
     @property
     def cell_volume(self) -> Union[float, None]:
