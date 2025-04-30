@@ -92,6 +92,11 @@ def test_read_cp2k_restart_structure_single(nested_dict_comparison, restart_file
     ref = dict(read_yaml_file(STRUCTURES_PATH + reference_file))
     structure = read_cp2k_restart_structure(STRUCTURES_PATH + restart_file)
     nested_dict_comparison(structure, ref)
+    # Test if the file is read from a string
+    with open(STRUCTURES_PATH + restart_file, "r") as pseudo_file:
+        file_content = pseudo_file.read()
+    structure = read_cp2k_restart_structure(file_content, pseudo_name=restart_file.split("/")[-1])
+    nested_dict_comparison(structure, ref)
 
 
 def test_read_cp2k_restart_structure_multiple(nested_dict_comparison):
