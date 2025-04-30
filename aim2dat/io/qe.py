@@ -598,7 +598,7 @@ def read_qe_proj_dos(folder_path):
 
         # Read pdos, we only read the orbital contributions here, the summation is performed in
         # the plotting-class:
-        with custom_open(folder_path["file"][idx], "r") as pdos_file:
+        with custom_open(folder_path["file_path"][idx], "r") as pdos_file:
 
             # Get inof from regex:
             qn_labels = quantum_numbers[orb]

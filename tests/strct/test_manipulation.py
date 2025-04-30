@@ -148,7 +148,7 @@ def test_scale_unit_cell_full_strain_matrix():
 
 def test_create_supercell_errors_and_warnings(structure_comparison):
     """Test appropriate error rasing of create_supercell function."""
-    structure = Structure(**dict(load_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml")))
+    structure = Structure(**dict(read_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml")))
     with pytest.raises(TypeError) as error:
         structure.create_supercell(size="test")
     assert str(error.value) == "All entries of `size` must be integer numbers."
@@ -178,9 +178,9 @@ def test_create_supercell_npbc(structure_comparison):
 
 def test_create_supercell(structure_comparison):
     """Test create_supercell function."""
-    ref = load_yaml_file(STRUCTURE_MANIPULATION_PATH + "GaAs_216_prim_create_spuercell_ref.yaml")
+    ref = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "GaAs_216_prim_create_spuercell_ref.yaml")
     structure = Structure(
-        **dict(load_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml")), label="test"
+        **dict(read_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml")), label="test"
     )
     structure.kinds = ["k1", "k2"]
     structure.site_attributes = {"test": [True, False]}

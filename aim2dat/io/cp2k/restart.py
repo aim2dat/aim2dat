@@ -10,8 +10,19 @@ import re
 import numpy as np
 
 # Internal library imports
-from aim2dat.io.base_parser import parse_pattern_function, _BasePattern
+from aim2dat.io.base_parser import parse_pattern_function, _BasePattern, transform_str_value
 from aim2dat.io.utils import read_multiple
+
+
+class _GlobalPattern(_BasePattern):
+    pattern = r"^\s*&GLOBAL\n(.*\n)*?\s*&END\sGLOBAL"
+
+    def process_data(self, output: dict, matches: List[re.Match]):
+        m = matches[-1]
+        for line in m.string[m.start() : m.end()].splitlines()[1:-1]:
+            line_sp = line.split()
+            if line_sp[0].upper() == "PROJECT_NAME":
+                output["label"] = transform_str_value(line_sp[1])
 
 
 class _CellPattern(_BasePattern):
@@ -72,9 +83,7 @@ class _KindPattern(_BasePattern):
 
 
 @read_multiple(r".*-1\.restart$", is_read_strct_method=True)
-def read_cp2k_restart_structure(
-    folder_path: str, pseudo_name: str = None
-) -> Union[dict, List[dict]]:
+def read_cp2k_restart_structure(folder_path: str) -> Union[dict, List[dict]]:
     """
     Read structures from 'restart'-files.
 
@@ -82,8 +91,6 @@ def read_cp2k_restart_structure(
     ----------
     folder_path : str
         Path to the folder containing the CP2K ouput-files.
-    pseudo_name: str
-        Name of the file if a "pseudo file" is passed.
 
     Returns
     -------
@@ -93,12 +100,14 @@ def read_cp2k_restart_structure(
         dictionaries is returned.
     """
     structures = []
-    for file_p, file_n in zip(folder_path["file"], folder_path["file_path"]):
-        proj = file_n.rsplit("-", 1)[0]
-        output = parse_pattern_function(file_p, [_CellPattern, _CoordPattern, _KindPattern])
+    for file_n, file_p in zip(folder_path["file_name"], folder_path["file_path"]):
+        output = parse_pattern_function(
+            file_p, [_GlobalPattern, _CellPattern, _CoordPattern, _KindPattern]
+        )
+        if "label" not in output and file_n != "":
+            output["label"] = file_n.rsplit("-", 1)[0]
         kind_info = output.pop("kind_info")
         output["elements"] = [kind_info[kind] for kind in output["kinds"]]
-        output["label"] = proj
         structures.append(output)
     return structures[0] if len(structures) == 1 else structures
 

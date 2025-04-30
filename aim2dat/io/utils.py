@@ -88,30 +88,28 @@ def read_multiple(
     # Single file as file name/file content/file object
     # Multiple files as List of files or folder path
 
-    def _check_file(file_like, file_dict, re_pattern, is_strict, pseudo_name):
+    def _check_file(file_like, file_dict, re_pattern, is_strict):
         if os.path.isfile(file_like):
-            file_path = os.path.split(file_like)[1]
+            file_name = os.path.split(file_like)[1]
         elif hasattr(file_like, "filename"):
             # Support AiiDA single file:
-            file_path = file_like.filename
-        elif pseudo_name:
-            file_path = pseudo_name
+            file_name = file_like.filename
         else:
+            file_dict["file_path"].append(file_like)
+            file_dict["file_name"].append("")
             return None
 
-        match = None if re_pattern is None else re_pattern.match(file_path)
+        match = None if re_pattern is None else re_pattern.match(file_name)
         if match or not is_strict:
-            file_dict["file"].append(file_like)
-            file_dict["file_path"].append(file_path)
+            file_dict["file_path"].append(file_like)
+            file_dict["file_name"].append(file_name)
             for key, val in match.groupdict().items():
                 file_dict[key].append(val)
 
     def read_func_decorator(func):
         func._is_read_structure_method = is_read_strct_method
-        func._is_read_band_structure_method = is_read_band_strct_method
-        func._is_read_proj_dos_method = is_read_proj_dos_method
         func._pattern = pattern
-        func._preset_kwargs = {} if preset_kwargs is None else preset_kwargs
+        func._preset_kwargs = preset_kwargs
 
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -130,23 +128,21 @@ def read_multiple(
             if not isinstance(files, (list, tuple)):
                 files = [files]
             re_pattern = None
-            file_dict = {"file": [], "file_path": []}
+            file_dict = {"file_path": [], "file_name": []}
             if pattern:
                 re_pattern = re.compile(pattern)
                 for k0 in re_pattern.groupindex.keys():
                     file_dict[k0] = []
-
-            pseudo_name = kwargs.get("pseudo_name", None)
             for file_like in files:
                 if os.path.isdir(file_like):
                     [
-                        _check_file(os.path.join(file_like, f0), file_dict, re_pattern, True, None)
+                        _check_file(os.path.join(file_like, f0), file_dict, re_pattern, True)
                         for f0 in os.listdir(file_like)
                     ]
                 else:
-                    _check_file(file_like, file_dict, re_pattern, False, pseudo_name)
+                    _check_file(file_like, file_dict, re_pattern, False)
             # TODO add regex to error message:
-            if len(file_dict["file"]) == 0:
+            if len(file_dict["file_path"]) == 0:
                 raise ValueError("No files with the correct naming scheme found.")
             # TODO add check for number of files and policy to handle multiple files.
             return func(file_dict, *args, **kwargs)

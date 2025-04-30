@@ -56,7 +56,7 @@ def read_fhiaims_band_structure(folder_path: str, soc: bool = False) -> dict:
         ):
             continue
 
-        with custom_open(folder_path["file"][idx], "r") as bandfile:
+        with custom_open(folder_path["file_path"][idx], "r") as bandfile:
             for line in bandfile:
                 l_split = line.split()
                 nrbands = int((len(l_split) - 4) * 0.5)
@@ -135,7 +135,7 @@ def read_fhiaims_proj_dos(folder_path: str, soc: bool = False, load_raw: bool = 
         pdos0 = {"element": re.split(r"(\d+)", folder_path["kind"][idx])[0]}
         energy = []
         with custom_open(
-            folder_path["file"][idx], "r"
+            folder_path["file_path"][idx], "r"
         ) as pdos_file:  # TODO change to own manager:
             for line in pdos_file:
                 if line.split()[0] != "#" and len(line.strip()) != 0:

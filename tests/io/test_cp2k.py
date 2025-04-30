@@ -95,7 +95,7 @@ def test_read_cp2k_restart_structure_single(nested_dict_comparison, restart_file
     # Test if the file is read from a string
     with open(STRUCTURES_PATH + restart_file, "r") as pseudo_file:
         file_content = pseudo_file.read()
-    structure = read_cp2k_restart_structure(file_content, pseudo_name=restart_file.split("/")[-1])
+    structure = read_cp2k_restart_structure(file_content)
     nested_dict_comparison(structure, ref)
 
 

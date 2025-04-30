@@ -124,7 +124,7 @@ def read_cp2k_proj_dos(folder_path: str) -> dict:
         "i+5",
     ]
 
-    indices = [(val, idx) for idx, val in enumerate(folder_path["file_path"])]
+    indices = [(val, idx) for idx, val in enumerate(folder_path["file_name"])]
     indices.sort(key=lambda point: point[0])
     _, indices = zip(*indices)
     pdos = []
@@ -136,7 +136,7 @@ def read_cp2k_proj_dos(folder_path: str) -> dict:
             spin_suffix = "_" + folder_path["spin"][idx].lower()
         energy = []
         occupation = []
-        with io_utils.custom_open(folder_path["file"][idx], "r") as dos_file:
+        with io_utils.custom_open(folder_path["file_path"][idx], "r") as dos_file:
             line_1 = dos_file.readline().split()
             line_2 = dos_file.readline().split()
             if "list" in line_1:

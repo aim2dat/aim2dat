@@ -7,7 +7,7 @@
  # Source code revision number                                       git:310b7ab
  &GLOBAL
    PRINT_LEVEL  LOW
-   PROJECT_NAME geo_opt
+   PROJECT_NAME O2_geo_opt
    RUN_TYPE  GEO_OPT
  &END GLOBAL
  &MOTION
