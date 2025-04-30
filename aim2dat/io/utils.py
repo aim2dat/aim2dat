@@ -108,8 +108,10 @@ def read_multiple(
 
     def read_func_decorator(func):
         func._is_read_structure_method = is_read_strct_method
+        func._is_read_band_structure_method = is_read_band_strct_method
+        func._is_read_proj_dos_method = is_read_proj_dos_method
         func._pattern = pattern
-        func._preset_kwargs = preset_kwargs
+        func._preset_kwargs = {} if preset_kwargs is None else preset_kwargs
 
         @wraps(func)
         def wrapper(*args, **kwargs):

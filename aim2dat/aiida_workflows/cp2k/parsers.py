@@ -130,9 +130,7 @@ class _Cp2kBaseParser(Parser):
         # Read the restart file.
         # TODO distinguish different exceptions.
         try:
-            structures = read_cp2k_restart_structure(
-                self.retrieved.get_object_content(fname), pseudo_name=fname
-            )
+            structures = read_cp2k_restart_structure(self.retrieved.get_object_content(fname))
         except IOError:
             return self.exit_codes.ERROR_READING_OUTPUT_FILE
 
