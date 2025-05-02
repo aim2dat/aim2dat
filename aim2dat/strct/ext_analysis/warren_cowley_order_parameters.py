@@ -10,10 +10,8 @@ from aim2dat.strct.strct import Structure
 from aim2dat.utils.maths import calc_polygon_area
 
 
-@external_analysis_method
-def calculate_warren_cowley_order_p(
-    structure: Structure, r_max: float = 20.0, max_shells: int = 3
-):
+@external_analysis_method(attr_mapping=None)
+def calc_warren_cowley_order_p(structure: Structure, r_max: float = 20.0, max_shells: int = 3):
     """
     Calculate Warren-Cowley like order parameters as defined in :doi:`10.1103/PhysRevB.96.024104`.
 
@@ -32,7 +30,7 @@ def calculate_warren_cowley_order_p(
         Dictionary containing the order parameters.
     """
     # TODO calculate in voronoi tessellation? and implement different weights
-    voronoi_list = structure.calculate_voronoi_tessellation(r_max)
+    voronoi_list = structure.calc_voronoi_tessellation(r_max)
     for vlist_site in voronoi_list:
         for vinfo in vlist_site:
             vinfo["weight"] = calc_polygon_area(vinfo["vertices"])
@@ -42,7 +40,7 @@ def calculate_warren_cowley_order_p(
     order_p_list = []
 
     if len(kind_dict) == 1:
-        return None, {
+        return {
             "order_p": {kinds[0]: [0.0 for _ in range(max_shells)]},
             "order_p_sites": [[0.0 for _ in range(max_shells)] for _ in kinds],
         }
@@ -69,7 +67,7 @@ def calculate_warren_cowley_order_p(
         order_p_dict[kind] = [
             mean(order_p_list[idx][shell] for idx in kind_sites) for shell in range(max_shells)
         ]
-    return None, {"order_p": order_p_dict, "order_p_sites": order_p_list}
+    return {"order_p": order_p_dict, "order_p_sites": order_p_list}
 
 
 def _calculate_order_p_recursive(

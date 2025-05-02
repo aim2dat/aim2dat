@@ -28,7 +28,7 @@ def _compare_structures_ffprint(
         return 1.0
     else:
         ffprints = [
-            strct.calculate_ffingerprint(
+            strct.calc_ffingerprint(
                 r_max=r_max,
                 delta_bin=delta_bin,
                 sigma=sigma,
@@ -123,7 +123,7 @@ def _compare_structures_direct_comp(
     el_lists = []
     positions = []
     for strct in [structure1, structure2]:
-        output = strct.determine_space_group(
+        output = strct.calc_space_group(
             symprec=symprec,
             angle_tolerance=angle_tolerance,
             hall_number=hall_number,
@@ -175,7 +175,7 @@ def _compare_structures_comp_sym(
     ):
         return False
     for strct in [structure1, structure2]:
-        sg_info = strct.determine_space_group(
+        sg_info = strct.calc_space_group(
             symprec=symprec,
             angle_tolerance=angle_tolerance,
             hall_number=hall_number,

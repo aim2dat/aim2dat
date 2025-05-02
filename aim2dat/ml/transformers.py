@@ -13,12 +13,12 @@ from sklearn.utils.validation import check_is_fitted
 # Internal library imports
 from aim2dat.strct import StructureCollection, StructureOperations
 from aim2dat.strct.ext_analysis import (
-    calculate_warren_cowley_order_p,
-    calculate_prdf,
-    calculate_interaction_matrix,
-    calculate_acsf_descriptor,
-    calculate_soap_descriptor,
-    calculate_mbtr_descriptor,
+    calc_warren_cowley_order_p,
+    calc_prdf,
+    calc_interaction_matrix,
+    calc_acsf_descriptor,
+    calc_soap_descriptor,
+    calc_mbtr_descriptor,
 )
 from aim2dat.strct.strct import _compare_function_args
 from aim2dat.utils.chem_formula import transform_list_to_dict
@@ -456,7 +456,7 @@ class StructureCoordinationTransformer(_BaseStructureTransformer):
         self._features_out = np.asarray(f_labels, dtype=object)
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
-        return strct_op[label_list].calculate_coordination(**input_p)
+        return strct_op[label_list].calc_coordination(**input_p)
 
     def _get_features(self, label_list, strct_op, input_p):
         check_is_fitted(self, attributes="el_pairs_")
@@ -518,7 +518,7 @@ class StructureChemOrderTransformer(_BaseStructureTransformer):
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
         return strct_op[label_list].perform_analysis(
-            method=calculate_warren_cowley_order_p, kwargs=input_p
+            method=calc_warren_cowley_order_p, kwargs=input_p
         )
 
     def _get_features(self, label_list, strct_op, input_p):
@@ -590,7 +590,7 @@ class StructureFFPrintTransformer(_BaseStructureTransformer):
         self.el_pairs_ = list(itertools.combinations_with_replacement(self.elements_, 2))
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
-        return strct_op[label_list].calculate_ffingerprint(**input_p)
+        return strct_op[label_list].calc_ffingerprint(**input_p)
 
     def _get_features(self, label_list, strct_op, input_p):
         check_is_fitted(self, attributes="el_pairs_")
@@ -666,7 +666,7 @@ class StructurePRDFTransformer(_BaseStructureTransformer):
         self.el_pairs_ = list(itertools.product(all_elements, repeat=2))
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
-        return strct_op[label_list].perform_analysis(method=calculate_prdf, kwargs=input_p)
+        return strct_op[label_list].perform_analysis(method=calc_prdf, kwargs=input_p)
 
     def _get_features(self, label_list, strct_op, input_p):
         check_is_fitted(self, attributes="el_pairs_")
@@ -787,7 +787,7 @@ class StructureMatrixTransformer(_BaseStructureTransformer):
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
         return strct_op[label_list].perform_analysis(
-            method=calculate_interaction_matrix, kwargs=input_p
+            method=calc_interaction_matrix, kwargs=input_p
         )
 
     def _get_features(self, label_list, strct_op, input_p):
@@ -878,9 +878,7 @@ class StructureACSFTransformer(_BaseDscribeTransformer):
         self.dscribe_only_physical_cores = dscribe_only_physical_cores
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
-        return strct_op[label_list].perform_analysis(
-            method=calculate_acsf_descriptor, kwargs=input_p
-        )
+        return strct_op[label_list].perform_analysis(method=calc_acsf_descriptor, kwargs=input_p)
 
 
 class StructureSOAPTransformer(_BaseDscribeTransformer):
@@ -976,9 +974,7 @@ class StructureSOAPTransformer(_BaseDscribeTransformer):
         self.dscribe_only_physical_cores = dscribe_only_physical_cores
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
-        return strct_op[label_list].perform_analysis(
-            method=calculate_soap_descriptor, kwargs=input_p
-        )
+        return strct_op[label_list].perform_analysis(method=calc_soap_descriptor, kwargs=input_p)
 
 
 class StructureMBTRTransformer(_BaseDscribeTransformer):
@@ -1060,6 +1056,4 @@ class StructureMBTRTransformer(_BaseDscribeTransformer):
         self.dscribe_only_physical_cores = dscribe_only_physical_cores
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
-        return strct_op[label_list].perform_analysis(
-            method=calculate_mbtr_descriptor, kwargs=input_p
-        )
+        return strct_op[label_list].perform_analysis(method=calc_mbtr_descriptor, kwargs=input_p)

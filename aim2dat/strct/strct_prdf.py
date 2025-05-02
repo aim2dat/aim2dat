@@ -13,9 +13,7 @@ from aim2dat.strct.strct_super_cell import _create_supercell_positions
 from aim2dat.fct.smearing import apply_smearing
 
 
-def calculate_ffingerprint(
-    structure, r_max, delta_bin, sigma, use_legacy_smearing, distinguish_kinds
-):
+def calc_ffingerprint(structure, r_max, delta_bin, sigma, use_legacy_smearing, distinguish_kinds):
     """Calculate f-fingerprint."""
     elements_uc = structure["elements"]
     element_dict = structure._element_dict
@@ -50,7 +48,7 @@ def calculate_ffingerprint(
             fingerprint -= 1.0
             atomic_fprint["fingerprints"][el_tuple] = fingerprint.tolist()
         atomic_fingerprints.append(atomic_fprint)
-    return None, (element_fingerprints, atomic_fingerprints)
+    return (element_fingerprints, atomic_fingerprints)
 
 
 def _calculate_prdf(structure, r_max, delta_bin, distinguish_kinds, method):

@@ -159,7 +159,7 @@ def determine_point_group(structure, threshold_distance, threshold_angle, thresh
 
         # Derive point group from symmetry elements:
         point_group = _derive_point_group(symmetry_elements, threshold_angle)
-    return point_group, {"point_group": point_group, "symmetry_elements": symmetry_elements}
+    return {"point_group": point_group, "symmetry_elements": symmetry_elements}
 
 
 def _detect_sea(elements, positions, threshold_distance):

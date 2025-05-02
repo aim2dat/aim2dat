@@ -23,7 +23,7 @@ _supported_methods = [
 ]
 
 
-def calculate_coordination(
+def calc_coordination(
     structure,
     r_max: float,
     method: str,
@@ -70,7 +70,7 @@ def calculate_coordination(
         voronoi_weight_threshold,
     )
     if method == "voronoi":
-        voronoi_list = structure.calculate_voronoi_tessellation(r_max=r_max)
+        voronoi_list = structure.calc_voronoi_tessellation(r_max=r_max)
         method_args = [structure, voronoi_list] + method_args[method]
     else:
         elements_sc, kinds_sc, positions_sc, indices_sc, mapping, _ = _create_supercell_positions(
@@ -115,7 +115,7 @@ def calculate_coordination(
         is_optional.append(False)
     coordination = _calculate_statistical_quantities(structure, sites, stat_keys, is_optional)
     coordination["sites"] = sites
-    return None, coordination
+    return coordination
 
 
 def _coord_group_method_args(

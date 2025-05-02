@@ -16,9 +16,7 @@ if TYPE_CHECKING:
     from aim2dat.strct.structure import Structure
 
 
-def calculate_voronoi_tessellation(
-    structure: Structure, r_max: float
-) -> Tuple[None, List[List[dict]]]:
+def calc_voronoi_tessellation(structure: Structure, r_max: float) -> Tuple[None, List[List[dict]]]:
     """Calculate voronoi tessellation."""
     voronoi_list = []
     (
@@ -55,7 +53,7 @@ def calculate_voronoi_tessellation(
                 key=lambda neighbor: (neighbor["index"], *neighbor["position"].tolist()),
             )
         )
-    return None, voronoi_list
+    return voronoi_list
 
 
 def _create_supercell_positions(

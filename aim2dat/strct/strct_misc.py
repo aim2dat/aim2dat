@@ -10,11 +10,11 @@ from typing import List
 import numpy as np
 
 # Internal library imports:
-from aim2dat.utils.maths import calc_angle
+import aim2dat.utils.maths as a2d_maths
 from aim2dat.strct.strct_super_cell import _create_supercell_positions
 
 
-def calculate_distance(
+def calc_distance(
     structure,
     site_index1,
     site_index2,
@@ -31,11 +31,10 @@ def calculate_distance(
             structure, site_index1, site_index2, backfold_positions
         )
 
-    output = (None, (distance, pos)) if return_pos else (None, distance)
-    return output
+    return (distance, pos) if return_pos else distance
 
 
-def calculate_angle(structure, site_index1, site_index2, site_index3, backfold_positions):
+def calc_angle(structure, site_index1, site_index2, site_index3, backfold_positions):
     """Calculate angle between three atomic positions."""
     comb_indices, is_int = _check_site_indices(structure, [site_index1, site_index2, site_index3])
     site_index1, site_index2, site_index3 = zip(*comb_indices)
@@ -46,14 +45,14 @@ def calculate_angle(structure, site_index1, site_index2, site_index3, backfold_p
     for idx1, idx2, idx3 in comb_indices:
         pos1 = np.array(structure["positions"][idx1])
         output.append(
-            calc_angle(positions[(idx1, idx2)] - pos1, positions[(idx1, idx3)] - pos1)
+            a2d_maths.calc_angle(positions[(idx1, idx2)] - pos1, positions[(idx1, idx3)] - pos1)
             * 180.0
             / np.pi
         )
-    return None, _parse_calc_output(comb_indices, output, is_int)
+    return _parse_calc_output(comb_indices, output, is_int)
 
 
-def calculate_dihedral_angle(
+def calc_dihedral_angle(
     structure, site_index1, site_index2, site_index3, site_index4, backfold_positions
 ):
     """Calculate dihedral angle between four atomic positions."""
@@ -77,8 +76,8 @@ def calculate_dihedral_angle(
             positions[(idx1, idx3)] - positions[(idx1, idx2)],
             positions[(idx1, idx4)] - positions[(idx1, idx3)],
         )
-        output.append(calc_angle(n_vector1, n_vector2) * 180.0 / np.pi)
-    return None, _parse_calc_output(comb_indices, output, is_int)
+        output.append(a2d_maths.calc_angle(n_vector1, n_vector2) * 180.0 / np.pi)
+    return _parse_calc_output(comb_indices, output, is_int)
 
 
 def _check_site_indices(structure, site_indices):

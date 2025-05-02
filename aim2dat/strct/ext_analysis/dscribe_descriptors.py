@@ -9,8 +9,8 @@ from aim2dat.strct.strct import Structure
 from aim2dat.strct.ext_analysis.decorator import external_analysis_method
 
 
-@external_analysis_method
-def calculate_interaction_matrix(
+@external_analysis_method(attr_mapping=None)
+def calc_interaction_matrix(
     structure: Structure,
     matrix_type: str = "coulomb",
     n_atoms_max: int = None,
@@ -87,8 +87,8 @@ def calculate_interaction_matrix(
     )
 
 
-@external_analysis_method
-def calculate_acsf_descriptor(
+@external_analysis_method(attr_mapping=None)
+def calc_acsf_descriptor(
     structure: Structure,
     r_cut: float = 7.5,
     g2_params: list = None,
@@ -150,8 +150,8 @@ def calculate_acsf_descriptor(
     )
 
 
-@external_analysis_method
-def calculate_soap_descriptor(
+@external_analysis_method(attr_mapping=None)
+def calc_soap_descriptor(
     structure: Structure,
     r_cut: float = 7.5,
     n_max: list = 8,
@@ -227,8 +227,8 @@ def calculate_soap_descriptor(
     )
 
 
-@external_analysis_method
-def calculate_mbtr_descriptor(
+@external_analysis_method(attr_mapping=None)
+def calc_mbtr_descriptor(
     structure: Structure,
     geometry: dict = {"function": "inverse_distance"},
     grid: dict = {"min": 0, "max": 1, "n": 100, "sigma": 0.1},
