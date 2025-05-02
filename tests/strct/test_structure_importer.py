@@ -133,7 +133,8 @@ def test_mp_openapi_interface(structure_comparison):
     strct_import.set_concentration_constraint("Cs", 0.3, 0.8)
     strct_import.set_concentration_constraint("Te", 0.3, 0.8)
     strct_collect = strct_import.import_from_mp(
-        "Cs-Te", os.environ["MP_OPENAPI_KEY"], use_openapi=True
+        "Cs-Te",
+        os.environ["MP_OPENAPI_KEY"],
     )
     assert strct_import._import_details == {"mp_openapi": [4, ["Cs", "Te"]]}
     for structure in strct_collect:
