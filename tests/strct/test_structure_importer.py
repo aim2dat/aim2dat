@@ -126,27 +126,6 @@ def test_print_and_constraints():
     )
 
 
-def test_mp_interface(structure_comparison):
-    """Test the materials project interface."""
-    ref_structures = load_yaml_file(REF_PATH + "mp_Cs-Te.yaml")
-    strct_import = StructureImporter()
-    strct_import.set_concentration_constraint("Cs", 0.3, 0.8)
-    strct_import.set_concentration_constraint("Te", 0.3, 0.8)
-    strct_collect = strct_import.import_from_mp("Cs-Te", os.environ["MP_API_KEY"])
-    assert strct_import._import_details == {"mp": [4, ["Cs", "Te"]]}
-    for structure, ref_structure in zip(strct_collect, ref_structures):
-        structure_comparison(structure, ref_structure)
-        for attr in ["source_id", "source", "icsd_ids", "space_group", "functional"]:
-            assert structure["attributes"][attr] == ref_structure[attr], f"'{attr}' doesn't match."
-        for attr in ["formation_energy", "stability", "direct_band_gap"]:
-            assert (
-                abs(structure["attributes"][attr]["value"] - ref_structure[attr]["value"]) < 1e-5
-            ), f"Values of '{attr}' don't match."
-            assert (
-                structure["attributes"][attr]["unit"] == ref_structure[attr]["unit"]
-            ), f"Units of '{attr}' don't match."
-
-
 def test_mp_openapi_interface(structure_comparison):
     """Test the materials project interface."""
     ref_structures = load_yaml_file(REF_PATH + "mp_Cs-Te_openapi.yaml")
