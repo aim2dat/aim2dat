@@ -54,6 +54,22 @@ def test_calc_distance(structure, file_suffix):
         assert abs(dist - ref_outputs["distance"]["reference"]) < 1e-5, "Wrong distance."
 
 
+def test_calculate_distance_pbc():
+    """Test correct handling of periodic boundary conditions in the calculate_distance function."""
+    strct = Structure(
+        elements=["H", "H"],
+        positions=[[1.0, 1.0, 1.0], [1.0, 9.0, 1.0]],
+        cell=[[2.0, 0.0, 0.0], [0.0, 10.0, 0.0], [0.0, 0.0, 2.0]],
+        pbc=True,
+    )
+    assert abs(strct.calculate_distance(0, 1) - 2.0) < 1e-5
+    strct._attributes = {}
+    strct._extras = {}
+    strct._function_args = {}
+    strct.pbc = [True, False, True]
+    assert abs(strct.calculate_distance(0, 1) - 8.0) < 1e-5
+
+
 @pytest.mark.parametrize("structure, file_suffix", [("ZIF-8", "cif"), ("ScBDC", "cif")])
 def test_calc_distance_sc(structure, file_suffix):
     """Test calc_distance function using the super cell."""
