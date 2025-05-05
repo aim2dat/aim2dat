@@ -160,7 +160,6 @@ class StructureImporter(ConstraintsMixin):
         conv_unit_cell: bool = False,
         property_data: list = [],
         structure_type: str = "initial",
-        use_openapi: bool = False,
     ) -> StructureCollection:
         """
         Import structures from the crystal database Materials Project using the pymatgen interface.
@@ -188,9 +187,6 @@ class StructureImporter(ConstraintsMixin):
             Materials project includes the initial and final (relaxed) structure in the database.
             The initial or final structure can be queried by setting this attribute
             to ``initial`` or ``final``, respectively. The default setting is ``initial``.
-        use_openapi : bool (optional)
-            Whether to use the openapi interface of Materials Project. If set to ``False`` the
-            legacy interface is used. The default value is ``False``.
         """
         if not isinstance(api_key, str):
             raise TypeError(
@@ -219,12 +215,9 @@ class StructureImporter(ConstraintsMixin):
             "conventional_unit_cell": conv_unit_cell,
             "compatible_only": compatible_only,
         }
-        if use_openapi:
-            if structure_type == "initial":
-                download_kwargs["property_data"].append("initial_structure")
-            return self._import_from_odb("mp_openapi", formulas, {}, download_kwargs)
-        else:
-            return self._import_from_odb("mp", formulas, {}, download_kwargs)
+        if structure_type == "initial":
+            download_kwargs["property_data"].append("initial_structure")
+        return self._import_from_odb("mp_openapi", formulas, {}, download_kwargs)
 
     def import_from_mofxdb(
         self,

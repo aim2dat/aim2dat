@@ -67,7 +67,6 @@ phonons = [
     "phonopy>=2.17.1",
 ]
 database_interfaces = [
-    "pymatgen>=2022.02.03",
     "msgpack>=1.0.2",
     "qmpy_rester>=0.2.0",
     "mofdb_client>=0.10.0",
