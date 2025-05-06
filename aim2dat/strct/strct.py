@@ -128,6 +128,8 @@ class Structure(AnalysisMixin, ManipulationMixin):
         self.kinds = kinds
         self.cell = cell
         self.pbc = pbc
+        self.set_positions(positions, is_cartesian=is_cartesian, wrap=wrap)
+
         self.label = label
         self.site_attributes = site_attributes
         self.store_calculated_properties = store_calculated_properties
@@ -135,8 +137,6 @@ class Structure(AnalysisMixin, ManipulationMixin):
         self._attributes = {} if attributes is None else attributes
         self._extras = {} if extras is None else extras
         self._function_args = {} if function_args is None else function_args
-
-        self.set_positions(positions, is_cartesian=is_cartesian, wrap=wrap)
 
     def __str__(self):
         """Represent object as string."""
