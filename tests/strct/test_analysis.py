@@ -62,12 +62,12 @@ def test_calculate_distance_pbc():
         cell=[[2.0, 0.0, 0.0], [0.0, 10.0, 0.0], [0.0, 0.0, 2.0]],
         pbc=True,
     )
-    assert abs(strct.calculate_distance(0, 1) - 2.0) < 1e-5
+    assert abs(strct.calc_distance(0, 1) - 2.0) < 1e-5
     strct._attributes = {}
     strct._extras = {}
     strct._function_args = {}
     strct.pbc = [True, False, True]
-    assert abs(strct.calculate_distance(0, 1) - 8.0) < 1e-5
+    assert abs(strct.calc_distance(0, 1) - 8.0) < 1e-5
 
 
 @pytest.mark.parametrize("structure, file_suffix", [("ZIF-8", "cif"), ("ScBDC", "cif")])
