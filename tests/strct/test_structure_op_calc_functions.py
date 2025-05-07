@@ -171,7 +171,7 @@ def test_planes(structure, file_type):
 
 
 def test_stabilities(create_structure_collection_object):
-    """Test calculate_stabilities function."""
+    """Test calc_stabilities function."""
     ref = load_yaml_file(STABILITIES_PATH + "MOFs_ref.yaml")
     strct_c, _ = create_structure_collection_object(["GaAs_216_conv"])
     for idx0, strct in enumerate(ref["input"]):

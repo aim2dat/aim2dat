@@ -54,8 +54,8 @@ def test_calc_distance(structure, file_suffix):
         assert abs(dist - ref_outputs["distance"]["reference"]) < 1e-5, "Wrong distance."
 
 
-def test_calculate_distance_pbc():
-    """Test correct handling of periodic boundary conditions in the calculate_distance function."""
+def test_calc_distance_pbc():
+    """Test correct handling of periodic boundary conditions in the calc_distance function."""
     strct = Structure(
         elements=["H", "H"],
         positions=[[1.0, 1.0, 1.0], [1.0, 9.0, 1.0]],
