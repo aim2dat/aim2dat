@@ -12,8 +12,8 @@ from aim2dat.strct.ext_analysis.decorator import external_analysis_method
 from aim2dat.strct.strct_prdf import _calculate_weights
 
 
-@external_analysis_method
-def calculate_ffingerprint_order_p(
+@external_analysis_method(attr_mapping={"ffingerprint_order_p": ("el_order_p",)})
+def calc_ffingerprint_order_p(
     structure: Structure,
     r_max: float = 15.0,
     delta_bin: float = 0.005,
@@ -54,7 +54,7 @@ def calculate_ffingerprint_order_p(
             order_p += prefactor * np.linalg.norm(np.array(fprint["fingerprints"][el_pair])) ** 2
         return order_p
 
-    fprints = structure.calculate_ffingerprint(
+    fprints = structure.calc_ffingerprint(
         r_max=r_max, delta_bin=delta_bin, sigma=sigma, distinguish_kinds=distinguish_kinds
     )
 
@@ -68,4 +68,4 @@ def calculate_ffingerprint_order_p(
     site_order_p = [
         _calc_order_p(delta_bin, fprint, weights, cell_v, n_atoms) for fprint in fprints[1]
     ]
-    return el_order_p, (el_order_p, site_order_p)
+    return {"order_p": el_order_p, "site_order_p": site_order_p}

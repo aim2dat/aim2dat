@@ -12,8 +12,8 @@ from aim2dat.strct.strct import Structure
 from aim2dat.strct.ext_analysis.decorator import external_analysis_method
 
 
-@external_analysis_method
-def create_graph(
+@external_analysis_method(attr_mapping=None)
+def calc_graph(
     structure: Structure,
     get_graphviz_graph: bool = False,
     graphviz_engine: str = "circo",
@@ -43,7 +43,7 @@ def create_graph(
     graphviz_graph : graphviz.Digraph
         graphviz graph of the structure (if ``get_graphviz_graph`` is set to ``True``).
     """
-    coord = structure.calculate_coordination(**cn_kwargs)
+    coord = structure.calc_coordination(**cn_kwargs)
     nx_graph = nx.MultiDiGraph()
     for site_idx, site in enumerate(coord["sites"]):
         nx_graph.add_node(site_idx, element=site["element"])
@@ -65,11 +65,8 @@ def create_graph(
 
     if get_graphviz_graph:
         backend_module = _return_ext_interface_modules("graphviz")
-        return None, (
-            nx_graph,
-            backend_module._networkx2graphviz(
-                nx_graph, graphviz_engine, graphviz_edge_rank_colors
-            ),
+        return nx_graph, backend_module._networkx2graphviz(
+            nx_graph, graphviz_engine, graphviz_edge_rank_colors
         )
     else:
-        return None, nx_graph
+        return nx_graph
