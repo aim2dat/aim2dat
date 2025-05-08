@@ -54,7 +54,7 @@ def test_basic_features(create_structure_collection_object, structure_comparison
 
     with pytest.raises(TypeError) as error:
         strct1_collect[2.0] = structures_1[2]
-    assert str(error.value) == "`key` needs to be of type int or str."
+    assert str(error.value) == "`key` needs to be of type: str, int, slice, tuple or list."
     with pytest.raises(ValueError) as error:
         strct1_collect[10] = structures_1[2]
     assert str(error.value) == "Index out of range (10 >= 7)."

@@ -172,7 +172,7 @@ class StructureCollection:
                 new_sc.append_structure(self.get_structure(key0))
             return new_sc
         else:
-            raise TypeError("key needs to be of type: str, int, slice, tuple or list.")
+            raise TypeError("`key` needs to be of type: str, int, slice, tuple or list.")
 
     def __setitem__(self, key: Union[str, int], value: Union[dict, Structure]):
         """
@@ -191,7 +191,7 @@ class StructureCollection:
             if isinstance(key, slice):
                 key = self._process_slice(key)
         else:
-            raise TypeError("key needs to be of type: str, int, slice, tuple or list.")
+            raise TypeError("`key` needs to be of type: str, int, slice, tuple or list.")
         if len(key) != len(value):
             raise ValueError("`key` and `value` need to have the same length.")
 
