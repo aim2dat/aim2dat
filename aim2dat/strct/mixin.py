@@ -442,6 +442,27 @@ class AnalysisMixin:
         }
         return self._perform_strct_analysis(calculate_ffingerprint, kwargs)
 
+    def perform_analysis(self, method: Callable, kwargs: dict = None):
+        """
+        Perform structure analaysis using an external method.
+
+        Parameters
+        ----------
+        method : function
+            Analysis function.
+        kwargs : dict
+            Arguments to be passed to the function.
+
+        Returns
+        ------
+        output
+            Output of the analysis.
+        """
+        kwargs = {} if kwargs is None else kwargs
+        if not getattr(method, "_is_analysis_method", False):
+            raise TypeError("Function is not a structure analysis method.")
+        return self._perform_strct_analysis(method, kwargs)
+
     @abc.abstractmethod
     def _perform_strct_analysis(self, method, kwargs):
         pass
@@ -508,7 +529,9 @@ class ManipulationMixin:
         scaling_factors: Union[float, List[float]] = None,
         pressure: float = None,
         bulk_modulus: float = None,
-        change_label: bool = True,
+        random_factors: float = None,
+        random_seed: int = None,
+        change_label: bool = False,
     ) -> Union["Structure", "StructureCollection"]:
         """
         Scale the unit cell of the structure, supporting isotropic and anisotropic strain,
@@ -531,6 +554,10 @@ class ManipulationMixin:
         bulk_modulus : float, optional
             Bulk modulus of the material. Required if `pressure` is provided. Ensure the units
             of `bulk_modulus` and `pressure` are consistent.
+        random_factors : float, optional
+            Extend to which the unitcell will be randomly scaled/distorted.
+        random_seed : int, optional
+            Specify the random seed to ensure reproducible results.
         change_label : bool, optional
             If True, appends a suffix to the structure's label to reflect
             the scaling applied. Defaults to True
@@ -557,13 +584,15 @@ class ManipulationMixin:
             "scaling_factors": scaling_factors,
             "pressure": pressure,
             "bulk_modulus": bulk_modulus,
+            "random_factors": random_factors,
+            "random_seed": random_seed,
             "change_label": change_label,
         }
         return self._perform_strct_manipulation(scale_unit_cell, kwargs)
 
     @manipulates_structure
     def create_supercell(
-        self, size: Union[int, list, tuple] = 2, wrap: bool = True, change_label: bool = True
+        self, size: Union[int, list, tuple] = 2, wrap: bool = True, change_label: bool = False
     ):
         """
         Create supercell.
@@ -633,7 +662,7 @@ class ManipulationMixin:
         }
         return self._perform_strct_manipulation(substitute_elements, kwargs)
 
-    def perform_manipulation(self, method: Callable, kwargs: dict = {}):
+    def perform_manipulation(self, method: Callable, kwargs: dict = None):
         """
         Perform structure manipulation using an external method.
 
@@ -650,6 +679,7 @@ class ManipulationMixin:
         aim2dat.strct.StructureCollection
             Manipulated structure(s).
         """
+        kwargs = {} if kwargs is None else kwargs
         if not getattr(method, "_manipulates_structure", False):
             raise TypeError("Function is not a structure analysis method.")
         return self._perform_strct_manipulation(method, kwargs)

@@ -9,6 +9,8 @@ import copy
 from concurrent.futures import ProcessPoolExecutor
 from functools import partial
 from collections.abc import Callable
+import importlib
+from inspect import getmembers, isfunction
 
 # Third party library imports
 import pandas as pd
@@ -27,6 +29,7 @@ from aim2dat.strct.strct_comparison import (
 from aim2dat.strct.stability import _calculate_stabilities
 from aim2dat.strct.strct_coordination import _coordination_compare_sites
 from aim2dat.strct.strct_prdf import _ffingerprint_compare_sites
+import aim2dat.strct.ext_manipulation as ext_manipulation
 import aim2dat.utils.chem_formula as utils_cf
 
 
@@ -154,10 +157,10 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             if isinstance(key, slice):
                 start = key.start if key.start is not None else 0
                 if start < 0:
-                    start += len(self)
-                stop = key.stop if key.stop is not None else len(self)
+                    start += len(self.structures)
+                stop = key.stop if key.stop is not None else len(self.structures)
                 if stop < 0:
-                    stop += len(self)
+                    stop += len(self.structures)
                 key = range(start, stop)
             for key0 in key:
                 new_sc.append_structure(self.structures.get_structure(key0))
@@ -189,6 +192,78 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             self._structures = StructureCollection(value)
         else:
             raise TypeError("`structures` needs to be of type `StructureCollection` or `list`.")
+
+    @property
+    def pipeline(self):
+        return self._pipeline.copy()
+
+    @pipeline.setter
+    def pipeline(self, value):
+        if not isinstance(value, dict):
+            raise TypeError("`pipeline` needs to be of type dict.")
+        inp_steps = value.get("steps", [])
+        steps = []
+        for step_idx, step in enumerate(inp_steps):
+            func_args = {"change_label": False}# TODO handle label changes.
+            n_times = [1]
+            if isinstance(step, (list, tuple)):
+                method = self._check_pipeline_method(step[0], step_idx)
+                func_args.update(step[1])
+                if len(step) > 2:
+                    n_times = [step[2]] if isinstance(step[2], int) else step[2]
+            else:
+                method = self._check_pipeline_method(step, step_idx)
+            steps.append((method, func_args, tuple(n_times)))
+        self._pipeline = {"steps": tuple(steps)}
+
+    def run_pipeline(self):
+        pipeline = getattr(self, "_pipeline", None)
+        if pipeline is None:
+            return None
+        #TODO handle case when no structures are in self.structures.
+        original_structures = self.structures.copy()
+        new_structures = self.structures
+        for step_idx, (method, kwargs, n_times) in enumerate(pipeline["steps"]):
+            max_n_t = max(n_times)
+            self.structures = StructureCollection()
+            for i in range(len(n_times)):
+                for strct in new_structures:
+                    strct = strct.copy()
+                    if len(n_times) > 1:
+                        strct.label += f"x{i}"
+                    self.structures.append_structure(strct)
+            n_t = 0
+            while n_t < max_n_t:
+                indices = []
+                for n_t_idx, n_t0 in enumerate(n_times):
+                    if n_t0 > n_t:
+                        indices += list(range(n_t_idx*len(new_structures), (n_t_idx + 1) * len(new_structures)))
+                if hasattr(self, method):
+                    self.structures[indices] = getattr(self[indices], method)(**kwargs)
+                elif hasattr(ext_manipulation, method):
+                    self.structures[indices] = self[indices].perform_manipulation(getattr(ext_manipulation, method), kwargs)
+                else:
+                    self.structures[indices] = self[indices].perform_manipulation(method, kwargs)
+                n_t += 1
+            new_structures = self.structures
+        self.structures = original_structures
+        return new_structures
+
+
+
+    # TODO Move this function down.
+    def _check_pipeline_method(self, method, step_idx):
+        # TODO for the future, just store entry point here?
+        if isinstance(method, str):
+            if method in self.list_manipulation_methods():
+                return method
+            else:
+                for m_name, ext_m in getmembers(ext_manipulation, isfunction):
+                    if m_name == method and getattr(ext_m, "_manipulates_structure", False):
+                        return method
+        elif getattr(method, "_is_manipulation_method", False):
+            return method
+        raise ValueError(f"Method of step {step_idx} is not a manipulation function.")
 
     @property
     def verbose(self) -> bool:
@@ -926,26 +1001,6 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             distinguish_kinds,
         )
 
-    def perform_analysis(self, method: Callable, kwargs: dict = {}):
-        """
-        Perform structure analaysis using an external method.
-
-        Parameters
-        ----------
-        method : function
-            Analysis function.
-        kwargs : dict
-            Arguments to be passed to the function.
-
-        Returns
-        ------
-        output
-            Output of the analysis.
-        """
-        if not getattr(method, "_is_analysis_method", False):
-            raise TypeError("Function is not a structure analysis method.")
-        return self._perform_strct_analysis(method, kwargs)
-
     def _parse_output(self, output, method="values"):
         if self.output_format == "dict":
             return output
@@ -953,15 +1008,10 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             return pd.DataFrame(output.values(), index=output.keys(), columns=[method])
 
     def _perform_strct_manipulation(self, method, kwargs):
-        output = self._perform_operation(method, kwargs, False)
-        output_strct_c = StructureCollection()
-        for label, structure in output.items():
-            output_strct_c.append_structure(structure)
-        return output_strct_c
+        return StructureCollection(self._perform_operation(method, kwargs, False).values())
 
     def _perform_strct_analysis(self, method, kwargs):
-        output = self._perform_operation(method, kwargs, False)
-        return self._parse_output(output, method)
+        return self._parse_output(self._perform_operation(method, kwargs, False), method)
 
     def _perform_operation(self, method, kwargs, check_stored):
         structure_list = self.structures
@@ -994,7 +1044,6 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
                 )
                 exc.shutdown()
             for strct, output0 in output_list:
-                self.structures[strct.label] = strct
                 output[strct.label] = output0
         else:
             if self.verbose and len(structure_list) > 1:
