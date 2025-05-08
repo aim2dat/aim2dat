@@ -129,7 +129,7 @@ def _space_group_analysis(
             angle_tolerance=angle_tolerance,
         )
         output_dict["standardized_structure"] = _transform_cell_to_structure(std_cell)
-    return output_dict["space_group"]["number"], output_dict
+    return output_dict
 
 
 def _layer_group_analysis(

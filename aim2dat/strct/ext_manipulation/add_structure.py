@@ -189,7 +189,7 @@ def add_structure_coord(
     change_label : bool (optional)
         Add suffix to the label of the new structure highlighting the performed manipulation.
     cn_kwargs :
-        Optional keyword arguments passed on to the ``calculate_coordination`` function.
+        Optional keyword arguments passed on to the ``calc_coordination`` function.
 
     Returns
     -------
@@ -224,12 +224,12 @@ def add_structure_coord(
         guest_dir = [1.0, 0.0, 0.0]
         if len(guest_strct) > 1:
             # Get vector of guest atoms for rotation
-            guest_strct_coord = guest_strct.calculate_coordination(**cn_kwargs)
+            guest_strct_coord = guest_strct.calc_coordination(**cn_kwargs)
             guest_dir = -1.0 * _derive_bond_dir(guest_index, guest_strct_coord)
     guest_dir /= np.linalg.norm(np.array(guest_dir))
 
     # Calculate coordination:
-    coord = structure.calculate_coordination(**cn_kwargs)
+    coord = structure.calc_coordination(**cn_kwargs)
 
     # Derive bond directions and rotation to align guest towards bond direction:
     bond_dir = _derive_bond_dir(host_indices[0], coord)
@@ -478,9 +478,7 @@ def _add_mol(
         host_indices = [idx for idx, _, _ in dist_constraints]
         guest_indices = [idx + len(structure) for _, idx, _ in dist_constraints]
         ref_dists = [dist for _, _, dist in dist_constraints]
-        dists = new_structure.calculate_distance(
-            host_indices, guest_indices, backfold_positions=True
-        )
+        dists = new_structure.calc_distance(host_indices, guest_indices, backfold_positions=True)
         if isinstance(dists, float):
             dists = [dists]
         elif isinstance(dists, dict):

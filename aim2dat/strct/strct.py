@@ -33,6 +33,7 @@ import aim2dat.utils.chem_formula as utils_cf
 import aim2dat.utils.print as utils_pr
 from aim2dat.utils.maths import calc_angle
 from aim2dat.utils.element_properties import get_atomic_number
+from aim2dat.utils.dict_tools import dict_retrieve_parameter
 
 
 def _compare_function_args(args1, args2):
@@ -56,19 +57,21 @@ def _create_index_dict(value):
     return index_dict
 
 
-def _check_calculated_properties(structure, func, func_args):
+def _check_calculated_properties(structure, func, func_args, mapping):
     property_name = "_".join(func.__name__.split("_")[1:])
+    output = None
     if structure.store_calculated_properties and property_name in structure._function_args:
         if _compare_function_args(structure._function_args[property_name], func_args):
-            return structure.extras[property_name]
-    calc_attr, calc_extra = func(structure, **func_args)
-    if calc_attr is not None:
-        structure.set_attribute(property_name, calc_attr)
+            output = structure.extras[property_name]
+    if output is None:
+        output = func(structure, **func_args)
+    if mapping is not None:
+        for key, attr_tree in mapping.items():
+            structure.set_attribute(key, dict_retrieve_parameter(output, attr_tree))
     if structure.store_calculated_properties:
-        if calc_extra is not None:
-            structure._extras[property_name] = calc_extra
+        structure._extras[property_name] = output
         structure._function_args[property_name] = func_args
-    return calc_extra
+    return output
 
 
 def _update_label_attributes_extras(strct_dict, label, attributes, site_attributes, extras):
@@ -125,6 +128,8 @@ class Structure(AnalysisMixin, ManipulationMixin):
         self.kinds = kinds
         self.cell = cell
         self.pbc = pbc
+        self.set_positions(positions, is_cartesian=is_cartesian, wrap=wrap)
+
         self.label = label
         self.site_attributes = site_attributes
         self.store_calculated_properties = store_calculated_properties
@@ -132,8 +137,6 @@ class Structure(AnalysisMixin, ManipulationMixin):
         self._attributes = {} if attributes is None else attributes
         self._extras = {} if extras is None else extras
         self._function_args = {} if function_args is None else function_args
-
-        self.set_positions(positions, is_cartesian=is_cartesian, wrap=wrap)
 
     def __str__(self):
         """Represent object as string."""
@@ -273,6 +276,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         self._element_dict = _create_index_dict(elements)
         self._chem_formula = utils_cf.transform_list_to_dict(elements)
         self._numbers = tuple(get_atomic_number(el) for el in elements)
+        self.reset_calculated_properties()
 
     @property
     def chem_formula(self) -> dict:
@@ -318,6 +322,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
                 "`cell` must be set if `pbc` is set to true for one or more direction."
             )
         self._pbc = value
+        self.reset_calculated_properties()
 
     @property
     def cell(self) -> Union[tuple, None]:
@@ -371,6 +376,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
             raise ValueError("`kinds` must have the same length as `elements`.")
         self._kind_dict = _create_index_dict(value)
         self._kinds = tuple(value)
+        self.reset_calculated_properties()
 
     @property
     def site_attributes(self) -> Union[dict, None]:
@@ -400,6 +406,15 @@ class Structure(AnalysisMixin, ManipulationMixin):
         """Return attributes."""
         return copy.deepcopy(self._attributes)
 
+    @attributes.setter
+    def attributes(self, attributes: dict):
+        if attributes is None:
+            self._attributes = {}
+        elif isinstance(attributes, dict):
+            self._attributes = attributes
+        else:
+            raise TypeError("`attributes` must be a dictionary.")
+
     @property
     def extras(self) -> dict:
         """
@@ -419,6 +434,14 @@ class Structure(AnalysisMixin, ManipulationMixin):
         if not isinstance(value, bool):
             raise TypeError("`store_calculated_properties` needs to be of type bool.")
         self._store_calculated_properties = value
+
+    def reset_calculated_properties(self):
+        """
+        Reset all previously calculated properties that are stored within the
+        ``Structure`` object.
+        """
+        self._extras = {}
+        self._function_args = {}
 
     def iter_sites(
         self,
@@ -499,6 +522,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
             _, cart_positions, scaled_positions = zip(*new_positions)
             self._positions = tuple(cart_positions)
             self._scaled_positions = tuple(scaled_positions)
+        self.reset_calculated_properties()
 
     def get_position(self, index: int, cartesian: bool = True, wrap: bool = False):
         """
@@ -897,8 +921,8 @@ class Structure(AnalysisMixin, ManipulationMixin):
             scaled_pos = tuple(float(p) for p in scaled_pos)
         return cart_pos, scaled_pos
 
-    def _perform_strct_analysis(self, method, kwargs):
-        return _check_calculated_properties(self, method, kwargs)
+    def _perform_strct_analysis(self, method, kwargs, mapping=None):
+        return _check_calculated_properties(self, method, kwargs, mapping)
 
     def _perform_strct_manipulation(self, method, kwargs):
         new_strct = method(structure=self, **kwargs)

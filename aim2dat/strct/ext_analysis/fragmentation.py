@@ -11,8 +11,8 @@ from aim2dat.strct.strct import Structure
 from aim2dat.strct.ext_analysis.decorator import external_analysis_method
 
 
-@external_analysis_method
-def determine_molecular_fragments(
+@external_analysis_method(attr_mapping=None)
+def calc_molecular_fragments(
     structure: Structure,
     max_fragment_size: int = 100,
     exclude_elements: List[str] = None,
@@ -53,7 +53,7 @@ def determine_molecular_fragments(
         end_point_elements = []
     used_site_indices = []
     molecular_fragments = []
-    coord = structure.calculate_coordination(**cn_kwargs)
+    coord = structure.calc_coordination(**cn_kwargs)
 
     allowed_sites = []
     for site_idx, el in enumerate(structure.elements):
@@ -84,7 +84,7 @@ def determine_molecular_fragments(
         if mol_fragment["elements"] != []:
             molecular_fragments.append(Structure(**mol_fragment))
             used_site_indices += mol_fragment["site_attributes"]["parent_indices"]
-    return None, molecular_fragments
+    return molecular_fragments
 
 
 def _recursive_graph_builder(

@@ -55,7 +55,7 @@ def calc_interaction_matrix(
     output = matrix_obj.create(structure.to_ase_atoms(), **create_kwargs)
     if enforce_real:
         output = output.real
-    return None, output.tolist()
+    return output.tolist()
 
 
 def calc_acsf_descriptor(
@@ -147,11 +147,8 @@ def calc_mbtr_descriptor(
 
 def return_descriptor(obj, structure, dscribe_n_jobs, dscribe_only_physical_cores):
     """Return output from SOAP, MBTR or ACSF descriptor."""
-    return (
-        None,
-        obj.create(
-            structure.to_ase_atoms(),
-            n_jobs=dscribe_n_jobs,
-            only_physical_cores=dscribe_only_physical_cores,
-        ).tolist(),
-    )
+    return obj.create(
+        structure.to_ase_atoms(),
+        n_jobs=dscribe_n_jobs,
+        only_physical_cores=dscribe_only_physical_cores,
+    ).tolist()

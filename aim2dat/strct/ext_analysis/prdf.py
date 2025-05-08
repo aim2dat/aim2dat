@@ -9,8 +9,8 @@ from aim2dat.strct.ext_analysis.decorator import external_analysis_method
 from aim2dat.strct.strct_prdf import _calculate_prdf
 
 
-@external_analysis_method
-def calculate_prdf(
+@external_analysis_method(attr_mapping=None)
+def calc_prdf(
     structure: Structure,
     r_max: float = 20.0,
     delta_bin: float = 0.005,
@@ -49,4 +49,4 @@ def calculate_prdf(
     for idx, prdfs in enumerate(atomic_prdf):
         for el_pair, prdf in prdfs.items():
             atomic_prdf[idx][el_pair] = prdf.tolist()
-    return None, (element_prdf, atomic_prdf)
+    return (element_prdf, atomic_prdf)

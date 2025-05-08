@@ -16,8 +16,8 @@ from aim2dat.utils.maths import calc_plane_equation
 from aim2dat.strct.strct_super_cell import _create_supercell_positions
 
 
-@external_analysis_method
-def calculate_planes(
+@external_analysis_method(attr_mapping=None)
+def calc_planes(
     structure: Structure,
     r_max: float = 15.0,
     fragment: list = None,
@@ -124,7 +124,7 @@ def calculate_planes(
                 for pl0 in plane["plane"]
             ]
         planes.append(plane)
-    return None, planes
+    return planes
 
 
 def _construct_orthogonal_plane(plane_group, positions, elements, mapping, margin, vector_lengths):

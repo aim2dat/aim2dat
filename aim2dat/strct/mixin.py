@@ -6,19 +6,20 @@ from typing import List, Tuple, Union
 import abc
 from typing import TYPE_CHECKING
 from collections.abc import Callable
+from functools import wraps
 
 # Internal library imports
 import aim2dat.utils.chem_formula as utils_cf
 from aim2dat.strct.strct_point_groups import determine_point_group
 from aim2dat.strct.strct_space_groups import determine_space_group
 from aim2dat.strct.strct_misc import (
-    calculate_distance,
-    calculate_angle,
-    calculate_dihedral_angle,
+    calc_distance,
+    calc_angle,
+    calc_dihedral_angle,
 )
-from aim2dat.strct.strct_coordination import calculate_coordination
-from aim2dat.strct.strct_super_cell import calculate_voronoi_tessellation
-from aim2dat.strct.strct_prdf import calculate_ffingerprint
+from aim2dat.strct.strct_coordination import calc_coordination
+from aim2dat.strct.strct_super_cell import calc_voronoi_tessellation
+from aim2dat.strct.strct_prdf import calc_ffingerprint
 from aim2dat.strct.strct_manipulation import (
     create_supercell,
     delete_atoms,
@@ -52,8 +53,9 @@ class classproperty:
 
 
 def analysis_method(func):
-    """Mark function as calculation function."""
+    """Mark internal structure analysis functions."""
 
+    @wraps(func)
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
 
@@ -64,6 +66,7 @@ def analysis_method(func):
 def manipulates_structure(func):
     """Mark structure manipulating functions."""
 
+    @wraps(func)
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
 
@@ -98,7 +101,7 @@ class AnalysisMixin:
         return cls.list_analysis_methods()
 
     @analysis_method
-    def determine_point_group(
+    def calc_point_group(
         self,
         threshold_distance: float = 0.1,
         threshold_angle: float = 1.0,
@@ -126,10 +129,12 @@ class AnalysisMixin:
             "threshold_angle": threshold_angle,
             "threshold_inertia": threshold_inertia,
         }
-        return self._perform_strct_analysis(determine_point_group, kwargs)
+        return self._perform_strct_analysis(
+            determine_point_group, kwargs, mapping={"point_group": ("point_group",)}
+        )
 
     @analysis_method
-    def determine_space_group(
+    def calc_space_group(
         self,
         symprec: float = 0.005,
         angle_tolerance: float = -1.0,
@@ -174,10 +179,12 @@ class AnalysisMixin:
             "return_standardized_structure": return_standardized_structure,
             "no_idealize": no_idealize,
         }
-        return self._perform_strct_analysis(determine_space_group, kwargs)
+        return self._perform_strct_analysis(
+            determine_space_group, kwargs, mapping={"space_group": ("space_group", "number")}
+        )
 
     @analysis_method
-    def calculate_distance(
+    def calc_distance(
         self,
         site_index1: Union[int, List[int]] = 0,
         site_index2: Union[int, List[int]] = 1,
@@ -223,10 +230,10 @@ class AnalysisMixin:
             "r_max": r_max,
             "return_pos": return_pos,
         }
-        return self._perform_strct_analysis(calculate_distance, kwargs)
+        return self._perform_strct_analysis(calc_distance, kwargs)
 
     @analysis_method
-    def calculate_angle(
+    def calc_angle(
         self,
         site_index1: Union[int, List[int]] = 0,
         site_index2: Union[int, List[int]] = 1,
@@ -260,10 +267,10 @@ class AnalysisMixin:
             "site_index3": site_index3,
             "backfold_positions": backfold_positions,
         }
-        return self._perform_strct_analysis(calculate_angle, kwargs)
+        return self._perform_strct_analysis(calc_angle, kwargs)
 
     @analysis_method
-    def calculate_dihedral_angle(
+    def calc_dihedral_angle(
         self,
         site_index1: Union[int, List[int]] = 0,
         site_index2: Union[int, List[int]] = 1,
@@ -300,10 +307,10 @@ class AnalysisMixin:
             "site_index4": site_index4,
             "backfold_positions": backfold_positions,
         }
-        return self._perform_strct_analysis(calculate_dihedral_angle, kwargs)
+        return self._perform_strct_analysis(calc_dihedral_angle, kwargs)
 
     @analysis_method
-    def calculate_voronoi_tessellation(
+    def calc_voronoi_tessellation(
         self,
         r_max: float = 10.0,
     ) -> List[List[dict]]:
@@ -320,10 +327,10 @@ class AnalysisMixin:
         list
             List of voronoi details for each atomic site.
         """
-        return self._perform_strct_analysis(calculate_voronoi_tessellation, {"r_max": r_max})
+        return self._perform_strct_analysis(calc_voronoi_tessellation, {"r_max": r_max})
 
     @analysis_method
-    def calculate_coordination(
+    def calc_coordination(
         self,
         r_max: float = 10.0,
         method: str = "atomic_radius",
@@ -395,10 +402,10 @@ class AnalysisMixin:
             "voronoi_weight_threshold": voronoi_weight_threshold,
             "okeeffe_weight_threshold": okeeffe_weight_threshold,
         }
-        return self._perform_strct_analysis(calculate_coordination, kwargs)
+        return self._perform_strct_analysis(calc_coordination, kwargs)
 
     @analysis_method
-    def calculate_ffingerprint(
+    def calc_ffingerprint(
         self,
         r_max: float = 20.0,
         delta_bin: float = 0.005,
@@ -440,7 +447,7 @@ class AnalysisMixin:
             "distinguish_kinds": distinguish_kinds,
             "use_legacy_smearing": use_legacy_smearing,
         }
-        return self._perform_strct_analysis(calculate_ffingerprint, kwargs)
+        return self._perform_strct_analysis(calc_ffingerprint, kwargs)
 
     def perform_analysis(self, method: Callable, kwargs: dict = None):
         """
@@ -464,7 +471,7 @@ class AnalysisMixin:
         return self._perform_strct_analysis(method, kwargs)
 
     @abc.abstractmethod
-    def _perform_strct_analysis(self, method, kwargs):
+    def _perform_strct_analysis(self, method, kwargs, mapping=None):
         pass
 
 

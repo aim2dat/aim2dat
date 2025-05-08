@@ -15,20 +15,20 @@ MISC_PATH = os.path.dirname(__file__) + "/miscellaneous/"
 COORDINATION_PATH = os.path.dirname(__file__) + "/coordination/"
 
 
-def test_calculate_distance_angle_dihedral_errors():
+def test_calc_distance_angle_dihedral_errors():
     """Test correct error handling on site indices input."""
     strct = Structure.from_file(STRUCTURES_PATH + "Benzene.xyz")
     with pytest.raises(ValueError) as error:
-        strct.calculate_distance([1] * 3, [0, 2, 20])
+        strct.calc_distance([1] * 3, [0, 2, 20])
     assert str(error.value) == "`site_index` needs to be smaller than the number of sites."
     with pytest.raises(TypeError) as error:
-        strct.calculate_distance([1.0] * 3, [0, 2, 3])
+        strct.calc_distance([1.0] * 3, [0, 2, 3])
     assert str(error.value) == "`site_index` must be of type int, list, tuple, np.ndarray or None."
     with pytest.raises(TypeError) as error:
-        strct.calculate_distance([0, 2.0, 3], [1] * 3)
+        strct.calc_distance([0, 2.0, 3], [1] * 3)
     assert str(error.value) == "`site_index` must be of type int, list, tuple, np.ndarray or None."
     with pytest.raises(TypeError) as error:
-        strct.calculate_distance([1], "test")
+        strct.calc_distance([1], "test")
     assert str(error.value) == "`site_index` must be of type int, list, tuple, np.ndarray or None."
 
 
@@ -36,11 +36,11 @@ def test_calculate_distance_angle_dihedral_errors():
     "structure, file_suffix",
     [("Benzene", "xyz"), ("ZIF-8", "cif"), ("MOF-303_3xH2O_flawed", "xsf")],
 )
-def test_calculate_distance(structure, file_suffix):
-    """Test calculate_distance function."""
+def test_calc_distance(structure, file_suffix):
+    """Test calc_distance function."""
     ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
     strct = Structure.from_file(STRUCTURES_PATH + structure + "." + file_suffix)
-    dist = strct.calculate_distance(**ref_outputs["distance"]["function_args"])
+    dist = strct.calc_distance(**ref_outputs["distance"]["function_args"])
     if isinstance(ref_outputs["distance"]["reference"], list):
         assert [
             abs(dist[(idx0, idx1)] - val) < 1e-5
@@ -54,25 +54,25 @@ def test_calculate_distance(structure, file_suffix):
         assert abs(dist - ref_outputs["distance"]["reference"]) < 1e-5, "Wrong distance."
 
 
-def test_calculate_distance_pbc():
-    """Test correct handling of periodic boundary conditions in the calculate_distance function."""
+def test_calc_distance_pbc():
+    """Test correct handling of periodic boundary conditions in the calc_distance function."""
     strct = Structure(
         elements=["H", "H"],
         positions=[[1.0, 1.0, 1.0], [1.0, 9.0, 1.0]],
         cell=[[2.0, 0.0, 0.0], [0.0, 10.0, 0.0], [0.0, 0.0, 2.0]],
         pbc=True,
     )
-    assert abs(strct.calculate_distance(0, 1) - 2.0) < 1e-5
+    assert abs(strct.calc_distance(0, 1) - 2.0) < 1e-5
     strct._attributes = {}
     strct._extras = {}
     strct._function_args = {}
     strct.pbc = [True, False, True]
-    assert abs(strct.calculate_distance(0, 1) - 8.0) < 1e-5
+    assert abs(strct.calc_distance(0, 1) - 8.0) < 1e-5
 
 
 @pytest.mark.parametrize("structure, file_suffix", [("ZIF-8", "cif"), ("ScBDC", "cif")])
-def test_calculate_distance_sc(structure, file_suffix):
-    """Test calculate_distance function using the super cell."""
+def test_calc_distance_sc(structure, file_suffix):
+    """Test calc_distance function using the super cell."""
     ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
     strct = Structure.from_file(
         STRUCTURES_PATH + structure + "." + file_suffix,
@@ -81,7 +81,7 @@ def test_calculate_distance_sc(structure, file_suffix):
     )
     if isinstance(strct, list):
         strct = strct[0]
-    dist = strct.calculate_distance(**ref_outputs["distance_sc"]["function_args"])
+    dist = strct.calc_distance(**ref_outputs["distance_sc"]["function_args"])
     if ref_outputs["distance_sc"]["reference"] is None:
         assert dist is None
     else:
@@ -111,11 +111,11 @@ def test_calculate_distance_sc(structure, file_suffix):
 
 
 @pytest.mark.parametrize("structure, file_suffix", [("Benzene", "xyz"), ("ZIF-8", "cif")])
-def test_calculate_angle(structure, file_suffix):
-    """Test calculate_angle function."""
+def test_calc_angle(structure, file_suffix):
+    """Test calc_angle function."""
     ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
     strct = Structure.from_file(STRUCTURES_PATH + structure + "." + file_suffix)
-    angles = strct.calculate_angle(**ref_outputs["angle"]["function_args"])
+    angles = strct.calc_angle(**ref_outputs["angle"]["function_args"])
     if isinstance(ref_outputs["angle"]["reference"], list):
         for angle, ref in zip(angles.values(), ref_outputs["angle"]["reference"]):
             assert abs(angle - ref) < 1e-3, "Wrong angle."
@@ -124,15 +124,15 @@ def test_calculate_angle(structure, file_suffix):
 
 
 @pytest.mark.parametrize("structure, file_suffix", [("ScBDC", "cif")])
-def test_calculate_dihedral_angle(structure, file_suffix):
-    """Test calculate_dihedral_angle function."""
+def test_calc_dihedral_angle(structure, file_suffix):
+    """Test calc_dihedral_angle function."""
     ref_outputs = load_yaml_file(MISC_PATH + structure + "_ref.yaml")
     strct = Structure.from_file(
         STRUCTURES_PATH + structure + "." + file_suffix,
         backend="internal",
         backend_kwargs={"strct_check_chem_formula": False},
     )[0]
-    angles = strct.calculate_dihedral_angle(**ref_outputs["dihedral_angle"]["function_args"])
+    angles = strct.calc_dihedral_angle(**ref_outputs["dihedral_angle"]["function_args"])
     assert len(angles) == len(ref_outputs["dihedral_angle"]["reference"])
     for angle, ref in zip(angles.values(), ref_outputs["dihedral_angle"]["reference"]):
         assert abs(angle - ref) < 1e-3, "Wrong angle."
@@ -142,14 +142,14 @@ def test_cn_analysis_error():
     """Test method validation of coordination analysis."""
     strct = Structure(**dict(load_yaml_file(STRUCTURES_PATH + "GaAs_216_conv.yaml")))
     with pytest.raises(ValueError) as error:
-        strct.calculate_coordination(method="test")
+        strct.calc_coordination(method="test")
     assert (
         str(error.value)
         == "Method 'test' is not supported. Supported methods are: 'minimum_distance', "
         "'n_nearest_neighbours', 'atomic_radius', 'econ', 'voronoi'."
     )
     with pytest.raises(ValueError) as error:
-        strct.calculate_coordination(method="voronoi", voronoi_weight_type="test")
+        strct.calc_coordination(method="voronoi", voronoi_weight_type="test")
     assert str(error.value) == "`weight_type` 'test' is not supported."
 
 
@@ -178,7 +178,7 @@ def test_cn_analysis(nested_dict_comparison, structure_label, method):
     inputs = dict(load_yaml_file(STRUCTURES_PATH + structure_label + ".yaml"))
     ref = dict(load_yaml_file(COORDINATION_PATH + structure_label + "_" + method + ".yaml"))
     structure = Structure(**inputs)
-    output = structure.calculate_coordination(**ref["parameters"])
+    output = structure.calc_coordination(**ref["parameters"])
     sites = output.pop("sites")
     sites_ref = ref["ref"].pop("sites")
     assert len(sites) == len(sites_ref)

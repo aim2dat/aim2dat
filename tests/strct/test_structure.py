@@ -230,14 +230,14 @@ def test_list_methods():
         "to_aiida_structuredata",
     ]
     assert Structure.analysis_methods == [
-        "determine_point_group",
-        "determine_space_group",
-        "calculate_distance",
-        "calculate_angle",
-        "calculate_dihedral_angle",
-        "calculate_voronoi_tessellation",
-        "calculate_coordination",
-        "calculate_ffingerprint",
+        "calc_point_group",
+        "calc_space_group",
+        "calc_distance",
+        "calc_angle",
+        "calc_dihedral_angle",
+        "calc_voronoi_tessellation",
+        "calc_coordination",
+        "calc_ffingerprint",
     ]
     assert Structure.manipulation_methods == [
         "delete_atoms",
