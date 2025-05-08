@@ -3,7 +3,6 @@
 # Standard library imports
 import copy
 from typing import List, Union
-from collections.abc import Callable
 
 # Third party library imports
 import numpy as np
