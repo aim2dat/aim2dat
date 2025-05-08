@@ -14,6 +14,7 @@ from aim2dat.io.yaml import load_yaml_file
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 REF_PATH = os.path.dirname(__file__) + "/structure_op/"
 
+
 def test_structure_op_basics():
     """Test basic features of the StructuresOperations class."""
     strct_collect = StructureCollection()
@@ -73,5 +74,3 @@ def test_structure_op_pipeline(structure_comparison):
     assert len(strct_op.structures) == len(strct_c)
     for strct0, strct1 in zip(strct_op.structures, strct_c):
         structure_comparison(strct0, strct1)
-
-

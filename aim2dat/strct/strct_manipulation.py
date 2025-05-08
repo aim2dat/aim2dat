@@ -165,10 +165,15 @@ def scale_unit_cell(
         scaling_factors = 1 - pressure / bulk_modulus
     if random_factors is not None:
         rng = np.random.default_rng(seed=random_seed)
-        scaling_factors = np.array([[0.0 if i<j else rng.random() - 0.5 for j in range(3)] for i in range(3)]) * 2.0 * random_factors + np.eye(3)
+        scaling_factors = np.array(
+            [[0.0 if i < j else rng.random() - 0.5 for j in range(3)] for i in range(3)]
+        ) * 2.0 * random_factors + np.eye(3)
 
     if scaling_factors is None:
-        raise ValueError("Provide either `scaling_factors`, `pressure` (with `bulk_modulus`) or `random_factors`.")
+        raise ValueError(
+            "Provide either `scaling_factors`, `pressure` (with `bulk_modulus`) or "
+            + "`random_factors`."
+        )
 
     scaling_matrix = get_scaling_matrix(scaling_factors)
 

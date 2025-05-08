@@ -200,7 +200,6 @@ class StructureCollection:
                 value0 = Structure(**value0)
             self._add_structure(key0, value0)
 
-
     def __delitem__(self, key: Union[str, int, tuple, list, slice]):
         """
         Delete structure by key.
@@ -697,7 +696,6 @@ class StructureCollection:
         if stop < 0:
             stop += len(self)
         return range(stop - 1, start - 1, -1) if reverse else range(start, stop)
-
 
     def _add_structure(
         self,

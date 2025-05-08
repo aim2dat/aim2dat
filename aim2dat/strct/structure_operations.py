@@ -8,8 +8,6 @@ from typing import List, Tuple, Union
 import copy
 from concurrent.futures import ProcessPoolExecutor
 from functools import partial
-from collections.abc import Callable
-import importlib
 from inspect import getmembers, isfunction
 
 # Third party library imports
@@ -195,6 +193,8 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
 
     @property
     def pipeline(self):
+        """Set pipeline."""
+        # TODO improve doc-string.
         return self._pipeline.copy()
 
     @pipeline.setter
@@ -204,7 +204,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         inp_steps = value.get("steps", [])
         steps = []
         for step_idx, step in enumerate(inp_steps):
-            func_args = {"change_label": False}# TODO handle label changes.
+            func_args = {"change_label": False}  # TODO handle label changes.
             n_times = [1]
             if isinstance(step, (list, tuple)):
                 method = self._check_pipeline_method(step[0], step_idx)
@@ -217,10 +217,12 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         self._pipeline = {"steps": tuple(steps)}
 
     def run_pipeline(self):
+        """Run pipeline."""
+        # TODO improve docstring.
         pipeline = getattr(self, "_pipeline", None)
         if pipeline is None:
             return None
-        #TODO handle case when no structures are in self.structures.
+        # TODO handle case when no structures are in self.structures.
         original_structures = self.structures.copy()
         new_structures = self.structures
         for step_idx, (method, kwargs, n_times) in enumerate(pipeline["steps"]):
@@ -237,19 +239,23 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
                 indices = []
                 for n_t_idx, n_t0 in enumerate(n_times):
                     if n_t0 > n_t:
-                        indices += list(range(n_t_idx*len(new_structures), (n_t_idx + 1) * len(new_structures)))
+                        indices += list(
+                            range(
+                                n_t_idx * len(new_structures), (n_t_idx + 1) * len(new_structures)
+                            )
+                        )
                 if hasattr(self, method):
                     self.structures[indices] = getattr(self[indices], method)(**kwargs)
                 elif hasattr(ext_manipulation, method):
-                    self.structures[indices] = self[indices].perform_manipulation(getattr(ext_manipulation, method), kwargs)
+                    self.structures[indices] = self[indices].perform_manipulation(
+                        getattr(ext_manipulation, method), kwargs
+                    )
                 else:
                     self.structures[indices] = self[indices].perform_manipulation(method, kwargs)
                 n_t += 1
             new_structures = self.structures
         self.structures = original_structures
         return new_structures
-
-
 
     # TODO Move this function down.
     def _check_pipeline_method(self, method, step_idx):
