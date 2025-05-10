@@ -159,6 +159,9 @@ def scale_unit_cell(
             "`scaling_factors` must be a single value, a list of 3 values, or a 3x3 nested list."
         )
 
+    if structure.cell is None:
+        return None
+
     if pressure is not None:
         if bulk_modulus is None:
             raise ValueError("`bulk_modulus` must be provided when applying `pressure`.")
