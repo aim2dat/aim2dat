@@ -63,7 +63,7 @@ class SurfaceGeneration:
         dict
             Dictionary containing the surface data.
         """
-        sg_details = self.structure.determine_space_group(
+        sg_details = self.structure.calc_space_group(
             symprec=symprec,
             angle_tolerance=angle_tolerance,
             hall_number=hall_number,

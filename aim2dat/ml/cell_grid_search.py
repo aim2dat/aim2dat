@@ -146,7 +146,7 @@ class CellGridSearch:
             List of parameter sets that are varied.
         """
         search_space = []
-        space_group = self._strct_ops["initial"].determine_space_group(
+        space_group = self._strct_ops["initial"].calc_space_group(
             symprec=self.symprec,
             angle_tolerance=self.angle_tolerance,
             hall_number=self.hall_number,
@@ -241,7 +241,7 @@ class CellGridSearch:
         """
         if search_space is None:
             search_space = self.return_search_space()
-        initial_sg = self._strct_ops["initial"].determine_space_group(
+        initial_sg = self._strct_ops["initial"].calc_space_group(
             symprec=self.symprec,
             angle_tolerance=self.angle_tolerance,
             hall_number=self.hall_number,
@@ -268,7 +268,7 @@ class CellGridSearch:
                 cell=cell,
                 is_cartesian=False,
             )
-            trial_sg = self._strct_ops[str(idx0)].determine_space_group(
+            trial_sg = self._strct_ops[str(idx0)].calc_space_group(
                 symprec=self.symprec,
                 angle_tolerance=self.angle_tolerance,
                 hall_number=self.hall_number,

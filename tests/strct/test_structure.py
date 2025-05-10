@@ -5,6 +5,7 @@ import os
 
 # Third party library imports
 import pytest
+import numpy as np
 
 # Internal library imports
 from aim2dat.strct import Structure, SamePositionsError
@@ -228,14 +229,14 @@ def test_list_methods():
         "to_aiida_structuredata",
     ]
     assert Structure.analysis_methods == [
-        "determine_point_group",
-        "determine_space_group",
-        "calculate_distance",
-        "calculate_angle",
-        "calculate_dihedral_angle",
-        "calculate_voronoi_tessellation",
-        "calculate_coordination",
-        "calculate_ffingerprint",
+        "calc_point_group",
+        "calc_space_group",
+        "calc_distance",
+        "calc_angle",
+        "calc_dihedral_angle",
+        "calc_voronoi_tessellation",
+        "calc_coordination",
+        "calc_ffingerprint",
     ]
     assert Structure.manipulation_methods == [
         "delete_atoms",
@@ -245,15 +246,38 @@ def test_list_methods():
     ]
 
 
-def test_wrap_positions(structure_comparison):
+def test_cell_setter_and_wrap_positions(structure_comparison):
     """Test wrapping positions onto unit cell."""
     strct_dict = read_yaml_file(STRUCTURES_PATH + "GaAs_216_conv.yaml")
+    position = strct_dict["positions"][1].copy()
+    position[1] -= strct_dict["cell"][1][1]
     structure = Structure(**strct_dict)
-    # TODO check get_positions wrap
+    assert all(
+        abs(p0 - p1) < 1e-5 for p0, p1 in zip(structure.get_position(1, wrap=True), position)
+    )
     structure_comparison(structure, strct_dict)
+
     structure = Structure(**strct_dict, wrap=True)
     strct_dict["positions"][1][1] -= strct_dict["cell"][1][1]
     structure_comparison(structure, strct_dict)
+
+    strct_dict["cell"][1][1] += 2.0
+    scaled_positions = structure.scaled_positions
+    strct_dict["positions"] = [
+        np.transpose(strct_dict["cell"]).dot(np.array(pos)) for pos in scaled_positions
+    ]
+    structure.cell = strct_dict["cell"]
+    structure_comparison(structure, strct_dict)
+
+    cell = strct_dict.pop("cell")
+    strct_dict["pbc"] = False
+    structure = Structure(**strct_dict)
+    structure.cell = cell
+    assert all(
+        abs(v0 - v1) < 1e-5
+        for p0, p1 in zip(structure.scaled_positions, scaled_positions)
+        for v0, v1 in zip(p0, p1)
+    )
 
 
 @pytest.mark.parametrize(

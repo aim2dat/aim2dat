@@ -253,9 +253,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             )
         self._output_format = value
 
-    def calculate_stabilities(
-        self, unit: str = "eV", exclude_keys: list = []
-    ) -> Tuple[list, list]:
+    def calc_stabilities(self, unit: str = "eV", exclude_keys: list = []) -> Tuple[list, list]:
         """
         Calculate the formation energies and stabilities of all structures.
 
@@ -747,7 +745,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         threshold : float (optional)
             Threshold to consider two sites equivalent.
         cn_kwargs :
-            Optional keyword arguments passed on to the ``calculate_coordination`` function.
+            Optional keyword arguments passed on to the ``calc_coordination`` function.
 
         Returns
         -------
@@ -763,7 +761,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             key2,
             site_index1,
             site_index2,
-            "calculate_coordination",
+            "calc_coordination",
             cn_kwargs,
             _coordination_compare_sites,
             compare_f_kwargs,
@@ -832,7 +830,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             key2,
             site_index1,
             site_index2,
-            "calculate_ffingerprint",
+            "calc_ffingerprint",
             calc_f_kwargs,
             _ffingerprint_compare_sites,
             compare_f_kwargs,
@@ -859,7 +857,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         threshold : float (optional)
             Threshold to consider two sites equivalent.
         cn_kwargs :
-            Optional keyword arguments passed on to the ``calculate_coordination`` function.
+            Optional keyword arguments passed on to the ``calc_coordination`` function.
 
         Returns
         --------

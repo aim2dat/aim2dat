@@ -31,11 +31,11 @@ def test_structure_op_basics():
     with pytest.raises(TypeError) as error:
         StructureOperations([1, 2, 3])
 
-    assert isinstance(strct_ops["Cs2Te_62_prim"].calculate_distance(0, 1), float)
-    assert isinstance(strct_ops[["Cs2Te_62_prim", "NaCl_225_prim"]].calculate_distance(0, 1), dict)
+    assert isinstance(strct_ops["Cs2Te_62_prim"].calc_distance(0, 1), float)
+    assert isinstance(strct_ops[["Cs2Te_62_prim", "NaCl_225_prim"]].calc_distance(0, 1), dict)
     strct_ops.output_format = "DataFrame"
     assert isinstance(
-        strct_ops[["Cs2Te_62_prim", "NaCl_225_prim"]].calculate_distance(0, 1), pd.DataFrame
+        strct_ops[["Cs2Te_62_prim", "NaCl_225_prim"]].calc_distance(0, 1), pd.DataFrame
     )
     with pytest.raises(TypeError) as error:
         strct_ops.output_format = 10

@@ -336,7 +336,7 @@ def _transform_slab_to_primitive(slab, symprec, angle_tolerance, hall_number, ap
         slab = Structure(**slab)
 
     # Based on Litvin and Wike
-    _, spglib_output = _space_group_analysis(
+    spglib_output = _space_group_analysis(
         slab,
         symprec,
         angle_tolerance,

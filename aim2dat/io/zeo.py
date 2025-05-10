@@ -25,7 +25,7 @@ def write_zeo_file(file_path: str, struct_dict: dict):
         output.append(
             " ".join(map(str, struct_dict.cell_angles))
             + " SPGR = "
-            + struct_dict.determine_space_group()["space_group"]["international_short"]
+            + struct_dict.calc_space_group()["space_group"]["international_short"]
         )
         output.append(f"{len(struct_dict.positions)} 0")
         output.append(f"0 {struct_dict.label}")

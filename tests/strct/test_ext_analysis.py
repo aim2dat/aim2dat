@@ -8,7 +8,7 @@ import pytest
 
 # Internal library imports
 from aim2dat.strct import Structure
-from aim2dat.strct.ext_analysis import determine_molecular_fragments, create_graph
+from aim2dat.strct.ext_analysis import calc_molecular_fragments, calc_graph
 from aim2dat.io import read_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
@@ -18,7 +18,7 @@ FRAG_PATH = os.path.dirname(__file__) + "/fragment_analysis/"
 def test_func_args_extraction():
     """Test correct extraction of function arguments done by the decorator."""
     strct = Structure(**read_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml"))
-    create_graph(strct, method="n_nearest_neighbours")
+    calc_graph(strct, method="n_nearest_neighbours")
     assert strct._function_args == {
         "coordination": {
             "r_max": 10.0,
@@ -40,7 +40,7 @@ def test_func_args_extraction():
             "graphviz_edge_rank_colors": ["blue", "red", "green", "orange", "darkblue"],
         },
     }
-    create_graph(strct)
+    calc_graph(strct)
     assert strct._function_args == {
         "coordination": {
             "r_max": 10.0,
@@ -70,13 +70,11 @@ def test_func_args_extraction():
         ("ZIF-8", ".cif", "internal"),
     ],
 )
-def test_determine_molecular_fragments_function(
-    structure_comparison, system, file_suffix, backend
-):
-    """Test determine_molecular_fragments function."""
+def test_calc_molecular_fragments_function(structure_comparison, system, file_suffix, backend):
+    """Test calc_molecular_fragments function."""
     kwargs, ref = read_yaml_file(FRAG_PATH + system + ".yaml")
     strct = Structure.from_file(STRUCTURES_PATH + system + file_suffix, backend=backend)
-    fragments = determine_molecular_fragments(strct, **kwargs)
+    fragments = calc_molecular_fragments(strct, **kwargs)
     for frag, frag_ref in zip(fragments, ref):
         structure_comparison(frag, Structure(**frag_ref))
         assert frag.site_attributes["parent_indices"] == tuple(
@@ -84,10 +82,10 @@ def test_determine_molecular_fragments_function(
         )
 
 
-def test_determine_graph(nested_dict_comparison):
+def test_calc_graph(nested_dict_comparison):
     """Test creating a graph from a structure."""
     strct = Structure(**read_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml"))
-    nx_graph, graphviz_graph = create_graph(
+    nx_graph, graphviz_graph = calc_graph(
         strct, get_graphviz_graph=True, method="minimum_distance"
     )
     assert list(nx_graph.edges) == [
