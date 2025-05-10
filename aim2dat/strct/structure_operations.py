@@ -174,7 +174,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         )
 
     def copy(self) -> "StructureOperations":
-        """Return copy of ``StructureCollection`` object."""
+        """Return copy of ``StructureOperations`` object."""
         return copy.deepcopy(self)
 
     @property
@@ -192,13 +192,17 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             raise TypeError("`structures` needs to be of type `StructureCollection` or `list`.")
 
     @property
-    def pipeline(self):
-        """Set pipeline."""
-        # TODO improve doc-string.
+    def pipeline(self) -> dict:
+        """
+        dict: Set pipeline dictionary containing the entry ``'steps'``. The value of ``'steps'``
+        contains a list of strings or tuples of the name of the manipulation method, the input
+        parameters and an integer number or list of integer numbers denoting how many times the
+        function is applied.
+        """
         return self._pipeline.copy()
 
     @pipeline.setter
-    def pipeline(self, value):
+    def pipeline(self, value: dict):
         if not isinstance(value, dict):
             raise TypeError("`pipeline` needs to be of type dict.")
         inp_steps = value.get("steps", [])
@@ -218,11 +222,9 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
 
     def run_pipeline(self):
         """Run pipeline."""
-        # TODO improve docstring.
         pipeline = getattr(self, "_pipeline", None)
         if pipeline is None:
             return None
-        # TODO handle case when no structures are in self.structures.
         original_structures = self.structures.copy()
         new_structures = self.structures
         for step_idx, (method, kwargs, n_times) in enumerate(pipeline["steps"]):
@@ -256,20 +258,6 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             new_structures = self.structures
         self.structures = original_structures
         return new_structures
-
-    # TODO Move this function down.
-    def _check_pipeline_method(self, method, step_idx):
-        # TODO for the future, just store entry point here?
-        if isinstance(method, str):
-            if method in self.list_manipulation_methods():
-                return method
-            else:
-                for m_name, ext_m in getmembers(ext_manipulation, isfunction):
-                    if m_name == method and getattr(ext_m, "_manipulates_structure", False):
-                        return method
-        elif getattr(method, "_is_manipulation_method", False):
-            return method
-        raise ValueError(f"Method of step {step_idx} is not a manipulation function.")
 
     @property
     def verbose(self) -> bool:
@@ -1056,3 +1044,15 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
                 _, output0 = structure_wrapper(structure, method, kwargs, check_stored)
                 output[structure.label] = output0
         return output
+
+    def _check_pipeline_method(self, method, step_idx):
+        if isinstance(method, str):
+            if method in self.list_manipulation_methods():
+                return method
+            else:
+                for m_name, ext_m in getmembers(ext_manipulation, isfunction):
+                    if m_name == method and getattr(ext_m, "_manipulates_structure", False):
+                        return method
+        elif getattr(method, "_is_manipulation_method", False):
+            return method
+        raise ValueError(f"Method of step {step_idx} is not a manipulation function.")
