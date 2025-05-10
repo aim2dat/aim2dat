@@ -11,7 +11,7 @@ import pandas as pd
 from aim2dat.plots import PhasePlot
 from aim2dat.strct import StructureCollection
 from aim2dat.ext_interfaces.pandas import _turn_dict_into_pandas_df
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 import aim2dat.utils.chem_formula as utils_cf
 
 PHASES_PATH = os.path.dirname(__file__) + "/phases_files/"
@@ -81,8 +81,8 @@ def test_add_data_point():
 )
 def test_pandas_df_import(nested_dict_comparison, system):
     """Test pandas data frame import."""
-    pandas_dict = dict(load_yaml_file(PHASES_PATH + system + "_df.yaml"))
-    ref_dict = load_yaml_file(PHASES_PATH + system + "_import_ref.yaml")
+    pandas_dict = dict(read_yaml_file(PHASES_PATH + system + "_df.yaml"))
+    ref_dict = read_yaml_file(PHASES_PATH + system + "_import_ref.yaml")
     df = _turn_dict_into_pandas_df(pandas_dict)
     phase_plot = PhasePlot()
     phase_plot.import_from_pandas_df("test", df)
@@ -126,13 +126,13 @@ def test_strct_c_import(nested_dict_comparison, system):
 )
 def test_prepare_plot(nested_dict_comparison, system, test_case, input_type):
     """Test _prepare_to_plot function for different use cases."""
-    ref_dict = load_yaml_file(PHASES_PATH + system + "_" + test_case + "_ref.yaml")
+    ref_dict = read_yaml_file(PHASES_PATH + system + "_" + test_case + "_ref.yaml")
 
     phase_plot = PhasePlot()
     for label, value in ref_dict["attributes"].items():
         setattr(phase_plot, label, value)
     if input_type == "pandas":
-        pandas_dict = dict(load_yaml_file(PHASES_PATH + system + "_df.yaml"))
+        pandas_dict = dict(read_yaml_file(PHASES_PATH + system + "_df.yaml"))
         df = _turn_dict_into_pandas_df(pandas_dict)
         phase_plot.import_from_pandas_df("test", df)
     else:

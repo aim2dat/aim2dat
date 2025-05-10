@@ -13,7 +13,7 @@ from aiida.engine import calcfunction
 from aim2dat.utils.element_properties import get_atomic_number
 from aim2dat.utils.units import energy
 from aim2dat.utils.dict_tools import dict_set_parameter, dict_retrieve_parameter
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 @calcfunction
@@ -147,7 +147,7 @@ def set_xc_functional(input_dict, xc_functional):
         Input parmaters for the cp2k calculation.
     """
     file_path = os.path.dirname(__file__) + "/parameter_files/xc_functionals_p.yaml"
-    xc_keyword_dict = load_yaml_file(file_path)
+    xc_keyword_dict = read_yaml_file(file_path)
 
     xc_functional = xc_functional.upper()
     if xc_functional in xc_keyword_dict:

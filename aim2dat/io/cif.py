@@ -11,7 +11,7 @@ from scipy.spatial.distance import cdist
 # Internal library imports
 from aim2dat.io.utils import read_structure, custom_open
 from aim2dat.io.base_parser import FLOAT, transform_str_value
-from aim2dat.strct.strct_misc import _get_cell_from_lattice_p
+from aim2dat.utils.strct import _get_cell_from_lattice_p
 from aim2dat.utils.element_properties import get_element_symbol
 from aim2dat.utils.space_groups import get_space_group_details
 import aim2dat.utils.chem_formula as utils_cf
@@ -383,19 +383,19 @@ class _CIFDataBlock:
 
 
 @read_structure(r".*\.cif", preset_kwargs={"extract_structures": True})
-def read_file(
-    file_name,
-    extract_structures=False,
-    strct_check_chem_formula=True,
-    strct_get_sym_op_from_sg=True,
-    strct_wrap=False,
-):
+def read_cif_file(
+    file_path: str,
+    extract_structures: bool = False,
+    strct_check_chem_formula: bool = True,
+    strct_get_sym_op_from_sg: bool = True,
+    strct_wrap: bool = False,
+) -> dict:
     """
     Read cif file.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path to the cif file.
     extract_structures : bool (optional)
         Whether to extract alls crystal structures and add them to the output dictionary with the
@@ -413,7 +413,7 @@ def read_file(
     """
     cif_blocks = []
     current_block = None
-    with custom_open(file_name, "r") as f_obj:
+    with custom_open(file_path, "r") as f_obj:
         for line_idx, line in enumerate(f_obj):
             line = line.strip()
             if line.startswith("data_"):
@@ -456,3 +456,53 @@ def read_file(
     if extract_structures:
         output_dict["structures"] = structures
     return output_dict
+
+
+@read_structure(r".*\.cif", preset_kwargs={"extract_structures": True})
+def read_file(
+    file_path: str,
+    extract_structures: bool = False,
+    strct_check_chem_formula: bool = True,
+    strct_get_sym_op_from_sg: bool = True,
+    strct_wrap: bool = False,
+) -> dict:
+    """
+    Read cif file.
+
+    Notes
+    -----
+        This function is deprecated and will be removed, please use `aim2dat.io.read_cif_file`
+        instead.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to the cif file.
+    extract_structures : bool (optional)
+        Whether to extract alls crystal structures and add them to the output dictionary with the
+        key ``'structures'``.
+    strct_check_chem_formula : bool (optional)
+        Check the chemical formula given by field matches with the structure.
+    strct_get_sym_op_from_sg : bool (optional)
+        Add symmetry operations based on the space group to add symmetry equivalent sites to the
+        structures.
+
+    Returns
+    -------
+    dict
+        Output dictionary.
+    """
+    from warnings import warn
+
+    warn(
+        "This function will be removed, please use `aim2dat.io.read_cif_file` instead.",
+        DeprecationWarning,
+        2,
+    )
+    return read_cif_file(
+        file_path=file_path,
+        extract_structures=extract_structures,
+        strct_check_chem_formula=strct_check_chem_formula,
+        strct_get_sym_op_from_sg=strct_get_sym_op_from_sg,
+        strct_wrap=strct_wrap,
+    )

@@ -7,11 +7,11 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
-from aim2dat.io.cp2k import (
-    read_band_structure,
-    read_atom_proj_density_of_states,
-    read_restart_structure,
+from aim2dat.io import (
+    read_yaml_file,
+    read_cp2k_band_structure,
+    read_cp2k_proj_dos,
+    read_cp2k_restart_structure,
 )
 
 cwd = os.path.dirname(__file__) + "/"
@@ -21,10 +21,10 @@ PDOS_PATH = cwd + "cp2k_pdos/"
 
 
 @pytest.mark.parametrize("system", ["standard", "uks"])
-def test_read_band_structure(system):
-    """Test read_band_structure function."""
-    bands_data = read_band_structure(BAND_STRUCTURE_PATH + system + "/bands.bs")
-    bands_ref = dict(load_yaml_file(BAND_STRUCTURE_PATH + system + "/ref.yaml"))
+def test_read_cp2k_band_structure(system):
+    """Test read_cp2k_band_structure function."""
+    bands_data = read_cp2k_band_structure(BAND_STRUCTURE_PATH + system + "/bands.bs")
+    bands_ref = dict(read_yaml_file(BAND_STRUCTURE_PATH + system + "/ref.yaml"))
     assert bands_data["unit_y"] == bands_ref["unit_y"], "Energy unit doesn't match."
     for kpt_idx, kpt0 in enumerate(bands_ref["kpoints"]):
         kpt1 = bands_data["kpoints"][kpt_idx]
@@ -47,16 +47,16 @@ def test_read_band_structure(system):
 
 
 @pytest.mark.parametrize("system", ["standard", "uks", "lists"])
-def test_read_atom_proj_density_of_states(system):
-    """Test read_atom_proj_density_of_states function."""
+def test_read_cp2k_proj_dos(system):
+    """Test read_cp2k_proj_dos function."""
     # Test empty folder
     with pytest.raises(ValueError) as error:
-        read_atom_proj_density_of_states(cwd + "empty_folder/")
+        read_cp2k_proj_dos(cwd + "empty_folder/")
     assert str(error.value) == "No files with the correct naming scheme found."
 
     # Test different systems:
-    pdos_data = read_atom_proj_density_of_states(PDOS_PATH + system + "/")
-    pdos_ref = dict(load_yaml_file(PDOS_PATH + system + "/ref.yaml"))
+    pdos_data = read_cp2k_proj_dos(PDOS_PATH + system + "/")
+    pdos_ref = dict(read_yaml_file(PDOS_PATH + system + "/ref.yaml"))
     assert all(
         [abs(en0 - en1) < 1e-5 for en0, en1 in zip(pdos_data["energy"], pdos_ref["energy"])]
     ), "Energies don't match."
@@ -85,19 +85,24 @@ def test_read_atom_proj_density_of_states(system):
         ("/md-nvt/aiida-1.restart", "/md-nvt/ref.yaml"),
     ],
 )
-def test_read_restart_structure_single(nested_dict_comparison, restart_file, reference_file):
+def test_read_cp2k_restart_structure_single(nested_dict_comparison, restart_file, reference_file):
     """
-    Test read_restart_structure function for single calculations.
+    Test read_cp2k_restart_structure function for single calculations.
     """
-    ref = dict(load_yaml_file(STRUCTURES_PATH + reference_file))
-    structure = read_restart_structure(STRUCTURES_PATH + restart_file)
+    ref = dict(read_yaml_file(STRUCTURES_PATH + reference_file))
+    structure = read_cp2k_restart_structure(STRUCTURES_PATH + restart_file)
+    nested_dict_comparison(structure, ref)
+    # Test if the file is read from a string
+    with open(STRUCTURES_PATH + restart_file, "r") as pseudo_file:
+        file_content = pseudo_file.read()
+    structure = read_cp2k_restart_structure(file_content)
     nested_dict_comparison(structure, ref)
 
 
-def test_read_restart_structure_multiple(nested_dict_comparison):
-    """Test read_restart_structure function."""
-    structures = read_restart_structure(STRUCTURES_PATH + "multiple_structures/")
-    ref_structures = list(load_yaml_file(STRUCTURES_PATH + "multiple_structures/ref.yaml"))
+def test_read_cp2k_restart_structure_multiple(nested_dict_comparison):
+    """Test read_cp2k_restart_structure function."""
+    structures = read_cp2k_restart_structure(STRUCTURES_PATH + "multiple_structures/")
+    ref_structures = list(read_yaml_file(STRUCTURES_PATH + "multiple_structures/ref.yaml"))
     assert len(structures) == len(ref_structures), "Number of structures is wrong."
     for ref in ref_structures:
         for strct in structures:

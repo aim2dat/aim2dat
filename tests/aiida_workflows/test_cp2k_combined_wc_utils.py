@@ -16,7 +16,7 @@ from aim2dat.aiida_workflows.cp2k.surface_opt_utils import (
 )
 from aim2dat.aiida_workflows.utils import obtain_value_from_aiida_node
 from aim2dat.aiida_workflows.cp2k.el_properties_utils import elprop_setup
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 from aim2dat.strct import Structure, SurfaceGeneration
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/../strct/structures/"
@@ -33,7 +33,7 @@ def test_surfopt(nested_dict_comparison, structure_comparison):
     def _parse_to_aiida_float(value):
         return aiida_orm.Float(value.get_dict()["energy"])
 
-    inputs_dict, ref = load_yaml_file(REF_PATH + "surfopt_ref.yaml")
+    inputs_dict, ref = read_yaml_file(REF_PATH + "surfopt_ref.yaml")
     inputs_dict["slab_conv"]["criteria"] = aiida_orm.Str(inputs_dict["slab_conv"]["criteria"])
     inputs_dict["slab_conv"]["threshold"] = aiida_orm.Float(inputs_dict["slab_conv"]["threshold"])
     inputs_dict["structural_p"]["minimum_slab_size"] = aiida_orm.Float(
@@ -44,7 +44,7 @@ def test_surfopt(nested_dict_comparison, structure_comparison):
     )
 
     surf_gen = SurfaceGeneration(
-        Structure(**load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim.yaml"))
+        Structure(**read_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim.yaml"))
     )
     inputs_dict["structural_p"]["surface"] = surf_gen.to_aiida_surfacedata((1, 0, 0), 1, 0.005)
 
@@ -120,8 +120,8 @@ def test_surfopt(nested_dict_comparison, structure_comparison):
 
 def test_elprop(nested_dict_comparison):
     """Test utils functions for el prop work chain."""
-    ref = load_yaml_file(REF_PATH + "elprop_ref.yaml")
-    strct = Structure(**load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim.yaml"))
+    ref = read_yaml_file(REF_PATH + "elprop_ref.yaml")
+    strct = Structure(**read_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim.yaml"))
     strct_node = strct.to_aiida_structuredata()
 
     inputs = AttributeDict(

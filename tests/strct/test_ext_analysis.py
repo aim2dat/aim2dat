@@ -9,7 +9,7 @@ import pytest
 # Internal library imports
 from aim2dat.strct import Structure
 from aim2dat.strct.ext_analysis import calc_molecular_fragments, calc_graph
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 FRAG_PATH = os.path.dirname(__file__) + "/fragment_analysis/"
@@ -17,7 +17,7 @@ FRAG_PATH = os.path.dirname(__file__) + "/fragment_analysis/"
 
 def test_func_args_extraction():
     """Test correct extraction of function arguments done by the decorator."""
-    strct = Structure(**load_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml"))
+    strct = Structure(**read_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml"))
     calc_graph(strct, method="n_nearest_neighbours")
     assert strct._function_args == {
         "coordination": {
@@ -72,7 +72,7 @@ def test_func_args_extraction():
 )
 def test_calc_molecular_fragments_function(structure_comparison, system, file_suffix, backend):
     """Test calc_molecular_fragments function."""
-    kwargs, ref = load_yaml_file(FRAG_PATH + system + ".yaml")
+    kwargs, ref = read_yaml_file(FRAG_PATH + system + ".yaml")
     strct = Structure.from_file(STRUCTURES_PATH + system + file_suffix, backend=backend)
     fragments = calc_molecular_fragments(strct, **kwargs)
     for frag, frag_ref in zip(fragments, ref):
@@ -84,7 +84,7 @@ def test_calc_molecular_fragments_function(structure_comparison, system, file_su
 
 def test_calc_graph(nested_dict_comparison):
     """Test creating a graph from a structure."""
-    strct = Structure(**load_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml"))
+    strct = Structure(**read_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml"))
     nx_graph, graphviz_graph = calc_graph(
         strct, get_graphviz_graph=True, method="minimum_distance"
     )

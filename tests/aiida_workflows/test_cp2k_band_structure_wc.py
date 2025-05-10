@@ -11,7 +11,7 @@ import aiida.orm as aiida_orm
 from aiida.engine import run_get_node
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 BandStructureWC = WorkflowFactory("aim2dat.cp2k.band_structure")
@@ -25,7 +25,7 @@ def test_band_structure_incl_seekpath(aiida_local_code_factory, aiida_create_str
     code = aiida_local_code_factory("cp2k", "/usr/bin/cp2k.ssmp")
 
     # Load input parameters:
-    parameters_si = load_yaml_file(THIS_DIR + "/cp2k/test_systems/Si_crystal.yaml")
+    parameters_si = read_yaml_file(THIS_DIR + "/cp2k/test_systems/Si_crystal.yaml")
     structure = aiida_create_structuredata(parameters_si["structure"])
     parameters = aiida_orm.Dict(dict=parameters_si["input_parameters"])
 
@@ -58,7 +58,7 @@ def test_band_structure_without_seekpath(aiida_local_code_factory, aiida_create_
     code = aiida_local_code_factory("cp2k", "/usr/bin/cp2k.ssmp")
 
     # Load input parameters:
-    parameters_si = load_yaml_file(THIS_DIR + "/cp2k/test_systems/Si_crystal.yaml")
+    parameters_si = read_yaml_file(THIS_DIR + "/cp2k/test_systems/Si_crystal.yaml")
     structure = aiida_create_structuredata(parameters_si["structure"])
     parameters = aiida_orm.Dict(dict=parameters_si["input_parameters"])
     path_parameters = aiida_orm.Dict(

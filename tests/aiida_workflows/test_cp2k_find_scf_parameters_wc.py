@@ -11,7 +11,7 @@ from aiida.engine import run_get_node
 import aiida.orm.nodes.process.calculation.calcjob as cjob
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 FindSCFParametersWC = WorkflowFactory("aim2dat.cp2k.find_scf_p")
@@ -25,8 +25,8 @@ def test_find_scf_parameters_fail(aiida_local_code_factory, aiida_create_structu
     code = aiida_local_code_factory("cp2k", "/usr/bin/cp2k.ssmp")
 
     # Load input parameters:
-    parameters_h2o = load_yaml_file(THIS_DIR + "/cp2k/test_systems/H2O_molecule.yaml")
-    scf_m_custom_p_list = load_yaml_file(
+    parameters_h2o = read_yaml_file(THIS_DIR + "/cp2k/test_systems/H2O_molecule.yaml")
+    scf_m_custom_p_list = read_yaml_file(
         THIS_DIR + "/cp2k/scf_method_parameters/custom_mixing_parameters_failed.yaml"
     )
 
@@ -113,8 +113,8 @@ def test_find_scf_parameters_success(aiida_local_code_factory, aiida_create_stru
     code = aiida_local_code_factory("cp2k", "/usr/bin/cp2k.ssmp")
 
     # Load input parameters:
-    parameters_h2o = load_yaml_file(THIS_DIR + "/cp2k/test_systems/H2O_molecule.yaml")
-    scf_m_custom_p_list = load_yaml_file(
+    parameters_h2o = read_yaml_file(THIS_DIR + "/cp2k/test_systems/H2O_molecule.yaml")
+    scf_m_custom_p_list = read_yaml_file(
         THIS_DIR + "/cp2k/scf_method_parameters/custom_mixing_parameters_failed.yaml"
     )
     scf_m_custom_p_list[0]["parameters"][1]["MAX_SCF"] = 50

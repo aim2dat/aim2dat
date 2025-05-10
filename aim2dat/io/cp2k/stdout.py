@@ -661,8 +661,8 @@ class WarningBlock(_BaseDataBlock):
     def _parse_line(self, line):
         line_sp = line.split()
         if self.start_str in line:
-            file_name, line_number = line_sp[3].split(":")
-            self.current_data["file_name"] = file_name
+            file_path, line_number = line_sp[3].split(":")
+            self.current_data["file_path"] = file_path
             self.current_data["line_number"] = line_number
             self.current_data["message"] = " ".join(line_sp[5:-1])
         elif len(line_sp) > 1:
@@ -686,8 +686,8 @@ class ErrorBlock(_BaseDataBlock):
         if self.start_str in line:
             self.current_data["message"] = ""
         elif self.end_str in line:
-            file_name, line_number = line.split()[3].split(":")
-            self.current_data["file_name"] = file_name
+            file_path, line_number = line.split()[3].split(":")
+            self.current_data["file_path"] = file_path
             self.current_data["line_number"] = line_number
         else:
             message = " ".join(line[12:78].split())
@@ -871,24 +871,28 @@ def _create_step_info_dict(
     return outp_list
 
 
-def read_stdout(file_name: str, parser_type: str = "standard") -> dict:
+def read_cp2k_stdout(
+    file_path: str, parser_type: str = "standard", raise_error: bool = True
+) -> dict:
     """
     Read standard output file of CP2K.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path to the output file.
     parser_type : str
         Defines the quantities that are being parsed. Supported options are ``'standard'``,
         ``'partial_charges'`` and ``'trajectory'``.
+    raise_error : bool
+        Whether to raise an error if a flaw is detected in the output file.
 
     Returns
     -------
     dict
         Dictionary containing the parsed values.
     """
-    output, n_lines = parse_block_function(file_name, _BLOCKS[parser_type])
+    output, n_lines = parse_block_function(file_path, _BLOCKS[parser_type])
     output["cp2k_version"] = float(output["cp2k_version"])
     if "exceeded_walltime" not in output:
         output["exceeded_walltime"] = False
@@ -913,6 +917,11 @@ def read_stdout(file_name: str, parser_type: str = "standard") -> dict:
         for err1 in _ERROR_MAPPING:
             if err1[0] in err0["message"]:
                 output[err1[1]] = True
+        if raise_error:
+            raise ValueError(
+                f"Calculation did not finish properly, error message: '{err0['message']}'. "
+                "To obtain output, set `raise_error` to False."
+            )
 
     kpoints = output.pop("kpoints", [])
     if "eigenvalues_info" in output:
@@ -973,3 +982,35 @@ def read_stdout(file_name: str, parser_type: str = "standard") -> dict:
     else:
         output.pop("motion_step_info", None)
     return output
+
+
+def read_stdout(file_name: str, parser_type: str = "standard") -> dict:
+    """
+    Read standard output file of CP2K.
+
+    Notes
+    -----
+        This function is deprecated and will be removed, please use `aim2dat.io.read_cp2k_stdout`
+        instead.
+
+    Parameters
+    ----------
+    file_name : str
+        Path to the output file.
+    parser_type : str
+        Defines the quantities that are being parsed. Supported options are ``'standard'``,
+        ``'partial_charges'`` and ``'trajectory'``.
+
+    Returns
+    -------
+    dict
+        Dictionary containing the parsed values.
+    """
+    from warnings import warn
+
+    warn(
+        "This function will be removed, please use `aim2dat.io.read_cp2k_stdout` instead.",
+        DeprecationWarning,
+        2,
+    )
+    return read_cp2k_stdout(file_path=file_name, parser_type=parser_type)

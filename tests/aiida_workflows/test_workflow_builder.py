@@ -13,7 +13,7 @@ from workflow_utils import generate_work_function_node
 from aim2dat.aiida_workflows.workflow_builder import WorkflowBuilder, WorkflowProtocolError
 from aim2dat.aiida_workflows._workflow_builder_utils import _load_protocol
 from aim2dat.aiida_workflows.utils import obtain_value_from_aiida_node
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 MAIN_PATH = os.path.dirname(__file__) + "/workflow_builder/"
 
@@ -40,37 +40,37 @@ node_container = NodeContainer()
 @pytest.mark.aiida
 def test_workflow_validation():
     """Test protocol validation."""
-    protocol = dict(load_yaml_file(MAIN_PATH + "flawed_protocols/missing-process.yaml"))
+    protocol = dict(read_yaml_file(MAIN_PATH + "flawed_protocols/missing-process.yaml"))
     wf_builder = WorkflowBuilder()
     with pytest.raises(WorkflowProtocolError) as error:
         wf_builder.protocol = protocol
     assert str(error.value) == "No process specified for task 'task_1'."
 
-    protocol = dict(load_yaml_file(MAIN_PATH + "flawed_protocols/missing-task.yaml"))
+    protocol = dict(read_yaml_file(MAIN_PATH + "flawed_protocols/missing-task.yaml"))
     wf_builder = WorkflowBuilder()
     with pytest.raises(WorkflowProtocolError) as error:
         wf_builder.protocol = protocol
     assert str(error.value) == "Task 'task_2' does not exist."
 
-    protocol = dict(load_yaml_file(MAIN_PATH + "flawed_protocols/parent-node-clash.yaml"))
+    protocol = dict(read_yaml_file(MAIN_PATH + "flawed_protocols/parent-node-clash.yaml"))
     wf_builder = WorkflowBuilder()
     with pytest.raises(WorkflowProtocolError) as error:
         wf_builder.protocol = protocol
     assert str(error.value) == "Input 'input_variable' clashes with parent node at task 'task_1'."
 
-    protocol = dict(load_yaml_file(MAIN_PATH + "flawed_protocols/input-defined-twice.yaml"))
+    protocol = dict(read_yaml_file(MAIN_PATH + "flawed_protocols/input-defined-twice.yaml"))
     wf_builder = WorkflowBuilder()
     with pytest.raises(WorkflowProtocolError) as error:
         wf_builder.protocol = protocol
     assert str(error.value) == "Input 'input_variable' defined twice for task 'task_1'."
 
-    protocol = dict(load_yaml_file(MAIN_PATH + "flawed_protocols/input-defined-twice.yaml"))
+    protocol = dict(read_yaml_file(MAIN_PATH + "flawed_protocols/input-defined-twice.yaml"))
     wf_builder = WorkflowBuilder()
     with pytest.raises(WorkflowProtocolError) as error:
         wf_builder.protocol = protocol
     assert str(error.value) == "Input 'input_variable' defined twice for task 'task_1'."
 
-    protocol = dict(load_yaml_file(MAIN_PATH + "flawed_protocols/blacklist-clash.yaml"))
+    protocol = dict(read_yaml_file(MAIN_PATH + "flawed_protocols/blacklist-clash.yaml"))
     wf_builder = WorkflowBuilder()
     with pytest.raises(WorkflowProtocolError) as error:
         wf_builder.protocol = protocol
@@ -302,7 +302,7 @@ def test_protocol_version(protocol, version):
 )
 def test_protocols(nested_dict_comparison, protocol):
     """Test protocol that all standard protocols are valid."""
-    ref = load_yaml_file(MAIN_PATH + "protocols/" + protocol + "_ref.yaml")
+    ref = read_yaml_file(MAIN_PATH + "protocols/" + protocol + "_ref.yaml")
     wf_builder = WorkflowBuilder()
     wf_builder.protocol = protocol
     for label, input_det in wf_builder._general_input.items():

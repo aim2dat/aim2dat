@@ -18,9 +18,11 @@ Version 0.4.0
 
 **Breaking Changes:**
 
+* All functions of the ``io`` sub-package have been renamed and are imported directly via the ``__init__.py`` file of the sub-package (`PR #133 <https://github.com/aim2dat/aim2dat/pull/133>`_)
 * The ``utils.element_properties.get_atomic_radius`` function now relies entirely internal values taken from :doi:`10.1039/B801115J` (``'covalent'``), :doi:`10.1039/C3DT50599E` (``'vdw'``), :doi:`10.1039/C9RA07327B` (``'chen_manz'``), and :doi:`10.26434/chemrxiv-2024-m3rtp-v2` (``'vdw_charry_tkatchenko'``) instead of ase (`PR #138 <https://github.com/aim2dat/aim2dat/pull/138>`_).
 * The creation of supercells for the calculation of coordination environments and other features has been sped up substantially (`PR #136 <https://github.com/aim2dat/aim2dat/pull/136>`_).
 * Support for the MP legacy interface via pymatgen is removed from the ``strct.StructureImporter`` class since it is no longer supported by pymatgen (`PR #142 <https://github.com/aim2dat/aim2dat/pull/142>`_).
+
 
 Version 0.3.0
 =============

@@ -11,25 +11,32 @@ import copy
 import numpy as np
 
 # Internal library imports
-from aim2dat.io.utils import read_structure, read_multiple, custom_open
+from aim2dat.io.utils import (
+    read_structure,
+    read_total_dos,
+    read_band_structure,
+    read_multiple,
+    custom_open,
+)
 from aim2dat.io.base_parser import transform_str_value
 from aim2dat.utils.units import length
 from aim2dat.utils.dict_tools import dict_create_tree
 
 
 @read_structure(r".*\.xml", preset_kwargs={"extract_structures": True})
-def read_xml(
-    file_name: str,
+def read_qe_xml(
+    file_path: str,
     extract_structures: bool = False,
     strct_type: str = None,
     strct_include: list = None,
-):
+    raise_error: bool = True,
+) -> dict:
     """
     Read xml output file.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path of the xml-file of Quantum ESPRESSO.
     extract_structures : bool
         Whether to extract alls crystal structures and add them to the output dictionary with the
@@ -39,6 +46,8 @@ def read_xml(
         ``'steps'``.
     strct_include : list
         List of dictionary keys that are included in the structure attributes.
+    raise_error : bool
+        Whether to raise an error if a flaw is detected in the output file.
 
     Returns
     -------
@@ -262,11 +271,17 @@ def read_xml(
             strct_dict["site_attributes"] = {"forces": [tuple(val) for val in inp_dict["forces"]]}
         return strct_dict
 
-    tree = ET.parse(file_name)
+    tree = ET.parse(file_path)
     outp_dict = {}
     for child in tree.getroot():
         if child.tag == "exit_status":
+            exit_status = int(child.text)
             outp_dict["exit_status"] = int(child.text)
+            if raise_error and exit_status != 0:
+                raise ValueError(
+                    f"Calculation did not finish properly, exit status: {exit_status}. "
+                    "To obtain output, set `raise_error` to False."
+                )
         elif child.tag == "closed":
             pass
         else:
@@ -305,14 +320,14 @@ def read_xml(
 
 
 @read_structure(r".*\.in(p)?$")
-def read_input_structure(file_name):
+def read_qe_input_structure(file_path: str) -> dict:
     """
     Read structure from the Quantum ESPRESSO input file.
     ibrav parameters are not yet fully supported.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path of the input-file of Quantum ESPRESSO containing structural data.
 
     Returns
@@ -436,7 +451,7 @@ def read_input_structure(file_name):
         return line_idx, elements, positions, is_cartesian
 
     struct_dict = {"pbc": [True, True, True]}
-    with custom_open(file_name, "r") as input_file:
+    with custom_open(file_path, "r") as input_file:
         file_content = input_file.read().splitlines()
     line_idx = 0
     while line_idx < len(file_content):  # line in enumerate(file_content):
@@ -463,14 +478,15 @@ def read_input_structure(file_name):
     return struct_dict
 
 
-def read_band_structure(file_name):
+@read_band_structure(r".*bands\.dat$")
+def read_qe_band_structure(file_path: str) -> dict:
     """
     Read band structure file from Quantum ESPRESSO.
     Spin-polarized calculations are not yet supported.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path of the output-file of Quantum ESPRESSO containing the band structure.
 
     Returns
@@ -480,7 +496,7 @@ def read_band_structure(file_name):
     """
     kpoints = []
     bands = []
-    with custom_open(file_name, "r") as bands_file:
+    with custom_open(file_path, "r") as bands_file:
         nr_bands = 0
         current_bands = []
         parse_kpoint = True
@@ -503,13 +519,14 @@ def read_band_structure(file_name):
     return {"kpoints": kpoints, "unit_y": "eV", "bands": bands}
 
 
-def read_total_density_of_states(file_name):
+@read_total_dos(r".*dos\.dat$")
+def read_qe_total_dos(file_path: str) -> dict:
     """
     Read the total density of states from Quantum ESPRESSO.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path of the output-file of Quantum ESPRESSO containing the total density of states.
 
     Returns
@@ -520,7 +537,7 @@ def read_total_density_of_states(file_name):
     energy = []
     tdos = []
     e_fermi = None
-    with custom_open(file_name, "r") as tdos_file:
+    with custom_open(file_path, "r") as tdos_file:
         for line in tdos_file:
             line_split = line.split()
             if not line.startswith("#"):
@@ -533,9 +550,10 @@ def read_total_density_of_states(file_name):
 
 @read_multiple(
     pattern=r"^.*pdos_atm#(?P<at_idx>\d*)?\((?P<el>[a-zA-Z]*)"
-    + r"?\)\_wfc\#(?P<orb_idx>\d*)?\((?P<orb>[a-z])?\)$"
+    + r"?\)\_wfc\#(?P<orb_idx>\d*)?\((?P<orb>[a-z])?\)$",
+    is_read_proj_dos_method=True,
 )
-def read_atom_proj_density_of_states(folder_path):
+def read_qe_proj_dos(folder_path):
     """
     Read the projected density of states from Quantum ESPRESSO.
 
@@ -580,7 +598,7 @@ def read_atom_proj_density_of_states(folder_path):
 
         # Read pdos, we only read the orbital contributions here, the summation is performed in
         # the plotting-class:
-        with custom_open(folder_path["file"][idx], "r") as pdos_file:
+        with custom_open(folder_path["file_path"][idx], "r") as pdos_file:
 
             # Get inof from regex:
             qn_labels = quantum_numbers[orb]
@@ -610,3 +628,174 @@ def read_atom_proj_density_of_states(folder_path):
                         )
 
     return {"energy": energy, "pdos": atomic_pdos, "unit_x": "eV"}
+
+
+@read_structure(r".*\.xml", preset_kwargs={"extract_structures": True})
+def read_xml(
+    file_name: str,
+    extract_structures: bool = False,
+    strct_type: str = None,
+    strct_include: list = None,
+):
+    """
+    Read xml output file.
+
+    Notes
+    -----
+        This function is deprecated and will be removed, please use `aim2dat.io.read_qe_xml`
+        instead.
+
+    Parameters
+    ----------
+    file_name : str
+        Path of the xml-file of Quantum ESPRESSO.
+    extract_structures : bool
+        Whether to extract alls crystal structures and add them to the output dictionary with the
+        key ``'structures'``.
+    strct_type : str
+        Type of extracted structure(s). Supported options are ``'input'``, ``'output'`` or
+        ``'steps'``.
+    strct_include : list
+        List of dictionary keys that are included in the structure attributes.
+
+    Returns
+    -------
+    dict
+        Output dictionary.
+    """
+    from warnings import warn
+
+    warn(
+        "This function will be removed, please use `aim2dat.io.read_qe_xml` instead.",
+        DeprecationWarning,
+        2,
+    )
+    return read_qe_xml(
+        file_path=file_name,
+        extract_structures=extract_structures,
+        strct_type=strct_type,
+        strct_include=strct_include,
+    )
+
+
+@read_structure(r".*\.in(p)?$")
+def read_input_structure(file_name):
+    """
+    Read structure from the Quantum ESPRESSO input file.
+    ibrav parameters are not yet fully supported.
+
+    Notes
+    -----
+        This function is deprecated and will be removed, please use
+        `aim2dat.io.read_qe_input_structure` instead.
+
+    Parameters
+    ----------
+    file_name : str
+        Path of the input-file of Quantum ESPRESSO containing structural data.
+
+    Returns
+    -------
+    dict
+        Dictionary containing the structural information.
+    """
+    from warnings import warn
+
+    warn(
+        "This function will be removed, please use `aim2dat.io.read_qe_input_structure` instead.",
+        DeprecationWarning,
+        2,
+    )
+    return read_qe_input_structure(file_path=file_name)
+
+
+def read_band_structure(file_name):
+    """
+    Read band structure file from Quantum ESPRESSO.
+    Spin-polarized calculations are not yet supported.
+
+    Notes
+    -----
+        This function is deprecated and will be removed, please use
+        `aim2dat.io.read_qe_band_structure` instead.
+
+    Parameters
+    ----------
+    file_name : str
+        Path of the output-file of Quantum ESPRESSO containing the band structure.
+
+    Returns
+    -------
+    band_structure : dict
+        Dictionary containing the k-path and th eigenvalues as well as the occupations.
+    """
+    from warnings import warn
+
+    warn(
+        "This function will be removed, please use `aim2dat.io.read_qe_band_structure` instead.",
+        DeprecationWarning,
+        2,
+    )
+    return read_qe_band_structure(file_path=file_name)
+
+
+def read_total_density_of_states(file_name):
+    """
+    Read the total density of states from Quantum ESPRESSO.
+
+    Notes
+    -----
+        This function is deprecated and will be removed, please use `aim2dat.io.read_qe_total_dos`
+        instead.
+
+    Parameters
+    ----------
+    file_name : str
+        Path of the output-file of Quantum ESPRESSO containing the total density of states.
+
+    Returns
+    -------
+    pdos : dict
+        Dictionary containing the projected density of states for each atom.
+    """
+    from warnings import warn
+
+    warn(
+        "This function will be removed, please use `aim2dat.io.read_qe_total_dos` instead.",
+        DeprecationWarning,
+        2,
+    )
+    return read_qe_total_dos(file_path=file_name)
+
+
+@read_multiple(
+    pattern=r"^.*pdos_atm#(?P<at_idx>\d*)?\((?P<el>[a-zA-Z]*)"
+    + r"?\)\_wfc\#(?P<orb_idx>\d*)?\((?P<orb>[a-z])?\)$"
+)
+def read_atom_proj_density_of_states(folder_path):
+    """
+    Read the projected density of states from Quantum ESPRESSO.
+
+    Notes
+    -----
+        This function is deprecated and will be removed, please use `aim2dat.io.read_qe_proj_dos`
+        instead.
+
+    Parameters
+    ----------
+    folder_path : str
+        Path to the folder containing the pdos ouput-files.
+
+    Returns
+    -------
+    pdos : dict
+        Dictionary containing the projected density of states for each atom.
+    """
+    from warnings import warn
+
+    warn(
+        "This function will be removed, please use `aim2dat.io.read_qe_proj_dos` instead.",
+        DeprecationWarning,
+        2,
+    )
+    return read_qe_proj_dos(folder_path=folder_path)

@@ -9,7 +9,7 @@ from sklearn.exceptions import NotFittedError
 
 # Internal library imports
 from aim2dat.ml import transformers
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 REF_PATH = os.path.dirname(__file__) + "/structure_transformers_ref/"
@@ -159,7 +159,7 @@ def test_transformer(
     transf_structure_list,
 ):
     """Test structure transformers."""
-    ref = load_yaml_file(REF_PATH + transformer_type + "_" + test_case + ".yaml")
+    ref = read_yaml_file(REF_PATH + transformer_type + "_" + test_case + ".yaml")
 
     strct_c_fit, _ = create_structure_collection_object(fit_structure_list)
     strct_c_transf, _ = create_structure_collection_object(transf_structure_list)
