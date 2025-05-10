@@ -21,8 +21,12 @@ cwd = os.path.dirname(__file__)
 
 
 def _add_label_suffix(strct, label_suffix, change_label):
-    if change_label:
+    new_label = None
+    if isinstance(change_label, str):
+        new_label = change_label
+    elif change_label:
         new_label = label_suffix if strct["label"] is None else strct["label"] + label_suffix
+    if new_label is not None:
         if isinstance(strct, dict):
             strct["label"] = new_label
         else:
@@ -125,10 +129,12 @@ def substitute_elements(
 
 def scale_unit_cell(
     structure,
-    scaling_factors: Union[float, List[float]] = None,
-    pressure: float = None,
-    bulk_modulus: float = None,
-    change_label: bool = True,
+    scaling_factors: Union[float, List[float]],
+    pressure: float,
+    bulk_modulus: float,
+    random_factors: float,
+    random_seed: int,
+    change_label: bool,
 ) -> "Structure":
     """Scale the unit cell of a structure."""
 
@@ -153,13 +159,24 @@ def scale_unit_cell(
             "`scaling_factors` must be a single value, a list of 3 values, or a 3x3 nested list."
         )
 
+    if structure.cell is None:
+        return None
+
     if pressure is not None:
         if bulk_modulus is None:
             raise ValueError("`bulk_modulus` must be provided when applying `pressure`.")
         scaling_factors = 1 - pressure / bulk_modulus
+    if random_factors is not None:
+        rng = np.random.default_rng(seed=random_seed)
+        scaling_factors = np.array(
+            [[0.0 if i < j else rng.random() - 0.5 for j in range(3)] for i in range(3)]
+        ) * 2.0 * random_factors + np.eye(3)
 
     if scaling_factors is None:
-        raise ValueError("Provide either `scaling_factors` or `pressure` (with `bulk_modulus`).")
+        raise ValueError(
+            "Provide either `scaling_factors`, `pressure` (with `bulk_modulus`) or "
+            + "`random_factors`."
+        )
 
     scaling_matrix = get_scaling_matrix(scaling_factors)
 
@@ -176,9 +193,9 @@ def scale_unit_cell(
 
 def create_supercell(
     structure: Structure,
-    size: Union[tuple, list, int] = 2,
-    wrap: bool = True,
-    change_label: bool = False,
+    size: Union[tuple, list, int],
+    wrap: bool,
+    change_label: bool,
 ):
     """Create supercell."""
     if structure.cell is None:

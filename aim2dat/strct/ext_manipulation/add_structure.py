@@ -11,7 +11,8 @@ import copy
 import numpy as np
 
 # Internal library imports
-from aim2dat.strct import Structure, SamePositionsError
+from aim2dat.strct.strct import Structure
+from aim2dat.strct.strct_validation import SamePositionsError
 from aim2dat.strct.ext_manipulation.decorator import external_manipulation_method
 from aim2dat.strct.ext_manipulation.utils import (
     _build_distance_dict,
@@ -51,10 +52,10 @@ def add_structure_random(
         (viable options are ``'CH3'``, ``'COOH'``, ``'H2O'``, ``'NH2'``, ``'NO2'`` or ``'OH'``), a
         ``Structure`` object or the element symbol to add one single atom.
     max_tries : int
-        Number of tries to add the guest structure. A trie is rejected via the criteria given by
+        Number of tries to add the guest structure. A try is rejected via the criteria given by
         the ``dist_treshold`` parameter.
     random_seed : int or None (optional)
-        Specify the initial random state to ensure reproducible results.
+        Specify the random seed to ensure reproducible results.
     random_nrs : list or None (optional)
         List of random numbers used to derive the position and rotation of the guest molecule. It
         should contain ``max_tries * 7`` entries to cover the maximum amout of tries.
