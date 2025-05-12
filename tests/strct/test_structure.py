@@ -6,10 +6,13 @@ import os
 # Third party library imports
 import pytest
 import numpy as np
+from openmm import LangevinMiddleIntegrator
+from openmm.app import ForceField
 
 # Internal library imports
 from aim2dat.strct import Structure, SamePositionsError
 from aim2dat.io.yaml import load_yaml_file
+from aim2dat.ext_interfaces.openmm import _get_potential_energy
 
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
@@ -221,6 +224,7 @@ def test_list_methods():
         "from_ase_atoms",
         "from_pymatgen_structure",
         "from_aiida_structuredata",
+        "from_openmm_simulation",
     ]
     assert Structure.export_methods == [
         "to_dict",
@@ -228,6 +232,7 @@ def test_list_methods():
         "to_ase_atoms",
         "to_pymatgen_structure",
         "to_aiida_structuredata",
+        "to_openmm_simulation",
     ]
     assert Structure.analysis_methods == [
         "calc_point_group",
@@ -319,3 +324,43 @@ def test_internal_io_errors():
     with pytest.raises(ValueError) as error:
         Structure.from_file(STRUCTURES_PATH + "ZIF-8_complex.xyz", backend="internal")
     assert str(error.value) == "Could not find a suitable io function."
+
+
+def test_openmm_interface_cycle(structure_comparison):
+    """Test openmm interface cycle."""
+    ff = ForceField("amber14/tip3pfb.xml")
+    integrator = LangevinMiddleIntegrator(300.0, 1.0, 0.004)
+    strct = Structure(**load_yaml_file(STRUCTURES_PATH + "H2O.yaml"))
+    strct.kinds = ["O", "H1", "H2"]
+    simulation = strct.to_openmm_simulation(ff, bonds=((0, 1), (0, 2)), integrator=integrator)
+    strct.cell = ((20.0, 0.0, 0.0), (0.0, 20.0, 0.0), (0.0, 0.0, 20.0))
+    strct.pbc = True
+    strct2 = Structure.from_openmm_simulation(simulation)
+    structure_comparison(strct, strct2)
+
+
+def test_openmm_pot_energy():
+    """Test potential energy calculation."""
+    ref_energy = 0.06525535135632189
+    ref_forces = [
+        [-0.5603919697651646, -0.797173989039611, 0.0],
+        [1.5382744084594724, -0.4922853025455664, 0.0],
+        [-0.9778824386943078, 1.2894592915851772, 0.0],
+    ]
+
+    ff = ForceField("amber14/tip3pfb.xml")
+    integrator = LangevinMiddleIntegrator(300.0, 1.0, 0.004)
+    strct = Structure(**load_yaml_file(STRUCTURES_PATH + "H2O.yaml"))
+    assert (
+        abs(
+            _get_potential_energy(strct, ff, integrator, None, ((0, 1), (0, 2)), "cpu")
+            - ref_energy
+        )
+        < 1e-5
+    )
+    integrator = LangevinMiddleIntegrator(300.0, 1.0, 0.004)
+    energy, forces = _get_potential_energy(
+        strct, ff, integrator, None, ((0, 1), (0, 2)), "cpu", get_forces=True
+    )
+    assert abs(energy - ref_energy) < 1e-5
+    assert np.allclose(forces, ref_forces)

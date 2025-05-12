@@ -17,6 +17,7 @@ _ext_interfaces_deps = {
     "mofxdb": [("mofdb_client", None, None)],
     "mp_openapi": [("requests", None, None), ("msgpack", "1.0.2", None), ("boto3", "1.25", None)],
     "oqmd": [("qmpy_rester", None, None)],
+    "openmm": [("openmm", "8.2.0", None)],
     "optimade": [("requests", None, None)],
     "pandas": [("pandas", None, None)],
     "phonopy": [("phonopy", "2.17.1", None)],
