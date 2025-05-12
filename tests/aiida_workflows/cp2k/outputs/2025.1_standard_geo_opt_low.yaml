@@ -1,0 +1,33 @@
+%YAML 1.2
+---
+output_parameters:
+  cp2k_version: 2025.1
+  run_type: GEO_OPT
+  natoms: 2
+  runtime: 0.865
+  nelectrons: 2
+  nr_occ_orbitals: 1
+  scf_converged: true
+  energy_scf: -1.16118537207595
+  energy: -1.161185372075949
+  energy_units: hartree
+  nr_steps: 2
+  warnings: [Using a non-square number of MPI ranks.]
+  nwarnings: 1
+  exceeded_walltime: false
+output_structure:
+  label:
+  elements: [H, H]
+  pbc: [false, false, false]
+  cell:
+  - [4.0, 0.0, 0.0]
+  - [0.0, 4.0, 0.0]
+  - [0.0, 0.0, 4.737166000000001]
+  kinds: [null, null]
+  site_attributes: {}
+  attributes: {structure_node: null, space_group: null, source: null, source_id: null,
+    formation_energy: null, stability: null, functional: null, band_gap: null, direct_band_gap: null,
+    magnetic_moment: null, icsd_ids: null, aiida_group: null}
+  positions:
+  - [2.000000000137841, 2.0000000001378426, 2.7290247583909104]
+  - [2.000000000137838, 2.0000000001378404, 2.008141242575707]

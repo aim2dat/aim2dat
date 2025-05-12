@@ -9,7 +9,7 @@ import pytest
 # Internal library imports
 from aim2dat.plots.thermal_properties import ThermalPropertiesPlot, QHAPlot
 from aim2dat.io.phonopy import read_thermal_properties, read_qha_properties
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 MAIN_PATH = os.path.dirname(__file__)
@@ -21,8 +21,8 @@ PHONOPY_QHA_PATH = MAIN_PATH + "/../io/phonopy_qha/"
 @pytest.mark.skip
 def test_thermal_properties_plot(nested_dict_comparison, matplotlib_figure_comparison):
     """Test ThermalPropertiesPlot class."""
-    import_ref = load_yaml_file(REF_PATH + "thermal_properties_import_ref.yaml")
-    plot_ref = load_yaml_file(REF_PATH + "thermal_properties_matplotlib_ref.yaml")
+    import_ref = read_yaml_file(REF_PATH + "thermal_properties_import_ref.yaml")
+    plot_ref = read_yaml_file(REF_PATH + "thermal_properties_matplotlib_ref.yaml")
     thermal_properties = read_thermal_properties(
         PHONOPY_HA_PATH + "phonopy_disp.yaml",
         force_sets_file_name=PHONOPY_HA_PATH + "FORCE_SETS",
@@ -39,8 +39,8 @@ def test_thermal_properties_plot(nested_dict_comparison, matplotlib_figure_compa
 
 def test_qha_plot(nested_dict_comparison):
     """Test QHAPlot class."""
-    import_ref = load_yaml_file(REF_PATH + "qha_import_ref.yaml")
-    plot_ref = load_yaml_file(REF_PATH + "qha_ref.yaml")
+    import_ref = read_yaml_file(REF_PATH + "qha_import_ref.yaml")
+    plot_ref = read_yaml_file(REF_PATH + "qha_ref.yaml")
     qha_properties = read_qha_properties(
         thermal_properties_file_names=[
             PHONOPY_QHA_PATH + f"thermal_properties.yaml-{idx0}" for idx0 in range(-5, 6)

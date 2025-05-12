@@ -9,7 +9,7 @@ from aiida.common import datastructures
 
 # Internal library imports
 from aim2dat.aiida_workflows.utils import create_aiida_node
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 MAIN_PATH = os.path.dirname(__file__) + "/critic2/"
@@ -24,7 +24,7 @@ def test_input(
     aiida_sandbox_folder, aiida_get_calcinfo, aiida_create_remote_data, aiida_create_code, system
 ):
     """Test 'prepare_for_submission' functions."""
-    input_details = load_yaml_file(INPUTS_PATH + f"{system}.yaml")
+    input_details = read_yaml_file(INPUTS_PATH + f"{system}.yaml")
     input_p = input_details["inputs"]
     for input_key, input_value in input_p.items():
         input_p[input_key] = create_aiida_node(input_value)
@@ -48,7 +48,7 @@ def test_input(
 @pytest.mark.parametrize("system", ["bader_charges"])  # , "rhodef_plane"])
 def test_parser(aiida_create_calcjob, aiida_create_remote_data, aiida_create_parser, system):
     """Test parser."""
-    ref_output = load_yaml_file(OUTPUTS_PATH + system + ".yaml")
+    ref_output = read_yaml_file(OUTPUTS_PATH + system + ".yaml")
     node = aiida_create_calcjob("aim2dat.critic2", MAIN_PATH + f"output_files_{system}")
     parser = aiida_create_parser("aim2dat.critic2")
     results, _ = parser.parse_from_node(node, store_provenance=False)

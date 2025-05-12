@@ -9,7 +9,7 @@ import numpy as np
 
 # Internal library imports
 from aim2dat.plots.band_structure_dos import BandStructurePlot, DOSPlot, BandStructureDOSPlot
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 MAIN_PATH = os.path.dirname(__file__)
 BAND_STRUCTURE_PATH = MAIN_PATH + "/band_structure_files/"
@@ -20,11 +20,11 @@ DOS_PATH = MAIN_PATH + "/dos_files/"
 def test_band_analysis_functions(test_case):
     """Test the BandStructurePlot class."""
     # Read test file:
-    inputs = dict(load_yaml_file(BAND_STRUCTURE_PATH + f"{test_case}_band_structure.yaml"))
+    inputs = dict(read_yaml_file(BAND_STRUCTURE_PATH + f"{test_case}_band_structure.yaml"))
 
     # Read reference file:
     ref = dict(
-        load_yaml_file(BAND_STRUCTURE_PATH + f"{test_case}_band_analysis_ref.yaml", typ="unsafe")
+        read_yaml_file(BAND_STRUCTURE_PATH + f"{test_case}_band_analysis_ref.yaml", typ="unsafe")
     )
 
     # Create object:
@@ -42,10 +42,10 @@ def test_band_analysis_functions(test_case):
 def test_band_structure_plot_matplotlib_backend(matplotlib_figure_comparison, system):
     """Test matplotlib backend with the BandStructurePlot class."""
     # Read test file:
-    inputs = dict(load_yaml_file(BAND_STRUCTURE_PATH + f"{system}_band_structure.yaml"))
+    inputs = dict(read_yaml_file(BAND_STRUCTURE_PATH + f"{system}_band_structure.yaml"))
 
     # Read reference file:
-    ref = dict(load_yaml_file(BAND_STRUCTURE_PATH + f"{system}_matplotlib_ref.yaml", typ="unsafe"))
+    ref = dict(read_yaml_file(BAND_STRUCTURE_PATH + f"{system}_matplotlib_ref.yaml", typ="unsafe"))
 
     # Create object:
     band_structure_plt = BandStructurePlot()
@@ -109,8 +109,8 @@ def test_dos_errors():
 )
 def test_dos_import(nested_dict_comparison, system):
     """Test pDOS and tDOS import."""
-    inputs = dict(load_yaml_file(DOS_PATH + f"{system}.yaml"))
-    ref = dict(load_yaml_file(DOS_PATH + f"{system}_import_ref.yaml"))
+    inputs = dict(read_yaml_file(DOS_PATH + f"{system}.yaml"))
+    ref = dict(read_yaml_file(DOS_PATH + f"{system}_import_ref.yaml"))
     dos_plot = DOSPlot(**inputs["attributes"])
     if "import_pdos_input" in inputs:
         dos_plot.import_projected_dos("test", **inputs["import_pdos_input"])
@@ -128,8 +128,8 @@ def test_dos_import(nested_dict_comparison, system):
 
 def test_shift_dos(nested_dict_comparison):
     """Test shif_dos function of the DOSPlot class."""
-    inputs = dict(load_yaml_file(DOS_PATH + "Si_at_qe.yaml"))
-    ref = dict(load_yaml_file(DOS_PATH + "Si_at_qe_import_ref.yaml"))
+    inputs = dict(read_yaml_file(DOS_PATH + "Si_at_qe.yaml"))
+    ref = dict(read_yaml_file(DOS_PATH + "Si_at_qe_import_ref.yaml"))
     dos_plot = DOSPlot(**inputs["attributes"])
     dos_plot.import_projected_dos("test", **inputs["import_pdos_input"])
     dos_plot.import_total_dos("test", **inputs["import_tdos_input"])
@@ -146,7 +146,7 @@ def test_shift_dos(nested_dict_comparison):
 @pytest.mark.parametrize("system", ["Si_at"])
 def test_pdos_import_aiida_xydata(nested_dict_comparison, aiida_create_xydata, system):
     """Test pDOS import via AiidA data nodes."""
-    inputs = dict(load_yaml_file(DOS_PATH + f"{system}_aiida_pdos.yaml"))
+    inputs = dict(read_yaml_file(DOS_PATH + f"{system}_aiida_pdos.yaml"))
     y_data = [[], [], []]
     for label, data_set in inputs["pdosdata"].items():
         x_data = data_set["x_data"]
@@ -167,15 +167,15 @@ def test_pdos_import_aiida_xydata(nested_dict_comparison, aiida_create_xydata, s
                 [float(val) for val in row] for row in dos_data[d_type]["dos"]
             ]
             dos_data[d_type]["energy"] = [float(val) for val in dos_data[d_type]["energy"]]
-    reference = dict(load_yaml_file(DOS_PATH + f"{system}_aiida_import_ref.yaml", typ="unsafe"))
+    reference = dict(read_yaml_file(DOS_PATH + f"{system}_aiida_import_ref.yaml", typ="unsafe"))
     nested_dict_comparison(dos_data, reference)
 
 
 @pytest.mark.parametrize("system,test_case", [("Si_uks", "sum_pdos"), ("Si_at_qe", "linefill")])
 def test_dos_prepare_plot(nested_dict_comparison, system, test_case):
     """Test _prepare_to_plot function for different use cases."""
-    inputs = dict(load_yaml_file(DOS_PATH + f"{system}.yaml"))
-    ref_dict = dict(load_yaml_file(DOS_PATH + f"{system}_{test_case}_prepare_plot_ref.yaml"))
+    inputs = dict(read_yaml_file(DOS_PATH + f"{system}.yaml"))
+    ref_dict = dict(read_yaml_file(DOS_PATH + f"{system}_{test_case}_prepare_plot_ref.yaml"))
     dos_plot = DOSPlot(**inputs["attributes"], **ref_dict["attributes"])
     if "import_pdos_input" in inputs:
         dos_plot.import_projected_dos("test", **inputs["import_pdos_input"])
@@ -211,10 +211,10 @@ def test_dos_prepare_plot(nested_dict_comparison, system, test_case):
 
 def test_band_structure_dos_prepare_plot(nested_dict_comparison):
     """Test _prepare_to_plot function of BandStructureDOSPlot class."""
-    inputs_dos = dict(load_yaml_file(DOS_PATH + "Si_at_qe.yaml"))
-    inputs_bands = dict(load_yaml_file(BAND_STRUCTURE_PATH + "Si_band_structure.yaml"))
+    inputs_dos = dict(read_yaml_file(DOS_PATH + "Si_at_qe.yaml"))
+    inputs_bands = dict(read_yaml_file(BAND_STRUCTURE_PATH + "Si_band_structure.yaml"))
     ref_dict = dict(
-        load_yaml_file(BAND_STRUCTURE_PATH + "Si_band_structure_dos_prepare_plot_ref.yaml")
+        read_yaml_file(BAND_STRUCTURE_PATH + "Si_band_structure_dos_prepare_plot_ref.yaml")
     )
 
     bands_dos_plot = BandStructureDOSPlot(**ref_dict["attributes"], **inputs_dos["attributes"])

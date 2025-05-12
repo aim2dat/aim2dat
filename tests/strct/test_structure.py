@@ -9,8 +9,7 @@ import numpy as np
 
 # Internal library imports
 from aim2dat.strct import Structure, SamePositionsError
-from aim2dat.io.yaml import load_yaml_file
-
+from aim2dat.io import read_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 ZEO_PATH = os.path.dirname(__file__) + "/zeo/"
@@ -19,7 +18,7 @@ IO_PATH = os.path.dirname(__file__) + "/io/"
 
 def test_structure_print():
     """Test print statement of Structure class."""
-    strct_dict = load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
+    strct_dict = read_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
     structure = Structure(**strct_dict, label="test")
     assert structure.__str__() == (
         "----------------------------------------------------------------------\n"
@@ -53,7 +52,7 @@ def test_structure_print():
         "----------------------------------------------------------------------"
     )
 
-    strct_dict = load_yaml_file(STRUCTURES_PATH + "NH3.yaml")
+    strct_dict = read_yaml_file(STRUCTURES_PATH + "NH3.yaml")
     structure = Structure(**strct_dict)
     assert structure.__str__() == (
         "----------------------------------------------------------------------\n"
@@ -74,7 +73,7 @@ def test_structure_print():
 
 def test_structure_validation():
     """Test validation."""
-    strct_dict = load_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml")
+    strct_dict = read_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml")
     pbc = strct_dict["pbc"]
 
     with pytest.raises(ValueError) as error:
@@ -145,7 +144,7 @@ def test_to_dict(structure_comparison):
     """Test to_dict function."""
     calc_keys = ["extras", "function_args"]
     site_attrs = {"test": (0.0, 0.0, 1.0, 2.0, 3.0, -1.0, "test", 0.0, 0.0, 1.0, 1.0, -2.5)}
-    strct_dict = load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
+    strct_dict = read_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
     strct_dict["label"] = "test"
     structure = Structure(**strct_dict)
     test_dict = structure.to_dict(include_calculated_properties=False)
@@ -163,7 +162,7 @@ def test_to_dict(structure_comparison):
 
 def test_zeo_write_to_file(tmpdir):
     """Test write structure to zeo input files."""
-    strct_dict = load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
+    strct_dict = read_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
     structure = Structure(**strct_dict, label="test")
 
     file = tmpdir.join("Cs2Te_62_prim_kinds.cssr")
@@ -184,7 +183,7 @@ def test_zeo_write_to_file(tmpdir):
 
 def test_structure_features():
     """Test features of Structure class."""
-    strct_dict = load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
+    strct_dict = read_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
     strct_dict["site_attributes"] = {
         "test": (0.0, [0.0, 1.9], 1.0, 2.0, 3.0, -1.0, "test", 0.0, 0.0, 1.0, 1.0, -2.5)
     }
@@ -249,7 +248,7 @@ def test_list_methods():
 
 def test_cell_setter_and_wrap_positions(structure_comparison):
     """Test wrapping positions onto unit cell."""
-    strct_dict = load_yaml_file(STRUCTURES_PATH + "GaAs_216_conv.yaml")
+    strct_dict = read_yaml_file(STRUCTURES_PATH + "GaAs_216_conv.yaml")
     position = strct_dict["positions"][1].copy()
     position[1] -= strct_dict["cell"][1][1]
     structure = Structure(**strct_dict)
@@ -291,7 +290,7 @@ def test_cell_setter_and_wrap_positions(structure_comparison):
 )
 def test_internal_io(structure_comparison, system, file_path):
     """Test internal structure parsers."""
-    ref = load_yaml_file(IO_PATH + system + "/ref.yaml")
+    ref = read_yaml_file(IO_PATH + system + "/ref.yaml")
     structure = Structure.from_file(file_path, **ref["parameters"])
     structure_comparison(structure, ref["structure"])
 
@@ -300,7 +299,7 @@ def test_internal_io_str_input(structure_comparison):
     """Test internal structure parser for the case string input."""
     with open(STRUCTURES_PATH + "ZIF-8.cif") as fobj:
         file_content = fobj.read()
-    ref = load_yaml_file(IO_PATH + "cif/ref.yaml")
+    ref = read_yaml_file(IO_PATH + "cif/ref.yaml")
     structure = Structure.from_file(file_content, **ref["parameters"])
     structure_comparison(structure, ref["structure"])
 

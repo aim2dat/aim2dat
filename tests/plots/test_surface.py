@@ -8,7 +8,7 @@ import pytest
 
 # Internal library imports
 from aim2dat.plots import SurfacePlot
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 from aim2dat.ext_interfaces.pandas import _turn_dict_into_pandas_df
 
 
@@ -67,7 +67,7 @@ def test_properties_validation(prop, value, ref_value, error_type, error_m):
 
 def test_import_functions(create_plot_object, nested_dict_comparison):
     """Test importing data sets."""
-    ref_dict = load_yaml_file(SURFACE_PATH + "Cs18Te9_import_ref.yaml")
+    ref_dict = read_yaml_file(SURFACE_PATH + "Cs18Te9_import_ref.yaml")
     splot = create_plot_object(SurfacePlot, "matplotlib", ref_dict)
     nested_dict_comparison(splot.elemental_phases, ref_dict["ref"]["elemental_phases"])
     nested_dict_comparison(splot.bulk_phase, ref_dict["ref"]["bulk_phase"])
@@ -81,7 +81,7 @@ def test_import_pandas_df(
     nested_dict_comparison,
 ):
     """Test import pandas data frame."""
-    ref_dict = load_yaml_file(SURFACE_PATH + "Cs8Te4_pandas_df_import_ref.yaml")
+    ref_dict = read_yaml_file(SURFACE_PATH + "Cs8Te4_pandas_df_import_ref.yaml")
     pandas_dict = {
         "parent_node": [],
         "optimized_structure": [],
@@ -119,8 +119,8 @@ def test_import_pandas_df(
 )
 def test_prepare_plot(create_plot_object, nested_dict_comparison, system, test_case):
     """Test _prepare_to_plot function."""
-    import_dict = load_yaml_file(SURFACE_PATH + system + "_import_ref.yaml")
-    ref_dict = load_yaml_file(SURFACE_PATH + system + "_" + test_case + "_ref.yaml")
+    import_dict = read_yaml_file(SURFACE_PATH + system + "_import_ref.yaml")
+    ref_dict = read_yaml_file(SURFACE_PATH + system + "_" + test_case + "_ref.yaml")
     import_dict["properties"] = ref_dict["properties"]
     splot = create_plot_object(SurfacePlot, "matplotlib", import_dict)
     (
