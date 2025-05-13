@@ -7,8 +7,7 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.io.cif import read_file
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_cif_file, read_yaml_file
 from aim2dat.strct import Structure
 
 cwd = os.path.dirname(__file__) + "/"
@@ -19,40 +18,40 @@ STRUCTURES_PATH = cwd + "../strct/structures/"
 def test_errors_and_warnings(structure_comparison):
     """Test errors and warnings."""
     with pytest.raises(ValueError) as error:
-        read_file(PATH + "error_chem_f.cif", extract_structures=True)
+        read_cif_file(PATH + "error_chem_f.cif", extract_structures=True)
     assert str(error.value) == "Chemical formula doesn't match with number of sites."
 
     with pytest.raises(ValueError) as error:
-        read_file(PATH + "error_determine_el.cif", extract_structures=True)
+        read_cif_file(PATH + "error_determine_el.cif", extract_structures=True)
     assert str(error.value) == "Could not determine element of 'abc'."
 
     with pytest.raises(ValueError) as error:
-        read_file(PATH + "error_loop.cif", extract_structures=True)
+        read_cif_file(PATH + "error_loop.cif", extract_structures=True)
     assert str(error.value) == "Number of values differ for loop finishing on line 7."
 
     with pytest.warns(UserWarning, match="Two data bloocks have the same title: 'GaAs_216_conv'."):
-        read_file(PATH + "warning_same_title.cif", extract_structures=True)
+        read_cif_file(PATH + "warning_same_title.cif", extract_structures=True)
     with pytest.warns(UserWarning, match="Data block 'structures' is overwritten."):
-        read_file(PATH + "warning_structures.cif", extract_structures=True)
+        read_cif_file(PATH + "warning_structures.cif", extract_structures=True)
     with pytest.warns(
         UserWarning,
         match="Could not determine symmetry operations directly, using space group details.",
     ):
-        read_file(PATH + "warning_space_group.cif", extract_structures=True)
+        read_cif_file(PATH + "warning_space_group.cif", extract_structures=True)
     with pytest.warns(
         UserWarning,
         match=r"The sites \{8, 9, 10\} are omitted as they are duplicate of other sites.",
     ):
-        outp_dict = read_file(PATH + "warning_duplicate_sites.cif", extract_structures=True)
+        outp_dict = read_cif_file(PATH + "warning_duplicate_sites.cif", extract_structures=True)
         strct = Structure(**outp_dict["structures"][0])
-        ref_strct = load_yaml_file(STRUCTURES_PATH + f"{strct.label}.yaml")
+        ref_strct = read_yaml_file(STRUCTURES_PATH + f"{strct.label}.yaml")
         ref_strct["label"] = strct.label
         structure_comparison(strct, ref_strct)
 
 
 def test_loops():
     """Test different loop constructions."""
-    outp_dict = read_file(PATH + "loop_test.cif")
+    outp_dict = read_cif_file(PATH + "loop_test.cif")
     assert outp_dict == {
         "Test": {
             "loops": [
@@ -85,24 +84,24 @@ def test_loops():
 
 def test_extract_structures(structure_comparison):
     """Test the parsing of crystal structures."""
-    outp_dict = read_file(PATH + "crystals.cif", extract_structures=True)
+    outp_dict = read_cif_file(PATH + "crystals.cif", extract_structures=True)
     structures = [Structure(**strct) for strct in outp_dict["structures"]]
     for strct in structures:
-        ref_strct = load_yaml_file(STRUCTURES_PATH + f"{strct.label}.yaml")
+        ref_strct = read_yaml_file(STRUCTURES_PATH + f"{strct.label}.yaml")
         ref_strct["label"] = strct.label
         structure_comparison(strct, ref_strct)
 
 
 def test_extract_structures_with_site_attributes(structure_comparison):
     """Test parsing of site attributes and strct parameters."""
-    outp_dict = read_file(
+    outp_dict = read_cif_file(
         PATH + "crystals_with_site_attributes.cif",
         extract_structures=True,
         strct_check_chem_formula=False,
         strct_get_sym_op_from_sg=False,
     )
     structure = Structure(**outp_dict["structures"][0])
-    ref_strct = load_yaml_file(STRUCTURES_PATH + f"{structure.label}.yaml")
+    ref_strct = read_yaml_file(STRUCTURES_PATH + f"{structure.label}.yaml")
     ref_strct["label"] = structure.label
     structure_comparison(structure, ref_strct)
     assert structure.site_attributes == {

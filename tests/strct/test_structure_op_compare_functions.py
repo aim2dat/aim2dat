@@ -8,7 +8,7 @@ import pytest
 
 # Internal library imports
 from aim2dat.strct import StructureCollection, StructureOperations
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
@@ -41,7 +41,7 @@ def test_compare_structures_via_ffingerprint(
 
     # Load structures:
     for structure in [structure1, structure2]:
-        inputs = dict(load_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
+        inputs = dict(read_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
         # inputs["structure_label"] = structure
         strct_collect.append(structure, **inputs)
     strct_ops = StructureOperations(strct_collect)
@@ -68,7 +68,7 @@ def test_compare_sites_via_coordination(
     """Test compare_sites_via_coordination function."""
     strct_collect = StructureCollection()
     for structure in [structure1, structure2]:
-        inputs = dict(load_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
+        inputs = dict(read_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
         strct_collect.append(structure, **inputs)
 
     strct_ops = StructureOperations(strct_collect)
@@ -100,7 +100,7 @@ def test_compare_sites_via_ffingerprint(
 
     # Load structures:
     for structure in [structure1, structure2]:
-        inputs = dict(load_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
+        inputs = dict(read_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
         strct_collect.append(structure, **inputs)
 
     strct_ops = StructureOperations(strct_collect)
@@ -160,7 +160,7 @@ def test_find_duplicates(method, confined, remove_structures, n_procs, verbose, 
     }
     strct_c = StructureCollection()
     for strct_label, structure in structures.items():
-        inputs = dict(load_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
+        inputs = dict(read_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
         strct_c.append(label=strct_label, **inputs)
 
     strct_ops = StructureOperations(strct_c)
@@ -180,10 +180,10 @@ def test_find_duplicates(method, confined, remove_structures, n_procs, verbose, 
 )
 def test_determine_eq_sites(nested_dict_comparison, structure, file_suffix, method):
     """Test functions to determine equivalent sites."""
-    ref_outputs = dict(load_yaml_file(EQ_SITES_PATH + structure + "_" + method + ".yaml"))
+    ref_outputs = dict(read_yaml_file(EQ_SITES_PATH + structure + "_" + method + ".yaml"))
     strct_c = StructureCollection()
     if file_suffix == "yaml":
-        strct_c.append("test", **load_yaml_file(STRUCTURES_PATH + structure + "." + file_suffix))
+        strct_c.append("test", **read_yaml_file(STRUCTURES_PATH + structure + "." + file_suffix))
     else:
         strct_c.append_from_file(
             "test", STRUCTURES_PATH + structure + "." + file_suffix, backend="internal"

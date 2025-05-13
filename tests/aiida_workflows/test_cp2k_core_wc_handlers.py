@@ -10,7 +10,7 @@ from aiida.engine.processes.exit_code import ExitCodesNamespace
 from aiida.common.extendeddicts import AttributeDict
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 from aim2dat.aiida_workflows.utils import create_aiida_node
 from aim2dat.utils.dict_tools import dict_set_parameter
 from aim2dat.aiida_workflows.cp2k.core_work_chain_inputs import _set_input_parameters
@@ -51,7 +51,7 @@ def test_scf_error_handlers(
 ):
     """Test 'switch to atomic scf guess' handler."""
     ExitCode = namedtuple("ExitCode", "exit_status message")
-    ref = dict(load_yaml_file(REF_PATH + structure + "_" + test_case + "_ref.yaml"))
+    ref = dict(read_yaml_file(REF_PATH + structure + "_" + test_case + "_ref.yaml"))
     inputs, ctx, strct_node = aiida_create_wc_inputs(structure, ref)
     _set_input_parameters(inputs, ctx, **ref["add_args"])
     _initialize_scf_parameters(inputs, ctx)
@@ -96,7 +96,7 @@ def test_opt_error_handlers(
 ):
     """Test optimization error handlers."""
     ExitCode = namedtuple("ExitCode", "exit_status message")
-    ref = dict(load_yaml_file(REF_PATH + structure + "_" + test_case + "_ref.yaml"))
+    ref = dict(read_yaml_file(REF_PATH + structure + "_" + test_case + "_ref.yaml"))
     inputs, ctx, strct_node = aiida_create_wc_inputs(structure, ref)
     _set_input_parameters(inputs, ctx, **ref["add_args"])
     exit_codes = ExitCodesNamespace(

@@ -12,7 +12,7 @@ from aiida.engine import run_get_node
 import aiida.orm.nodes.process.calculation.calcjob as cjob
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 GeoOptWC = WorkflowFactory("aim2dat.cp2k.geo_opt")
@@ -26,11 +26,11 @@ def test_geo_opt_fail(aiida_local_code_factory, aiida_create_structuredata):
     code = aiida_local_code_factory("cp2k", "/usr/bin/cp2k.ssmp")
 
     # Load input parameters:
-    parameters_h2o = load_yaml_file(THIS_DIR + "/cp2k/test_systems/H2O_molecule.yaml")
-    scf_m_custom_p_list = load_yaml_file(
+    parameters_h2o = read_yaml_file(THIS_DIR + "/cp2k/test_systems/H2O_molecule.yaml")
+    scf_m_custom_p_list = read_yaml_file(
         THIS_DIR + "/cp2k/scf_method_parameters/custom_mixing_parameters_failed.yaml"
     )
-    c_opt_custom_p_list = load_yaml_file(
+    c_opt_custom_p_list = read_yaml_file(
         THIS_DIR + "/cp2k/geo_opt_parameters/custom_parameters_failed.yaml"
     )
     scf_m_custom_p_list[0]["parameters"][1]["MAX_SCF"] = 50
@@ -121,11 +121,11 @@ def test_geo_opt_sucess(aiida_local_code_factory, aiida_create_structuredata):
     code = aiida_local_code_factory("cp2k", "/usr/bin/cp2k.ssmp")
 
     # Load input parameters:
-    parameters_h2o = load_yaml_file(THIS_DIR + "/cp2k/test_systems/H2O_molecule.yaml")
-    scf_m_custom_p_list = load_yaml_file(
+    parameters_h2o = read_yaml_file(THIS_DIR + "/cp2k/test_systems/H2O_molecule.yaml")
+    scf_m_custom_p_list = read_yaml_file(
         THIS_DIR + "/cp2k/scf_method_parameters/custom_mixing_parameters_failed.yaml"
     )
-    c_opt_custom_p_list = load_yaml_file(
+    c_opt_custom_p_list = read_yaml_file(
         THIS_DIR + "/cp2k/geo_opt_parameters/custom_parameters_failed.yaml"
     )
     scf_m_custom_p_list[1]["parameters"].append(

@@ -16,7 +16,11 @@ from aiida.plugins import DataFactory
 from aiida.common import OutputParsingError
 
 # Internal library imports
-from aim2dat.io.cp2k import read_stdout, read_restart_structure, read_atom_proj_density_of_states
+from aim2dat.io import (
+    read_cp2k_stdout,
+    read_cp2k_restart_structure,
+    read_cp2k_proj_dos,
+)
 
 
 StructureData = DataFactory("core.structure")
@@ -99,7 +103,7 @@ class _Cp2kBaseParser(Parser):
             raise OutputParsingError("CP2K output file was not retrieved.")
 
         try:
-            result_dict = read_stdout(
+            result_dict = read_cp2k_stdout(
                 self.retrieved.get_object_content(fname), parser_type=self.parser_type
             )
         # TODO distinguish different exceptions.
@@ -126,15 +130,15 @@ class _Cp2kBaseParser(Parser):
         # Read the restart file.
         # TODO distinguish different exceptions.
         try:
-            structures = read_restart_structure(self.retrieved.get_object_content(fname))
+            structures = read_cp2k_restart_structure(self.retrieved.get_object_content(fname))
         except IOError:
             return self.exit_codes.ERROR_READING_OUTPUT_FILE
 
         # For now only one structure is supported
-        if len(structures) > 1:
+        if isinstance(structures, list):
             raise OutputParsingError("Multiple force-evaluations not yet supported.")
         else:
-            structure = structures[0]
+            structure = structures
         structure_node = StructureData(cell=structure["cell"], pbc=structure["pbc"])
         for kind, sym, pos in zip(
             structure["kinds"], structure["elements"], structure["positions"]
@@ -146,9 +150,9 @@ class _Cp2kBaseParser(Parser):
         """Parse cube files."""
         if retrieved_temporary_folder is not None:
             pattern = re.compile(r"^\S*-([A-Za-z]*)?_([A-Za-z0-9]+)?_*(\d*)?-\d+_\d+.cube")
-            file_names = os.listdir(retrieved_temporary_folder)
-            for file_name in file_names:
-                found_match = pattern.match(file_name)
+            file_pathes = os.listdir(retrieved_temporary_folder)
+            for file_path in file_pathes:
+                found_match = pattern.match(file_path)
                 if found_match is not None:
                     groups = found_match.groups()
                     label = []
@@ -160,7 +164,7 @@ class _Cp2kBaseParser(Parser):
                         else:
                             label.append(grp.lower())
                     label = "_".join(label)
-                    file_path = os.path.join(retrieved_temporary_folder, file_name)
+                    file_path = os.path.join(retrieved_temporary_folder, file_path)
                     with open(file_path, "r") as fobj:
                         g_cube_data = GCubeData.set_from_file(fobj)
                     self.out("output_cubes." + label, g_cube_data)
@@ -187,7 +191,7 @@ class Cp2kStandardParser(_Cp2kBaseParser):
         if retrieved_temporary_folder is not None:
             pdos_data = None
             try:
-                pdos_data = read_atom_proj_density_of_states(retrieved_temporary_folder)
+                pdos_data = read_cp2k_proj_dos(retrieved_temporary_folder)
             except ValueError as e:
                 if str(e) != "No files with the correct naming scheme found.":
                     raise
