@@ -2,6 +2,7 @@
 
 # Standard library imports
 import inspect
+from functools import wraps
 
 # Internal library imports
 from aim2dat.strct.strct import Structure
@@ -11,6 +12,7 @@ from aim2dat.strct.strct_manipulation import _add_label_suffix
 def external_manipulation_method(func):
     """Decorate external manipulation methods."""
 
+    @wraps(func)
     def wrapper(*args, **kwargs):
         """Wrap manipulation method and create output."""
         sig_pars = inspect.signature(func).parameters

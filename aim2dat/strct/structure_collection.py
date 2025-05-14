@@ -167,18 +167,12 @@ class StructureCollection:
         elif isinstance(key, (slice, tuple, list)):
             new_sc = StructureCollection()
             if isinstance(key, slice):
-                start = key.start if key.start is not None else 0
-                if start < 0:
-                    start += len(self)
-                stop = key.stop if key.stop is not None else len(self)
-                if stop < 0:
-                    stop += len(self)
-                key = range(start, stop)
+                key = self._process_slice(key)
             for key0 in key:
                 new_sc.append_structure(self.get_structure(key0))
             return new_sc
         else:
-            raise TypeError("key needs to be of type: str, int, slice, tuple or list.")
+            raise TypeError("`key` needs to be of type: str, int, slice, tuple or list.")
 
     def __setitem__(self, key: Union[str, int], value: Union[dict, Structure]):
         """
@@ -189,20 +183,39 @@ class StructureCollection:
         str
             Key of the structure.
         """
-        if isinstance(value, dict):
-            value = Structure(**value)
-        self._add_structure(key, value)
+        # TODO update type hints and doc-strings
+        if isinstance(key, (str, int)):
+            key = [key]
+            value = [value]
+        elif isinstance(key, (slice, tuple, list)):
+            if isinstance(key, slice):
+                key = self._process_slice(key)
+        else:
+            raise TypeError("`key` needs to be of type: str, int, slice, tuple or list.")
+        if len(key) != len(value):
+            raise ValueError("`key` and `value` need to have the same length.")
 
-    def __delitem__(self, key: Union[str, int]):
+        for key0, value0 in zip(key, value):
+            if isinstance(value0, dict):
+                value0 = Structure(**value0)
+            self._add_structure(key0, value0)
+
+    def __delitem__(self, key: Union[str, int, tuple, list, slice]):
         """
-        Delete item by index or label.
+        Delete structure by key.
 
         Parameters
         ----------
         str
-            Key of the structure.
+            Key of the structure(s).
         """
-        self.pop(key)
+        if isinstance(key, (str, int)):
+            self.pop(key)
+        elif isinstance(key, (slice, tuple, list)):
+            if isinstance(key, slice):
+                key = self._process_slice(key, reverse=True)
+            for key0 in key:
+                self.pop(key0)
 
     def __iter__(self) -> Iterator[Structure]:
         """
@@ -218,7 +231,7 @@ class StructureCollection:
         if type(other) is type(self):
             new_sc = StructureCollection()
             for sc_obj in [self, other]:
-                for struct in sc_obj._structures:
+                for struct in sc_obj:
                     new_sc.append_structure(struct.copy())
             return new_sc
         else:
@@ -549,7 +562,6 @@ class StructureCollection:
         Structure
             structure.
         """
-        # TODO
         index, label = self._get_index_label(key)
 
         if index is None or label is None:
@@ -676,6 +688,15 @@ class StructureCollection:
                 return key, None
         return None, None
 
+    def _process_slice(self, key: slice, reverse: bool = False) -> range:
+        start = key.start if key.start is not None else 0
+        if start < 0:
+            start += len(self)
+        stop = key.stop if key.stop is not None else len(self)
+        if stop < 0:
+            stop += len(self)
+        return range(stop - 1, start - 1, -1) if reverse else range(start, stop)
+
     def _add_structure(
         self,
         key: Union[str, int],
@@ -708,7 +729,7 @@ class StructureCollection:
                     )
                 if structure.label is None:
                     structure.label = label
-                elif structure.label in self.labels:
+                elif structure.label in self.labels and raise_label_error:
                     raise ValueError(f"Label '{structure.label}' already used.")
             else:
                 raise ValueError(f"Index out of range ({key} >= {len(self)}).")

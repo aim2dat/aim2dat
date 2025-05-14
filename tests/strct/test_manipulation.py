@@ -71,7 +71,9 @@ def test_scale_unit_cell_errors():
     with pytest.raises(ValueError) as error:
         structure.scale_unit_cell()
     assert (
-        str(error.value) == "Provide either `scaling_factors` or `pressure` (with `bulk_modulus`)."
+        str(error.value)
+        == "Provide either `scaling_factors`, `pressure` (with `bulk_modulus`) or "
+        + "`random_factors`."
     )
 
 
@@ -97,6 +99,18 @@ def test_scale_unit_cell_uniform_scaling():
     scaled_structure = structure.scale_unit_cell(scaling_factors=scaling_factors)
     expected_cell = np.array(structure["cell"]) * scaling_factors
     assert np.allclose(scaled_structure["cell"], expected_cell), "Uniform scaling failed"
+
+
+def test_scale_unit_cell_random():
+    """Test scale_unit_cell with random scaling factors."""
+    structure = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
+    scaled_structure = structure.scale_unit_cell(random_factors=0.1, random_seed=0)
+    expected_cell = (
+        (-1.861476878653931, 12.66112401092773, 14.117867364879451),
+        (12.137504475478352, 0.8170898580677926, 14.117867364879451),
+        (12.79806969488115, 11.844034152859939, 0.0),
+    )
+    assert np.allclose(scaled_structure["cell"], expected_cell), "Random scaling failed"
 
 
 def test_scale_unit_cell_anisotropic_scaling():

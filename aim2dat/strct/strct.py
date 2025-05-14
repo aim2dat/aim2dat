@@ -3,7 +3,6 @@
 # Standard library imports
 import copy
 from typing import List, Union
-from collections.abc import Callable
 
 # Third party library imports
 import numpy as np
@@ -1001,26 +1000,6 @@ class Structure(AnalysisMixin, ManipulationMixin):
 
     def _perform_strct_analysis(self, method, kwargs, mapping=None):
         return _check_calculated_properties(self, method, kwargs, mapping)
-
-    def perform_analysis(self, method: Callable, kwargs: dict = {}):
-        """
-        Perform structure analaysis using an external method.
-
-        Parameters
-        ----------
-        method : function
-            Analysis function.
-        kwargs : dict
-            Arguments to be passed to the function.
-
-        Returns
-        ------
-        output
-            Output of the analysis.
-        """
-        if not getattr(method, "_is_analysis_method", False):
-            raise TypeError("Function is not a structure analysis method.")
-        return method(structure=self, **kwargs)
 
     def _perform_strct_manipulation(self, method, kwargs):
         new_strct = method(structure=self, **kwargs)
