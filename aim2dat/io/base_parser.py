@@ -69,13 +69,13 @@ class _BasePattern(abc.ABC):
                 dict_set_parameter(output, self.dict_tree + [key], val)
 
 
-def parse_pattern_function(file_name: str, patterns: List[_BasePattern]) -> dict:
+def parse_pattern_function(file_path: str, patterns: List[_BasePattern]) -> dict:
     """
     Parse output file using regex patterns.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path to the output file.
     patterns : list
         List of child classes of ``_BasePattern``
@@ -86,7 +86,7 @@ def parse_pattern_function(file_name: str, patterns: List[_BasePattern]) -> dict
         Output dictionary.
     """
     output = {}
-    with custom_open(file_name, mode="r") as fobj:
+    with custom_open(file_path, mode="r") as fobj:
         content = fobj.read()
         for pattern in patterns:
             pattern().match_pattern(content, output)
@@ -152,13 +152,13 @@ class _BaseDataBlock(abc.ABC):
             return self.all_data[-1]
 
 
-def parse_block_function(file_name: str, block_classes: List[_BaseDataBlock]) -> dict:
+def parse_block_function(file_path: str, block_classes: List[_BaseDataBlock]) -> dict:
     """
     Parse output file using data blocks.
 
     Parameters
     ----------
-    file_name : str
+    file_path : str
         Path to the output file.
     patterns : list
         List of child classes of ``_BaseDataBlock``
@@ -170,7 +170,7 @@ def parse_block_function(file_name: str, block_classes: List[_BaseDataBlock]) ->
     """
     blocks = [block() for block in block_classes]
     output = {}
-    with custom_open(file_name, mode="r") as fobj:
+    with custom_open(file_path, mode="r") as fobj:
         for idx, line in enumerate(fobj):
             for block in blocks:
                 block.add_line(idx, line)

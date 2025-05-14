@@ -9,7 +9,7 @@ import pandas as pd
 
 # Internal library imports
 from aim2dat.strct import Structure, StructureCollection, StructureOperations
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 from aim2dat.ext_interfaces.pandas import _turn_dict_into_pandas_df
 
 # from aim2dat.ext_interfaces.ase_atoms import _create_atoms_from_structure
@@ -143,11 +143,11 @@ def test_create_pandas_df(nested_dict_comparison):
         "min_dist_delta": 0.1,
     }
     structures = ["GaAs_216_prim", "GaAs_216_conv", "Cs2Te_62_prim", "Benzene"]
-    ref = dict(load_yaml_file(EXT_INTERFACES_PATH + "pandas_df_ref.yaml"))
+    ref = dict(read_yaml_file(EXT_INTERFACES_PATH + "pandas_df_ref.yaml"))
 
     strct_collect = StructureCollection()
     for strct in structures:
-        strct_collect.append(strct, **dict(load_yaml_file(STRUCTURES_PATH + strct + ".yaml")))
+        strct_collect.append(strct, **dict(read_yaml_file(STRUCTURES_PATH + strct + ".yaml")))
     strct_ops = StructureOperations(strct_collect)
     strct_ops[strct_collect.labels].calc_coordination(**coord_kwargs)
     df = strct_collect.create_pandas_df()
@@ -159,7 +159,7 @@ def test_create_pandas_df(nested_dict_comparison):
 
 def test_h5py_interface(structure_comparison):
     """Test store/import functions for the hdf5 interface."""
-    ref_data = load_yaml_file(EXT_INTERFACES_PATH + "hdf5_ref.yaml")
+    ref_data = read_yaml_file(EXT_INTERFACES_PATH + "hdf5_ref.yaml")
     strct_collect = StructureCollection()
     for label, structure in ref_data.items():
         strct_collect.append(label, **structure)
@@ -291,7 +291,7 @@ def test_print(create_structure_collection_object):
 )
 def test_append_from_ase_atoms(structure_comparison, structure):
     """Test append_from_ase_atoms function."""
-    ref_structure_dict = load_yaml_file(STRUCTURES_PATH + structure + ".yaml")
+    ref_structure_dict = read_yaml_file(STRUCTURES_PATH + structure + ".yaml")
     strct_c = StructureCollection()
     strct_c.append_from_ase_atoms(
         ase_atoms=Structure(**ref_structure_dict).to_ase_atoms(), label="test"
@@ -306,7 +306,7 @@ def test_append_from_ase_atoms(structure_comparison, structure):
 )
 def test_append_from_pymatgen_structure(structure_comparison, structure):
     """Test append_from_ase_atoms function."""
-    ref_structure_dict = load_yaml_file(STRUCTURES_PATH + structure + ".yaml")
+    ref_structure_dict = read_yaml_file(STRUCTURES_PATH + structure + ".yaml")
     strct_c = StructureCollection()
     strct_c.append_from_pymatgen_structure(
         pymatgen_structure=Structure(**ref_structure_dict).to_pymatgen_structure(), label="test"
@@ -323,7 +323,7 @@ def test_append_from_aiida_structuredata(
     structure_comparison, structure, use_node_label, use_uuid
 ):
     """Test append_from_aiida_structuredata function."""
-    ref_structure_dict = load_yaml_file(STRUCTURES_PATH + structure + ".yaml")
+    ref_structure_dict = read_yaml_file(STRUCTURES_PATH + structure + ".yaml")
     ref_structure_dict["label"] = structure
     strct = Structure(**ref_structure_dict)
     structure_node = strct.to_aiida_structuredata()
@@ -343,7 +343,7 @@ def test_append_from_aiida_structuredata(
 )
 def test_file_support(structure_comparison, structure, file_suffix):
     """Test the ase atoms interface by loading structures from file."""
-    ref_structure_dict = load_yaml_file(STRUCTURES_PATH + structure + ".yaml")
+    ref_structure_dict = read_yaml_file(STRUCTURES_PATH + structure + ".yaml")
     Structure(**ref_structure_dict).to_file(STRUCTURES_PATH + "test" + file_suffix)
     strct_c = StructureCollection()
     strct_c.append_from_file(file_path=STRUCTURES_PATH + "test" + file_suffix, label="test")

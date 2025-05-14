@@ -7,7 +7,7 @@ import os
 import aiida.orm as aiida_orm
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 from aim2dat.utils.dict_tools import (
     dict_set_parameter,
     dict_retrieve_parameter,
@@ -29,7 +29,7 @@ def _initialize_opt_parameters(inputs, ctx, exit_codes, opt_type):
         ctx.opt_method_p = inputs.custom_opt_method.get_list()
     else:
         file_path = cwd + f"/opt_parameter_files/{opt_type}_p.yaml"
-        ctx.opt_method_p = load_yaml_file(file_path)
+        ctx.opt_method_p = read_yaml_file(file_path)
 
     if "initial_opt_parameters" in inputs and inputs.initial_opt_parameters.value < len(
         ctx.opt_method_p

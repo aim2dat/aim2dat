@@ -6,10 +6,13 @@ import os
 # Third party library imports
 import pytest
 import numpy as np
+from openmm import LangevinMiddleIntegrator
+from openmm.app import ForceField
 
 # Internal library imports
 from aim2dat.strct import Structure, SamePositionsError
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
+from aim2dat.ext_interfaces.openmm import _get_potential_energy
 
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
@@ -19,7 +22,7 @@ IO_PATH = os.path.dirname(__file__) + "/io/"
 
 def test_structure_print():
     """Test print statement of Structure class."""
-    strct_dict = load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
+    strct_dict = read_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
     structure = Structure(**strct_dict, label="test")
     assert structure.__str__() == (
         "----------------------------------------------------------------------\n"
@@ -53,7 +56,7 @@ def test_structure_print():
         "----------------------------------------------------------------------"
     )
 
-    strct_dict = load_yaml_file(STRUCTURES_PATH + "NH3.yaml")
+    strct_dict = read_yaml_file(STRUCTURES_PATH + "NH3.yaml")
     structure = Structure(**strct_dict)
     assert structure.__str__() == (
         "----------------------------------------------------------------------\n"
@@ -74,7 +77,7 @@ def test_structure_print():
 
 def test_structure_validation():
     """Test validation."""
-    strct_dict = load_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml")
+    strct_dict = read_yaml_file(STRUCTURES_PATH + "GaAs_216_prim.yaml")
     pbc = strct_dict["pbc"]
 
     with pytest.raises(ValueError) as error:
@@ -145,7 +148,7 @@ def test_to_dict(structure_comparison):
     """Test to_dict function."""
     calc_keys = ["extras", "function_args"]
     site_attrs = {"test": (0.0, 0.0, 1.0, 2.0, 3.0, -1.0, "test", 0.0, 0.0, 1.0, 1.0, -2.5)}
-    strct_dict = load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
+    strct_dict = read_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
     strct_dict["label"] = "test"
     structure = Structure(**strct_dict)
     test_dict = structure.to_dict(include_calculated_properties=False)
@@ -163,7 +166,7 @@ def test_to_dict(structure_comparison):
 
 def test_zeo_write_to_file(tmpdir):
     """Test write structure to zeo input files."""
-    strct_dict = load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
+    strct_dict = read_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
     structure = Structure(**strct_dict, label="test")
 
     file = tmpdir.join("Cs2Te_62_prim_kinds.cssr")
@@ -184,7 +187,7 @@ def test_zeo_write_to_file(tmpdir):
 
 def test_structure_features():
     """Test features of Structure class."""
-    strct_dict = load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
+    strct_dict = read_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim_kinds.yaml")
     strct_dict["site_attributes"] = {
         "test": (0.0, [0.0, 1.9], 1.0, 2.0, 3.0, -1.0, "test", 0.0, 0.0, 1.0, 1.0, -2.5)
     }
@@ -221,6 +224,7 @@ def test_list_methods():
         "from_ase_atoms",
         "from_pymatgen_structure",
         "from_aiida_structuredata",
+        "from_openmm_simulation",
     ]
     assert Structure.export_methods == [
         "to_dict",
@@ -228,6 +232,7 @@ def test_list_methods():
         "to_ase_atoms",
         "to_pymatgen_structure",
         "to_aiida_structuredata",
+        "to_openmm_simulation",
     ]
     assert Structure.analysis_methods == [
         "calc_point_group",
@@ -249,7 +254,7 @@ def test_list_methods():
 
 def test_cell_setter_and_wrap_positions(structure_comparison):
     """Test wrapping positions onto unit cell."""
-    strct_dict = load_yaml_file(STRUCTURES_PATH + "GaAs_216_conv.yaml")
+    strct_dict = read_yaml_file(STRUCTURES_PATH + "GaAs_216_conv.yaml")
     position = strct_dict["positions"][1].copy()
     position[1] -= strct_dict["cell"][1][1]
     structure = Structure(**strct_dict)
@@ -291,7 +296,7 @@ def test_cell_setter_and_wrap_positions(structure_comparison):
 )
 def test_internal_io(structure_comparison, system, file_path):
     """Test internal structure parsers."""
-    ref = load_yaml_file(IO_PATH + system + "/ref.yaml")
+    ref = read_yaml_file(IO_PATH + system + "/ref.yaml")
     structure = Structure.from_file(file_path, **ref["parameters"])
     structure_comparison(structure, ref["structure"])
 
@@ -300,7 +305,7 @@ def test_internal_io_str_input(structure_comparison):
     """Test internal structure parser for the case string input."""
     with open(STRUCTURES_PATH + "ZIF-8.cif") as fobj:
         file_content = fobj.read()
-    ref = load_yaml_file(IO_PATH + "cif/ref.yaml")
+    ref = read_yaml_file(IO_PATH + "cif/ref.yaml")
     structure = Structure.from_file(file_content, **ref["parameters"])
     structure_comparison(structure, ref["structure"])
 
@@ -319,3 +324,43 @@ def test_internal_io_errors():
     with pytest.raises(ValueError) as error:
         Structure.from_file(STRUCTURES_PATH + "ZIF-8_complex.xyz", backend="internal")
     assert str(error.value) == "Could not find a suitable io function."
+
+
+def test_openmm_interface_cycle(structure_comparison):
+    """Test openmm interface cycle."""
+    ff = ForceField("amber14/tip3pfb.xml")
+    integrator = LangevinMiddleIntegrator(300.0, 1.0, 0.004)
+    strct = Structure(**read_yaml_file(STRUCTURES_PATH + "H2O.yaml"))
+    strct.kinds = ["O", "H1", "H2"]
+    simulation = strct.to_openmm_simulation(ff, bonds=((0, 1), (0, 2)), integrator=integrator)
+    strct.cell = ((20.0, 0.0, 0.0), (0.0, 20.0, 0.0), (0.0, 0.0, 20.0))
+    strct.pbc = True
+    strct2 = Structure.from_openmm_simulation(simulation)
+    structure_comparison(strct, strct2)
+
+
+def test_openmm_pot_energy():
+    """Test potential energy calculation."""
+    ref_energy = 0.06525535135632189
+    ref_forces = [
+        [-0.5603919697651646, -0.797173989039611, 0.0],
+        [1.5382744084594724, -0.4922853025455664, 0.0],
+        [-0.9778824386943078, 1.2894592915851772, 0.0],
+    ]
+
+    ff = ForceField("amber14/tip3pfb.xml")
+    integrator = LangevinMiddleIntegrator(300.0, 1.0, 0.004)
+    strct = Structure(**read_yaml_file(STRUCTURES_PATH + "H2O.yaml"))
+    assert (
+        abs(
+            _get_potential_energy(strct, ff, integrator, None, ((0, 1), (0, 2)), "cpu")
+            - ref_energy
+        )
+        < 1e-5
+    )
+    integrator = LangevinMiddleIntegrator(300.0, 1.0, 0.004)
+    energy, forces = _get_potential_energy(
+        strct, ff, integrator, None, ((0, 1), (0, 2)), "cpu", get_forces=True
+    )
+    assert abs(energy - ref_energy) < 1e-5
+    assert np.allclose(forces, ref_forces)

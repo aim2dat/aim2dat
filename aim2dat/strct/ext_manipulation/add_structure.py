@@ -23,7 +23,7 @@ from aim2dat.strct.ext_manipulation.rotate_structure import rotate_structure
 from aim2dat.strct.strct_misc import _calc_atomic_distance
 from aim2dat.utils.element_properties import get_element_symbol
 from aim2dat.utils.maths import calc_angle, create_lin_ind_vector
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 cwd = os.path.dirname(__file__)
@@ -397,7 +397,7 @@ def _check_guest_structure(guest_strct: Union[Structure, str]) -> Structure:
             )
         except ValueError:
             try:
-                guest_strct_dict = load_yaml_file(
+                guest_strct_dict = read_yaml_file(
                     os.path.join(cwd, "pred_structures", guest_strct + ".yaml")
                 )
                 strct = Structure(

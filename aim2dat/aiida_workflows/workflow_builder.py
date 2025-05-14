@@ -20,7 +20,7 @@ from aim2dat.aiida_workflows._workflow_builder_utils import (
     _load_protocol,
     _wf_states_color_map,
 )
-from aim2dat.io.yaml import load_yaml_file, store_in_yaml_file
+from aim2dat.io import read_yaml_file, write_yaml_file
 from aim2dat.aiida_workflows.utils import (
     create_aiida_node,
     obtain_value_from_aiida_node,
@@ -198,7 +198,7 @@ class _BaseWorkflowBuilder(abc.ABC):
                     user_input[input_p + "->" + task] = input_details["value"]
         return user_input
 
-    def to_file(self, file_name="workflow.yaml"):
+    def to_file(self, file_path="workflow.yaml"):
         def _transform_namespace(value, new_value):
             for key, val in value.items():
                 if isinstance(val, dict):
@@ -257,10 +257,10 @@ class _BaseWorkflowBuilder(abc.ABC):
                             input_details,
                         )
         self._extract_parent_nodes(content)
-        store_in_yaml_file(file_name, content)
+        write_yaml_file(file_path, content)
 
     @classmethod
-    def from_file(cls, file_name="workflow.yaml"):
+    def from_file(cls, file_path="workflow.yaml"):
         def _transform_name_space(value):
             for key, val in value.items():
                 if isinstance(val, dict):
@@ -268,7 +268,7 @@ class _BaseWorkflowBuilder(abc.ABC):
                 else:
                     value[key] = _load_data_node(val)
 
-        content = load_yaml_file(file_name)
+        content = read_yaml_file(file_path)
         wf_builder = cls()
         wf_builder.protocol = content["protocol"]
         if "parent_node" in content:

@@ -6,13 +6,19 @@ from typing import List, Union
 
 # Third party library imports
 import numpy as np
-from ase import Atoms
 
 try:
     import aiida
 except ImportError:
     aiida = None
-
+try:
+    import ase
+except ImportError:
+    ase = None
+try:
+    import openmm
+except ImportError:
+    openmm = None
 try:
     import pymatgen
 except ImportError:
@@ -21,7 +27,7 @@ except ImportError:
 # Internal library imports
 from aim2dat.ext_interfaces import _return_ext_interface_modules
 from aim2dat.strct.strct_io import get_structure_from_file
-from aim2dat.io import zeo
+from aim2dat.io import write_zeo_file
 from aim2dat.strct.strct_validation import (
     _structure_validate_cell,
     _structure_validate_elements,
@@ -714,7 +720,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
     @classmethod
     def from_ase_atoms(
         cls,
-        ase_atoms: Atoms,
+        ase_atoms: "ase.Atoms",
         attributes: dict = None,
         site_attributes: dict = None,
         extras: dict = None,
@@ -792,7 +798,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
         label: str = None,
     ) -> "Structure":
         """
-        Append structure from AiiDA structure node.
+        Get structure from AiiDA structure node.
 
         Parameters
         ----------
@@ -816,6 +822,42 @@ class Structure(AnalysisMixin, ManipulationMixin):
         if label is not None:
             structure_dict["label"] = label
         return cls(**structure_dict)
+
+    @import_method
+    @classmethod
+    def from_openmm_simulation(
+        cls,
+        simulation,
+        attributes: dict = None,
+        site_attributes: dict = None,
+        extras: dict = None,
+        label: str = None,
+    ):
+        """
+        Get structure from openmm simulation using the latest context state.
+
+        Parameters
+        ----------
+        simulation : openmm.app.Simulation
+            openmm simulation.
+        attributes : dict
+            Attributes stored within the structure object.
+        site_attributes : dict
+            Site attributes stored within the structure object.
+        extras : dict
+            Extras stored within the structure object.
+        label : str
+            Label used internally to store the structure in the object.
+
+        Returns
+        -------
+        aim2dat.strct.Structure
+            Structure.
+        """
+        backend_module = _return_ext_interface_modules("openmm")
+        strct_dict = backend_module._extract_structure_from_simulation(simulation)
+        _update_label_attributes_extras(strct_dict, label, attributes, site_attributes, extras)
+        return cls(**strct_dict)
 
     @export_method
     def to_dict(
@@ -860,13 +902,13 @@ class Structure(AnalysisMixin, ManipulationMixin):
         Export structure to file using the ase interface or certain file formats for Zeo++.
         """
         if file_path.endswith((".cssr", ".v1", ".cuc")):
-            zeo.write_to_file(self, file_path)
+            write_zeo_file(file_path, self)
         else:
             backend_module = _return_ext_interface_modules("ase_atoms")
             backend_module._write_structure_to_file(self, file_path)
 
     @export_method
-    def to_ase_atoms(self) -> Atoms:
+    def to_ase_atoms(self) -> "ase.Atoms":
         """
         Create ase Atoms object.
 
@@ -903,6 +945,42 @@ class Structure(AnalysisMixin, ManipulationMixin):
         """
         backend_module = _return_ext_interface_modules("aiida")
         return backend_module._create_structure_node(self)
+
+    @export_method
+    def to_openmm_simulation(
+        self,
+        potential: "openmm.app.Simulation.ForceField",
+        integrator: "openmm.Integrator",
+        potential_kwargs=None,
+        bonds=None,
+        device="cpu",
+    ) -> "openmm.app.Simulation":
+        """
+        Create openmm simulation object.
+
+        Parameters
+        ----------
+        potential
+            openmm potential or force field.
+        integrator
+            openmm integrator.
+        potential_kwargs : dict
+            Additional keyword argurments for the ``create_system`` function of the
+            potential/force field.
+        bonds : list
+            List of tuples of two site indices that share a chemical bond.
+        device : str
+            Device/platform used for the simulation.
+
+        Returns
+        -------
+        openmm.app.Simulation
+            openmm simulation object.
+        """
+        backend_module = _return_ext_interface_modules("openmm")
+        return backend_module._create_simulation(
+            self, potential, integrator, potential_kwargs, bonds, device
+        )
 
     def _get_position(self, index: int, wrap: bool):
         """Get cartesian and scaled position and (optionally) wrap them back into the unit cell."""

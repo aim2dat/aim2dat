@@ -9,7 +9,7 @@ import pytest
 
 # Internal library imports
 from aim2dat.strct import StructureOperations, StructureCollection, Structure
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
 REF_PATH = os.path.dirname(__file__) + "/structure_op/"
@@ -18,14 +18,13 @@ REF_PATH = os.path.dirname(__file__) + "/structure_op/"
 def test_structure_op_basics():
     """Test basic features of the StructuresOperations class."""
     strct_collect = StructureCollection()
-    inputs = dict(load_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim.yaml"))
+    inputs = dict(read_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim.yaml"))
     strct_collect.append("Cs2Te_62_prim", **inputs)
 
-    inputs = dict(load_yaml_file(STRUCTURES_PATH + "NaCl_225_prim.yaml"))
+    inputs = dict(read_yaml_file(STRUCTURES_PATH + "NaCl_225_prim.yaml"))
     strct_collect.append("NaCl_225_prim", **inputs)
 
     strct_ops = StructureOperations(structures=strct_collect)
-
     strct_ops_inp_list = StructureOperations([Structure(label="Cs2Te_62_prim", **inputs)])
     assert isinstance(strct_ops_inp_list.structures, StructureCollection)
 
@@ -60,7 +59,7 @@ def test_structure_op_basics():
 
 def test_structure_op_pipeline(structure_comparison):
     """Test pipeline implementation of the StructureOperations class."""
-    ref = load_yaml_file(REF_PATH + "pipeline.yaml")
+    ref = read_yaml_file(REF_PATH + "pipeline.yaml")
     strct_c = StructureCollection()
     for file_name, label in ref["input_structures"]:
         strct_c.append_structure(Structure.from_file(STRUCTURES_PATH + file_name), label=label)

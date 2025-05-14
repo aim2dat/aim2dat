@@ -9,7 +9,7 @@ import pytest
 # Internal library imports
 from aim2dat.ml.utils import _check_train_test_size, train_test_split_crystals
 import aim2dat.utils.chem_formula as utils_cf
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 REF_PATH = os.path.dirname(__file__) + "/train_test_split_crystals_ref/"
@@ -43,7 +43,7 @@ def test_check_train_test_size():
 @pytest.mark.parametrize("system", ["Cs-Te_random_split", "Cs-Te_comp_bins", "Cs-Te_target_bins"])
 def test_train_test_split_crystals_binary(create_structure_collection_object, system):
     """Test train_test_split_crystals function."""
-    ref = load_yaml_file(REF_PATH + system + ".yaml")
+    ref = read_yaml_file(REF_PATH + system + ".yaml")
     structures = ref["structures"]
     if isinstance(structures, str):
         structures = REF_PATH + structures

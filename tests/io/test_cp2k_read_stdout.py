@@ -7,8 +7,7 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.io.cp2k import read_stdout
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_cp2k_stdout, read_yaml_file
 
 
 MAIN_PATH = os.path.dirname(__file__) + "/cp2k_stdout/"
@@ -24,16 +23,20 @@ class OutputParserTester:
     def add_output_file(self, test_case, print_level, cp2k_version):
         """Add output-file to the class."""
         self.result_dicts[test_case + "-" + str(cp2k_version)] = {
-            "standard": read_stdout(
-                MAIN_PATH + f"cp2k-{cp2k_version}/{test_case}_{print_level}/aiida.out", "standard"
+            "standard": read_cp2k_stdout(
+                MAIN_PATH + f"cp2k-{cp2k_version}/{test_case}_{print_level}/aiida.out",
+                "standard",
+                raise_error=False,
             ),
-            "partial_charges": read_stdout(
+            "partial_charges": read_cp2k_stdout(
                 MAIN_PATH + f"cp2k-{cp2k_version}/{test_case}_{print_level}/aiida.out",
                 "partial_charges",
+                raise_error=False,
             ),
-            "trajectory": read_stdout(
+            "trajectory": read_cp2k_stdout(
                 MAIN_PATH + f"cp2k-{cp2k_version}/{test_case}_{print_level}/aiida.out",
                 "trajectory",
+                raise_error=False,
             ),
         }
 
@@ -119,6 +122,17 @@ class OutputParserTester:
                 assert value1 == value2, f"Different value for {item['key']}."
 
 
+def test_read_cp2k_stdout_error():
+    """Test read_cp2k_stdout error."""
+    with pytest.raises(ValueError) as error:
+        read_cp2k_stdout(MAIN_PATH + "cp2k-2025.1/smearing_need_added_mos_medium/aiida.out")
+    assert (
+        str(error.value)
+        == "Calculation did not finish properly, error message: 'Extra MOs (ADDED_MOS) are "
+        + "required for smearing'. To obtain output, set `raise_error` to False."
+    )
+
+
 @pytest.mark.parametrize(
     "test_case, print_level, cp2k_version",
     [
@@ -167,7 +181,7 @@ def test_mainoutput(test_case, print_level, cp2k_version):
     parser_types = ["standard", "partial_charges", "trajectory"]
     for ptype in parser_types:
         reference_values = list(
-            load_yaml_file(
+            read_yaml_file(
                 MAIN_PATH + f"cp2k-{cp2k_version}/{test_case}_{print_level}_{ptype}_reference.yaml"
             )
         )

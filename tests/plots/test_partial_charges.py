@@ -8,7 +8,7 @@ import pytest
 
 # Internal library imports
 from aim2dat.plots.partial_charges import PartialChargesPlot
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 
 
 MAIN_PATH = os.path.dirname(__file__) + "/partial_charges/"
@@ -40,10 +40,10 @@ def test_pc_errors():
 )
 def test_import_partial_charges(nested_dict_comparison, system):
     """Test import of charges."""
-    inputs = load_yaml_file(MAIN_PATH + "partial_charges_import_input.yaml")
-    ref = load_yaml_file(MAIN_PATH + "partial_charges_import_ref.yaml")
-    ref_wo_ckd = load_yaml_file(MAIN_PATH + "partial_charges_import_ref_wo_ckd.yaml")
-    custom_kind_dict_error = load_yaml_file(MAIN_PATH + "index_error.yaml")
+    inputs = read_yaml_file(MAIN_PATH + "partial_charges_import_input.yaml")
+    ref = read_yaml_file(MAIN_PATH + "partial_charges_import_ref.yaml")
+    ref_wo_ckd = read_yaml_file(MAIN_PATH + "partial_charges_import_ref_wo_ckd.yaml")
+    custom_kind_dict_error = read_yaml_file(MAIN_PATH + "index_error.yaml")
     pc_plot = PartialChargesPlot()
     pc_plot.import_partial_charges(**inputs[system])
     pc_data = pc_plot._data[system]
@@ -69,8 +69,8 @@ def test_import_partial_charges(nested_dict_comparison, system):
 )
 def test_import_partial_charges_from_aiida_list(nested_dict_comparison, aiida_create_list, system):
     """Test import of charges from aiida list."""
-    inputs = load_yaml_file(MAIN_PATH + "aiida_input.yaml")
-    ref = load_yaml_file(MAIN_PATH + "aiida_ref.yaml")
+    inputs = read_yaml_file(MAIN_PATH + "aiida_input.yaml")
+    ref = read_yaml_file(MAIN_PATH + "aiida_ref.yaml")
     inputs[system]["pcdata"] = aiida_create_list(inputs[system]["pcdata"])
     pc_plot = PartialChargesPlot()
     pc_plot.import_from_aiida_list(**inputs[system])
@@ -95,8 +95,8 @@ def systems():
 def test_prepare_to_plot(nested_dict_comparison, systems):
     """Test _prepare_to_plot function of BandStructureDOSPlot class."""
     data_sets = ["data_sets", "x_ticks", "y_ticks", "x_tick_labels", "y_tick_labels", "sec_axis"]
-    inputs = load_yaml_file(MAIN_PATH + "partial_charges_import_input.yaml")
-    ref = load_yaml_file(MAIN_PATH + "plot_import_ref.yaml")
+    inputs = read_yaml_file(MAIN_PATH + "partial_charges_import_input.yaml")
+    ref = read_yaml_file(MAIN_PATH + "plot_import_ref.yaml")
     plot_data = PartialChargesPlot()
     for system in systems:
         plot_data.import_partial_charges(**inputs[system])

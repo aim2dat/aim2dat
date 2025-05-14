@@ -7,17 +7,18 @@ import os
 import pytest
 
 # Internal library imports
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.strct import Structure
+from aim2dat.io import read_yaml_file
 
 MAIN_PATH = os.path.dirname(__file__) + "/cp2k/"
 OUTPUTS_PATH = MAIN_PATH + "outputs/"
+IO_OUTPUT_PATH = os.path.dirname(__file__) + "/../io/cp2k_stdout/"
 
 
 @pytest.mark.aiida
-@pytest.mark.parametrize(
-    "system,version", [("Sc2BDC3_el_pdos", "9.1"), ("Si_at_pdos", "9.1"), ("Si_uks_pdos", "9.1")]
-)
+@pytest.mark.parametrize("system, version", [("geo_opt_low", "2025.1")])
 def test_standard_parser(
+    structure_comparison,
     nested_dict_comparison,
     aiida_create_calcjob,
     aiida_create_remote_data,
@@ -26,7 +27,37 @@ def test_standard_parser(
     version,
 ):
     """Test cp2k parser."""
-    ref_output = load_yaml_file(OUTPUTS_PATH + version + "_standard_" + system + ".yaml")
+    ref_output = read_yaml_file(OUTPUTS_PATH + version + "_standard_" + system + ".yaml")
+    node = aiida_create_calcjob("aim2dat.cp2k", IO_OUTPUT_PATH + f"cp2k-{version}/{system}/")
+    parser = aiida_create_parser("aim2dat.cp2k.standard")
+    results, _ = parser.parse_from_node(
+        node,
+        store_provenance=False,
+        retrieved_temporary_folder=IO_OUTPUT_PATH + f"cp2k-{version}/{system}/",
+    )
+    nested_dict_comparison(
+        results["output_parameters"].get_dict(), ref_output["output_parameters"]
+    )
+    structure_comparison(
+        Structure.from_aiida_structuredata(results["output_structure"]),
+        ref_output["output_structure"],
+    )
+
+
+@pytest.mark.aiida
+@pytest.mark.parametrize(
+    "system,version", [("Sc2BDC3_el_pdos", "9.1"), ("Si_at_pdos", "9.1"), ("Si_uks_pdos", "9.1")]
+)
+def test_pdos_standard_parser(
+    nested_dict_comparison,
+    aiida_create_calcjob,
+    aiida_create_remote_data,
+    aiida_create_parser,
+    system,
+    version,
+):
+    """Test cp2k pdos parser."""
+    ref_output = read_yaml_file(OUTPUTS_PATH + version + "_standard_" + system + ".yaml")
     node = aiida_create_calcjob(
         "aim2dat.cp2k", MAIN_PATH + f"output_files_{version}_standard_{system}"
     )

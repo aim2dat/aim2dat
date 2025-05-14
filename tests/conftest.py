@@ -18,7 +18,7 @@ from aiida.plugins.entry_point import format_entry_point_string
 # Internal library imports
 from aim2dat.strct import StructureCollection, Structure
 from aim2dat.aiida_data.surface_data import SurfaceData
-from aim2dat.io.yaml import load_yaml_file
+from aim2dat.io import read_yaml_file
 from aim2dat.aiida_workflows.utils import create_aiida_node
 from aim2dat.utils.dict_tools import dict_set_parameter
 from aim2dat.utils.element_properties import get_element_symbol
@@ -184,7 +184,7 @@ def create_structure_collection_object():
         structures = []
         if isinstance(inp_structures, list):
             for strct in inp_structures:
-                strct_dict = load_yaml_file(STRUCTURES_PATH + strct + ".yaml")
+                strct_dict = read_yaml_file(STRUCTURES_PATH + strct + ".yaml")
                 strct_c.append(label=label_prefix + strct, **strct_dict)
                 strct_dict["elements"] = [get_element_symbol(el) for el in strct_dict["elements"]]
                 structures.append(strct_dict)
@@ -469,7 +469,7 @@ def aiida_create_wc_inputs():
     """Create work chain inputs"""
 
     def _aiida_create_wc_inputs(structure, ref):
-        strct_dict = dict(load_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
+        strct_dict = dict(read_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
 
         inputs = {}
         for key, val in ref["inputs"].items():
@@ -555,7 +555,7 @@ def aiida_create_structuredata(aiida_localhost):
 
     def _create_structuredata(structure_dict):
         if isinstance(structure_dict, str):
-            structure_dict = dict(load_yaml_file(STRUCTURES_PATH + structure_dict + ".yaml"))
+            structure_dict = dict(read_yaml_file(STRUCTURES_PATH + structure_dict + ".yaml"))
         structure_data = DataFactory("core.structure")
         structure = structure_data(cell=structure_dict["cell"], pbc=structure_dict["pbc"])
         for position, element in zip(structure_dict["positions"], structure_dict["elements"]):
