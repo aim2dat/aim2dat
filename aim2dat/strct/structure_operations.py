@@ -192,22 +192,20 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             raise TypeError("`structures` needs to be of type `StructureCollection` or `list`.")
 
     @property
-    def pipeline(self) -> dict:
+    def pipeline(self) -> list:
         """
-        dict: Set pipeline dictionary containing the entry ``'steps'``. The value of ``'steps'``
-        contains a list of strings or tuples of the name of the manipulation method, the input
-        parameters and an integer number or list of integer numbers denoting how many times the
-        function is applied.
+        list: Set pipeline list containing strings or tuples of the name of the manipulation
+        method, the input parameters and an integer number or list of integer numbers denoting how
+        many times the function is applied. A nested list for multiple operation is also valid.
         """
         return self._pipeline.copy()
 
     @pipeline.setter
-    def pipeline(self, value: dict):
-        if not isinstance(value, dict):
-            raise TypeError("`pipeline` needs to be of type dict.")
-        inp_steps = value.get("steps", [])
+    def pipeline(self, value: list):
+        if not isinstance(value, list):
+            raise TypeError("`pipeline` needs to be of type list.")
         steps = []
-        for step_idx, step in enumerate(inp_steps):
+        for step_idx, step in enumerate(value):
             func_args = {"change_label": False}  # TODO handle label changes.
             n_times = [1]
             if isinstance(step, (list, tuple)):
@@ -218,7 +216,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             else:
                 method = self._check_pipeline_method(step, step_idx)
             steps.append((method, func_args, tuple(n_times)))
-        self._pipeline = {"steps": tuple(steps)}
+        self._pipeline = tuple(steps)
 
     def run_pipeline(self):
         """Run pipeline."""
@@ -227,7 +225,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             return None
         original_structures = self.structures.copy()
         new_structures = self.structures
-        for step_idx, (method, kwargs, n_times) in enumerate(pipeline["steps"]):
+        for step_idx, (method, kwargs, n_times) in enumerate(pipeline):
             max_n_t = max(n_times)
             self.structures = StructureCollection()
             for i in range(len(n_times)):

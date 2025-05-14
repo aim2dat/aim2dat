@@ -2,7 +2,7 @@
 ---
 input_structures:
 - ["MOF-5_prim.xsf", "MOF-5"]
-pipeline: {"steps": [["scale_unit_cell", {"scaling_factors": 1.1}, [1, 1, 1]], ["add_structure_random", {"random_seed": 0}, [0, 1, 2]]]}
+pipeline: [["scale_unit_cell", {"scaling_factors": 1.1}, [1, 1, 1]], ["add_structure_random", {"random_seed": 0}, [0, 1, 2]]]
 output_structures:
 - label: MOF-5x0x0
   elements: [Zn, Zn, Zn, Zn, Zn, Zn, Zn, Zn, O, O, O, O, O, O, O, O, O, O, O, O, O,
