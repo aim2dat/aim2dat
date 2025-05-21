@@ -145,7 +145,7 @@ def add_structure_coord(
     guest_structure: Union[Structure, str] = "CH3",
     guest_dir: Union[None, List[float]] = None,
     bond_length: float = 1.25,
-    dist_constraints = None,
+    dist_constraints=None,
     constrain_steps: int = 1000,
     dist_threshold: Union[dict, list, float, int, str, None] = 0.8,
     change_label: bool = False,
@@ -290,7 +290,7 @@ def add_structure_coord(
 
     # Optimize positions to reduce score
     dist_dict, _ = _build_distance_dict(dist_threshold, structure, guest_strct)
-    num = round(constrain_steps**(1/3))
+    num = round(constrain_steps ** (1 / 3))
     if len(dist_constraints) > 0:
         for alpha in np.linspace(0, 360, num=num):
             for beta in np.linspace(0, 360, num=num):
@@ -466,9 +466,7 @@ def _add_mol(
 ):
     # Reorient and shift guest structure:
     for p0, ref_dir in zip(angle_pars, ref_dirs):
-        guest_strct = rotate_structure(
-            guest_strct, angles=p0, vector=ref_dir, origin=np.zeros(3)
-        )
+        guest_strct = rotate_structure(guest_strct, angles=p0, vector=ref_dir, origin=np.zeros(3))
     guest_strct.set_positions(
         [np.array(pos) + bond_length * ref_dirs[0] + host_pos for pos in guest_strct.positions]
     )
