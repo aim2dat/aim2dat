@@ -145,7 +145,8 @@ def add_structure_coord(
     guest_structure: Union[Structure, str] = "CH3",
     guest_dir: Union[None, List[float]] = None,
     bond_length: float = 1.25,
-    dist_constraints=None,
+    dist_constraints = None,
+    constrain_steps: int = 1000,
     dist_threshold: Union[dict, list, float, int, str, None] = 0.8,
     change_label: bool = False,
     **cn_kwargs,
@@ -178,6 +179,9 @@ def add_structure_coord(
         of the site of the guest structure and the target distance. The position of the guest
         structure is varied based on a grid search until the sum of the absolute errors in
         minimized.
+    constrain_steps: int (optional)
+        Number of steps to consider for the grid search in `dist_constraints`. 1000 steps consider
+        10 different rotation angles around x, y, and z.
     dist_threshold : dict, list, float, int, str or None (optional)
         Check the distances between all site pairs of the host and guest structure to ensure that
         none of the added atoms collide or are too far apart. For example, ``0.8`` to ensure a
@@ -286,10 +290,11 @@ def add_structure_coord(
 
     # Optimize positions to reduce score
     dist_dict, _ = _build_distance_dict(dist_threshold, structure, guest_strct)
+    num = round(constrain_steps**(1/3))
     if len(dist_constraints) > 0:
-        for alpha in np.linspace(0.0, 2.0 * np.pi, num=10):
-            for beta in np.linspace(-1.0 * np.pi, 1.0 * np.pi, num=10):
-                for gamma in np.linspace(-1.0 * np.pi, 1.0 * np.pi, num=10):
+        for alpha in np.linspace(0.0, 2.0 * np.pi, num=num):
+            for beta in np.linspace(0.0, 2.0 * np.pi, num=num):
+                for gamma in np.linspace(0.0, 2.0 * np.pi, num=num):
                     new_strct0, score0 = _add_mol(
                         structure,
                         guest_strct,
@@ -305,8 +310,7 @@ def add_structure_coord(
                     ):
                         score = score0
                         new_structure = new_strct0
-    else:
-        _check_distances(new_structure, new_indices, None, dist_dict, False)
+    _check_distances(new_structure, new_indices, None, dist_dict, False)
     return new_structure, "_added-" + guest_strct_label
 
 
