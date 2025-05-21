@@ -293,8 +293,8 @@ def add_structure_coord(
     num = round(constrain_steps ** (1 / 3))
     if len(dist_constraints) > 0:
         for alpha in np.linspace(0, 360, num=num):
-            for beta in np.linspace(0, 360, num=num):
-                for gamma in np.linspace(0, 360, num=num):
+            for beta in np.linspace(-180, 180, num=num):
+                for gamma in np.linspace(-180, 180, num=num):
                     new_strct0, score0 = _add_mol(
                         structure,
                         guest_strct,
