@@ -236,6 +236,7 @@ def test_add_structure_coord_molecules(structure_comparison):
         min_dist_delta=0.5,
         bond_length=1.0,
         dist_constraints=[(1, 1, 0.9)],
+        dist_threshold=None,
     )
     ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "NH3-OH_ref.yaml")
     structure_comparison(new_strct, ref_p)
