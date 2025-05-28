@@ -17,7 +17,8 @@ Version 0.4.0
 * The ``strct.Structure.calculate_distance`` method was not always returning the smallest distance when ``backfold_positions=True`` since only the second site position was backfolded (`PR #139 <https://github.com/aim2dat/aim2dat/pull/139>`_).
 * The ``strct.Structure`` object wouldn't update the positions if a cell is added or altered after initialization (`PR #141 <https://github.com/aim2dat/aim2dat/pull/141>`_).
 * The ``strct.Structure.calculate_distance`` method was considering periodic images also if ``pbc`` was set to ``False`` (`PR #141 <https://github.com/aim2dat/aim2dat/pull/141>`_).
-* The ``io.read_cp2k_restart_structure`` function would wrongly take the reference cell instead of the actual unitcell (`PR #149 <https://github.com/aim2dat/aim2dat/pull/149>`_).
+* The ``strct.ext_manipulation.add_structure_coord`` didn't apply distance checks if distance constraints were applied (`PR #147 <https://github.com/aim2dat/aim2dat/pull/147>`_).
+* The ``io.read_cp2k_restart_structure`` function was wrongly taking the reference cell instead of the actual unitcell (`PR #149 <https://github.com/aim2dat/aim2dat/pull/149>`_).
 
 **Breaking Changes:**
 
