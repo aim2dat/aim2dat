@@ -125,12 +125,12 @@ def _check_distances(
     max_dist = {}
 
     for idx_pair, dist in dists.items():
-        sorted_pair = tuple(sorted(idx_pair))
-        el_pair = tuple(sorted([structure.elements[idx_pair[0]], structure.elements[idx_pair[1]]]))
-        threshold = distance_dict.get(sorted_pair, None)
+        key = tuple(sorted(idx_pair))
+        threshold = distance_dict.get(key, None)
 
         if threshold is None:
-            threshold = distance_dict.get(el_pair, None)
+            key = tuple(sorted([structure.elements[idx_pair[0]], structure.elements[idx_pair[1]]]))
+            threshold = distance_dict.get(key, None)
         if threshold is None:
             continue
 
@@ -144,7 +144,6 @@ def _check_distances(
         if threshold[1] is None:
             continue
 
-        key = sorted_pair if sorted_pair in distance_dict else el_pair
         if dist <= threshold[1]:
             max_dist[key] = True
         elif not max_dist.get(key, False):
