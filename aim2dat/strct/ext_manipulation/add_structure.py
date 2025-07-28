@@ -422,14 +422,19 @@ def _derive_bond_dir(index, coord):
         dir_v = np.array(neigh["position"]) - pos
         bond_dir += dir_v / np.linalg.norm(dir_v)
     # We need to ensure that the bond direction is not zero.
-    # Happens when the neighbours are exatly opisite of each other or in a symmetric arrangment.
+    # Happens when the neighbours are exatly opposite of each other or in a symmetric arrangment.
     if np.linalg.norm(bond_dir) < 1e-1:
-        dir0 = np.array(cn_details["neighbours"][0]["position"]) - pos
-        dir1 = np.array(cn_details["neighbours"][1]["position"]) - pos
-        if len(cn_details["neighbours"]) == 2:
-            bond_dir = np.cross(create_lin_ind_vector(dir0), create_lin_ind_vector(dir1))
-        else:
-            bond_dir = np.cross(dir0, dir1)
+        bond_dir = np.cross(
+            np.array(cn_details["neighbours"][0]["position"]) - pos,
+            np.array(cn_details["neighbours"][1]["position"]) - pos,
+        )
+    # We need to ensure that the bond direction is not zero.
+    # Can happen when chosen neigbours are pointing exactly opposite of each other from host atom.
+    if np.linalg.norm(bond_dir) < 1e-1:
+        bond_dir = np.cross(
+            create_lin_ind_vector(np.array(cn_details["neighbours"][0]["position"]) - pos),
+            np.array(cn_details["neighbours"][0]["position"]) - pos,
+        )
     bond_dir *= -1.0 / np.linalg.norm(bond_dir)
     return bond_dir
 
