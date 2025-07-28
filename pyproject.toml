@@ -11,7 +11,6 @@ classifiers = [
     "Development Status :: 4 - Beta",
     "Framework :: AiiDA",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: GNU Lesser General Public License v2 (LGPLv2)",
     "Natural Language :: English",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
