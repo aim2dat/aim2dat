@@ -146,6 +146,7 @@ def _check_distances(
 
         if dist <= threshold[1]:
             max_dist[key] = True
+            min_max_dist = 0
         elif key not in max_dist:
             max_dist[key] = False
             max_pair = idx_pair
