@@ -146,10 +146,13 @@ def _check_distances(
 
         if dist <= threshold[1]:
             max_dist[key] = True
-        elif not max_dist.get(key, False):
+        elif key not in max_dist:
             max_dist[key] = False
             max_pair = idx_pair
-    if threshold[1] is not None and not all(max_dist.values()):
+            min_max_dist = dist
+        elif dist < min_max_dist:
+            max_pair = idx_pair
+    if max_dist and not all(max_dist.values()):
         if silent:
             return False
         raise DistanceThresholdError(
