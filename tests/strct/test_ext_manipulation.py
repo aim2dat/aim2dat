@@ -17,7 +17,7 @@ from aim2dat.strct.ext_manipulation import (
     translate_structure,
     DistanceThresholdError,
 )
-from aim2dat.strct.ext_manipulation.utils import _build_distance_dict
+from aim2dat.strct.ext_manipulation.utils import _build_distance_dict, _check_distances
 from aim2dat.io import read_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
@@ -127,6 +127,16 @@ def test_build_distance_dict_fct(nested_dict_comparison):
         str(error.value)
         == "`dist_threshold` needs to be of type int/float/list/tuple/dict or None."
     )
+
+
+def test_check_distance_fct():
+    """Test _check_distances function"""
+    strct_1 = Structure.from_file(STRUCTURES_PATH + "MOF-303_3xH2O_flawed.xsf")
+    with pytest.raises(DistanceThresholdError) as error:
+        _check_distances(
+            strct_1, [*range(131)] + [134, 135, 136], {("N", "O"): [0.8, 2.5]}, None, False
+        )
+    assert str(error.value) == "Atoms 131 and 50 are too far from each other."
 
 
 def test_add_structure_coord(structure_comparison):

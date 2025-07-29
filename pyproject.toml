@@ -82,6 +82,7 @@ graphs = [
 ml = [
     "dscribe>=2.1.0",
     "scikit-learn>=1.3.0",
+    "mace-torch>=0.3.12"
 ]
 plots = [
     "plotly>=5.11.0",
@@ -98,6 +99,7 @@ tests = [
     "h5py>=3.7.0",
     "msgpack>=1.0.2",
     "scikit-learn>=1.2.1",
+    "mace-torch>=0.3.12",
     "dscribe>=2.0.1",
     "pytest>=6.2.5",
     "pgtest>=1.3.2",
