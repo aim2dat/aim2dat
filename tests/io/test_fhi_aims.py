@@ -72,7 +72,12 @@ def test_read_fhiaims_total_dos():
 
 @pytest.mark.parametrize(
     "system,soc,load_raw",
-    [("Cs3Sb_soc", False, False), ("Cs3Sb_soc", True, True), ("g_qantum_number", False, True)],
+    [
+        ("Cs3Sb_soc", False, False),
+        ("Cs3Sb_soc", True, True),
+        ("g_qantum_number", False, True),
+        ("Na_spin_pol", False, False),
+    ],
 )
 def test_read_fhiaims_proj_dos(nested_dict_comparison, system, soc, load_raw):
     """Test read_fhiaims_proj_dos function."""

@@ -2,15 +2,13 @@
 Module of functions to read output-files of FHI-aims.
 """
 
-# Standard library imports
-import re
-
 # Internal library imports
 from aim2dat.io.utils import (
     read_total_dos,
     read_multiple,
     custom_open,
 )
+from aim2dat.utils.element_properties import get_element_symbol
 
 
 def _check_for_soc_files(folder_path, soc):
@@ -92,7 +90,8 @@ def read_fhiaims_total_dos(file_path: str) -> dict:
 
 
 @read_multiple(
-    r".*atom_proj[a-z]*_dos_(?P<kind>[a-zA-Z]+\d+)(?P<raw>_raw)?\.dat(?P<soc>\.no_soc)?$",
+    r".*atom_proj[a-z]*_dos_(spin_(?P<spin>\S\S))?(?P<kind>[^0-9]+)"
+    + r"(?P<site_index>\d+)(?P<raw>_raw)?\.dat(?P<soc>\.no_soc)?$",
     is_read_proj_dos_method=True,
 )
 def read_fhiaims_proj_dos(folder_path: str, soc: bool = False, load_raw: bool = False) -> dict:
@@ -117,9 +116,11 @@ def read_fhiaims_proj_dos(folder_path: str, soc: bool = False, load_raw: bool = 
 
     # Iterate over files and quantum numbers:
     dict_labels = ["s", "p", "d", "f", "g", "h", "i"]
+    spin_labels = {"up": "_alpha", "dn": "_beta"}
+    used_indices = {}
     atomic_pdos = []
     energy = []
-    indices = [(val, idx) for idx, val in enumerate(folder_path["file_path"])]
+    indices = [(val, idx) for idx, val in enumerate(folder_path["site_index"])]
     indices.sort(key=lambda point: point[0])
     _, indices = zip(*indices)
     for idx in indices:
@@ -132,20 +133,39 @@ def read_fhiaims_proj_dos(folder_path: str, soc: bool = False, load_raw: bool = 
         ):
             continue
 
-        pdos0 = {"element": re.split(r"(\d+)", folder_path["kind"][idx])[0]}
+        pdos0 = {}
         energy = []
-        with custom_open(
-            folder_path["file_path"][idx], "r"
-        ) as pdos_file:  # TODO change to own manager:
+        with custom_open(folder_path["file_path"][idx], "r") as pdos_file:
+            spin_suffix = spin_labels.get(folder_path["spin"][idx], "")
             for line in pdos_file:
                 if line.split()[0] != "#" and len(line.strip()) != 0:
                     energy.append(float(line.split()[0]))
                     for value_idx, value in enumerate(line.split()[2:]):
-                        if dict_labels[value_idx] in pdos0:
-                            pdos0[dict_labels[value_idx]].append(float(value))
-                        else:
-                            pdos0[dict_labels[value_idx]] = [float(value)]
-        atomic_pdos.append(pdos0)
+                        pdos0.setdefault(dict_labels[value_idx] + spin_suffix, []).append(
+                            float(value)
+                        )
+
+        site_index = int(folder_path["site_index"][idx])
+        if site_index in used_indices:
+            atomic_pdos[used_indices[site_index]].update(pdos0)
+        else:
+            # In FHI-aims, we only have "species" which can refer to an element or to
+            # a specific kind. Here, we try to account for that:
+            kind = folder_path["kind"][idx]
+            kind_sp = kind.split("_")
+            try:
+                el = get_element_symbol(kind_sp[0])
+            except ValueError:
+                el = None
+            if el is None:
+                pdos0["kind"] = kind
+            elif el == kind:
+                pdos0["element"] = kind
+            else:
+                pdos0["kind"] = kind
+                pdos0["element"] = kind
+            used_indices[site_index] = len(atomic_pdos)
+            atomic_pdos.append(pdos0)
     return {"energy": energy, "pdos": atomic_pdos, "unit_x": "eV"}
 
 
@@ -213,7 +233,8 @@ def read_total_density_of_states(file_name):
 
 
 @read_multiple(
-    r".*atom_proj[a-z]*_dos_(?P<kind>[a-zA-Z]+\d+)(?P<raw>_raw)?\.dat(?P<soc>\.no_soc)?$"
+    r".*atom_proj[a-z]*_dos_(spin_(?P<spin>\S\S))?(?P<kind>[^0-9]+)"
+    + r"(?P<site_index>\d+)(?P<raw>_raw)?\.dat(?P<soc>\.no_soc)?$",
 )
 def read_atom_proj_density_of_states(folder_path, soc=False, load_raw=False):
     """
