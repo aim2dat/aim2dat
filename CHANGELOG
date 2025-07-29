@@ -11,6 +11,7 @@ Version 0.4.0
 * ``plots.simpleplot.import_bar_data_set`` added new parameter `y_error` to add errors to height for backend `matplotlib` (`PR #140 <https://github.com/aim2dat/aim2dat/pull/140>`_).
 * ``strct.StructureOperations`` implements now the ``pipeline`` porperty and the ``run_pipeline`` function used to apply a series of manipulation methods at once (`PR #144 <https://github.com/aim2dat/aim2dat/pull/144>`_).
 * ``strct.Structure`` offers now an interface to the openmm Python package (`PR #145 <https://github.com/aim2dat/aim2dat/pull/145>`_).
+* ``io.read_fhiaims_proj_dos`` now also supports spin-polarized pDOS output files (`PR #152 <https://github.com/aim2dat/aim2dat/pull/152>`_).
 
 **Fixes:**
 
