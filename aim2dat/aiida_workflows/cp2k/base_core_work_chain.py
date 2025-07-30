@@ -48,7 +48,7 @@ def _validate_input_scf_method(scf_method, _):
 
 class _BaseCoreWorkChain(BaseRestartWorkChain):
     _smearing_levels = [0.0, 250.0, 500.0, 1000.0]
-    _allowed_system_character = ["metallic", "insulator", "unkown"]
+    _allowed_system_character = ["metallic", "insulator", "unknown"]
     _conv_warning = "One or more SCF run did not converge."
     _process_class = Cp2kCalculation
     _high_verbosity = False
@@ -101,12 +101,26 @@ class _BaseCoreWorkChain(BaseRestartWorkChain):
             "enable_roks",
             valid_type=aiida_orm.Bool,
             default=lambda: aiida_orm.Bool(False),
-            help="Use restricted open-shell instead of unrestricted open-shell calcualtions.",
+            help="Use restricted open-shell instead of unrestricted open-shell calculations.",
         )
         spec.input(
             "numerical_p.kpoints_ref_dist",
             valid_type=aiida_orm.Float,
             help="Reference distance between two k-points in reciprocal space.",
+            required=False,
+        )
+        spec.input(
+            "numerical_p.cutoff_radius",
+            valid_type=aiida_orm.Float,
+            help="Cutoff radius (in Angstroms) for the truncated 1/r potential."
+            "Only valid when doing truncated calculation.",
+            required=False,
+        )
+        spec.input(
+            "numerical_p.max_memory",
+            valid_type=aiida_orm.Int,
+            help="Defines the maximum amount of memory [MiB]"
+            "to be consumed by the full HFX module.",
             required=False,
         )
         spec.expose_inputs(
@@ -235,16 +249,18 @@ class _BaseCoreWorkChain(BaseRestartWorkChain):
         priority=401,
         exit_codes=[
             ExitCode(0),
+            ExitCode(301),
             ExitCode(400),
             ExitCode(401),
             ExitCode(404),
             ExitCode(405),
             ExitCode(500),
+            ExitCode(610),
         ],
     )
     def check_scf_convergence(self, calc):
         """
-        Check if the scf-calculation is convergenced and increments the
+        Check if the scf-calculation is converged and increments the
         internal level of mixing parameters.
         """
         return self._execute_error_handler(calc, _switch_scf_parameters)

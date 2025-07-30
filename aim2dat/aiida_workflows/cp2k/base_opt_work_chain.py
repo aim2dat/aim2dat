@@ -39,7 +39,7 @@ class _BaseOptimizationWorkChain(_BaseCoreWorkChain):
             "adjust_scf_parameters",
             valid_type=aiida_orm.Bool,
             default=lambda: aiida_orm.Bool(False),
-            help="Restart calculation with adjusted parameters if SCF-clycles are not converged.",
+            help="Restart calculation with adjusted parameters if SCF-cycles are not converged.",
         )
         spec.input(
             "always_add_unocc_states",
@@ -89,10 +89,16 @@ class _BaseOptimizationWorkChain(_BaseCoreWorkChain):
             help="The tolerance parameter used to determine the space group.",
         )
         spec.input(
+            "optimization_p.fixed_atoms",
+            valid_type=aiida_orm.List,
+            required=False,
+            help="Fix atoms.",
+        )
+        spec.input(
             "custom_opt_method",
             valid_type=aiida_orm.List,
             required=False,
-            help="Custom set of parameters used for the optimzation.",
+            help="Custom set of parameters used for the optimization.",
         )
         spec.input(
             "initial_opt_parameters",

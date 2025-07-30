@@ -36,7 +36,7 @@ def _get_version(cp2k_code):
 
 def _set_numerical_p_xc_functional(cp2k_dict, input_p, cp2k_version):
     """
-    Set the parameters for the exchange-correlation functional in the input-paramters.
+    Set the parameters for the exchange-correlation functional in the input-parameters.
     """
     xc_keyword_dict = read_yaml_file(cwd + "/parameter_files/xc_functionals_p.yaml")
     xc_functional = input_p.value.upper()
@@ -76,15 +76,25 @@ def _set_numerical_p_basis_sets(cp2k_dict, input_p, structure, xc_functional):
 
     cp2k_kinds = []
     for kind in structure.kinds:
+        bs_entry = basis_sets[kind.symbol]
         kind_dict = {
             "_": kind.name,
-            "BASIS_SET": basis_sets[kind.symbol][0],
-            "POTENTIAL": basis_sets[kind.symbol][1],
+            "BASIS_SET": bs_entry[0],
+            "POTENTIAL": bs_entry[1],
         }
+        if len(bs_entry) > 2 and bs_type == "ADMM":
+            kind_dict["BASIS_SET AUX_FIT"] = bs_entry[2]
         if kind.name != kind.symbol:
             kind_dict["ELEMENT"] = kind.symbol
         cp2k_kinds.append(kind_dict)
     dict_set_parameter(cp2k_dict, ["FORCE_EVAL", "SUBSYS", "KIND"], cp2k_kinds)
+
+    if bs_type == "ADMM":
+        dict_set_parameter(
+            cp2k_dict,
+            ["FORCE_EVAL", "DFT", "AUXILIARY_DENSITY_MATRIX_METHOD"],
+            {"ADMM_TYPE": "ADMMS"},
+        )
 
     if "basis_set_file_name" in basis_sets:
         basis_filenames = dict_retrieve_parameter(
@@ -205,9 +215,25 @@ def _set_input_parameters(
                 ["FORCE_EVAL", "DFT", "POTENTIAL_FILE_NAME"],
                 inputs.numerical_p.pseudo_file.filename,
             )
+        if "cutoff_radius" in inputs.numerical_p:
+            cutoff_radius = inputs.numerical_p.cutoff_radius.value
+            interaction_potential = dict_retrieve_parameter(
+                cp2k_p, ["FORCE_EVAL", "DFT", "XC", "HF", "INTERACTION_POTENTIAL"]
+            )
+            interaction_potential["cutoff_radius"] = cutoff_radius
+            dict_set_parameter(
+                cp2k_p,
+                ["FORCE_EVAL", "DFT", "XC", "HF", "INTERACTION_POTENTIAL"],
+                interaction_potential,
+            )
+        if "max_memory" in inputs.numerical_p:
+            max_memory = inputs.numerical_p.max_memory.value
+            dict_set_parameter(
+                cp2k_p, ["FORCE_EVAL", "DFT", "XC", "HF", "MEMORY"], {"MAX_MEMORY": max_memory}
+            )
         ctx.inputs.parameters = aiida_orm.Dict(dict=cp2k_p)
 
-    # Set system-depdendent resources:
+    # Set system-dependent resources:
     resources = dict_retrieve_parameter(ctx.inputs.metadata, ["options", "resources"])
     if resources is not None and "coeff" in resources:
         res_input_p = {

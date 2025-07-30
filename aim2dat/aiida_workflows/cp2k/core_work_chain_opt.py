@@ -57,6 +57,19 @@ def _initialize_opt_parameters(inputs, ctx, exit_codes, opt_type):
                     ["MOTION", ctx.opt_type, keyword.upper()],
                     inputs_opt_p[keyword].value,
                 )
+        if "fixed_atoms" in inputs_opt_p:
+            atoms_list = inputs_opt_p["fixed_atoms"].get_list()
+            atoms_list = [i + 1 for i in atoms_list]
+            if len(atoms_list) > 4 and all(x < y for x, y in zip(atoms_list, atoms_list[1:])):
+                fixed_atoms = f"{atoms_list[0]}..{atoms_list[-1]}"
+            else:
+                atoms_string = [str(s) for s in atoms_list]
+                fixed_atoms = " ".join(atoms_string)
+            dict_set_parameter(
+                parameters,
+                ["MOTION", "CONSTRAINT", "FIXED_ATOMS", "LIST"],
+                fixed_atoms,
+            )
         if opt_type == "cell_opt":
             _set_additional_cell_opt_p(inputs.optimization_p, ctx, exit_codes, parameters)
     ctx.inputs.parameters = aiida_orm.Dict(dict=parameters)

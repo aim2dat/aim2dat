@@ -15,9 +15,91 @@ from aim2dat.strct.surface_utils import (
     _surface_create_slab,
     _transform_slab_to_primitive,
 )
-from aim2dat.strct.strct import Structure
+from aim2dat.strct import Structure, StructureOperations
+from aim2dat.strct.ext_manipulation import add_structure_coord, rotate_structure
 from aim2dat.strct.brillouin_zone_2d import _get_kpath
 from aim2dat.utils.dict_tools import dict_retrieve_parameter
+
+
+@calcfunction
+def find_equivalent_sites(structure):
+    """Wrap the 'find_eq_sites_via_coordination' function to be used as a calcfunction."""
+    if not isinstance(structure, aiida_orm.StructureData):
+        raise ValueError(f"{type(structure)} is not supported.")
+    eq_sites = aiida_orm.Dict(
+        dict=StructureOperations(
+            [Structure.from_aiida_structuredata(structure, label="aiida")]
+        ).find_eq_sites_via_coordination(0)
+    )
+    output_dict = {
+        "eq_sites": eq_sites,
+    }
+    return output_dict
+
+
+@calcfunction
+def add_molecule(structure, parameters):
+    """Wrap the 'add_structure_position' function to be used as a calcfunction."""
+    p_dict = parameters.get_dict()
+    if not isinstance(structure, aiida_orm.StructureData):
+        raise ValueError(f"{type(structure)} is not supported.")
+    for parameter in [
+        "host_indices",
+        "guest_structure",
+        "bond_length",
+    ]:
+        if parameter not in parameters:
+            raise ValueError(f"{parameter} needs to be set.")
+    if hasattr(p_dict, "label_suffix"):
+        label = f"{structure.label}_{p_dict.pop('label_suffix')}"
+    else:
+        label = structure.label
+    host_indices = p_dict.pop("host_indices")
+    guest_index = p_dict.pop("guest_index", 0)
+    guest_structure = p_dict.pop("guest_structure")
+    bond_length = p_dict.pop("bond_length")
+    a2d_structure = Structure.from_aiida_structuredata(structure, label=label)
+    a2d_structure._attributes = {}
+    output_structure = _create_structure_node(
+        add_structure_coord(
+            structure=a2d_structure,
+            host_indices=host_indices,
+            guest_index=guest_index,
+            guest_structure=guest_structure,
+            bond_length=bond_length,
+            dist_threshold=0.99 * bond_length,
+        )
+    )
+    # We need to delete the 'structure_node' attribute to avoid circular references
+    if len(output_structure.sites) - len(structure.sites) != 0:
+        return output_structure
+
+
+@calcfunction
+def rotate_molecule(structure, parameters):
+    """Wrap the 'rotate_structure' function to be used as a calcfunction."""
+    p_dict = parameters.get_dict()
+    if not isinstance(structure, aiida_orm.StructureData):
+        raise ValueError(f"{type(structure)} is not supported.")
+    for parameter in [
+        "angles",
+        "site_indices",
+    ]:
+        if parameter not in parameters:
+            raise ValueError(f"{parameter} needs to be set.")
+    if hasattr(p_dict, "label_suffix"):
+        structure.label = f"{structure.label}_{p_dict.pop('label_suffix')}"
+    angles = p_dict.pop("angles")
+    site_indices = p_dict.pop("site_indices")
+    output_structure = _create_structure_node(
+        rotate_structure(
+            structure=Structure.from_aiida_structuredata(structure),
+            angles=angles,
+            vector=False,
+            site_indices=site_indices,
+        )
+    )
+    return output_structure
 
 
 @calcfunction
@@ -260,7 +342,7 @@ def create_aiida_node(value, node_type=None):
     aiida_node : variable
         AiiDA data node.
     """
-    # TODO inlcude more node types, use DataFactory?
+    # TODO include more node types, use DataFactory?
     check_node_type = False
     if node_type is None:
         check_node_type = True
