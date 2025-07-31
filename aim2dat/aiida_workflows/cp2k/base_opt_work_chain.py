@@ -42,6 +42,12 @@ class _BaseOptimizationWorkChain(_BaseCoreWorkChain):
             help="Restart calculation with adjusted parameters if SCF-cycles are not converged.",
         )
         spec.input(
+            "ignore_convergence_failure",
+            valid_type=aiida_orm.Bool,
+            default=lambda: aiida_orm.Bool(False),
+            help="If true, only a warning is issued if an SCF iteration has not converged.",
+        )
+        spec.input(
             "always_add_unocc_states",
             valid_type=aiida_orm.Bool,
             default=lambda: aiida_orm.Bool(False),
@@ -105,11 +111,6 @@ class _BaseOptimizationWorkChain(_BaseCoreWorkChain):
             valid_type=aiida_orm.Int,
             required=False,
             help="....",
-        )
-        spec.input(
-            "adjust_scf_parameters",
-            valid_type=aiida_orm.Bool,
-            default=lambda: aiida_orm.Bool(False),
         )
         spec.output(
             "space_group_info",

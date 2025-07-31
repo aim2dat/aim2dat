@@ -1071,7 +1071,7 @@ class WorkflowBuilder(_BaseWorkflowBuilder):
 
 class MultipleWorkflowBuilder(_BaseWorkflowBuilder):
     """
-    Workflow builder that can manage a worklfow for several parent nodes at once.
+    Workflow builder that can manage a workflow for several parent nodes at once.
     """
 
     def __init__(
@@ -1368,7 +1368,7 @@ class MultipleWorkflowBuilder(_BaseWorkflowBuilder):
         """
         Return a pandas data frame containing the current state of  workflow.
 
-        Paramters
+        Parameters
         ---------
         unformatted : bool (optional)
             If set to ``True`` an unformatted pandas.DataFrame object is returned otherwise a
