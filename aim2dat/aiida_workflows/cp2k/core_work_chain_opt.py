@@ -41,6 +41,10 @@ def _initialize_opt_parameters(inputs, ctx, exit_codes, opt_type):
     dict_merge(parameters["GLOBAL"], {"RUN_TYPE": ctx.opt_type})
     dict_create_tree(parameters, ["MOTION", ctx.opt_type])
     dict_merge(parameters["MOTION"][ctx.opt_type], ctx.opt_method_p[ctx.opt_level])
+    if "ignore_convergence_failure" in inputs and inputs.ignore_convergence_failure.value:
+        dict_set_parameter(
+            parameters, ["FORCE_EVAL", "DFT", "SCF", "IGNORE_CONVERGENCE_FAILURE"], True
+        )
     if "optimization_p" in inputs:
         inputs_opt_p = inputs.optimization_p
         for keyword in [

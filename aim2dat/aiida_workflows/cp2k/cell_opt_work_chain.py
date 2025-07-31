@@ -65,7 +65,7 @@ class CellOptWorkChain(_BaseOptimizationWorkChain):
         )
 
     def setup_wc_specific_inputs(self):
-        """Set stress tensor calculation to analystical."""
+        """Set stress tensor calculation to analytical."""
         # Set stress tensor for cell optimization and add symmetry constraints:
         parameters = self.ctx.inputs.parameters.get_dict()
         dict_create_tree(parameters, ["FORCE_EVAL"])

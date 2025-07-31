@@ -141,12 +141,9 @@ def _set_input_parameters(
         "always_add_unocc_states": False,
         "allow_pulay": True,
         "scf_guess": initial_scf_guess,
-        "ignore_convergence_failure": False,
     }
     if "always_add_unocc_states" in inputs and inputs.always_add_unocc_states.value:
         ctx.scf_m_info["always_add_unocc_states"] = True
-    if "ignore_convergence_failure" in inputs and inputs.ignore_convergence_failure.value:
-        ctx.scf_m_info["ignore_convergence_failure"] = True
     if "parent_calc_folder" in ctx.inputs:
         ctx.scf_m_info["scf_guess"] = "RESTART"
 
