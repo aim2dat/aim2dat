@@ -60,8 +60,11 @@ def _initialize_opt_parameters(inputs, ctx, exit_codes, opt_type):
         if "fixed_atoms" in inputs_opt_p:
             atoms_list = inputs_opt_p["fixed_atoms"].get_list()
             atoms_list = [i + 1 for i in atoms_list]
-            if len(atoms_list) > 4 and all(x < y for x, y in zip(atoms_list, atoms_list[1:])):
-                fixed_atoms = f"{atoms_list[0]}..{atoms_list[-1]}"
+            atoms_list_sorted = sorted(atoms_list)
+            if len(atoms_list) > 4 and atoms_list_sorted[-1] - atoms_list_sorted[0] + 1 == len(
+                atoms_list_sorted
+            ):
+                fixed_atoms = f"{atoms_list_sorted[0]}..{atoms_list_sorted[-1]}"
             else:
                 atoms_string = [str(s) for s in atoms_list]
                 fixed_atoms = " ".join(atoms_string)
