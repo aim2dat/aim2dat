@@ -41,6 +41,10 @@ def _initialize_opt_parameters(inputs, ctx, exit_codes, opt_type):
     dict_merge(parameters["GLOBAL"], {"RUN_TYPE": ctx.opt_type})
     dict_create_tree(parameters, ["MOTION", ctx.opt_type])
     dict_merge(parameters["MOTION"][ctx.opt_type], ctx.opt_method_p[ctx.opt_level])
+    if "ignore_convergence_failure" in inputs and inputs.ignore_convergence_failure.value:
+        dict_set_parameter(
+            parameters, ["FORCE_EVAL", "DFT", "SCF", "IGNORE_CONVERGENCE_FAILURE"], True
+        )
     if "optimization_p" in inputs:
         inputs_opt_p = inputs.optimization_p
         for keyword in [
@@ -57,6 +61,22 @@ def _initialize_opt_parameters(inputs, ctx, exit_codes, opt_type):
                     ["MOTION", ctx.opt_type, keyword.upper()],
                     inputs_opt_p[keyword].value,
                 )
+        if "fixed_atoms" in inputs_opt_p:
+            atoms_list = inputs_opt_p["fixed_atoms"].get_list()
+            atoms_list = [i + 1 for i in atoms_list]
+            atoms_list_sorted = sorted(atoms_list)
+            if len(atoms_list) > 4 and atoms_list_sorted[-1] - atoms_list_sorted[0] + 1 == len(
+                atoms_list_sorted
+            ):
+                fixed_atoms = f"{atoms_list_sorted[0]}..{atoms_list_sorted[-1]}"
+            else:
+                atoms_string = [str(s) for s in atoms_list]
+                fixed_atoms = " ".join(atoms_string)
+            dict_set_parameter(
+                parameters,
+                ["MOTION", "CONSTRAINT", "FIXED_ATOMS", "LIST"],
+                fixed_atoms,
+            )
         if opt_type == "cell_opt":
             _set_additional_cell_opt_p(inputs.optimization_p, ctx, exit_codes, parameters)
     ctx.inputs.parameters = aiida_orm.Dict(dict=parameters)

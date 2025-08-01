@@ -38,7 +38,7 @@ class PDOSWorkChain(_BaseCoreWorkChain):
             "adjust_scf_parameters",
             valid_type=aiida_orm.Bool,
             default=lambda: aiida_orm.Bool(False),
-            help="Restart calculation with adjusted parameters if SCF-clycles are not converged.",
+            help="Restart calculation with adjusted parameters if SCF-cycles are not converged.",
         )
         spec.input(
             "minimum_cell_length",
@@ -103,13 +103,15 @@ class PDOSWorkChain(_BaseCoreWorkChain):
         # dict_create_tree(parameters, ["FORCE_EVAL", "DFT", "SCF"])
         # dict_set_parameter(parameters, ["FORCE_EVAL", "DFT", "SCF", "ADDED_MOS"], n_unocc_states)
 
-        self.report(f"{self.ctx.mult_unit_cell} repititions chosen.")
+        self.report(f"{self.ctx.mult_unit_cell} repetitions chosen.")
         self.report(f"{self.ctx.scf_m_info['factor_unocc_states']} factor for unoccupied states.")
 
+        # TO-DO: Include option to control the printing of local PDOS,
+        # projected on subsets of atoms given through lists
         # Adapt structure and add for each site an individual kind:
         if self.inputs.resolve_atoms.value:
             structure = self.ctx.inputs.structure
-            stucture_w_kinds = StructureData(
+            structure_w_kinds = StructureData(
                 cell=self.ctx.inputs.structure.cell, pbc=self.ctx.inputs.structure.pbc
             )
             kind_parameters = dict_retrieve_parameter(parameters, ["FORCE_EVAL", "SUBSYS", "KIND"])
@@ -127,7 +129,7 @@ class PDOSWorkChain(_BaseCoreWorkChain):
                     kind_p["ELEMENT"] = element
                     kind_p["_"] += "_" + str(site_idx)
                     kind_parameters_new.append(kind_p)
-                    stucture_w_kinds.append_atom(
+                    structure_w_kinds.append_atom(
                         position=site.position,
                         symbols=element,
                         name=kind_p["_"],
@@ -135,7 +137,7 @@ class PDOSWorkChain(_BaseCoreWorkChain):
             else:
                 return self.exit_codes.ERROR_INPUT_WRONG_VALUE
             dict_set_parameter(parameters, ["FORCE_EVAL", "SUBSYS", "KIND"], kind_parameters_new)
-            self.ctx.inputs.structure = stucture_w_kinds
+            self.ctx.inputs.structure = structure_w_kinds
 
         # Delete k-points section in input-parameters:
         kpoints_p = dict_retrieve_parameter(parameters, ["FORCE_EVAL", "DFT", "KPOINTS"])

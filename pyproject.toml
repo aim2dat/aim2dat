@@ -128,12 +128,15 @@ pre-commit = [
 "aim2dat.surface" = "aim2dat.aiida_data.surface_data:SurfaceData"
 
 [project.entry-points."aiida.calculations"]
-"aim2dat.cp2k" = "aim2dat.aiida_workflows.cp2k.calcjobs:Cp2kCalculation"
-"aim2dat.critic2" = "aim2dat.aiida_workflows.critic2.calcjobs:Critic2Calculation"
+"aim2dat.add_molecule" = "aim2dat.aiida_workflows.utils:add_molecule"
 "aim2dat.chargemol" = "aim2dat.aiida_workflows.chargemol.calcjobs:ChargemolCalculation"
-"aim2dat.enumlib" = "aim2dat.aiida_workflows.enumlib.enum_calcjob:EnumlibCalculation"
-"aim2dat.seekpath.structure_analysis" = "aim2dat.aiida_workflows.utils:seekpath_structure_analysis"
+"aim2dat.cp2k" = "aim2dat.aiida_workflows.cp2k.calcjobs:Cp2kCalculation"
 "aim2dat.create_surface_slab" = "aim2dat.aiida_workflows.utils:create_surface_slab"
+"aim2dat.critic2" = "aim2dat.aiida_workflows.critic2.calcjobs:Critic2Calculation"
+"aim2dat.enumlib" = "aim2dat.aiida_workflows.enumlib.enum_calcjob:EnumlibCalculation"
+"aim2dat.find_equivalent_sites" = "aim2dat.aiida_workflows.utils:find_equivalent_sites"
+"aim2dat.rotate_molecule" = "aim2dat.aiida_workflows.utils:rotate_molecule"
+"aim2dat.seekpath.structure_analysis" = "aim2dat.aiida_workflows.utils:seekpath_structure_analysis"
 
 [project.entry-points."aiida.parsers"]
 "aim2dat.cp2k.standard" = "aim2dat.aiida_workflows.cp2k.parsers:Cp2kStandardParser"

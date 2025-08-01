@@ -1,0 +1,134 @@
+%YAML 1.2
+---
+# Protocol with standard settings for the molecule workflow.
+title: cp2k-molecule-standard
+version: '1.0'
+description: Standard settings to optimize the geometry and calculate total energy.
+dependencies:
+- [aiida-core, '1.6', Null]
+parent_node_type: core.structure
+parent_node_input:
+  find_scf_parameters: structural_p.structure
+  geo_opt: structural_p.structure
+tasks:
+  find_scf_parameters:
+    process: aim2dat.cp2k.find_scf_p
+    blacklist_inputs:
+    - custom_scf_method
+  geo_opt:
+    process: aim2dat.cp2k.geo_opt
+    blacklist_inputs:
+    - custom_scf_method
+    dependencies:
+      find_scf_parameters:
+      - [scf_parameters, structural_p.scf_parameters]
+general_input:
+  cp2k.parameters:
+    value:
+      GLOBAL:
+        PRINT_LEVEL: MEDIUM
+        PREFERRED_DIAG_LIBRARY: SCALAPACK
+        EXTENDED_FFT_LENGTHS: true
+      FORCE_EVAL:
+        METHOD: Quickstep
+        STRESS_TENSOR: ANALYTICAL
+        DFT:
+          MGRID: {}
+          POISSON: {PERIODIC: NONE, POISSON_SOLVER: MT}
+          BASIS_SET_FILE_NAME: BASIS_MOLOPT_UZH
+          POTENTIAL_FILE_NAME: POTENTIALS_UZH
+          QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
+          SCF: {EPS_SCF: 5.0e-7}
+          XC: {}
+        SUBSYS:
+          CELL: {PERIODIC: NONE}
+    aiida_node: true
+    tasks: [find_scf_parameters, geo_opt]
+  scf_method:
+    value: orbital_transformation
+    aiida_node: true
+    tasks: [find_scf_parameters, geo_opt]
+  adjust_scf_parameters:
+    value: true
+    aiida_node: true
+    tasks: [geo_opt]
+  max_iterations:
+    value: 100
+    aiida_node: true
+    compare: False
+    tasks: [find_scf_parameters, geo_opt]
+  optimization_p.max_force->geo_opt:
+    value: 0.000097
+    aiida_node: true
+user_input:
+  scf_extended_system:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, geo_opt]
+  numerical_p.xc_functional:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, geo_opt]
+  numerical_p.cutoff_values:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, geo_opt]
+  numerical_p.basis_sets:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, geo_opt]
+  numerical_p.pseudo_file:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters, geo_opt]
+  numerical_p.basis_file:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters, geo_opt]
+  cp2k.code:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: false
+    tasks: [find_scf_parameters, geo_opt]
+  cp2k.metadata:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters, geo_opt]
+  clean_workdir:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters, geo_opt]
+results:
+  scf_method_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [method_level]
+  scf_parameter_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [parameter_level]
+  scf_smearing_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [smearing_level]
+  optimized_structure:
+    task: geo_opt
+    output_port: cp2k.output_structure
+  total_energy:
+    task: geo_opt
+    output_port: cp2k.output_parameters
+    retrieve_value: [energy]
+    unit: Hartree
