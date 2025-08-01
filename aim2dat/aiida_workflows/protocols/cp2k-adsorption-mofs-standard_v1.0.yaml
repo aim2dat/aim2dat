@@ -165,11 +165,6 @@ user_input:
     optional: true
     compare: false
     tasks: [find_scf_parameters, geo_opt, pdos, partial_charges]
-  ignore_convergence_failure->pre_geo_opt:
-    validation: aim2dat.cp2k.geo_opt
-    aiida_node: true
-    optional: true
-    compare: false
   numerical_p.cutoff_values->pre_geo_opt:
     validation: aim2dat.cp2k.find_scf_p
     aiida_node: true
@@ -188,7 +183,13 @@ user_input:
     aiida_node: true
     optional: true
     compare: false
-  optimization_p.fixed_atoms->geo_opt:
+  ignore_convergence_failure:
+    validation: aim2dat.cp2k.geo_opt
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [pre_geo_opt]
+  optimization_p.fixed_atoms:
     validation: aim2dat.cp2k.geo_opt
     aiida_node: true
     compare: false
