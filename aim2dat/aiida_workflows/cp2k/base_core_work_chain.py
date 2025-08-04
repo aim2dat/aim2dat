@@ -249,7 +249,6 @@ class _BaseCoreWorkChain(BaseRestartWorkChain):
         priority=401,
         exit_codes=[
             ExitCode(0),
-            ExitCode(301),
             ExitCode(400),
             ExitCode(401),
             ExitCode(404),
