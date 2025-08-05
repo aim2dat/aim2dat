@@ -47,12 +47,12 @@ class _Cp2kBaseParser(Parser):
         result_dict = self._parse_stdout()
 
         # Parse extra output
-        parse_extra_output = True
+        scf_converged = True
         settings = self.node.inputs.settings.get_dict() if "settings" in self.node.inputs else {}
         if "output_check_scf_conv" in settings and settings["output_check_scf_conv"]:
-            if "scf_converged" in result_dict and not result_dict["scf_converged"]:
-                parse_extra_output = False
-        if parse_extra_output:
+            if not result_dict.get("scf_converged", False):
+                scf_converged = False
+        if scf_converged:
             for output_f_label in self.extra_output_functions:
                 output_f = getattr(self, output_f_label)
                 output_dict = output_f(retrieved_temporary_folder)
@@ -74,6 +74,8 @@ class _Cp2kBaseParser(Parser):
         # All exit_codes from the main-output are triggered here
         if "geo_not_converged" in result_dict:
             return self.exit_codes.ERROR_GEOMETRY_CONVERGENCE_NOT_REACHED
+        elif not scf_converged:
+            return self.exit_codes.ERROR_SCF_PARAMETERS
         elif "odd_nr_electrons" in result_dict:
             return self.exit_codes.ERROR_ODD_NR_ELECTRONS
         elif "need_added_mos" in result_dict:
@@ -104,7 +106,9 @@ class _Cp2kBaseParser(Parser):
 
         try:
             result_dict = read_cp2k_stdout(
-                self.retrieved.get_object_content(fname), parser_type=self.parser_type
+                self.retrieved.get_object_content(fname),
+                parser_type=self.parser_type,
+                raise_error=False,
             )
         # TODO distinguish different exceptions.
         except IOError:

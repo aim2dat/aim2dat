@@ -36,7 +36,7 @@ class PartialChargesWorkChain(_BaseCoreWorkChain):
             "adjust_scf_parameters",
             valid_type=aiida_orm.Bool,
             default=lambda: aiida_orm.Bool(False),
-            help="Restart calculation with adjusted parameters if SCF-clycles are not converged.",
+            help="Restart calculation with adjusted parameters if SCF-cycles are not converged.",
         )
         spec.input(
             "always_add_unocc_states",

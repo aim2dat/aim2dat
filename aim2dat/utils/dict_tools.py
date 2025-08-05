@@ -46,7 +46,7 @@ def dict_retrieve_parameter(dictionary, parameter_tree):
     Returns
     -------
     value :
-        The value of the parameter or ``None`` if the key word cound not be found.
+        The value of the parameter or ``None`` if the key word could not be found.
     """
     helper_dict = dictionary
 

@@ -9,9 +9,13 @@ Version 0.4.0
 
 * The ``strct.Structure`` and ``strct.StructureOperations`` now implement the function ``create_supercell`` which replicates the unit cell forming a supercell (`PR #136 <https://github.com/aim2dat/aim2dat/pull/136>`_).
 * ``plots.simpleplot.import_bar_data_set`` added new parameter `y_error` to add errors to height for backend `matplotlib` (`PR #140 <https://github.com/aim2dat/aim2dat/pull/140>`_).
-* ``strct.StructureOperations`` implements now the ``pipeline`` porperty and the ``run_pipeline`` function used to apply a series of manipulation methods at once (`PR #144 <https://github.com/aim2dat/aim2dat/pull/144>`_).
+* ``strct.StructureOperations`` implements now the ``pipeline`` property and the ``run_pipeline`` function used to apply a series of manipulation methods at once (`PR #144 <https://github.com/aim2dat/aim2dat/pull/144>`_).
 * ``strct.Structure`` offers now an interface to the openmm Python package (`PR #145 <https://github.com/aim2dat/aim2dat/pull/145>`_).
 * ``io.read_fhiaims_proj_dos`` now also supports spin-polarized pDOS output files (`PR #152 <https://github.com/aim2dat/aim2dat/pull/152>`_).
+* ``aim2dat.aiida_workflows.utils:add_molecule``, ``aim2dat.aiida_workflows.utils:find_equivalent_sites``, and ``aim2dat.aiida_workflows.utils:rotate_molecule`` were added as a `calcfunction` (`PR #155 <https://github.com/aim2dat/aim2dat/pull/155>`_).
+* A workflow was added to calculate the adsorption energies [``cp2k-adsorption-mofs-*``, ``cp2k-preadsorption-mofs-*``, ``cp2k-molecule-*``] (`PR #155 <https://github.com/aim2dat/aim2dat/pull/155>`_).
+* Hybrid functionals *PBE0* and *HSE06* with the *ADMM method* were implemented. As well as *rVV10* and *D3* dispersion corrections for *R2SCAN* and the hybrid functionals (`PR #155 <https://github.com/aim2dat/aim2dat/pull/155>`_).
+* ``aiida_workflows.cp2k.base_opt_work_chain._BaseOptimizationWorkChain`` contains now the option to fix atoms ``optimization_p.fixed_atoms`` and also to ignore scf convergence failure ``ignore_convergence_failure`` (`PR #155 <https://github.com/aim2dat/aim2dat/pull/155>`_).
 
 **Fixes:**
 
@@ -20,14 +24,18 @@ Version 0.4.0
 * The ``strct.Structure.calculate_distance`` method was considering periodic images also if ``pbc`` was set to ``False`` (`PR #141 <https://github.com/aim2dat/aim2dat/pull/141>`_).
 * The ``strct.ext_manipulation.add_structure_coord`` didn't apply distance checks if distance constraints were applied (`PR #147 <https://github.com/aim2dat/aim2dat/pull/147>`_).
 * The ``io.read_cp2k_restart_structure`` function was wrongly taking the reference cell instead of the actual unitcell (`PR #149 <https://github.com/aim2dat/aim2dat/pull/149>`_).
+* The ``find_scf_parameters`` were not restarted if the mixing parameters were not found (`PR #155 <https://github.com/aim2dat/aim2dat/pull/155>`_).
 
 **Breaking Changes:**
 
 * All functions of the ``io`` sub-package have been renamed and are imported directly via the ``__init__.py`` file of the sub-package (`PR #133 <https://github.com/aim2dat/aim2dat/pull/133>`_)
-* The ``utils.element_properties.get_atomic_radius`` function now relies entirely internal values taken from :doi:`10.1039/B801115J` (``'covalent'``), :doi:`10.1039/C3DT50599E` (``'vdw'``), :doi:`10.1039/C9RA07327B` (``'chen_manz'``), and :doi:`10.26434/chemrxiv-2024-m3rtp-v2` (``'vdw_charry_tkatchenko'``) instead of ase (`PR #138 <https://github.com/aim2dat/aim2dat/pull/138>`_).
 * The creation of supercells for the calculation of coordination environments and other features has been sped up substantially (`PR #136 <https://github.com/aim2dat/aim2dat/pull/136>`_).
+* The ``utils.element_properties.get_atomic_radius`` function now relies entirely internal values taken from :doi:`10.1039/B801115J` (``'covalent'``), :doi:`10.1039/C3DT50599E` (``'vdw'``), :doi:`10.1039/C9RA07327B` (``'chen_manz'``), and :doi:`10.26434/chemrxiv-2024-m3rtp-v2` (``'vdw_charry_tkatchenko'``) instead of ase (`PR #138 <https://github.com/aim2dat/aim2dat/pull/138>`_).
 * Support for the MP legacy interface via pymatgen is removed from the ``strct.StructureImporter`` class since it is no longer supported by pymatgen (`PR #142 <https://github.com/aim2dat/aim2dat/pull/142>`_).
-* If a maximum value is given in ``dist_threshold`` of the ``strct.ext_manipulation.add_structure_*`` functions, only one atom is considered for the criterium to be fulfilled (`PR #151 <https://github.com/aim2dat/aim2dat/pull/151>`_).
+* If a maximum value is given in ``dist_threshold`` of the ``strct.ext_manipulation.add_structure_*`` functions, only one atom is considered for the criteria to be fulfilled (`PR #151 <https://github.com/aim2dat/aim2dat/pull/151>`_).
+* The number of SCF iterations in the OT method for CP2K workflows were reduced from `40` to `25` and `50` to `25` (`PR #155 <https://github.com/aim2dat/aim2dat/pull/155>`_).
+* The `BASIS_SET_FILE_NAME` and `POTENTIAL_FILE_NAME` was changed from `[BASIS_MOLOPT, BASIS_MOLOPT_UCL]` to `BASIS_MOLOPT_UZH` and from `GTH_POTENTIALS` to `POTENTIAL_UZH` for CP2K workflows. Additionally, the `PBE` functional includes `GGA` in its `BASIS_SET` and `POTENTIAL` for each `KIND`. `SCAN` thus includes `MGGA` instead of `SCAN`. Shortrange `SR` for most metals become redundant by introducing `BASIS_MOLOPT_UZH` (`PR #155 <https://github.com/aim2dat/aim2dat/pull/155>`_).
+* The bond distance from the hydrogen molecule was reduced from `0.909862` to `0.74` (`PR #155 <https://github.com/aim2dat/aim2dat/pull/155>`_).
 
 
 Version 0.3.0
@@ -62,7 +70,7 @@ Version 0.3.0
 
 **Deprecations:**
 
-* The ``strct.Structure.import_methods``, ``strct.Structure.export_methods``, ``strct.Structure.analysis_methods``, ``strct.Structure.manipulation_methods``, ``strct.StructureOperations.analysis_methods`` and ``strct.StructureOperaions.manipulation_methods`` functions are now deprecated since Python dropped the support for class properties. The methods are replaced by the ``list_*_methods`` class methods, making this Package compatible with Python 3.13 (`PR #132 <https://github.com/aim2dat/aim2dat/pull/132>`_).
+* The ``strct.Structure.import_methods``, ``strct.Structure.export_methods``, ``strct.Structure.analysis_methods``, ``strct.Structure.manipulation_methods``, ``strct.StructureOperations.analysis_methods`` and ``strct.StructureOperations.manipulation_methods`` functions are now deprecated since Python dropped the support for class properties. The methods are replaced by the ``list_*_methods`` class methods, making this Package compatible with Python 3.13 (`PR #132 <https://github.com/aim2dat/aim2dat/pull/132>`_).
 
 **Breaking Changes:**
 
@@ -84,10 +92,10 @@ Version 0.2.0
 * ``io.qe.read_total_density_of_states`` parses now the Fermi energy as well (`PR #20 <https://github.com/aim2dat/aim2dat/pull/20>`_).
 * ``plots.base_plot`` added new property `subplot_align_ylabels` to adjust y labels in subplots for backend `matplotlib` (`PR #23 <https://github.com/aim2dat/aim2dat/pull/23>`_).
 * ``strct.Structure`` added new file formats `.cssr`, `.v1` and `.cuc` to `to_file` for postprocessing in Zeo++ (`PR #26 <https://github.com/aim2dat/aim2dat/pull/26>`_).
-* ``strct.StructureOperaions`` now supports, in addition to a ``strct.StructureCollection`` object, a list of ``Structure`` objects upon initialization (`PR #29 <https://github.com/aim2dat/aim2dat/pull/29>`_).
+* ``strct.StructureOperations`` now supports, in addition to a ``strct.StructureCollection`` object, a list of ``Structure`` objects upon initialization (`PR #29 <https://github.com/aim2dat/aim2dat/pull/29>`_).
 * ``fct.smearing`` functions have a new parameter ``sampling_width`` to control the distance between x-values (`PR #32 <https://github.com/aim2dat/aim2dat/pull/32>`_).
 * ``strct.Structure.to_dict`` returns a dictionary of a ``Structure`` object (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
-* Structure manipulation methods maintain ``kinds`` information and ``strct.Structure.substitute_elements`` has now the addiational ``remove_kind`` parameter (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
+* Structure manipulation methods maintain ``kinds`` information and ``strct.Structure.substitute_elements`` has now the additional ``remove_kind`` parameter (`PR #34 <https://github.com/aim2dat/aim2dat/pull/34>`_).
 * ``utils.element_properties.get_atomic_radius`` supports now the set of radii determined in :doi:`10.1039/C9RA07327B` (`PR #35 <https://github.com/aim2dat/aim2dat/pull/35>`_).
 * ``strct.Structure.calculate_coordination`` supports the calculation of the coordination environment based on the sum of the corresponding atomic radii (`PR #35 <https://github.com/aim2dat/aim2dat/pull/35>`_).
 * ``strct.ext_manipulation.add_structure_coord`` replaces the ``strct.ext_manipulation.add_functional_group`` function allowing ``Structure`` objects as input and adding methods to define the orientation and position of the guest structure in more detail (`PR #37 <https://github.com/aim2dat/aim2dat/pull/37>`_, `PR #65 <https://github.com/aim2dat/aim2dat/pull/65>`_, `PR #85 <https://github.com/aim2dat/aim2dat/pull/85>`_).
