@@ -42,7 +42,7 @@ ctx:
         DFT:
           MGRID: {CUTOFF: 300, NGRIDS: 4, REL_CUTOFF: 100}
           POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
-          BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT]
+          BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT, BASIS_MOLOPT_UZH]
           POTENTIAL_FILE_NAME: POTENTIAL_UZH
           QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
           SCF: 
@@ -57,8 +57,8 @@ ctx:
         SUBSYS:
           CELL: {PERIODIC: XYZ}
           KIND:
-          - {'_': O, BASIS_SET: TZV2P-MOLOPT-GTH-q6, POTENTIAL: GTH-SCAN-q6}
-          - {'_': H, BASIS_SET: TZV2P-MOLOPT-GTH-q1, POTENTIAL: GTH-SCAN-q1}
+          - {'_': O, BASIS_SET: TZV2P-MOLOPT-MGGA-GTH-q6, POTENTIAL: GTH-MGGA-q6}
+          - {'_': H, BASIS_SET: TZV2P-MOLOPT-MGGA-GTH-q1, POTENTIAL: GTH-MGGA-q1}
   scf_m_info: 
     kpoints_ref_dist: 
     factor_unocc_states: 0.5

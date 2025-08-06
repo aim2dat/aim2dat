@@ -125,30 +125,31 @@ def test_precomputed_properties(create_structure_collection_object):
             ["Cs2Te_62_prim"],
             ["Cs2Te_62_prim", "Cs2Te_194_prim", "Cs2Te_19_prim", "CsK2Sb_225"],
         ),
-        (
-            "Matrix",
-            "Cs2Te",
-            ["CsK2Sb_225"],
-            ["Cs2Te_62_prim", "Cs2Te_194_prim", "Cs2Te_19_prim", "CsK2Sb_225"],
-        ),
-        (
-            "ACSF",
-            "molecules",
-            ["HClO"],
-            ["HClO", "HCN", "H2O"],
-        ),
-        (
-            "SOAP",
-            "Cs2Te",
-            ["Cs2Te_62_prim"],
-            ["Cs2Te_62_prim", "Cs2Te_194_prim", "Cs2Te_19_prim", "CsK2Sb_225"],
-        ),
-        (
-            "MBTR",
-            "Cs2Te",
-            ["Cs2Te_62_prim"],
-            ["Cs2Te_62_prim", "Cs2Te_194_prim", "Cs2Te_19_prim", "CsK2Sb_225"],
-        ),
+        # Due to dscribe not being installable on Python 3.13:
+        # (
+        #     "Matrix",
+        #     "Cs2Te",
+        #     ["CsK2Sb_225"],
+        #     ["Cs2Te_62_prim", "Cs2Te_194_prim", "Cs2Te_19_prim", "CsK2Sb_225"],
+        # ),
+        # (
+        #     "ACSF",
+        #     "molecules",
+        #     ["HClO"],
+        #     ["HClO", "HCN", "H2O"],
+        # ),
+        # (
+        #     "SOAP",
+        #     "Cs2Te",
+        #     ["Cs2Te_62_prim"],
+        #     ["Cs2Te_62_prim", "Cs2Te_194_prim", "Cs2Te_19_prim", "CsK2Sb_225"],
+        # ),
+        # (
+        #     "MBTR",
+        #     "Cs2Te",
+        #     ["Cs2Te_62_prim"],
+        #     ["Cs2Te_62_prim", "Cs2Te_194_prim", "Cs2Te_19_prim", "CsK2Sb_225"],
+        # ),
     ],
 )
 def test_transformer(
