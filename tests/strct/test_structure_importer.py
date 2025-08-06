@@ -144,9 +144,9 @@ def test_mp_openapi_interface(structure_comparison):
                 ref_structure = ref_strct
                 break
         if ref_structure is None:
-            raise ValueError(f"Structure {structure['source_id']} not found.")
+            raise ValueError(f"Structure {structure['attributes']['source_id']} not found.")
         structure_comparison(structure, ref_structure)
-        for attr in ["source_id", "source", "space_group", "icsd_ids"]:
+        for attr in ["source_id", "source", "space_group", "theoretical"]:
             assert structure["attributes"][attr] == ref_structure[attr], f"'{attr}' doesn't match."
         for attr in ["formation_energy", "stability", "band_gap"]:
             assert (
@@ -180,7 +180,7 @@ def test_append_from_mp_by_id(
     )
     assert strct_import._import_details == import_details
     structure_comparison(structure, ref_structure)
-    for attr in ["source_id", "source", "space_group", "icsd_ids"]:
+    for attr in ["source_id", "source", "space_group", "theoretical"]:
         assert structure["attributes"][attr] == ref_structure[attr], f"'{attr}' doesn't match."
     for attr in ["formation_energy", "stability", "band_gap"]:
         assert (
@@ -205,7 +205,7 @@ def test_oqmd_interface(structure_comparison):
                 ref_structure = ref_strct
                 break
         if ref_structure is None:
-            raise ValueError(f"Structure {structure['source_id']} not found.")
+            raise ValueError(f"Structure {structure['attributes']['source_id']} not found.")
         structure_comparison(structure, ref_structure)
         for attr in ["source_id", "source", "icsd_ids", "space_group", "functional"]:
             assert structure["attributes"][attr] == ref_structure[attr], f"'{attr}' doesn't match."
@@ -222,8 +222,8 @@ def test_optimade_interface(structure_comparison):
     """Test the optimade interface."""
     ref_structures = read_yaml_file(REF_PATH + "optimade_SiO2.yaml")
     strct_import = StructureImporter()
-    strct_collect = strct_import.import_from_optimade("SiO2", "mcloud.mc3d")
-    assert strct_import._import_details == {"optimade-mcloud.mc3d": [15, ["O", "Si"]]}
+    strct_collect = strct_import.import_from_optimade("SiO2", "mcloud.mc3d-pbe-v1")
+    assert strct_import._import_details == {"optimade-mcloud.mc3d-pbe-v1": [20, ["O", "Si"]]}
     for structure in strct_collect:
         ref_structure = None
         for ref_strct in ref_structures:
@@ -231,7 +231,7 @@ def test_optimade_interface(structure_comparison):
                 ref_structure = ref_strct
                 break
         if ref_structure is None:
-            raise ValueError(f"Structure {structure['source_id']} not found.")
+            raise ValueError(f"Structure {structure['attributes']['source_id']} not found.")
         structure_comparison(structure, ref_structure)
         for attr in ["source_id", "source"]:
             assert (

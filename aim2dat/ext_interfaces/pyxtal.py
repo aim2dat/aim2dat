@@ -181,7 +181,7 @@ def _create_crystals(
                     dim=3,
                     group=space_group,
                     species=list(formulas[formula_idx].keys()),
-                    numIons=list(formulas[formula_idx].values()),
+                    numIons=[int(val) for val in formulas[formula_idx].values()],
                     factor=volume_factor,
                     sites=None,
                     lattice=None,

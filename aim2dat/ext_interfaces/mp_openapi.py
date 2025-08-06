@@ -110,10 +110,6 @@ def _parse_entry(
     else:
         mp_structure = entry["structure"]
 
-    icsd_ids = []
-    if "icsd" in entry["database_IDs"]:
-        icsd_ids = [int(id0.split("-")[-1]) for id0 in entry["database_IDs"]["icsd"]]
-
     structure = {
         "label": "mp_" + entry["material_id"],
         "cell": mp_structure["lattice"]["matrix"],
@@ -124,7 +120,7 @@ def _parse_entry(
         "attributes": {
             "source_id": entry["material_id"],
             "source": "MP_" + mp_version,
-            "icsd_ids": icsd_ids,
+            "theoretical": entry["theoretical"],
             "formation_energy": {
                 "value": float(entry["formation_energy_per_atom"]),
                 "unit": "eV/atom",
@@ -200,8 +196,10 @@ def _retrieve_additional_data(
         phonon_data = retrieve_mp_object(
             session, link, "materials/phonon/", {"material_ids": mp_id}, False
         )
-        additional_data["ph_band_structure"] = phonon_data[0]["ph_bs"]
-        additional_data["ph_dos"] = phonon_data[0]["ph_dos"]
+        if phonon_data[0]["phonon_bandstructure"] is not None:
+            additional_data["ph_band_structure"] = phonon_data[0]["phonon_bandstructure"]
+        if phonon_data[0]["phonon_dos"] is not None:
+            additional_data["ph_dos"] = phonon_data[0]["phonon_dos"]
     if "el_dos" in property_data and el_structure_data["dos"] is not None:
         additional_data["el_dos"] = retrieve_mp_s3_object("dos", task_id)
     if "xas_spectra" in property_data:
