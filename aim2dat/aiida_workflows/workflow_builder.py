@@ -25,6 +25,7 @@ from aim2dat.io import read_yaml_file, write_yaml_file
 from aim2dat.aiida_workflows.utils import (
     create_aiida_node,
     obtain_value_from_aiida_node,
+    get_workchain_runtime,
 )
 from aim2dat.ext_interfaces.import_opt_dependencies import _check_package_dependencies
 from aim2dat.ext_interfaces.aiida import _load_data_node, _create_group
