@@ -15,8 +15,8 @@ from aiida.engine import (
 from aim2dat.aiida_workflows.cp2k.base_core_work_chain import _BaseCoreWorkChain
 from aim2dat.aiida_workflows.cp2k.core_work_chain_opt import _initialize_opt_parameters
 from aim2dat.aiida_workflows.cp2k.core_work_chain_handlers import (
+    _resubmit_calculation,
     _resubmit_unconverged_geometry,
-    _resubmit_unfinished_calculation,
 )
 
 
@@ -166,12 +166,12 @@ class _BaseOptimizationWorkChain(_BaseCoreWorkChain):
         return self._execute_error_handler(calc, _resubmit_unconverged_geometry)
 
     @process_handler(
-        priority=400,
-        exit_codes=[ExitCode(400), ExitCode(401)],
+        priority=402,
+        exit_codes=ExitCode(400),
     )
-    def resubmit_unfinished_calculation(self, calc):
-        """Resubmit the geometry in case the walltime is hit or the calculation is interrupted."""
-        return self._execute_error_handler(calc, _resubmit_unfinished_calculation)
+    def _resubmit_calculation(self, calc):
+        """Resubmit the geometry in case the walltime is hit."""
+        return self._execute_error_handler(calc, _resubmit_calculation)
 
     # @process_handler(
     #     priority=402,

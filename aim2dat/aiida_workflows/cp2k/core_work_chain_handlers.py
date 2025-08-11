@@ -38,7 +38,7 @@ def _switch_scf_parameters(inputs, ctx, exit_codes, calc):
             ctx.inputs.parameters = aiida_orm.Dict(dict=parameters)
             return ProcessHandlerReport(do_break=True), []
         else:
-            return ProcessHandlerReport(exit_code=exit_codes.ERROR_SCF_PARAMETERS), []
+            return ProcessHandlerReport(exit_code=exit_codes.ERROR_SCF_CONVERGENCE_NOT_REACHED), []
     return None, []
 
 
@@ -160,13 +160,11 @@ def _resubmit_unconverged_geometry(inputs, ctx, exit_Codes, calc):
     return None, []
 
 
-def _resubmit_unfinished_calculation(inputs, ctx, exit_codes, calc):
-    output_p_dict = calc.outputs["output_parameters"].get_dict()
-    if "scf_converged" not in output_p_dict:
-        return ProcessHandlerReport(exit_code=exit_codes.ERROR_CALCULATION_ABORTED), []
+def _resubmit_calculation(inputs, ctx, exit_codes, calc):
     if "parent_calc_folder" in ctx.inputs:
         ctx.inputs.parent_calc_folder = calc.outputs["remote_folder"]
-    _update_structure(ctx, calc.outputs, set_start_iteration=True)
+    if "opt_type" in ctx:
+        _update_structure(ctx, calc.outputs, set_start_iteration=True)
     return ProcessHandlerReport(do_break=True), []
 
 

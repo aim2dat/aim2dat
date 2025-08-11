@@ -72,7 +72,6 @@ def _set_numerical_p_basis_sets(cp2k_dict, input_p, structure, xc_functional):
                 return False, {"parameter": "numerical_p.basis_sets"}
             basis_sets[el] = bs_details[bs_size]
     else:
-        bs_type = ""
         basis_sets = input_p.get_dict()
 
     cp2k_kinds = []
