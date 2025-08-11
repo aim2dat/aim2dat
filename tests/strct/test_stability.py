@@ -12,7 +12,7 @@ from aim2dat.strct.stability import (
     _find_most_stable_elemental_phases,
     _calculate_stabilities,
 )
-from aim2dat.utils.units import UnitConverter
+from aim2dat.units import UnitConverter
 
 
 REF_PATH = os.path.dirname(__file__) + "/stabilities/"

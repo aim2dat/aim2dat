@@ -5,90 +5,55 @@ Deprecated units module.
 # Internal library imports
 import aim2dat.units as new_units
 
+from warnings import warn
 
-def Constants(*args, **kwargs):
+warn(
+    "This module will be removed, please use `aim2dat.units.Constants` instead.",
+    DeprecationWarning,
+    2,
+)
+
+
+class Constants(new_units.Constants):
     """Access fundamental constants."""
-    from warnings import warn
 
-    warn(
-        "This class will be removed, please use `aim2dat.units.Constants` instead.",
-        DeprecationWarning,
-        2,
-    )
-
-    return new_units.Constants(*args, **kwargs)
+    pass
 
 
-def Length(*args, **kwargs):
+class Length(new_units.Length):
     """Access length quantity."""
-    from warnings import warn
 
-    warn(
-        "This class will be removed, please use `aim2dat.units.Length` instead.",
-        DeprecationWarning,
-        2,
-    )
-    return new_units.Length(*args, **kwargs)
+    pass
 
 
-def Energy(*args, **kwargs):
+class Energy(new_units.Energy):
     """Access energy quantity."""
-    from warnings import warn
 
-    warn(
-        "This class will be removed, please use `aim2dat.units.Energy` instead.",
-        DeprecationWarning,
-        2,
-    )
-    return new_units.Energy(*args, **kwargs)
+    pass
 
 
-def Force(*args, **kwargs):
+class Force(new_units.Force):
     """Access force quantity."""
-    from warnings import warn
 
-    warn(
-        "This class will be removed, please use `aim2dat.units.Force` instead.",
-        DeprecationWarning,
-        2,
-    )
-    return new_units.Force(*args, **kwargs)
+    pass
 
 
-def Pressure(*args, **kwargs):
+class Pressure(new_units.Pressure):
     """Access pressure quantity."""
-    from warnings import warn
 
-    warn(
-        "This class will be removed, please use `aim2dat.units.Pressure` instead.",
-        DeprecationWarning,
-        2,
-    )
-    return new_units.Pressure(*args, **kwargs)
+    pass
 
 
-def Frequency(*args, **kwargs):
+class Frequency(new_units.Frequency):
     """Access frequency quantity."""
-    from warnings import warn
 
-    warn(
-        "This class will be removed, please use `aim2dat.units.Frequency` instead.",
-        DeprecationWarning,
-        2,
-    )
-    return new_units.Frequency(*args, **kwargs)
+    pass
 
 
-def Wavevector(*args, **kwargs):
+class Wavevector(new_units.Wavevector):
     """Access wavevector quantity."""
-    from warnings import warn
 
-    warn(
-        "This class will be removed, please use `aim2dat.units.Wavevector` instead.",
-        DeprecationWarning,
-        2,
-    )
-    return new_units.Wavevector(*args, **kwargs)
+    pass
 
 
 constants = Constants()
@@ -100,13 +65,7 @@ frequency = Frequency()
 wavevector = Wavevector()
 
 
-def UnitConverter(*args, **kwargs):
-    """Access unit converter."""
-    from warnings import warn
+class UnitConverter(new_units.UnitConverter):
+    """Deprecated UnitConverter class."""
 
-    warn(
-        "This class will be removed, please use `aim2dat.units.UnitConverter` instead.",
-        DeprecationWarning,
-        2,
-    )
-    return new_units.UnitConverter(*args, **kwargs)
+    pass
