@@ -1359,10 +1359,10 @@ class MultipleWorkflowBuilder(_BaseWorkflowBuilder):
             for task in self.tasks.keys():
                 if task in acc_tasks:
                     task_node = wf_builder._completed_tasks[task][0]
-                    if isinstance(task_node, WorkChainNode):
+                    if isinstance(task_node, aiida_orm.WorkChainNode):
                         total_runtime = get_workchain_runtime(task_node)
-                    elif isinstance(task_node, CalcFunctionNode):
-                        total_runtime = timedelta(seconds=0) # No remote computing
+                    elif isinstance(task_node, aiida_orm.CalcFunctionNode):
+                        total_runtime = timedelta(seconds=0)  # No remote computing
                     pd_series_dict[task].append(total_runtime)
                 if task not in acc_tasks:
                     pd_series_dict[task].append(None)

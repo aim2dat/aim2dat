@@ -162,6 +162,7 @@ def create_surface_slab(surface, nr_layers, parameters):
     outputs["slab"] = _create_structure_node(Structure(**slab))
     return outputs
 
+
 def get_workchain_runtime(workchain):
     """
     Calculate the total runtime of all CalcJobNodes linked to a WorkChainNode.
@@ -171,15 +172,17 @@ def get_workchain_runtime(workchain):
     total_runtime : datetime.timedelta
     """
     calcjobs = [
-        link.node for link in workchain.base.links.get_outgoing()
-        if isinstance(link.node, CalcJobNode)
+        link.node
+        for link in workchain.base.links.get_outgoing()
+        if isinstance(link.node, aiida_orm.CalcJobNode)
     ]
     runtimes = []
     for calc_j in calcjobs:
-        output_parameters =  calc_j.outputs["output_parameters"]
-        runtimes.append(output_parameters.get_dict().get('runtime'))
+        output_parameters = calc_j.outputs["output_parameters"]
+        runtimes.append(output_parameters.get_dict().get("runtime"))
     total_runtime = timedelta(seconds=round(sum(runtimes)))
     return total_runtime
+
 
 def concatenate_workflow_results(
     workflow_results1,
