@@ -28,7 +28,7 @@ from aim2dat.strct.stability import _calculate_stabilities
 from aim2dat.strct.strct_coordination import _coordination_compare_sites
 from aim2dat.strct.strct_prdf import _ffingerprint_compare_sites
 import aim2dat.strct.ext_manipulation as ext_manipulation
-import aim2dat.utils.chem_formula as utils_cf
+from aim2dat.chem_f import compare_formulas
 
 
 def _create_index_combinations(confined, strct_c, explicit_indices=None):
@@ -66,7 +66,7 @@ def _create_index_combinations(confined, strct_c, explicit_indices=None):
             if (
                 idx0 != idx1
                 and (idx1, idx0) not in pairs
-                and utils_cf.compare_formulas(
+                and compare_formulas(
                     strct_c[idx0].chem_formula, strct_c[idx1].chem_formula, reduce_formulas=True
                 )
             ):

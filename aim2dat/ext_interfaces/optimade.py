@@ -4,15 +4,15 @@
 import requests
 
 # Internal library imports
-import aim2dat.utils.chem_formula as utils_cf
+from aim2dat.chem_f import transform_str_to_dict, transform_dict_to_str
 import aim2dat.utils.space_groups as utils_sg
 from aim2dat.strct.strct import Structure
 
 
 def _formula_query_args(formula):
     """Create formula query for the optimade interface."""
-    formula_dict = utils_cf.transform_str_to_dict(formula)
-    formula_sorted = utils_cf.transform_dict_to_str(formula_dict, output_type="alphabetic")
+    formula_dict = transform_str_to_dict(formula)
+    formula_sorted = transform_dict_to_str(formula_dict, output_type="alphabetic")
     return f'chemical_formula_reduced="{formula_sorted}"'
 
 

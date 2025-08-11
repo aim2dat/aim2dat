@@ -21,7 +21,7 @@ from aim2dat.strct.ext_analysis import (
     calc_mbtr_descriptor,
 )
 from aim2dat.strct.strct import _compare_function_args
-from aim2dat.utils.chem_formula import transform_list_to_dict
+from aim2dat.chem_f import transform_list_to_dict
 from aim2dat.ml.utils import _get_all_elements
 
 

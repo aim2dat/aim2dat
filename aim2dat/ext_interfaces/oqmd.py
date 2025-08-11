@@ -1,11 +1,10 @@
 """Interface to the open quantum materials database."""
 
 # Third party library imports
-# import numpy as np
 import qmpy_rester as qr
 
 # Internal library imports
-import aim2dat.utils.chem_formula as utils_cf
+from aim2dat.chem_f import transform_str_to_dict
 import aim2dat.utils.space_groups as utils_sg
 from aim2dat.strct.strct import Structure
 
@@ -61,7 +60,7 @@ def _parse_entry(entry):
 
     entry_id = entry.get("entry_id")
     icsd_ids = [entry.get("icsd_id")] if entry.get("icsd_id") is not None else []
-    formula = utils_cf.transform_str_to_dict(entry.get("composition"))
+    formula = transform_str_to_dict(entry.get("composition"))
 
     functional = "PBE"
     if is_plus_u(formula):

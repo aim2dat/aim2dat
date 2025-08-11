@@ -4,11 +4,11 @@
 import pandas as pd
 
 # Internal library imports
-import aim2dat.utils.chem_formula as utils_cf
+from aim2dat.chem_f import transform_list_to_dict
 
 
 def _parse_el_concentrations(pd_series_dict, dtypes, structure, all_elements):
-    chem_formula = utils_cf.transform_list_to_dict(structure["elements"])
+    chem_formula = transform_list_to_dict(structure["elements"])
     for element in all_elements:
         dtypes["el_conc_" + element] = float
         if "el_conc_" + element not in pd_series_dict:
@@ -22,7 +22,7 @@ def _parse_el_concentrations(pd_series_dict, dtypes, structure, all_elements):
 
 
 def _parse_nr_atoms_per_el(pd_series_dict, dtypes, structure, all_elements):
-    chem_formula = utils_cf.transform_list_to_dict(structure["elements"])
+    chem_formula = transform_list_to_dict(structure["elements"])
     for element in all_elements:
         dtypes["nr_atoms_" + element] = int
         if "nr_atoms_" + element not in pd_series_dict:

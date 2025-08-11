@@ -9,7 +9,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 
 # Internal library imports
-from aim2dat.utils.chem_formula import transform_list_to_dict
+from aim2dat.chem_f import transform_list_to_dict
 from aim2dat.strct import StructureCollection
 
 

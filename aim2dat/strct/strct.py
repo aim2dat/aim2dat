@@ -34,7 +34,7 @@ from aim2dat.strct.strct_validation import (
     _structure_validate_positions,
 )
 from aim2dat.strct.mixin import AnalysisMixin, ManipulationMixin, classproperty
-import aim2dat.utils.chem_formula as utils_cf
+from aim2dat.chem_f import transform_dict_to_str, transform_list_to_dict
 import aim2dat.utils.print as utils_pr
 from aim2dat.utils.maths import calc_angle
 from aim2dat.utils.element_properties import get_atomic_number
@@ -151,7 +151,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
             return "[" + " ".join([" ".join([""] * (9 - len(val))) + val for val in vector]) + "]"
 
         output_str = utils_pr._print_title(f"Structure: {self.label}") + "\n\n"
-        output_str += " Formula: " + utils_cf.transform_dict_to_str(self.chem_formula) + "\n"
+        output_str += " Formula: " + transform_dict_to_str(self.chem_formula) + "\n"
         output_str += " PBC: [" + " ".join(str(val) for val in self.pbc) + "]\n\n"
 
         if self.cell is not None:
@@ -279,7 +279,7 @@ class Structure(AnalysisMixin, ManipulationMixin):
             raise ValueError("Length of `elements` is unequal to length of `positions`.")
         self._elements = elements
         self._element_dict = _create_index_dict(elements)
-        self._chem_formula = utils_cf.transform_list_to_dict(elements)
+        self._chem_formula = transform_list_to_dict(elements)
         self._numbers = tuple(get_atomic_number(el) for el in elements)
         self.reset_calculated_properties()
 
