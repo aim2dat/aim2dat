@@ -3,7 +3,7 @@ Functions to read band structure and pDOS files of CP2K.
 """
 
 # Internal library imports
-import aim2dat.utils.units as units
+import aim2dat.units as units
 import aim2dat.io.utils as io_utils
 
 

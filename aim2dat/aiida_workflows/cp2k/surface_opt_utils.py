@@ -9,7 +9,7 @@ from aiida.plugins import CalculationFactory
 
 # Internal library imports
 import aim2dat.utils.chem_formula as utils_cf
-from aim2dat.utils.units import energy
+from aim2dat.units import energy
 
 create_surface_slab = CalculationFactory("aim2dat.create_surface_slab")
 

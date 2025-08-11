@@ -7,7 +7,7 @@ from openmm.app import Topology, Simulation, Element
 import openmm.unit as unit
 
 # Internal library imports
-import aim2dat.utils.units as a2d_units
+import aim2dat.units as a2d_units
 
 
 def _create_simulation(structure, potential, integrator, potential_kwargs, bonds, device):

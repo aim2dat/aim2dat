@@ -24,7 +24,7 @@ from aim2dat.utils.dict_tools import dict_set_parameter
 from aim2dat.utils.element_properties import get_element_symbol
 
 
-pytest_plugins = ["aiida.manage.tests.pytest_fixtures"]
+# pytest_plugins = ["aiida.manage.tests.pytest_fixtures"]
 
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/strct/structures/"

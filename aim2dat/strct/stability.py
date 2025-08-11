@@ -5,7 +5,7 @@ Functions to calculate the formation energy and stability.
 # Internal library imports
 import aim2dat.utils.chem_formula as utils_cf
 from aim2dat.fct.hull import get_convex_hull
-from aim2dat.utils.units import UnitConverter
+from aim2dat.units import UnitConverter
 
 
 def _extract_value(structure, attr, unit):
