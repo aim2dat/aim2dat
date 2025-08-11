@@ -5,7 +5,7 @@ import numpy as np
 
 # Internal library imports:
 from aim2dat.plots.base_plot import _BasePlot
-from aim2dat.utils.units import UnitConverter
+from aim2dat.units import UnitConverter
 
 
 class PartialRDFPlot(_BasePlot):

@@ -4,7 +4,7 @@
 import pytest
 
 # Internal library imports
-from aim2dat.utils.units import UnitConverter, Constants, Length
+from aim2dat.units import UnitConverter, Constants, Length
 
 
 def test_constants():

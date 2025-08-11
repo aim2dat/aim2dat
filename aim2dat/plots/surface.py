@@ -8,7 +8,7 @@ import numpy as np
 
 # Internal library imports
 from aim2dat.plots.base_plot import _BasePlot
-from aim2dat.utils.units import UnitConverter
+from aim2dat.units import UnitConverter
 import aim2dat.utils.chem_formula as utils_cf
 import aim2dat.utils.element_properties as utils_el
 

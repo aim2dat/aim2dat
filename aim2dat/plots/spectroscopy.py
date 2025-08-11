@@ -5,7 +5,7 @@ Module to plot spectroscopy data.
 # Internal imports
 from aim2dat.plots.base_plot import _BasePlot
 from aim2dat.plots.base_mixin import _VLineMixin, _PeakDetectionMixin, _SmearingMixin
-from aim2dat.utils.units import UnitConverter
+from aim2dat.units import UnitConverter
 
 # from aim2dat.structure_importer.online_databases import MPImporter
 
