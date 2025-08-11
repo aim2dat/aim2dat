@@ -57,7 +57,7 @@ class PDOSWorkChain(_BaseCoreWorkChain):
             "ldos",
             valid_type=aiida_orm.List,
             required=False,
-            help=" Print the local PDOS, projected on subsets of atoms given through lists.",
+            help="Print the local PDOS, projected on subsets of atoms given through lists.",
         )
         spec.input(
             "wfn_n_homo",
