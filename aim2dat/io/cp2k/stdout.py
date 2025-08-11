@@ -786,7 +786,6 @@ _ERROR_MAPPING = [
     ("exceeded requested execution time", "exceeded_walltime"),
     ("Use the LSD option for an odd number of electrons", "odd_nr_electrons"),
     ("Extra MOs (ADDED_MOS) are required for smearing", "need_added_mos"),
-    ("exceeded requested execution time", "exceeded_walltime"),
     ("Cholesky decompose failed", "cholesky_decompose_failed"),
     ("Bad condition number R_COND", "bad_condition_number"),
 ]
