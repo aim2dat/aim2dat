@@ -54,6 +54,12 @@ class PDOSWorkChain(_BaseCoreWorkChain):
             "resolve_atoms", valid_type=aiida_orm.Bool, default=lambda: aiida_orm.Bool(False)
         )
         spec.input(
+            "ldos",
+            valid_type=aiida_orm.List,
+            required=False,
+            help=" Print the local PDOS, projected on subsets of atoms given through lists.",
+        )
+        spec.input(
             "wfn_n_homo",
             valid_type=aiida_orm.Int,
             default=lambda: aiida_orm.Int(0),
@@ -106,39 +112,6 @@ class PDOSWorkChain(_BaseCoreWorkChain):
         self.report(f"{self.ctx.mult_unit_cell} repetitions chosen.")
         self.report(f"{self.ctx.scf_m_info['factor_unocc_states']} factor for unoccupied states.")
 
-        # TO-DO: Include option to control the printing of local PDOS,
-        # projected on subsets of atoms given through lists
-        # Adapt structure and add for each site an individual kind:
-        if self.inputs.resolve_atoms.value:
-            structure = self.ctx.inputs.structure
-            structure_w_kinds = StructureData(
-                cell=self.ctx.inputs.structure.cell, pbc=self.ctx.inputs.structure.pbc
-            )
-            kind_parameters = dict_retrieve_parameter(parameters, ["FORCE_EVAL", "SUBSYS", "KIND"])
-            kind_parameters_new = []
-            if kind_parameters is not None:
-                # el_counter = {}
-                for site_idx, site in enumerate(structure.sites):
-                    element = structure.get_kind(site.kind_name).get_symbols_string()
-                    # if element not in el_counter:
-                    #    el_counter[element] = 1
-                    # else:
-                    #    el_counter[element] += 1
-                    kind_p = [par0 for par0 in kind_parameters if par0["_"] == site.kind_name]
-                    kind_p = dict(kind_p[0])
-                    kind_p["ELEMENT"] = element
-                    kind_p["_"] += "_" + str(site_idx)
-                    kind_parameters_new.append(kind_p)
-                    structure_w_kinds.append_atom(
-                        position=site.position,
-                        symbols=element,
-                        name=kind_p["_"],
-                    )
-            else:
-                return self.exit_codes.ERROR_INPUT_WRONG_VALUE
-            dict_set_parameter(parameters, ["FORCE_EVAL", "SUBSYS", "KIND"], kind_parameters_new)
-            self.ctx.inputs.structure = structure_w_kinds
-
         # Delete k-points section in input-parameters:
         kpoints_p = dict_retrieve_parameter(parameters, ["FORCE_EVAL", "DFT", "KPOINTS"])
         if kpoints_p is not None:
@@ -153,6 +126,37 @@ class PDOSWorkChain(_BaseCoreWorkChain):
 
         # Add the print-command for pdos and cubes:
         extra_sections = {"PDOS": {"COMPONENTS": True, "NLUMO": -1}}
+        if self.inputs.resolve_atoms.value:
+            structure = self.ctx.inputs.structure
+            dict_set_parameter(
+                extra_sections,
+                ["PDOS", "LDOS"],
+                [{"LIST": str(i + 1), "COMPONENTS": True} for i in range(len(structure.sites))],
+            )
+        elif "ldos" in self.inputs:
+            ldos_list = self.inputs.ldos.get_list()
+            ldos_str_list = []
+            if all(isinstance(i, int) for i in ldos_list):
+                ldos_list = [ldos_list]
+            ldos_list = [[ldos] if isinstance(ldos, int) else ldos for ldos in ldos_list]
+            if min(i for ldos in ldos_list for i in ldos) == 0:
+                ldos_list = [[i + 1 for i in ldos] for ldos in ldos_list]
+            if not all(isinstance(ldos, list) for ldos in ldos_list):
+                return self.exit_codes.ERROR_INPUT_WRONG_VALUE
+            for ldos in ldos_list:
+                ldos_sorted = sorted(ldos)
+                if len(ldos) > 4 and ldos_sorted[-1] - ldos_sorted[0] + 1 == len(ldos_sorted):
+                    ldos_str = f"{ldos_sorted[0]}..{ldos_sorted[-1]}"
+                else:
+                    atoms_string = [str(s) for s in ldos]
+                    ldos_str = " ".join(atoms_string)
+                ldos_str_list.append({"LIST": ldos_str, "COMPONENTS": True})
+            dict_set_parameter(
+                extra_sections,
+                ["PDOS", "LDOS"],
+                ldos_str_list,
+            )
+
         if "wfn_cube_list" in self.inputs:
             _, n_electrons = calculate_added_mos(
                 self.ctx.inputs.structure,
