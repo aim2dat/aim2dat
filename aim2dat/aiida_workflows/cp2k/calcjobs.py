@@ -232,7 +232,7 @@ class Cp2kCalculation(CalcJob):
         )
         spec.exit_code(
             501,
-            "ERROR_SCF_PARAMETERS",
+            "ERROR_SCF_CONVERGENCE_NOT_REACHED",
             message="No parameters found to converge the Kohn-Sham equations.",
         )
 
