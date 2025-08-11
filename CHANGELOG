@@ -17,6 +17,7 @@ Version 0.4.0
 * Hybrid functionals *PBE0* and *HSE06* with the *ADMM method* were implemented. As well as *rVV10* and *D3* dispersion corrections for *R2SCAN* and the hybrid functionals (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * ``aiida_workflows.cp2k.base_opt_work_chain._BaseOptimizationWorkChain`` contains now the option to fix atoms ``optimization_p.fixed_atoms`` and also to ignore scf convergence failure ``ignore_convergence_failure`` (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * ``aiida_workflows.MultipleWorkflowBuilder`` offers the possibility with ``return_remote_runtimes`` to return only the sum of remote runtimes for each task (`PR #155 <https://github.com/aim2dat/aim2dat/pull/155>`_).
+* ``aiida_workflows.cp2k.pdos_work_chain.PDOSWorkChain`` contains now the option to print the local PDOS, projected on subsets of atoms given through lists ``ldos`` (`PR #158 <https://github.com/aim2dat/aim2dat/pull/158>`_).
 
 **Fixes:**
 
@@ -40,6 +41,7 @@ Version 0.4.0
 * The bond distance from the hydrogen molecule was reduced from `0.909862` to `0.74` (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * The Materials Project openAPI interface does not support ICSD IDs anymore, instead the new key `theoretical` is added (`PR #154 <https://github.com/aim2dat/aim2dat/pull/154>`_).
 * The `chem_formula`, `units` and `element_properties` modules from the `aim2dat.utils` sup-package are moved to the new sub-packages: `chem_f`, `units` and `elements` to reduce the import paths; all element properties are now stored internaly, instead of relying on the ase implementation (`PR #159 <https://github.com/aim2dat/aim2dat/pull/159>`_).
+* ``aiida_workflows.cp2k.pdos_work_chain.PDOSWorkChain.resolve_atoms`` resolves the atoms now via local PDOS instead of changing each atom in a separate kind (`PR #158 <https://github.com/aim2dat/aim2dat/pull/158>`_).
 
 
 Version 0.3.0
