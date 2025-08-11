@@ -20,7 +20,7 @@ from aim2dat.ext_interfaces.ase_surface import _create_ase_surface_from_structur
 from aim2dat.ext_interfaces.ase_atoms import _extract_structure_from_atoms
 from aim2dat.ext_interfaces.spglib import _space_group_analysis
 from aim2dat.utils.maths import calc_angle, calc_reflection_matrix
-import aim2dat.utils.chem_formula as utils_cf
+from aim2dat.chem_f import transform_list_to_dict, reduce_formula
 
 
 SPACE_GROUP_HN_TO_LAYER_GROUP = {
@@ -457,10 +457,7 @@ def _determine_max_terminations(surf_1l, centrosymmetric, trans_v, tol):
             z_pos[atom.position[2]] = [atom.symbol]
 
     if centrosymmetric:
-        z_pos = {
-            k0: utils_cf.reduce_formula(utils_cf.transform_list_to_dict(v0))
-            for k0, v0 in z_pos.items()
-        }
+        z_pos = {k0: reduce_formula(transform_list_to_dict(v0)) for k0, v0 in z_pos.items()}
         z_pos_cs = {k0: v0 for k0, v0 in z_pos.items() if k0 < 0.5 * surf_1l.cell[:][2][2] - tol}
         for z_pos0, formula in z_pos.items():
             if z_pos0 not in z_pos_cs and formula not in list(z_pos_cs.values()):

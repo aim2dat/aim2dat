@@ -15,7 +15,12 @@ import numpy as np
 from aim2dat.plots.base_plot import _BasePlot
 from aim2dat.ext_interfaces.import_opt_dependencies import _return_ext_interface_modules
 from aim2dat.fct.hull import get_convex_hull, get_minimum_maximum_points
-import aim2dat.utils.chem_formula as utils_cf
+from aim2dat.chem_f import (
+    transform_str_to_dict,
+    transform_list_to_dict,
+    transform_dict_to_str,
+    transform_dict_to_latexstr,
+)
 import aim2dat.utils.space_groups as utils_sg
 from aim2dat.utils.element_properties import get_element_symbol
 
@@ -151,9 +156,9 @@ class PhasePlot(_BasePlot):
             value = [value]
         for f_idx, formula in enumerate(value):
             if isinstance(formula, str):
-                value[f_idx] = utils_cf.transform_str_to_dict(formula)
+                value[f_idx] = transform_str_to_dict(formula)
             elif isinstance(formula, (list, tuple)):
-                value[f_idx] = utils_cf.transform_list_to_dict(formula)
+                value[f_idx] = transform_list_to_dict(formula)
         self._top_labels = value
 
     def add_data_point(
@@ -189,9 +194,9 @@ class PhasePlot(_BasePlot):
             Additional attributes of the material that can be plotted.
         """
         if isinstance(formula, (list, tuple)):
-            formula = utils_cf.transform_list_to_dict(formula)
+            formula = transform_list_to_dict(formula)
         elif isinstance(formula, str):
-            formula = utils_cf.transform_str_to_dict(formula)
+            formula = transform_str_to_dict(formula)
         elif isinstance(formula, dict):
             pass
         else:
@@ -243,7 +248,7 @@ class PhasePlot(_BasePlot):
             dp_kwargs["space_group"] = structure["attributes"].pop("space_group", None)
             dp_kwargs["attributes"] = structure["attributes"]
             self.add_data_point(
-                data_label, utils_cf.transform_list_to_dict(structure["elements"]), **dp_kwargs
+                data_label, transform_list_to_dict(structure["elements"]), **dp_kwargs
             )
 
     def import_from_pandas_df(
@@ -326,7 +331,7 @@ class PhasePlot(_BasePlot):
                 x_value = 0.0
                 if plot_elements[0] in top_label:
                     x_value = top_label[plot_elements[0]] / sum(top_label.values())
-                label_tl.append(utils_cf.transform_dict_to_latexstr(top_label))
+                label_tl.append(transform_dict_to_latexstr(top_label))
                 values_tl.append(x_value)
                 data_sets.append(
                     {
@@ -354,7 +359,7 @@ class PhasePlot(_BasePlot):
         """Extract chemical formula from aiida structure nodes."""
         backend_module = _return_ext_interface_modules("aiida")
         struct = backend_module._load_data_node(row[comp_cols])
-        return utils_cf.transform_str_to_dict(struct.get_formula())
+        return transform_str_to_dict(struct.get_formula())
 
     @staticmethod
     def _extract_formula_from_atoms_per_el(row, comp_cols):
@@ -387,7 +392,7 @@ class PhasePlot(_BasePlot):
             if self.plot_property not in entry["attributes"]:
                 print(
                     f"Property '{self.plot_property}' missing, could not plot entry "
-                    + utils_cf.transform_dict_to_str(entry["chem_formula"])
+                    + transform_dict_to_str(entry["chem_formula"])
                     + "."
                 )
                 continue
@@ -398,7 +403,7 @@ class PhasePlot(_BasePlot):
             if self.show_crystal_system and entry["space_group"] is None:
                 print(
                     "Space group missing, could not plot entry "
-                    + utils_cf.transform_dict_to_str(entry["chem_formula"])
+                    + transform_dict_to_str(entry["chem_formula"])
                     + "."
                 )
                 continue
@@ -504,7 +509,7 @@ class PhasePlot(_BasePlot):
             if self.show_crystal_system and entry["space_group"] is None:
                 print(
                     "Space group missing, could not plot entry "
-                    + utils_cf.transform_dict_to_str(entry["chem_formula"])
+                    + transform_dict_to_str(entry["chem_formula"])
                     + "."
                 )
                 continue

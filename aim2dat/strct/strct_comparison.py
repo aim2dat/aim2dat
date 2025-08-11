@@ -8,7 +8,7 @@ import numpy as np
 
 # Internal library imports
 from aim2dat.strct.strct_prdf import _ffingerprint_compare
-import aim2dat.utils.chem_formula as utils_cf
+from aim2dat.chem_f import transform_list_to_dict, compare_formulas
 
 
 def _compare_structures_ffprint(
@@ -142,7 +142,7 @@ def _compare_structures_direct_comp(
             el_lists.append(std_structure["elements"])
         positions.append(std_structure["scaled_positions"])
 
-    if not utils_cf.compare_formulas(formulas[0], formulas[1], reduce_formulas=False):
+    if not compare_formulas(formulas[0], formulas[1], reduce_formulas=False):
         return False
 
     for per in list(itertools.permutations([0, 1, 2], 3)):
@@ -181,12 +181,10 @@ def _compare_structures_comp_sym(
             hall_number=hall_number,
             return_standardized_structure=return_standardized_structure,
         )
-        formulas.append(
-            utils_cf.transform_list_to_dict(sg_info["standardized_structure"]["elements"])
-        )
+        formulas.append(transform_list_to_dict(sg_info["standardized_structure"]["elements"]))
         space_groups.append(sg_info["space_group"]["number"])
     if space_groups[0] != space_groups[1]:
         return False
-    if not utils_cf.compare_formulas(formulas[0], formulas[1], reduce_formulas=False):
+    if not compare_formulas(formulas[0], formulas[1], reduce_formulas=False):
         return False
     return True

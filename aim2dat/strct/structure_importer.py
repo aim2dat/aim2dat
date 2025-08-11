@@ -14,7 +14,7 @@ from aim2dat.strct import StructureCollection
 from aim2dat.ext_interfaces import _return_ext_interface_modules
 from aim2dat.strct.mixin import ConstraintsMixin
 import aim2dat.utils.print as utils_pr
-import aim2dat.utils.chem_formula as utils_cf
+from aim2dat.chem_f import transform_dict_to_str, transform_str_to_dict
 
 
 def _update_import_details(import_details, provider, structures):
@@ -76,7 +76,7 @@ class StructureImporter(ConstraintsMixin):
                 if "element_set" in formula:
                     chemical_formulas.append("-".join(formula["element_set"]))
                 else:
-                    formula_str = utils_cf.transform_dict_to_str(formula["formula"])
+                    formula_str = transform_dict_to_str(formula["formula"])
                     if formula["is_reduced"]:
                         formula_str += " (reduced)"
                     chemical_formulas.append(formula_str)
@@ -457,7 +457,7 @@ class StructureImporter(ConstraintsMixin):
             space_group_list = [0] * backend_module.NR_OF_SPACE_GROUPS[dimensions]
             crystal_sys_list = [0] * len(backend_module.SPACE_GROUP_LIMITS[dimensions])
 
-            formula_dict = utils_cf.transform_str_to_dict(formula)
+            formula_dict = transform_str_to_dict(formula)
             unspecified_quantity = "-"
             if any(quantity == unspecified_quantity for quantity in formula_dict.values()):
                 formula_series = self._create_formula_series(list(formula_dict.keys()), max_atoms)
@@ -544,7 +544,7 @@ class StructureImporter(ConstraintsMixin):
         el_set_query_args = getattr(backend_module, "_element_set_query_args")
         formula_query_qrgs = getattr(backend_module, "_formula_query_args")
         queries = []
-        formula_dict = utils_cf.transform_str_to_dict(formula_str)
+        formula_dict = transform_str_to_dict(formula_str)
 
         if "-" in formula_str:
             elements = formula_str.split("-")
