@@ -37,6 +37,7 @@ Version 0.4.0
 * The `BASIS_SET_FILE_NAME` and `POTENTIAL_FILE_NAME` was changed from `[BASIS_MOLOPT, BASIS_MOLOPT_UCL]` to `BASIS_MOLOPT_UZH` and from `GTH_POTENTIALS` to `POTENTIAL_UZH` for CP2K workflows. Additionally, the `PBE` functional includes `GGA` in its `BASIS_SET` and `POTENTIAL` for each `KIND`. `SCAN` thus includes `MGGA` instead of `SCAN`. Shortrange `SR` for most metals become redundant by introducing `BASIS_MOLOPT_UZH` (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * The bond distance from the hydrogen molecule was reduced from `0.909862` to `0.74` (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * The Materials Project openAPI interface does not support ICSD IDs anymore, instead the new key `theoretical` is added (`PR #154 <https://github.com/aim2dat/aim2dat/pull/154>`_).
+* The `chem_formula`, `units` and `element_properties` modules from the `aim2dat.utils` sup-package are moved to the new sub-packages: `chem_f`, `units` and `elements` to reduce the import paths; all element properties are now stored internaly, instead of relying on the ase implementation (`PR #159 <https://github.com/aim2dat/aim2dat/pull/159>`_).
 
 
 Version 0.3.0
