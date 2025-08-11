@@ -11,7 +11,7 @@ from scipy.spatial.distance import cdist
 import numpy as np
 
 # Internal library imports
-from aim2dat.utils.element_properties import get_element_symbol
+from aim2dat.elements import get_element_symbol
 
 
 class SamePositionsError(ValueError):

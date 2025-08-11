@@ -22,7 +22,7 @@ from aim2dat.chem_f import (
     transform_dict_to_latexstr,
 )
 import aim2dat.utils.space_groups as utils_sg
-from aim2dat.utils.element_properties import get_element_symbol
+from aim2dat.elements import get_element_symbol
 
 
 def PhaseDiagram(*args, **kwargs):
