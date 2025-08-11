@@ -74,8 +74,8 @@ class _Cp2kBaseParser(Parser):
         # All exit_codes from the main-output are triggered here
         if "geo_not_converged" in result_dict:
             return self.exit_codes.ERROR_GEOMETRY_CONVERGENCE_NOT_REACHED
-        elif not scf_converged:
-            return self.exit_codes.ERROR_SCF_PARAMETERS
+        elif "scf_converged" in result_dict and not scf_converged:
+            return self.exit_codes.ERROR_SCF_CONVERGENCE_NOT_REACHED
         elif "odd_nr_electrons" in result_dict:
             return self.exit_codes.ERROR_ODD_NR_ELECTRONS
         elif "need_added_mos" in result_dict:
@@ -84,7 +84,7 @@ class _Cp2kBaseParser(Parser):
             return self.exit_codes.ERROR_ILL_CONDITIONED_MATRIX
         elif "bad_condition_number" in result_dict:
             return self.exit_codes.ERROR_BAD_CONDITION_NUMBER
-        elif result_dict["exceeded_walltime"]:
+        elif result_dict.get("exceeded_walltime", False):
             return self.exit_codes.ERROR_OUT_OF_WALLTIME
         elif "interrupted" in result_dict:
             return self.exit_codes.ERROR_INTERRUPTED
@@ -94,15 +94,14 @@ class _Cp2kBaseParser(Parser):
             return self.exit_codes.ERROR_INCOMPATIBLE_CODE_VERSION
         elif "incomplete" in result_dict:
             return self.exit_codes.ERROR_OUTPUT_INCOMPLETE
+        elif "io_error" in result_dict:
+            return self.exit_codes.ERROR_READING_OUTPUT_FILE
         else:
             return ExitCode(0)
 
     def _parse_stdout(self):
         """Parse main CP2K output file."""
         fname = self.node.get_option("output_filename")
-
-        if fname not in self.retrieved.list_object_names():
-            raise OutputParsingError("CP2K output file was not retrieved.")
 
         try:
             result_dict = read_cp2k_stdout(
@@ -112,7 +111,7 @@ class _Cp2kBaseParser(Parser):
             )
         # TODO distinguish different exceptions.
         except IOError:
-            return self.exit_codes.ERROR_READING_OUTPUT_FILE
+            result_dict = {"io_error": True}
 
         if result_dict is None:
             raise OutputParsingError("CP2K version is not supported.")
