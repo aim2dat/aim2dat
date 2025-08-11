@@ -10,7 +10,7 @@ import numpy as np
 from aim2dat.plots.base_plot import _BasePlot
 from aim2dat.units import UnitConverter
 from aim2dat.chem_f import transform_str_to_dict, transform_list_to_dict
-import aim2dat.utils.element_properties as utils_el
+import aim2dat.elements as utils_el
 
 
 def _validate_miller_indices(m_indices):

@@ -8,7 +8,7 @@ from aim2dat.io.utils import (
     read_multiple,
     custom_open,
 )
-from aim2dat.utils.element_properties import get_element_symbol
+from aim2dat.elements import get_element_symbol
 
 
 def _check_for_soc_files(folder_path, soc):

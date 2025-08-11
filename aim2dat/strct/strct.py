@@ -37,7 +37,7 @@ from aim2dat.strct.mixin import AnalysisMixin, ManipulationMixin, classproperty
 from aim2dat.chem_f import transform_dict_to_str, transform_list_to_dict
 import aim2dat.utils.print as utils_pr
 from aim2dat.utils.maths import calc_angle
-from aim2dat.utils.element_properties import get_atomic_number
+from aim2dat.elements import get_atomic_number
 from aim2dat.utils.dict_tools import dict_retrieve_parameter
 
 

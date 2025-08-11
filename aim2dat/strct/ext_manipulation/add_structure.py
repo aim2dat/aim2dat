@@ -21,7 +21,7 @@ from aim2dat.strct.ext_manipulation.utils import (
 )
 from aim2dat.strct.ext_manipulation.rotate_structure import rotate_structure
 from aim2dat.strct.strct_misc import _calc_atomic_distance
-from aim2dat.utils.element_properties import get_element_symbol
+from aim2dat.elements import get_element_symbol
 from aim2dat.utils.maths import calc_angle, create_lin_ind_vector
 from aim2dat.io import read_yaml_file
 

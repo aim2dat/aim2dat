@@ -7,7 +7,7 @@ import aiida.orm as aiida_orm
 
 # Internal library imports
 from aim2dat.aiida_workflows.cp2k.base_core_work_chain import _BaseCoreWorkChain
-from aim2dat.utils.element_properties import get_group
+from aim2dat.elements import get_group
 
 
 class FindSCFParametersWorkChain(_BaseCoreWorkChain):

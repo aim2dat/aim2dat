@@ -9,7 +9,7 @@ import spglib
 from scipy.spatial.transform import Rotation
 
 # Internal library imports
-from aim2dat.utils.element_properties import get_atomic_number, get_element_symbol
+from aim2dat.elements import get_atomic_number, get_element_symbol
 from aim2dat.utils.maths import calc_angle, calc_reflection_matrix
 from aim2dat.strct.strct import Structure
 
