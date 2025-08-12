@@ -1,0 +1,288 @@
+%YAML 1.2
+---
+# Protocol with standard settings for the adsorption workflow.
+title: cp2k-adsorption-standard
+version: '1.0'
+description: Standard settings to calculated the adsorption properties.
+dependencies:
+- [aiida-core, '1.6', Null]
+parent_node_type: core.structure
+parent_node_input:
+  find_scf_parameters: structural_p.structure
+  pre_geo_opt: structural_p.structure
+tasks:
+  find_scf_parameters:
+    process: aim2dat.cp2k.find_scf_p
+    blacklist_inputs:
+    - custom_scf_method
+  pre_geo_opt:
+    process: aim2dat.cp2k.geo_opt
+    blacklist_inputs:
+    - custom_scf_method
+    dependencies:
+      find_scf_parameters:
+      - [scf_parameters, structural_p.scf_parameters]
+  geo_opt:
+    process: aim2dat.cp2k.geo_opt
+    blacklist_inputs:
+    - custom_scf_method
+    dependencies:
+      find_scf_parameters:
+      - [scf_parameters, structural_p.scf_parameters]
+      pre_geo_opt:
+      - [cp2k.output_structure, structural_p.structure]
+  pdos:
+    process: aim2dat.cp2k.pdos
+    blacklist_inputs:
+    - custom_scf_method
+    dependencies:
+      geo_opt:
+      - [cp2k.output_structure, structural_p.structure]
+      - [scf_parameters, structural_p.scf_parameters]
+  partial_charges:
+    process: aim2dat.cp2k.partial_charges
+    blacklist_inputs:
+    - custom_scf_method
+    dependencies:
+      geo_opt:
+      - [cp2k.output_structure, structural_p.structure]
+      - [cp2k.remote_folder, cp2k.parent_calc_folder]
+      - [scf_parameters, structural_p.scf_parameters]
+general_input:
+  cp2k.parameters:
+    value:
+      GLOBAL:
+        PRINT_LEVEL: MEDIUM
+        PREFERRED_DIAG_LIBRARY: SCALAPACK
+        EXTENDED_FFT_LENGTHS: true
+      FORCE_EVAL:
+        METHOD: Quickstep
+        STRESS_TENSOR: ANALYTICAL
+        DFT:
+          MGRID: {}
+          POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+          BASIS_SET_FILE_NAME: BASIS_MOLOPT_UZH
+          POTENTIAL_FILE_NAME: POTENTIALS_UZH
+          QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
+          SCF: {EPS_SCF: 5.0e-7}
+          KPOINTS:
+            EPS_GEO: 1.0E-8
+          XC: {}
+        SUBSYS:
+          CELL: {PERIODIC: XYZ}
+    aiida_node: true
+    tasks: [find_scf_parameters, pre_geo_opt, geo_opt, pdos, partial_charges]
+  numerical_p.kpoints_ref_dist:
+    value: 0.15
+    aiida_node: true
+    tasks: [find_scf_parameters, pre_geo_opt, geo_opt, partial_charges]
+  enable_roks:
+    value: false
+    aiida_node: true
+    tasks: [find_scf_parameters, pre_geo_opt, geo_opt, pdos, partial_charges]
+  scf_method:
+    value: density_mixing
+    aiida_node: true
+    tasks: [find_scf_parameters, pre_geo_opt, geo_opt, partial_charges]
+  adjust_scf_parameters:
+    value: true
+    aiida_node: true
+    tasks: [pre_geo_opt, geo_opt, pdos, partial_charges]
+  always_add_unocc_states:
+    value: true
+    aiida_node: true
+    tasks: [find_scf_parameters, pre_geo_opt, geo_opt, partial_charges]
+  factor_unocc_states:
+    value: 0.75
+    aiida_node: true
+    tasks: [find_scf_parameters, pre_geo_opt, geo_opt, pdos, partial_charges]
+  max_iterations:
+    value: 100
+    aiida_node: true
+    compare: False
+    tasks: [find_scf_parameters, pre_geo_opt, geo_opt, pdos, partial_charges]
+  optimization_p.max_force->pre_geo_opt:
+    value: 0.0005
+    aiida_node: true
+  optimization_p.max_force->geo_opt:
+    value: 0.00001
+    aiida_node: true
+  scf_method->pdos:
+    value: super_cell
+    aiida_node: true
+  minimum_cell_length->pdos:
+    value: 25.0
+    aiida_node: true
+  maximum_cell_length->pdos:
+    value: 40.0
+    aiida_node: true
+  critic2.parameters->partial_charges:
+    value:
+    - crystal aiida-ELECTRON_DENSITY-1_0.cube
+    - load aiida-ELECTRON_DENSITY-1_0.cube zpsp
+    - load aiida-ELECTRON_DENSITY-1_0.cube
+    - integrable 2
+    - yt
+    dependency: critic2.code
+    aiida_node: true
+  chargemol.parameters->partial_charges:
+    value: {periodicity along A, B, and C vectors: [true, true, true], charge type: DDEC6}
+    dependency: chargemol.code
+    aiida_node: true
+user_input:
+  scf_extended_system:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, pre_geo_opt, geo_opt, pdos, partial_charges]
+  numerical_p.xc_functional:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, pre_geo_opt, geo_opt, pdos, partial_charges]
+  numerical_p.cutoff_values:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, geo_opt, pdos, partial_charges]
+  numerical_p.basis_sets:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, geo_opt, pdos, partial_charges]
+  numerical_p.pseudo_file:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters, geo_opt, pdos, partial_charges]
+  numerical_p.basis_file:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters, geo_opt, pdos, partial_charges]
+  numerical_p.cutoff_values->pre_geo_opt:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: false
+  numerical_p.basis_sets->pre_geo_opt:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: false
+  numerical_p.pseudo_file->pre_geo_opt:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+  numerical_p.basis_file->pre_geo_opt:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+  ignore_convergence_failure:
+    validation: aim2dat.cp2k.geo_opt
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [pre_geo_opt]
+  optimization_p.fixed_atoms:
+    validation: aim2dat.cp2k.geo_opt
+    aiida_node: true
+    compare: false
+    tasks: [pre_geo_opt, geo_opt]
+  resolve_atoms->pdos:
+    validation: aim2dat.cp2k.pdos
+    aiida_node: true
+    optional: true
+    compare: false
+  ldos->pdos:
+    validation: aim2dat.cp2k.pdos
+    aiida_node: true
+    optional: true
+    compare: false
+  cp2k.code:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: false
+    tasks: [find_scf_parameters, pre_geo_opt, geo_opt, pdos, partial_charges]
+  cp2k.metadata:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters, pre_geo_opt, geo_opt, pdos, partial_charges]
+  critic2.code:
+    validation: aim2dat.cp2k.partial_charges
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [partial_charges]
+  critic2.metadata:
+    validation: aim2dat.cp2k.partial_charges
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+    tasks: [partial_charges]
+  chargemol.code:
+    validation: aim2dat.cp2k.partial_charges
+    aiida_node: true
+    optional: true
+    tasks: [partial_charges]
+  chargemol.metadata:
+    validation: aim2dat.cp2k.partial_charges
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+    tasks: [partial_charges]
+  chargemol.path_atomic_densities:
+    validation: aim2dat.cp2k.partial_charges
+    aiida_node: true
+    dependency: chargemol.code
+    compare: false
+    tasks: [partial_charges]
+  clean_workdir:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters, pre_geo_opt, geo_opt, pdos, partial_charges]
+results:
+  scf_method_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [method_level]
+  scf_parameter_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [parameter_level]
+  scf_smearing_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [smearing_level]
+  optimized_structure:
+    task: geo_opt
+    output_port: cp2k.output_structure
+  total_energy:
+    task: geo_opt
+    output_port: cp2k.output_parameters
+    retrieve_value: [energy]
+    unit: Hartree
+  pdos:
+    task: pdos
+    output_port: cp2k.output_pdos
+  bader_populations:
+    task: partial_charges
+    output_port: critic2.output_bader_populations
+  ddec6_populations:
+    task: partial_charges
+    output_port: chargemol.output_ddec6_populations
+  hirshfeld_populations:
+    task: partial_charges
+    output_port: cp2k.output_hirshfeld_populations
+  mulliken_populations:
+    task: partial_charges
+    output_port: cp2k.output_mulliken_populations

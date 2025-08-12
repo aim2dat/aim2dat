@@ -259,7 +259,10 @@ def _initialize_scf_parameters(inputs, ctx):
             cur_scf_p["method_level"] += 1
             cur_scf_p_set = ctx.scf_method_p[cur_scf_p["method_level"]]
     if not successful_upd:
-        return ("ERROR_SCF_PARAMETERS", {}), reports  # self.exit_codes.ERROR_SCF_PARAMETERS
+        return (
+            "ERROR_SCF_CONVERGENCE_NOT_REACHED",
+            {},
+        ), reports  # self.exit_codes.ERROR_SCF_CONVERGENCE_NOT_REACHED
 
     ctx.cur_scf_p = cur_scf_p
     ctx.cur_scf_p_set = cur_scf_p_set
