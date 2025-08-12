@@ -84,7 +84,7 @@ class _Cp2kBaseParser(Parser):
             return self.exit_codes.ERROR_ILL_CONDITIONED_MATRIX
         elif "bad_condition_number" in result_dict:
             return self.exit_codes.ERROR_BAD_CONDITION_NUMBER
-        elif result_dict["exceeded_walltime"]:
+        elif result_dict.get("exceeded_walltime", False):
             return self.exit_codes.ERROR_OUT_OF_WALLTIME
         elif "interrupted" in result_dict:
             return self.exit_codes.ERROR_INTERRUPTED
