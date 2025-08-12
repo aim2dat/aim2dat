@@ -16,6 +16,7 @@ Version 0.4.0
 * A workflow was added to calculate the adsorption energies [``cp2k-adsorption-mofs-*``, ``cp2k-preadsorption-mofs-*``, ``cp2k-molecule-*``] (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * Hybrid functionals *PBE0* and *HSE06* with the *ADMM method* were implemented. As well as *rVV10* and *D3* dispersion corrections for *R2SCAN* and the hybrid functionals (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * ``aiida_workflows.cp2k.base_opt_work_chain._BaseOptimizationWorkChain`` contains now the option to fix atoms ``optimization_p.fixed_atoms`` and also to ignore scf convergence failure ``ignore_convergence_failure`` (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
+* ``aiida_workflows.cp2k.pdos_work_chain.PDOSWorkChain`` contains now the option to print the local PDOS, projected on subsets of atoms given through lists ``ldos`` (`PR #158 <https://github.com/aim2dat/aim2dat/pull/158>`_).
 
 **Fixes:**
 
@@ -38,6 +39,7 @@ Version 0.4.0
 * The `BASIS_SET_FILE_NAME` and `POTENTIAL_FILE_NAME` was changed from `[BASIS_MOLOPT, BASIS_MOLOPT_UCL]` to `BASIS_MOLOPT_UZH` and from `GTH_POTENTIALS` to `POTENTIAL_UZH` for CP2K workflows. Additionally, the `PBE` functional includes `GGA` in its `BASIS_SET` and `POTENTIAL` for each `KIND`. `SCAN` thus includes `MGGA` instead of `SCAN`. Shortrange `SR` for most metals become redundant by introducing `BASIS_MOLOPT_UZH` (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * The bond distance from the hydrogen molecule was reduced from `0.909862` to `0.74` (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * The Materials Project openAPI interface does not support ICSD IDs anymore, instead the new key `theoretical` is added (`PR #154 <https://github.com/aim2dat/aim2dat/pull/154>`_).
+* ``aiida_workflows.cp2k.pdos_work_chain.PDOSWorkChain.resolve_atoms`` resolves the atoms now via local PDOS instead of changing each atom in a separate kind (`PR #158 <https://github.com/aim2dat/aim2dat/pull/158>`_).
 
 
 Version 0.3.0
