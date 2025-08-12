@@ -171,11 +171,7 @@ def get_workchain_runtime(workchain):
     -------
     total_runtime : datetime.timedelta
     """
-    calcjobs = [
-        link.node
-        for link in workchain.base.links.get_outgoing()
-        if isinstance(link.node, aiida_orm.CalcJobNode)
-    ]
+    calcjobs = workchain.base.links.get_outgoing(node_class=aiida_orm.CalcJobNode).all_nodes()
     runtimes = []
     for calc_j in calcjobs:
         output_parameters = calc_j.outputs["output_parameters"]
