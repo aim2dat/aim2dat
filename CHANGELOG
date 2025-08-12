@@ -16,7 +16,7 @@ Version 0.4.0
 * A workflow was added to calculate the adsorption energies [``cp2k-adsorption-mofs-*``, ``cp2k-preadsorption-mofs-*``, ``cp2k-molecule-*``] (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * Hybrid functionals *PBE0* and *HSE06* with the *ADMM method* were implemented. As well as *rVV10* and *D3* dispersion corrections for *R2SCAN* and the hybrid functionals (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * ``aiida_workflows.cp2k.base_opt_work_chain._BaseOptimizationWorkChain`` contains now the option to fix atoms ``optimization_p.fixed_atoms`` and also to ignore scf convergence failure ``ignore_convergence_failure`` (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
-* ``aiida_workflows.MultipleWorkflowBuilder`` offers the possibility to return only the sum of remote runtimes for each task (`PR #155 <https://github.com/aim2dat/aim2dat/pull/155>`_).
+* ``aiida_workflows.MultipleWorkflowBuilder`` offers the possibility with ``return_remote_runtimes`` to return only the sum of remote runtimes for each task (`PR #155 <https://github.com/aim2dat/aim2dat/pull/155>`_).
 
 **Fixes:**
 
