@@ -22,7 +22,7 @@ from aim2dat.aiida_workflows.cp2k.core_work_chain_handlers import (
     _switch_to_atomic_scf_guess,
     _switch_to_broyden_mixing,
     _resubmit_unconverged_geometry,
-    _resubmit_unfinished_calculation,
+    _resubmit_calculation,
 )
 
 
@@ -82,8 +82,8 @@ def test_scf_error_handlers(
     [
         ("Al_225_conv", "unconv_structure_1", _resubmit_unconverged_geometry),
         ("Al_225_conv", "unconv_structure_2", _resubmit_unconverged_geometry),
-        ("Al_225_conv", "unfinished_structure_1", _resubmit_unfinished_calculation),
-        ("Al_225_conv", "unfinished_structure_2", _resubmit_unfinished_calculation),
+        ("Al_225_conv", "unfinished_structure_1", _resubmit_calculation),
+        ("Al_225_conv", "unfinished_structure_2", _resubmit_calculation),
     ],
 )
 def test_opt_error_handlers(
