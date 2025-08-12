@@ -230,11 +230,19 @@ class Cp2kCalculation(CalcJob):
             "ERROR_GEOMETRY_CONVERGENCE_NOT_REACHED",
             message="The ionic minimization cycle did not converge for the given thresholds.",
         )
+        spec.exit_code(
+            501,
+            "ERROR_SCF_CONVERGENCE_NOT_REACHED",
+            message="No parameters found to converge the Kohn-Sham equations.",
+        )
 
     def prepare_for_submission(self, folder):
         """Prepare input for calculation."""
         parameters = _set_dict_to_upper(self.inputs.parameters.get_dict())
         dict_set_parameter(parameters, ["GLOBAL", "PROJECT"], self._PROJECT_NAME)
+        walltime = self.inputs["metadata"]["options"].get("max_wallclock_seconds")
+        if walltime:
+            dict_set_parameter(parameters, ["GLOBAL", "WALLTIME"], walltime)
 
         if "structure" in self.inputs:
             self._write_structure(self.inputs.structure, folder, self._COORDS_FILE_NAME)
@@ -315,9 +323,9 @@ class Cp2kCalculation(CalcJob):
             if self.inputs.code.computer.uuid == comp_uuid:
                 calcinfo.remote_symlink_list += copy_info
             else:
-                self.report("Transfer between two differen computers not yet supported.")
+                self.report("Transfer between two different computers not yet supported.")
                 # self.report(
-                #    f"Transfering files from {self.inputs.parent_calc_folder.computer.label} to "
+                #    f"Transferring files from {self.inputs.parent_calc_folder.computer.label} to "
                 #    f"{self.inputs.code.computer.label}."
                 # )
                 # calcinfo.remote_copy_list += copy_info

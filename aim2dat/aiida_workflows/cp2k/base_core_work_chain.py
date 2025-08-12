@@ -30,6 +30,7 @@ from aim2dat.aiida_workflows.cp2k.work_chain_specs import (
     core_work_chain_exit_codes,
 )
 from aim2dat.aiida_workflows.cp2k.core_work_chain_handlers import (
+    _resubmit_calculation,
     _switch_scf_parameters,
     _switch_to_broyden_mixing,
     _switch_to_open_shell_ks,
@@ -220,7 +221,7 @@ class _BaseCoreWorkChain(BaseRestartWorkChain):
         )
         output_p_dict = self.ctx.children[-1].outputs["output_parameters"].get_dict()
         if not output_p_dict["scf_converged"]:
-            return self.exit_codes.ERROR_SCF_PARAMETERS
+            return self.exit_codes.ERROR_SCF_CONVERGENCE_NOT_REACHED
 
     def on_terminated(self):
         """Clean working directories of the calculations."""
@@ -245,6 +246,11 @@ class _BaseCoreWorkChain(BaseRestartWorkChain):
     def wc_specific_post_processing(self):
         pass
 
+    @process_handler(priority=402, exit_codes=ExitCode(310))
+    def resubmit_calculation(self, calc):
+        """Resubmit in case the calculation did not start."""
+        return self._execute_error_handler(calc, _resubmit_calculation)
+
     @process_handler(
         priority=401,
         exit_codes=[
@@ -254,7 +260,7 @@ class _BaseCoreWorkChain(BaseRestartWorkChain):
             ExitCode(404),
             ExitCode(405),
             ExitCode(500),
-            ExitCode(610),
+            ExitCode(501),
         ],
     )
     def check_scf_convergence(self, calc):
