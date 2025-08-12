@@ -4,7 +4,7 @@
 import pytest
 
 # Internal library imports
-import aim2dat.utils.element_properties as el_properties
+import aim2dat.elements as el_properties
 
 
 @pytest.mark.parametrize(
@@ -62,7 +62,7 @@ def test_get_atomic_number_invalid_input():
 
 @pytest.mark.parametrize(
     "test_input, test_result",
-    [("C", "C"), ("Oxygen", "O"), (82, "Pb"), ("sulfur", "S"), ("na", "Na")],
+    [("C", "C"), ("Oxygen", "O"), (82, "Pb"), ("sulfur", "S"), ("na", "Na"), (118, "Og")],
 )
 def test_get_element_symbol(test_input, test_result):
     """Test get_element_symbol-function."""

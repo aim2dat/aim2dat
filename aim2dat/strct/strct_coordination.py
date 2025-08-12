@@ -11,7 +11,7 @@ import numpy as np
 
 # Internal library imports
 from aim2dat.strct.strct_super_cell import _create_supercell_positions
-from aim2dat.utils.element_properties import get_atomic_radius
+from aim2dat.elements import get_atomic_radius
 from aim2dat.utils.maths import calc_solid_angle, calc_polygon_area
 
 _supported_methods = [

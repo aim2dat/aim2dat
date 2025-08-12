@@ -10,8 +10,8 @@ import aiida.orm as aiida_orm
 from aiida.engine import calcfunction
 
 # Internal library imports
-from aim2dat.utils.element_properties import get_atomic_number
-from aim2dat.utils.units import energy
+from aim2dat.elements import get_atomic_number
+from aim2dat.units import energy
 from aim2dat.utils.dict_tools import dict_set_parameter, dict_retrieve_parameter
 from aim2dat.io import read_yaml_file
 

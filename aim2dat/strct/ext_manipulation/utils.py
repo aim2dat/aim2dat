@@ -6,7 +6,7 @@ from typing import Union, List, Tuple
 
 # Internal library imports
 from aim2dat.strct import Structure
-from aim2dat.utils.element_properties import get_atomic_radius
+from aim2dat.elements import get_atomic_radius
 
 
 class DistanceThresholdError(ValueError):

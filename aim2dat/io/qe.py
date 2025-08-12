@@ -19,7 +19,7 @@ from aim2dat.io.utils import (
     custom_open,
 )
 from aim2dat.io.base_parser import transform_str_value
-from aim2dat.utils.units import length
+from aim2dat.units import length
 from aim2dat.utils.dict_tools import dict_create_tree
 
 

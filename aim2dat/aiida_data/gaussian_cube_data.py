@@ -10,7 +10,7 @@ import numpy as np
 from aiida.orm import Data
 
 # Internal library imports
-from aim2dat.utils.units import UnitConverter, length
+from aim2dat.units import UnitConverter, length
 
 
 class GaussianCubeData(Data):

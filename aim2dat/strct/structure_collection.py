@@ -27,7 +27,7 @@ except ImportError:
 from aim2dat.strct.strct import Structure
 from aim2dat.ext_interfaces import _return_ext_interface_modules
 import aim2dat.utils.print as utils_pr
-import aim2dat.utils.chem_formula as utils_cf
+from aim2dat.chem_f import transform_dict_to_str
 
 
 class StructureCollection:
@@ -106,7 +106,7 @@ class StructureCollection:
         def create_structure_summaries(start, end):
             strct_list = []
             for strct in self[start:end]:
-                cf_str = utils_cf.transform_dict_to_str(strct.chem_formula)
+                cf_str = transform_dict_to_str(strct.chem_formula)
                 strct_str = (
                     strct.label
                     + " ".join([""] * (20 - len(strct.label)))

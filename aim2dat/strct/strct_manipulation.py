@@ -11,7 +11,7 @@ import numpy as np
 
 # Internal library imports
 from aim2dat.strct.strct_super_cell import _create_supercell_positions
-from aim2dat.utils.element_properties import get_atomic_radius, get_element_symbol
+from aim2dat.elements import get_atomic_radius, get_element_symbol
 
 if TYPE_CHECKING:
     from aim2dat.strct.strct import Structure

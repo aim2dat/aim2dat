@@ -3,9 +3,9 @@ Functions to calculate the formation energy and stability.
 """
 
 # Internal library imports
-import aim2dat.utils.chem_formula as utils_cf
+from aim2dat.chem_f import transform_dict_to_str
 from aim2dat.fct.hull import get_convex_hull
-from aim2dat.utils.units import UnitConverter
+from aim2dat.units import UnitConverter
 
 
 def _extract_value(structure, attr, unit):
@@ -15,7 +15,7 @@ def _extract_value(structure, attr, unit):
         unit0 = value["unit"].split("/")[0]
         value = value["value"]
     if unit0 is None and unit is not None:
-        chem_f_str = utils_cf.transform_dict_to_str(structure.chem_formula)
+        chem_f_str = transform_dict_to_str(structure.chem_formula)
         print(
             f"No unit given for {structure.label} - {chem_f_str} with attr. '{attr}', ",
             f"assuming {unit} as energy unit.",
@@ -71,7 +71,7 @@ def _calculate_formation_energy(structure, elemental_phases, unit):
     if any(elemental_phases.get(element) is None for element in chem_formula.keys()):
         print(
             f"Elemental phase missing, cannot process entry {structure.label} - "
-            f"{utils_cf.transform_dict_to_str(chem_formula)}."
+            f"{transform_dict_to_str(chem_formula)}."
         )
         return None, unit
     if "total_energy" in structure.attributes:
@@ -82,7 +82,7 @@ def _calculate_formation_energy(structure, elemental_phases, unit):
     else:
         print(
             f"Total energy missing, cannot process entry {structure.label} - "
-            f"{utils_cf.transform_dict_to_str(chem_formula)}."
+            f"{transform_dict_to_str(chem_formula)}."
         )
         return None, unit
     for element, quantity in chem_formula.items():

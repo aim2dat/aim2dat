@@ -8,9 +8,9 @@ import numpy as np
 
 # Internal library imports
 from aim2dat.plots.base_plot import _BasePlot
-from aim2dat.utils.units import UnitConverter
-import aim2dat.utils.chem_formula as utils_cf
-import aim2dat.utils.element_properties as utils_el
+from aim2dat.units import UnitConverter
+from aim2dat.chem_f import transform_str_to_dict, transform_list_to_dict
+import aim2dat.elements as utils_el
 
 
 def _validate_miller_indices(m_indices):
@@ -628,9 +628,9 @@ class SurfacePlot(_BasePlot):
         if isinstance(value, dict):
             pass
         elif isinstance(value, str):
-            value = utils_cf.transform_str_to_dict(value)
+            value = transform_str_to_dict(value)
         elif isinstance(value, list):
-            value = utils_cf.transform_list_to_dict(value)
+            value = transform_list_to_dict(value)
         else:
             raise TypeError("Could not process `formula`.")
         return value

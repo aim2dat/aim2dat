@@ -8,8 +8,8 @@ import aiida.orm as aiida_orm
 from aiida.plugins import CalculationFactory
 
 # Internal library imports
-import aim2dat.utils.chem_formula as utils_cf
-from aim2dat.utils.units import energy
+from aim2dat.chem_f import transform_str_to_dict
+from aim2dat.units import energy
 
 create_surface_slab = CalculationFactory("aim2dat.create_surface_slab")
 
@@ -23,7 +23,7 @@ def surfopt_setup(ctx, inputs):
     ctx.scf_p = None
     ctx.initial_opt_parameters = aiida_orm.Int(8)
     for formula, input_value in inputs.bulk_reference.items():
-        formula_dict = utils_cf.transform_str_to_dict(formula)
+        formula_dict = transform_str_to_dict(formula)
         if isinstance(input_value, aiida_orm.Float):
             energy = input_value.value
         elif isinstance(input_value, aiida_orm.Dict):
@@ -85,7 +85,7 @@ def surfopt_should_run_slab_conv(ctx, inputs):
     if inputs.slab_conv.criteria.value == "surface_energy" and "geo_opt" in ctx:
         slab_e_nrlx = ctx.find_scf_p.outputs["cp2k"]["output_parameters"]["energy"]
         slab_e_rlx = ctx.geo_opt.outputs["cp2k"]["output_parameters"]["energy"]
-        slab_formula = utils_cf.transform_str_to_dict(ctx.surface_slab.get_formula())
+        slab_formula = transform_str_to_dict(ctx.surface_slab.get_formula())
         # TODO make more general and create extra function:
         factor = 0.0
         for bulk_e in ctx.bulk_energies:

@@ -9,7 +9,7 @@ from scipy.spatial.transform import Rotation
 import numpy as np
 
 # Internal library imports
-from aim2dat.utils.element_properties import get_atomic_mass
+from aim2dat.elements import get_atomic_mass
 from aim2dat.utils.maths import calc_angle
 
 

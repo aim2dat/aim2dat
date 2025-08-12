@@ -12,9 +12,9 @@ from scipy.spatial.distance import cdist
 from aim2dat.io.utils import read_structure, custom_open
 from aim2dat.io.base_parser import FLOAT, transform_str_value
 from aim2dat.utils.strct import _get_cell_from_lattice_p
-from aim2dat.utils.element_properties import get_element_symbol
 from aim2dat.utils.space_groups import get_space_group_details
-import aim2dat.utils.chem_formula as utils_cf
+from aim2dat.elements import get_element_symbol
+from aim2dat.chem_f import compare_formulas, transform_list_to_dict, transform_str_to_dict
 
 
 class _CIFDataBlock:
@@ -204,8 +204,8 @@ class _CIFDataBlock:
         if check_chem_formula:
             chem_formula = self.get_chem_formula()
             if chem_formula is not None:
-                if not utils_cf.compare_formulas(
-                    chem_formula, utils_cf.transform_list_to_dict(elements), reduce_formulas=True
+                if not compare_formulas(
+                    chem_formula, transform_list_to_dict(elements), reduce_formulas=True
                 ):
                     raise ValueError("Chemical formula doesn't match with number of sites.")
 
@@ -255,7 +255,7 @@ class _CIFDataBlock:
     def get_chem_formula(self):
         for key in self._chem_formula_fields:
             if key in self.fields:
-                return utils_cf.transform_str_to_dict(self.fields[key])
+                return transform_str_to_dict(self.fields[key])
 
     def _add_line_to_loop(self, line_idx, line):
         # Adding loop labels:

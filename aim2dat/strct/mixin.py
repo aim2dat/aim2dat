@@ -9,7 +9,7 @@ from collections.abc import Callable
 from functools import wraps
 
 # Internal library imports
-import aim2dat.utils.chem_formula as utils_cf
+from aim2dat.chem_f import transform_str_to_dict, transform_dict_to_str, reduce_formula
 from aim2dat.strct.strct_point_groups import determine_point_group
 from aim2dat.strct.strct_space_groups import determine_space_group
 from aim2dat.strct.strct_misc import (
@@ -778,7 +778,7 @@ class ConstraintsMixin:
 
         for formula in chem_formula:
             formula_add = {"is_reduced": reduced_formula}
-            formula_dict = utils_cf.transform_str_to_dict(formula)
+            formula_dict = transform_str_to_dict(formula)
             unspecified_quantity = "-"
             if any(quantity == unspecified_quantity for quantity in formula_dict.values()):
                 formula_add["element_set"] = []
@@ -786,7 +786,7 @@ class ConstraintsMixin:
                     formula_add["element_set"].append(element)
             else:
                 if reduced_formula:
-                    formula_dict = utils_cf.reduce_formula(formula_dict)
+                    formula_dict = reduce_formula(formula_dict)
                 formula_add["formula"] = formula_dict
             if not hasattr(self, "_formula_constraints"):
                 self._formula_constraints = []
@@ -839,10 +839,10 @@ class ConstraintsMixin:
     def _check_chem_formula_constraints(self, structure, print_message, raise_error):
         def _validate_formula_constraint(structure, constr, constr_formulas):
             const_fulfilled = True
-            constr_formula_str = utils_cf.transform_dict_to_str(constr["formula"])
+            constr_formula_str = transform_dict_to_str(constr["formula"])
             chem_f = structure["chem_formula"]
             if constr["is_reduced"]:
-                chem_f = utils_cf.reduce_formula(chem_f)
+                chem_f = reduce_formula(chem_f)
             constr_formulas.append(constr_formula_str)
 
             if len(chem_f) != len(constr["formula"]):
@@ -878,7 +878,7 @@ class ConstraintsMixin:
                     else:
                         const_fulfilled = False
             if not const_fulfilled:
-                formula_str = utils_cf.transform_dict_to_str(structure["chem_formula"])
+                formula_str = transform_dict_to_str(structure["chem_formula"])
                 constr_reason = (
                     str(structure["label"])
                     + " - Chem. formula constraint: "
@@ -907,7 +907,7 @@ class ConstraintsMixin:
         const_fulfilled = True
         if hasattr(self, "_neglect_el_structures") and self._neglect_el_structures:
             if len(chem_formula) == 1:
-                formula_str = utils_cf.transform_dict_to_str(chem_formula)
+                formula_str = transform_dict_to_str(chem_formula)
                 const_fulfilled = False
                 constr_reason = (
                     str(structure["label"])

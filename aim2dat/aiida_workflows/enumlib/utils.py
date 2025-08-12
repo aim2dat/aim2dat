@@ -6,7 +6,7 @@ Utils for the EnumlibCalcjob.
 import re
 
 # Internal library imports
-from aim2dat.utils.element_properties import _check_element
+from aim2dat.elements.element_properties import _check_element
 
 
 def check_kinds(kind_names):
