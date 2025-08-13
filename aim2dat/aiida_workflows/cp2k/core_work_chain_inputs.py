@@ -51,6 +51,7 @@ def _set_numerical_p_xc_functional(cp2k_dict, input_p, cp2k_version):
 
 def _set_numerical_p_basis_sets(cp2k_dict, input_p, structure, xc_functional):
     """Validate and set the basis set parameters."""
+    bs_type = ""
     if isinstance(input_p, aiida_orm.Str):
         if xc_functional is None:
             return False, {
