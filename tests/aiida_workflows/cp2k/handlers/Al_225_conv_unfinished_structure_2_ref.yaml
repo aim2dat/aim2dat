@@ -34,7 +34,7 @@ cp2k_parameters:
       XC: {}
     SUBSYS:
       CELL: {PERIODIC: XYZ}
-calc: {outputs: {output_parameters: {exceeded_walltime: True, nr_steps: 100}, remote_folder: output_folder}}
+calc: {outputs: {output_parameters: {exceeded_walltime: True, nr_steps: 20}, remote_folder: output_folder}}
 error_handler:
   do_break: True
   exit_code: {exit_status: 0, message: }
