@@ -6,6 +6,7 @@ WorkflowBuilder and auxiliary functions.
 import os
 import copy
 import abc
+from datetime import timedelta
 
 # Third party library imports
 from aiida.plugins import DataFactory, WorkflowFactory, CalculationFactory
@@ -24,6 +25,7 @@ from aim2dat.io import read_yaml_file, write_yaml_file
 from aim2dat.aiida_workflows.utils import (
     create_aiida_node,
     obtain_value_from_aiida_node,
+    get_workchain_runtime,
 )
 from aim2dat.ext_interfaces.import_opt_dependencies import _check_package_dependencies
 from aim2dat.ext_interfaces.aiida import _load_data_node, _create_group
@@ -1336,6 +1338,35 @@ class MultipleWorkflowBuilder(_BaseWorkflowBuilder):
                     pd_series_dict[pandas_label].append(value)
             pandas_df = _turn_dict_into_pandas_df(pd_series_dict)
         return pandas_df
+
+    def return_remote_runtimes(self):
+        """
+        Return a pandas data frame containing the total remote runtimes of all completed tasks.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Pandas data frame.
+        """
+        pd_series_dict = {"parent_node": []}
+        for task in self.tasks.keys():
+            pd_series_dict[task] = []
+        for wf_builder in self._wf_builders:
+            pd_series_dict["parent_node"].append(
+                self._get_aiida_node_identifier(wf_builder.parent_node)
+            )
+            acc_tasks = wf_builder.completed_tasks
+            for task in self.tasks.keys():
+                if task in acc_tasks:
+                    task_node = wf_builder._completed_tasks[task][0]
+                    if isinstance(task_node, aiida_orm.WorkChainNode):
+                        total_runtime = get_workchain_runtime(task_node)
+                    elif isinstance(task_node, aiida_orm.CalcFunctionNode):
+                        total_runtime = timedelta(seconds=0)  # No remote computing
+                    pd_series_dict[task].append(total_runtime)
+                if task not in acc_tasks:
+                    pd_series_dict[task].append(None)
+        return _turn_dict_into_pandas_df(pd_series_dict)
 
     def return_runtimes(self, unit=None):
         """

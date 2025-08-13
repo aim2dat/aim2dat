@@ -2,6 +2,7 @@
 
 # Standard library imports
 import time
+from datetime import timedelta
 
 # Third party library imports
 import aiida.orm as aiida_orm
@@ -160,6 +161,23 @@ def create_surface_slab(surface, nr_layers, parameters):
     slab["label"] = label
     outputs["slab"] = _create_structure_node(Structure(**slab))
     return outputs
+
+
+def get_workchain_runtime(workchain):
+    """
+    Calculate the total runtime of all CalcJobNodes linked to a WorkChainNode.
+
+    Returns
+    -------
+    total_runtime : datetime.timedelta
+    """
+    calcjobs = workchain.base.links.get_outgoing(node_class=aiida_orm.CalcJobNode).all_nodes()
+    runtimes = []
+    for calc_j in calcjobs:
+        output_parameters = calc_j.outputs["output_parameters"]
+        runtimes.append(output_parameters.get_dict().get("runtime"))
+    total_runtime = timedelta(seconds=round(sum(runtimes)))
+    return total_runtime
 
 
 def concatenate_workflow_results(
