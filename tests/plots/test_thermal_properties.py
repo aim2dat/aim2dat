@@ -3,9 +3,6 @@
 # Standard library imports
 import os
 
-# Third party library imports
-import pytest
-
 # Internal library imports
 from aim2dat.plots.thermal_properties import ThermalPropertiesPlot, QHAPlot
 from aim2dat.io.phonopy import read_thermal_properties, read_qha_properties
@@ -18,7 +15,6 @@ PHONOPY_HA_PATH = MAIN_PATH + "/../io/phonopy_ha/"
 PHONOPY_QHA_PATH = MAIN_PATH + "/../io/phonopy_qha/"
 
 
-@pytest.mark.skip
 def test_thermal_properties_plot(nested_dict_comparison, matplotlib_figure_comparison):
     """Test ThermalPropertiesPlot class."""
     import_ref = read_yaml_file(REF_PATH + "thermal_properties_import_ref.yaml")
