@@ -28,7 +28,7 @@ Version 0.4.0
 * The ``io.read_cp2k_restart_structure`` function was wrongly taking the reference cell instead of the actual unitcell (`PR #149 <https://github.com/aim2dat/aim2dat/pull/149>`_).
 * The ``find_scf_parameters`` were not restarted if the mixing parameters were not found (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * The ``aim2dat.aiida_workflows.cp2k.core_work_chain_handlers._resubmit_calculation`` function takes care of restarting CP2K calculations when walltime is hit or no output for CP2K was created due to connection issues (`PR #157 <https://github.com/aim2dat/aim2dat/pull/157>`_).
-* The ``aim2dat.aiida_workflows.cp2k.core_work_chain_handlers._resubmit_calculation`` function takes care of restarting CP2K calculations when walltime is hit or no output for CP2K was created due to connection issues (`PR #157 <https://github.com/aim2dat/aim2dat/pull/157>`_).
+* The ``strct.ext_manipulation.add_structure_coord`` function threw an error when the host or guest indices were larger than the number of sites of the corresponding structure (`PR #165 <https://github.com/aim2dat/aim2dat/pull/165>`_).
 
 **Breaking Changes:**
 

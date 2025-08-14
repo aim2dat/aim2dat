@@ -219,7 +219,7 @@ def add_structure_coord(
 
     if max(host_indices) >= len(structure) or guest_index >= len(guest_strct):
         idx = max(host_indices)
-        return structure
+        return structure, ""
 
     if dist_constraints is None:
         dist_constraints = []
