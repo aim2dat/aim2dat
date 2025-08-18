@@ -8,7 +8,7 @@ import pytest
 
 # Internal library imports
 from aim2dat.strct import Structure
-from aim2dat.strct.ext_analysis import calc_molecular_fragments, calc_graph
+from aim2dat.strct.ext_analysis import calc_molecular_fragments, calc_graph, calc_hydrogen_bonds
 from aim2dat.io import read_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
@@ -115,3 +115,19 @@ def test_calc_graph(nested_dict_comparison):
     )
     for idx, line in enumerate(graphviz_graph):
         assert line == graphviz_ref[idx]
+
+
+def test_calc_hydrogen_bonds():
+    """Test hydrogen bond analysis."""
+    strct = Structure.from_file(STRUCTURES_PATH + "MOF-303_30xH2O.xsf")
+    with pytest.raises(ValueError) as error:
+        calc_hydrogen_bonds(strct, scheme="test")
+    assert (
+        str(error.value) == "`scheme` 'test' is not supported. Valid options are: 'baker_hubbard'."
+    )
+
+    hbonds = calc_hydrogen_bonds(
+        strct, host_elements="O", index_constraint=[104, 128, 129, 130, 131, 132, 148, 200, 201]
+    )
+    print(hbonds)
+    assert hbonds == ((128, 201, 200), (200, 132, 131))

@@ -18,6 +18,7 @@ Version 0.4.0
 * ``aiida_workflows.cp2k.base_opt_work_chain._BaseOptimizationWorkChain`` contains now the option to fix atoms ``optimization_p.fixed_atoms`` and also to ignore scf convergence failure ``ignore_convergence_failure`` (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * ``aiida_workflows.MultipleWorkflowBuilder`` offers the possibility with ``return_remote_runtimes`` to return only the sum of remote runtimes for each task (`PR #155 <https://github.com/aim2dat/aim2dat/pull/155>`_).
 * ``aiida_workflows.cp2k.pdos_work_chain.PDOSWorkChain`` contains now the option to print the local PDOS, projected on subsets of atoms given through lists ``ldos`` (`PR #158 <https://github.com/aim2dat/aim2dat/pull/158>`_).
+* Newly implemented function ``strct.ext_analysis.calc_hydrogen_bonds`` to search for hydrogen bonds in a ``strct.Structure`` object (`PR #167 <https://github.com/aim2dat/aim2dat/pull/167>`_)
 
 **Fixes:**
 
