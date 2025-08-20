@@ -156,7 +156,6 @@ def test_add_structure_coord(structure_comparison):
             "guest_structure": "H",
             "bond_length": 1.0,
             "change_label": False,
-            "guest_dir": [1.0, 0.0, 0.0],
             "method": "minimum_distance",
         },
     )
@@ -168,7 +167,6 @@ def test_add_structure_coord(structure_comparison):
             "guest_structure": "CH3",
             "bond_length": 1.1,
             "change_label": False,
-            "guest_dir": [1.0, 0.0, 0.0],
             "method": "minimum_distance",
         },
     )
@@ -178,7 +176,7 @@ def test_add_structure_coord(structure_comparison):
             "host_indices": 41,
             "guest_structure": "COOH",
             "change_label": False,
-            "guest_dir": [1.0, 0.0, 0.0],
+            "dist_threshold": None,
             "method": "minimum_distance",
         },
     )
@@ -188,7 +186,6 @@ def test_add_structure_coord(structure_comparison):
             "host_indices": 42,
             "guest_structure": "NH2",
             "change_label": False,
-            "guest_dir": [1.0, 0.0, 0.0],
             "method": "minimum_distance",
         },
     )
@@ -198,7 +195,6 @@ def test_add_structure_coord(structure_comparison):
             "host_indices": 62,
             "guest_structure": "NO2",
             "change_label": False,
-            "guest_dir": [1.0, 0.0, 0.0],
             "method": "minimum_distance",
         },
     )
@@ -209,7 +205,6 @@ def test_add_structure_coord(structure_comparison):
             "guest_structure": "OH",
             "change_label": False,
             "dist_threshold": None,
-            "guest_dir": [1.0, 0.0, 0.0],
             "method": "minimum_distance",
         },
     )
@@ -223,7 +218,6 @@ def test_add_structure_coord_planar(structure_comparison):
     new_strct = add_structure_coord(
         strct,
         guest_structure="H2O",
-        guest_dir=[1.0, 0.0, 0.0],
         min_dist_delta=0.2,
         host_indices=54,
         dist_threshold=None,
@@ -242,11 +236,9 @@ def test_add_structure_coord_molecules(structure_comparison):
         Structure(**inputs),
         host_indices=[1, 2, 3],
         guest_structure="OH",
-        guest_dir=None,
         min_dist_delta=0.5,
         bond_length=1.0,
-        dist_constraints=[(1, 1, 0.9)],
-        dist_threshold=None,
+        dist_threshold={(1, 1): 0.9},
     )
     ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "NH3-OH_ref.yaml")
     structure_comparison(new_strct, ref_p)
@@ -258,12 +250,11 @@ def test_add_structure_coord_molecules_2(structure_comparison):
     new_strct = add_structure_coord(
         Structure(**inputs),
         host_indices=[1, 2, 3],
-        guest_index=0,
+        guest_indices=0,
         guest_structure="H2O",
-        guest_dir=None,
         min_dist_delta=0.1,
         bond_length=1.5,
-        dist_constraints=[(2, 1, 1.5)],
+        dist_threshold={(2, 1): 1.5},
     )
     ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "NH3-H2O_ref.yaml")
     structure_comparison(new_strct, ref_p)
@@ -279,9 +270,8 @@ def test_add_structure_coord_molecules_3(structure_comparison):
     new_strct = add_structure_coord(
         Structure(**inputs),
         host_indices=0,
-        guest_index=0,
+        guest_indices=[1, 2],
         guest_structure="H2O",
-        guest_dir=[-1.0, 0.0, 0.0],
         min_dist_delta=0.3,
         bond_length=1.5,
     )
@@ -291,9 +281,8 @@ def test_add_structure_coord_molecules_3(structure_comparison):
     new_strct = add_structure_coord(
         Structure(**inputs),
         host_indices=0,
-        guest_index=0,
+        guest_indices=0,
         guest_structure="H2O",
-        guest_dir=[1.0, 0.0, 0.0],
         min_dist_delta=0.3,
         bond_length=1.5,
     )
@@ -303,11 +292,11 @@ def test_add_structure_coord_molecules_3(structure_comparison):
     new_strct = add_structure_coord(
         Structure(**inputs),
         host_indices=0,
-        guest_index=0,
+        guest_indices=0,
         guest_structure="H2O",
         min_dist_delta=0.3,
         bond_length=1.5,
-        dist_constraints=[(0, 1, 2.2)],
+        dist_threshold={(0, 1): 2.2},
     )
     ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "PCl5-H2O_3_ref.yaml")
     structure_comparison(new_strct, ref_p)
@@ -392,7 +381,7 @@ def test_add_structure_position(structure_comparison):
             guest_structure=Structure(**inputs[1]),
             dist_threshold=10.0,
         )
-    assert str(error.value) == "Atoms 0 and 4 are too close to each other."
+    assert str(error.value) == "Atoms 3 and 7 are too close to each other."
 
 
 def test_rotate_structure(structure_comparison):

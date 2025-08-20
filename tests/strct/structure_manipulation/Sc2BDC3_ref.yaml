@@ -1,6 +1,5 @@
 %YAML 1.2
 ---
-label: test
 elements: [Sc, Sc, Sc, Sc, O, O, O, O, O, O, O, O, O, O, O, O, O, O, O, O, O, O, 
     O, O, O, O, O, O, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C,
   C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, C, 
@@ -18,8 +17,6 @@ kinds: [kind1, null, null, null, null, null, null, null, null, null, null, null,
     null, null, null, null, null, null, null, null, null, null, null, null, null,
   null, null, null, null, null, null, null, null, null, null, null, null, null, 
     null, null, null]
-site_attributes: {}
-attributes: {}
 positions:
 - [37.813156137626, 6.826898335620305, 4.0797604051921965]
 - [27.60166238486911, 5.852452582020504, 2.090061227071799]
