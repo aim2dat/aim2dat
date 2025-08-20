@@ -79,13 +79,13 @@ def add_structure_random(
     Raises
     ------
     ValueError
-        `dist_threshold` needs to have keys with length 2 containing site indices or element
+        ``dist_threshold`` needs to have keys with length 2 containing site indices or element
         symbols.
     ValueError
-        `dist_threshold` needs to have keys of type List[str/int] containing site indices or
+        ``dist_threshold`` needs to have keys of type List[str/int] containing site indices or
         element symbols.
     TypeError
-        `dist_threshold` needs to be of type int/float/list/tuple/dict or None.
+        ``dist_threshold`` needs to be of type int/float/list/tuple/dict or None.
     ValueError
         Could not add guest structure, host structure seems to be too aggregated.
     """
@@ -178,9 +178,9 @@ def add_structure_coord(
         The rotation of the guest structure is varied based on a grid search until the sum of the
         absolute errors is minimized.
     constrain_steps : int (optional)
-        Rotation steps in degree to consider for the grid search in `rot_guest`.
+        Rotation steps in degree to consider for the grid search in ``rot_guest``.
         Additionally, if the first position guess of the molecule does not match the
-        dist_threshold`, a grid search around the host atom is utilized until the sum of the
+        ```dist_threshold```, a grid search around the host atom is utilized until the sum of the
         absolute errors is minimized.
     dist_threshold : dict, list, float, int, str or None (optional)
         Check the distances between all site pairs of the host and guest structure to ensure that
@@ -203,13 +203,13 @@ def add_structure_coord(
     Raises
     ------
     ValueError
-        `dist_threshold` needs to have keys with length 2 containing site indices or element
+        ``dist_threshold`` needs to have keys with length 2 containing site indices or element
         symbols.
     ValueError
-        `dist_threshold` needs to have keys of type List[str/int] containing site indices or
+        ``dist_threshold`` needs to have keys of type List[str/int] containing site indices or
         element symbols.
     TypeError
-        `dist_threshold` needs to be of type int/float/list/tuple/dict or None.
+        ``dist_threshold`` needs to be of type int/float/list/tuple/dict or None.
     ValueError
         If any distance between atoms is outside the threshold.
     """
@@ -391,13 +391,13 @@ def add_structure_position(
     Raises
     ------
     ValueError
-        `dist_threshold` needs to have keys with length 2 containing site indices or element
+        ``dist_threshold`` needs to have keys with length 2 containing site indices or element
         symbols.
     ValueError
-        `dist_threshold` needs to have keys of type List[str/int] containing site indices or
+        ``dist_threshold`` needs to have keys of type List[str/int] containing site indices or
         element symbols.
     TypeError
-        `dist_threshold` needs to be of type int/float/list/tuple/dict or None.
+        ``dist_threshold`` needs to be of type int/float/list/tuple/dict or None.
     ValueError
         If any distance between atoms is outside the threshold.
     """
@@ -444,10 +444,10 @@ def _check_guest_structure(guest_strct: Union[Structure, str]) -> Structure:
                     pbc=False,
                 )
             except FileNotFoundError:
-                raise ValueError(f"`guest_structure` '{guest_strct}' is not supported.")
+                raise ValueError(f"``guest_structure`` '{guest_strct}' is not supported.")
         return strct, guest_strct
     else:
-        raise TypeError("`guest_structure` needs to be of type Structure or str.")
+        raise TypeError("``guest_structure`` needs to be of type Structure or str.")
 
 
 def _derive_bond(structure, index, cn_kwargs, bond_length=None):
@@ -537,7 +537,7 @@ def _add_mol(
     guest_pos = np.array(guest_strct.positions) + bond_length * np.array([1, 0, 0])
     # Shift guest structure:
     guest_strct0.set_positions(guest_pos)
-    # Rotate if `dist_threshold` is not satisfied
+    # Rotate if ``dist_threshold`` is not satisfied
     guest_strct0 = rotate_structure(
         guest_strct0,
         angles,
@@ -547,9 +547,7 @@ def _add_mol(
     # Rotate guest to align bond direction
     if len(guest_strct0) > 1:
         rot_angle = np.rad2deg(-calc_angle([1, 0, 0], bond_dir))
-        if np.isclose(abs(rot_angle), 0.0):
-            pass
-        elif np.isclose(abs(rot_angle), 180.0):
+        if np.isclose(abs(rot_angle) % 180, 0.0):
             rot_dir = np.cross(create_lin_ind_vector(bond_dir), [1, 0, 0])
         else:
             rot_dir = np.cross(bond_dir, [1, 0, 0])

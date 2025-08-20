@@ -132,6 +132,14 @@ def _check_distances(
     dists = structure.calc_distance(other_indices, indices, backfold_positions=True)
 
     if isinstance(dist_threshold, (int, float)):
+        min_key = min(dists, key=dists.get)
+        min_value = dists[min_key]
+        if min_value < dist_threshold:
+            if silent:
+                return False
+            raise DistanceThresholdError(
+                f"Atoms {min_key[0]} and {min_key[1]} are too close to each other."
+            )
         if return_score:
             return abs(min(dists.values()) - dist_threshold)
         return True
