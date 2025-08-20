@@ -228,22 +228,30 @@ def add_structure_coord(
         guest_dir = [1.0, 0.0, 0.0]
     else:
         # Get vector of guest atoms for rotation
-        guest_dir, *_ = _derive_bond(guest_strct, guest_indices, cn_kwargs)
+        guest_dir, guest_center, guest_positions = _derive_bond(
+            guest_strct, guest_indices, cn_kwargs
+        )
         guest_dir *= -1.0
+        guest_strct.set_positions(np.array(guest_strct.positions) - guest_center)
     guest_dir /= np.linalg.norm(np.array(guest_dir))
 
     # Calculate coordination:
 
     # Derive bond directions
-    bond_dir, host_pos_np, bond_positions = _derive_bond(
+    bond_dir, host_center, host_positions = _derive_bond(
         structure, host_indices, cn_kwargs, bond_length
     )
 
     # Check bond length and adjusts if necessary
-    if all([np.linalg.norm(host_pos_np - bond_pos) >= bond_length for bond_pos in bond_positions]):
+    if all([np.linalg.norm(host_center - bond_pos) >= bond_length for bond_pos in host_positions]):
         bond_length = 0.0
     else:
-        bond_length = _rescale_bond_length(host_pos_np, bond_positions, bond_dir, bond_length)
+        if len(host_indices) > 1:
+            bond_length = _rescale_bond_length(host_center, host_positions, bond_dir, bond_length)
+        if len(guest_indices) > 1:
+            bond_length = _rescale_bond_length(
+                guest_center, guest_positions, guest_dir, bond_length
+            )
 
     # Rotate guest to align the x-axis
     if len(guest_strct) > 1:
@@ -265,7 +273,7 @@ def add_structure_coord(
         structure,
         guest_strct,
         wrap,
-        host_pos_np,
+        host_center,
         bond_length,
         [0.0, 0.0, 0.0],
         bond_dir,
@@ -289,7 +297,7 @@ def add_structure_coord(
                         structure,
                         guest_strct,
                         wrap,
-                        host_pos_np,
+                        host_center,
                         bond_length,
                         [0.0, alpha, beta],
                         bond_dir,
@@ -308,7 +316,7 @@ def add_structure_coord(
         score = score if score else float("inf")
         # Prepare guest to rotate. Need to align guest with x-axis.
         origin = np.mean(new_guest.positions, axis=0)
-        guest_vec = origin - host_pos_np
+        guest_vec = origin - host_center
         rot_angle = np.rad2deg(-calc_angle(guest_vec, [1, 0, 0]))
         if np.isclose(abs(rot_angle), 180.0):
             guest_vec = create_lin_ind_vector(guest_vec)
@@ -497,27 +505,30 @@ def _derive_bond(structure, index, cn_kwargs, bond_length=None):
     return bond_direction, bond_position_center, bond_positions
 
 
-def _rescale_bond_length(host_pos_np, host_positions, bond_dir, bond_length):
+def _rescale_bond_length(atom_center, atom_positions, bond_dir, bond_length):
     # Rescale bond length to match the distance between guest molecule and host atoms
     scaled_bond_lengths = []
-    for host_pos in host_positions:
+    for atom_pos in atom_positions:
         # Calculate the coefficients for the quadratic equation
-        dis_host_center = host_pos_np - host_pos
+        dis_atom_pos = atom_center - atom_pos
         bond_dir_square = np.dot(bond_dir, bond_dir)
-        bond_dir_dot_dis_host_center = np.dot(bond_dir, dis_host_center)
-        dis_host_center_square = np.dot(dis_host_center, dis_host_center)
+        bond_dir_dot_dis_atom_pos = np.dot(bond_dir, dis_atom_pos)
+        dis_atom_pos_square = np.dot(dis_atom_pos, dis_atom_pos)
         # Coefficients of the quadratic equation at^2 + bt + c = 0
         a = bond_dir_square
-        b = 2 * bond_dir_dot_dis_host_center
-        c = dis_host_center_square - bond_length**2
+        b = 2 * bond_dir_dot_dis_atom_pos
+        c = dis_atom_pos_square - bond_length**2
         # Solve the quadratic equation
         t1, t2 = np.roots([a, b, c])
         scaled_bond_lengths.append(max([t1, t2]))
 
     for sbl in scaled_bond_lengths:
-        guest = host_pos_np + sbl * bond_dir
+        ref_position = atom_center + sbl * bond_dir
         if all(
-            [np.linalg.norm(guest - host_pos) >= bond_length * 0.95 for host_pos in host_positions]
+            [
+                np.linalg.norm(ref_position - atom_pos) >= bond_length * 0.95
+                for atom_pos in atom_positions
+            ]
         ):
             bond_length = sbl
             break
