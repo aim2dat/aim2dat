@@ -20,6 +20,7 @@ from aim2dat.strct.ext_analysis.dscribe_descriptors import (
     calc_soap_descriptor,
     calc_mbtr_descriptor,
 )
+from aim2dat.strct.ext_analysis.h_bonds import calc_hydrogen_bonds
 
 
 __all__ = [
@@ -33,4 +34,5 @@ __all__ = [
     "calc_acsf_descriptor",
     "calc_soap_descriptor",
     "calc_mbtr_descriptor",
+    "calc_hydrogen_bonds",
 ]
