@@ -56,7 +56,7 @@ def add_molecule(structure, parameters):
     else:
         label = structure.label
     host_indices = p_dict.pop("host_indices")
-    guest_index = p_dict.pop("guest_index", 0)
+    guest_indices = p_dict.pop("guest_indices", 0)
     guest_structure = p_dict.pop("guest_structure")
     bond_length = p_dict.pop("bond_length")
     a2d_structure = Structure.from_aiida_structuredata(structure, label=label)
@@ -65,7 +65,7 @@ def add_molecule(structure, parameters):
         add_structure_coord(
             structure=a2d_structure,
             host_indices=host_indices,
-            guest_index=guest_index,
+            guest_indices=guest_indices,
             guest_structure=guest_structure,
             bond_length=bond_length,
             dist_threshold=0.99 * bond_length,

@@ -39,7 +39,7 @@ def rotate_structure(
     angles : float or list of float
         Angles for the rotation in degree. Type ``list`` for 3 individual rotations around
         the x, y, and z directions, respectively. Type ``float`` for a rotation around a
-        roation vector given by ``vector``..
+        rotation vector given by ``vector``..
     vector : list of float (optional)
         Rotation vector in cartesian coordinates, needs to be given if ``angles`` is single
         number.

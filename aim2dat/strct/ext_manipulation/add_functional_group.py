@@ -83,7 +83,7 @@ def add_functional_group(
         structure=structure,
         wrap=wrap,
         host_indices=host_index,
-        guest_index=0,
+        guest_indices=0,
         guest_structure=functional_group,
         bond_length=bond_length,
         r_max=r_max,
