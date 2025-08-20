@@ -37,14 +37,15 @@ def calc_hydrogen_bonds(
         Tuple of triples: site of the hydrogen acceptor, hydrogen site, and site of the hydrogen
         donor.
     """
+    schemes = ["baker_hubbard"]
     if isinstance(host_elements, str):
         host_elements = [host_elements]
     host_elements = [get_element_symbol(el) for el in host_elements]
     if index_constraint is None:
         index_constraint = list(range(len(structure)))
-    if scheme != "baker_hubbard":
+    if scheme not in schemes:
         raise ValueError(
-            f"`scheme` '{scheme}' is not supported. Valid options are: 'baker_hubbard'."
+            f"`scheme` '{scheme}' is not supported. Valid options are: {*schemes,}"
         )
 
     host_indices = [
