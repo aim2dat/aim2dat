@@ -139,6 +139,19 @@ def test_check_distance_fct():
     assert str(error.value) == "Atoms 131 and 50 are too far from each other."
 
 
+def test_add_structure_coord_index_mismatch():
+    """Test add_coord_structure when host/guest index is too large."""
+    inputs = dict(read_yaml_file(STRUCTURES_PATH + "NH3.yaml"))
+    new_strct = add_structure_coord(
+        Structure(**inputs),
+        host_indices=[1, 2, 3],
+        guest_index=1,
+        guest_structure="H",
+    )
+    assert len(new_strct) == 4
+    assert new_strct.label is None
+
+
 def test_add_structure_coord(structure_comparison):
     """Test add functional group function."""
     inputs = dict(read_yaml_file(STRUCTURES_PATH + "Sc2BDC3.yaml"))
