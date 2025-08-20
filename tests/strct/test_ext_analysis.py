@@ -123,11 +123,11 @@ def test_calc_hydrogen_bonds():
     with pytest.raises(ValueError) as error:
         calc_hydrogen_bonds(strct, scheme="test")
     assert (
-        str(error.value) == "`scheme` 'test' is not supported. Valid options are: 'baker_hubbard'."
+        str(error.value)
+        == "`scheme` 'test' is not supported. Valid options are: ['baker_hubbard']."
     )
 
     hbonds = calc_hydrogen_bonds(
         strct, host_elements="O", index_constraint=[104, 128, 129, 130, 131, 132, 148, 200, 201]
     )
-    print(hbonds)
     assert hbonds == ((128, 201, 200), (200, 132, 131))

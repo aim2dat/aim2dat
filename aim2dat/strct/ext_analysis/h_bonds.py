@@ -44,9 +44,7 @@ def calc_hydrogen_bonds(
     if index_constraint is None:
         index_constraint = list(range(len(structure)))
     if scheme not in schemes:
-        raise ValueError(
-            f"`scheme` '{scheme}' is not supported. Valid options are: {*schemes,}"
-        )
+        raise ValueError(f"`scheme` '{scheme}' is not supported. Valid options are: {schemes}.")
 
     host_indices = [
         idx
