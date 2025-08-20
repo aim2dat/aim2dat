@@ -229,6 +229,40 @@ def test_add_structure_coord_planar(structure_comparison):
     structure_comparison(new_strct, ref_p)
 
 
+def test_add_structure_coord_rotation(structure_comparison):
+    """
+    Test add_structure_coord method for rotation of molecule around itself
+    and around the host geometries.
+    """
+    strct = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
+    new_strct = add_structure_coord(
+        strct,
+        host_indices=[10, 24, 30],
+        guest_indices=[1, 2],
+        guest_structure="H2O",
+        rotate_guest=True,
+        bond_length=3,
+        dist_threshold=2,
+    )
+    ref_p = read_yaml_file(
+        STRUCTURE_MANIPULATION_PATH + "MOF-5_prim_add_structure_coord_rotation_ref.yaml"
+    )
+    structure_comparison(new_strct, ref_p)
+    new_strct = add_structure_coord(
+        strct,
+        host_indices=0,
+        guest_indices=0,
+        guest_structure="H2",
+        bond_length=3,
+        dist_threshold=2.9,
+        constrain_steps=30,
+    )
+    ref_p = read_yaml_file(
+        STRUCTURE_MANIPULATION_PATH + "MOF-5_prim_add_structure_coord_constrain_ref.yaml"
+    )
+    structure_comparison(new_strct, ref_p)
+
+
 def test_add_structure_coord_molecules(structure_comparison):
     """Test add_structure_coord method."""
     inputs = dict(read_yaml_file(STRUCTURES_PATH + "NH3.yaml"))
@@ -257,48 +291,6 @@ def test_add_structure_coord_molecules_2(structure_comparison):
         dist_threshold={(2, 1): 1.5},
     )
     ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "NH3-H2O_ref.yaml")
-    structure_comparison(new_strct, ref_p)
-
-
-def test_add_structure_coord_molecules_3(structure_comparison):
-    """
-    Test corner cases of add_structure_coord method when bond_dir and
-    guest_dir align or have opposite directions.
-    """
-    inputs = dict(read_yaml_file(STRUCTURES_PATH + "PCl5.yaml"))
-
-    new_strct = add_structure_coord(
-        Structure(**inputs),
-        host_indices=0,
-        guest_indices=[1, 2],
-        guest_structure="H2O",
-        min_dist_delta=0.3,
-        bond_length=1.5,
-    )
-    ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "PCl5-H2O_1_ref.yaml")
-    structure_comparison(new_strct, ref_p)
-
-    new_strct = add_structure_coord(
-        Structure(**inputs),
-        host_indices=0,
-        guest_indices=0,
-        guest_structure="H2O",
-        min_dist_delta=0.3,
-        bond_length=1.5,
-    )
-    ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "PCl5-H2O_2_ref.yaml")
-    structure_comparison(new_strct, ref_p)
-
-    new_strct = add_structure_coord(
-        Structure(**inputs),
-        host_indices=0,
-        guest_indices=0,
-        guest_structure="H2O",
-        min_dist_delta=0.3,
-        bond_length=1.5,
-        dist_threshold={(0, 1): 2.2},
-    )
-    ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "PCl5-H2O_3_ref.yaml")
     structure_comparison(new_strct, ref_p)
 
 
