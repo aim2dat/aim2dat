@@ -145,7 +145,7 @@ def test_add_structure_coord_index_mismatch():
     new_strct = add_structure_coord(
         Structure(**inputs),
         host_indices=[1, 2, 3],
-        guest_index=1,
+        guest_indices=1,
         guest_structure="H",
     )
     assert len(new_strct) == 4
