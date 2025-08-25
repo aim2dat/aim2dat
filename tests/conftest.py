@@ -478,7 +478,7 @@ def aiida_create_wc_inputs():
             strct_node = Structure.from_str(structure, label=structure).to_aiida_structuredata()
         else:
             strct_node = Structure.from_file(
-                STRUCTURES_PATH + structure + ".yaml", label=structure
+                STRUCTURES_PATH + structure + ".yaml", label=structure, backend="internal"
             ).to_aiida_structuredata()
 
         inputs = {}
