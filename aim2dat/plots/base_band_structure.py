@@ -8,7 +8,7 @@ import itertools
 import numpy as np
 
 # Internal library imports
-from aim2dat.strct.strct_misc import _calc_reciprocal_cell
+from aim2dat.strct.analysis.geometry import _calc_reciprocal_cell
 from aim2dat.utils.maths import calc_angle
 
 

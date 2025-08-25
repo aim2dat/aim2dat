@@ -7,7 +7,7 @@ import inspect
 from functools import wraps
 
 # Internal library imports
-from aim2dat.strct.strct import _check_calculated_properties
+from aim2dat.strct.structure import _check_calculated_properties
 
 
 def external_analysis_method(attr_mapping):

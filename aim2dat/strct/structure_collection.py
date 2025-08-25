@@ -7,30 +7,40 @@ crystalline structures.
 import re
 import copy
 from warnings import warn
-from typing import Union, List, Tuple, Iterator
+from typing import TYPE_CHECKING, Union, List, Tuple, Iterator
 
 # Third party library imports
 import pandas as pd
 from ase import Atoms
 
-try:
-    import aiida
-except ImportError:
-    aiida = None
-
-try:
-    import pymatgen
-except ImportError:
-    pymatgen = None
-
 # Internal library imports
-from aim2dat.strct.strct import Structure
+from aim2dat.strct.structure import Structure
+from aim2dat.strct.import_export_mixin import ImportExportMixin, import_method, export_method
+from aim2dat.strct.io_interface import get_structures_from_file
+from aim2dat.io import write_hdf5_structure
 from aim2dat.ext_interfaces import _return_ext_interface_modules
 import aim2dat.utils.print as utils_pr
 from aim2dat.chem_f import transform_dict_to_str
 
 
-class StructureCollection:
+if TYPE_CHECKING:
+    import aiida
+    import pymatgen
+
+
+def _process_strct_list(structures, indices):
+    # TODO handle keys???
+    if isinstance(indices, int):
+        return [structures[indices]]
+    elif isinstance(indices, slice):
+        return structures[indices]
+    elif isinstance(indices, (tuple, list)):
+        return [structures[idx] for idx in indices]
+    else:
+        raise TypeError("`indices` must be of type int, tuple, list, or slice.")
+
+
+class StructureCollection(ImportExportMixin):
     """
     The StructureCollection class is a container for one or multiple atomic structures. It
     implements several ``import_*`` and ``append_*`` functions to add new data to the object.
@@ -166,9 +176,7 @@ class StructureCollection:
             return self.get_structure(key)
         elif isinstance(key, (slice, tuple, list)):
             new_sc = StructureCollection()
-            if isinstance(key, slice):
-                key = self._process_slice(key)
-            for key0 in key:
+            for key0 in self._process_key(key):
                 new_sc.append_structure(self.get_structure(key0))
             return new_sc
         else:
@@ -184,18 +192,7 @@ class StructureCollection:
             Key of the structure.
         """
         # TODO update type hints and doc-strings
-        if isinstance(key, (str, int)):
-            key = [key]
-            value = [value]
-        elif isinstance(key, (slice, tuple, list)):
-            if isinstance(key, slice):
-                key = self._process_slice(key)
-        else:
-            raise TypeError("`key` needs to be of type: str, int, slice, tuple or list.")
-        if len(key) != len(value):
-            raise ValueError("`key` and `value` need to have the same length.")
-
-        for key0, value0 in zip(key, value):
+        for key0, value0 in zip(*self._process_key(key, value=value)):
             if isinstance(value0, dict):
                 value0 = Structure(**value0)
             self._add_structure(key0, value0)
@@ -209,13 +206,8 @@ class StructureCollection:
         str
             Key of the structure(s).
         """
-        if isinstance(key, (str, int)):
-            self.pop(key)
-        elif isinstance(key, (slice, tuple, list)):
-            if isinstance(key, slice):
-                key = self._process_slice(key, reverse=True)
-            for key0 in key:
-                self.pop(key0)
+        for key0 in self._process_key(key):
+            self.pop(key0)
 
     def __iter__(self) -> Iterator[Structure]:
         """
@@ -316,6 +308,7 @@ class StructureCollection:
             wrap=wrap,
             kinds=kinds,
             attributes=attributes,
+            site_attributes=site_attributes,
             extras=None,
         )
         self.append_structure(structure)
@@ -416,6 +409,266 @@ class StructureCollection:
         for strct in structure:
             self.append_structure(strct)
 
+    @import_method
+    @classmethod
+    def from_file(
+        cls,
+        file_path: str,
+        labels: list = None,
+        indices: Union[int, list, tuple, slice] = slice(None),
+        raise_error: bool = True,
+        backend: str = "internal",
+        file_format: str = None,
+        backend_kwargs: dict = None,
+    ):
+        """
+        Import from hdf5-file. Calculated extras are not yet supported.
+
+        Parameters
+        ------------
+        file_path : str
+            File path.
+        labels : list (optional)
+            List of labels with the same length as loaded structures, overwriting the structure
+            labels contained in the file.
+        indices : int, list, tuple, slice
+            Indices of a subset of the structures contained in the file.
+        raise_error : bool (optional)
+            Whether to raise an error if one of the constraints is not met.
+        backend : str (optional)
+            Backend to be used to parse the structure file. Supported options are ``'ase'``
+            and ``'internal'``.
+        file_format : str or None (optional)
+            File format of the backend. For ``'ase'``, please refer to the documentation of the
+            package for a complete list. For ``'internal'``, the format translates from
+            ``io.{module}.read_structure`` to ``'{module}'`` or from
+            ``{module}.read_{specification}_structure`` to ``'module-specification'``. If set to
+            ``None`` the corresponding function is searched based on the file name and suffix.
+        backend_kwargs : dict (optional)
+            Arguments passed to the backend function.
+
+        Returns
+        -------
+        aim2dat.strct.StructureCollection
+            Structure collection.
+        """
+        structures = get_structures_from_file(file_path, backend, file_format, backend_kwargs)
+        strct_c = cls()
+        for idx, structure in enumerate(_process_strct_list(structures, indices)):
+            if labels is not None:
+                structure["label"] = labels[idx]
+            strct_c._add_structure(
+                structure.get("label", f"strct_{idx}"),
+                Structure(**structure),
+                raise_label_warning=True,
+                raise_label_error=raise_error,
+            )
+        return strct_c
+
+    @import_method
+    @classmethod
+    def from_pandas_df(
+        cls,
+        data_frame: pd.DataFrame,
+        indices: Union[int, list, tuple, slice] = slice(None),
+        structure_column: str = "structure",
+        exclude_columns: list = None,
+        use_uuid: bool = False,
+        raise_error: bool = True,
+    ):
+        """
+        Import from pandas data frame.
+
+        Parameters
+        ----------
+        data_frame : pd.DataFrame
+            Pandas data frame containing at least one column with the AiiDA structure nodes.
+        indices : int, list, tuple, slice
+            Indices of a subset of the structures contained in the file.
+        structure_column : str (optional)
+            Column containing AiiDA structure nodes used to determine structural and compositional
+            properties. The default value is ``'optimized_structure'``.
+        exclude_columns : list (optional)
+            Columns of the data frame that are excluded. The default value is ``[]``.
+        use_uuid : bool (optional)
+            Whether to use the uuid (str) to represent AiiDA nodes instead of the primary key
+            (int).
+        raise_error : bool (optional)
+            Whether to raise an error if one of the constraints is not met.
+
+        Returns
+        -------
+        aim2dat.strct.StructureCollection
+            Structure collection.
+        """
+        exclude_columns = [] if exclude_columns is None else exclude_columns
+        label_unit_pattern = re.compile(r"^([\S\s]+)?\s\(([\S\s]+)\)$")
+        structures = []
+        strct_c = cls()
+        for _, row in data_frame.iterrows():
+            structure = row.pop(structure_column)
+            if structure is None or structure is pd.NA:
+                continue
+            if not isinstance(structure, Structure):
+                backend_module = _return_ext_interface_modules("aiida")
+                structure = Structure.from_aiida_structuredata(structure, use_uuid)
+                if structure.label is None and "parent_node" in row:
+                    structure.label = backend_module._extract_label_from_aiida_node(
+                        row["parent_node"]
+                    )
+            if "label" in row:
+                new_label = row.pop("label")
+                if structure.label is None:
+                    structure.label = new_label
+            if structure.label is None:
+                structure.label = f"pandas_{len(strct_c)}"
+
+            for label0, value in row.items():
+                if "el_conc" in label0 or "nr_atoms" in label0:
+                    continue
+                if label0 in exclude_columns:
+                    continue
+                match = label_unit_pattern.match(label0)
+                if match:
+                    structure.set_attribute(
+                        match.groups()[0],
+                        {
+                            "value": data_frame.dtypes[label0].type(value),
+                            "unit": match.groups()[1],
+                        },
+                    )
+                else:
+                    try:
+                        structure.set_attribute(label0, data_frame.dtypes[label0].type(value))
+                    except TypeError:
+                        continue
+            structures.append(structure)
+        for structure in _process_strct_list(structures, indices):
+            strct_c._add_structure(
+                structure.label, structure, raise_label_warning=True, raise_label_error=raise_error
+            )
+        return strct_c
+
+    @import_method
+    @classmethod
+    def from_aiida_db(
+        cls,
+        indices: Union[int, list, tuple, slice] = slice(None),
+        group_label: str = None,
+        use_uuid: bool = False,
+        raise_error: bool = True,
+    ):
+        """
+        Import from the AiiDA database.
+
+        Parameters
+        ----------
+        indices : int, list, tuple, slice
+            Indices of a subset of the structures contained in the file.
+        group_label : str or list (optional)
+            Constrains query to structures that are member of the group(s).
+        use_uuid : bool (optional)
+            Whether to use the uuid (str) to represent AiiDA nodes instead of the primary key
+            (int).
+        raise_error : bool (optional)
+            Whether to raise an error if one of the constraints is not met.
+        """
+        backend_module = _return_ext_interface_modules("aiida")
+        structure_nodes = []
+        if not isinstance(group_label, list):
+            group_label = [group_label]
+        for gl0 in group_label:
+            structure_nodes += backend_module._query_structure_nodes(group_label=gl0)
+
+        strct_c = cls()
+        for structure_node in _process_strct_list(structure_nodes, indices):
+            structure = Structure.from_aiida_structuredata(structure_node, use_uuid)
+            if structure.label is None:
+                structure.label = f"aiida_{len(strct_c)}"
+            strct_c._add_structure(
+                key=structure.label,
+                structure=structure,
+                raise_label_error=raise_error,
+                raise_label_warning=True,
+            )
+        return strct_c
+
+    @export_method
+    def to_file(self, file_path: str, keys=slice(None)):
+        """
+        Store structures in file. If the file suffix is ``'*.h(df)?5'``, the internal hdf5 format
+        is used, otherwise the ase Python package is used as backend.
+
+        Parameters
+        ------------
+        file_path : str
+            File path.
+        keys : int, str, list, tuple, slice
+            Keys for a subset of structures.
+        """
+        structures = [self[keys]] if isinstance(keys, (str, int)) else self[keys]
+        if file_path.endswith(("h5", "hdf5")):
+            write_hdf5_structure(file_path, structures)
+        else:
+            backend_module = _return_ext_interface_modules("ase_atoms")
+            backend_module._write_structure_to_file(file_path, self[keys])
+
+    @export_method
+    def to_pandas_df(
+        self, keys: Union[int, str, list, tuple, slice] = slice(None), exclude_columns: list = None
+    ) -> pd.DataFrame:
+        """
+        Create a pandas data frame of the object.
+
+        Parameters
+        ----------
+        keys : int, str, list, tuple, slice
+            Keys for a subset of structures.
+        exclude_columns : list (optional)
+            Columns that are not shown in the pandas data frame.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Pandas data frame.
+        """
+        structures = [self[keys]] if isinstance(keys, (str, int)) else self[keys]
+        backend_module = _return_ext_interface_modules("pandas")
+        return backend_module._create_strct_c_pandas_df(structures, exclude_columns)
+
+    @export_method
+    def to_aiida_db(
+        self,
+        keys: Union[int, str, list, tuple, slice] = slice(None),
+        group_label: str = None,
+        group_description: str = None,
+    ):
+        """
+        Store structures into the AiiDA-database.
+
+        Parameters
+        ----------
+        keys : int, str, list, tuple, slice
+            Keys for a subset of structures.
+        group_label : str (optional)
+            Label of the AiiDA group.
+        group_description : str (optional)
+            Description of the AiiDA group.
+
+        Returns
+        -------
+        list
+            List containing dictionary of all structure nodes.
+        """
+        structures = [self[keys]] if isinstance(keys, (str, int)) else self[keys]
+        backend_module = _return_ext_interface_modules("aiida")
+
+        if group_label is not None:
+            print(f"Storing data as group `{group_label}` in the AiiDA database.")
+            if group_description is None:
+                group_description = "Structures from StructureCollection."
+        return backend_module._store_data_aiida(group_label, group_description, structures)
+
     def import_from_aiida_db(
         self, group_label: str = None, use_uuid: bool = False, raise_error: bool = True
     ):
@@ -432,23 +685,20 @@ class StructureCollection:
         raise_error : bool (optional)
             Whether to raise an error if one of the constraints is not met.
         """
-        backend_module = _return_ext_interface_modules("aiida")
-        structure_nodes = []
-        if not isinstance(group_label, list):
-            group_label = [group_label]
-        for gl0 in group_label:
-            structure_nodes = backend_module._query_structure_nodes(group_label=gl0)
+        from warnings import warn
 
-            for structure_node in structure_nodes:
-                structure = Structure.from_aiida_structuredata(structure_node, use_uuid)
-                if structure.label is None:
-                    structure.label = f"aiida_{len(self)}"
-                self._add_structure(
-                    key=structure.label,
-                    structure=structure,
-                    raise_label_error=raise_error,
-                    raise_label_warning=True,
-                )
+        warn(
+            "This function will be removed, please use the `from_pandas_df` class method instead.",
+            DeprecationWarning,
+            2,
+        )
+        new_structures = self.from_aiida_db(
+            group_label=group_label, use_uuid=use_uuid, raise_error=raise_error
+        )
+        for strct in new_structures:
+            self._add_structure(
+                strct.label, strct, raise_label_warning=True, raise_label_error=raise_error
+            )
 
     def import_from_pandas_df(
         self,
@@ -476,43 +726,17 @@ class StructureCollection:
         raise_error : bool (optional)
             Whether to raise an error if one of the constraints is not met.
         """
-        label_unit_pattern = re.compile(r"^([\S\s]+)?\s\(([\S\s]+)\)$")
-        backend_module = _return_ext_interface_modules("aiida")
-        for _, row in data_frame.iterrows():
-            structure_node = row.pop(structure_column)
-            if structure_node is None or structure_node is pd.NA:
-                continue
-            structure = Structure.from_aiida_structuredata(structure_node, use_uuid)
-            if structure.label is None and "parent_node" in row:
-                structure.label = backend_module._extract_label_from_aiida_node(row["parent_node"])
-            if "label" in row:
-                new_label = row.pop("label")
-                if structure.label is None:
-                    structure.label = new_label
-            if structure.label is None:
-                structure.label = f"pandas_{len(self)}"
+        from warnings import warn
 
-            for label0, value in row.items():
-                if "el_conc" in label0 or "nr_atoms" in label0:
-                    continue
-                if label0 in exclude_columns:
-                    continue
-                match = label_unit_pattern.match(label0)
-                if match:
-                    structure.set_attribute(
-                        match.groups()[0],
-                        {
-                            "value": data_frame.dtypes[label0].type(value),
-                            "unit": match.groups()[1],
-                        },
-                    )
-                else:
-                    try:
-                        structure.set_attribute(label0, data_frame.dtypes[label0].type(value))
-                    except TypeError:
-                        continue
+        warn(
+            "This function will be removed, please use the `from_pandas_df` class method instead.",
+            DeprecationWarning,
+            2,
+        )
+        new_structures = self.from_pandas_df(data_frame, raise_error=raise_error)
+        for strct in new_structures:
             self._add_structure(
-                structure.label, structure, raise_label_warning=True, raise_label_error=raise_error
+                strct.label, strct, raise_label_warning=True, raise_label_error=raise_error
             )
 
     def import_from_hdf5_file(self, file_path: str, raise_error: bool = True):
@@ -526,13 +750,17 @@ class StructureCollection:
         raise_error : bool (optional)
             Whether to raise an error if one of the constraints is not met.
         """
-        backend_module = _return_ext_interface_modules("hdf5")
-        for structure in backend_module._import_from_hdf5_file(file_path):
+        from warnings import warn
+
+        warn(
+            "This function will be removed, please use the `from_file` class method instead.",
+            DeprecationWarning,
+            2,
+        )
+        new_structures = self.from_file(file_path, raise_error=raise_error)
+        for strct in new_structures:
             self._add_structure(
-                structure.label,
-                structure,
-                raise_label_warning=True,
-                raise_label_error=False,
+                strct.label, strct, raise_label_warning=True, raise_label_error=raise_error
             )
 
     def duplicate_structure(self, key: Union[str, int], new_label: str):
@@ -592,8 +820,14 @@ class StructureCollection:
         file_path : str
             File path.
         """
-        backend_module = _return_ext_interface_modules("hdf5")
-        backend_module._store_in_hdf5_file(file_path, self._structures)
+        from warnings import warn
+
+        warn(
+            "This function will be removed, please use the `to_file` method instead.",
+            DeprecationWarning,
+            2,
+        )
+        self.to_file(file_path=file_path)
 
     def store_in_aiida_db(self, group_label: str = None, group_description: str = None):
         """
@@ -611,15 +845,16 @@ class StructureCollection:
         list
             List containing dictionary of all structure nodes.
         """
-        backend_module = _return_ext_interface_modules("aiida")
+        from warnings import warn
 
-        if group_label is not None:
-            print(f"Storing data as group `{group_label}` in the AiiDA database.")
-            if group_description is None:
-                group_description = "Structures from StructureCollection."
-        return backend_module._store_data_aiida(group_label, group_description, self._structures)
+        warn(
+            "This function will be removed, please use the `to_aiida_db` method instead.",
+            DeprecationWarning,
+            2,
+        )
+        return self.to_aiida_db(group_label=group_label, group_description=group_description)
 
-    def create_pandas_df(self, exclude_columns: list = []) -> pd.DataFrame:
+    def create_pandas_df(self, exclude_columns: list = None) -> pd.DataFrame:
         """
         Create a pandas data frame of the object.
 
@@ -633,8 +868,14 @@ class StructureCollection:
         pandas.DataFrame
             Pandas data frame.
         """
-        backend_module = _return_ext_interface_modules("pandas")
-        return backend_module._create_strct_c_pandas_df(self, exclude_columns)
+        from warnings import warn
+
+        warn(
+            "This function will be removed, please use the `to_pandas_df` class method instead.",
+            DeprecationWarning,
+            2,
+        )
+        return self.to_pandas_df(exclude_columns=exclude_columns)
 
     def get_all_elements(self) -> List[str]:
         """
@@ -688,14 +929,25 @@ class StructureCollection:
                 return key, None
         return None, None
 
-    def _process_slice(self, key: slice, reverse: bool = False) -> range:
-        start = key.start if key.start is not None else 0
-        if start < 0:
-            start += len(self)
-        stop = key.stop if key.stop is not None else len(self)
-        if stop < 0:
-            stop += len(self)
-        return range(stop - 1, start - 1, -1) if reverse else range(start, stop)
+    def _process_key(self, key, value=None) -> Union[list, tuple, range]:
+        if isinstance(key, (str, int)):
+            if value is None:
+                return [key]
+            return [key], [value]
+        elif isinstance(key, (slice, tuple, list)):
+            if isinstance(key, slice):
+                start = key.start if key.start is not None else 0
+                if start < 0:
+                    start += len(self)
+                stop = key.stop if key.stop is not None else len(self)
+                if stop < 0:
+                    stop += len(self)
+                key = range(start, stop)
+            if value is None:
+                return key
+            return key, value
+        else:
+            raise TypeError("`key` needs to be of type: str, int, slice, tuple or list.")
 
     def _add_structure(
         self,

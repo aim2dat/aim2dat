@@ -239,13 +239,13 @@ class PhasePlot(_BasePlot):
         for structure in structure_collection:
             dp_kwargs = {}
             for attr in ["formation_energy", "stability"]:
-                value = structure["attributes"].pop(attr, None)
+                value = structure["attributes"].get(attr, None)
                 dp_kwargs[attr] = value
                 if isinstance(value, dict):
                     dp_kwargs[attr] = value["value"]
                     if "unit" in value and "unit" not in dp_kwargs:
                         dp_kwargs["unit"] = value["unit"]
-            dp_kwargs["space_group"] = structure["attributes"].pop("space_group", None)
+            dp_kwargs["space_group"] = structure["attributes"].get("space_group", None)
             dp_kwargs["attributes"] = structure["attributes"]
             self.add_data_point(
                 data_label, transform_list_to_dict(structure["elements"]), **dp_kwargs

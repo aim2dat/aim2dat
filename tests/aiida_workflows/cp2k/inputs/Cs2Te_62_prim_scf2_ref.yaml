@@ -78,7 +78,8 @@ ctx:
         SUBSYS:
           CELL: {PERIODIC: XYZ}
           KIND:
-          - {'_': Cs, BASIS_SET: TZV2P-MOLOPT-MGGA-GTH-q9, POTENTIAL: GTH-MGGA-q9}
+          - {'_': Cs1, ELEMENT: Cs, BASIS_SET: TZV2P-MOLOPT-MGGA-GTH-q9, POTENTIAL: GTH-MGGA-q9}
+          - {'_': Cs2, ELEMENT: Cs, BASIS_SET: TZV2P-MOLOPT-MGGA-GTH-q9, POTENTIAL: GTH-MGGA-q9}
           - {'_': Te, BASIS_SET: TZV2P-MOLOPT-MGGA-GTH-q6, POTENTIAL: GTH-MGGA-q6}
   scf_m_info: 
     kpoints_ref_dist: 0.01

@@ -6,7 +6,6 @@ import qmpy_rester as qr
 # Internal library imports
 from aim2dat.chem_f import transform_str_to_dict
 import aim2dat.utils.space_groups as utils_sg
-from aim2dat.strct.strct import Structure
 
 
 def _formula_query_args(formula, query_limit):
@@ -75,7 +74,7 @@ def _parse_entry(entry):
         elements.append(symbol.strip())
         positions_scaled.append([float(x) for x in position_str.split()])
 
-    structure_input = {
+    structure = {
         "label": "OQMD_" + str(entry_id),
         "cell": entry.get("unit_cell"),
         "pbc": [True, True, True],
@@ -93,4 +92,4 @@ def _parse_entry(entry):
             "space_group": utils_sg.transform_to_nr(entry.get("spacegroup", None)),
         },
     }
-    return Structure(**structure_input)
+    return structure

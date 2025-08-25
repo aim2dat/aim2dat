@@ -7,9 +7,9 @@ from typing import List, Tuple
 import numpy as np
 
 # Internal library imports
-from aim2dat.strct.strct import Structure
+from aim2dat.strct.structure import Structure
 from aim2dat.strct.ext_analysis.decorator import external_analysis_method
-from aim2dat.strct.strct_prdf import _calculate_weights
+from aim2dat.strct.analysis.rdf import _calculate_weights
 
 
 @external_analysis_method(attr_mapping={"ffingerprint_order_p": ("el_order_p",)})

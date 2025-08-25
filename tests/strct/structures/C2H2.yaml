@@ -7,5 +7,3 @@ positions:
 - [ 0.6,   0.0,  0.5]
 - [-1.665, 0.0,  0.4999]
 - [ 1.665, 0.0,  0.5001]
-attributes:
-  point_group: $D_{\infty h}$

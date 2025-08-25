@@ -16,6 +16,4 @@ positions:
 - [-1.2152,    2.1048,   -0.0000]
 - [ 1.2152,    2.1048,    0.0000]
 is_cartesian: true
-attributes:
-  point_group: "$D_{6h}$"
 site_attributes: {test: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]}

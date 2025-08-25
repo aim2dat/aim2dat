@@ -1,0 +1,14 @@
+%YAML 1.2
+---
+point_group: $C_{2v}$
+symmetry_elements:
+- axis: [1.0, 0.0, 0.0]
+  n-fold: 2
+  label: $C_2$
+  type: rotation
+- type: reflection
+  label: $\sigma$
+  n-vector: [0.0, 1.0, 0.0]
+- type: reflection
+  label: $\sigma$
+  n-vector: [0.0, 0.0, 1.0]

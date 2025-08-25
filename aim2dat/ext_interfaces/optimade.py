@@ -6,7 +6,6 @@ import requests
 # Internal library imports
 from aim2dat.chem_f import transform_str_to_dict, transform_dict_to_str
 import aim2dat.utils.space_groups as utils_sg
-from aim2dat.strct.strct import Structure
 
 
 def _formula_query_args(formula):
@@ -138,7 +137,7 @@ def _parse_entry(entry, database_id):
             structure["attributes"].update(_convert_extra_properties_oqmd(entry_attr))
         elif database_id == "odbx":
             structure["attributes"].update(_convert_extra_properties_odbx(entry_attr))
-        return Structure(**structure)
+        return structure
 
 
 def _convert_extra_properties_oqmd(entry):

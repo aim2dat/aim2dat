@@ -1,1 +1,1 @@
-"""Tests for aiida-scripts."""
+"""Tests for aim2dat."""

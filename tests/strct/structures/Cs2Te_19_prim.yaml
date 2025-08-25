@@ -5,6 +5,7 @@ cell:
 - [0.0, 9.58256252, 0.0]
 - [0.0, 0.0, 11.59515172]
 elements: [Cs, Cs, Cs, Cs, Cs, Cs, Cs, Cs, Te, Te, Te, Te]
+kinds: [Cs1, Cs1, Cs2, Cs2, Cs1, Cs1, Cs2, Cs2, Te, Te, Te, Te]
 pbc: [true, true, true]
 positions:
 - [5.866065017999999, 5.78786776208, 0.824415287292]

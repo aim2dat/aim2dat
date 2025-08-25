@@ -12,8 +12,8 @@ from itertools import product, combinations
 import numpy as np
 
 # Internal library imports
-from aim2dat.strct.strct import Structure
-from aim2dat.strct.strct_validation import SamePositionsError
+from aim2dat.strct.structure import Structure
+from aim2dat.strct.validation import SamePositionsError
 from aim2dat.strct.ext_manipulation.decorator import external_manipulation_method
 from aim2dat.strct.ext_manipulation.utils import (
     _build_distance_dict,
@@ -21,13 +21,12 @@ from aim2dat.strct.ext_manipulation.utils import (
     DistanceThresholdError,
 )
 from aim2dat.strct.ext_manipulation.rotate_structure import rotate_structure
-from aim2dat.strct.strct_misc import _calc_atomic_distance
+from aim2dat.strct.analysis.geometry import _calc_atomic_distance
 from aim2dat.elements import get_element_symbol
 from aim2dat.utils.maths import (
     calc_angle,
     create_lin_ind_vector,
 )
-from aim2dat.io import read_yaml_file
 
 
 cwd = os.path.dirname(__file__)
@@ -432,7 +431,6 @@ def _check_guest_structure(guest_strct: Union[Structure, str]) -> Structure:
         label = "" if guest_strct.label is None else guest_strct.label
         return guest_strct, label
     elif isinstance(guest_strct, str):
-        guest_strct_dict = {}
         try:
             strct = Structure(
                 label=guest_strct,
@@ -442,16 +440,8 @@ def _check_guest_structure(guest_strct: Union[Structure, str]) -> Structure:
             )
         except ValueError:
             try:
-                guest_strct_dict = read_yaml_file(
-                    os.path.join(cwd, "pred_structures", guest_strct + ".yaml")
-                )
-                strct = Structure(
-                    label=guest_strct,
-                    elements=guest_strct_dict["elements"],
-                    positions=guest_strct_dict["positions"],
-                    pbc=False,
-                )
-            except FileNotFoundError:
+                strct = Structure.from_str(guest_strct)
+            except ValueError:
                 raise ValueError(f"``guest_structure`` '{guest_strct}' is not supported.")
         return strct, guest_strct
     else:

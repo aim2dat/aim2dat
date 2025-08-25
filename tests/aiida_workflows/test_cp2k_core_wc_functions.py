@@ -25,7 +25,7 @@ REF_PATH = os.path.dirname(__file__) + "/cp2k/inputs/"
         ("Al_225_conv", "inp5"),
         ("Al_225_conv", "inp6"),
         ("Al_225_conv", "inp7"),
-        ("Cs2Te_62_prim_kinds", "inp1"),
+        ("Cs2Te_62_prim", "inp1"),
     ],
 )
 def test_inputs_general_features(

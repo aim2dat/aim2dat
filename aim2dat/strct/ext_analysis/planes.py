@@ -10,10 +10,10 @@ import scipy
 from scipy.spatial.distance import cdist
 
 # Internal library imports
-from aim2dat.strct.strct import Structure
+from aim2dat.strct.structure import Structure
 from aim2dat.strct.ext_analysis.decorator import external_analysis_method
 from aim2dat.utils.maths import calc_plane_equation
-from aim2dat.strct.strct_super_cell import _create_supercell_positions
+from aim2dat.strct.manipulation.cell import _create_supercell_positions
 
 
 @external_analysis_method(attr_mapping=None)

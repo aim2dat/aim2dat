@@ -16,12 +16,11 @@ from aiida.common.extendeddicts import AttributeDict
 from aiida.plugins.entry_point import format_entry_point_string
 
 # Internal library imports
-from aim2dat.strct import StructureCollection, Structure
+from aim2dat.strct import Structure, StructureCollection
 from aim2dat.aiida_data.surface_data import SurfaceData
 from aim2dat.io import read_yaml_file
 from aim2dat.aiida_workflows.utils import create_aiida_node
 from aim2dat.utils.dict_tools import dict_set_parameter
-from aim2dat.utils.element_properties import get_element_symbol
 
 
 pytest_plugins = ["aiida.manage.tests.pytest_fixtures"]
@@ -183,11 +182,17 @@ def create_structure_collection_object():
         strct_c = StructureCollection()
         structures = []
         if isinstance(inp_structures, list):
-            for strct in inp_structures:
-                strct_dict = read_yaml_file(STRUCTURES_PATH + strct + ".yaml")
-                strct_c.append(label=label_prefix + strct, **strct_dict)
-                strct_dict["elements"] = [get_element_symbol(el) for el in strct_dict["elements"]]
-                structures.append(strct_dict)
+            for label in inp_structures:
+                try:
+                    strct = Structure.from_str(label, label=label_prefix + label)
+                except ValueError:
+                    strct = Structure.from_file(
+                        STRUCTURES_PATH + label + ".yaml",
+                        backend="internal",
+                        label=label_prefix + label,
+                    )
+                strct_c.append_structure(strct)
+                structures.append(strct.copy())
         else:
             strct_c.import_from_hdf5_file(inp_structures)
             structures = strct_c.get_all_structures()
@@ -469,13 +474,17 @@ def aiida_create_wc_inputs():
     """Create work chain inputs"""
 
     def _aiida_create_wc_inputs(structure, ref):
-        strct_dict = dict(read_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
+        if structure in Structure.list_named_structures():
+            strct_node = Structure.from_str(structure, label=structure).to_aiida_structuredata()
+        else:
+            strct_node = Structure.from_file(
+                STRUCTURES_PATH + structure + ".yaml", label=structure, backend="internal"
+            ).to_aiida_structuredata()
 
         inputs = {}
         for key, val in ref["inputs"].items():
             key_tree = key.split(".")
             dict_set_parameter(inputs, key_tree, create_aiida_node(val))
-        strct_node = Structure(**strct_dict, label=structure).to_aiida_structuredata()
         dict_set_parameter(inputs, ["structural_p", "structure"], strct_node)
         inputs = AttributeDict(inputs)
 

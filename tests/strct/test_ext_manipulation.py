@@ -21,13 +21,13 @@ from aim2dat.strct.ext_manipulation.utils import _build_distance_dict, _check_di
 from aim2dat.io import read_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
-STRUCTURE_MANIPULATION_PATH = os.path.dirname(__file__) + "/structure_manipulation/"
+REF_PATH = os.path.dirname(__file__) + "/ext_manipulation/"
 
 
 def test_build_distance_dict_fct(nested_dict_comparison):
     """Test _build_distance_dict function."""
     strct_1 = Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf")
-    strct_2 = Structure.from_file(STRUCTURES_PATH + "Benzene.xyz")
+    strct_2 = Structure.from_file(STRUCTURES_PATH + "Benzene.yaml", backend="internal")
 
     dist_dict, min_dist = _build_distance_dict(None, strct_1, strct_2)
     assert dist_dict is None
@@ -156,7 +156,7 @@ def test_add_structure_coord(structure_comparison):
     """Test add functional group function."""
     inputs = dict(read_yaml_file(STRUCTURES_PATH + "Sc2BDC3.yaml"))
     inputs["kinds"] = ["kind1"] + [None] * (len(inputs["elements"]) - 1)
-    ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "Sc2BDC3_ref.yaml")
+    ref_p = read_yaml_file(REF_PATH + "add_structure_coord_Sc2BDC3.yaml")
     ref_p["label"] = "test"
     strct_collect = StructureCollection()
     strct_collect.append(**inputs, label="test")
@@ -236,9 +236,7 @@ def test_add_structure_coord_planar(structure_comparison):
         dist_threshold=None,
         bond_length=0.2,
     )
-    ref_p = read_yaml_file(
-        STRUCTURE_MANIPULATION_PATH + "MOF-5_prim_add_structure_coord_planar_ref.yaml"
-    )
+    ref_p = read_yaml_file(REF_PATH + "add_structure_coord_MOF-5_prim_planar.yaml")
     structure_comparison(new_strct, ref_p)
 
 
@@ -257,9 +255,7 @@ def test_add_structure_coord_rotation(structure_comparison):
         bond_length=3,
         dist_threshold=2,
     )
-    ref_p = read_yaml_file(
-        STRUCTURE_MANIPULATION_PATH + "MOF-5_prim_add_structure_coord_rotation_ref.yaml"
-    )
+    ref_p = read_yaml_file(REF_PATH + "add_structure_coord_MOF-5_prim_rotation.yaml")
     structure_comparison(new_strct, ref_p)
     new_strct = add_structure_coord(
         strct,
@@ -270,9 +266,7 @@ def test_add_structure_coord_rotation(structure_comparison):
         dist_threshold=2.9,
         constrain_steps=30,
     )
-    ref_p = read_yaml_file(
-        STRUCTURE_MANIPULATION_PATH + "MOF-5_prim_add_structure_coord_constrain_ref.yaml"
-    )
+    ref_p = read_yaml_file(REF_PATH + "add_structure_coord_MOF-5_prim_constrain.yaml")
     structure_comparison(new_strct, ref_p)
 
 
@@ -287,7 +281,7 @@ def test_add_structure_coord_molecules(structure_comparison):
         bond_length=1.0,
         dist_threshold={(1, 1): 0.9},
     )
-    ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "NH3-OH_ref.yaml")
+    ref_p = read_yaml_file(REF_PATH + "add_structure_coord_NH3-OH.yaml")
     structure_comparison(new_strct, ref_p)
 
 
@@ -303,7 +297,7 @@ def test_add_structure_coord_molecules_2(structure_comparison):
         bond_length=1.5,
         dist_threshold={(2, 1): 1.5},
     )
-    ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "NH3-H2O_ref.yaml")
+    ref_p = read_yaml_file(REF_PATH + "add_structure_coord_NH3-H2O.yaml")
     structure_comparison(new_strct, ref_p)
 
 
@@ -322,7 +316,7 @@ def test_add_structure_random_molecule(structure_comparison):
         random_seed=44,
         dist_threshold=1.0,
     )
-    ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "NH3-H2O-OH_ref.yaml")
+    ref_p = read_yaml_file(REF_PATH + "add_structure_random_NH3-H2O-OH.yaml")
     structure_comparison(new_strct, ref_p)
 
 
@@ -344,7 +338,7 @@ def test_add_structure_random_crystal(structure_comparison):
         max_tries=1,
         dist_threshold=1.0,
     )
-    ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "NaCl_225_conv-H_ref.yaml")
+    ref_p = read_yaml_file(REF_PATH + "add_structure_random_NaCl_225_conv-H.yaml")
     structure_comparison(new_strct, ref_p)
 
 
@@ -368,15 +362,15 @@ def test_add_structure_random_molecules_error():
 def test_add_structure_position(structure_comparison):
     """Test add_structure_random method for a crystal."""
     inputs = [
-        dict(read_yaml_file(STRUCTURE_MANIPULATION_PATH + "PBI3.yaml")),
-        dict(read_yaml_file(STRUCTURE_MANIPULATION_PATH + "CN2H5.yaml")),
+        dict(read_yaml_file(STRUCTURES_PATH + "PBI3.yaml")),
+        dict(read_yaml_file(STRUCTURES_PATH + "CN2H5.yaml")),
     ]
     new_strct = add_structure_position(
         Structure(**inputs[0]),
         position=[2.88759377, 3.244215, 3.25149],
         guest_structure=Structure(**inputs[1]),
     )
-    ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "PBI3+CN2H5_ref.yaml")
+    ref_p = read_yaml_file(REF_PATH + "add_structure_position_PBI3+CN2H5.yaml")
     structure_comparison(new_strct, ref_p)
 
     with pytest.raises(DistanceThresholdError) as error:
@@ -392,7 +386,7 @@ def test_add_structure_position(structure_comparison):
 def test_rotate_structure(structure_comparison):
     """Test rotate_structure method for a crystal."""
     inputs = (
-        dict(read_yaml_file(STRUCTURE_MANIPULATION_PATH + "PBI3+CN2H5_ref.yaml")),
+        dict(read_yaml_file(REF_PATH + "add_structure_position_PBI3+CN2H5.yaml")),
         Structure.from_file(STRUCTURES_PATH + "MOF-5_prim.xsf"),
     )
     new_strct = rotate_structure(
@@ -400,7 +394,7 @@ def test_rotate_structure(structure_comparison):
         angles=[90, 0, 0],
         site_indices=[4, 5, 6, 7, 8, 9, 10, 11],
     )
-    ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "PBI3+CN2H5_rot_ref.yaml")
+    ref_p = read_yaml_file(REF_PATH + "rotate_structure_PBI3+CN2H5.yaml")
     structure_comparison(new_strct, ref_p)
 
     new_strct = rotate_structure(
@@ -410,14 +404,14 @@ def test_rotate_structure(structure_comparison):
         origin=[2.90097537349613, 6.52064699916667, 6.52064699916667],
         vector=[1.00000000e00, 2.44932357e-15, 2.44932357e-15],
     )
-    ref_p = read_yaml_file(STRUCTURE_MANIPULATION_PATH + "MOF-5_prim.yaml")
+    ref_p = read_yaml_file(REF_PATH + "rotate_structure_MOF-5_prim.yaml")
     structure_comparison(new_strct, ref_p)
 
 
 def test_translate_structure(structure_comparison):
     """Test translate_structure method for a crystal."""
     vector = np.array([1.0, 0.4, 0.6])
-    strct = Structure.from_file(STRUCTURES_PATH + "Benzene.xyz")
+    strct = Structure.from_file(STRUCTURES_PATH + "Benzene.yaml", backend="internal")
     strct.label = "Test"
     ref_strct = strct.copy()
     ref_strct.label = "Test_translated-[1.0, 0.4, 0.6]"

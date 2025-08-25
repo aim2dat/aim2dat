@@ -10,6 +10,7 @@ from aim2dat.io.fhi_aims import (
     read_fhiaims_total_dos,
     read_fhiaims_proj_dos,
 )
+from aim2dat.io.hdf5 import read_hdf5_structure, write_hdf5_structure
 from aim2dat.io.phonopy import (
     read_phonopy_band_structure,
     read_phonopy_total_dos,
@@ -41,6 +42,8 @@ __all__ = [
     "read_fhiaims_band_structure",
     "read_fhiaims_total_dos",
     "read_fhiaims_proj_dos",
+    "read_hdf5_structure",
+    "write_hdf5_structure",
     "read_phonopy_band_structure",
     "read_phonopy_total_dos",
     "read_phonopy_proj_dos",

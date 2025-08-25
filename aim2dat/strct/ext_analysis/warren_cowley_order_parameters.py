@@ -6,7 +6,7 @@ from statistics import mean
 
 # Internal library imports
 from aim2dat.strct.ext_analysis.decorator import external_analysis_method
-from aim2dat.strct.strct import Structure
+from aim2dat.strct.structure import Structure
 from aim2dat.utils.maths import calc_polygon_area
 
 
