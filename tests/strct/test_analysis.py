@@ -7,17 +7,18 @@ import os
 import pytest
 
 # Internal library imports:
-from aim2dat.strct import Structure
+from aim2dat.strct import Structure, SurfaceGeneration
+from aim2dat.strct.surface_utils import _transform_slab_to_primitive
+from aim2dat.strct.analysis.brillouin_zone_2d import _get_kpath
 from aim2dat.io import read_yaml_file
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/structures/"
-MISC_PATH = os.path.dirname(__file__) + "/miscellaneous/"
-COORDINATION_PATH = os.path.dirname(__file__) + "/coordination/"
+REF_PATH = os.path.dirname(__file__) + "/analysis/"
 
 
 def test_calc_distance_angle_dihedral_errors():
     """Test correct error handling on site indices input."""
-    strct = Structure.from_file(STRUCTURES_PATH + "Benzene.xyz")
+    strct = Structure.from_file(STRUCTURES_PATH + "Benzene.yaml", backend="internal")
     with pytest.raises(ValueError) as error:
         strct.calc_distance([1] * 3, [0, 2, 20])
     assert str(error.value) == "`site_index` needs to be smaller than the number of sites."
@@ -34,12 +35,13 @@ def test_calc_distance_angle_dihedral_errors():
 
 @pytest.mark.parametrize(
     "structure, file_suffix",
-    [("Benzene", "xyz"), ("ZIF-8", "cif"), ("MOF-303_3xH2O_flawed", "xsf")],
+    [("Benzene", "yaml"), ("ZIF-8", "cif"), ("MOF-303_3xH2O_flawed", "xsf")],
 )
 def test_calc_distance(structure, file_suffix):
     """Test calc_distance function."""
-    ref_outputs = read_yaml_file(MISC_PATH + structure + "_ref.yaml")
-    strct = Structure.from_file(STRUCTURES_PATH + structure + "." + file_suffix)
+    ref_outputs = read_yaml_file(REF_PATH + "geometry_" + structure + ".yaml")
+    backend = "internal" if structure == "Benzene" else "ase"
+    strct = Structure.from_file(STRUCTURES_PATH + structure + "." + file_suffix, backend=backend)
     dist = strct.calc_distance(**ref_outputs["distance"]["function_args"])
     if isinstance(ref_outputs["distance"]["reference"], list):
         assert [
@@ -73,14 +75,12 @@ def test_calc_distance_pbc():
 @pytest.mark.parametrize("structure, file_suffix", [("ZIF-8", "cif"), ("ScBDC", "cif")])
 def test_calc_distance_sc(structure, file_suffix):
     """Test calc_distance function using the super cell."""
-    ref_outputs = read_yaml_file(MISC_PATH + structure + "_ref.yaml")
+    ref_outputs = read_yaml_file(REF_PATH + "geometry_" + structure + ".yaml")
     strct = Structure.from_file(
         STRUCTURES_PATH + structure + "." + file_suffix,
         backend="internal",
         backend_kwargs={"strct_check_chem_formula": False},
     )
-    if isinstance(strct, list):
-        strct = strct[0]
     dist = strct.calc_distance(**ref_outputs["distance_sc"]["function_args"])
     if ref_outputs["distance_sc"]["reference"] is None:
         assert dist is None
@@ -110,11 +110,12 @@ def test_calc_distance_sc(structure, file_suffix):
                 assert abs(dist[idx0] - dist_list) < 1e-5, f"Distance {idx0} is wrong."
 
 
-@pytest.mark.parametrize("structure, file_suffix", [("Benzene", "xyz"), ("ZIF-8", "cif")])
+@pytest.mark.parametrize("structure, file_suffix", [("Benzene", "yaml"), ("ZIF-8", "cif")])
 def test_calc_angle(structure, file_suffix):
     """Test calc_angle function."""
-    ref_outputs = read_yaml_file(MISC_PATH + structure + "_ref.yaml")
-    strct = Structure.from_file(STRUCTURES_PATH + structure + "." + file_suffix)
+    ref_outputs = read_yaml_file(REF_PATH + "geometry_" + structure + ".yaml")
+    backend = "internal" if structure == "Benzene" else "ase"
+    strct = Structure.from_file(STRUCTURES_PATH + structure + "." + file_suffix, backend=backend)
     angles = strct.calc_angle(**ref_outputs["angle"]["function_args"])
     if isinstance(ref_outputs["angle"]["reference"], list):
         for angle, ref in zip(angles.values(), ref_outputs["angle"]["reference"]):
@@ -126,12 +127,12 @@ def test_calc_angle(structure, file_suffix):
 @pytest.mark.parametrize("structure, file_suffix", [("ScBDC", "cif")])
 def test_calc_dihedral_angle(structure, file_suffix):
     """Test calc_dihedral_angle function."""
-    ref_outputs = read_yaml_file(MISC_PATH + structure + "_ref.yaml")
+    ref_outputs = read_yaml_file(REF_PATH + "geometry_" + structure + ".yaml")
     strct = Structure.from_file(
         STRUCTURES_PATH + structure + "." + file_suffix,
         backend="internal",
         backend_kwargs={"strct_check_chem_formula": False},
-    )[0]
+    )
     angles = strct.calc_dihedral_angle(**ref_outputs["dihedral_angle"]["function_args"])
     assert len(angles) == len(ref_outputs["dihedral_angle"]["reference"])
     for angle, ref in zip(angles.values(), ref_outputs["dihedral_angle"]["reference"]):
@@ -176,7 +177,10 @@ def test_cn_analysis(nested_dict_comparison, structure_label, method):
     Test the different methods to determine the coordination number of atomic sites.
     """
     inputs = dict(read_yaml_file(STRUCTURES_PATH + structure_label + ".yaml"))
-    ref = dict(read_yaml_file(COORDINATION_PATH + structure_label + "_" + method + ".yaml"))
+    inputs.pop("kinds", None)
+    ref = dict(
+        read_yaml_file(REF_PATH + "coordination_" + structure_label + "_" + method + ".yaml")
+    )
     structure = Structure(**inputs)
     output = structure.calc_coordination(**ref["parameters"])
     sites = output.pop("sites")
@@ -207,3 +211,98 @@ def test_cn_analysis(nested_dict_comparison, structure_label, method):
                     used_indices.append(idx)
                     break
             assert match, f"Neighbour {neigh} of site {site_idx} not found in reference data."
+
+
+@pytest.mark.parametrize(
+    "structure, kwargs",
+    [
+        ("ZIF-8.cif", {"symprec": 1e-5}),
+        ("GaAs_216_prim.yaml", {}),
+        ("Cs2Te_62_prim.yaml", {"symprec": 0.01, "return_sym_operations": True}),
+    ],
+)
+def test_calc_space_group(nested_dict_comparison, structure, kwargs):
+    """Test calc_space_group function."""
+    ref_outputs = dict(read_yaml_file(REF_PATH + "symmetry_" + structure.split(".")[0] + ".yaml"))
+    strct = Structure.from_file(STRUCTURES_PATH + structure, backend="internal")
+    sg_dict = strct.calc_space_group(**kwargs)
+    nested_dict_comparison(sg_dict, ref_outputs)
+    assert strct["attributes"]["space_group"] == sg_dict["space_group"]["number"]
+
+
+@pytest.mark.parametrize(
+    "structure",
+    [
+        "CHBrClF",
+        "HClO",
+        "C4H6O6",
+        "HCN",
+        "C2H2",
+        "N2H4",
+        "H3PO4",
+        "C2H2Cl2",
+        "H2O",
+        "NH3",
+        "C2H4",
+        "PCl5",
+        "C5H5",
+        "Benzene",
+        "C7H7",
+        "C8H8",
+        "C3H4",
+        "CH4",
+        "SF6",
+    ],
+)
+def test_point_group_determination(nested_dict_comparison, structure):
+    """
+    Test the method to determine the point group.
+    """
+    ref = dict(read_yaml_file(REF_PATH + "symmetry_" + structure + ".yaml"))
+    if structure in ["H2O", "NH3"]:
+        structure = Structure.from_str(structure)
+    else:
+        structure = Structure.from_file(STRUCTURES_PATH + structure + ".yaml", backend="internal")
+    nested_dict_comparison(structure.calc_point_group(), ref)
+    assert structure["attributes"]["point_group"] == ref["point_group"]
+
+
+@pytest.mark.parametrize(
+    "bulk_crystal, miller_indices, ter",
+    [
+        ("GaAs_216_prim", (1, 0, 0), 1),
+        # ("GaAs_216_prim", (1, 1, 0), 1),
+        # ("Cs2Te_62_prim", (1, 0, 0), 1),
+        # ("Cs2Te_62_prim", (1, 1, 1), 1),
+        # ("Cs2Te_194_prim", (1, 0, 1), 1),
+        # ("Cs2Te_194_prim", (5, 1, 2), 1),
+    ],
+)
+def test_2d_brillouin_zone_kpath(
+    structure_comparison, nested_dict_comparison, bulk_crystal, miller_indices, ter
+):
+    """Test k-path generation in 2d Brillouin zone."""
+    mil_ind_str = "".join(str(mil_idx) for mil_idx in miller_indices)
+    ref_outputs = read_yaml_file(
+        REF_PATH + f"brillouin_zone_2d_{bulk_crystal}_{mil_ind_str}_{ter}.yaml"
+    )
+    bulk_structure = Structure(**read_yaml_file(STRUCTURES_PATH + bulk_crystal + ".yaml"))
+    bulk_structure.attributes["label"] = bulk_crystal
+    surf_gen = SurfaceGeneration(bulk_structure)
+
+    surf_c = surf_gen.generate_surface_slabs(miller_indices=miller_indices)
+    prim_slab, layer_group = _transform_slab_to_primitive(surf_c[ter - 1], 0.005, -1, 0)
+    kpath = _get_kpath(
+        prim_slab["cell"],
+        2,
+        layer_group,
+        0.015,
+        1.0e-5,
+    )
+    structure_comparison(
+        prim_slab,
+        ref_outputs["prim_slab"],
+        tolerance=1e-3,
+    )
+    assert layer_group == ref_outputs["layer_group"], "Wrong layer group."
+    nested_dict_comparison(kpath, ref_outputs["kpath"])

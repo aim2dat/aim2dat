@@ -8,7 +8,11 @@ from typing import Any
 # Third party library imports
 import ruamel.yaml
 
+# Internal library imports
+from aim2dat.io.utils import read_structure
 
+
+@read_structure(r".*\.ya?ml")
 def read_yaml_file(file_path: str, typ: str = "safe"):
     """
     Load a yaml-file and returns the content.

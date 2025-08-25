@@ -18,7 +18,7 @@ from aim2dat.strct.surface_utils import (
 )
 from aim2dat.strct import Structure, StructureOperations
 from aim2dat.strct.ext_manipulation import add_structure_coord, rotate_structure
-from aim2dat.strct.brillouin_zone_2d import _get_kpath
+from aim2dat.strct.analysis.brillouin_zone_2d import _get_kpath
 from aim2dat.utils.dict_tools import dict_retrieve_parameter
 
 

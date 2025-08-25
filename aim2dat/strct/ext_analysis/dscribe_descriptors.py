@@ -5,7 +5,7 @@ from typing import List
 
 # Internal library imports
 from aim2dat.ext_interfaces import _return_ext_interface_modules
-from aim2dat.strct.strct import Structure
+from aim2dat.strct import Structure
 from aim2dat.strct.ext_analysis.decorator import external_analysis_method
 
 

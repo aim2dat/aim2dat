@@ -4,7 +4,6 @@
 import itertools
 import random
 import math
-from typing import List
 
 # Third party library imports
 import numpy as np
@@ -12,8 +11,6 @@ from pyxtal.tolerance import Tol_matrix
 from pyxtal.crystal import random_crystal
 from pyxtal.msg import Comp_CompatibilityError
 
-# Internal library imports
-from aim2dat.strct.strct import Structure
 
 SPACE_GROUP_LIMITS = {
     3: [
@@ -59,7 +56,7 @@ def _process_element_set(
     max_structures_per_cs,
     max_structures_per_sg,
     volume_factor,
-) -> List[Structure]:
+) -> list:
     """
     Process a set of elements.
     """
@@ -155,7 +152,7 @@ def _create_crystals(
     max_structures_per_cs,
     max_structures_per_sg,
     volume_factor,
-) -> List[Structure]:
+) -> list:
     """
     Create the crystal structures.
     """
@@ -194,7 +191,7 @@ def _create_crystals(
             if structure_pyxtal is not None and structure_pyxtal.valid:
                 space_group_list[space_group - 1] += 1
                 crystal_sys_list[crystal_sys - 1] += 1
-                structures.append(Structure(**_parse_structure(structure_pyxtal)))
+                structures.append(_parse_structure(structure_pyxtal))
             else:
                 counter_tries += 1
     return structures

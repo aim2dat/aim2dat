@@ -5,8 +5,8 @@ import inspect
 from functools import wraps
 
 # Internal library imports
-from aim2dat.strct.strct import Structure
-from aim2dat.strct.strct_manipulation import _add_label_suffix
+from aim2dat.strct.structure import Structure
+from aim2dat.strct.manipulation.utils import _add_label_suffix
 
 
 def external_manipulation_method(func):

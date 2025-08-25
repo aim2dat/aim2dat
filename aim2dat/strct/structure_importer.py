@@ -9,10 +9,10 @@ import uuid
 
 
 # Internal library imports
-from aim2dat.strct import Structure
-from aim2dat.strct import StructureCollection
+from aim2dat.strct.structure import Structure
+from aim2dat.strct.structure_collection import StructureCollection
 from aim2dat.ext_interfaces import _return_ext_interface_modules
-from aim2dat.strct.mixin import ConstraintsMixin
+from aim2dat.strct.constraints_mixin import ConstraintsMixin
 import aim2dat.utils.print as utils_pr
 from aim2dat.chem_f import transform_dict_to_str, transform_str_to_dict
 
@@ -148,6 +148,7 @@ class StructureImporter(ConstraintsMixin):
         entry = backend_module._download_structure_by_id(
             entry_id, api_key, structure_type, property_data
         )
+        entry = Structure(**entry)
         self.structures.append_structure(entry)
         _update_import_details(self._import_details, "mp_openapi", entry)
         return entry
@@ -503,7 +504,7 @@ class StructureImporter(ConstraintsMixin):
                 )
             for strct_idx, structure in enumerate(structures):
                 label = "pyxtal_" + uuid.uuid4().hex
-                structures_collect._add_structure(label, structure, False)
+                structures_collect._add_structure(label, Structure(**structure), False)
         _update_import_details(self._import_details, "PyXtaL", structures_collect)
         self.structures += structures_collect
         return structures_collect
@@ -526,6 +527,7 @@ class StructureImporter(ConstraintsMixin):
                 time.sleep(0.1)
                 entries = backend_module._download_structures(query, **download_kwargs)
                 for entry in entries:
+                    entry = Structure(**entry)
                     if entry.label in self.structures.labels:
                         print(f"Entry for {entry.label} already imported.")
                         continue

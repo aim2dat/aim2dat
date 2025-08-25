@@ -11,7 +11,6 @@ from scipy.spatial.transform import Rotation
 # Internal library imports
 from aim2dat.elements import get_atomic_number, get_element_symbol
 from aim2dat.utils.maths import calc_angle, calc_reflection_matrix
-from aim2dat.strct.strct import Structure
 
 
 CENTROSYMMETRIC_PG = [
@@ -41,14 +40,13 @@ def _transfrom_structure_to_cell(structure):
 
 
 def _transform_cell_to_structure(cell):
-    structure = {
+    return {
         "cell": cell[0],
         "positions": cell[1],
         "elements": [get_element_symbol(el) for el in cell[2]],
         "is_cartesian": False,
         "pbc": True,
     }
-    return Structure(**structure)
 
 
 def _transform_spglib_output_to_dict(output, keys):
