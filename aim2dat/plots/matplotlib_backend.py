@@ -346,9 +346,10 @@ def _add_bar(obj, axes, bar):
         yerr=bar.get("y_error", None),
         capsize=bar.get("capsize", None),
         ecolor=bar.get("ecolor", None),
-        color=bar.get("color", None),
+        color=(bar.get("color", None), bar.get("alpha", None)),
         hatch=bar.get("hatch", None),
-        alpha=bar.get("alpha", None),
+        edgecolor=bar.get("edgecolor", "black"),
+        linewidth=bar.get("linewidth", 0.5),
         label=bar.get("label", None),
     )
 
