@@ -345,6 +345,7 @@ def test_openmm_interface_cycle(structure_comparison):
     ff = ForceField("amber14/tip3pfb.xml")
     integrator = LangevinMiddleIntegrator(300.0, 1.0, 0.004)
     strct = Structure.from_str("H2O")
+    strct.label = None
     strct.kinds = ["O", "H1", "H2"]
     simulation = strct.to_openmm_simulation(ff, bonds=((0, 1), (0, 2)), integrator=integrator)
     strct.cell = ((20.0, 0.0, 0.0), (0.0, 20.0, 0.0), (0.0, 0.0, 20.0))

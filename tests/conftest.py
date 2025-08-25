@@ -474,13 +474,17 @@ def aiida_create_wc_inputs():
     """Create work chain inputs"""
 
     def _aiida_create_wc_inputs(structure, ref):
-        strct_dict = dict(read_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
+        if structure in Structure.list_named_structures():
+            strct_node = Structure.from_str(structure, label=structure).to_aiida_structuredata()
+        else:
+            strct_node = Structure.from_file(
+                STRUCTURES_PATH + structure + ".yaml", label=structure
+            ).to_aiida_structuredata()
 
         inputs = {}
         for key, val in ref["inputs"].items():
             key_tree = key.split(".")
             dict_set_parameter(inputs, key_tree, create_aiida_node(val))
-        strct_node = Structure(**strct_dict, label=structure).to_aiida_structuredata()
         dict_set_parameter(inputs, ["structural_p", "structure"], strct_node)
         inputs = AttributeDict(inputs)
 
