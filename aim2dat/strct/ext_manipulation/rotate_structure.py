@@ -10,7 +10,7 @@ import numpy as np
 from scipy.spatial.transform import Rotation
 
 # Internal library imports
-from aim2dat.strct import Structure
+from aim2dat.strct.structure import Structure
 from aim2dat.strct.ext_manipulation.decorator import (
     external_manipulation_method,
 )

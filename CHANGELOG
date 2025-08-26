@@ -19,8 +19,10 @@ Version 0.4.0
 * ``aiida_workflows.MultipleWorkflowBuilder`` offers the possibility with ``return_remote_runtimes`` to return only the sum of remote runtimes for each task (`PR #155 <https://github.com/aim2dat/aim2dat/pull/155>`_).
 * ``aiida_workflows.cp2k.pdos_work_chain.PDOSWorkChain`` contains now the option to print the local PDOS, projected on subsets of atoms given through lists ``ldos`` (`PR #158 <https://github.com/aim2dat/aim2dat/pull/158>`_).
 * Newly implemented function ``strct.ext_analysis.calc_hydrogen_bonds`` to search for hydrogen bonds in a ``strct.Structure`` object (`PR #167 <https://github.com/aim2dat/aim2dat/pull/167>`_)
-* ``strct.ext_analysis.add_structure_coord`` grid search is now improved by a grid search in a sphere around the host atoms. Additionally, `rotate_guest` allows to rotate the guest until minimum is found (`PR #168 <https://github.com/aim2dat/aim2dat/pull/168>`_)
+* ``strct.ext_analysis.add_structure_coord`` grid search is now improved by a grid search in a sphere around the host atoms. Additionally, `rotate_guest` allows to rotate the guest until minimum is found (`PR #168 <https://github.com/aim2dat/aim2dat/pull/168>`_).
 * ``plots.simple_plot`` added new property `edge_color` and `line_width` to set the color and thickness of the edges for bar plots for backend `matplotlib` (`PR #169 <https://github.com/aim2dat/aim2dat/pull/169>`_).
+* The ``strct.Structure`` class has the new ``from_str`` classmethod to initialize an object from string, using pre-defined stored structures (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
+* The ``read_yaml_file`` function now has the ``read_structure`` decorator to integrate into the io-interface of the ``strct.Structure`` class (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
 
 **Fixes:**
 
@@ -32,6 +34,7 @@ Version 0.4.0
 * The ``find_scf_parameters`` were not restarted if the mixing parameters were not found (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * The ``aim2dat.aiida_workflows.cp2k.core_work_chain_handlers._resubmit_calculation`` function takes care of restarting CP2K calculations when walltime is hit or no output for CP2K was created due to connection issues (`PR #157 <https://github.com/aim2dat/aim2dat/pull/157>`_).
 * The ``strct.ext_manipulation.add_structure_coord`` function threw an error when the host or guest indices were larger than the number of sites of the corresponding structure (`PR #165 <https://github.com/aim2dat/aim2dat/pull/165>`_).
+* The read/write functions to hdf5-files of the ``strct.StructureCollection`` class are finetuned to be more data-efficient (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
 
 **Breaking Changes:**
 
@@ -46,6 +49,9 @@ Version 0.4.0
 * The Materials Project openAPI interface does not support ICSD IDs anymore, instead the new key `theoretical` is added (`PR #154 <https://github.com/aim2dat/aim2dat/pull/154>`_).
 * ``aiida_workflows.cp2k.pdos_work_chain.PDOSWorkChain.resolve_atoms`` resolves the atoms now via local PDOS instead of changing each atom in a separate kind (`PR #158 <https://github.com/aim2dat/aim2dat/pull/158>`_).
 * The `chem_formula`, `units` and `element_properties` modules from the `aim2dat.utils` sup-package are moved to the new sub-packages: `chem_f`, `units` and `elements` to reduce the import paths; all element properties are now stored internaly, instead of relying on the ase implementation (`PR #159 <https://github.com/aim2dat/aim2dat/pull/159>`_).
+* ``strct.Structure.attributes`` are now completely mutable for more straight-forward use (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
+* The ``strct.StructureCollection`` io-function are now aligned with the ``strct.Structure`` class, replacing the ``StructureCollection.import_*`` and ``StructureCollection.store_*`` with ``StructureCollection.from_*`` and ``StructureCollection.to_*`` functions, respectively (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
+* The interface of the ``strct.StructureCollection`` towards pandas data frames now adds a column to the data frame containing the ``strct.Structure`` objects, thus, the interface is now circular and the new ``StructureCollection.from_pandas_df`` method can be used initiate a ``strct.StructureCollection`` object from a data frame (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
 
 
 Version 0.3.0

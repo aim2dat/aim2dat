@@ -1,7 +1,7 @@
 """Module that implements functions to change molecular or crystalline structures."""
 
 # Internal library imports
-from aim2dat.strct.strct import Structure
+from aim2dat.strct.structure import Structure
 from aim2dat.strct.ext_manipulation.add_structure import add_structure_coord
 
 

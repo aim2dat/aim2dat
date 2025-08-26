@@ -7,11 +7,11 @@ from typing import List, Union
 import numpy as np
 
 # Internal library imports
+from aim2dat.strct.structure import Structure
 from aim2dat.strct.ext_manipulation.decorator import (
     external_manipulation_method,
 )
 from aim2dat.strct.ext_manipulation.utils import _check_distances
-from aim2dat.strct import Structure
 
 
 @external_manipulation_method

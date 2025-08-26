@@ -7,7 +7,7 @@ from typing import List
 import numpy as np
 
 # Internal library imports
-from aim2dat.strct.strct import Structure
+from aim2dat.strct.structure import Structure
 from aim2dat.strct.ext_analysis.decorator import external_analysis_method
 
 

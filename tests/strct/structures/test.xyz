@@ -1,5 +1,5 @@
 12
-Properties=species:S:1:pos:R:3:tags:I:1:test:I:1 point_group="$D_{6h}$" pbc="F F F"
+Properties=species:S:1:pos:R:3:tags:I:1:test:I:1 pbc="F F F"
 C       -0.70400000      -1.21940000      -0.00000000        0        0
 C        0.70400000      -1.21940000      -0.00000000        0        1
 C       -1.40810000      -0.00000000      -0.00000000        0        2

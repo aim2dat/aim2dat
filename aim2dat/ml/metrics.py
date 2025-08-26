@@ -4,7 +4,7 @@
 from scipy.special import comb
 
 # Internal library imports
-from aim2dat.strct.strct_prdf import _ffingerprint_compare
+from aim2dat.strct.analysis.rdf import _ffingerprint_compare
 
 
 def ffprint_cosine(fprint1, fprint2):
