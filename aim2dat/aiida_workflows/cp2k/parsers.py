@@ -74,7 +74,7 @@ class _Cp2kBaseParser(Parser):
         # All exit_codes from the main-output are triggered here
         if "geo_not_converged" in result_dict:
             return self.exit_codes.ERROR_GEOMETRY_CONVERGENCE_NOT_REACHED
-        elif not result_dict.get("scf_converged", False):
+        elif not result_dict.get("scf_converged", True):
             return self.exit_codes.ERROR_SCF_CONVERGENCE_NOT_REACHED
         elif "odd_nr_electrons" in result_dict:
             return self.exit_codes.ERROR_ODD_NR_ELECTRONS
@@ -84,7 +84,7 @@ class _Cp2kBaseParser(Parser):
             return self.exit_codes.ERROR_ILL_CONDITIONED_MATRIX
         elif "bad_condition_number" in result_dict:
             return self.exit_codes.ERROR_BAD_CONDITION_NUMBER
-        elif result_dict.get("exceeded_walltime", False):
+        elif result_dict.get("exceeded_walltime", False) or self.node.exit_code.status == 120:
             return self.exit_codes.ERROR_OUT_OF_WALLTIME
         elif "interrupted" in result_dict:
             return self.exit_codes.ERROR_INTERRUPTED

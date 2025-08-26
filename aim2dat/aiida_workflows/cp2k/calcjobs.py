@@ -240,9 +240,6 @@ class Cp2kCalculation(CalcJob):
         """Prepare input for calculation."""
         parameters = _set_dict_to_upper(self.inputs.parameters.get_dict())
         dict_set_parameter(parameters, ["GLOBAL", "PROJECT"], self._PROJECT_NAME)
-        walltime = self.inputs["metadata"]["options"].get("max_wallclock_seconds")
-        if walltime:
-            dict_set_parameter(parameters, ["GLOBAL", "WALLTIME"], walltime)
 
         if "structure" in self.inputs:
             self._write_structure(self.inputs.structure, folder, self._COORDS_FILE_NAME)
