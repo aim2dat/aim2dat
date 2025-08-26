@@ -45,6 +45,7 @@ Version 0.4.0
 * The Materials Project openAPI interface does not support ICSD IDs anymore, instead the new key `theoretical` is added (`PR #154 <https://github.com/aim2dat/aim2dat/pull/154>`_).
 * ``aiida_workflows.cp2k.pdos_work_chain.PDOSWorkChain.resolve_atoms`` resolves the atoms now via local PDOS instead of changing each atom in a separate kind (`PR #158 <https://github.com/aim2dat/aim2dat/pull/158>`_).
 * The `chem_formula`, `units` and `element_properties` modules from the `aim2dat.utils` sup-package are moved to the new sub-packages: `chem_f`, `units` and `elements` to reduce the import paths; all element properties are now stored internaly, instead of relying on the ase implementation (`PR #159 <https://github.com/aim2dat/aim2dat/pull/159>`_).
+* ``plots.simple_plot`` added new property `edge_color` and `line_width` to set the color and thickness of the edges for bar plots for backend `matplotlib` (`PR #169 <https://github.com/aim2dat/aim2dat/pull/169>`_).
 
 
 Version 0.3.0
