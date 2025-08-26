@@ -25,6 +25,7 @@ import_data:
     width: 0.15
     bottom: 1.5
     color: C4
+    edge_color: [0.0, 0.0, 0.0, 0.0]
 ref:
   n_axes: 1
   axes:
