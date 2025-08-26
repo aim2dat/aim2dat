@@ -20,6 +20,7 @@ Version 0.4.0
 * ``aiida_workflows.cp2k.pdos_work_chain.PDOSWorkChain`` contains now the option to print the local PDOS, projected on subsets of atoms given through lists ``ldos`` (`PR #158 <https://github.com/aim2dat/aim2dat/pull/158>`_).
 * Newly implemented function ``strct.ext_analysis.calc_hydrogen_bonds`` to search for hydrogen bonds in a ``strct.Structure`` object (`PR #167 <https://github.com/aim2dat/aim2dat/pull/167>`_)
 * ``strct.ext_analysis.add_structure_coord`` grid search is now improved by a grid search in a sphere around the host atoms. Additionally, `rotate_guest` allows to rotate the guest until minimum is found (`PR #168 <https://github.com/aim2dat/aim2dat/pull/168>`_)
+* ``plots.simple_plot`` added new property `edge_color` and `line_width` to set the color and thickness of the edges for bar plots for backend `matplotlib` (`PR #169 <https://github.com/aim2dat/aim2dat/pull/169>`_).
 
 **Fixes:**
 
