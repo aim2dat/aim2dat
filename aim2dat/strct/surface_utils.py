@@ -9,13 +9,9 @@ import decimal
 import numpy as np
 from scipy.spatial.transform import Rotation
 
-
 # Internal library imports
-from aim2dat.strct.strct import Structure
-from aim2dat.strct.strct_validation import (
-    # _create_structure_dict,
-    _structure_validate_cell,
-)
+from aim2dat.strct.structure import Structure
+from aim2dat.strct.validation import _structure_validate_cell
 from aim2dat.ext_interfaces.ase_surface import _create_ase_surface_from_structure
 from aim2dat.ext_interfaces.ase_atoms import _extract_structure_from_atoms
 from aim2dat.ext_interfaces.spglib import _space_group_analysis
@@ -156,8 +152,12 @@ def _surface_create(
 ) -> dict:
     # Create surface slabs:
     structure = sg_details["standardized_structure"]
-    surf_1l = _create_ase_surface_from_structure(structure, miller_indices, 1, 0.0, True)
-    surf_2l = _create_ase_surface_from_structure(structure, miller_indices, 2, 0.0, True)
+    surf_1l = _create_ase_surface_from_structure(
+        Structure(**structure), miller_indices, 1, 0.0, True
+    )
+    surf_2l = _create_ase_surface_from_structure(
+        Structure(**structure), miller_indices, 2, 0.0, True
+    )
     cell_1l = surf_1l.cell[:]
     cell_1l[2] = surf_2l.cell[:][2] - cell_1l[2]
     surf_1l.set_cell(cell_1l)

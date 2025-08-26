@@ -1,16 +1,17 @@
 """Interface to h5py to store/import structures."""
 
 # Standard library imports
-from typing import List
+from typing import TYPE_CHECKING, List
 
 # Third party library imports
+import numpy as np
 import h5py
 
-# Internal library imports
-from aim2dat.strct.strct import Structure
+if TYPE_CHECKING:
+    from aim2dat.strct.structure import Structure
 
 
-def _store_in_hdf5_file(file_path: str, structures: List[Structure]) -> None:
+def _store_in_hdf5_file(file_path: str, structures: List["Structure"]) -> None:
     """Store structures in file."""
     string_dt = h5py.string_dtype(encoding="utf-8")
     labels = []
@@ -21,33 +22,51 @@ def _store_in_hdf5_file(file_path: str, structures: List[Structure]) -> None:
     kinds = []
     positions = []
     attributes = {}
+    site_attributes = {}
 
-    for structure in structures:
+    same_elements = False
+    same_kinds = False
+    same_pbc = False
+    if all(structures[0].elements == strct.elements for strct in structures):
+        same_elements = True
+        if all(structures[0].kinds == strct.kinds for strct in structures):
+            same_kinds = True
+    if all(structures[0].pbc == strct.pbc for strct in structures):
+        same_pbc = True
+
+    for idx, structure in enumerate(structures):
         labels.append(structure.label)
-        nr_atoms.append(len(structure["elements"]))
-        pbc += structure["pbc"]
-        if structure["cell"] is not None:
+        if not same_elements or idx == 0:
+            nr_atoms.append(len(structure))
+            elements += structure.numbers
+        if not same_kinds or idx == 0:
+            kinds += ["" if k is None else k for k in structure.kinds]
+        if not same_pbc or idx == 0:
+            pbc += structure.pbc
+        if structure.cell is not None:
             cells += [v1 for dir0 in structure.cell for v1 in dir0]
-        elements += structure["elements"]
-        kinds += ["" if k is None else k for k in structure.kinds]
-        for pos in structure["positions"]:
+        for pos in structure.positions:
             positions += list(pos)
-        attributes[structure.label] = structure["attributes"]
+        if len(structure.attributes) > 0:
+            attributes[structure.label] = structure.attributes
+        if len(structure.site_attributes) > 0:
+            site_attributes[structure.label] = structure.site_attributes
 
     with h5py.File(file_path, "w") as fobj:
-        # labels = np.array(labels, dtype="str")
         fobj.create_dataset("labels", data=labels, dtype=string_dt)
         fobj.create_dataset("nr_atoms", data=nr_atoms, dtype="int16")
+        fobj.create_dataset("elements", data=elements, dtype="int8")
         fobj.create_dataset("pbc", data=pbc, dtype="bool")
         fobj.create_dataset("cells", data=cells, dtype="float32")
-        fobj.create_dataset("elements", data=elements, dtype=string_dt)
         fobj.create_dataset("kinds", data=kinds, dtype=string_dt)
         fobj.create_dataset("positions", data=positions, dtype="float32")
-        attr_grp = fobj.create_group("attributes")
-        _add_recursive_dict(attr_grp, attributes)
+        if len(attributes) > 0:
+            _add_recursive_dict(fobj.create_group("attributes"), attributes)
+        if len(site_attributes) > 0:
+            _add_recursive_dict(fobj.create_group("site_attributes"), site_attributes)
 
 
-def _import_from_hdf5_file(file_path: str) -> List[Structure]:
+def _import_from_hdf5_file(file_path: str) -> List[dict]:
     """Read structures from file."""
     with h5py.File(file_path, "r") as fobj:
         labels = fobj["labels"][:]
@@ -60,10 +79,23 @@ def _import_from_hdf5_file(file_path: str) -> List[Structure]:
         else:
             kinds = fobj["elements"][:]
         positions = fobj["positions"][:]
-        attributes = {}
-        _retrieve_recursive_dict(fobj, "attributes", attributes)
+        attributes = {"attributes": {}}
+        if "attributes" in fobj.keys():
+            _retrieve_recursive_dict(fobj, "attributes", attributes)
+        site_attributes = {"site_attributes": {}}
+        if "site_attributes" in fobj.keys():
+            _retrieve_recursive_dict(fobj, "site_attributes", site_attributes)
 
     attributes = attributes["attributes"]
+    site_attributes = site_attributes["site_attributes"]
+    if len(all_nr_atoms) != len(labels):
+        all_nr_atoms = np.tile(all_nr_atoms, len(labels))
+        elements = np.tile(elements, len(labels))
+    if len(kinds) != len(elements):
+        kinds = np.tile(kinds, len(labels))
+    if len(pbc) != len(labels) * 3:
+        pbc = np.tile(pbc, len(labels))
+
     c_atoms = 0
     c_pbc = 0
     structures = []
@@ -71,7 +103,10 @@ def _import_from_hdf5_file(file_path: str) -> List[Structure]:
         label = label.decode()
         structure = {
             "label": label,
-            "elements": [el.decode() for el in elements[c_atoms : c_atoms + nr_atoms]],
+            "elements": [
+                el.decode() if hasattr(el, "decode") else el
+                for el in elements[c_atoms : c_atoms + nr_atoms]
+            ],
             "positions": [
                 [positions[idx], positions[idx + 1], positions[idx + 2]]
                 for idx in range(c_atoms * 3, (c_atoms + nr_atoms) * 3, 3)
@@ -91,14 +126,14 @@ def _import_from_hdf5_file(file_path: str) -> List[Structure]:
             c_pbc += 9
         if label in attributes and len(attributes[label]) > 0:
             structure["attributes"] = attributes[label]
-        structure = Structure(**structure)
+        if label in site_attributes and len(site_attributes[label]) > 0:
+            structure["site_attributes"] = site_attributes[label]
         structures.append(structure)
         c_atoms += nr_atoms
     return structures
 
 
 def _add_recursive_dict(grp: h5py.Group, input_dict: dict) -> None:
-    # if isintance(input_dict, dict):
     for key, value in input_dict.items():
         if isinstance(value, dict):
             new_grp = grp.create_group(key)

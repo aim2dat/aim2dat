@@ -8,6 +8,7 @@ import pytest
 
 # Internal library imports
 from aim2dat.io import read_yaml_file
+from aim2dat.strct import StructureOperations
 from aim2dat.strct.stability import (
     _find_most_stable_elemental_phases,
     _calculate_stabilities,
@@ -132,3 +133,21 @@ def test_elemental_phases_only():
             assert (
                 abs(entry["stability"] - ref_val) < 1e-5
             ), "Stability for elemental phases wrong."
+
+
+def test_stabilities(create_structure_collection_object):
+    """Test calc_stabilities function."""
+    ref = read_yaml_file(REF_PATH + "MOFs_ref.yaml")
+    strct_c, _ = create_structure_collection_object(["GaAs_216_conv"])
+    for idx0, strct in enumerate(ref["input"]):
+        strct_c.append("test_" + str(idx0), **strct)
+    strct_ops = StructureOperations(strct_c)
+    f_e, st = strct_ops.calc_stabilities(unit="eV")
+    f_e = f_e[1:]
+    st = st[1:]
+    assert all(
+        abs(val - ref_val) < 1.0e-4 for val, ref_val in zip(f_e, ref["ref"]["formation_energies"])
+    ), "Formation energies are wrong."
+    assert all(
+        abs(val - ref_val) < 1.0e-4 for val, ref_val in zip(st, ref["ref"]["stabilities"])
+    ), "Stabilities are wrong."

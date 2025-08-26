@@ -4,7 +4,7 @@
 from typing import List, Tuple, Union
 
 # Internal library imports
-from aim2dat.strct.strct import Structure
+from aim2dat.strct.structure import Structure
 from aim2dat.strct.structure_collection import StructureCollection
 from aim2dat.ext_interfaces import _return_ext_interface_modules
 from aim2dat.strct.surface_utils import _surface_create, _surface_create_slab

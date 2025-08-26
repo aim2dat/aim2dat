@@ -24,6 +24,7 @@ import_data:
     width: 0.15
     bottom: 1.5
     color: C4
+    edge_color: [0.0, 0.0, 0.0, 0.0]
 - function: add_hline
   args:
     y: 2.0

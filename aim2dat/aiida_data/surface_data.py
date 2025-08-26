@@ -10,7 +10,7 @@ import numpy as np
 from aiida.orm import Data
 
 # Internal library imports
-from aim2dat.strct.strct_validation import (
+from aim2dat.strct.validation import (
     _structure_validate_cell,
     _structure_validate_el_pos,
 )

@@ -30,9 +30,9 @@ __all__ = [
     "calc_ffingerprint_order_p",
     "calc_warren_cowley_order_p",
     "calc_planes",
+    "calc_hydrogen_bonds",
     "calc_interaction_matrix",
     "calc_acsf_descriptor",
     "calc_soap_descriptor",
     "calc_mbtr_descriptor",
-    "calc_hydrogen_bonds",
 ]

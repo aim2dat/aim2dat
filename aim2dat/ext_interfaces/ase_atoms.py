@@ -62,12 +62,17 @@ def _create_atoms_from_structure(structure):
 def _load_structure_from_file(file_path, kwargs):
     """
     Load structure from file using the ase implementation.
-
-    As for cif-files a tempory
     """
-    return [_extract_structure_from_atoms(read(file_path, **kwargs))]
+    atoms = read(file_path, **kwargs)
+    if isinstance(atoms, Atoms):
+        atoms = [atoms]
+    return [_extract_structure_from_atoms(at) for at in atoms]
 
 
-def _write_structure_to_file(struct_dict, file_path):
+def _write_structure_to_file(file_path, structure):
     """Write structure to file using the ase implementation."""
-    write(file_path, _create_atoms_from_structure(struct_dict))
+    if isinstance(structure, list):
+        atoms = [_create_atoms_from_structure(strct) for strct in structure]
+    else:
+        atoms = _create_atoms_from_structure(structure)
+    write(file_path, atoms)
