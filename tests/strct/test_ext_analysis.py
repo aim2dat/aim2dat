@@ -14,6 +14,7 @@ from aim2dat.strct.ext_analysis import (
     calc_warren_cowley_order_p,
     calc_molecular_fragments,
     calc_graph,
+    calc_hydrogen_bonds,
     calc_planes,
 )
 from aim2dat.io import read_yaml_file
@@ -246,3 +247,19 @@ def test_planes(structure, file_type):
                 assert (
                     abs(proj_pos[coord] - ref_proj_pos[coord]) < 1e-4
                 ), "Coordinates of projected positions is wrong."
+
+
+def test_calc_hydrogen_bonds():
+    """Test hydrogen bond analysis."""
+    strct = Structure.from_file(STRUCTURES_PATH + "MOF-303_30xH2O.xsf")
+    with pytest.raises(ValueError) as error:
+        calc_hydrogen_bonds(strct, scheme="test")
+    assert (
+        str(error.value)
+        == "`scheme` 'test' is not supported. Valid options are: ['baker_hubbard']."
+    )
+
+    hbonds = calc_hydrogen_bonds(
+        strct, host_elements="O", index_constraint=[104, 128, 129, 130, 131, 132, 148, 200, 201]
+    )
+    assert hbonds == ((128, 201, 200), (200, 132, 131))

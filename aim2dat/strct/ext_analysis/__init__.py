@@ -20,6 +20,7 @@ from aim2dat.strct.ext_analysis.dscribe_descriptors import (
     calc_soap_descriptor,
     calc_mbtr_descriptor,
 )
+from aim2dat.strct.ext_analysis.h_bonds import calc_hydrogen_bonds
 
 
 __all__ = [
@@ -29,6 +30,7 @@ __all__ = [
     "calc_ffingerprint_order_p",
     "calc_warren_cowley_order_p",
     "calc_planes",
+    "calc_hydrogen_bonds",
     "calc_interaction_matrix",
     "calc_acsf_descriptor",
     "calc_soap_descriptor",

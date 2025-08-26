@@ -284,38 +284,37 @@ def test_append_from_pymatgen_structure(structure_comparison, structure):
     structure_comparison(strct_c["test"], ref_structure_dict)
 
 
-# TODO adapt this test.
-# @pytest.mark.parametrize(
-#     "structure,file_suffix",
-#     [("Benzene", ".xyz"), ("GaAs_216_prim", ".xsf")],
-# )
-# def test_file_support(structure_comparison, structure, file_suffix):
-#     """Test the ase atoms interface by loading structures from file."""
-#     ref_structure_dict = read_yaml_file(STRUCTURES_PATH + structure + ".yaml")
-#     Structure(**ref_structure_dict).to_file(STRUCTURES_PATH + "test" + file_suffix)
-#     strct_c = StructureCollection()
-#     strct_c.append_from_file(file_path=STRUCTURES_PATH + "test" + file_suffix, label="test")
-#     ref_structure_dict["label"] = "test"
-#     structure_comparison(strct_c["test"], ref_structure_dict)
+@pytest.mark.parametrize(
+    "structure,file_suffix",
+    [("Benzene", ".xyz"), ("GaAs_216_prim", ".xsf")],
+)
+def test_file_support(structure_comparison, structure, file_suffix):
+    """Test the ase atoms interface by loading structures from file."""
+    ref_structure_dict = read_yaml_file(STRUCTURES_PATH + structure + ".yaml")
+    Structure(**ref_structure_dict).to_file(STRUCTURES_PATH + "test" + file_suffix)
+    strct_c = StructureCollection()
+    strct_c.append_from_file(file_path=STRUCTURES_PATH + "test" + file_suffix, label="test")
+    ref_structure_dict["label"] = "test"
+    structure_comparison(strct_c["test"], ref_structure_dict)
 
-# TODO Adapt this test.
-# @pytest.mark.parametrize(
-#     "structure, use_node_label, use_uuid",
-#     [("Benzene", True, True), ("Cs2Te_62_prim_kinds", False, False)],
-# )
-# def test_append_from_aiida_structuredata(
-#     structure_comparison, structure, use_node_label, use_uuid
-# ):
-#     """Test append_from_aiida_structuredata function."""
-#     ref_structure_dict = read_yaml_file(STRUCTURES_PATH + structure + ".yaml")
-#     ref_structure_dict["label"] = structure
-#     strct = Structure(**ref_structure_dict)
-#     structure_node = strct.to_aiida_structuredata()
-#     structure_node.store()
-#     strct_c = StructureCollection()
-#     strct_c.append_from_aiida_structuredata(
-#         label=None if use_node_label else "test", aiida_node=structure_node.pk, use_uuid=use_uuid
-#     )
-#     if not use_node_label:
-#         ref_structure_dict["label"] = "test"
-#     structure_comparison(strct_c[0], ref_structure_dict)
+
+@pytest.mark.parametrize(
+    "structure, use_node_label, use_uuid",
+    [("Benzene", True, True), ("Cs2Te_62_prim", False, False)],
+)
+def test_append_from_aiida_structuredata(
+    structure_comparison, structure, use_node_label, use_uuid
+):
+    """Test append_from_aiida_structuredata function."""
+    ref_structure_dict = read_yaml_file(STRUCTURES_PATH + structure + ".yaml")
+    ref_structure_dict["label"] = structure
+    strct = Structure(**ref_structure_dict)
+    structure_node = strct.to_aiida_structuredata()
+    structure_node.store()
+    strct_c = StructureCollection()
+    strct_c.append_from_aiida_structuredata(
+        label=None if use_node_label else "test", aiida_node=structure_node.pk, use_uuid=use_uuid
+    )
+    if not use_node_label:
+        ref_structure_dict["label"] = "test"
+    structure_comparison(strct_c[0], ref_structure_dict)
