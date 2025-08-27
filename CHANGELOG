@@ -35,6 +35,7 @@ Version 0.4.0
 * The ``aim2dat.aiida_workflows.cp2k.core_work_chain_handlers._resubmit_calculation`` function takes care of restarting CP2K calculations when walltime is hit or no output for CP2K was created due to connection issues (`PR #157 <https://github.com/aim2dat/aim2dat/pull/157>`_).
 * The ``strct.ext_manipulation.add_structure_coord`` function threw an error when the host or guest indices were larger than the number of sites of the corresponding structure (`PR #165 <https://github.com/aim2dat/aim2dat/pull/165>`_).
 * The read/write functions to hdf5-files of the ``strct.StructureCollection`` class are finetuned to be more data-efficient (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
+* The ``aiida_workflows.cp2k.parsers._Cp2kBaseParser.parse`` takes care of the ``exit_codes`` if ``WALLTIME`` is hit by Slurm or CP2K, as well fixes the error that if calculation was ``interrupted`` an ``SCF`` error accrued instead (`PR #171 <https://github.com/aim2dat/aim2dat/pull/171>`_).
 
 **Breaking Changes:**
 
@@ -48,7 +49,7 @@ Version 0.4.0
 * The bond distance from the hydrogen molecule was reduced from `0.909862` to `0.74` (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * The Materials Project openAPI interface does not support ICSD IDs anymore, instead the new key `theoretical` is added (`PR #154 <https://github.com/aim2dat/aim2dat/pull/154>`_).
 * ``aiida_workflows.cp2k.pdos_work_chain.PDOSWorkChain.resolve_atoms`` resolves the atoms now via local PDOS instead of changing each atom in a separate kind (`PR #158 <https://github.com/aim2dat/aim2dat/pull/158>`_).
-* The `chem_formula`, `units` and `element_properties` modules from the `aim2dat.utils` sup-package are moved to the new sub-packages: `chem_f`, `units` and `elements` to reduce the import paths; all element properties are now stored internaly, instead of relying on the ase implementation (`PR #159 <https://github.com/aim2dat/aim2dat/pull/159>`_).
+* The `chem_formula`, `units` and `element_properties` modules from the `aim2dat.utils` sup-package are moved to the new sub-packages: `chem_f`, `units` and `elements` to reduce the import paths; all element properties are now stored internally, instead of relying on the ase implementation (`PR #159 <https://github.com/aim2dat/aim2dat/pull/159>`_).
 * ``strct.Structure.attributes`` are now completely mutable for more straight-forward use (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
 * The ``strct.StructureCollection`` io-function are now aligned with the ``strct.Structure`` class, replacing the ``StructureCollection.import_*`` and ``StructureCollection.store_*`` with ``StructureCollection.from_*`` and ``StructureCollection.to_*`` functions, respectively (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
 * The interface of the ``strct.StructureCollection`` towards pandas data frames now adds a column to the data frame containing the ``strct.Structure`` objects, thus, the interface is now circular and the new ``StructureCollection.from_pandas_df`` method can be used initiate a ``strct.StructureCollection`` object from a data frame (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
