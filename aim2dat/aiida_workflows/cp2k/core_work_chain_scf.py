@@ -140,6 +140,13 @@ def _update_scf_parameters(
         _set_numerical_p_kpoints_ref_dist(
             structure, parameters, scf_m_info["kpoints_ref_dist"], cur_scf_p["odd_kpoints"]
         )
+
+    # Set EPS_SCF in OUTER_SCF:
+    if "OT" in cur_scf_p["parameters"]:
+        eps_scf = dict_retrieve_parameter(parameters, ["FORCE_EVAL", "DFT", "SCF", "EPS_SCF"])
+        dict_set_parameter(
+            parameters, ["FORCE_EVAL", "DFT", "SCF", "OUTER_SCF", "EPS_SCF"], eps_scf
+        )
     return True
 
 
