@@ -47,12 +47,12 @@ class _Cp2kBaseParser(Parser):
         result_dict = self._parse_stdout()
 
         # Parse extra output
-        scf_converged = True
+        parse_extra_output = True
         settings = self.node.inputs.settings.get_dict() if "settings" in self.node.inputs else {}
-        if "output_check_scf_conv" in settings and settings["output_check_scf_conv"]:
+        if settings.get("output_check_scf_conv", False):
             if not result_dict.get("scf_converged", False):
-                scf_converged = False
-        if scf_converged:
+                parse_extra_output = False
+        if parse_extra_output:
             for output_f_label in self.extra_output_functions:
                 output_f = getattr(self, output_f_label)
                 output_dict = output_f(retrieved_temporary_folder)
@@ -74,7 +74,7 @@ class _Cp2kBaseParser(Parser):
         # All exit_codes from the main-output are triggered here
         if "geo_not_converged" in result_dict:
             return self.exit_codes.ERROR_GEOMETRY_CONVERGENCE_NOT_REACHED
-        elif "scf_converged" in result_dict and not scf_converged:
+        elif not result_dict.get("scf_converged", True):
             return self.exit_codes.ERROR_SCF_CONVERGENCE_NOT_REACHED
         elif "odd_nr_electrons" in result_dict:
             return self.exit_codes.ERROR_ODD_NR_ELECTRONS
@@ -84,7 +84,9 @@ class _Cp2kBaseParser(Parser):
             return self.exit_codes.ERROR_ILL_CONDITIONED_MATRIX
         elif "bad_condition_number" in result_dict:
             return self.exit_codes.ERROR_BAD_CONDITION_NUMBER
-        elif result_dict.get("exceeded_walltime", False):
+        elif result_dict.get("exceeded_walltime", False) or (
+            self.node.exit_code is not None and self.node.exit_code == 120
+        ):
             return self.exit_codes.ERROR_OUT_OF_WALLTIME
         elif "interrupted" in result_dict:
             return self.exit_codes.ERROR_INTERRUPTED
