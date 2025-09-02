@@ -319,6 +319,15 @@ def test_internal_io_str_input(structure_comparison):
     structure_comparison(structure, ref["structure"])
 
 
+def test_structure_to_dict_unmutability():
+    """Test the unmutability of the to_dict function."""
+    strct = Structure.from_str("H2O")
+    strct.attributes = {"test": 0}
+    strct_dict = strct.to_dict()
+    strct_dict["attributes"]["test"] = 1
+    assert strct.attributes["test"] == 0
+
+
 def test_internal_io_errors():
     """Test internal structure parser errors."""
     with pytest.raises(ValueError) as error:
