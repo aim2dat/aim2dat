@@ -688,7 +688,7 @@ class StructureCollection(ImportExportMixin):
         from warnings import warn
 
         warn(
-            "This function will be removed, please use the `from_pandas_df` class method instead.",
+            "This function will be removed, please use the `from_aiida_db` class method instead.",
             DeprecationWarning,
             2,
         )
