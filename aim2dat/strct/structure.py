@@ -872,7 +872,9 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
         for key in self.keys():
             if (not include_calculated_properties and key in calc_prop_keys) or key == "positions":
                 continue
-            strct_dict[key] = getattr(self, key)
+            strct_dict[key] = (
+                copy.deepcopy(getattr(self, key)) if key == "attributes" else getattr(self, key)
+            )
         strct_dict["positions"] = self.get_positions(cartesian=cartesian, wrap=wrap)
         if not cartesian:
             strct_dict["is_cartesian"] = False
