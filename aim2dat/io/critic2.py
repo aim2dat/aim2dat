@@ -62,6 +62,9 @@ def read_critic2_stdout(file_path: str, raise_error: bool = True) -> dict:
                 result_dict["ncomments"] = int(line.split()[-2])
             elif line.startswith("CRITIC2 ended "):
                 result_dict["aborted"] = True
+            if line.startswith("Elapsed wall time: "):
+                clac_times = line.split()[3:]
+                result_dict["runtime"] = _convert_time(clac_times)
     if raise_error and result_dict.get("aborted", False):
         raise ValueError(
             "Calculation did not finish properly, error message: "
@@ -132,3 +135,18 @@ def read_stdout(file_name: str) -> dict:
         2,
     )
     return read_critic2_stdout(file_path=file_name)
+
+
+def _convert_time(clac_times):
+    time_conv_dict = {
+        "s": 1,
+        "m": 60,
+        "h": 3600,
+        "d": 86400,
+    }
+    runtime = 0
+    for time in clac_times:
+        value = int(time[:-1])
+        unit = time[-1]
+        runtime += value * time_conv_dict[unit]
+    return runtime

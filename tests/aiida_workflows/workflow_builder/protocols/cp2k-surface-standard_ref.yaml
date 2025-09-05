@@ -180,7 +180,7 @@ protocol:
       dependency: critic2.code
       aiida_node: true
     chargemol.parameters->partial_charges:
-      value: {periodicity along A, B, and C vectors: [true, true, true], charge type: DDEC6}
+      value: {'periodicity along A, B, and C vectors': [true, true, true], charge type: DDEC6}
       dependency: chargemol.code
       aiida_node: true
     store_cubes->partial_charges:
@@ -464,7 +464,7 @@ Individual_input:
       optional: false
       user_input: false
     chargemol.parameters:
-      value: {periodicity along A, B, and C vectors: [true, true, true], charge type: DDEC6}
+      value: {'periodicity along A, B, and C vectors': [true, true, true], charge type: DDEC6}
       dependency: chargemol.code
       aiida_node: true
       namespace: false

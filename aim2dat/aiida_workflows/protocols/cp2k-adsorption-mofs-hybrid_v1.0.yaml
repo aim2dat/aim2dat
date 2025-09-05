@@ -114,7 +114,7 @@ general_input:
     dependency: critic2.code
     aiida_node: true
   chargemol.parameters->partial_charges:
-    value: {periodicity along A, B, and C vectors: [true, true, true], charge type: DDEC6}
+    value: {'periodicity along A, B, and C vectors': [true, true, true], charge type: DDEC6}
     dependency: chargemol.code
     aiida_node: true
 user_input:
@@ -220,6 +220,7 @@ user_input:
     validation: aim2dat.cp2k.partial_charges
     aiida_node: true
     optional: true
+    compare: false
     tasks: [partial_charges]
   chargemol.metadata:
     validation: aim2dat.cp2k.partial_charges

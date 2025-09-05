@@ -138,9 +138,7 @@ protocol:
       aiida_node: true
     chargemol.parameters->partial_charges:
       value:
-        periodicity along A:
-        B:
-        and C vectors: &id003 [true, true, true]
+        'periodicity along A, B, and C vectors': &id003 [true, true, true]
         charge type: DDEC6
       dependency: chargemol.code
       aiida_node: true
@@ -365,9 +363,7 @@ Individual_input:
       user_input: false
     chargemol.parameters:
       value:
-        periodicity along A:
-        B:
-        and C vectors: *id003
+        'periodicity along A, B, and C vectors': &id003 [true, true, true]
         charge type: DDEC6
       dependency: chargemol.code
       aiida_node: true

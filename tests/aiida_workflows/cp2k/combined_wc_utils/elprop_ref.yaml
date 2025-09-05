@@ -155,7 +155,7 @@ partial_charges:
   critic2.parameters: ['crystal aiida-ELECTRON_DENSITY-1_0.cube', 'load aiida-ELECTRON_DENSITY-1_0.cube core zpsp', 'load aiida-ELECTRON_DENSITY-1_0.cube', 'integrable 2', 'yt']
   critic2.metadata: {"test": "test"}
   chargemol.code: "test"
-  chargemol.parameters: {periodicity along A, B, and C vectors: [true, true, true], charge type: DDEC6}
+  chargemol.parameters: {'periodicity along A, B, and C vectors': [true, true, true], charge type: DDEC6}
   chargemol.metadata: {"test": "test"}
   numerical_p.kpoints_ref_dist: 0.15
   factor_unocc_states: 0.75
