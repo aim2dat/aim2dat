@@ -56,6 +56,8 @@ class ChargemolParser(Parser):
                 result_dict["aborted"] = False
             if line.startswith(" Integration volumes are not sufficiently accurate."):
                 result_dict["insufficient_accuracy"] = True
+            if line.startswith(" Finished chargemol in"):
+                result_dict["runtime"] = float(line.split()[3])
         if "aborted" not in result_dict and "insufficient_accuracy" not in result_dict:
             result_dict["aborted"] = True
         return result_dict

@@ -23,6 +23,8 @@ Version 0.4.0
 * ``plots.simple_plot`` added new property `edge_color` and `line_width` to set the color and thickness of the edges for bar plots for backend `matplotlib` (`PR #169 <https://github.com/aim2dat/aim2dat/pull/169>`_).
 * The ``strct.Structure`` class has the new ``from_str`` classmethod to initialize an object from string, using pre-defined stored structures (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
 * The ``read_yaml_file`` function now has the ``read_structure`` decorator to integrate into the io-interface of the ``strct.Structure`` class (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
+* The ``WorkflowBuilder`` and ``MultipleWorkflowBuilder`` can be imported directly via the ``__init__.py`` file of the sub-package (`PR #174 <https://github.com/aim2dat/aim2dat/pull/174>`_).
+* ``aim2dat/aiida_workflows/chargemol/parsers`` and ``aim2dat/io/critic2`` retrieves ``runtime`` of the calculation and includes it in the ``result_dict`` (`PR #174 <https://github.com/aim2dat/aim2dat/pull/174>`_).
 
 **Fixes:**
 
@@ -36,6 +38,7 @@ Version 0.4.0
 * The ``strct.ext_manipulation.add_structure_coord`` function threw an error when the host or guest indices were larger than the number of sites of the corresponding structure (`PR #165 <https://github.com/aim2dat/aim2dat/pull/165>`_).
 * The read/write functions to hdf5-files of the ``strct.StructureCollection`` class are finetuned to be more data-efficient (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
 * The ``aiida_workflows.cp2k.parsers._Cp2kBaseParser.parse`` takes care of the ``exit_codes`` if ``WALLTIME`` is hit by Slurm or CP2K, as well fixes the error that if calculation was ``interrupted`` an ``SCF`` error arose instead (`PR #171 <https://github.com/aim2dat/aim2dat/pull/171>`_).
+* The ``aim2dat/aiida_workflows/protocols/*.yaml/chargemol.parameters->partial_charges`` was fixed since the values were taken as three `key` parameters instead of one whole key (`PR #174 <https://github.com/aim2dat/aim2dat/pull/174>`_).
 * ``plots.simple_plot`` is fixed for bar plots including `colors` and `alpha` for the `matplotlib` backend (`PR #175 <https://github.com/aim2dat/aim2dat/pull/175>`_).
 
 **Breaking Changes:**
