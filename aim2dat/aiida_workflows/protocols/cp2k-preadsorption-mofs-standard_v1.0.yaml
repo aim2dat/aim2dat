@@ -99,7 +99,7 @@ general_input:
   adjust_scf_parameters:
     value: true
     aiida_node: true
-    tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt, pdos, partial_charges]
+    tasks: [unit_cell_preopt, unit_cell_opt, pdos, partial_charges]
   always_add_unocc_states:
     value: true
     aiida_node: true
