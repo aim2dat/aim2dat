@@ -145,9 +145,6 @@ general_input:
   maximum_cell_length->pdos:
     value: 40.0
     aiida_node: true
-  resolve_atoms->pdos:
-    value: true
-    aiida_node: true
   critic2.parameters->partial_charges:
     value:
     - crystal aiida-ELECTRON_DENSITY-1_0.cube
@@ -209,6 +206,16 @@ user_input:
     compare: false
   numerical_p.basis_file->unit_cell_preopt:
     validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+  resolve_atoms->pdos:
+    validation: aim2dat.cp2k.pdos
+    aiida_node: true
+    optional: true
+    compare: false
+  ldos->pdos:
+    validation: aim2dat.cp2k.pdos
     aiida_node: true
     optional: true
     compare: false

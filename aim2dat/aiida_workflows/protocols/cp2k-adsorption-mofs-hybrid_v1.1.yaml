@@ -2,7 +2,7 @@
 ---
 # Protocol with hybrid settings for the adsorption workflow.
 title: cp2k-adsorption-hybrid
-version: '1.0'
+version: '1.1'
 description: Hybrid settings to calculated the adsorption properties.
 dependencies:
 - [aiida-core, '1.6', Null]
