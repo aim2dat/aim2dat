@@ -56,13 +56,11 @@ class InteractionEnergyWorkChain(_BaseCoreWorkChain):
         kind_parameters = dict_retrieve_parameter(parameters, ["FORCE_EVAL", "SUBSYS", "KIND"])
         kind_parameters_new = deepcopy(kind_parameters)
         for kind in kind_parameters:
-            kind_parameters_new.append(
-                {
-                    "_": f"{kind['_']}_ghost",
-                    "BASIS_SET": kind["BASIS_SET"],
-                    "GHOST": True,
-                }
-            )
+            kind_ghost = deepcopy(kind)
+            kind_ghost["_"] += "_ghost"
+            kind_ghost.pop("POTENTIAL")
+            kind_ghost["GHOST"] = True
+            kind_parameters_new.append(kind_ghost)
         dict_set_parameter(parameters, ["FORCE_EVAL", "SUBSYS", "KIND"], kind_parameters_new)
 
         # Set the fragments
