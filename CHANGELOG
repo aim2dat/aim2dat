@@ -36,6 +36,7 @@ Version 0.4.0
 * The ``strct.ext_manipulation.add_structure_coord`` function threw an error when the host or guest indices were larger than the number of sites of the corresponding structure (`PR #165 <https://github.com/aim2dat/aim2dat/pull/165>`_).
 * The read/write functions to hdf5-files of the ``strct.StructureCollection`` class are finetuned to be more data-efficient (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
 * The ``aiida_workflows.cp2k.parsers._Cp2kBaseParser.parse`` takes care of the ``exit_codes`` if ``WALLTIME`` is hit by Slurm or CP2K, as well fixes the error that if calculation was ``interrupted`` an ``SCF`` error arose instead (`PR #171 <https://github.com/aim2dat/aim2dat/pull/171>`_).
+* ``plots.simple_plot`` is fixed for bar plots including `colors` and `alpha` for the `matplotlib` backend (`PR #175 <https://github.com/aim2dat/aim2dat/pull/175>`_).
 
 **Breaking Changes:**
 

@@ -337,6 +337,12 @@ def _add_contour(obj, axes, data_set):
 
 
 def _add_bar(obj, axes, bar):
+    color = (
+        (bar.get("color"), bar.get("alpha"))
+        if "alpha" in bar and "color" in bar
+        else bar.get("color", None)
+    )
+    alpha = bar.get("alpha", None) if not color else None
     axes.bar(
         x=bar["x_values"],
         height=bar["heights"],
@@ -346,7 +352,8 @@ def _add_bar(obj, axes, bar):
         yerr=bar.get("y_error", None),
         capsize=bar.get("capsize", None),
         ecolor=bar.get("ecolor", None),
-        color=(bar.get("color", None), bar.get("alpha", None)),
+        color=color,
+        alpha=alpha,
         hatch=bar.get("hatch", None),
         edgecolor=bar.get("edgecolor", "black"),
         linewidth=bar.get("linewidth", 0.5),
