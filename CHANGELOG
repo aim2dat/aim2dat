@@ -39,6 +39,7 @@ Version 0.4.0
 * The read/write functions to hdf5-files of the ``strct.StructureCollection`` class are finetuned to be more data-efficient (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
 * The ``aiida_workflows.cp2k.parsers._Cp2kBaseParser.parse`` takes care of the ``exit_codes`` if ``WALLTIME`` is hit by Slurm or CP2K, as well fixes the error that if calculation was ``interrupted`` an ``SCF`` error arose instead (`PR #171 <https://github.com/aim2dat/aim2dat/pull/171>`_).
 * The ``aim2dat/aiida_workflows/protocols/*.yaml/chargemol.parameters->partial_charges`` was fixed since the values were taken as three `key` parameters instead of one whole key (`PR #174 <https://github.com/aim2dat/aim2dat/pull/174>`_).
+* The ``plots.simple_plot`` is fixed for bar plots including `colors` and `alpha` for the `matplotlib` backend (`PR #175 <https://github.com/aim2dat/aim2dat/pull/175>`_).
 
 **Breaking Changes:**
 
