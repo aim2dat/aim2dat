@@ -88,10 +88,10 @@ class _Cp2kBaseParser(Parser):
             self.node.exit_code is not None and self.node.exit_code == 120
         ):
             return self.exit_codes.ERROR_OUT_OF_WALLTIME
-        elif "interrupted" in result_dict:
-            return self.exit_codes.ERROR_INTERRUPTED
         elif "aborted" in result_dict:
             return self.exit_codes.ERROR_OUTPUT_CONTAINS_ABORT
+        elif "interrupted" in result_dict:
+            return self.exit_codes.ERROR_INTERRUPTED
         elif "incompatible_code" in result_dict:
             return self.exit_codes.ERROR_INCOMPATIBLE_CODE_VERSION
         elif "incomplete" in result_dict:
