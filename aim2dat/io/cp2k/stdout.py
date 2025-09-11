@@ -967,6 +967,9 @@ def read_cp2k_stdout(
             _BSSE_SCF_KEYS,
             pc,
         )
+        output["scf_converged"] = all(
+            bsse_step["scf_converged"] for bsse_step in output["bsse_step_info"]
+        )
 
     if parser_type == "trajectory":
         output["motion_step_info"] = _create_step_info_dict(
