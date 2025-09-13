@@ -546,18 +546,17 @@ def _add_mol(
     )
 
     # Rotate guest to align bond direction
-    if len(guest_strct0) > 1:
-        rot_angle = np.rad2deg(-calc_angle([1, 0, 0], bond_dir))
-        if np.isclose(abs(rot_angle) % 180, 0.0):
-            rot_dir = np.cross(create_lin_ind_vector(bond_dir), [1, 0, 0])
-        else:
-            rot_dir = np.cross(bond_dir, [1, 0, 0])
-        guest_strct0 = rotate_structure(
-            guest_strct0,
-            rot_angle,
-            rot_dir,
-            np.zeros(3),
-        )
+    rot_angle = np.rad2deg(-calc_angle([1, 0, 0], bond_dir))
+    if np.isclose(abs(rot_angle) % 180, 0.0):
+        rot_dir = np.cross(create_lin_ind_vector(bond_dir), [1, 0, 0])
+    else:
+        rot_dir = np.cross(bond_dir, [1, 0, 0])
+    guest_strct0 = rotate_structure(
+        guest_strct0,
+        rot_angle,
+        rot_dir,
+        np.zeros(3),
+    )
     guest_strct0.set_positions(guest_strct0.positions + host_pos)
 
     # Add guest structure to host:

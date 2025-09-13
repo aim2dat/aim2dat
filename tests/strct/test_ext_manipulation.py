@@ -157,7 +157,6 @@ def test_add_structure_coord(structure_comparison):
     inputs = dict(read_yaml_file(STRUCTURES_PATH + "Sc2BDC3.yaml"))
     inputs["kinds"] = ["kind1"] + [None] * (len(inputs["elements"]) - 1)
     ref_p = read_yaml_file(REF_PATH + "add_structure_coord_Sc2BDC3.yaml")
-    ref_p["label"] = "test"
     strct_collect = StructureCollection()
     strct_collect.append(**inputs, label="test")
     strct_ops = StructureOperations(strct_collect)
@@ -170,6 +169,7 @@ def test_add_structure_coord(structure_comparison):
             "bond_length": 1.0,
             "change_label": False,
             "method": "minimum_distance",
+            "min_dist_delta": 0.2,
         },
     )
     new_strct = new_strct.perform_manipulation(
@@ -178,9 +178,10 @@ def test_add_structure_coord(structure_comparison):
             "wrap": True,
             "host_indices": 39,
             "guest_structure": "CH3",
-            "bond_length": 1.1,
+            "bond_length": 1.25,
             "change_label": False,
             "method": "minimum_distance",
+            "min_dist_delta": 0.2,
         },
     )
     new_strct = new_strct.perform_manipulation(
@@ -188,9 +189,11 @@ def test_add_structure_coord(structure_comparison):
         kwargs={
             "host_indices": 41,
             "guest_structure": "COOH",
+            "bond_length": 1.5,
             "change_label": False,
             "dist_threshold": None,
             "method": "minimum_distance",
+            "min_dist_delta": 0.2,
         },
     )
     new_strct = new_strct.perform_manipulation(
@@ -200,6 +203,7 @@ def test_add_structure_coord(structure_comparison):
             "guest_structure": "NH2",
             "change_label": False,
             "method": "minimum_distance",
+            "min_dist_delta": 0.2,
         },
     )
     new_strct = new_strct.perform_manipulation(
@@ -209,6 +213,7 @@ def test_add_structure_coord(structure_comparison):
             "guest_structure": "NO2",
             "change_label": False,
             "method": "minimum_distance",
+            "min_dist_delta": 0.2,
         },
     )
     new_strct = new_strct.perform_manipulation(
@@ -219,9 +224,9 @@ def test_add_structure_coord(structure_comparison):
             "change_label": False,
             "dist_threshold": None,
             "method": "minimum_distance",
+            "min_dist_delta": 0.2,
         },
     )
-    new_strct.set_positions(new_strct.positions, wrap=True)
     structure_comparison(new_strct, ref_p)
 
 
@@ -299,6 +304,11 @@ def test_add_structure_coord_molecules_2(structure_comparison):
     )
     ref_p = read_yaml_file(REF_PATH + "add_structure_coord_NH3-H2O.yaml")
     structure_comparison(new_strct, ref_p)
+
+
+# def test_add_structure_coord_single_atom():
+#     strct = Structure.from_file(STRUCTURES_PATH + "Benzene.yaml", backend="internal")
+#     print(strct)
 
 
 def test_add_structure_random_molecule(structure_comparison):
