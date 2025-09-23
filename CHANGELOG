@@ -25,6 +25,7 @@ Version 0.4.0
 * The ``read_yaml_file`` function now has the ``read_structure`` decorator to integrate into the io-interface of the ``strct.Structure`` class (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
 * The ``WorkflowBuilder`` and ``MultipleWorkflowBuilder`` can be imported directly via the ``__init__.py`` file of the sub-package (`PR #174 <https://github.com/aim2dat/aim2dat/pull/174>`_).
 * ``aim2dat/aiida_workflows/chargemol/parsers`` and ``aim2dat/io/critic2`` retrieves ``runtime`` of the calculation and includes it in the ``result_dict`` (`PR #174 <https://github.com/aim2dat/aim2dat/pull/174>`_).
+* The ``strct.Structure.calc_coordination`` now allows to calculate the coordination environment for a subset of sites and has the option to omit the statistics; the ``strct.Structure.calc_distance`` method with ``use_supercell=True`` as well as the ``strct.ext_manipulation.add_structure_coord`` functions are now faster for larger structures (`PR #177 <https://github.com/aim2dat/aim2dat/pull/177>`_).
 
 **Fixes:**
 
