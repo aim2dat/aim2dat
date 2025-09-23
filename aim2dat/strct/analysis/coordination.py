@@ -3,7 +3,6 @@
 # Standard library imports
 import math
 from statistics import mean, stdev
-import itertools
 
 # Third party libraries
 from scipy.spatial.distance import cdist
@@ -25,6 +24,7 @@ _supported_methods = [
 
 def calc_coordination(
     structure,
+    indices: list,
     r_max: float,
     method: str,
     min_dist_delta: float,
@@ -36,6 +36,7 @@ def calc_coordination(
     voronoi_weight_type: str,
     voronoi_weight_threshold: float,
     okeeffe_weight_threshold: float,
+    get_statistics: bool,
 ):
     """
     Calculate the coordination of all sites.
@@ -69,14 +70,42 @@ def calc_coordination(
         voronoi_weight_type,
         voronoi_weight_threshold,
     )
+    if isinstance(indices, int):  # TODO move to cell?
+        indices = [indices]
+    if indices is None:
+        indices = list(range(len(structure)))
+
     if method == "voronoi":
         voronoi_list = structure.calc_voronoi_tessellation(r_max=r_max)
         method_args = [structure, voronoi_list] + method_args[method]
     else:
         elements_sc, kinds_sc, positions_sc, indices_sc, mapping, _ = _create_supercell_positions(
-            structure, r_max
+            structure, r_max, indices=indices
         )
-        dist_matrix = cdist(structure.get_positions(cartesian=True, wrap=True), positions_sc)
+        dist_matrix = cdist(
+            [structure.get_position(site_idx, cartesian=True, wrap=True) for site_idx in indices],
+            positions_sc,
+        )
+        if method == "atomic_radius":
+            radii = {
+                el: get_atomic_radius(el, radius_type=radius_type) for el in structure.elements
+            }
+            s = 1.0 + atomic_radius_delta
+            dist_matrix0 = [[] for _ in range(dist_matrix.shape[0])]
+            for i in range(dist_matrix.shape[0]):
+                for j in range(dist_matrix.shape[1]):
+                    if indices_sc[j] != indices[i] and dist_matrix[i][j] <= min(
+                        r_max,
+                        s
+                        * (
+                            radii[structure.elements[indices[i]]]
+                            + radii[structure.elements[mapping[j]]]
+                        ),
+                    ):
+                        dist_matrix0[i].append((j, dist_matrix[i][j]))
+            dist_matrix = dist_matrix0
+
+        indices = [(idx, dists) for idx, dists in zip(indices, dist_matrix)]
         method_args = [
             structure,
             r_max,
@@ -84,38 +113,23 @@ def calc_coordination(
             positions_sc,
             indices_sc,
             mapping,
-            dist_matrix,
         ] + method_args[method]
-
-    # Transform arguments for 'atomic_radius' method directly to the distances
-    # to speed up calculation:
-    if method == "atomic_radius":
-        radius_sum = {}
-        max_distance = 0.0
-        for el1, el2 in itertools.permutations(structure.elements, 2):
-            radius_sum[(el1, el2)] = 0.0
-            for el in [el1, el2]:
-                site_radius = get_atomic_radius(el, radius_type=radius_type)
-                if site_radius is None:
-                    site_radius = get_atomic_radius(el, radius_type="covalent")
-                radius_sum[(el1, el2)] += site_radius
-            radius_sum[(el1, el2)] *= 1.0 + atomic_radius_delta
-            if radius_sum[(el1, el2)] > max_distance:
-                max_distance = radius_sum[(el1, el2)]
-        method_args += [radius_sum, max_distance]
 
     method_function = globals()["_coord_calculate_" + method]
     sites = []
-    for site_idx in range(len(structure["elements"])):
-        sites.append(method_function(site_idx, *method_args))
-    stat_keys = ["distance"]
-    is_optional = [False]
-    if method == "voronoi" and voronoi_weight_type is not None or method == "econ":
-        stat_keys.append("weight")
-        is_optional.append(False)
-    coordination = _calculate_statistical_quantities(structure, sites, stat_keys, is_optional)
-    coordination["sites"] = sites
-    return coordination
+    for site_idx in indices:
+        sites.append(_create_site_dict(get_statistics, *method_function(site_idx, *method_args)))
+    if get_statistics:
+        stat_keys = ["distance"]
+        is_optional = [False]
+        if method == "voronoi" and voronoi_weight_type is not None or method == "econ":
+            stat_keys.append("weight")
+            is_optional.append(False)
+        coordination = _calculate_statistical_quantities(structure, sites, stat_keys, is_optional)
+        coordination["sites"] = sites
+        return coordination
+    else:
+        return sites
 
 
 def _coord_group_method_args(
@@ -135,7 +149,7 @@ def _coord_group_method_args(
     }
 
 
-def _create_site_dict(structure, site_idx, neighbours, weights=None):
+def _create_site_dict(get_statistics, structure, site_idx, neighbours, weights=None):
     """
     Create dictionary storing information for a specific site.
     """
@@ -161,10 +175,11 @@ def _create_site_dict(structure, site_idx, neighbours, weights=None):
         site_dict[neigh_dict["element"]] += 1
         distances.append(float(neighbours[idx][2]))
 
-    site_dict["total_cn"] = len(distances)
-    site_dict["min_dist"] = min(distances, default=0.0)
-    site_dict["max_dist"] = max(distances, default=0.0)
-    site_dict["avg_dist"] = sum(distances) / len(distances) if len(distances) > 0 else 0.0
+    if get_statistics:
+        site_dict["total_cn"] = len(distances)
+        site_dict["min_dist"] = min(distances, default=0.0)
+        site_dict["max_dist"] = max(distances, default=0.0)
+        site_dict["avg_dist"] = sum(distances) / len(distances) if len(distances) > 0 else 0.0
     return site_dict
 
 
@@ -233,28 +248,24 @@ def _coord_calculate_minimum_distance(
     positions_sc,
     indices_sc,
     mapping,
-    dist_matrix,
     distance_delta,
 ):
     """
     Calculate coordination numbers using the minimum distance method.
     """
+    site_idx, dists = site_idx
     el_idx_sc = indices_sc.index(site_idx)
     position = np.array(structure.positions[site_idx])
     neighbours = []
-    sc_indices = np.argsort(dist_matrix[site_idx])
+    sc_indices = np.argsort(dists)
 
     for idx in sc_indices[1:]:
-        if (
-            dist_matrix[site_idx][idx]
-            > dist_matrix[site_idx][sc_indices[1]] * (1.0 + distance_delta)
-            or dist_matrix[site_idx][idx] > r_max
-        ):
+        if dists[idx] > dists[sc_indices[1]] * (1.0 + distance_delta) or dists[idx] > r_max:
             break
 
         neigh_pos = position + (np.array(positions_sc[idx]) - np.array(positions_sc[el_idx_sc]))
-        neighbours.append((mapping[idx], neigh_pos, dist_matrix[site_idx][idx]))
-    return _create_site_dict(structure, site_idx, neighbours)
+        neighbours.append((mapping[idx], neigh_pos, dists[idx]))
+    return structure, site_idx, neighbours
 
 
 def _coord_calculate_n_nearest_neighbours(
@@ -265,22 +276,22 @@ def _coord_calculate_n_nearest_neighbours(
     positions_sc,
     indices_sc,
     mapping,
-    dist_matrix,
     n_neighbours,
 ):
     """
     Calculate the coordination numbers by taking the n nearest atoms.
     """
+    site_idx, dists = site_idx
     el_idx_sc = indices_sc.index(site_idx)
     position = np.array(structure.positions[site_idx])
     neighbours = []
-    sc_indices = np.argsort(dist_matrix[site_idx])
+    sc_indices = np.argsort(dists)
     for idx in sc_indices[1 : n_neighbours + 1]:
-        if dist_matrix[site_idx][idx] > r_max:
+        if dists[idx] > r_max:
             break
         neigh_pos = position + (np.array(positions_sc[idx]) - np.array(positions_sc[el_idx_sc]))
-        neighbours.append((mapping[idx], neigh_pos, dist_matrix[site_idx][idx]))
-    return _create_site_dict(structure, site_idx, neighbours)
+        neighbours.append((mapping[idx], neigh_pos, dists[idx]))
+    return structure, site_idx, neighbours
 
 
 def _coord_calculate_atomic_radius(
@@ -291,27 +302,18 @@ def _coord_calculate_atomic_radius(
     positions_sc,
     indices_sc,
     mapping,
-    dist_matrix,
-    radius_sum,
-    max_distance,
 ):
+    """
+    Calculate the coordination numbers based on the sum of element radii.
+    """
+    site_idx, dists = site_idx
     el_idx_sc = indices_sc.index(site_idx)
     position = np.array(structure.positions[site_idx])
     neighbours = []
-    sc_indices = np.argsort(dist_matrix[site_idx])
-    for idx in sc_indices[1:]:
-        if dist_matrix[site_idx][idx] > max_distance or dist_matrix[site_idx][idx] > r_max:
-            break
-
-        if (
-            dist_matrix[site_idx][idx]
-            <= radius_sum[(structure.elements[site_idx], structure.elements[mapping[idx]])]
-        ):
-            neigh_pos = position + (
-                np.array(positions_sc[idx]) - np.array(positions_sc[el_idx_sc])
-            )
-            neighbours.append((mapping[idx], neigh_pos, dist_matrix[site_idx][idx]))
-    return _create_site_dict(structure, site_idx, neighbours)
+    for idx, dist in dists:
+        neigh_pos = position + (np.array(positions_sc[idx]) - np.array(positions_sc[el_idx_sc]))
+        neighbours.append((mapping[idx], neigh_pos, dist))
+    return structure, site_idx, neighbours
 
 
 def _coord_calculate_econ(
@@ -322,7 +324,6 @@ def _coord_calculate_econ(
     positions_sc,
     indices_sc,
     mapping,
-    dist_matrix,
     tolerance,
     conv_threshold,
 ):
@@ -336,9 +337,10 @@ def _coord_calculate_econ(
         dist_avg = numerator / sum(exp_dist)
         return dist_avg
 
+    site_idx, dists = site_idx
     el_idx_sc = indices_sc.index(site_idx)
     position = np.array(structure.positions[site_idx])
-    distances_wo_site = np.delete(dist_matrix[site_idx], el_idx_sc)
+    distances_wo_site = np.delete(dists, el_idx_sc)
     min_dist = np.amin(distances_wo_site)
     dist_avg0 = min_dist
     dist_avg = calc_weighted_average_bond_length(distances_wo_site, dist_avg0)
@@ -349,16 +351,16 @@ def _coord_calculate_econ(
     neighbours = []
     weights = []
     for idx in range(len(elements_sc)):
-        if idx == el_idx_sc or dist_matrix[site_idx][idx] > r_max:
+        if idx == el_idx_sc or dists[idx] > r_max:
             continue
-        weight = math.exp(1.0 - (dist_matrix[site_idx][idx] / dist_avg0) ** 6.0)
+        weight = math.exp(1.0 - (dists[idx] / dist_avg0) ** 6.0)
         if weight >= tolerance:
             neigh_pos = position + (
                 np.array(positions_sc[idx]) - np.array(positions_sc[el_idx_sc])
             )
-            neighbours.append((mapping[idx], neigh_pos, dist_matrix[site_idx][idx]))
+            neighbours.append((mapping[idx], neigh_pos, dists[idx]))
             weights.append(weight)
-    return _create_site_dict(structure, site_idx, neighbours, weights)
+    return structure, site_idx, neighbours, weights
 
 
 def _coord_calculate_voronoi(
@@ -413,4 +415,4 @@ def _coord_calculate_voronoi(
             neighbours.append((neigh["index"], neigh["position"], neigh["distance"]))
             if weight_type is not None:
                 weights.append(neigh["weight"])
-    return _create_site_dict(structure, site_idx, neighbours, weights)
+    return structure, site_idx, neighbours, weights
