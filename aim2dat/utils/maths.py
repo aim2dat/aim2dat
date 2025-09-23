@@ -65,7 +65,7 @@ def calc_plane_equation(point1, point2, point3):
     a = plane_normal[0]
     b = plane_normal[1]
     c = plane_normal[2]
-    d = sum(plane_normal * point1)
+    d = -1.0 * sum(plane_normal * point1)
 
     return a, b, c, d
 

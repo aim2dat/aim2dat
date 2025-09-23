@@ -182,7 +182,7 @@ def test_cn_analysis(nested_dict_comparison, structure_label, method):
         read_yaml_file(REF_PATH + "coordination_" + structure_label + "_" + method + ".yaml")
     )
     structure = Structure(**inputs)
-    output = structure.calc_coordination(**ref["parameters"])
+    output = structure.calc_coordination(**ref["parameters"], indices=list(range(len(structure))))
     sites = output.pop("sites")
     sites_ref = ref["ref"].pop("sites")
     assert len(sites) == len(sites_ref)
