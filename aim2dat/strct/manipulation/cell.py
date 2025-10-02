@@ -12,6 +12,7 @@ import numpy as np
 
 # Internal library imports
 from aim2dat.strct.manipulation.utils import _add_label_suffix
+from aim2dat.utils.maths import calc_plane_equation
 
 if TYPE_CHECKING:
     from aim2dat.strct.structure import Structure
@@ -131,31 +132,28 @@ def create_supercell(
 
 
 def _create_supercell_positions(
-    structure: "Structure", r_max: float, size: Union[tuple, list] = None, wrap: bool = True
+    structure: "Structure",
+    r_max: float,
+    size: Union[tuple, list] = None,
+    indices: list = None,
+    wrap: bool = True,
 ) -> tuple:
     if any(pbc0 for pbc0 in structure["pbc"]):
-        translation_list = []
-        for direction, pbc in enumerate(structure.pbc):
-            if pbc:
-                if r_max is None:
-                    translation_list.append(list(range(0, size[direction])))
-                else:
-                    max_nr_trans = math.ceil(r_max / structure.cell_lengths[direction]) + 2
-                    translation_list.append(list(range(-max_nr_trans, max_nr_trans)))
-            else:
-                translation_list.append([0])
-        translational_combinations = list(itertools.product(*translation_list))
-        rep_cells = np.repeat(translational_combinations, len(structure), axis=0)
-        num_combinations = len(translational_combinations)
+        translation_list = (
+            _create_global_translation_list(structure, r_max, size)
+            if indices is None
+            else _create_index_translation_list(structure, indices, r_max)
+        )
+        rep_cells = np.repeat(translation_list, len(structure), axis=0)
+        num_combinations = len(translation_list)
         positions_sc = (
             np.tile(
                 structure.get_positions(cartesian=False, wrap=wrap),
-                (len(translational_combinations), 1),
+                (len(translation_list), 1),
             )
             + rep_cells
         )
         positions_sc = positions_sc.dot(structure.cell)
-
         elements_sc = list(structure.elements) * num_combinations
         kinds_sc = (
             [None] * (len(structure) * num_combinations)
@@ -165,7 +163,7 @@ def _create_supercell_positions(
         mapping = list(range(len(structure))) * num_combinations
         indices_sc = [
             idx if trans_comb == (0, 0, 0) else -1
-            for trans_comb in translational_combinations
+            for trans_comb in translation_list
             for idx in range(len(structure))
         ]
 
@@ -177,3 +175,71 @@ def _create_supercell_positions(
         mapping = indices_sc
         rep_cells = [np.array([0, 0, 0]) for el in structure["elements"]]
     return elements_sc, kinds_sc, positions_sc, indices_sc, mapping, rep_cells
+
+
+def _create_global_translation_list(
+    structure: "Structure", r_max: float, size: Union[tuple, list] = None
+):
+    translation_list = []
+    for direction, pbc in enumerate(structure.pbc):
+        if pbc:
+            if r_max is None:
+                translation_list.append(list(range(0, size[direction])))
+            else:
+                max_nr_trans = math.ceil(r_max / structure.cell_lengths[direction]) + 2
+                translation_list.append(list(range(-max_nr_trans, max_nr_trans)))
+        else:
+            translation_list.append([0])
+    return list(itertools.product(*translation_list))
+
+
+def _create_index_translation_list(
+    structure: "Structure", indices: Union[int, list], r_max: float
+):
+    translation_list = [[0], [0], [0]]
+
+    # We pre-calculate the plane limiting the unit cell in each periodic direction and the
+    # projected cell length:
+    planes = {}
+    for dir0, pbc in enumerate(structure.pbc):
+        if not pbc:
+            continue
+
+        plane_points = [(0.0, 0.0, 0.0)] + [structure.cell[i] for i in range(3) if i != dir0]
+        plane_p = calc_plane_equation(*plane_points)
+        norm = np.linalg.norm(plane_p[:3])
+        proj_cell_length = abs(np.dot(structure.cell[dir0], plane_p[:3]) / norm)
+        planes[dir0] = (plane_p, norm, proj_cell_length)
+
+    for index in indices:
+        pos = structure.get_position(index, cartesian=True, wrap=True)
+        for dir0, pbc in enumerate(structure.pbc):
+            if not pbc:
+                continue
+
+            # Now, We calculate the left/right distance of the position to the limiting unitcell
+            # planes:
+            plane_points = [(0.0, 0.0, 0.0)] + [structure.cell[i] for i in range(3) if i != dir0]
+            plane_p, norm, proj_cell_length = planes[dir0]
+            dotp = np.dot(pos, plane_p[:3])
+            distances = [
+                abs(dotp + p3) / norm
+                for p3 in [plane_p[3], -1.0 * sum(plane_p[:3] * np.array(structure.cell[dir0]))]
+            ]
+
+            # We take multiples of the projected cell length to estimate the number of periodic
+            # replica in that direction.
+            for i, dist in enumerate(distances):
+                multiples = 0
+                if dist < 1e-3:
+                    dist += distances[i - 1]
+                    multiples += 1
+                elif dist > r_max:
+                    continue
+
+                multiples += math.ceil((r_max - dist) / proj_cell_length) + 1
+                for mult in range(1, multiples):
+                    mult = mult * -1 if i == 0 else mult
+                    if mult not in translation_list[dir0]:
+                        translation_list[dir0].append(mult)
+    return list(itertools.product(*translation_list))

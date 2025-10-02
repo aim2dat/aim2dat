@@ -307,6 +307,7 @@ class AnalysisMixin:
     @analysis_method
     def calc_coordination(
         self,
+        indices: Union[int, list, tuple] = None,
         r_max: float = 10.0,
         method: str = "atomic_radius",
         min_dist_delta: float = 0.1,
@@ -318,12 +319,15 @@ class AnalysisMixin:
         voronoi_weight_type: float = "rel_solid_angle",
         voronoi_weight_threshold: float = 0.5,
         okeeffe_weight_threshold: float = 0.5,
-    ) -> dict:
+        get_statistics: bool = True,
+    ) -> Union[dict, list]:
         """
         Calculate coordination environment of each atomic site.
 
         Parameters
         ----------
+        indices : list (optional)
+            Site indices to include in the analysis.
         r_max : float (optional)
             Cut-off value for the maximum distance between two atoms in angstrom.
         method : str (optional)
@@ -358,6 +362,9 @@ class AnalysisMixin:
             This parameter is depreciated and will be removed in a future version.
             The original results can be obtained by using the ``voronoi_weight_threshold``
             parameter and setting ``voronoi_weight_type`` to ``'rel_solid_angle'``.
+        get_statistics : bool (optional)
+            If set to ``False`` only the ``'sites'`` list is returned without average/min/max
+            values for the distances and coordination numbers.
 
         Returns
         -------
@@ -365,6 +372,7 @@ class AnalysisMixin:
             Dictionary containing the coordination information of the structure.
         """
         kwargs = {
+            "indices": indices,
             "r_max": r_max,
             "method": method,
             "min_dist_delta": min_dist_delta,
@@ -376,6 +384,7 @@ class AnalysisMixin:
             "voronoi_weight_type": voronoi_weight_type,
             "voronoi_weight_threshold": voronoi_weight_threshold,
             "okeeffe_weight_threshold": okeeffe_weight_threshold,
+            "get_statistics": get_statistics,
         }
         return self._perform_strct_analysis(calc_coordination, kwargs)
 
