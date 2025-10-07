@@ -461,8 +461,8 @@ def _derive_bond(structure, index, cn_kwargs, bond_length=None):
         if not bond_positions:
             bond_positions.append(pos)
         else:
-            _, pos = _calc_atomic_distance(structure, index[0], idx, backfold_positions=True)
-            bond_positions.append(pos)
+            _, bond_pos = _calc_atomic_distance(structure, index[0], idx, backfold_positions=True)
+            bond_positions.append(bond_pos)
         for neigh in cn_details["neighbours"]:
             dir_v = np.array(neigh["position"]) - pos
             bond_dir += dir_v / np.linalg.norm(dir_v)
