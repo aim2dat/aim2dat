@@ -193,7 +193,11 @@ def _calc_atomic_distance_sc(structure, site_indices1, site_indices2, r_max):
     replicates in a supercell.
     """
     comb_indices, is_int = _check_site_indices(structure, [site_indices1, site_indices2])
-    _, _, positions_sc, _, mapping, _ = _create_supercell_positions(structure, r_max)
+    if isinstance(site_indices1, int):
+        site_indices1 = [site_indices1]
+    _, _, positions_sc, _, mapping, _ = _create_supercell_positions(
+        structure, r_max, indices=site_indices1
+    )
 
     dist_out = []
     pos_out = []

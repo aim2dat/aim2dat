@@ -449,16 +449,15 @@ def _check_guest_structure(guest_strct: Union[Structure, str]) -> Structure:
 
 
 def _derive_bond(structure, index, cn_kwargs, bond_length=None):
-    coord = structure.calc_coordination(**cn_kwargs)
     bond_direction = np.zeros(3)
     bond_positions = []
     if isinstance(index, int):
         index = [index]
-    for idx in index:
+    coord = structure.calc_coordination(indices=index, get_statistics=False, **cn_kwargs)
+    for idx, cn_details in zip(index, coord):
         bond_dir = np.zeros(3)
-        cn_details = coord["sites"][idx]
         pos = np.array(cn_details["position"])
-        all_pos = np.array([site["position"] for site in coord["sites"]])
+        all_pos = np.array(structure.positions)
         if not bond_positions:
             bond_positions.append(pos)
         else:
@@ -546,18 +545,17 @@ def _add_mol(
     )
 
     # Rotate guest to align bond direction
-    if len(guest_strct0) > 1:
-        rot_angle = np.rad2deg(-calc_angle([1, 0, 0], bond_dir))
-        if np.isclose(abs(rot_angle) % 180, 0.0):
-            rot_dir = np.cross(create_lin_ind_vector(bond_dir), [1, 0, 0])
-        else:
-            rot_dir = np.cross(bond_dir, [1, 0, 0])
-        guest_strct0 = rotate_structure(
-            guest_strct0,
-            rot_angle,
-            rot_dir,
-            np.zeros(3),
-        )
+    rot_angle = np.rad2deg(-calc_angle([1, 0, 0], bond_dir))
+    if np.isclose(abs(rot_angle) % 180, 0.0):
+        rot_dir = np.cross(create_lin_ind_vector(bond_dir), [1, 0, 0])
+    else:
+        rot_dir = np.cross(bond_dir, [1, 0, 0])
+    guest_strct0 = rotate_structure(
+        guest_strct0,
+        rot_angle,
+        rot_dir,
+        np.zeros(3),
+    )
     guest_strct0.set_positions(guest_strct0.positions + host_pos)
 
     # Add guest structure to host:

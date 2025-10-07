@@ -70,6 +70,8 @@ def test_store_calc_properties(create_structure_collection_object, nested_dict_c
         "radius_type": "chen_manz",
         "atomic_radius_delta": 0.0,
         "econ_tolerance": 0.5,
+        "get_statistics": True,
+        "indices": None,
         "econ_conv_threshold": 0.001,
         "voronoi_weight_type": "rel_solid_angle",
         "voronoi_weight_threshold": 0.5,
