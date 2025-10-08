@@ -47,11 +47,6 @@ class InteractionEnergyWorkChain(_BaseCoreWorkChain):
         parameters = self.ctx.inputs.parameters.get_dict()
         dict_set_parameter(parameters, ["GLOBAL", "RUN_TYPE"], "BSSE")
 
-        # Delete k-points section in input-parameters:
-        kpoints_p = dict_retrieve_parameter(parameters, ["FORCE_EVAL", "DFT", "KPOINTS"])
-        if kpoints_p is not None:
-            del parameters["FORCE_EVAL"]["DFT"]["KPOINTS"]
-
         # Set ghost atoms
         kind_parameters = dict_retrieve_parameter(parameters, ["FORCE_EVAL", "SUBSYS", "KIND"])
         kind_parameters_new = deepcopy(kind_parameters)
