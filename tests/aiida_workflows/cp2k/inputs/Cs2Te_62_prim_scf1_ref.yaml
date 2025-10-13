@@ -91,6 +91,7 @@ ctx:
     parameters: {MAX_SCF: 50, MIXING: {METHOD: BROYDEN_MIXING, BETA: 0.5, ALPHA: 0.5, NBUFFER: 10}}
     roks: False
     uks: False
+    cholesky: False
     odd_kpoints: False
     smearing_temperature: 0.0
   cur_scf_p_set:

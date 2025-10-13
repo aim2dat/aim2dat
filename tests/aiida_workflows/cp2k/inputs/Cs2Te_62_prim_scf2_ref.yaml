@@ -9,6 +9,7 @@ inputs:
     parameters: {MAX_SCF: 50, MIXING: {METHOD: BROYDEN_MIXING, BETA: 0.5, ALPHA: 0.5, NBUFFER: 10}}
     roks: False
     uks: True
+    cholesky: False
     odd_kpoints: True
     smearing_temperature: 20.0
   numerical_p.xc_functional: r2scan
@@ -102,6 +103,7 @@ ctx:
     parameters: {MAX_SCF: 50, MIXING: {METHOD: BROYDEN_MIXING, BETA: 0.5, ALPHA: 0.5, NBUFFER: 10}}
     roks: False
     uks: True
+    cholesky: False
     odd_kpoints: True
     smearing_temperature: 250.0
   cur_scf_p_set:
