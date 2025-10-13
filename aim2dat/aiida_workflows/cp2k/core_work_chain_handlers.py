@@ -54,6 +54,7 @@ def _switch_to_open_shell_ks(inputs, ctx, exit_codes, calc):
         ctx.cur_scf_p,
         ctx.cur_scf_p_set.get("allow_smearing", True),
         ctx.cur_scf_p_set.get("allow_uks", True),
+        ctx.cur_scf_p_set.get("disable_cholesky", True),
         ctx.scf_m_info,
     )
     ctx.inputs.parameters = aiida_orm.Dict(dict=parameters)
@@ -73,6 +74,7 @@ def _switch_to_atomic_scf_guess(inputs, ctx, exit_codes, calc):
             ctx.cur_scf_p,
             ctx.cur_scf_p_set.get("allow_smearing", True),
             ctx.cur_scf_p_set.get("allow_uks", True),
+            ctx.cur_scf_p_set.get("disable_cholesky", True),
             ctx.scf_m_info,
         )
         ctx.inputs.parameters = aiida_orm.Dict(dict=parameters)
@@ -132,6 +134,7 @@ def _switch_to_broyden_mixing(inputs, ctx, exit_codes, calc):
             ctx.cur_scf_p,
             ctx.cur_scf_p_set.get("allow_smearing", True),
             ctx.cur_scf_p_set.get("allow_uks", True),
+            ctx.cur_scf_p_set.get("disable_cholesky", True),
             ctx.scf_m_info,
         ):
             reports.append("Switching back to broyden-mixing.")

@@ -81,12 +81,14 @@ def _set_added_mos(structure, parameters, factor_unocc_states):
 
 
 def _update_scf_parameters(
-    structure, parameters, cur_scf_p, allow_smearing, allow_uks, scf_m_info
+    structure, parameters, cur_scf_p, allow_smearing, allow_uks, disable_cholesky, scf_m_info
 ):
     """Update the input parameters for the calculation."""
     if cur_scf_p["smearing_level"] > 0 and not allow_smearing:
         return False
     if cur_scf_p["uks"] and not allow_uks:
+        return False
+    if cur_scf_p["cholesky"] and not disable_cholesky:
         return False
     mixing_scheme = dict_retrieve_parameter(cur_scf_p, ["parameters", "MIXING", "METHOD"])
     if (
@@ -112,6 +114,10 @@ def _update_scf_parameters(
         dict_set_parameter(parameters, ["FORCE_EVAL", "DFT", "UKS"], True)
     elif cur_scf_p["roks"]:
         dict_set_parameter(parameters, ["FORCE_EVAL", "DFT", "ROKS"], True)
+
+    # Set CHOLESKY:
+    if cur_scf_p["cholesky"]:
+        dict_set_parameter(parameters, ["FORCE_EVAL", "DFT", "SCF", "CHOLESKY"], "OFF")
 
     # Set smearing:
     if scf_m_info["smearing_levels"][cur_scf_p["smearing_level"]] == 0.0:
@@ -170,6 +176,7 @@ def _initialize_scf_parameters(inputs, ctx):
         "parameters": ctx.scf_method_p[0]["parameters"][0],
         "roks": False,
         "uks": False,
+        "cholesky": False,
     }
     if ctx.scf_m_info["system_character"] == "metallic":
         cur_scf_p["smearing_level"] = 1
@@ -198,6 +205,7 @@ def _initialize_scf_parameters(inputs, ctx):
         cur_scf_p["added_mos"] = scf_parameters.get("added_mos", 0)
         cur_scf_p["uks"] = scf_parameters.get("uks", False)
         cur_scf_p["roks"] = scf_parameters.get("roks", False)
+        cur_scf_p["cholesky"] = scf_parameters.get("cholesky", False)
         if "odd_kpoints" in scf_parameters:
             cur_scf_p["odd_kpoints"] = scf_parameters["odd_kpoints"]
         if (cur_scf_p["uks"] and cur_scf_p["roks"]) or (
@@ -257,6 +265,7 @@ def _initialize_scf_parameters(inputs, ctx):
             cur_scf_p,
             cur_scf_p_set.get("allow_smearing", True),
             cur_scf_p_set.get("allow_uks", True),
+            cur_scf_p_set.get("disable_cholesky", True),
             ctx.scf_m_info,
         )
         if successful_upd or not inputs.adjust_scf_parameters.value:
@@ -298,6 +307,7 @@ def _iterate_scf_parameters(
                 cur_scf_p,
                 cur_scf_p_set.get("allow_smearing", True),
                 cur_scf_p_set.get("allow_uks", True),
+                cur_scf_p_set.get("disable_cholesky", True),
                 scf_m_info,
             )
         elif (
@@ -317,6 +327,7 @@ def _iterate_scf_parameters(
                 cur_scf_p,
                 cur_scf_p_set.get("allow_smearing", True),
                 cur_scf_p_set.get("allow_uks", True),
+                cur_scf_p_set.get("disable_cholesky", True),
                 scf_m_info,
             )
         elif "odd_kpoints" in cur_scf_p and not cur_scf_p["odd_kpoints"]:
@@ -337,6 +348,7 @@ def _iterate_scf_parameters(
                 cur_scf_p,
                 cur_scf_p_set.get("allow_smearing", True),
                 cur_scf_p_set.get("allow_uks", True),
+                cur_scf_p_set.get("disable_cholesky", True),
                 scf_m_info,
             )
         elif cur_scf_p["parameter_level"] < scf_m_info["max_parameter"] - 1:
@@ -359,6 +371,7 @@ def _iterate_scf_parameters(
                 cur_scf_p,
                 cur_scf_p_set.get("allow_smearing", True),
                 cur_scf_p_set.get("allow_uks", True),
+                cur_scf_p_set.get("disable_cholesky", True),
                 scf_m_info,
             )
         else:
@@ -374,6 +387,7 @@ def _compare_scf_p(dict_input, dict_output):
     for keyword in [
         "roks",
         "uks",
+        "cholesky",
         "method_level",
         "parameter_level",
         "smearing_level",
