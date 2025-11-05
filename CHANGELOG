@@ -42,7 +42,7 @@ Version 0.4.0
 * The ``aiida_workflows.protocols.*.yaml/chargemol.parameters->partial_charges`` was fixed since the values were taken as three `key` parameters instead of one whole key (`PR #174 <https://github.com/aim2dat/aim2dat/pull/174>`_).
 * The ``plots.simple_plot`` is fixed for bar plots including `colors` and `alpha` for the `matplotlib` backend (`PR #175 <https://github.com/aim2dat/aim2dat/pull/175>`_).
 * The ``elements.get_element_groups`` now returns the groups of all 118 elements of the periodic table, the missing entries for 'Ce', 'Fr' and 'Ra' were added (`PR #179 <https://github.com/aim2dat/aim2dat/pull/179>`_).
-* ``plots.simple_plot`` is fixed for bar plots including `colors` and `alpha` for the `matplotlib` backend (`PR #175 <https://github.com/aim2dat/aim2dat/pull/175>`_).
+* The ``aiida_workflows.cp2k.parameter_files.basis_sets`` `STANDARD` basis sets and potentials were overwritten by `UZH`. Now, both options are implemented (`PR #183 <https://github.com/aim2dat/aim2dat/pull/183>`_).
 
 **Breaking Changes:**
 
