@@ -58,9 +58,9 @@ protocol:
   results:
     res_1: {task: task_4.1, output_port: result, unit: test_unit}
     res_2: {task: task_1.3, output_port: result, unit: test_unit}
-general_input: {z: 44f4fc48-6bd1-42b9-a7df-91cf7834d53a, z->task_1.2:
-    9b4b7a75-88d2-473f-8e48-fede611a8244}
-user_input_nodes: {y: b3eba109-d347-40ac-8681-ecf9cb6ab8b4, y->task_4.1:
-    15950aa3-4e39-4be8-82ab-68bee4fd9707}
+general_input: {z: 5222b4fc-04e3-4e46-a3b3-8397e934deb4, z->task_1.2:
+    3158a97c-0f4e-4616-99e4-17ac5b759f2a}
+user_input_nodes: {y: 78329aac-d834-4edf-bcf5-43bed1b97127, y->task_4.1:
+    d7a643fc-6026-4ade-841f-9670ba5afce0}
 user_input: {}
-parent_node: 38296bb0-c3ee-4c9b-8b15-08c2e0a38d10
+parent_node: 1b9466de-0dba-4628-a991-32dc81f67e03
