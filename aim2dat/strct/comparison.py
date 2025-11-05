@@ -92,14 +92,14 @@ def _compare_structures_direct_comp(
                         ]
                     )
                     dev_norm = min(np.linalg.norm(deviation[0]), np.linalg.norm(deviation[1]))
-                    # If the deviation is below the threhold we add the position to
+                    # If the deviation is below the threshold we add the position to
                     # matched_indices:
                     if dev_norm < eps:
                         deviations[idx1] = dev_norm
                         free_indices.remove(idx2)
                         # If one match is found it goes to the next position
                         break
-            # If there are more free inidices than positions left in positions[0] the
+            # If there are more free indices than positions left in positions[0] the
             # structures cannot match:
             if len(free_indices) > (len(elements[0]) - idx1):
                 break

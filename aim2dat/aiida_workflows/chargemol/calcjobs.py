@@ -25,7 +25,7 @@ class ChargemolCalculation(CalcJob):
         spec.input(
             "charge_density_folder",
             valid_type=aiida_orm.RemoteData,
-            help="Folder containing the carge-density cube files",
+            help="Folder containing the charge-density cube files",
         )
         spec.input(
             "charge_density_filename",
@@ -49,7 +49,7 @@ class ChargemolCalculation(CalcJob):
             "path_atomic_densities",
             valid_type=aiida_orm.Str,
             required=False,
-            help="Absolte path to the atomic densities needed for the chargemol calculation.",
+            help="Absolute path to the atomic densities needed for the chargemol calculation.",
         )
         spec.inputs["metadata"]["options"]["input_filename"].default = "job_control.txt"
         spec.inputs["metadata"]["options"][
