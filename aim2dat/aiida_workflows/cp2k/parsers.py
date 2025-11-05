@@ -36,7 +36,7 @@ class _Cp2kBaseParser(Parser):
     extra_output_functions = []
 
     def parse(self, **kwargs):
-        """Receives in input a dictionary of retrieved nodes. Does all the logic here."""
+        """Receives as input a dictionary of retrieved nodes. Does all the logic here."""
         try:
             _ = self.retrieved
         except exceptions.NotExistent:
@@ -84,9 +84,7 @@ class _Cp2kBaseParser(Parser):
             return self.exit_codes.ERROR_ILL_CONDITIONED_MATRIX
         elif "bad_condition_number" in result_dict:
             return self.exit_codes.ERROR_BAD_CONDITION_NUMBER
-        elif result_dict.get("exceeded_walltime", False) or (
-            self.node.exit_code is not None and self.node.exit_code == 120
-        ):
+        elif result_dict.get("exceeded_walltime", False) or self.node.exit_status == 120:
             return self.exit_codes.ERROR_OUT_OF_WALLTIME
         elif "aborted" in result_dict:
             return self.exit_codes.ERROR_OUTPUT_CONTAINS_ABORT

@@ -155,7 +155,7 @@ class _BaseOptimizationWorkChain(_BaseCoreWorkChain):
             return self.exit_codes.ERROR_OPTIMIZATION_NOT_CONVERGED
 
     @process_handler(
-        priority=400,
+        priority=402,
         exit_codes=ExitCode(500),
     )
     def resubmit_unconverged_geometry(self, calc):
