@@ -106,13 +106,13 @@ class Energy(_BaseQuantity):
             "ev": 1.0,
             "hartree": (constants["me"] * constants["e"] ** 3.0)
             / (16.0 * math.pi**2.0 * constants["eps0"] ** 2.0 * constants["hbar"] ** 2.0),
-            "joule": 1.0 * constants["e"],
+            "joule": 1.0 / constants["e"],
         }
         self._units["ha"] = self._units["hartree"]
         self._units["rydberg"] = self._units["hartree"] / 2.0
         self._units["j"] = self._units["joule"]
         self._units["cal"] = 4.184 * self._units["joule"]
-        self._units["kj_per_mol"] = self._units["joule"] / 1.0e3 * constants["na"]
+        self._units["kj_per_mol"] = 1.0e3 * self._units["joule"] / constants["na"]
 
 
 class Force(_BaseQuantity):
