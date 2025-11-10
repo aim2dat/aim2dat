@@ -1,0 +1,34 @@
+%YAML 1.2
+---
+structure:
+  cell:
+  - [2.468, 0.000, 0.000]
+  - [-1.233, 2.137, 0.000]
+  - [0.000, 0.000, 8.685]
+  elements: [C, C, C, C, H, H]
+  positions:
+  - [0.000, 0.000, 2.171]
+  - [0.000, 0.000, 6.514]
+  - [1.234, 0.712, 2.171]
+  - [0.000, 1.425, 6.514]
+  - [1.234, 0.000, 0.000]
+  - [0.864, -0.640, 0.000]
+  pbc: [true, true, true]
+input_parameters:
+  GLOBAL: {RUN_TYPE: ENERGY, PRINT_LEVEL: MEDIUM}
+  FORCE_EVAL:
+    METHOD: Quickstep
+    DFT:
+      BASIS_SET_FILE_NAME: /cp2k/data/BASIS_MOLOPT
+      POTENTIAL_FILE_NAME: /cp2k/data/GTH_POTENTIALS
+      QS: {EPS_DEFAULT: 1e-9}
+      MGRID: {NGRIDS: 4, CUTOFF: 280, REL_CUTOFF: 30}
+      XC:
+        XC_FUNCTIONAL: {_: PBE}
+      POISSON: {PERIODIC: XYZ, PSOLVER: PERIODIC}
+      SCF: {EPS_SCF: 1.0e-4}
+    SUBSYS:
+      KIND:
+      - {_: C, BASIS_SET: DZVP-MOLOPT-GTH, POTENTIAL: GTH-PBE-q4}
+      - {_: H, BASIS_SET: DZVP-MOLOPT-GTH, POTENTIAL: GTH-PBE-q1}
+      CELL: {PERIODIC: XYZ}
