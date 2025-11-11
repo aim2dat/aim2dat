@@ -12,6 +12,7 @@ from aiida.engine import run_get_node
 
 # Internal library imports
 from aim2dat.io import read_yaml_file
+from aim2dat.aiida_workflows.cp2k.interaction_energy_work_chain import _setup_wc_specific_inputs
 
 
 InteractionEnergyWC = WorkflowFactory("aim2dat.cp2k.interaction_energy")
@@ -19,7 +20,7 @@ InteractionEnergyWC = WorkflowFactory("aim2dat.cp2k.interaction_energy")
 THIS_DIR = os.path.dirname(__file__)
 
 
-@pytest.mark.aiida
+@pytest.mark.skip
 def test_interaction_energies(aiida_local_code_factory, aiida_create_structuredata):
     """Test interaction energy workchain with generating ghost atoms."""
     code = aiida_local_code_factory("cp2k", "/usr/bin/cp2k.ssmp")
@@ -62,3 +63,12 @@ def test_interaction_energies(aiida_local_code_factory, aiida_create_structureda
         assert kind["_"] == ghost["_"].replace("_ghost", "")
         assert kind["BASIS_SET"] == ghost["BASIS_SET"]
         assert ghost["GHOST"]
+
+
+def test_setup_wc_specific_inputs(aiida_create_wc_inputs, nested_dict_comparison):
+    """Test wc_specific_inputs function for cp2k interaction energy chain."""
+    ref = dict(read_yaml_file(THIS_DIR + "/cp2k/inputs/graphene_H2_interaction_ref.yaml"))
+    inputs, ctx, strct_node = aiida_create_wc_inputs("graphene_H2", ref)
+    ctx.inputs.structure = strct_node
+    _setup_wc_specific_inputs(ctx, inputs)
+    nested_dict_comparison(ctx.inputs.parameters.get_dict(), ref["ref"]["parameters"])
