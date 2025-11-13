@@ -39,7 +39,7 @@ def test_validate_cube_types(input_value, return_value):
 
 
 def test_setup_wc_specific_inputs(aiida_create_wc_inputs, nested_dict_comparison):
-    """Test wc_specific_inputs fucntion for cp2k cube work chain."""
+    """Test wc_specific_inputs function for cp2k cube work chain."""
     ref = dict(read_yaml_file(REF_PATH + "Al_225_conv_cube_ref.yaml"))
     inputs, ctx, strct_node = aiida_create_wc_inputs("Al_225_conv", ref)
     _setup_wc_specific_inputs(ctx, inputs)

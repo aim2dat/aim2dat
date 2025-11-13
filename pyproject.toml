@@ -158,6 +158,7 @@ pre-commit = [
 "aim2dat.cp2k.cube" = "aim2dat.aiida_workflows.cp2k.cube_work_chain:CubeWorkChain"
 "aim2dat.cp2k.combined.surface_opt" = "aim2dat.aiida_workflows.cp2k.combined_work_chains:SurfaceOptWorkChain"
 "aim2dat.cp2k.combined.electronic_properties" = "aim2dat.aiida_workflows.cp2k.combined_work_chains:ElectronicPropertiesWorkChain"
+"aim2dat.cp2k.interaction_energy" = "aim2dat.aiida_workflows.cp2k.interaction_energy_work_chain:InteractionEnergyWorkChain"
 
 [tool.setuptools.packages.find]
 include = ["aim2dat*"]

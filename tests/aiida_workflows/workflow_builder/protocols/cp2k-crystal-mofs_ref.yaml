@@ -2,11 +2,11 @@
 ---
 protocol:
   title: cp2k-crystal-mofs
-  version: '2.0'
+  version: '3.0'
   description: Settings to calculate metal-organic frameworks.
   dependencies:
-  - [aiida-core, '1.6', null]
-  parent_node_type: structure
+  - [aiida-core, '2.7', Null]
+  parent_node_type: core.structure
   parent_node_input:
     find_scf_parameters: structural_p.structure
     unit_cell_preopt: structural_p.structure
@@ -82,13 +82,12 @@ protocol:
           DFT:
             MGRID: {}
             POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
-            BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT]
-            POTENTIAL_FILE_NAME: GTH_POTENTIALS
-            QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-12}
+            BASIS_SET_FILE_NAME: BASIS_MOLOPT_UZH
+            POTENTIAL_FILE_NAME: POTENTIALS_UZH
+            QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
             SCF: {EPS_SCF: 5.0e-7}
             KPOINTS:
-              FULL_GRID: false
-              SYMMETRY: false
+              EPS_GEO: 1.0E-8
             XC: {}
           SUBSYS:
             CELL: {PERIODIC: XYZ}
@@ -140,7 +139,7 @@ protocol:
       aiida_node: true
       compare: false
     optimization_p.max_force->unit_cell_opt:
-      value: 0.00048
+      value: 0.00045
       aiida_node: true
     optimization_p.pressure_tolerance->unit_cell_opt:
       value: 100.0
@@ -226,6 +225,12 @@ protocol:
       aiida_node: true
       optional: true
       compare: false
+    ignore_convergence_failure:
+      validation: aim2dat.cp2k.geo_opt
+      aiida_node: true
+      optional: true
+      compare: false
+      tasks: [unit_cell_preopt]
     cp2k.code:
       validation: aim2dat.cp2k.find_scf_p
       aiida_node: true
@@ -330,6 +335,8 @@ user_input:
     compare: true, namespace: false, value: null, unstored: false, optional: false}
   numerical_p.basis_sets: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
     compare: true, namespace: false, value: null, unstored: false, optional: false}
+  ignore_convergence_failure: {validation: aim2dat.cp2k.geo_opt, aiida_node: true,
+    compare: false, namespace: false, value: null, unstored: false, optional: true}
   numerical_p.pseudo_file: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
     optional: true, compare: false, namespace: false, value: null, unstored: false}
   numerical_p.basis_file: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
@@ -364,13 +371,12 @@ general_input:
         DFT:
           MGRID: {}
           POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
-          BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT]
-          POTENTIAL_FILE_NAME: GTH_POTENTIALS
-          QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-12}
+          BASIS_SET_FILE_NAME: BASIS_MOLOPT_UZH
+          POTENTIAL_FILE_NAME: POTENTIALS_UZH
+          QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
           SCF: {EPS_SCF: 5.0e-7}
           KPOINTS:
-            FULL_GRID: false
-            SYMMETRY: false
+            EPS_GEO: 1.0E-8
           XC: {}
         SUBSYS:
           CELL: {PERIODIC: XYZ}
@@ -417,7 +423,7 @@ Individual_input:
     optimization_p.pressure_tolerance: {value: 200.0, aiida_node: true, compare: false,
       namespace: false, unstored: false, optional: false, user_input: false}
   unit_cell_opt:
-    optimization_p.max_force: {value: 0.00048, aiida_node: true, namespace: false,
+    optimization_p.max_force: {value: 0.00045, aiida_node: true, namespace: false,
       unstored: false, compare: true, optional: false, user_input: false}
     optimization_p.pressure_tolerance: {value: 100.0, aiida_node: true, namespace: false,
       unstored: false, compare: true, optional: false, user_input: false}
@@ -467,7 +473,7 @@ tasks:
     process: aim2dat.cp2k.cell_opt
     parent_node: structural_p.structure
     inputs: [scf_extended_system, numerical_p.xc_functional, numerical_p.cutoff_values, 
-      numerical_p.basis_sets, numerical_p.pseudo_file, numerical_p.basis_file, cp2k.code, 
+      numerical_p.basis_sets, numerical_p.pseudo_file, numerical_p.basis_file, ignore_convergence_failure, cp2k.code, 
       cp2k.metadata, clean_workdir, cp2k.parameters, factor_unocc_states, enable_roks, 
       scf_method, adjust_scf_parameters, always_add_unocc_states, max_iterations, optimization_p.keep_angles, 
       numerical_p.kpoints_ref_dist, optimization_p.max_force, optimization_p.pressure_tolerance]

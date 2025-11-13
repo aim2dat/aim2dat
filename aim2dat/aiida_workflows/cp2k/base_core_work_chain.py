@@ -105,6 +105,12 @@ class _BaseCoreWorkChain(BaseRestartWorkChain):
             help="Use restricted open-shell instead of unrestricted open-shell calculations.",
         )
         spec.input(
+            "disable_cholesky",
+            valid_type=aiida_orm.Bool,
+            default=lambda: aiida_orm.Bool(False),
+            help="Disables cholesky method used for computing the inverse of S.",
+        )
+        spec.input(
             "numerical_p.kpoints_ref_dist",
             valid_type=aiida_orm.Float,
             help="Reference distance between two k-points in reciprocal space.",
@@ -259,7 +265,6 @@ class _BaseCoreWorkChain(BaseRestartWorkChain):
             ExitCode(401),
             ExitCode(404),
             ExitCode(405),
-            ExitCode(500),
             ExitCode(501),
         ],
     )

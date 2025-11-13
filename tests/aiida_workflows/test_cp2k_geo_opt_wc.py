@@ -49,6 +49,7 @@ def test_geo_opt_fail(aiida_local_code_factory, aiida_create_structuredata):
         "parameter_level": 0,
         "uks": False,
         "roks": False,
+        "cholesky": False,
     }
     initial_scf_parameters = aiida_orm.Dict(dict=i_scf_p)
 
@@ -102,6 +103,7 @@ def test_geo_opt_fail(aiida_local_code_factory, aiida_create_structuredata):
     scf_parameters = {
         "uks": False,
         "roks": False,
+        "cholesky": False,
         "parameters": {
             "MIXING": {"BETA": 0.5, "ALPHA": 0.2, "METHOD": "BROYDEN_MIXING", "NBUFFER": 4},
             "MAX_SCF": 50,
@@ -158,6 +160,7 @@ def test_geo_opt_sucess(aiida_local_code_factory, aiida_create_structuredata):
         "parameter_level": 1,
         "uks": False,
         "roks": False,
+        "cholesky": False,
     }
     initial_scf_parameters = aiida_orm.Dict(dict=i_scf_p)
 
@@ -211,6 +214,7 @@ def test_geo_opt_sucess(aiida_local_code_factory, aiida_create_structuredata):
     scf_parameters = {
         "uks": False,
         "roks": False,
+        "cholesky": False,
         "parameters": {
             "MIXING": {"BETA": 0.5, "ALPHA": 0.35, "METHOD": "BROYDEN_MIXING", "NBUFFER": 4},
             "MAX_SCF": 25,

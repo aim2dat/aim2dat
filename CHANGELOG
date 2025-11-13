@@ -13,7 +13,7 @@ Version 0.4.0
 * ``strct.Structure`` offers now an interface to the openmm Python package (`PR #145 <https://github.com/aim2dat/aim2dat/pull/145>`_).
 * ``io.read_fhiaims_proj_dos`` now also supports spin-polarized pDOS output files (`PR #152 <https://github.com/aim2dat/aim2dat/pull/152>`_).
 * ``aim2dat.aiida_workflows.utils:add_molecule``, ``aim2dat.aiida_workflows.utils:find_equivalent_sites``, and ``aim2dat.aiida_workflows.utils:rotate_molecule`` were added as a `calcfunction` (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
-* A workflow was added to calculate the adsorption energies [``cp2k-adsorption-mofs-*``, ``cp2k-preadsorption-mofs-*``, ``cp2k-molecule-*``] (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
+* A workflow was added to calculate the adsorption energies [``cp2k-adsorption-mofs-*``] (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_, `PR #184 <https://github.com/aim2dat/aim2dat/pull/184>`_).
 * Hybrid functionals *PBE0* and *HSE06* with the *ADMM method* were implemented. As well as *rVV10* and *D3* dispersion corrections for *R2SCAN* and the hybrid functionals (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * ``aiida_workflows.cp2k.base_opt_work_chain._BaseOptimizationWorkChain`` contains now the option to fix atoms ``optimization_p.fixed_atoms`` and also to ignore scf convergence failure ``ignore_convergence_failure`` (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
 * ``aiida_workflows.MultipleWorkflowBuilder`` offers the possibility with ``return_remote_runtimes`` to return only the sum of remote runtimes for each task (`PR #155 <https://github.com/aim2dat/aim2dat/pull/155>`_).
@@ -26,6 +26,7 @@ Version 0.4.0
 * The ``WorkflowBuilder`` and ``MultipleWorkflowBuilder`` can be imported directly via the ``__init__.py`` file of the sub-package (`PR #174 <https://github.com/aim2dat/aim2dat/pull/174>`_).
 * ``aim2dat/aiida_workflows/chargemol/parsers`` and ``aim2dat/io/critic2`` retrieves ``runtime`` of the calculation and includes it in the ``result_dict`` (`PR #174 <https://github.com/aim2dat/aim2dat/pull/174>`_).
 * The ``strct.Structure.calc_coordination`` now allows to calculate the coordination environment for a subset of sites and has the option to omit the statistics; the ``strct.Structure.calc_distance`` method with ``use_supercell=True`` as well as the ``strct.ext_manipulation.add_structure_coord`` functions are now faster for larger structures (`PR #177 <https://github.com/aim2dat/aim2dat/pull/177>`_).
+* Newly implemented workchain ``aiida_workflows.cp2k.interaction_energy_work_chain`` to calculate interaction energies including counter poise correction (`PR #184 <https://github.com/aim2dat/aim2dat/pull/184>`_)
 
 **Fixes:**
 
@@ -35,7 +36,7 @@ Version 0.4.0
 * The ``strct.ext_manipulation.add_structure_coord`` didn't apply distance checks if distance constraints were applied (`PR #147 <https://github.com/aim2dat/aim2dat/pull/147>`_).
 * The ``io.read_cp2k_restart_structure`` function was wrongly taking the reference cell instead of the actual unitcell (`PR #149 <https://github.com/aim2dat/aim2dat/pull/149>`_).
 * The ``find_scf_parameters`` were not restarted if the mixing parameters were not found (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
-* The ``aiida_workflows.cp2k.core_work_chain_handlers._resubmit_calculation`` function takes care of restarting CP2K calculations when walltime is hit or no output for CP2K was created due to connection issues (`PR #157 <https://github.com/aim2dat/aim2dat/pull/157>`_).
+* The ``aiida_workflows.cp2k.core_work_chain_handlers._resubmit_calculation`` function takes care of restarting CP2K calculations when walltime is hit or no output for CP2K was created due to connection issues (`PR #157 <https://github.com/aim2dat/aim2dat/pull/157>`_, `PR #184 <https://github.com/aim2dat/aim2dat/pull/184>`_).
 * The ``strct.ext_manipulation.add_structure_coord`` function threw an error when the host or guest indices were larger than the number of sites of the corresponding structure (`PR #165 <https://github.com/aim2dat/aim2dat/pull/165>`_).
 * The read/write functions to hdf5-files of the ``strct.StructureCollection`` class are finetuned to be more data-efficient (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
 * The ``aiida_workflows.cp2k.parsers._Cp2kBaseParser.parse`` takes care of the ``exit_codes`` if ``WALLTIME`` is hit by Slurm or CP2K, as well fixes the error that if calculation was ``interrupted`` an ``SCF`` error arose instead (`PR #171 <https://github.com/aim2dat/aim2dat/pull/171>`_).
