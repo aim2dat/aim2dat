@@ -84,7 +84,7 @@ def calc_planes(
         for atom_idx in frg_indices:
             pos = positions[atom_idx]
             if (
-                abs(sum([plane_p[idx] * pos[idx] for idx in range(3)]) - plane_p[3]) < threshold
+                abs(sum([plane_p[idx] * pos[idx] for idx in range(3)]) + plane_p[3]) < threshold
                 and atom_idx not in plane_group
             ):
                 plane_group.append(atom_idx)
