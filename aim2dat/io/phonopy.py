@@ -334,8 +334,9 @@ def read_phonopy_qha_properties(
                 "Parsing volumes and energies from output files is not yet supported."
             )
     qha_properties = _return_ext_interface_modules("phonopy")._extract_qha_properties(**qha_kwargs)
-    qha_properties["temperatures"] = qha_kwargs["temperatures"][
-        : len(qha_properties["thermal_expansion"])
+    qha_properties["temperatures"] = [
+        float(val)
+        for val in qha_kwargs["temperatures"][: len(qha_properties["thermal_expansion"])]
     ]
     qha_properties["bulk_modulus"] = float(qha_properties["bulk_modulus"])
     qha_properties["thermal_expansion"] = [
