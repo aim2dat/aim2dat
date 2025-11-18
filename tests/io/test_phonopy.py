@@ -88,4 +88,5 @@ def test_read_phonopy_qha_properties(nested_dict_comparison):
         ],
         ev_file_path=cwd + "phonopy_qha/e-v.dat",
     )
+    print(qha_properties)
     nested_dict_comparison(qha_properties, qha_properties_ref, threshold=1.0)
