@@ -167,9 +167,12 @@ class _BaseOptimizationWorkChain(_BaseCoreWorkChain):
 
     @process_handler(
         priority=402,
-        exit_codes=ExitCode(400),
+        exit_codes=[
+            ExitCode(310),
+            ExitCode(400),
+        ],
     )
-    def _resubmit_calculation(self, calc):
+    def resubmit_calculation(self, calc):
         """Resubmit the geometry in case the walltime is hit."""
         return self._execute_error_handler(calc, _resubmit_calculation)
 
