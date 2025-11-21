@@ -226,7 +226,7 @@ protocol:
       optional: true
       compare: false
     ignore_convergence_failure:
-      validation: aim2dat.cp2k.geo_opt
+      validation: aim2dat.cp2k.cell_opt
       aiida_node: true
       optional: true
       compare: false
@@ -335,7 +335,7 @@ user_input:
     compare: true, namespace: false, value: null, unstored: false, optional: false}
   numerical_p.basis_sets: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
     compare: true, namespace: false, value: null, unstored: false, optional: false}
-  ignore_convergence_failure: {validation: aim2dat.cp2k.geo_opt, aiida_node: true,
+  ignore_convergence_failure: {validation: aim2dat.cp2k.cell_opt, aiida_node: true,
     compare: false, namespace: false, value: null, unstored: false, optional: true}
   numerical_p.pseudo_file: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
     optional: true, compare: false, namespace: false, value: null, unstored: false}
