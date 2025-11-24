@@ -226,7 +226,7 @@ user_input:
     optional: true
     compare: false
   ignore_convergence_failure:
-    validation: aim2dat.cp2k.geo_opt
+    validation: aim2dat.cp2k.cell_opt
     aiida_node: true
     optional: true
     compare: false
