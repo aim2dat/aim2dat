@@ -287,7 +287,7 @@ def add_structure_coord(
     # If the distance threshold does not hold, a grid search will be performed.
     # The grid is based on `constrain_steps` and rotates the molecule around `host_indices` within
     # a sphere with the ´bond_distance´ as rotation vector.
-    if not score:
+    if isinstance(score, bool) and not score:
         score = score if score else float("inf")
         for alpha in np.linspace(-180, 180, num=num1, endpoint=False):
             for beta in np.linspace(0, 180, num=num2, endpoint=False):
@@ -304,7 +304,7 @@ def add_structure_coord(
                 except Exception:
                     continue
                 score0 = _check_distances(new_strct0, new_indices, None, dist_dict, True, True)
-                if score0 and score0 < score:
+                if isinstance(score0, float) and score0 < score:
                     score = score0
                     new_structure = new_strct0
                     new_guest = new_guest0
@@ -346,7 +346,7 @@ def add_structure_coord(
                 except Exception:
                     continue
                 score0 = _check_distances(new_strct0, new_indices, None, dist_dict, True, True)
-                if score0 and score0 < score:
+                if isinstance(score0, float) and score0 < score:
                     score = score0
                     new_structure = new_strct0
 
@@ -461,8 +461,8 @@ def _derive_bond(structure, index, cn_kwargs, bond_length=None):
         if not bond_positions:
             bond_positions.append(pos)
         else:
-            _, pos = _calc_atomic_distance(structure, index[0], idx, backfold_positions=True)
-            bond_positions.append(pos)
+            _, bond_pos = _calc_atomic_distance(structure, index[0], idx, backfold_positions=True)
+            bond_positions.append(bond_pos)
         for neigh in cn_details["neighbours"]:
             dir_v = np.array(neigh["position"]) - pos
             bond_dir += dir_v / np.linalg.norm(dir_v)

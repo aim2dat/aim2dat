@@ -19,7 +19,7 @@ Version 0.4.0
 * ``aiida_workflows.MultipleWorkflowBuilder`` offers the possibility with ``return_remote_runtimes`` to return only the sum of remote runtimes for each task (`PR #155 <https://github.com/aim2dat/aim2dat/pull/155>`_).
 * ``aiida_workflows.cp2k.pdos_work_chain.PDOSWorkChain`` contains now the option to print the local PDOS, projected on subsets of atoms given through lists ``ldos`` (`PR #158 <https://github.com/aim2dat/aim2dat/pull/158>`_).
 * Newly implemented function ``strct.ext_analysis.calc_hydrogen_bonds`` to search for hydrogen bonds in a ``strct.Structure`` object (`PR #167 <https://github.com/aim2dat/aim2dat/pull/167>`_)
-* ``strct.ext_analysis.add_structure_coord`` grid search is now improved by a grid search in a sphere around the host atoms. Additionally, `rotate_guest` allows to rotate the guest until minimum is found (`PR #168 <https://github.com/aim2dat/aim2dat/pull/168>`_, `PR #176 <https://github.com/aim2dat/aim2dat/pull/176>`_).
+* ``strct.ext_analysis.add_structure_coord`` grid search is now improved by a grid search in a sphere around the host atoms. Additionally, `rotate_guest` allows to rotate the guest until minimum is found (`PR #168 <https://github.com/aim2dat/aim2dat/pull/168>`_, `PR #176 <https://github.com/aim2dat/aim2dat/pull/176>`_, `PR #180 <https://github.com/aim2dat/aim2dat/pull/180>`_, `PR #181 <https://github.com/aim2dat/aim2dat/pull/181>`_).
 * ``plots.simple_plot`` added new property `edge_color` and `line_width` to set the color and thickness of the edges for bar plots for backend `matplotlib` (`PR #169 <https://github.com/aim2dat/aim2dat/pull/169>`_).
 * The ``strct.Structure`` class has the new ``from_str`` classmethod to initialize an object from string, using pre-defined stored structures (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
 * The ``read_yaml_file`` function now has the ``read_structure`` decorator to integrate into the io-interface of the ``strct.Structure`` class (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
@@ -35,12 +35,14 @@ Version 0.4.0
 * The ``strct.ext_manipulation.add_structure_coord`` didn't apply distance checks if distance constraints were applied (`PR #147 <https://github.com/aim2dat/aim2dat/pull/147>`_).
 * The ``io.read_cp2k_restart_structure`` function was wrongly taking the reference cell instead of the actual unitcell (`PR #149 <https://github.com/aim2dat/aim2dat/pull/149>`_).
 * The ``find_scf_parameters`` were not restarted if the mixing parameters were not found (`PR #153 <https://github.com/aim2dat/aim2dat/pull/153>`_).
-* The ``aim2dat.aiida_workflows.cp2k.core_work_chain_handlers._resubmit_calculation`` function takes care of restarting CP2K calculations when walltime is hit or no output for CP2K was created due to connection issues (`PR #157 <https://github.com/aim2dat/aim2dat/pull/157>`_).
+* The ``aiida_workflows.cp2k.core_work_chain_handlers._resubmit_calculation`` function takes care of restarting CP2K calculations when walltime is hit or no output for CP2K was created due to connection issues (`PR #157 <https://github.com/aim2dat/aim2dat/pull/157>`_).
 * The ``strct.ext_manipulation.add_structure_coord`` function threw an error when the host or guest indices were larger than the number of sites of the corresponding structure (`PR #165 <https://github.com/aim2dat/aim2dat/pull/165>`_).
 * The read/write functions to hdf5-files of the ``strct.StructureCollection`` class are finetuned to be more data-efficient (`PR #170 <https://github.com/aim2dat/aim2dat/pull/170>`_).
 * The ``aiida_workflows.cp2k.parsers._Cp2kBaseParser.parse`` takes care of the ``exit_codes`` if ``WALLTIME`` is hit by Slurm or CP2K, as well fixes the error that if calculation was ``interrupted`` an ``SCF`` error arose instead (`PR #171 <https://github.com/aim2dat/aim2dat/pull/171>`_).
-* The ``aim2dat/aiida_workflows/protocols/*.yaml/chargemol.parameters->partial_charges`` was fixed since the values were taken as three `key` parameters instead of one whole key (`PR #174 <https://github.com/aim2dat/aim2dat/pull/174>`_).
+* The ``aiida_workflows.protocols.*.yaml/chargemol.parameters->partial_charges`` was fixed since the values were taken as three `key` parameters instead of one whole key (`PR #174 <https://github.com/aim2dat/aim2dat/pull/174>`_).
 * The ``plots.simple_plot`` is fixed for bar plots including `colors` and `alpha` for the `matplotlib` backend (`PR #175 <https://github.com/aim2dat/aim2dat/pull/175>`_).
+* The ``elements.get_element_groups`` now returns the groups of all 118 elements of the periodic table, the missing entries for 'Ce', 'Fr' and 'Ra' were added (`PR #179 <https://github.com/aim2dat/aim2dat/pull/179>`_).
+* The ``aiida_workflows.cp2k.parameter_files.basis_sets`` `STANDARD` basis sets and potentials were overwritten by `UZH`. Now, both options are implemented (`PR #183 <https://github.com/aim2dat/aim2dat/pull/183>`_).
 
 **Breaking Changes:**
 
