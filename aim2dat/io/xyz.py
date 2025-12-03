@@ -4,7 +4,7 @@ Module of functions to read/write xyz files.
 
 # Standard library imports
 import warnings
-from typing import List
+from typing import TYPE_CHECKING, Union, List
 
 # Third party library imports
 import numpy as np
@@ -12,7 +12,9 @@ import numpy as np
 # Internal library imports
 from aim2dat.io.utils import custom_open, read_structure
 
-# TODO handle tags and types.
+if TYPE_CHECKING:
+    from aim2dat.strct import Structure, StructureCollection
+
 
 _STRING_DELIMITERS = ["'", '"']
 _VALUE_DELIMITERS = [",", " "]
@@ -226,8 +228,10 @@ def read_xyz_file(file_path: str) -> List[dict]:
 
 def write_xyz_file(
     file_path: str,
-    structures: list,
+    structures: Union[list, "Structure", "StructureCollection"],
+    include_attributes: list = None,
     exclude_attributes: list = None,
+    include_site_attributes: list = None,
     exclude_site_attributes: list = None,
 ):
     """
@@ -235,16 +239,20 @@ def write_xyz_file(
 
     file_path : str
         Path to xyz file.
-    structures : list
-        List of ``Structure`` objects.
+    structures : aim2dat.strct.Structure, aim2dat.strct.StructureCollection, list
+        Structure object, StructureCollection object or list of Structure objects.
+    include_attributes : list
+        List of attributes that are written to file.
     exclude_attributes : list
         List of attributes that are not written to file.
+    include_site_attributes : list
+        List of site attributes that are written to file.
     exclude_site_attributes : list
         List of site attributes that are not written to file.
     """
+    structures = [structures] if type(structures).__name__ == "Structure" else structures
     exclude_attributes = [] if exclude_attributes is None else exclude_attributes
     exclude_site_attributes = [] if exclude_site_attributes is None else exclude_site_attributes
-
     with open(file_path, "w") as f_obj:
         for strct in structures:
             comment_line = ""
@@ -256,17 +264,38 @@ def write_xyz_file(
             columns = [("elements", strct.elements), ("positions", strct.positions)]
             if any(k is not None for k in strct.kinds) and "kinds" not in exclude_site_attributes:
                 columns.append(("kinds", strct.kinds))
-            for attr_key, attr_val in strct.site_attributes.items():
-                if attr_key not in exclude_site_attributes:
-                    columns.append((attr_key, strct.kinds))
+            if include_site_attributes is not None:
+                for attr in include_site_attributes:
+                    if attr in strct.site_attributes:
+                        columns.append((attr, strct.site_attributes[attr]))
+            else:
+                for attr, value in strct.site_attributes.items():
+                    if attr not in exclude_site_attributes:
+                        columns.append((attr, strct.site_attributes[attr]))
+
             comment, column_lines = _create_columns(columns, len(strct))
+
             comment_line += comment
-            for attr, val in strct.attributes.items():
-                val = str(val)
-                if " " in val or " " in attr:
-                    warnings.warn(f"Cannot add '{attr}' since the values have white spaces.")
-                    continue
-                comment_line += f" {attr}={val}"
+            if include_attributes is not None:
+                for attr in include_attributes:
+                    if attr in strct.attributes:
+                        val = str(strct.attributes[attr])
+                        if " " in val or " " in attr:
+                            warnings.warn(
+                                f"Cannot add '{attr}' since the values have white spaces."
+                            )
+                            continue
+                        comment_line += f" {attr}={val}"
+            else:
+                for attr, val in strct.attributes.items():
+                    if attr not in exclude_attributes:
+                        val = str(val)
+                        if " " in val or " " in attr:
+                            warnings.warn(
+                                f"Cannot add '{attr}' since the values have white spaces."
+                            )
+                            continue
+                        comment_line += f" {attr}={val}"
             comment_line += ' pbc="' + " ".join("T" if v else "F" for v in strct.pbc) + '"'
 
             f_obj.write(f"{len(strct)}\n")

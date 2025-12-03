@@ -8,10 +8,13 @@ So far, data blocks and grids are not yet supported and neglected.
 
 # Standard library imports
 import warnings
-from typing import List
+from typing import TYPE_CHECKING, Union, List
 
 # Internal library imports
 from aim2dat.io.utils import custom_open, read_structure
+
+if TYPE_CHECKING:
+    from aim2dat.strct import Structure, StructureCollection
 
 _PBC_SETTINGS = {
     "molecule": False,
@@ -85,7 +88,7 @@ def read_xsf_file(file_path: str) -> List[dict]:
 
 def write_xsf_file(
     file_path: str,
-    structures: list,
+    structures: Union[list, "Structure", "StructureCollection"],
 ):
     """
     Write xsf file.
@@ -94,9 +97,11 @@ def write_xsf_file(
     ----------
     file_path : str
         Path to xsf file.
-    structures : list
-        List of ``Structure`` objects.
+    structures : aim2dat.strct.Structure, aim2dat.strct.StructureCollection, list
+        Structure object, StructureCollection object or list of Structure objects.
     """
+    structures = [structures] if type(structures).__name__ == "Structure" else structures
+
     all_pbc = [strct.pbc for strct in structures]
     if all(pbc == (False, False, False) for pbc in all_pbc):
         structure_type = "ATOMS"

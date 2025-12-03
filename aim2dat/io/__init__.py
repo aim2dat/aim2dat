@@ -6,7 +6,7 @@ from aim2dat.io.cp2k.stdout import read_cp2k_stdout
 from aim2dat.io.cif import read_cif_file, write_cif_file
 from aim2dat.io.critic2 import read_critic2_stdout, read_critic2_plane
 from aim2dat.io.fhi_aims import (
-    read_fhiaims_geomytry_file,
+    read_fhiaims_geometry_file,
     read_fhiaims_band_structure,
     read_fhiaims_total_dos,
     read_fhiaims_proj_dos,
@@ -31,7 +31,7 @@ from aim2dat.io.xmgrace import read_xmgrace_file, read_xmgrace_band_structure
 from aim2dat.io.xsf import read_xsf_file, write_xsf_file
 from aim2dat.io.xyz import read_xyz_file, write_xyz_file
 from aim2dat.io.yaml import read_yaml_file, write_yaml_file
-from aim2dat.io.zeo import write_zeo_file
+from aim2dat.io.zeo import read_zeo_file, write_zeo_file
 
 
 __all__ = [
@@ -44,7 +44,7 @@ __all__ = [
     "write_cif_file",
     "read_critic2_stdout",
     "read_critic2_plane",
-    "read_fhiaims_geomytry_file",
+    "read_fhiaims_geometry_file",
     "read_fhiaims_band_structure",
     "read_fhiaims_total_dos",
     "read_fhiaims_proj_dos",
@@ -69,5 +69,6 @@ __all__ = [
     "write_xyz_file",
     "read_yaml_file",
     "write_yaml_file",
+    "read_zeo_file",
     "write_zeo_file",
 ]

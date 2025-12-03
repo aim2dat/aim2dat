@@ -10,7 +10,7 @@ import re
 from scipy.spatial.distance import cdist
 
 # Internal library imports
-from aim2dat.io.utils import read_structure, custom_open
+from aim2dat.io.utils import read_structure, custom_open, parse_to_str
 from aim2dat.io.base_parser import FLOAT, transform_str_value
 from aim2dat.utils.strct import _get_cell_from_lattice_p
 from aim2dat.utils.space_groups import get_space_group_details
@@ -462,21 +462,9 @@ def read_cif_file(
     return output_dict
 
 
-def _parse_to_str(value, add_space_front=False, length=8):
-    if isinstance(value, float):
-        return f"{value:16.8f}"
-    else:
-        value = str(value)
-        space = "".join(" " for _ in range(length - len(value)))
-        if add_space_front:
-            return space + value
-        else:
-            return value + space
-
-
 def write_cif_file(
     file_path: str,
-    structure: Union[list, "Structure", "StructureCollection"],
+    structures: Union[list, "Structure", "StructureCollection"],
     include_attributes: list = None,
     exclude_attributes: list = None,
     include_site_attributes: list = None,
@@ -491,125 +479,137 @@ def write_cif_file(
     ----------
     file_path : str
         Path to cif file.
-    structure : aim2dat.strct.Structure, aim2dat.strct.StructureCollection, list
-        Structure object, StructureCollection object or list of Structure objects. For the latter
-        two cases the first item/structure is written to file.
+    structures : aim2dat.strct.Structure, aim2dat.strct.StructureCollection, list
+        Structure object, StructureCollection object or list of Structure objects.
     include_attributes : list
-        List of attributes that written to file.
+        List of attributes that are written to file.
     exclude_attributes : list
         List of attributes that are not written to file.
     include_site_attributes : list
-        List of site attributes that written to file.
+        List of site attributes that are written to file.
     exclude_site_attributes : list
         List of site attributes that are not written to file.
     use_symmetry : bool
         If set to ``True``, symmetry equivalent positions are omitted and the symmetry operations
         are included instead.
+    sg_kwargs
+        Additional key word arguments are passed to ``Structure.calc_space_group`` in case
+        ``use_symmetry`` is set to ``True``.
     """
-    # TODO move attributes/site_attributes to structure/io interface?
-    # TODO unified spacing
-    # TODO support several structures at once.
-    # TODO attributes and site_attributes
-    # label:
-    if isinstance(structure, list) or type(structure).__name__ == "StructureCollection":
-        structure = structure[0]
-    label = structure.get("label", "aim2dat_structure").replace(" ", "_")
+    structures = [structures] if type(structures).__name__ == "Structure" else structures
+    exclude_attributes = [] if exclude_attributes is None else exclude_attributes
+    exclude_site_attributes = [] if exclude_site_attributes is None else exclude_site_attributes
 
-    # attributes:
-    attrs = {
-        "cell_length_a": structure.cell_lengths[0],
-        "cell_length_b": structure.cell_lengths[1],
-        "cell_length_c": structure.cell_lengths[2],
-        "cell_angle_alpha": structure.cell_angles[0],
-        "cell_angle_beta": structure.cell_angles[1],
-        "cell_angle_gamma": structure.cell_angles[2],
-    }
-    if include_attributes is not None:
-        for attr in include_attributes:
-            if attr in structure.attributes:
-                attrs[attr] = structure.attributes[attr]
-    else:
-        exclude_attributes = [] if exclude_attributes is None else exclude_attributes
-        for attr, value in structure.attributes.items():
-            if attr not in exclude_attributes:
-                attrs[attr] = value
-    loops = []
-    # Add symmetry operations:
-    if use_symmetry:
-        sg_details = structure.calc_space_group(return_sym_operations=True, **sg_kwargs)
-        # print(sg_details["symmetry_operations"])
-        symmetry_operations = []
-        for sym_op in sg_details["symmetry_operations"]:
-            sym_op_str = ""
-            for rot, shift in zip(sym_op[0], sym_op[1]):
-                has_added = False
-                for r0, coord in zip(rot, "xyz"):
-                    r0 = round(r0, 4)
-                    if abs(r0) > 1.0e-5:
-                        if has_added and r0 > 0.0:
+    lines = []
+    for strct_idx, structure in enumerate(structures):
+        # label:
+        label = structure.get("label", f"aim2dat_structure_{strct_idx}").replace(" ", "_")
+
+        # attributes:
+        attrs = {
+            "cell_length_a": structure.cell_lengths[0],
+            "cell_length_b": structure.cell_lengths[1],
+            "cell_length_c": structure.cell_lengths[2],
+            "cell_angle_alpha": structure.cell_angles[0],
+            "cell_angle_beta": structure.cell_angles[1],
+            "cell_angle_gamma": structure.cell_angles[2],
+        }
+        if include_attributes is not None:
+            for attr in include_attributes:
+                if attr in structure.attributes:
+                    attrs[attr] = structure.attributes[attr]
+        else:
+            for attr, value in structure.attributes.items():
+                if attr not in exclude_attributes:
+                    attrs[attr] = value
+
+        # Add symmetry operations:
+        loops = []
+        if use_symmetry:
+            sg_details = structure.calc_space_group(return_sym_operations=True, **sg_kwargs)
+            # print(sg_details["symmetry_operations"])
+            symmetry_operations = []
+            for sym_op in sg_details["symmetry_operations"]:
+                sym_op_str = ""
+                for rot, shift in zip(sym_op[0], sym_op[1]):
+                    has_added = False
+                    for r0, coord in zip(rot, "xyz"):
+                        r0 = round(r0, 4)
+                        if abs(r0) > 1.0e-5:
+                            if has_added and r0 > 0.0:
+                                sym_op_str += "+"
+                            if r0 == -1.0:
+                                sym_op_str += "-"
+                            elif r0 != 1.0:
+                                sym_op_str += str(r0)
+                            sym_op_str += coord
+                            has_added = True
+                    shift = round(shift, 4)
+                    if abs(shift) > 1.0e-5:
+                        if has_added and shift > 0.0:
                             sym_op_str += "+"
-                        if r0 == -1.0:
-                            sym_op_str += "-"
-                        elif r0 != 1.0:
-                            sym_op_str += str(r0)
-                        sym_op_str += coord
-                        has_added = True
-                shift = round(shift, 4)
-                if abs(shift) > 1.0e-5:
-                    if has_added and shift > 0.0:
-                        sym_op_str += "+"
-                    sym_op_str += str(shift)
-                sym_op_str += ","
-            if sym_op_str != "":
-                print(sym_op, sym_op_str)
-                symmetry_operations.append(sym_op_str[:-1])
-        loops.append([["_symmetry_equiv_pos_as_xyz"], [symmetry_operations]])
-        sites = [eq_site["sites"][0] for eq_site in sg_details["equivalent_sites"]]
-        attrs["symmetry_space_group_name_H-M"] = sg_details["space_group"]["international_short"]
-        attrs["symmetry_Int_Tables_number"] = sg_details["space_group"]["number"]
-    else:
-        # TODO add space group 1 here.
-        sites = list(range(len(structure)))
+                        sym_op_str += str(shift)
+                    sym_op_str += ","
+                if sym_op_str != "":
+                    print(sym_op, sym_op_str)
+                    symmetry_operations.append(sym_op_str[:-1])
+            loops.append([["_symmetry_equiv_pos_as_xyz"], [symmetry_operations]])
+            sites = [eq_site["sites"][0] for eq_site in sg_details["equivalent_sites"]]
+            attrs["symmetry_space_group_name_H-M"] = sg_details["space_group"][
+                "international_short"
+            ]
+            attrs["symmetry_Int_Tables_number"] = sg_details["space_group"]["number"]
+        else:
+            attrs["symmetry_space_group_name_H-M"] = "P1"
+            attrs["symmetry_Int_Tables_number"] = "1"
+            sites = list(range(len(structure)))
 
-    # Elements, positions and other site attributes:
-    site_loop = [["_atom_site_type_symbol"], [[structure.elements[i] for i in sites]]]
-    if any(k is not None for k in structure.kinds):
-        site_loop[0].append("_atom_site_label")
-        site_loop[1].append(structure.kinds)
-    site_loop[0] += ["_atom_site_fract_x", "_atom_site_fract_y", "_atom_site_fract_z"]
-    site_loop[1] += [
-        [structure.scaled_positions[i][0] for i in sites],
-        [structure.scaled_positions[i][1] for i in sites],
-        [structure.scaled_positions[i][2] for i in sites],
-    ]
-    if include_site_attributes is not None:
-        for attr in include_site_attributes:
-            if attr in structure.site_attributes:
-                site_loop[0].append("_" + attr)
-                # TODO check whether site attributes is number or str
-                site_loop[1].append([structure.site_attributes[attr][i] for i in sites])
-    else:
-        exclude_site_attributes = (
-            [] if exclude_site_attributes is None else exclude_site_attributes
-        )
-        for attr, value in structure.site_attributes.items():
-            if attr not in exclude_site_attributes:
-                site_loop[0].append("_" + attr)
-                # TODO check whether site attributes is number or str
-                site_loop[1].append([value[i] for i in sites])
-    loops.append(site_loop)
-    with open(file_path, "w") as f_obj:
-        f_obj.write(f"data_{label}\n\n")
+        # Elements, positions and other site attributes:
+        site_loop = [["_atom_site_type_symbol"], [[structure.elements[i] for i in sites]]]
+        if any(k is not None for k in structure.kinds):
+            site_loop[0].append("_atom_site_label")
+            site_loop[1].append(structure.kinds)
+        site_loop[0] += ["_atom_site_fract_x", "_atom_site_fract_y", "_atom_site_fract_z"]
+        site_loop[1] += [
+            [structure.scaled_positions[i][0] for i in sites],
+            [structure.scaled_positions[i][1] for i in sites],
+            [structure.scaled_positions[i][2] for i in sites],
+        ]
+        if include_site_attributes is not None:
+            for attr in include_site_attributes:
+                if attr in structure.site_attributes:
+                    site_loop[0].append("_" + attr)
+                    site_loop[1].append([structure.site_attributes[attr][i] for i in sites])
+        else:
+            for attr, value in structure.site_attributes.items():
+                if attr not in exclude_site_attributes:
+                    site_loop[0].append("_" + attr)
+                    site_loop[1].append([value[i] for i in sites])
+        loops.append(site_loop)
+
+        # Create output strings:
+        if strct_idx > 0:
+            lines.append("\n")
+        lines.append(f"data_{label}\n\n")
         for key, val in attrs.items():
-            f_obj.write("_" + _parse_to_str(key, length=32) + _parse_to_str(val) + "\n")
-        f_obj.write("\n")
+            lines.append("_" + parse_to_str(key, length=32) + parse_to_str(val) + "\n")
+        lines.append("\n")
         for loop in loops:
-            f_obj.write("loop_\n")
+            lines.append("loop_\n")
             for key in loop[0]:
-                f_obj.write(f"{key}\n")
+                lines.append(f"{key}\n")
             for vals in zip(*loop[1]):
-                f_obj.write(" ".join(_parse_to_str(val) for val in vals) + "\n")
-            f_obj.write("\n")
+                lines.append(
+                    " ".join(
+                        parse_to_str(val, add_space_front=i > 0) for i, val in enumerate(vals)
+                    )
+                    + "\n"
+                )
+            lines.append("\n")
+
+    with open(file_path, "w") as f_obj:
+        for line in lines:
+            f_obj.write(line)
 
 
 @read_structure(r".*\.cif", preset_kwargs={"extract_structures": True})

@@ -154,6 +154,35 @@ def read_multiple(
     return read_func_decorator
 
 
+def parse_to_str(value, add_space_front=False, length=8):
+    """
+    Parse value to string.
+
+    Parameters
+    ----------
+    value :
+        Value.
+    add_space_front : bool
+        Whether to add white spaces before instead of after the value.
+    length : int
+        Number of white spaces to obtain vertical alignment.
+
+    Returns
+    -------
+    str
+        String representation.
+    """
+    if isinstance(value, float):
+        return f"{value:16.8f}"
+    else:
+        value = str(value)
+        space = "".join(" " for _ in range(length - len(value)))
+        if add_space_front:
+            return space + value
+        else:
+            return value + space
+
+
 @contextmanager
 def custom_open(file, mode="r", **kwargs):
     """
