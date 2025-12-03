@@ -172,6 +172,7 @@ def test_find_scf_parameters_success(aiida_local_code_factory, aiida_create_stru
     scf_parameters = {
         "uks": False,
         "roks": False,
+        "cholesky": False,
         "parameters": {
             "MIXING": {"BETA": 0.5, "ALPHA": 0.2, "METHOD": "BROYDEN_MIXING", "NBUFFER": 4},
             "MAX_SCF": 50,

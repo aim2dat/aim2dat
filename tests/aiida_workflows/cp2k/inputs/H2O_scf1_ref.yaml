@@ -2,7 +2,7 @@ inputs:
   scf_method: density_mixing
   scf_extended_system: False
   numerical_p.xc_functional: r2scan
-  numerical_p.basis_sets: standard-tzv2p
+  numerical_p.basis_sets: uzh-tzv2p
   numerical_p.cutoff_values: {cutoff: 300, rel_cutoff: 100, ngrids: 4}
   factor_unocc_states: 0.5
 add_args:
@@ -21,8 +21,8 @@ cp2k_parameters:
     DFT:
       MGRID: {}
       POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
-      BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT]
-      POTENTIAL_FILE_NAME: GTH_POTENTIALS
+      BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UZH]
+      POTENTIAL_FILE_NAME: POTENTIAL_UZH
       QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
       SCF: {EPS_SCF: 5.0e-7}
       XC: {}
@@ -42,7 +42,7 @@ ctx:
         DFT:
           MGRID: {CUTOFF: 300, NGRIDS: 4, REL_CUTOFF: 100}
           POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
-          BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UCL, BASIS_MOLOPT, BASIS_MOLOPT_UZH]
+          BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UZH]
           POTENTIAL_FILE_NAME: POTENTIAL_UZH
           QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
           SCF: 
@@ -80,6 +80,7 @@ ctx:
     parameters: {MAX_SCF: 50, MIXING: {METHOD: BROYDEN_MIXING, BETA: 0.5, ALPHA: 0.5, NBUFFER: 10}}
     roks: False
     uks: False
+    cholesky: False
     smearing_temperature: 0.0
   cur_scf_p_set:
     parameters: 

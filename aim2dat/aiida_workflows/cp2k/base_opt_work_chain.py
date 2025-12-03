@@ -155,7 +155,7 @@ class _BaseOptimizationWorkChain(_BaseCoreWorkChain):
             return self.exit_codes.ERROR_OPTIMIZATION_NOT_CONVERGED
 
     @process_handler(
-        priority=400,
+        priority=402,
         exit_codes=ExitCode(500),
     )
     def resubmit_unconverged_geometry(self, calc):
@@ -167,9 +167,12 @@ class _BaseOptimizationWorkChain(_BaseCoreWorkChain):
 
     @process_handler(
         priority=402,
-        exit_codes=ExitCode(400),
+        exit_codes=[
+            ExitCode(310),
+            ExitCode(400),
+        ],
     )
-    def _resubmit_calculation(self, calc):
+    def resubmit_calculation(self, calc):
         """Resubmit the geometry in case the walltime is hit."""
         return self._execute_error_handler(calc, _resubmit_calculation)
 

@@ -96,6 +96,7 @@ class Energy(_BaseQuantity):
         "ha": "Ha",
         "joule": "Joule",
         "j": "Joule",
+        "kj_per_mol": r"kJ $\mathrm{mol}^{-1}$",
         "ev": "eV",
         "cal": "Cal",
     }
@@ -111,6 +112,7 @@ class Energy(_BaseQuantity):
         self._units["rydberg"] = self._units["hartree"] / 2.0
         self._units["j"] = self._units["joule"]
         self._units["cal"] = 4.184 * self._units["joule"]
+        self._units["kj_per_mol"] = 1.0e3 * self._units["joule"] / constants["na"]
 
 
 class Force(_BaseQuantity):

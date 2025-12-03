@@ -193,9 +193,9 @@ def _retrieve_additional_data(
         phonon_data = retrieve_mp_object(
             session, link, "materials/phonon/", {"material_ids": mp_id}, False
         )
-        if phonon_data[0]["phonon_bandstructure"] is not None:
+        if phonon_data[0].get("phonon_bandstructure"):
             additional_data["ph_band_structure"] = phonon_data[0]["phonon_bandstructure"]
-        if phonon_data[0]["phonon_dos"] is not None:
+        if phonon_data[0].get("phonon_dos"):
             additional_data["ph_dos"] = phonon_data[0]["phonon_dos"]
     if "el_dos" in property_data and el_structure_data["dos"] is not None:
         additional_data["el_dos"] = retrieve_mp_s3_object("dos", task_id)
