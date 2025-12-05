@@ -328,7 +328,7 @@ def test_structure_to_dict_unmutability():
     assert strct.attributes["test"] == 0
 
 
-def test_internal_io_errors():
+def test_internal_io_errors(tmpdir):
     """Test internal structure parser errors."""
     with pytest.raises(ValueError) as error:
         Structure.from_file("testtest", backend="internal")
@@ -340,11 +340,15 @@ def test_internal_io_errors():
     with pytest.raises(ValueError) as error:
         Structure.from_file("testtest", backend="internal", file_format="test")
     assert str(error.value) == "File format 'test' is not supported."
+
+    file = tmpdir.join("test.test")
+    with open(file, "w") as fobj:
+        fobj.write(" ")
     with pytest.raises(ValueError) as error:
-        Structure.from_file(STRUCTURES_PATH + "ZIF-8_complex.xyz", backend="internal")
+        Structure.from_file(file.strpath, backend="internal")
     assert (
         str(error.value)
-        == f"Could not find a suitable io function for '{STRUCTURES_PATH}ZIF-8_complex.xyz'"
+        == f"Could not find a suitable io function for '{file.strpath}'"
         + " - `file_format`: None."
     )
 

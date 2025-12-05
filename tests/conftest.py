@@ -23,7 +23,7 @@ from aim2dat.aiida_workflows.utils import create_aiida_node
 from aim2dat.utils.dict_tools import dict_set_parameter
 
 
-pytest_plugins = ["aiida.manage.tests.pytest_fixtures"]
+# pytest_plugins = ["aiida.manage.tests.pytest_fixtures"]
 
 
 STRUCTURES_PATH = os.path.dirname(__file__) + "/strct/structures/"
