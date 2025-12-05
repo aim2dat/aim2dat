@@ -3,7 +3,7 @@ Read and write zeo++ files.
 """
 
 # Internal library imports
-from aim2dat.io.utils import read_structure, custom_open, parse_to_str
+from aim2dat.io.utils import read_structure, write_structure, custom_open, parse_to_str
 from aim2dat.utils.strct import _get_cell_from_lattice_p
 from aim2dat.utils.space_groups import transform_to_nr
 
@@ -102,6 +102,7 @@ def read_zeo_file(file_path: str):
     }
 
 
+@write_structure(r".*(\.cssr|\.v1|\.cuc)", preset_kwargs=None)
 def write_zeo_file(file_path: str, structure: dict):
     """
     Write structure to an input file for zeo++.
@@ -119,10 +120,10 @@ def write_zeo_file(file_path: str, structure: dict):
         Invalid file format. Allowed formats are: ``'.cssr'``, ``'.v1'``, or ``'.cuc'``.
     """
     if file_path.endswith(".cssr"):
-        output = [" ".join(map(str, structure.cell_lengths))]
+        output = [" ".join(map(parse_to_str, structure.cell_lengths))]
         output.append
         output.append(
-            " ".join(map(str, structure.cell_angles))
+            " ".join(map(parse_to_str, structure.cell_angles))
             + " SPGR = "
             + structure.calc_space_group()["space_group"]["international_short"]
         )

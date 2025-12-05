@@ -154,6 +154,23 @@ def read_multiple(
     return read_func_decorator
 
 
+def write_structure(pattern, preset_kwargs=None):
+    """Decorate functions that write structure(s) to file."""
+
+    def decorator(func):
+        func._is_write_structure_method = True
+        func._pattern = pattern
+        func._preset_kwargs = {} if preset_kwargs is None else preset_kwargs
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
 def parse_to_str(value, add_space_front=False, length=8):
     """
     Parse value to string.

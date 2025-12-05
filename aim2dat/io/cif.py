@@ -10,7 +10,7 @@ import re
 from scipy.spatial.distance import cdist
 
 # Internal library imports
-from aim2dat.io.utils import read_structure, custom_open, parse_to_str
+from aim2dat.io.utils import read_structure, write_structure, custom_open, parse_to_str
 from aim2dat.io.base_parser import FLOAT, transform_str_value
 from aim2dat.utils.strct import _get_cell_from_lattice_p
 from aim2dat.utils.space_groups import get_space_group_details
@@ -462,9 +462,10 @@ def read_cif_file(
     return output_dict
 
 
+@write_structure(r".*\.cif", preset_kwargs=None)
 def write_cif_file(
     file_path: str,
-    structures: Union[list, "Structure", "StructureCollection"],
+    structures: Union["Structure", "StructureCollection", list],
     include_attributes: list = None,
     exclude_attributes: list = None,
     include_site_attributes: list = None,
@@ -496,6 +497,7 @@ def write_cif_file(
         Additional key word arguments are passed to ``Structure.calc_space_group`` in case
         ``use_symmetry`` is set to ``True``.
     """
+    # TODO add chemical formula?
     structures = [structures] if type(structures).__name__ == "Structure" else structures
     exclude_attributes = [] if exclude_attributes is None else exclude_attributes
     exclude_site_attributes = [] if exclude_site_attributes is None else exclude_site_attributes

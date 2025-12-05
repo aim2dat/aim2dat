@@ -10,6 +10,7 @@ from aim2dat.io.utils import (
     read_structure,
     read_total_dos,
     read_multiple,
+    write_structure,
     custom_open,
 )
 from aim2dat.elements import get_element_symbol
@@ -91,9 +92,10 @@ def read_fhiaims_geometry_file(file_path: str) -> dict:
     return structure
 
 
+@write_structure(r".*\.in(\.next_step)?", preset_kwargs=None)
 def write_fhiaims_geometry_file(
     file_path: str,
-    structure: Union[list, "Structure", "StructureCollection"],
+    structure: Union["Structure", "StructureCollection", list],
     use_scaled_pos: bool = False,
 ):
     """

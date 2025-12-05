@@ -10,7 +10,7 @@ from typing import TYPE_CHECKING, Union, List
 import numpy as np
 
 # Internal library imports
-from aim2dat.io.utils import custom_open, read_structure
+from aim2dat.io.utils import custom_open, read_structure, write_structure
 
 if TYPE_CHECKING:
     from aim2dat.strct import Structure, StructureCollection
@@ -226,9 +226,10 @@ def read_xyz_file(file_path: str) -> List[dict]:
     return structures
 
 
+@write_structure(r".*\.xyz", preset_kwargs=None)
 def write_xyz_file(
     file_path: str,
-    structures: Union[list, "Structure", "StructureCollection"],
+    structures: Union["Structure", "StructureCollection", list],
     include_attributes: list = None,
     exclude_attributes: list = None,
     include_site_attributes: list = None,

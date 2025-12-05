@@ -16,8 +16,7 @@ from ase import Atoms
 # Internal library imports
 from aim2dat.strct.structure import Structure
 from aim2dat.strct.import_export_mixin import ImportExportMixin, import_method, export_method
-from aim2dat.strct.io_interface import get_structures_from_file
-from aim2dat.io import write_hdf5_structure
+from aim2dat.strct.io_interface import get_structures_from_file, write_structures_to_file
 from aim2dat.ext_interfaces import _return_ext_interface_modules
 import aim2dat.utils.print as utils_pr
 from aim2dat.chem_f import transform_dict_to_str
@@ -420,6 +419,7 @@ class StructureCollection(ImportExportMixin):
         backend: str = "internal",
         file_format: str = None,
         backend_kwargs: dict = None,
+        **backend_kwargs_,
     ):
         """
         Import from hdf5-file. Calculated extras are not yet supported.
@@ -446,13 +446,25 @@ class StructureCollection(ImportExportMixin):
             ``None`` the corresponding function is searched based on the file name and suffix.
         backend_kwargs : dict (optional)
             Arguments passed to the backend function.
+        **backend_kwargs
+            Arguments passed to the backend function.
 
         Returns
         -------
         aim2dat.strct.StructureCollection
             Structure collection.
         """
-        structures = get_structures_from_file(file_path, backend, file_format, backend_kwargs)
+        if backend_kwargs is not None:
+            from warnings import warn
+
+            warn(
+                "The keyword argument `backend_kwargs` is deprecated, please "
+                + "use keyword arguments directly as they are forwarded to the backend functions.",
+                DeprecationWarning,
+                2,
+            )
+            backend_kwargs_.update(backend_kwargs)
+        structures = get_structures_from_file(file_path, backend, file_format, backend_kwargs_)
         strct_c = cls()
         for idx, structure in enumerate(_process_strct_list(structures, indices)):
             if labels is not None:
@@ -594,7 +606,14 @@ class StructureCollection(ImportExportMixin):
         return strct_c
 
     @export_method
-    def to_file(self, file_path: str, keys=slice(None)):
+    def to_file(
+        self,
+        file_path: str,
+        keys=slice(None),
+        backend: str = "internal",
+        file_format: str = None,
+        **backend_kwargs,
+    ):
         """
         Store structures in file. If the file suffix is ``'*.h(df)?5'``, the internal hdf5 format
         is used, otherwise the ase Python package is used as backend.
@@ -605,13 +624,19 @@ class StructureCollection(ImportExportMixin):
             File path.
         keys : int, str, list, tuple, slice
             Keys for a subset of structures.
+        backend : str (optional)
+            Backend to be used to parse the structure file. Supported options are ``'ase'``
+            and ``'internal'``.
+        file_format : str or None (optional)
+            File format of the backend. For ``'ase'``, please refer to the documentation of the
+            package for a complete list. For ``'internal'``, the format translates from
+            ``io.read_{file_format}_structure`` to ``'file_format'``. If set to ``None`` the
+            corresponding function is searched based on the file name and suffix.
+        **backend_kwargs
+            Arguments passed to the backend function.
         """
         structures = [self[keys]] if isinstance(keys, (str, int)) else self[keys]
-        if file_path.endswith(("h5", "hdf5")):
-            write_hdf5_structure(file_path, structures)
-        else:
-            backend_module = _return_ext_interface_modules("ase_atoms")
-            backend_module._write_structure_to_file(file_path, self[keys])
+        write_structures_to_file(file_path, structures, backend, file_format, backend_kwargs)
 
     @export_method
     def to_pandas_df(

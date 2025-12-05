@@ -11,7 +11,7 @@ import warnings
 from typing import TYPE_CHECKING, Union, List
 
 # Internal library imports
-from aim2dat.io.utils import custom_open, read_structure
+from aim2dat.io.utils import custom_open, read_structure, write_structure
 
 if TYPE_CHECKING:
     from aim2dat.strct import Structure, StructureCollection
@@ -86,9 +86,10 @@ def read_xsf_file(file_path: str) -> List[dict]:
     return structures
 
 
+@write_structure(r".*\.xsf", preset_kwargs=None)
 def write_xsf_file(
     file_path: str,
-    structures: Union[list, "Structure", "StructureCollection"],
+    structures: Union["Structure", "StructureCollection", list],
 ):
     """
     Write xsf file.
