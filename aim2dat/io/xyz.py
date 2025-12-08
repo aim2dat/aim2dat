@@ -23,7 +23,7 @@ _TYPE_MAPPING = {
     "i": int,
     "s": str,
 }
-_POPERTIES_MAPPING = {
+_PROPERTIES_MAPPING = {
     "species": "elements",
     "pos": "positions",
     "tags": "kinds",
@@ -84,8 +84,8 @@ def _parse_comment_line(line):
                 col_count = 0
                 for i in range(0, len(value), 3):
                     label = (
-                        _POPERTIES_MAPPING[value[i]]
-                        if value[i] in _POPERTIES_MAPPING
+                        _PROPERTIES_MAPPING[value[i]]
+                        if value[i] in _PROPERTIES_MAPPING
                         else value[i]
                     )
                     columns.append(
@@ -206,7 +206,7 @@ def read_xyz_file(file_path: str) -> List[dict]:
 
             if n_atoms is None:
                 n_atoms = [0, int(line)]
-                structures.append({})
+                structures.append({"site_attributes": {}})
             elif not in_col_section:
                 columns, add_pars = _parse_comment_line(line)
                 structures[-1].update(add_pars)
@@ -217,12 +217,16 @@ def read_xyz_file(file_path: str) -> List[dict]:
                     val = [val_type(v) for v in line_sp[start_idx:end_idx]]
                     if len(val) == 1:
                         val = val[0]
-                    structures[-1].setdefault(key, []).append(val)
+                    if key in _PROPERTIES_MAPPING.values():
+                        structures[-1].setdefault(key, []).append(val)
+                    else:
+                        structures[-1]["site_attributes"].setdefault(key, []).append(val)
                 n_atoms[0] += 1
                 if n_atoms[0] == n_atoms[1]:
                     n_atoms = None
                     columns = None
                     in_col_section = False
+    print(structures)
     return structures
 
 
@@ -257,14 +261,14 @@ def write_xyz_file(
     with open(file_path, "w") as f_obj:
         for strct in structures:
             comment_line = ""
-            if "cell" in strct:
+            if strct.cell is not None:
                 comment_line += (
                     'Lattice="' + " ".join([str(v) for val in strct.cell for v in val]) + '" '
                 )
 
             columns = [("elements", strct.elements), ("positions", strct.positions)]
             if any(k is not None for k in strct.kinds) and "kinds" not in exclude_site_attributes:
-                columns.append(("kinds", strct.kinds))
+                columns.append(("tags", strct.kinds))
             if include_site_attributes is not None:
                 for attr in include_site_attributes:
                     if attr in strct.site_attributes:

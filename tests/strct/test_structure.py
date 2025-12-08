@@ -163,28 +163,6 @@ def test_to_dict(structure_comparison):
     assert test_dict["site_attributes"] == site_attrs
 
 
-def test_zeo_write_to_file(tmpdir):
-    """Test write structure to zeo input files."""
-    structure = Structure.from_file(
-        STRUCTURES_PATH + "Cs2Te_62_prim.yaml", label="test", backend="internal"
-    )
-
-    file = tmpdir.join("Cs2Te_62_prim.cssr")
-    structure.to_file(file.strpath)
-    cssr = open(IO_PATH + "zeo/Cs2Te_62_prim.cssr", "r")
-    assert file.read() == cssr.read()
-
-    file = tmpdir.join("Cs2Te_62_prim.v1")
-    structure.to_file(file.strpath)
-    v1 = open(IO_PATH + "zeo/Cs2Te_62_prim.v1", "r")
-    assert file.read() == v1.read()
-
-    file = tmpdir.join("Cs2Te_62_prim.cuc")
-    structure.to_file(file.strpath)
-    cuc = open(IO_PATH + "zeo/Cs2Te_62_prim.cuc", "r")
-    assert file.read() == cuc.read()
-
-
 def test_structure_features():
     """Test features of Structure class."""
     strct_dict = read_yaml_file(STRUCTURES_PATH + "Cs2Te_62_prim.yaml")
@@ -296,17 +274,27 @@ def test_cell_setter_and_wrap_positions(structure_comparison):
 
 
 @pytest.mark.parametrize(
-    "system, file_path",
+    "system, read_path, write_file_name",
     [
-        ("cp2k_restart", IO_PATH + "cp2k_restart/aiida-1.restart"),
-        ("qe_input", IO_PATH + "qe_input/imidazole.in"),
-        ("cif", STRUCTURES_PATH + "ZIF-8.cif"),
+        ("cp2k_restart", IO_PATH + "cp2k_restart/aiida-1.restart", None),
+        ("qe_input", IO_PATH + "qe_input/imidazole.in", None),
+        ("cif", STRUCTURES_PATH + "ZIF-8.cif", "test.cif"),
+        ("zeo", IO_PATH + "zeo/Cs2Te_62_prim.cssr", "test.cssr"),
+        ("zeo", IO_PATH + "zeo/Cs2Te_62_prim.cuc", "test.cuc"),
+        ("zeo", IO_PATH + "zeo/Cs2Te_62_prim.v1", "test.v1"),
+        ("xsf", STRUCTURES_PATH + "test.xsf", "test.xsf"),
+        ("xyz", STRUCTURES_PATH + "test.xyz", "test.xyz"),
     ],
 )
-def test_internal_io(structure_comparison, system, file_path):
+def test_internal_io(tmpdir, structure_comparison, system, read_path, write_file_name):
     """Test internal structure parsers."""
     ref = read_yaml_file(IO_PATH + system + "/ref.yaml")
-    structure = Structure.from_file(file_path, **ref["parameters"])
+
+    if write_file_name is not None:
+        file = tmpdir.join(write_file_name)
+        Structure(**ref["structure"]).to_file(file)
+        assert file.read() == open(read_path, "r").read()
+    structure = Structure.from_file(read_path, **ref["parameters"])
     structure_comparison(structure, ref["structure"])
 
 

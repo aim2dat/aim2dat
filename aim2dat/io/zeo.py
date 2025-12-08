@@ -119,7 +119,7 @@ def write_zeo_file(file_path: str, structure: dict):
     ValueError
         Invalid file format. Allowed formats are: ``'.cssr'``, ``'.v1'``, or ``'.cuc'``.
     """
-    if file_path.endswith(".cssr"):
+    if str(file_path).endswith(".cssr"):
         output = [" ".join(map(parse_to_str, structure.cell_lengths))]
         output.append
         output.append(
@@ -139,7 +139,7 @@ def write_zeo_file(file_path: str, structure: dict):
                 )
             )
 
-    elif file_path.endswith(".v1"):
+    elif str(file_path).endswith(".v1"):
         output = ["Unit cell vectors:"]
         for a, vec in zip(["va", "vb", "vc"], structure.cell):
             output.append(
@@ -156,7 +156,7 @@ def write_zeo_file(file_path: str, structure: dict):
                 )
             )
 
-    elif file_path.endswith(".cuc"):
+    elif str(file_path).endswith(".cuc"):
         output = [f"Processing: {structure.label}"]
         output.append(
             "Unit_cell: "
@@ -178,5 +178,6 @@ def write_zeo_file(file_path: str, structure: dict):
             "Invalid file format. Allowed formats are: ``'.cssr'``, ``'.v1'``, or ``'.cuc'``."
         )
 
-    with open(file_path, "w") as file:
-        file.write("\n".join(output))
+    with open(file_path, "w") as f_obj:
+        for line in output:
+            f_obj.write(line + "\n")

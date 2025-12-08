@@ -1,0 +1,8 @@
+parameters: {file_format: xsf, backend: internal}
+structure:
+  elements: [Ga, As]
+  positions:
+  - [0.000, 0.000, 0.000]
+  - [6.099, 6.099, 6.099]
+  cell: [[0.000, 4.066, 4.066], [4.066, 0.000, 4.066], [4.066, 4.066, 0.000]]
+  pbc: True

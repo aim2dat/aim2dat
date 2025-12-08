@@ -30,7 +30,7 @@ def _check_for_soc_files(folder_path, soc):
     return no_soc_suffix
 
 
-@read_structure(r".*\.in(\.next_step)?", preset_kwargs=None)
+@read_structure(r".*geometry\.in(\.next_step)?", preset_kwargs=None)
 def read_fhiaims_geometry_file(file_path: str) -> dict:
     """
     Read geometry file.

@@ -25,7 +25,6 @@ def _find_io_function(file_path: str, file_format: str, io_type: str):
         if getattr(f[1], f"_is_{io_type}_structure_method", False)
     ]
     if file_format is not None:
-        print("I Am here.")
         file_format = file_format.replace("-", "_")
         for f_name, f in funcs:
             if file_format in f_name:
@@ -34,7 +33,7 @@ def _find_io_function(file_path: str, file_format: str, io_type: str):
         raise ValueError(f"File format '{file_format}' is not supported.")
     else:
         for f_name, f in funcs:
-            if re.search(f._pattern, file_path):
+            if re.search(f._pattern, str(file_path)):
                 return f
         raise ValueError(
             f"Could not find a suitable io function for '{file_path}' "
