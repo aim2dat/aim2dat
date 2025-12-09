@@ -279,6 +279,8 @@ def test_cell_setter_and_wrap_positions(structure_comparison):
         ("cp2k_restart", IO_PATH + "cp2k_restart/aiida-1.restart", None),
         ("qe_input", IO_PATH + "qe_input/imidazole.in", None),
         ("cif", STRUCTURES_PATH + "ZIF-8.cif", "test.cif"),
+        ("fhiaims", IO_PATH + "fhiaims/geometry.in", "geometry.in"),
+        ("fhiaims_atom_frac", IO_PATH + "fhiaims_atom_frac/geometry.in", None),
         ("zeo", IO_PATH + "zeo/Cs2Te_62_prim.cssr", "test.cssr"),
         ("zeo", IO_PATH + "zeo/Cs2Te_62_prim.cuc", "test.cuc"),
         ("zeo", IO_PATH + "zeo/Cs2Te_62_prim.v1", "test.v1"),

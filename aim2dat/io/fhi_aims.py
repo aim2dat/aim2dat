@@ -81,7 +81,7 @@ def read_fhiaims_geometry_file(file_path: str) -> dict:
                 positions.append([float(val) for val in line.split()[1:4]])
     structure = {
         "elements": elements,
-        "kinds": kinds,
+        "kinds": None if all(k == e for k, e in zip(kinds, elements)) else kinds,
         "positions": positions,
         "pbc": False,
         "is_cartesian": is_cartesian,
