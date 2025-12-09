@@ -4,11 +4,16 @@
 import os
 import importlib
 from inspect import getmembers, isfunction
-from typing import Union
+from typing import TYPE_CHECKING, Union
 import re
 
 # Internal library imports
 from aim2dat.ext_interfaces import _return_ext_interface_modules
+
+if TYPE_CHECKING:
+    from aim2dat.strct.structure import Structure
+    from aim2dat.strct.structure_collection import StructureCollection
+
 
 
 def _find_io_function(file_path: str, file_format: str, io_type: str):
@@ -28,7 +33,6 @@ def _find_io_function(file_path: str, file_format: str, io_type: str):
         file_format = file_format.replace("-", "_")
         for f_name, f in funcs:
             if file_format in f_name:
-                print(file_format, f_name, f)
                 return f
         raise ValueError(f"File format '{file_format}' is not supported.")
     else:
@@ -69,9 +73,8 @@ def get_structures_from_file(
     return structure_dicts
 
 
-# TODO fix typing.
 def write_structures_to_file(
-    file_path: str, structures, backend: str, file_format: str, backend_kwargs: dict
+    file_path: str, structures: Union["Structure", "StructureCollection", list], backend: str, file_format: str, backend_kwargs: dict
 ):
     """Write structure(s) to file."""
     backend_kwargs = {} if backend_kwargs is None else backend_kwargs

@@ -282,8 +282,8 @@ def test_cell_setter_and_wrap_positions(structure_comparison):
         ("zeo", IO_PATH + "zeo/Cs2Te_62_prim.cssr", "test.cssr"),
         ("zeo", IO_PATH + "zeo/Cs2Te_62_prim.cuc", "test.cuc"),
         ("zeo", IO_PATH + "zeo/Cs2Te_62_prim.v1", "test.v1"),
-        ("xsf", STRUCTURES_PATH + "test.xsf", "test.xsf"),
-        ("xyz", STRUCTURES_PATH + "test.xyz", "test.xyz"),
+        ("xsf", STRUCTURES_PATH + "MOF-5_prim.xsf", "test.xsf"),
+        ("xyz", STRUCTURES_PATH + "Imidazole.xyz", "test.xyz"),
     ],
 )
 def test_internal_io(tmpdir, structure_comparison, system, read_path, write_file_name):
