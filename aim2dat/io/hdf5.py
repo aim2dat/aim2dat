@@ -31,7 +31,10 @@ def read_hdf5_structure(file_path: str) -> List[dict]:
 
 
 @write_structure(r".*\.h(df)?5")
-def write_hdf5_structure(file_path: str, structures: Union["Structure", "StructureCollection", list],):
+def write_hdf5_structure(
+    file_path: str,
+    structures: Union["Structure", "StructureCollection", list],
+):
     """
     Write a list of structures to file.
 

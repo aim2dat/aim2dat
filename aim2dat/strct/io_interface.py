@@ -15,7 +15,6 @@ if TYPE_CHECKING:
     from aim2dat.strct.structure_collection import StructureCollection
 
 
-
 def _find_io_function(file_path: str, file_format: str, io_type: str):
     # Check if file_path is path to actual file or str:
     if io_type == "read" and file_format is None and not os.path.isfile(file_path):
@@ -74,7 +73,11 @@ def get_structures_from_file(
 
 
 def write_structures_to_file(
-    file_path: str, structures: Union["Structure", "StructureCollection", list], backend: str, file_format: str, backend_kwargs: dict
+    file_path: str,
+    structures: Union["Structure", "StructureCollection", list],
+    backend: str,
+    file_format: str,
+    backend_kwargs: dict,
 ):
     """Write structure(s) to file."""
     backend_kwargs = {} if backend_kwargs is None else backend_kwargs
