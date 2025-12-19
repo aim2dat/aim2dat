@@ -373,7 +373,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         r_max : float (optional)
             Cut-off value for the maximum distance between two atoms in angstrom.
         delta_bin : float (optional)
-            Bin size to descritize the function in angstrom.
+            Bin size to discretize the function in angstrom.
         sigma : float (optional)
             Smearing parameter for the Gaussian function.
         use_weights : bool (optional)
@@ -559,7 +559,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         hall_number: int = 0,
     ) -> List[Tuple[str]]:
         """
-        Find duplicate structures coimparing the composition and space group.
+        Find duplicate structures comparing the composition and space group.
 
         Parameters
         ----------
@@ -782,7 +782,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
     # Problem: eq_sites in one structure depend on compare sites
     # (which is also available for multiple structures)
     # Check how to split. Ideally, eq_sites in Structure and
-    # compare_sites in SturtucreComparison
+    # compare_sites in StructureComparison
     def compare_sites_via_coordination(
         self,
         key1: Union[str, int],
@@ -866,7 +866,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         r_max : float (optional)
             Cut-off value for the maximum distance between two atoms in angstrom.
         delta_bin : float (optional)
-            Bin size to descritize the function in angstrom.
+            Bin size to discretize the function in angstrom.
         sigma : float (optional)
             Smearing parameter for the Gaussian function.
         use_weights : bool (optional)
@@ -958,7 +958,7 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         r_max : float (optional)
             Cut-off value for the maximum distance between two atoms in angstrom.
         delta_bin : float (optional)
-            Bin size to descritize the function in angstrom.
+            Bin size to discretize the function in angstrom.
         sigma : float (optional)
             Smearing parameter for the Gaussian function.
         use_weights : bool

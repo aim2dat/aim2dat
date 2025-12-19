@@ -56,12 +56,12 @@ def add_structure_random(
         ``Structure`` object or the element symbol to add one single atom.
     max_tries : int
         Number of tries to add the guest structure. A try is rejected via the criteria given by
-        the ``dist_treshold`` parameter.
+        the ``dist_threshold`` parameter.
     random_seed : int or None (optional)
         Specify the random seed to ensure reproducible results.
     random_nrs : list or None (optional)
         List of random numbers used to derive the position and rotation of the guest molecule. It
-        should contain ``max_tries * 7`` entries to cover the maximum amout of tries.
+        should contain ``max_tries * 7`` entries to cover the maximum amount of tries.
     dist_threshold : dict, list, float, int, str or None (optional)
         Check the distances between all site pairs of the host and guest structure to ensure that
         none of the added atoms collide or are too far apart. For example, ``0.8`` to ensure a

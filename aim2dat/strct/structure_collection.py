@@ -69,7 +69,7 @@ class StructureCollection(ImportExportMixin):
     @property
     def labels(self) -> List[str]:
         """
-        Labels assigened to the structures.
+        Labels assigned to the structures.
         """
         return [strct.label for strct in self._structures]
 

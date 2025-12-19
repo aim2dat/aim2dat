@@ -28,7 +28,7 @@ def calc_planes(
     use_scaled_coordinates: bool = False,
 ) -> list:
     """
-    Find planar arangements of atoms in the structure.
+    Find planar arrangements of atoms in the structure.
 
     Parameters
     ----------

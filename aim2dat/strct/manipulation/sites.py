@@ -99,7 +99,6 @@ def substitute_elements(
         )
         if structure["cell"] is not None:
             new_structure["cell"] = [
-                [value * scaling_factor if i == dir_idx else value for i, value in enumerate(row)]
-                for dir_idx, row in enumerate(structure["cell"])
+                [value * scaling_factor for value in row] for row in structure["cell"]
             ]
         return _add_label_suffix(new_structure, "_subst-" + "-".join(str_el_pairs), change_label)

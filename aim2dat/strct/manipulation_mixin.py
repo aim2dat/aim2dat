@@ -118,7 +118,7 @@ class ManipulationMixin:
 
         Parameters
         ----------
-        scaling_factors : float, list of floats, or arry-like, optional
+        scaling_factors : float, list of floats, or array-like, optional
             Scaling factor(s) to scale the unit cell.
             - If a single float, isotropic scaling is applied.
             - If a list of 3 floats or a 1D array, anisotropic scaling is

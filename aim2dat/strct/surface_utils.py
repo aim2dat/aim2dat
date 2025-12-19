@@ -181,7 +181,7 @@ def _surface_create(
     if any(np.linalg.norm(shift - shifts[0]) > tol for shift in shifts):
         raise TypeError("Could not determine shift vector between two slab-layers.")
 
-    # Create rpeating structure
+    # Create repeating structure
     rep_structure = _extract_structure_from_atoms(surf_1l)
     del rep_structure["attributes"]
     del rep_structure["site_attributes"]

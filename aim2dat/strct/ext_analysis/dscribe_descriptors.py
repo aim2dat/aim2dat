@@ -29,7 +29,7 @@ def calc_interaction_matrix(
 ) -> list:
     """
     Calculate interaction matrices as defined in :doi:`10.1002/qua.24917`.
-    This method is based on the implementations of the dscribe python package.
+    This method is based on the implementations of the describe python package.
 
     Attributes
     ----------
@@ -61,7 +61,7 @@ def calc_interaction_matrix(
     dscribe_n_jobs : int
         Number of jobs used by dscribe to calculate the interaction matrix.
     dscribe_only_physical_cores : bool
-        Whether to only use physicsl cores.
+        Whether to only use physical cores.
 
     Returns
     --------
@@ -128,7 +128,7 @@ def calc_acsf_descriptor(
     dscribe_n_jobs : int
         Number of jobs used by dscribe to calculate the interaction matrix.
     dscribe_only_physical_cores : bool
-        Whether to only use physicsl cores.
+        Whether to only use physical cores.
 
     Returns
     --------
@@ -202,7 +202,7 @@ def calc_soap_descriptor(
     dscribe_n_jobs : int
         Number of jobs used by dscribe to calculate the interaction matrix.
     dscribe_only_physical_cores : bool
-        Whether to only use physicsl cores.
+        Whether to only use physical cores.
 
     Returns
     --------

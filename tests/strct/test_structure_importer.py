@@ -40,7 +40,7 @@ def test_print_and_constraints():
     # Constraint errors:
     with pytest.raises(ValueError) as error:
         strct_import.set_concentration_constraint("H", min_conc=-0.8, max_conc=0.6)
-    assert str(error.value) == "`min_conc` and `max_conc` need to be inbetween 0.0 and 1.0."
+    assert str(error.value) == "`min_conc` and `max_conc` need to be between 0.0 and 1.0."
     with pytest.raises(ValueError) as error:
         strct_import.set_concentration_constraint("H", min_conc=0.8, max_conc=0.6)
     assert str(error.value) == "`max_conc` needs to be larger than `min_conc`."

@@ -1,4 +1,4 @@
-"""Anylsis mixin class for the Structure and StructureOperations classes."""
+"""Analysis mixin class for the Structure and StructureOperations classes."""
 
 # Standard library imports
 from __future__ import annotations
@@ -407,7 +407,7 @@ class AnalysisMixin:
         r_max : float (optional)
             Cut-off value for the maximum distance between two atoms in angstrom.
         delta_bin : float (optional)
-            Bin size to descritize the function in angstrom.
+            Bin size to discretize the function in angstrom.
         sigma : float (optional)
             Smearing parameter for the Gaussian function.
         use_legacy_smearing : bool
@@ -435,7 +435,7 @@ class AnalysisMixin:
 
     def perform_analysis(self, method: Callable, kwargs: dict = None):
         """
-        Perform structure analaysis using an external method.
+        Perform structure analysis using an external method.
 
         Parameters
         ----------

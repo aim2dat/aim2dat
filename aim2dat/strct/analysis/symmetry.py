@@ -451,7 +451,7 @@ def _find_cn_axis_spherical(
 
 
 def _find_reflection_planes(sea_list, elements, positions, threshold_distance):
-    """Find relfection planes."""
+    """Find reflection planes."""
     # Based on paper :
     # TO-DO restrict maximum of symmetry operations
     sym_elements = []
@@ -547,7 +547,7 @@ def _derive_point_group(symmetry_elements, threshold_angle):
                 if "rotation" == sym_el["type"] and sym_el["n-fold"] > nfold_max:
                     nfold_max = sym_el["n-fold"]
                     main_rotation = sym_el
-            # Check the number of 2-fold rotations perpendicular to the rotation with higest n:
+            # Check the number of 2-fold rotations perpendicular to the rotation with highest n:
             has_c2_normal, c2_normal_axis = _check_c2_axis_normal_to_cn(
                 main_rotation, symmetry_elements, threshold_angle
             )
@@ -639,7 +639,7 @@ def _check_d_reflection_planes(main_rotation, symmetry_elements, c2_normal_axis,
 
 
 def _check_h_reflection_planes(main_rotation, symmetry_elements, threshold_angle):
-    """Check for horizontal relection planes."""
+    """Check for horizontal reflection planes."""
     has_h_plane = False
     for sym_el in symmetry_elements:
         if sym_el["type"] == "reflection":
@@ -654,7 +654,7 @@ def _check_h_reflection_planes(main_rotation, symmetry_elements, threshold_angle
 
 
 def _check_v_reflection_planes(main_rotation, symmetry_elements, threshold_angle):
-    """Check for vertical relfection planes."""
+    """Check for vertical reflection planes."""
     nr_v_planes = 0
     for sym_el in symmetry_elements:
         if sym_el["type"] == "reflection":
