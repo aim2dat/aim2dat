@@ -121,7 +121,7 @@ class ConstraintsMixin:
         """
         for conc in [min_conc, max_conc]:
             if conc < 0.0 or conc > 1.0:
-                raise ValueError("`min_conc` and `max_conc` need to be inbetween 0.0 and 1.0.")
+                raise ValueError("`min_conc` and `max_conc` need to be between 0.0 and 1.0.")
         if max_conc < min_conc:
             raise ValueError("`max_conc` needs to be larger than `min_conc`.")
         if not hasattr(self, "_conc_constraints"):

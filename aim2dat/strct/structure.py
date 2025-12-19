@@ -507,7 +507,7 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
         self, positions: Union[list, tuple], is_cartesian: bool = True, wrap: bool = False
     ):
         """
-        Set postions of all sites.
+        Set positions of all sites.
 
         Parameters
         ----------
@@ -949,7 +949,7 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
         integrator
             openmm integrator.
         potential_kwargs : dict
-            Additional keyword argurments for the ``create_system`` function of the
+            Additional keyword arguments for the ``create_system`` function of the
             potential/force field.
         bonds : list
             List of tuples of two site indices that share a chemical bond.

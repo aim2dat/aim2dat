@@ -150,7 +150,7 @@ def _compare_structures_direct_comp(
         check_cell_lengths = check_lattice_p(
             cell_lengths[0], cell_lengths[1], per, length_threshold
         )
-        # We can skip ther permutation if the cell lengths don't match
+        # We can skip their permutation if the cell lengths don't match
         if not check_cell_lengths[0]:
             continue
         check_cell_angles = check_lattice_p(cell_angles[0], cell_angles[1], per, angle_threshold)

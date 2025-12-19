@@ -27,7 +27,7 @@ def calc_prdf(
     r_max : float (optional)
         Cut-off value for the maximum distance between two atoms in angstrom.
     delta_bin : float (optional)
-        Bin size to descritize the function in angstrom.
+        Bin size to discretize the function in angstrom.
     distinguish_kinds: bool (optional)
         Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
         different elements if ``True``.
