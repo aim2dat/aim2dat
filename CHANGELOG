@@ -8,6 +8,7 @@ Version 0.5.0
 **Fixes:**
 
 * The mof workflow ``cp2k-crystal-mofs_v3.0`` had a wrong ``validation`` for the ``ignore_convergence_failure`` parameter and is fixed now (`PR #188 <https://github.com/aim2dat/aim2dat/pull/188>`_).
+* ``strct.manipulation.substitute_elements`` distorted the cell vectors were not of form ((a,0,0),(0,b,0),(0,0,c)) (`PR #190 <https://github.com/aim2dat/aim2dat/pull/190>`_).
 
 
 Version 0.4.0
