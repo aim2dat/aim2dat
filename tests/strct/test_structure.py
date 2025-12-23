@@ -144,6 +144,9 @@ def test_structure_validation():
 
     strct.cell = None
     assert strct.cell is None
+    assert strct.cell_volume is None
+    assert strct.cell_lengths is None
+    assert strct.cell_angles is None
     assert strct.scaled_positions is None
     assert strct.pbc == (False, False, False)
 

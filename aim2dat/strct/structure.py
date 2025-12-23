@@ -353,6 +353,9 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
                 self.set_positions(self.positions, is_cartesian=True)
         else:
             self._cell = None
+            self._cell_volume = None
+            self._cell_lengths = None
+            self._cell_angles = None
             self._scaled_positions = None
             self.pbc = False
 
