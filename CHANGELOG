@@ -7,7 +7,7 @@ Version 0.5.0
 
 **Enhancements:**
 
-* The ``strct.ext_analysis.calc_molecular_fragments`` function has now the option to exclude periodic images via the keyword argument ``include_periodic_images`` (`PR #190 <https://github.com/aim2dat/aim2dat/pull/190>`_).
+* The ``strct.ext_analysis.calc_molecular_fragments`` function has now the option to exclude periodic images via the keyword argument ``include_periodic_images`` (`PR #191 <https://github.com/aim2dat/aim2dat/pull/191>`_).
 
 **Fixes:**
 
