@@ -351,6 +351,10 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
                 self.set_positions(self.scaled_positions, is_cartesian=False)
             elif self.positions is not None:
                 self.set_positions(self.positions, is_cartesian=True)
+        else:
+            self._cell = None
+            self._scaled_positions = None
+            self.pbc = False
 
     @property
     def cell_volume(self) -> Union[float, None]:

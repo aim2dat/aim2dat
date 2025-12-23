@@ -142,6 +142,11 @@ def test_structure_validation():
         strct = Structure(**strct_dict)
     assert str(error.value) == "Sites with the same position: (2, 1)."
 
+    strct.cell = None
+    assert strct.cell is None
+    assert strct.scaled_positions is None
+    assert strct.pbc == (False, False, False)
+
 
 def test_to_dict(structure_comparison):
     """Test to_dict function."""
