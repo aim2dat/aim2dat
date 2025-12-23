@@ -86,10 +86,12 @@ def read_xsf_file(file_path: str) -> List[dict]:
     return structures
 
 
-@write_structure(r".*\.xsf", preset_kwargs=None)
+@write_structure(r".*\.xsf", preset_kwargs=None, writes_site_attributes=True)
 def write_xsf_file(
     file_path: str,
     structures: Union["Structure", "StructureCollection", list],
+    include_site_attributes: list = None,
+    exclude_site_attributes: list = None,
 ):
     """
     Write xsf file.
@@ -100,8 +102,21 @@ def write_xsf_file(
         Path to xsf file.
     structures : aim2dat.strct.Structure, aim2dat.strct.StructureCollection, list
         Structure object, StructureCollection object or list of Structure objects.
+    include_site_attributes : list
+        List of site attributes that are written to file.
+    exclude_site_attributes : list
+        List of site attributes that are not written to file.
     """
     structures = [structures] if type(structures).__name__ == "Structure" else structures
+    exclude_site_attributes = [] if exclude_site_attributes is None else exclude_site_attributes
+    if (
+        include_site_attributes is not None
+        and any(attr != "forces" for attr in include_site_attributes)
+    ) or any(attr != "forces" for attr in exclude_site_attributes):
+        raise warnings.warn(
+            "The current implementation of the 'xsf' file parser only supports "
+            + "'forces' as `site_attributes`."
+        )
 
     all_pbc = [strct.pbc for strct in structures]
     if all(pbc == (False, False, False) for pbc in all_pbc):
@@ -145,7 +160,14 @@ def write_xsf_file(
                 f_obj.write(f"PRIMCOORD{strct_idx}\n")
                 f_obj.write(f"{len(strct)} 1\n")
             forces = ["" for _ in range(len(strct))]
+            add_forces = False
             if "forces" in strct.site_attributes:
+                if include_site_attributes is not None:
+                    if "forces" in include_site_attributes:
+                        add_forces = True
+                elif "forces" not in exclude_site_attributes:
+                    add_forces = True
+            if add_forces:
                 for i, force in enumerate(strct.site_attributes["forces"]):
                     try:
                         forces[i] = f" {force[0]:16.8f} {force[1]:16.8f} {force[2]:16.8f}"

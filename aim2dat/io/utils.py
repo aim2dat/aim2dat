@@ -154,13 +154,17 @@ def read_multiple(
     return read_func_decorator
 
 
-def write_structure(pattern, preset_kwargs=None):
+def write_structure(
+    pattern, preset_kwargs=None, writes_attributes=False, writes_site_attributes=False
+):
     """Decorate functions that write structure(s) to file."""
 
     def decorator(func):
         func._is_write_structure_method = True
         func._pattern = pattern
         func._preset_kwargs = {} if preset_kwargs is None else preset_kwargs
+        func._writes_attributes = writes_attributes
+        func._writes_site_attributes = writes_site_attributes
 
         @wraps(func)
         def wrapper(*args, **kwargs):

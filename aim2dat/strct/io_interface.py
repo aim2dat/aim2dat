@@ -77,6 +77,10 @@ def write_structures_to_file(
     structures: Union["Structure", "StructureCollection", list],
     backend: str,
     file_format: str,
+    include_attributes: list,
+    exclude_attributes: list,
+    include_site_attributes: list,
+    exclude_site_attributes: list,
     backend_kwargs: dict,
 ):
     """Write structure(s) to file."""
@@ -87,6 +91,21 @@ def write_structures_to_file(
     elif backend == "internal":
         func = _find_io_function(file_path, file_format, "write")
         backend_kwargs.update(func._preset_kwargs)
+        if func._writes_attributes:
+            backend_kwargs.update(
+                {
+                    "include_attributes": include_attributes,
+                    "exclude_attributes": exclude_attributes,
+                }
+            )
+        if func._writes_site_attributes:
+            backend_kwargs.update(
+                {
+                    "include_site_attributes": include_site_attributes,
+                    "exclude_site_attributes": exclude_site_attributes,
+                }
+            )
+
         func(file_path, structures, **backend_kwargs)
     else:
         raise ValueError(f"Backend '{backend}' is not supported.")

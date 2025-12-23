@@ -226,7 +226,6 @@ def read_xyz_file(file_path: str) -> List[dict]:
                     n_atoms = None
                     columns = None
                     in_col_section = False
-    print(structures)
     return structures
 
 

@@ -895,10 +895,18 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
 
     @export_method
     def to_file(
-        self, file_path: str, backend: str = "internal", file_format: str = None, **backend_kwargs
+        self,
+        file_path: str,
+        backend: str = "internal",
+        file_format: str = None,
+        include_attributes: list = None,
+        exclude_attributes: list = None,
+        include_site_attributes: list = None,
+        exclude_site_attributes: list = None,
+        **backend_kwargs,
     ) -> None:
         """
-        Export structure to file using the ase interface or certain file formats for Zeo++.
+        Export structure to file using either the internal implementations or ``ase`` as backend.
 
         Parameters
         ----------
@@ -912,10 +920,40 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
             package for a complete list. For ``'internal'``, the format translates from
             ``io.write_{file_format}_structure``. If set to ``None`` the corresponding function
             is searched based on the file name and suffix.
+        include_attributes : list
+            List of attributes that are written to file. If set to ``None`` all attributes are
+            included and if set to ``[]`` no attributes are included. This parameter has no
+            effect for the ``'ase'`` backend or if the file format/io function does not support
+            additional information.
+        exclude_attributes : list
+            List of attributes that are not written to file. If set to ``None`` or to ``[]`` all
+            attributes are included. This parameter has no effect if ``include_attributes`` is set,
+            for the ``'ase'`` backend or if the file format/io function does not support additional
+            information.
+        include_site_attributes : list
+            List of site attributes that are written to file. If set to ``None`` all site
+            attributes are included and if set to ``[]`` no site attributes are included. This
+            parameter has no effect for the ``'ase'`` backend or if the file format/io function
+            does not support additional site information.
+        exclude_site_attributes : list
+            List of site attributes that are not written to file. If set to ``None`` or to ``[]``
+            all site attributes are included. This parameter has no effect if
+            ``include_site_attributes`` is set, for the ``'ase'`` backend or if the file format/io
+            function does not support additional site information.
         **backend_kwargs
             Arguments passed to the backend function.
         """
-        write_structures_to_file(file_path, self, backend, file_format, backend_kwargs)
+        write_structures_to_file(
+            file_path,
+            self,
+            backend,
+            file_format,
+            include_attributes,
+            exclude_attributes,
+            include_site_attributes,
+            exclude_site_attributes,
+            backend_kwargs,
+        )
 
     @export_method
     def to_ase_atoms(self) -> "ase.Atoms":

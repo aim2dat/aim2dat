@@ -462,7 +462,9 @@ def read_cif_file(
     return output_dict
 
 
-@write_structure(r".*\.cif", preset_kwargs=None)
+@write_structure(
+    r".*\.cif", preset_kwargs=None, writes_attributes=True, writes_site_attributes=True
+)
 def write_cif_file(
     file_path: str,
     structures: Union["Structure", "StructureCollection", list],
