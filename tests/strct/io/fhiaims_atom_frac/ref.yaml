@@ -1,0 +1,7 @@
+parameters: {}
+structure:
+  cell: [[10.0, 0.0, 0.0], [0.0, 10.0, 0.0], [0.0, 0.0, 10.0]]
+  elements: [H, H]
+  kinds: [H_1, H]
+  positions: [[5.0, 5.0, 5.0], [7.5, 2.5, 1.5]]
+  pbc: True

@@ -1,14 +1,22 @@
 """
-Module of functions to read output-files of FHI-aims.
+Module of functions to read/write files of the FHI-aims code.
 """
+
+# Standard library imports
+from typing import TYPE_CHECKING, Union
 
 # Internal library imports
 from aim2dat.io.utils import (
+    read_structure,
     read_total_dos,
     read_multiple,
+    write_structure,
     custom_open,
 )
 from aim2dat.elements import get_element_symbol
+
+if TYPE_CHECKING:
+    from aim2dat.strct import Structure, StructureCollection
 
 
 def _check_for_soc_files(folder_path, soc):
@@ -20,6 +28,106 @@ def _check_for_soc_files(folder_path, soc):
     if not soc and any(val == ".no_soc" for val in folder_path["soc"]):
         no_soc_suffix = True
     return no_soc_suffix
+
+
+@read_structure(r".*geometry\.in(\.next_step)?", preset_kwargs=None)
+def read_fhiaims_geometry_file(file_path: str) -> dict:
+    """
+    Read geometry file.
+
+    Parameters
+    ----------
+    file_path : str
+        File path or file content.
+
+    Returns
+    -------
+    dict
+        Dictionary containing the structural information.
+    """
+    cell = []
+    kinds = []
+    elements = []
+    positions = []
+    is_cartesian = ""
+    with custom_open(file_path, "r") as f_obj:
+        for line in f_obj:
+            line = line.strip()
+            if line.startswith("lattice_vector"):
+                cell.append([float(val) for val in line.split()[1:4]])
+            elif line.startswith("atom"):
+                line_sp = line.split()
+                if line_sp[0] == "atom_frac":
+                    if is_cartesian is True:
+                        raise ValueError(
+                            "Cannot parse geometry file with mixed cartesian and scaled positions."
+                        )
+                    is_cartesian = False
+                elif is_cartesian is False:
+                    raise ValueError(
+                        "Cannot parse geometry file with mixed cartesian and scaled positions."
+                    )
+                else:
+                    is_cartesian = True
+                kinds.append(line_sp[4])
+                try:
+                    elements.append(get_element_symbol(line_sp[4]))
+                except ValueError:
+                    elements.append(
+                        get_element_symbol(
+                            "".join(i for i in line_sp[4].split("_")[0] if not i.isdigit())
+                        )
+                    )
+                positions.append([float(val) for val in line.split()[1:4]])
+    structure = {
+        "elements": elements,
+        "kinds": None if all(k == e for k, e in zip(kinds, elements)) else kinds,
+        "positions": positions,
+        "pbc": False,
+        "is_cartesian": is_cartesian,
+    }
+    if len(cell) > 0:
+        structure["cell"] = cell
+        structure["pbc"] = True
+    return structure
+
+
+@write_structure(r".*\.in(\.next_step)?", preset_kwargs=None)
+def write_fhiaims_geometry_file(
+    file_path: str,
+    structure: Union["Structure", "StructureCollection", list],
+    use_scaled_pos: bool = False,
+):
+    """
+    Write FHI-aims geometry file.
+
+    Parameters
+    ----------
+    file_path : str
+        Path to geometry file.
+    structure : aim2dat.strct.Structure, aim2dat.strct.StructureCollection, list
+        Structure object, StructureCollection object or list of Structure objects. For the latter
+        two cases the first item/structure is written to file.
+    use_scaled_pos : bool
+        Whether to write scaled atom positions using the ``'atom_frac'`` key.
+    """
+    if isinstance(structure, list) or type(structure).__name__ == "StructureCollection":
+        structure = structure[0]
+
+    with open(file_path, "w") as f_obj:
+        if structure.cell is not None:
+            for cell_v in structure.cell:
+                f_obj.write(
+                    f"lattice_vector {cell_v[0]:16.8f} {cell_v[1]:16.8f} {cell_v[2]:16.8f}\n"
+                )
+        for el, kind, pos in structure.iter_sites(
+            get_kind=True, get_cart_pos=not use_scaled_pos, get_scaled_pos=use_scaled_pos
+        ):
+            species_name = el if kind is None else "_".join(kind.split(" "))
+            frac_suffix = "_frac" if use_scaled_pos else ""
+            f_obj.write(
+                f"atom{frac_suffix} {pos[0]:16.8f} {pos[1]:16.8f} {pos[2]:16.8f} {species_name}\n"
+            )
 
 
 @read_multiple(r".*band.*\.out(?P<soc>\.no_soc)?$", is_read_band_strct_method=True)
