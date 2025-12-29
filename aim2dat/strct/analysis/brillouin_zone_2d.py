@@ -64,7 +64,7 @@ def _get_kpath(cell, aperiodic_dir, layer_group, reference_distance, threshold):
                 {
                     "Y": [-0.5, 0.5, 0.0],
                     "C_0": _c_rectangular_calc_c0_point(rec_cell),
-                    "SIGMA_0": _c_rectangular_calc_simga0_point(rec_cell),
+                    "SIGMA_0": _c_rectangular_calc_sigma0_point(rec_cell),
                 }
             )
             path_parameters["path"] = [
@@ -175,7 +175,7 @@ def _c_rectangular_calc_c0_point(rec_cell):
     return [float(u - 0.5), float(u + 0.5), 0.0]
 
 
-def _c_rectangular_calc_simga0_point(rec_cell):
+def _c_rectangular_calc_sigma0_point(rec_cell):
     if rec_cell[1][1] == 0.0:
         u = 0.5 * rec_cell[1][0] / (rec_cell[0][0] + rec_cell[1][0])
     else:

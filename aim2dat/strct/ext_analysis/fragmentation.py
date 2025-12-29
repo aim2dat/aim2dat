@@ -18,6 +18,7 @@ def calc_molecular_fragments(
     exclude_elements: List[str] = None,
     exclude_sites: List[int] = None,
     end_point_elements: List[str] = None,
+    include_periodic_images: bool = True,
     **cn_kwargs,
 ) -> List[Structure]:
     """
@@ -35,8 +36,8 @@ def calc_molecular_fragments(
         List of site indices that are excluded from the search.
     end_point_elements : list
         List of elements that serve as an end point for a fragment.
-    r_max : float (optional)
-        Cut-off value for the maximum distance between two atoms in angstrom.
+    include_periodic_images : bool
+        Whether to also include periodic images to the fragments.
     cn_kwargs :
         Optional keyword arguments passed on to the ``calculate_coordination`` function.
 
@@ -80,6 +81,7 @@ def calc_molecular_fragments(
             end_point_elements,
             coord["sites"],
             np.array(structure.positions[site_idx]),
+            include_periodic_images,
         )
         if mol_fragment["elements"] != []:
             molecular_fragments.append(Structure(**mol_fragment))
@@ -95,6 +97,7 @@ def _recursive_graph_builder(
     end_point_elements,
     sites,
     position,
+    include_periodic_images,
 ):
     """
     Find nearest neighbour of the first atom and adds it to the fragment. Take the neighbour
@@ -110,7 +113,9 @@ def _recursive_graph_builder(
         for site_idx2, position2 in zip(
             mol_fragment["site_attributes"]["parent_indices"], mol_fragment["positions"]
         ):
-            if site_idx == site_idx2 and np.linalg.norm(position - position2) < 1e-3:
+            if site_idx == site_idx2 and (
+                not include_periodic_images or np.linalg.norm(position - position2) < 1e-3
+            ):
                 return None
 
         # 2) Update mol_fragment dictionary.
@@ -130,4 +135,5 @@ def _recursive_graph_builder(
                     end_point_elements,
                     sites,
                     np.array(neighbour["position"]) + shift,
+                    include_periodic_images,
                 )

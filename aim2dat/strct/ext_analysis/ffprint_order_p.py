@@ -32,7 +32,7 @@ def calc_ffingerprint_order_p(
     r_max : float (optional)
         Cut-off value for the maximum distance between two atoms in angstrom.
     delta_bin : float (optional)
-        Bin size to descritize the function in angstrom.
+        Bin size to discretize the function in angstrom.
     sigma : float (optional)
         Smearing parameter for the Gaussian function.
     distinguish_kinds: bool (optional)

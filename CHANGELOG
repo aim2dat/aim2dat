@@ -8,14 +8,18 @@ Version 0.5.0
 **Enhancements:**
 
 * New read/write functions for FHI-aims geometry, cif, xsf, and xyz file formats have been added and interfaced to the ``strct.Structure`` and ``strct.StructureCollection`` classes (`PR 189 <https://github.com/aim2dat/aim2dat/pull/189>`_).
+* The ``strct.ext_analysis.calc_molecular_fragments`` function has now the option to exclude periodic images via the keyword argument ``include_periodic_images`` (`PR #191 <https://github.com/aim2dat/aim2dat/pull/191>`_).
 
 **Fixes:**
 
 * The mof workflow ``cp2k-crystal-mofs_v3.0`` had a wrong ``validation`` for the ``ignore_convergence_failure`` parameter and is fixed now (`PR #188 <https://github.com/aim2dat/aim2dat/pull/188>`_).
+* ``strct.manipulation.substitute_elements`` distorted the cell when cell vectors were not of form ((a,0,0),(0,b,0),(0,0,c)) (`PR #190 <https://github.com/aim2dat/aim2dat/pull/190>`_).
+* The setter function of ``strct.Structure.cell`` now correctly removes the cell, scaled positions and periodic boundary conditions if set to ``None`` after initialization (`PR #192 <https://github.com/aim2dat/aim2dat/pull/192>`_).
 
 **Breaking Changes:**
 
 * The ``strct.Structure`` and ``strct.StructureCollection`` now use the ``'internal'`` backend as default to read structures from and write structures to file and the key word argument ``backend_kwargs`` is deprecated and replaced by ``**`` (`PR 189 <https://github.com/aim2dat/aim2dat/pull/189>`_).
+
 
 Version 0.4.0
 =============

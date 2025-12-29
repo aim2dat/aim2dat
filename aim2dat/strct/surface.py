@@ -197,7 +197,7 @@ class SurfaceGeneration:
         miller_indices : list or tuple (optional)
             Miller indices of the surface. The default value is ``(1, 0, 0)``.
         nr_layers : int (optional)
-            Number of repititions of the underlying periodic surface cell. The default
+            Number of repetitions of the underlying periodic surface cell. The default
             value is ``5``.
         periodic : bool (optional)
             Whether to apply periodic boundary conditions in the direction normal to the

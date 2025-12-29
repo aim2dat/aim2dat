@@ -352,6 +352,13 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
                 self.set_positions(self.scaled_positions, is_cartesian=False)
             elif self.positions is not None:
                 self.set_positions(self.positions, is_cartesian=True)
+        else:
+            self._cell = None
+            self._cell_volume = None
+            self._cell_lengths = None
+            self._cell_angles = None
+            self._scaled_positions = None
+            self.pbc = False
 
     @property
     def cell_volume(self) -> Union[float, None]:
@@ -508,7 +515,7 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
         self, positions: Union[list, tuple], is_cartesian: bool = True, wrap: bool = False
     ):
         """
-        Set postions of all sites.
+        Set positions of all sites.
 
         Parameters
         ----------
@@ -1013,7 +1020,7 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
         integrator
             openmm integrator.
         potential_kwargs : dict
-            Additional keyword argurments for the ``create_system`` function of the
+            Additional keyword arguments for the ``create_system`` function of the
             potential/force field.
         bonds : list
             List of tuples of two site indices that share a chemical bond.

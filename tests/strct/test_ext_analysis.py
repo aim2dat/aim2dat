@@ -155,7 +155,9 @@ def test_prdf_functions(structure, nested_dict_comparison):
     "system, file_suffix, backend",
     [
         ("Benzene", ".yaml", "internal"),
+        ("ZIF-8_complex", ".xyz", "ase"),
         ("ZIF-8", ".cif", "internal"),
+        ("MOF-5_prim", ".xsf", "ase"),
     ],
 )
 def test_calc_molecular_fragments_function(structure_comparison, system, file_suffix, backend):
