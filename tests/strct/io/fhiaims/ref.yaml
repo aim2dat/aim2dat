@@ -1,0 +1,5 @@
+parameters: {}
+structure:
+  elements: [H]
+  positions: [[5.0, 5.0, 5.0]]
+  pbc: False

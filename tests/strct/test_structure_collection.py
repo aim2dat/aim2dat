@@ -199,17 +199,15 @@ def test_duplicate_structure(create_structure_collection_object, structure_compa
     structure_comparison(strct_c["new_H3PO4"], structures[0])
 
 
-# TODO adapt test.
-# def test_aiida_interface(create_structure_collection_object, structure_comparison):
-#     """Test AiiDA interface."""
-#     structure_list = ["Benzene", "SF6", "H2O", "H3PO4", "GaAs_216_prim", "Cs2Te_62_prim"]
-#     strct_c, structures = create_structure_collection_object(structure_list)
-#     strct_c.store_in_aiida_db(group_label="test")
-#     strct_c_2 = StructureCollection()
-#     strct_c_2.import_from_aiida_db("test")
-#     for label, structure in zip(structure_list, structures):
-#         structure["label"] = label
-#         structure_comparison(strct_c_2[label], structure)
+def test_aiida_interface(create_structure_collection_object, structure_comparison):
+    """Test AiiDA interface."""
+    structure_list = ["Benzene", "SF6", "H2O", "H3PO4", "GaAs_216_prim", "Cs2Te_62_prim"]
+    strct_c, structures = create_structure_collection_object(structure_list)
+    strct_c.to_aiida_db(group_label="test")
+    strct_c_2 = StructureCollection.from_aiida_db(group_label="test")
+    for label, structure in zip(structure_list, structures):
+        structure["label"] = label
+        structure_comparison(strct_c_2[label], structure)
 
 
 def test_create_pandas_df(
@@ -288,12 +286,12 @@ def test_append_from_pymatgen_structure(structure_comparison, structure):
     "structure,file_suffix",
     [("Benzene", ".xyz"), ("GaAs_216_prim", ".xsf")],
 )
-def test_file_support(structure_comparison, structure, file_suffix):
+def test_file_support(tmpdir, structure_comparison, structure, file_suffix):
     """Test the ase atoms interface by loading structures from file."""
     ref_structure_dict = read_yaml_file(STRUCTURES_PATH + structure + ".yaml")
-    Structure(**ref_structure_dict).to_file(STRUCTURES_PATH + "test" + file_suffix)
+    Structure(**ref_structure_dict).to_file(str(tmpdir) + "test" + file_suffix)
     strct_c = StructureCollection()
-    strct_c.append_from_file(file_path=STRUCTURES_PATH + "test" + file_suffix, label="test")
+    strct_c.append_from_file(file_path=str(tmpdir) + "test" + file_suffix, label="test")
     ref_structure_dict["label"] = "test"
     structure_comparison(strct_c["test"], ref_structure_dict)
 
