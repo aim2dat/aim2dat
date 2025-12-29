@@ -1,0 +1,9 @@
+parameters: {file_format: xyz, backend: internal}
+structure:
+  elements: [H, O]
+  positions: [[0.0, 0.0, 0.0], [1.0, 1.0, 1.0]]
+  cell: [[2.5, 0.0, 0.0], [0.0, 2.5, 0.0], [0.0, 0.0, 2.5]]
+  pbc: [True, True, True]
+  attributes: {test: 0}
+  site_attributes:
+    test: [0, 1]

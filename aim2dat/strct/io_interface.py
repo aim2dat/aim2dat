@@ -105,7 +105,6 @@ def write_structures_to_file(
                     "exclude_site_attributes": exclude_site_attributes,
                 }
             )
-
         func(file_path, structures, **backend_kwargs)
     else:
         raise ValueError(f"Backend '{backend}' is not supported.")

@@ -113,7 +113,7 @@ def write_xsf_file(
         include_site_attributes is not None
         and any(attr != "forces" for attr in include_site_attributes)
     ) or any(attr != "forces" for attr in exclude_site_attributes):
-        raise warnings.warn(
+        warnings.warn(
             "The current implementation of the 'xsf' file parser only supports "
             + "'forces' as `site_attributes`."
         )
@@ -135,7 +135,7 @@ def write_xsf_file(
         for cell in all_cells[1:]:
             if any(
                 [
-                    abs(v0 - v1) < 1e-8
+                    abs(v0 - v1) > 1e-8
                     for cv0, cv1 in zip(all_cells[0], cell)
                     for v0, v1 in zip(cv0, cv1)
                 ]
@@ -172,7 +172,7 @@ def write_xsf_file(
                     try:
                         forces[i] = f" {force[0]:16.8f} {force[1]:16.8f} {force[2]:16.8f}"
                     except (ValueError, IndexError):
-                        warnings.warn(f"Cannot parse force of atom {i}.")
+                        warnings.warn(f"Cannot parse force of site {i}.")
                         forces = ["" for _ in range(len(strct))]
                         break
 

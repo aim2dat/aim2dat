@@ -286,6 +286,8 @@ def test_cell_setter_and_wrap_positions(structure_comparison):
         ("zeo", IO_PATH + "zeo/Cs2Te_62_prim.v1", "test.v1"),
         ("xsf", STRUCTURES_PATH + "MOF-5_prim.xsf", "test.xsf"),
         ("xyz", STRUCTURES_PATH + "Imidazole.xyz", "test.xyz"),
+        ("xyz_complex", STRUCTURES_PATH + "ZIF-8_complex.xyz", None),
+        ("xyz_crystal", IO_PATH + "xyz_crystal/crystal.xyz", "test.xyz"),
     ],
 )
 def test_internal_io(tmpdir, structure_comparison, system, read_path, write_file_name):
@@ -294,7 +296,7 @@ def test_internal_io(tmpdir, structure_comparison, system, read_path, write_file
 
     if write_file_name is not None:
         file = tmpdir.join(write_file_name)
-        Structure(**ref["structure"]).to_file(file)
+        Structure(**ref["structure"]).to_file(file, backend="internal")
         assert file.read() == open(read_path, "r").read()
     structure = Structure.from_file(read_path, **ref["parameters"])
     structure_comparison(structure, ref["structure"])

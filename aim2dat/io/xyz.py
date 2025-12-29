@@ -141,9 +141,11 @@ def _parse_column_value(column_key, column_value, parsed_values, n_values=None, 
             else:
                 v = str(v)
                 if " " in v:
-                    warnings.warn(f"Cannot add '{column_key}' since the values have white spaces.")
+                    warnings.warn(
+                        f"Cannot add '{column_key}' since the values contain white spaces."
+                    )
                     return False, None, None
-        except ValueError:
+        except (ValueError, TypeError):
             warnings.warn(f"Cannot add '{column_key}' since the values have different types.")
             return False, None, None
 
@@ -229,7 +231,9 @@ def read_xyz_file(file_path: str) -> List[dict]:
     return structures
 
 
-@write_structure(r".*\.xyz", preset_kwargs=None)
+@write_structure(
+    r".*\.xyz", preset_kwargs=None, writes_attributes=True, writes_site_attributes=True
+)
 def write_xyz_file(
     file_path: str,
     structures: Union["Structure", "StructureCollection", list],
@@ -254,6 +258,13 @@ def write_xyz_file(
     exclude_site_attributes : list
         List of site attributes that are not written to file.
     """
+
+    def _check_attribute_value(attr, val):
+        if " " in val or " " in attr:
+            warnings.warn(f"Cannot add attribute '{attr}' since the value contains white spaces.")
+            return ""
+        return f" {attr}={val}"
+
     structures = [structures] if type(structures).__name__ == "Structure" else structures
     exclude_attributes = [] if exclude_attributes is None else exclude_attributes
     exclude_site_attributes = [] if exclude_site_attributes is None else exclude_site_attributes
@@ -283,23 +294,11 @@ def write_xyz_file(
             if include_attributes is not None:
                 for attr in include_attributes:
                     if attr in strct.attributes:
-                        val = str(strct.attributes[attr])
-                        if " " in val or " " in attr:
-                            warnings.warn(
-                                f"Cannot add '{attr}' since the values have white spaces."
-                            )
-                            continue
-                        comment_line += f" {attr}={val}"
+                        comment_line += _check_attribute_value(attr, str(strct.attributes[attr]))
             else:
                 for attr, val in strct.attributes.items():
                     if attr not in exclude_attributes:
-                        val = str(val)
-                        if " " in val or " " in attr:
-                            warnings.warn(
-                                f"Cannot add '{attr}' since the values have white spaces."
-                            )
-                            continue
-                        comment_line += f" {attr}={val}"
+                        comment_line += _check_attribute_value(attr, str(val))
             comment_line += ' pbc="' + " ".join("T" if v else "F" for v in strct.pbc) + '"'
 
             f_obj.write(f"{len(strct)}\n")
