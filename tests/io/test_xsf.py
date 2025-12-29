@@ -17,6 +17,7 @@ STRUCTURES_PATH = cwd + "../strct/structures/"
 def test_forces(tmpdir, structure_comparison):
     """Test reading/writing forces to xsf file."""
     strct = Structure.from_str("H2O")
+    strct.label = None
     forces_wrong_type = [[0.3, "test", 0.03], [0.0, 1.0, 0.0], [1, 40.0, 0.0]]
     strct.set_site_attribute("forces", forces_wrong_type)
     with pytest.warns(UserWarning, match="Cannot parse force of site 0."):
