@@ -175,7 +175,7 @@ def get_workchain_runtime(workchain):
     runtimes = []
     for calc_j in calcjobs:
         output_parameters = calc_j.outputs["output_parameters"]
-        runtimes.append(output_parameters.get_dict().get("runtime"))
+        runtimes.append(output_parameters.get_dict().get("runtime", 0))
     total_runtime = timedelta(seconds=round(sum(runtimes)))
     return total_runtime
 
