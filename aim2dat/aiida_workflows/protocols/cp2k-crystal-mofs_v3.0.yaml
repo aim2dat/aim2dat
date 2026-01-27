@@ -159,7 +159,7 @@ general_input:
   critic2.parameters->partial_charges:
     value:
     - crystal aiida-ELECTRON_DENSITY-1_0.cube
-    - load aiida-ELECTRON_DENSITY-1_0.cube core zpsp
+    - load aiida-ELECTRON_DENSITY-1_0.cube zpsp
     - load aiida-ELECTRON_DENSITY-1_0.cube
     - integrable 2
     - yt
