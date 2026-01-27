@@ -4,16 +4,20 @@
 import os
 import importlib
 from inspect import getmembers, isfunction
-from typing import Union
+from typing import TYPE_CHECKING, Union
 import re
 
 # Internal library imports
 from aim2dat.ext_interfaces import _return_ext_interface_modules
 
+if TYPE_CHECKING:
+    from aim2dat.strct.structure import Structure
+    from aim2dat.strct.structure_collection import StructureCollection
 
-def _find_io_function(file_path: str, file_format: str):
+
+def _find_io_function(file_path: str, file_format: str, io_type: str):
     # Check if file_path is path to actual file or str:
-    if file_format is None and not os.path.isfile(file_path):
+    if io_type == "read" and file_format is None and not os.path.isfile(file_path):
         raise ValueError(
             "If `file_path` is not the path to a file, "
             + f"`file_format` needs to be set for '{file_path}'."
@@ -22,7 +26,7 @@ def _find_io_function(file_path: str, file_format: str):
     funcs = [
         f
         for f in getmembers(importlib.import_module("aim2dat.io", isfunction))
-        if getattr(f[1], "_is_read_structure_method", False)
+        if getattr(f[1], f"_is_{io_type}_structure_method", False)
     ]
     if file_format is not None:
         file_format = file_format.replace("-", "_")
@@ -32,7 +36,7 @@ def _find_io_function(file_path: str, file_format: str):
         raise ValueError(f"File format '{file_format}' is not supported.")
     else:
         for f_name, f in funcs:
-            if re.search(f._pattern, file_path):
+            if re.search(f._pattern, str(file_path)):
                 return f
         raise ValueError(
             f"Could not find a suitable io function for '{file_path}' "
@@ -46,7 +50,7 @@ def get_structures_from_file(
     file_format: str,
     backend_kwargs: dict,
 ) -> Union[dict, list]:
-    """Get function to read structure file."""
+    """Extract structure(s) from file."""
     backend_kwargs = {} if backend_kwargs is None else backend_kwargs
     if backend == "ase":
         backend_module = _return_ext_interface_modules("ase_atoms")
@@ -54,7 +58,7 @@ def get_structures_from_file(
             backend_kwargs["format"] = file_format
         structure_dicts = backend_module._load_structure_from_file(file_path, backend_kwargs)
     elif backend == "internal":
-        func = _find_io_function(file_path, file_format)
+        func = _find_io_function(file_path, file_format, "read")
         backend_kwargs.update(func._preset_kwargs)
         structure_dicts = func(file_path, **backend_kwargs)
         if isinstance(structure_dicts, dict):
@@ -66,3 +70,41 @@ def get_structures_from_file(
         raise ValueError(f"Backend '{backend}' is not supported.")
 
     return structure_dicts
+
+
+def write_structures_to_file(
+    file_path: str,
+    structures: Union["Structure", "StructureCollection", list],
+    backend: str,
+    file_format: str,
+    include_attributes: list,
+    exclude_attributes: list,
+    include_site_attributes: list,
+    exclude_site_attributes: list,
+    backend_kwargs: dict,
+):
+    """Write structure(s) to file."""
+    backend_kwargs = {} if backend_kwargs is None else backend_kwargs
+    if backend == "ase":
+        backend_module = _return_ext_interface_modules("ase_atoms")
+        backend_module._write_structure_to_file(file_path, structures)
+    elif backend == "internal":
+        func = _find_io_function(file_path, file_format, "write")
+        backend_kwargs.update(func._preset_kwargs)
+        if func._writes_attributes:
+            backend_kwargs.update(
+                {
+                    "include_attributes": include_attributes,
+                    "exclude_attributes": exclude_attributes,
+                }
+            )
+        if func._writes_site_attributes:
+            backend_kwargs.update(
+                {
+                    "include_site_attributes": include_site_attributes,
+                    "exclude_site_attributes": exclude_site_attributes,
+                }
+            )
+        func(file_path, structures, **backend_kwargs)
+    else:
+        raise ValueError(f"Backend '{backend}' is not supported.")
