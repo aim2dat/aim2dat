@@ -11,6 +11,7 @@ Version 0.5.0
 
 **Fixes:**
 
+* The ``aiida_workflows.utils.get_workchain_runtime`` rose an error if it has no ``runtime``(`PR #193 <https://github.com/aim2dat/aim2dat/pull/193>`_).
 * The mof workflow ``cp2k-crystal-mofs_v3.0`` had a wrong ``validation`` for the ``ignore_convergence_failure`` parameter and is fixed now (`PR #188 <https://github.com/aim2dat/aim2dat/pull/188>`_).
 * ``strct.manipulation.substitute_elements`` distorted the cell when cell vectors were not of form ((a,0,0),(0,b,0),(0,0,c)) (`PR #190 <https://github.com/aim2dat/aim2dat/pull/190>`_).
 * The setter function of ``strct.Structure.cell`` now correctly removes the cell, scaled positions and periodic boundary conditions if set to ``None`` after initialization (`PR #192 <https://github.com/aim2dat/aim2dat/pull/192>`_)

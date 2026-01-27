@@ -1,0 +1,66 @@
+%YAML 1.2
+---
+protocol:
+  title: arithmetic-testing
+  version: '1.1'
+  description: Test workflow using the arithmetic calcjobs/work chains from
+    aiida-core.
+  dependencies:
+  - [aiida-core, '2.0', null]
+  parent_node_type: float
+  parent_node_input: {task_1.1: x, task_1.2: x, task_1.3: z, task_2.2: x}
+  tasks:
+    task_1.1: {process: core.arithmetic.add_multiply}
+    task_1.2: {process: core.arithmetic.add_multiply}
+    task_1.3: {process: core.arithmetic.add_multiply}
+    task_2.1:
+      process: core.arithmetic.add_multiply
+      dependencies:
+        task_1.2:
+        - [result, x]
+        task_1.3:
+        - [result, z]
+    task_2.2:
+      process: core.arithmetic.add_multiply
+      dependencies:
+        task_1.3:
+        - [result, y]
+    task_3.1:
+      process: core.arithmetic.add_multiply
+      dependencies:
+        task_1.1:
+        - [result, x]
+        task_2.1:
+        - [result, y]
+        task_2.2:
+        - [result, z]
+    task_4.1:
+      process: core.arithmetic.add_multiply
+      dependencies:
+        task_3.1:
+        - [result, x]
+        task_1.2:
+        - [result, z]
+  general_input:
+    z:
+      value: 2.0
+      aiida_node: true
+      tasks: [task_1.1, task_2.2]
+    z->task_1.2: {value: 4.0, aiida_node: true}
+    x->task_1.3: {value: 10.0, aiida_node: true}
+  user_input:
+    y:
+      validation:
+      aiida_node: true
+      compare: true
+      tasks: [task_1.1, task_1.2, task_1.3, task_2.1]
+    y->task_4.1: {validation: null, aiida_node: true, compare: true}
+  results:
+    res_1: {task: task_4.1, output_port: result, unit: test_unit}
+    res_2: {task: task_1.3, output_port: result, unit: test_unit}
+general_input: {z: f09ad67f-a1af-478a-99cb-1df3c4e4317a, z->task_1.2:
+    4645b871-1360-404f-bc8c-e1ff367bf69d}
+user_input_nodes: {y: 39fffe1a-e2ea-4f48-a906-e2ca5b7eb17c, y->task_4.1:
+    7a461169-c8e3-4a59-b55d-a7f88d24a790}
+user_input: {}
+parent_node: 56299bc9-b478-4b6c-a3b6-a8b59f61c91d
