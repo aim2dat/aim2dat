@@ -10,6 +10,7 @@ Version 0.5.0
 * The ``strct.ext_analysis.calc_molecular_fragments`` function has now the option to exclude periodic images via the keyword argument ``include_periodic_images`` (`PR #191 <https://github.com/aim2dat/aim2dat/pull/191>`_).
 
 **Fixes:**
+
 * The ``aiida_workflows.cp2k.parsers._Cp2kBaseParser`` did not catch the ``runtime`` when ``walltime`` was exceeded which caused an error in ``aiida_workflows.utils.get_workchain_runtime`` (`PR #193 <https://github.com/aim2dat/aim2dat/pull/193>`_, `PR #194 <https://github.com/aim2dat/aim2dat/pull/194>`_).
 * The mof workflow ``cp2k-crystal-mofs_v3.0`` had a wrong ``validation`` for the ``ignore_convergence_failure`` parameter and is fixed now (`PR #188 <https://github.com/aim2dat/aim2dat/pull/188>`_).
 * ``strct.manipulation.substitute_elements`` distorted the cell when cell vectors were not of form ((a,0,0),(0,b,0),(0,0,c)) (`PR #190 <https://github.com/aim2dat/aim2dat/pull/190>`_).
