@@ -154,6 +154,56 @@ def read_multiple(
     return read_func_decorator
 
 
+def write_structure(
+    pattern, preset_kwargs=None, writes_attributes=False, writes_site_attributes=False
+):
+    """Decorate functions that write structure(s) to file."""
+
+    def decorator(func):
+        func._is_write_structure_method = True
+        func._pattern = pattern
+        func._preset_kwargs = {} if preset_kwargs is None else preset_kwargs
+        func._writes_attributes = writes_attributes
+        func._writes_site_attributes = writes_site_attributes
+
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+def parse_to_str(value, add_space_front=False, length=8):
+    """
+    Parse value to string.
+
+    Parameters
+    ----------
+    value :
+        Value.
+    add_space_front : bool
+        Whether to add white spaces before instead of after the value.
+    length : int
+        Number of white spaces to obtain vertical alignment.
+
+    Returns
+    -------
+    str
+        String representation.
+    """
+    if isinstance(value, float):
+        return f"{value:16.8f}"
+    else:
+        value = str(value)
+        space = "".join(" " for _ in range(length - len(value)))
+        if add_space_front:
+            return space + value
+        else:
+            return value + space
+
+
 @contextmanager
 def custom_open(file, mode="r", **kwargs):
     """

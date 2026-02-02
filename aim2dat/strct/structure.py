@@ -10,8 +10,9 @@ import numpy as np
 # Internal library imports
 from aim2dat.ext_interfaces import _return_ext_interface_modules
 from aim2dat.strct.named_structures import molecules, functional_groups
-from aim2dat.strct.io_interface import get_structures_from_file
-from aim2dat.io import write_zeo_file
+from aim2dat.strct.io_interface import get_structures_from_file, write_structures_to_file
+
+# from aim2dat.io import write_zeo_file
 from aim2dat.strct.validation import (
     _structure_validate_cell,
     _structure_validate_elements,
@@ -661,9 +662,10 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
         extras: dict = None,
         label: str = None,
         index: int = 0,
-        backend: str = "ase",
+        backend: str = "internal",
         file_format: str = None,
         backend_kwargs: dict = None,
+        **backend_kwargs_,
     ) -> "Structure":
         """
         Get structure from file using the ase read-function.
@@ -688,10 +690,11 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
         file_format : str or None (optional)
             File format of the backend. For ``'ase'``, please refer to the documentation of the
             package for a complete list. For ``'internal'``, the format translates from
-            ``io.{module}.read_structure`` to ``'{module}'`` or from
-            ``{module}.read_{specification}_structure`` to ``'module-specification'``. If set to
-            ``None`` the corresponding function is searched based on the file name and suffix.
+            ``io.read_{file_format}_structure`` to ``'file_format'``. If set to ``None`` the
+            corresponding function is searched based on the file name and suffix.
         backend_kwargs : dict (optional)
+            Arguments passed to the backend function.
+        **backend_kwargs
             Arguments passed to the backend function.
 
         Returns
@@ -699,7 +702,17 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
         aim2dat.strct.Structure
             Structure.
         """
-        strct_dict = get_structures_from_file(file_path, backend, file_format, backend_kwargs)[
+        if backend_kwargs is not None:
+            from warnings import warn
+
+            warn(
+                "The keyword argument `backend_kwargs` is deprecated, please "
+                + "use keyword arguments directly as they are forwarded to the backend functions.",
+                DeprecationWarning,
+                2,
+            )
+            backend_kwargs_.update(backend_kwargs)
+        strct_dict = get_structures_from_file(file_path, backend, file_format, backend_kwargs_)[
             index
         ]
         _update_label_attributes_extras(strct_dict, label, attributes, site_attributes, extras)
@@ -888,15 +901,66 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
         return strct_dict
 
     @export_method
-    def to_file(self, file_path: str) -> None:
+    def to_file(
+        self,
+        file_path: str,
+        backend: str = "internal",
+        file_format: str = None,
+        include_attributes: list = None,
+        exclude_attributes: list = None,
+        include_site_attributes: list = None,
+        exclude_site_attributes: list = None,
+        **backend_kwargs,
+    ) -> None:
         """
-        Export structure to file using the ase interface or certain file formats for Zeo++.
+        Export structure to file using either the internal implementations or ``ase`` as backend.
+
+        Parameters
+        ----------
+        file_path : str
+            File path.
+        backend : str (optional)
+            Backend to be used to parse the structure file. Supported options are ``'ase'``
+            and ``'internal'``.
+        file_format : str or None (optional)
+            File format of the backend. For ``'ase'``, please refer to the documentation of the
+            package for a complete list. For ``'internal'``, the format translates from
+            ``io.write_{file_format}_structure``. If set to ``None`` the corresponding function
+            is searched based on the file name and suffix.
+        include_attributes : list
+            List of attributes that are written to file. If set to ``None`` all attributes are
+            included and if set to ``[]`` no attributes are included. This parameter has no
+            effect for the ``'ase'`` backend or if the file format/io function does not support
+            additional information.
+        exclude_attributes : list
+            List of attributes that are not written to file. If set to ``None`` or to ``[]`` all
+            attributes are included. This parameter has no effect if ``include_attributes`` is set,
+            for the ``'ase'`` backend or if the file format/io function does not support additional
+            information.
+        include_site_attributes : list
+            List of site attributes that are written to file. If set to ``None`` all site
+            attributes are included and if set to ``[]`` no site attributes are included. This
+            parameter has no effect for the ``'ase'`` backend or if the file format/io function
+            does not support additional site information.
+        exclude_site_attributes : list
+            List of site attributes that are not written to file. If set to ``None`` or to ``[]``
+            all site attributes are included. This parameter has no effect if
+            ``include_site_attributes`` is set, for the ``'ase'`` backend or if the file format/io
+            function does not support additional site information.
+        **backend_kwargs
+            Arguments passed to the backend function.
         """
-        if file_path.endswith((".cssr", ".v1", ".cuc")):
-            write_zeo_file(file_path, self)
-        else:
-            backend_module = _return_ext_interface_modules("ase_atoms")
-            backend_module._write_structure_to_file(file_path, self)
+        write_structures_to_file(
+            file_path,
+            self,
+            backend,
+            file_format,
+            include_attributes,
+            exclude_attributes,
+            include_site_attributes,
+            exclude_site_attributes,
+            backend_kwargs,
+        )
 
     @export_method
     def to_ase_atoms(self) -> "ase.Atoms":
