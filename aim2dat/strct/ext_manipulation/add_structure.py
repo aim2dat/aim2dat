@@ -357,7 +357,7 @@ def add_structure_coord(
 @external_manipulation_method
 def add_structure_position(
     structure: Structure,
-    position: List[float],
+    position: Union[list, float],
     guest_structure: Union[Structure, str] = "CH3",
     wrap: bool = False,
     dist_threshold: Union[dict, list, float, int, str, None] = None,
@@ -370,8 +370,10 @@ def add_structure_position(
     ----------
     structure : aim2dat.strct.Structure
         Structure to which the guest structure is added.
-    position : list of floats
-        Position of the guest structure.
+    position : list of floats or list of lists of floats
+        Position of the guest structure. If list with xyz is given the center of the molecule will
+        be placed at this position.
+        IF a list of lists with xyz is given then the molecule will placed at these positions.
     guest_structure : str or aim2dat.strct.Structure (optional)
         A representation of the guest structure given as a string of a functional group or molecule
         (viable options are ``'CH3'``, ``'COOH'``, ``'H2O'``, ``'NH2'``, ``'NO2'`` or ``'OH'``), a
@@ -410,10 +412,13 @@ def add_structure_position(
     """
     guest_strct, guest_strct_label = _check_guest_structure(guest_structure)
 
-    guest_positions = np.array(guest_strct["positions"])
-    guest_center = np.mean(guest_positions, axis=0)
-    guest_positions -= guest_center
-    guest_positions += np.array(position)
+    if all([isinstance(pos, (int, float)) for pos in position]):
+        guest_positions = np.array(guest_strct["positions"])
+        guest_center = np.mean(guest_positions, axis=0)
+        guest_positions -= guest_center
+        guest_positions += np.array(position)
+    elif all([isinstance(pos, (list, tuple)) for pos in position]):
+        guest_positions = np.array(position)
     guest_strct0 = copy.deepcopy(guest_strct)
     guest_strct0.set_positions(guest_positions)
 
