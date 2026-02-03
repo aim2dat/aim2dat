@@ -115,11 +115,6 @@ class _Cp2kBaseParser(Parser):
 
         if self.node.exit_status == 120:
             result_dict["exceeded_walltime"] = True
-            result_dict["runtime"] = float(
-                self.node.base.attributes.get("metadata_inputs")["metadata"]["options"][
-                    "max_wallclock_seconds"
-                ]
-            )
 
         if result_dict is None:
             raise OutputParsingError("CP2K version is not supported.")
