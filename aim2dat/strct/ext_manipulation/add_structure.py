@@ -280,17 +280,16 @@ def add_structure_coord(
     new_indices = list(range(len(new_structure) - len(guest_strct), len(new_structure)))
 
     # Optimize positions to reduce score
-    # Numbers for the grid search
-    num1 = round(360 / constrain_steps)
-    num2 = round(num1 / 2)
     score = _check_distances(new_structure, new_indices, None, dist_dict, True, True)
     # If the distance threshold does not hold, a grid search will be performed.
     # The grid is based on `constrain_steps` and rotates the molecule around `host_indices` within
     # a sphere with the ´bond_distance´ as rotation vector.
     if isinstance(score, bool) and not score:
         score = score if score else float("inf")
-        for alpha in np.linspace(-180, 180, num=num1, endpoint=False):
-            for beta in np.linspace(0, 180, num=num2, endpoint=False):
+        for alpha in np.arange(-180, 180, constrain_steps):
+            for beta in np.arange(0, 180, constrain_steps):
+                if alpha == beta == 0 or alpha in [90, 180] and beta != 0:
+                    continue
                 try:
                     new_strct0, new_guest0 = _add_mol(
                         structure,
@@ -327,8 +326,10 @@ def add_structure_coord(
                 origin,
             )
 
-        for alpha, beta in product(np.linspace(-180, 180, num=num1, endpoint=False), repeat=2):
-            for gamma in np.linspace(0, 180, num=num2, endpoint=False):
+        for alpha, beta in product(np.arange(-180, 180, constrain_steps), repeat=2):
+            for gamma in np.arange(0, 180, constrain_steps):
+                if alpha in [90, 180] and beta != 0:
+                    continue
                 new_guest0 = rotate_structure(
                     new_guest,
                     [alpha, beta, gamma],
@@ -419,6 +420,9 @@ def add_structure_position(
         guest_positions += np.array(position)
     elif all([isinstance(pos, (list, tuple)) for pos in position]):
         guest_positions = np.array(position)
+    else:
+        raise ValueError(f"{type(position)} is not supported.")
+
     guest_strct0 = copy.deepcopy(guest_strct)
     guest_strct0.set_positions(guest_positions)
 
