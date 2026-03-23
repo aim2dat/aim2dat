@@ -306,9 +306,28 @@ def test_add_structure_coord_molecules_2(structure_comparison):
     structure_comparison(new_strct, ref_p)
 
 
-# def test_add_structure_coord_single_atom():
-#     strct = Structure.from_file(STRUCTURES_PATH + "Benzene.yaml", backend="internal")
-#     print(strct)
+def test_add_structure_coord_molecules_3(structure_comparison):
+    """
+    Test add_structure_coord for the case that the bond of the
+    guest molecule is not detected.
+    """
+    host_strct = Structure.from_str("H2O")
+    guest_strct = Structure(
+        elements=["H", "H"],
+        positions=[[0.0, 0.0, 0.0], [1.0, 0.0, 0.0]],
+        pbc=False
+    )
+    new_strct = add_structure_coord(
+        host_strct,
+        guest_structure=guest_strct,
+        host_indices=0,
+        guest_indices=0,
+        bond_length=1.0,
+    )
+    ref_strct = host_strct.to_dict()
+    ref_strct["elements"] = list(ref_strct["elements"]) + ["H", "H"]
+    ref_strct["positions"] = list(ref_strct["positions"]) + [[-1.0, 0.0, 0.0], [-2.0, 0.0, 0.0]]
+    structure_comparison(new_strct, ref_strct)
 
 
 def test_add_structure_random_molecule(structure_comparison):
@@ -424,7 +443,7 @@ def test_translate_structure(structure_comparison):
     strct = Structure.from_file(STRUCTURES_PATH + "Benzene.yaml", backend="internal")
     strct.label = "Test"
     ref_strct = strct.copy()
-    ref_strct.label = "Test_translated-[1.0, 0.4, 0.6]"
+    ref_strct.label = "Test_translated-[1.00,0.40,0.60]"
     ref_strct.set_positions([np.array(pos) + vector for pos in ref_strct.positions])
     new_strct = translate_structure(strct, vector=vector, change_label=True)
     structure_comparison(new_strct, ref_strct)

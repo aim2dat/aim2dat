@@ -232,9 +232,6 @@ def add_structure_coord(
         )
         guest_dir *= -1.0
         guest_strct.set_positions(np.array(guest_strct.positions) - guest_center)
-    guest_dir /= np.linalg.norm(np.array(guest_dir))
-
-    # Calculate coordination:
 
     # Derive bond directions
     bond_dir, host_center, host_positions = _derive_bond(
@@ -487,10 +484,16 @@ def _derive_bond(structure, index, cn_kwargs, bond_length=None):
                 dists = np.linalg.norm(diffs, axis=1)
                 if min(dists) > max_dist:
                     bond_dir = cross_dir
-        bond_dir *= -1.0 / np.linalg.norm(bond_dir)
+        norm_bond_dir = np.linalg.norm(bond_dir)
+        if norm_bond_dir > 1e-1:
+            bond_dir *= -1.0 / norm_bond_dir
         bond_direction += bond_dir
     bond_position_center = np.mean(np.array(bond_positions), axis=0)
-    bond_direction /= np.linalg.norm(bond_direction)
+    norm_bond_direction = np.linalg.norm(bond_direction)
+    if norm_bond_direction > 1e-1:
+        bond_direction /= norm_bond_direction
+    else:
+        bond_direction = np.array([-1.0, 0.0, 0.0])
     return bond_direction, bond_position_center, bond_positions
 
 
