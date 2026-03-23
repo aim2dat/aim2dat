@@ -313,9 +313,7 @@ def test_add_structure_coord_molecules_3(structure_comparison):
     """
     host_strct = Structure.from_str("H2O")
     guest_strct = Structure(
-        elements=["H", "H"],
-        positions=[[0.0, 0.0, 0.0], [1.0, 0.0, 0.0]],
-        pbc=False
+        elements=["H", "H"], positions=[[0.0, 0.0, 0.0], [1.0, 0.0, 0.0]], pbc=False
     )
     new_strct = add_structure_coord(
         host_strct,
