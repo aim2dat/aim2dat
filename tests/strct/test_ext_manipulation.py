@@ -400,6 +400,14 @@ def test_add_structure_position(structure_comparison):
     ref_p = read_yaml_file(REF_PATH + "add_structure_position_PBI3+CN2H5.yaml")
     structure_comparison(new_strct, ref_p)
 
+    new_strct = add_structure_position(
+        Structure(**inputs[0]),
+        position=[[2.5176, 3.2442, 3.2515], [3.2576, 3.2442, 3.2515]],
+        guest_structure="H2",
+    )
+    ref_p = read_yaml_file(REF_PATH + "add_structure_position_PBI3+H2.yaml")
+    structure_comparison(new_strct, ref_p)
+
     with pytest.raises(DistanceThresholdError) as error:
         new_strct = add_structure_position(
             Structure(**inputs[0]),
