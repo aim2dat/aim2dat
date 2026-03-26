@@ -11,14 +11,6 @@ cell:
 - [0.0, 13.041294, 13.041294]
 - [13.041294, 0.0, 13.041294]
 - [13.041294, 13.041294, 0.0]
-kinds: [null, null, null, null, null, null, null, null, null, null, null, null, null,
-  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-  null, null, null, null, null, null, null, null, null, null, null, null, null, null,
-  null, null, null, null, null, null, null, null, null, null, null, null]
 site_attributes: {}
 attributes: {}
 positions:
@@ -128,6 +120,6 @@ positions:
 - [14.29402353, 18.04404841, 21.07983358]
 - [1.25272953, 8.03853959, 8.03853959]
 - [24.82985846, 18.04404841, 18.04404841]
-- [9.258652412134413, 9.258652412134413, 3.782641590808662]
-- [9.160271926183254, 10.19503616969513, 3.6037578336911347]
-- [10.034957584727893, 9.000193341216015, 3.2836006629634533]
+- [9.258652412134413, 9.258652412134413, 3.7826415908086624]
+- [10.034957584727893, 9.000193341216017, 3.283600662963456]
+- [9.160271926183256, 10.195036169695134, 3.6037578336911356]

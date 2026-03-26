@@ -232,9 +232,6 @@ def add_structure_coord(
         )
         guest_dir *= -1.0
         guest_strct.set_positions(np.array(guest_strct.positions) - guest_center)
-    guest_dir /= np.linalg.norm(np.array(guest_dir))
-
-    # Calculate coordination:
 
     # Derive bond directions
     bond_dir, host_center, host_positions = _derive_bond(
@@ -280,17 +277,16 @@ def add_structure_coord(
     new_indices = list(range(len(new_structure) - len(guest_strct), len(new_structure)))
 
     # Optimize positions to reduce score
-    # Numbers for the grid search
-    num1 = round(360 / constrain_steps)
-    num2 = round(num1 / 2)
     score = _check_distances(new_structure, new_indices, None, dist_dict, True, True)
     # If the distance threshold does not hold, a grid search will be performed.
     # The grid is based on `constrain_steps` and rotates the molecule around `host_indices` within
     # a sphere with the ´bond_distance´ as rotation vector.
     if isinstance(score, bool) and not score:
         score = score if score else float("inf")
-        for alpha in np.linspace(-180, 180, num=num1, endpoint=False):
-            for beta in np.linspace(0, 180, num=num2, endpoint=False):
+        for alpha in np.arange(-180, 180, constrain_steps):
+            for beta in np.arange(0, 180, constrain_steps):
+                if alpha == beta == 0 or alpha in [90, 180] and beta != 0:
+                    continue
                 try:
                     new_strct0, new_guest0 = _add_mol(
                         structure,
@@ -327,8 +323,10 @@ def add_structure_coord(
                 origin,
             )
 
-        for alpha, beta in product(np.linspace(-180, 180, num=num1, endpoint=False), repeat=2):
-            for gamma in np.linspace(0, 180, num=num2, endpoint=False):
+        for alpha, beta in product(np.arange(-180, 180, constrain_steps), repeat=2):
+            for gamma in np.arange(0, 180, constrain_steps):
+                if alpha in [90, 180] and beta != 0:
+                    continue
                 new_guest0 = rotate_structure(
                     new_guest,
                     [alpha, beta, gamma],
@@ -357,7 +355,7 @@ def add_structure_coord(
 @external_manipulation_method
 def add_structure_position(
     structure: Structure,
-    position: List[float],
+    position: Union[list, float],
     guest_structure: Union[Structure, str] = "CH3",
     wrap: bool = False,
     dist_threshold: Union[dict, list, float, int, str, None] = None,
@@ -370,8 +368,10 @@ def add_structure_position(
     ----------
     structure : aim2dat.strct.Structure
         Structure to which the guest structure is added.
-    position : list of floats
-        Position of the guest structure.
+    position : list of floats or list of lists of floats
+        Position of the guest structure. If list with xyz is given the center of the molecule will
+        be placed at this position.
+        IF a list of lists with xyz is given then the molecule will placed at these positions.
     guest_structure : str or aim2dat.strct.Structure (optional)
         A representation of the guest structure given as a string of a functional group or molecule
         (viable options are ``'CH3'``, ``'COOH'``, ``'H2O'``, ``'NH2'``, ``'NO2'`` or ``'OH'``), a
@@ -410,10 +410,16 @@ def add_structure_position(
     """
     guest_strct, guest_strct_label = _check_guest_structure(guest_structure)
 
-    guest_positions = np.array(guest_strct["positions"])
-    guest_center = np.mean(guest_positions, axis=0)
-    guest_positions -= guest_center
-    guest_positions += np.array(position)
+    if all([isinstance(pos, (int, float)) for pos in position]):
+        guest_positions = np.array(guest_strct["positions"])
+        guest_center = np.mean(guest_positions, axis=0)
+        guest_positions -= guest_center
+        guest_positions += np.array(position)
+    elif all([isinstance(pos, (list, tuple)) for pos in position]):
+        guest_positions = np.array(position)
+    else:
+        raise ValueError(f"{type(position)} is not supported.")
+
     guest_strct0 = copy.deepcopy(guest_strct)
     guest_strct0.set_positions(guest_positions)
 
@@ -487,10 +493,16 @@ def _derive_bond(structure, index, cn_kwargs, bond_length=None):
                 dists = np.linalg.norm(diffs, axis=1)
                 if min(dists) > max_dist:
                     bond_dir = cross_dir
-        bond_dir *= -1.0 / np.linalg.norm(bond_dir)
+        norm_bond_dir = np.linalg.norm(bond_dir)
+        if norm_bond_dir > 1e-1:
+            bond_dir *= -1.0 / norm_bond_dir
         bond_direction += bond_dir
     bond_position_center = np.mean(np.array(bond_positions), axis=0)
-    bond_direction /= np.linalg.norm(bond_direction)
+    norm_bond_direction = np.linalg.norm(bond_direction)
+    if norm_bond_direction > 1e-1:
+        bond_direction /= norm_bond_direction
+    else:
+        bond_direction = np.array([-1.0, 0.0, 0.0])
     return bond_direction, bond_position_center, bond_positions
 
 
