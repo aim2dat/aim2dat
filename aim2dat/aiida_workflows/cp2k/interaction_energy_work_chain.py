@@ -81,7 +81,7 @@ class InteractionEnergyWorkChain(_BaseCoreWorkChain):
 
     _keep_scf_method_fixed = True
     _keep_smearing_fixed = True
-    _initial_scf_guess = "RESTART"
+    _initial_scf_guess = "ATOMIC"
 
     @classmethod
     def define(cls, spec):
