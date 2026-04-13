@@ -113,6 +113,9 @@ class _Cp2kBaseParser(Parser):
         except IOError:
             result_dict = {"io_error": True}
 
+        if self.node.exit_status == 120:
+            result_dict["exceeded_walltime"] = True
+
         if result_dict is None:
             raise OutputParsingError("CP2K version is not supported.")
 

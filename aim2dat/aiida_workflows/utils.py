@@ -174,8 +174,17 @@ def get_workchain_runtime(workchain):
     calcjobs = workchain.base.links.get_outgoing(node_class=aiida_orm.CalcJobNode).all_nodes()
     runtimes = []
     for calc_j in calcjobs:
-        output_parameters = calc_j.outputs["output_parameters"]
-        runtimes.append(output_parameters.get_dict().get("runtime", 0))
+        if calc_j.computer.scheduler_type != "core.slurm":
+            continue
+        scheduler_std_out = calc_j.get_detailed_job_info()["stdout"].lower().split("\n")
+        elapsed_idx = scheduler_std_out[0].split("|").index("elapsed")
+        try:
+            time = scheduler_std_out[-1].split("|")[elapsed_idx]
+            h, m, s = map(int, time.split(":"))
+            runtime = (h * 60 + m) * 60 + s
+        except IndexError:
+            runtime = float("inf")
+        runtimes.append(runtime)
     total_runtime = timedelta(seconds=round(sum(runtimes)))
     return total_runtime
 

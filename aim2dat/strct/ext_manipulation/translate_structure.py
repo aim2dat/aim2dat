@@ -73,4 +73,4 @@ def translate_structure(
     new_structure["positions"] = positions
     new_structure = Structure(**new_structure, wrap=wrap)
     _check_distances(new_structure, site_indices, dist_threshold, None, False)
-    return new_structure, f"_translated-{[round(v, 2) for v in vector]}"
+    return new_structure, "_translated-[" + ",".join(f"{v:3.2f}" for v in vector) + "]"
