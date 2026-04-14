@@ -179,7 +179,11 @@ def get_workchain_runtime(workchain):
         scheduler_std_out = calc_j.get_detailed_job_info()["stdout"].lower().split("\n")
         elapsed_idx = scheduler_std_out[0].split("|").index("elapsed")
         try:
-            time = scheduler_std_out[-1].split("|")[elapsed_idx]
+            # Sometimes, somehow the last row is empty, thus jump to second las row
+            if scheduler_std_out[-1]:
+                time = scheduler_std_out[-1].split("|")[elapsed_idx]
+            else:
+                time = scheduler_std_out[-2].split("|")[elapsed_idx]
             h, m, s = map(int, time.split(":"))
             runtime = (h * 60 + m) * 60 + s
         except IndexError:
