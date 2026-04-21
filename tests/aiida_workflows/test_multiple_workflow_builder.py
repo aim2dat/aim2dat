@@ -1,4 +1,5 @@
 """Test MultipleWorkflowBuilder class."""
+
 # Standard library imports
 import math
 
