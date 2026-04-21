@@ -175,6 +175,7 @@ nbsphinx_allow_errors = False
 # -- Options for HTML output -------------------------------------------------
 
 html_theme = "sphinx_immaterial"
+html_logo = "Images/aim2dat_white.svg"
 html_theme_options = {
     "font": False,
     "icon": {
