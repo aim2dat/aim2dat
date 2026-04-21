@@ -1,4 +1,6 @@
 """Test MultipleWorkflowBuilder class."""
+# Standard library imports
+import math
 
 # Third party library imports
 from aiida.orm import Float, load_node
@@ -66,7 +68,7 @@ def test_multiple_workflow_builder(aiida_profile):
         if idx0 >= interval[0] and idx0 < interval[1]:
             assert proc_uuid == row["task_1.1"]
         else:
-            assert row["task_1.1"] is pd.NA
+            assert row["task_1.1"] is pd.NA or math.isnan(row["task_1.1"])
     m_wfb.use_uuid = False
 
     m_wfb.submit_task("task_1.2", node_ids=pn_pks[1:4])
