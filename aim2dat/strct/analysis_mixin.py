@@ -319,7 +319,6 @@ class AnalysisMixin:
         voronoi_weight_type: float = "rel_solid_angle",
         voronoi_weight_threshold: float = 0.5,
         okeeffe_weight_threshold: float = 0.5,
-        get_statistics: bool = True,
     ) -> Union[dict, list]:
         """
         Calculate coordination environment of each atomic site.
@@ -362,9 +361,6 @@ class AnalysisMixin:
             This parameter is depreciated and will be removed in a future version.
             The original results can be obtained by using the ``voronoi_weight_threshold``
             parameter and setting ``voronoi_weight_type`` to ``'rel_solid_angle'``.
-        get_statistics : bool (optional)
-            If set to ``False`` only the ``'sites'`` list is returned without average/min/max
-            values for the distances and coordination numbers.
 
         Returns
         -------
@@ -384,7 +380,6 @@ class AnalysisMixin:
             "voronoi_weight_type": voronoi_weight_type,
             "voronoi_weight_threshold": voronoi_weight_threshold,
             "okeeffe_weight_threshold": okeeffe_weight_threshold,
-            "get_statistics": get_statistics,
         }
         return self._perform_strct_analysis(calc_coordination, kwargs)
 

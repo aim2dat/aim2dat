@@ -24,6 +24,7 @@ Version 0.5.0
 
 * The ``strct.Structure`` and ``strct.StructureCollection`` now use the ``'internal'`` backend as default to read structures from and write structures to file and the key word argument ``backend_kwargs`` is deprecated and replaced by ``**`` (`PR 189 <https://github.com/aim2dat/aim2dat/pull/189>`_).
 * Slight adjustment in the ``strct.Structure.label`` upon translation manipulation from ``"*_translated-[1.0, 0.4, 0.6]"`` to ``"*_translated-[1.00,0.40,0.60]"`` (`PR #195 <https://github.com/aim2dat/aim2dat/pull/195>`_).
+* Removal of the `get_statistics` kwarg of `strct.Structure.calc_coordination` implemented in `PR #177 <https://github.com/aim2dat/aim2dat/pull/177>`_ to maintain a common interface and avoid recalculation (`PR #197 <https://github.com/aim2dat/aim2dat/pull/197>`_).
 
 
 Version 0.4.0
