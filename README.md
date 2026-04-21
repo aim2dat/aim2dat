@@ -1,6 +1,8 @@
-# aim2dat
+<h1>
+<img src="https://raw.githubusercontent.com/aim2dat/aim2dat/main/logo/aim2dat_w_text.svg" width="300">
+</h1><br>
 
-aim2dat (Automated Ab-Initio Materials Modeling and Data Analysis Toolkit) is a library for pre-, post-processing and data management of ab-initio high-throughput workflows for computational materials science.
+aim2dat (Automated Ab Initio Materials Modeling and Data Analysis Toolkit) is a library for pre-, post-processing and data management of ab initio, high-throughput workflows for computational materials science.
 For further details and documentation, please visit https://aim2dat.github.io.
 
 ## Feature List
