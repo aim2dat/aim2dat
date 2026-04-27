@@ -19,6 +19,7 @@ Version 0.5.0
 * The setter function of ``strct.Structure.cell`` now correctly removes the cell, scaled positions and periodic boundary conditions if set to ``None`` after initialization (`PR #192 <https://github.com/aim2dat/aim2dat/pull/192>`_).
 * ``strct.ext_manipulation.add_structure_coord`` resulted in a ``ValueError`` if no chemical bonds were detected in the guest structure (`PR #195 <https://github.com/aim2dat/aim2dat/pull/195>`_).
 * ``strct.ext_manipulation.add_structure_coord`` redundant rotations are skipped now (`PR #195 <https://github.com/aim2dat/aim2dat/pull/195>`_).
+* The ``strct.Structure.copy`` and ``strct.Structure.__deepcopy__`` functions did falsely not add ``site_attributes`` to the copied object (`PR #201 <https://github.com/aim2dat/aim2dat/pull/201>`_)
 
 **Breaking Changes:**
 
