@@ -36,7 +36,6 @@ def calc_coordination(
     voronoi_weight_type: str,
     voronoi_weight_threshold: float,
     okeeffe_weight_threshold: float,
-    get_statistics: bool,
 ):
     """
     Calculate the coordination of all sites.
@@ -70,7 +69,7 @@ def calc_coordination(
         voronoi_weight_type,
         voronoi_weight_threshold,
     )
-    if isinstance(indices, int):  # TODO move to cell?
+    if isinstance(indices, int):
         indices = [indices]
     if indices is None:
         indices = list(range(len(structure)))
@@ -118,18 +117,16 @@ def calc_coordination(
     method_function = globals()["_coord_calculate_" + method]
     sites = []
     for site_idx in indices:
-        sites.append(_create_site_dict(get_statistics, *method_function(site_idx, *method_args)))
-    if get_statistics:
-        stat_keys = ["distance"]
-        is_optional = [False]
-        if method == "voronoi" and voronoi_weight_type is not None or method == "econ":
-            stat_keys.append("weight")
-            is_optional.append(False)
-        coordination = _calculate_statistical_quantities(structure, sites, stat_keys, is_optional)
-        coordination["sites"] = sites
-        return coordination
-    else:
-        return sites
+        sites.append(_create_site_dict(*method_function(site_idx, *method_args)))
+
+    stat_keys = ["distance"]
+    is_optional = [False]
+    if method == "voronoi" and voronoi_weight_type is not None or method == "econ":
+        stat_keys.append("weight")
+        is_optional.append(False)
+    coordination = _calculate_statistical_quantities(structure, sites, stat_keys, is_optional)
+    coordination["sites"] = sites
+    return coordination
 
 
 def _coord_group_method_args(
@@ -149,7 +146,7 @@ def _coord_group_method_args(
     }
 
 
-def _create_site_dict(get_statistics, structure, site_idx, neighbours, weights=None):
+def _create_site_dict(structure, site_idx, neighbours, weights=None):
     """
     Create dictionary storing information for a specific site.
     """
@@ -175,11 +172,10 @@ def _create_site_dict(get_statistics, structure, site_idx, neighbours, weights=N
         site_dict[neigh_dict["element"]] += 1
         distances.append(float(neighbours[idx][2]))
 
-    if get_statistics:
-        site_dict["total_cn"] = len(distances)
-        site_dict["min_dist"] = min(distances, default=0.0)
-        site_dict["max_dist"] = max(distances, default=0.0)
-        site_dict["avg_dist"] = sum(distances) / len(distances) if len(distances) > 0 else 0.0
+    site_dict["total_cn"] = len(distances)
+    site_dict["min_dist"] = min(distances, default=0.0)
+    site_dict["max_dist"] = max(distances, default=0.0)
+    site_dict["avg_dist"] = sum(distances) / len(distances) if len(distances) > 0 else 0.0
     return site_dict
 
 

@@ -197,7 +197,7 @@ def test_oqmd_interface(structure_comparison):
     ref_structures = read_yaml_file(REF_PATH + "oqmd_Cs2Te.yaml")
     strct_import = StructureImporter()
     strct_collect = strct_import.import_from_oqmd("Cs2Te")
-    assert strct_import._import_details == {"oqmd": [10, ["Cs", "Te"]]}
+    assert strct_import._import_details == {"oqmd": [11, ["Cs", "Te"]]}
     for structure in strct_collect:
         ref_structure = None
         for ref_strct in ref_structures:

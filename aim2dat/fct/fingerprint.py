@@ -77,7 +77,11 @@ class FunctionDiscretizationFingerprint:
         for i, x in enumerate(x_[:-1]):
             x_interp = np.linspace(x, x_[i + 1], 5)
             y_interp = np.interp(x_interp, x_values, y_values)
-            y_integrated.append(np.trapz(y_interp, x_interp))
+            if int(np.__version__.split(".")[0]) > 1:
+                trapz_fct = np.trapezoid
+            else:
+                trapz_fct = np.trapz
+            y_integrated.append(trapz_fct(y_interp, x_interp))
         return x_, y_integrated
 
     def calculate_fingerprint(

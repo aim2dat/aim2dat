@@ -207,17 +207,9 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
     def __deepcopy__(self, memo):
         """Create a deepcopy of the object."""
         copy = Structure(
-            elements=self.elements,
-            positions=self.positions,
-            cell=self.cell,
-            pbc=self.pbc,
             is_cartesian=True,
-            kinds=self.kinds,
-            attributes=self.attributes,
-            extras=self.extras,
-            function_args=self.function_args,
-            label=self.label,
             store_calculated_properties=self.store_calculated_properties,
+            **{key: getattr(self, key) for key in self.keys()},
         )
         memo[id(self)] = copy
         return copy

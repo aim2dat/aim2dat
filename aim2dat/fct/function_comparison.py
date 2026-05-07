@@ -215,7 +215,12 @@ class FunctionAnalysis:
         x_data = data.get("x_values")
         y_data = data.get("y_values")
 
-        area = np.trapz(y_data, x_data)
+        if int(np.__version__.split(".")[0]) > 1:
+            trapz_fct = np.trapezoid
+        else:
+            trapz_fct = np.trapz
+
+        area = trapz_fct(y_data, x_data)
 
         return area
 
