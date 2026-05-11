@@ -5,7 +5,7 @@ title: cp2k-adsorption-hybrid
 version: '1.0'
 description: Hybrid settings to calculated the adsorption properties.
 dependencies:
-- [aiida-core, '2.7', Null]
+- [aiida-core, '2.5', Null]
 parent_node_type: core.structure
 parent_node_input:
   find_scf_parameters: structural_p.structure
