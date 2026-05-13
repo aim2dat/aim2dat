@@ -2,10 +2,10 @@
 ---
 protocol:
   title: cp2k-crystal-mofs
-  version: '3.0'
+  version: '4.0'
   description: Settings to calculate metal-organic frameworks.
   dependencies:
-  - [aiida-core, '2.7', Null]
+  - [aiida-core, '2.5', Null]
   parent_node_type: core.structure
   parent_node_input:
     find_scf_parameters: structural_p.structure
@@ -85,20 +85,10 @@ protocol:
             BASIS_SET_FILE_NAME: BASIS_MOLOPT_UZH
             POTENTIAL_FILE_NAME: POTENTIALS_UZH
             QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
-            SCF: {EPS_SCF: 5.0e-7}
-            KPOINTS:
-              EPS_GEO: 1.0E-8
+            SCF: {EPS_SCF: 1.0e-5}
             XC: {}
           SUBSYS:
             CELL: {PERIODIC: XYZ}
-      aiida_node: true
-      tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt, band_structure, eigenvalues, pdos, partial_charges]
-    numerical_p.kpoints_ref_dist:
-      value: 0.20
-      aiida_node: true
-      tasks: [find_scf_parameters, unit_cell_opt, band_structure, partial_charges]
-    factor_unocc_states:
-      value: 0.75
       aiida_node: true
       tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt, band_structure, eigenvalues, pdos, partial_charges]
     enable_roks:
@@ -106,30 +96,18 @@ protocol:
       aiida_node: true
       tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt, band_structure, eigenvalues, pdos, partial_charges]
     scf_method:
-      value: density_mixing
+      value: orbital_transformation
       aiida_node: true
       tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt, band_structure, eigenvalues, pdos, partial_charges]
     adjust_scf_parameters:
       value: true
       aiida_node: true
       tasks: [unit_cell_preopt, unit_cell_opt, band_structure, eigenvalues, pdos, partial_charges]
-    always_add_unocc_states:
-      value: true
-      aiida_node: true
-      tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt, partial_charges]
     max_iterations:
       value: 100
       aiida_node: true
       compare: False
       tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt, band_structure, eigenvalues, pdos, partial_charges]
-    optimization_p.keep_angles:
-      value: true
-      aiida_node: true
-      tasks: [unit_cell_preopt, unit_cell_opt]
-    numerical_p.kpoints_ref_dist->unit_cell_preopt:
-      value: 0.40
-      aiida_node: true
-      compare: false
     optimization_p.max_force->unit_cell_preopt:
       value: 0.005
       aiida_node: true
@@ -144,22 +122,16 @@ protocol:
     optimization_p.pressure_tolerance->unit_cell_opt:
       value: 100.0
       aiida_node: true
-    numerical_p.kpoints_ref_dist->eigenvalues:
-      value: 0.1
-      aiida_node: true
     minimum_cell_length->pdos:
       value: 25.0
       aiida_node: true
     maximum_cell_length->pdos:
       value: 40.0
       aiida_node: true
-    resolve_atoms->pdos:
-      value: true
-      aiida_node: true
     critic2.parameters->partial_charges:
       value:
       - crystal aiida-ELECTRON_DENSITY-1_0.cube
-      - load aiida-ELECTRON_DENSITY-1_0.cube core zpsp
+      - load aiida-ELECTRON_DENSITY-1_0.cube zpsp
       - load aiida-ELECTRON_DENSITY-1_0.cube
       - integrable 2
       - yt
@@ -231,6 +203,16 @@ protocol:
       optional: true
       compare: false
       tasks: [unit_cell_preopt]
+    resolve_atoms->pdos:
+      validation: aim2dat.cp2k.pdos
+      aiida_node: true
+      optional: true
+      compare: false
+    ldos->pdos:
+      validation: aim2dat.cp2k.pdos
+      aiida_node: true
+      optional: true
+      compare: false
     cp2k.code:
       validation: aim2dat.cp2k.find_scf_p
       aiida_node: true
@@ -361,11 +343,11 @@ user_input:
 general_input:
   cp2k.parameters:
     value:
-      GLOBAL: 
+      GLOBAL:
         PRINT_LEVEL: MEDIUM
         PREFERRED_DIAG_LIBRARY: SCALAPACK
         EXTENDED_FFT_LENGTHS: true
-      FORCE_EVAL: 
+      FORCE_EVAL:
         METHOD: Quickstep
         STRESS_TENSOR: ANALYTICAL
         DFT:
@@ -374,9 +356,7 @@ general_input:
           BASIS_SET_FILE_NAME: BASIS_MOLOPT_UZH
           POTENTIAL_FILE_NAME: POTENTIALS_UZH
           QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
-          SCF: {EPS_SCF: 5.0e-7}
-          KPOINTS:
-            EPS_GEO: 1.0E-8
+          SCF: {EPS_SCF: 1.0e-5}
           XC: {}
         SUBSYS:
           CELL: {PERIODIC: XYZ}
@@ -385,22 +365,14 @@ general_input:
     unstored: false
     compare: true
     optional: false
-  numerical_p.kpoints_ref_dist: {value: 0.2, aiida_node: true, namespace: false, unstored: false,
-    compare: true, optional: false}
-  factor_unocc_states: {value: 0.75, aiida_node: true, namespace: false, unstored: false,
-    compare: true, optional: false}
   enable_roks: {value: false, aiida_node: true, namespace: false, unstored: false,
     compare: true, optional: false}
-  scf_method: {value: density_mixing, aiida_node: true, namespace: false, unstored: false,
+  scf_method: {value: orbital_transformation, aiida_node: true, namespace: false, unstored: false,
     compare: true, optional: false}
   adjust_scf_parameters: {value: true, aiida_node: true, namespace: false, unstored: false,
     compare: true, optional: false}
-  always_add_unocc_states: {value: true, aiida_node: true, namespace: false, unstored: false,
-    compare: true, optional: false}
   max_iterations: {value: 100, aiida_node: true, compare: false, namespace: false,
     unstored: false, optional: false}
-  optimization_p.keep_angles: {value: true, aiida_node: true, namespace: false, unstored: false,
-    compare: true, optional: false}
 Individual_input:
   find_scf_parameters: {}
   unit_cell_preopt:
@@ -416,8 +388,6 @@ Individual_input:
     numerical_p.basis_file: {validation: aim2dat.cp2k.find_scf_p, aiida_node: true,
       optional: true, compare: false, namespace: false, value: null, unstored: false,
       user_input: true}
-    numerical_p.kpoints_ref_dist: {value: 0.4, aiida_node: true, compare: false, namespace: false,
-      unstored: false, optional: false, user_input: false}
     optimization_p.max_force: {value: 0.005, aiida_node: true, compare: false, namespace: false,
       unstored: false, optional: false, user_input: false}
     optimization_p.pressure_tolerance: {value: 200.0, aiida_node: true, compare: false,
@@ -428,20 +398,18 @@ Individual_input:
     optimization_p.pressure_tolerance: {value: 100.0, aiida_node: true, namespace: false,
       unstored: false, compare: true, optional: false, user_input: false}
   band_structure: {}
-  eigenvalues:
-    numerical_p.kpoints_ref_dist: {value: 0.1, aiida_node: true, namespace: false,
-      unstored: false, compare: true, optional: false, user_input: false}
+  eigenvalues: {}
   pdos:
+    ldos: {validation: aim2dat.cp2k.pdos, aiida_node: true, optional: true, compare: false, namespace: false, value: null, unstored: false, user_input: true}
     minimum_cell_length: {value: 25.0, aiida_node: true, namespace: false, unstored: false,
       compare: true, optional: false, user_input: false}
     maximum_cell_length: {value: 40.0, aiida_node: true, namespace: false, unstored: false,
       compare: true, optional: false, user_input: false}
-    resolve_atoms: {value: true, aiida_node: true, namespace: false, unstored: false,
-      compare: true, optional: false, user_input: false}
+    resolve_atoms: {validation: aim2dat.cp2k.pdos, aiida_node: True, optional: True, compare: False, namespace: False, value: null, unstored: False, user_input: True}
   partial_charges:
     critic2.parameters:
       value: [crystal aiida-ELECTRON_DENSITY-1_0.cube, load aiida-ELECTRON_DENSITY-1_0.cube
-          core zpsp, load aiida-ELECTRON_DENSITY-1_0.cube, integrable 2, yt]
+          zpsp, load aiida-ELECTRON_DENSITY-1_0.cube, integrable 2, yt]
       dependency: critic2.code
       aiida_node: true
       namespace: false
@@ -465,8 +433,7 @@ tasks:
     inputs: [scf_extended_system, numerical_p.xc_functional,
       numerical_p.cutoff_values, numerical_p.basis_sets, numerical_p.pseudo_file,
       numerical_p.basis_file, cp2k.code, cp2k.metadata, clean_workdir, cp2k.parameters, 
-      numerical_p.kpoints_ref_dist, factor_unocc_states, enable_roks, scf_method,
-      always_add_unocc_states, max_iterations]
+      enable_roks, scf_method, max_iterations]
     dependencies: {}
     blacklist_inputs: [custom_scf_method]
   unit_cell_preopt:
@@ -474,9 +441,9 @@ tasks:
     parent_node: structural_p.structure
     inputs: [scf_extended_system, numerical_p.xc_functional, numerical_p.cutoff_values, 
       numerical_p.basis_sets, numerical_p.pseudo_file, numerical_p.basis_file, ignore_convergence_failure, cp2k.code, 
-      cp2k.metadata, clean_workdir, cp2k.parameters, factor_unocc_states, enable_roks, 
-      scf_method, adjust_scf_parameters, always_add_unocc_states, max_iterations, optimization_p.keep_angles, 
-      numerical_p.kpoints_ref_dist, optimization_p.max_force, optimization_p.pressure_tolerance]
+      cp2k.metadata, clean_workdir, cp2k.parameters, enable_roks, 
+      scf_method, adjust_scf_parameters, max_iterations, 
+      optimization_p.max_force, optimization_p.pressure_tolerance]
     dependencies:
       find_scf_parameters:
       - [scf_parameters, structural_p.scf_parameters]
@@ -485,9 +452,9 @@ tasks:
     process: aim2dat.cp2k.cell_opt
     inputs: [scf_extended_system, numerical_p.xc_functional, numerical_p.cutoff_values, 
       numerical_p.basis_sets, numerical_p.pseudo_file, numerical_p.basis_file, cp2k.code, 
-      cp2k.metadata, clean_workdir, cp2k.parameters, numerical_p.kpoints_ref_dist, factor_unocc_states, 
-      enable_roks, scf_method, adjust_scf_parameters, always_add_unocc_states, max_iterations, 
-      optimization_p.keep_angles, optimization_p.max_force, optimization_p.pressure_tolerance]
+      cp2k.metadata, clean_workdir, cp2k.parameters, 
+      enable_roks, scf_method, adjust_scf_parameters, max_iterations, 
+      optimization_p.max_force, optimization_p.pressure_tolerance]
     dependencies:
       unit_cell_preopt:
       - [cp2k.output_structure, structural_p.structure]
@@ -498,7 +465,7 @@ tasks:
     inputs: [path_parameters, scf_extended_system, numerical_p.xc_functional,
       numerical_p.cutoff_values, numerical_p.basis_sets, numerical_p.pseudo_file,
       numerical_p.basis_file, cp2k.code, cp2k.metadata, clean_workdir, cp2k.parameters, 
-      numerical_p.kpoints_ref_dist, factor_unocc_states, enable_roks, scf_method, adjust_scf_parameters,
+      enable_roks, scf_method, adjust_scf_parameters,
       max_iterations]
     dependencies:
       unit_cell_opt:
@@ -511,8 +478,8 @@ tasks:
     inputs: [scf_extended_system, numerical_p.xc_functional,
       numerical_p.cutoff_values, numerical_p.basis_sets, numerical_p.pseudo_file,
       numerical_p.basis_file, cp2k.code, cp2k.metadata, clean_workdir, cp2k.parameters, 
-      factor_unocc_states, enable_roks, scf_method, adjust_scf_parameters,
-      max_iterations, numerical_p.kpoints_ref_dist]
+      enable_roks, scf_method, adjust_scf_parameters,
+      max_iterations]
     dependencies:
       unit_cell_opt:
       - [cp2k.output_structure, structural_p.structure]
@@ -523,9 +490,9 @@ tasks:
     process: aim2dat.cp2k.pdos
     inputs: [scf_extended_system, numerical_p.xc_functional,
       numerical_p.cutoff_values, numerical_p.basis_sets, numerical_p.pseudo_file,
-      numerical_p.basis_file, cp2k.code, cp2k.metadata, clean_workdir, cp2k.parameters, 
-      factor_unocc_states, enable_roks, scf_method, adjust_scf_parameters,
-      max_iterations, minimum_cell_length, maximum_cell_length, resolve_atoms]
+      numerical_p.basis_file, resolve_atoms, ldos, cp2k.code, cp2k.metadata, clean_workdir, cp2k.parameters, 
+      enable_roks, scf_method, adjust_scf_parameters,
+      max_iterations, minimum_cell_length, maximum_cell_length]
     dependencies:
       unit_cell_opt:
       - [cp2k.output_structure, structural_p.structure]
@@ -537,8 +504,8 @@ tasks:
       numerical_p.cutoff_values, numerical_p.basis_sets, numerical_p.pseudo_file,
       numerical_p.basis_file, cp2k.code, cp2k.metadata, critic2.code, critic2.metadata, 
       chargemol.code, chargemol.metadata, chargemol.path_atomic_densities, clean_workdir, 
-      cp2k.parameters, numerical_p.kpoints_ref_dist, factor_unocc_states, enable_roks, 
-      scf_method, adjust_scf_parameters, always_add_unocc_states, max_iterations, critic2.parameters, 
+      cp2k.parameters, enable_roks, 
+      scf_method, adjust_scf_parameters, max_iterations, critic2.parameters, 
       chargemol.parameters]
     dependencies:
       unit_cell_opt:
