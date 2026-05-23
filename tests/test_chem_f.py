@@ -42,6 +42,7 @@ def test_transformations(formula_dict, formula_str, formula_lat_str, formula_lis
         ("HOH", {"H": 2.0, "O": 1.0}),
         ("H.5(CO)CH3{OH[CH]4}3.5", {"C": 16.0, "O": 4.5, "H": 21.0}),
         ("(OH)2CH34", {"O": 2.0, "H": 36.0, "C": 1.0}),
+        ("(C38H34P2)MnBr4", {"Br": 4.0, "C": 38.0, "H": 34.0, "Mn": 1.0, "P": 2.0})
     ],
 )
 def test_str_transformations(formula_str, formula_dict):
