@@ -46,7 +46,7 @@ def transform_str_to_dict(formula_str):
         for idx, char in enumerate(formula_str):
             if char in ("(", "[", "{"):
                 stack.append(idx)
-            elif char in (")", "]", "}"):
+            elif idx > 0 and char in (")", "]", "}"):
                 group_st = stack.pop()
                 if len(stack) > 0:
                     continue
