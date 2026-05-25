@@ -1,5 +1,6 @@
 parameters: {file_format: xyz, backend: internal}
 structure:
+  label: test
   elements: [H, O]
   positions: [[0.0, 0.0, 0.0], [1.0, 1.0, 1.0]]
   cell: [[2.5, 0.0, 0.0], [0.0, 2.5, 0.0], [0.0, 0.0, 2.5]]
