@@ -1,0 +1,32 @@
+%YAML 1.2
+---
+parameters: {}
+structure:
+  label:
+  elements: [Si, Si]
+  pbc: [true, true, true]
+  cell:
+  - [0.0, 2.692000668258526, 2.692000668258526]
+  - [2.692000668258526, 0.0, 2.692000668258526]
+  - [2.692000668258526, 2.692000668258526, 0.0]
+  kinds: [null, null]
+  site_attributes:
+    atomic_charges: [0.0, 0.0]
+  attributes:
+    cube:
+      title: -Quickstep-
+      comment: WAVEFUNCTION            3  spin            1  i.e. HOMO -           -1
+      origin: [0.0, 0.0, 0.0]
+      n_values: 3
+      shape: [2, 2, 2]
+      dset_ids: [10, 20, 30]
+      data_start: 493
+      data:
+      - - [[0.0, 1.0, 2.0], [3.0, 4.0, 5.0]]
+        - [[6.0, 7.0, 0.0], [1.0, 2.0, 3.0]]
+      - - [[4.0, 5.0, 6.0], [7.0, 0.0, 1.0]]
+        - [[2.0, 3.0, 4.0], [5.0, 6.0, 7.0]]
+  positions:
+  - [0.0, 0.0, 0.0]
+  - [1.3459998049520532, 1.3459998049520532, 1.3459998049520532]
+

@@ -304,6 +304,17 @@ def test_cell_setter_and_wrap_positions(structure_comparison):
         ("cif", STRUCTURES_PATH + "ZIF-8.cif", "test.cif"),
         ("fhiaims", IO_PATH + "fhiaims/geometry.in", "geometry.in"),
         ("fhiaims_atom_frac", IO_PATH + "fhiaims_atom_frac/geometry.in", None),
+        ("gaussian_cube", IO_PATH + "gaussian_cube/Si_crystal_wfn_03_1.cube", "test.cube"),
+        (
+            "gaussian_cube_w_dset",
+            IO_PATH + "gaussian_cube_w_dset/Si_crystal_wfn_03_1.cube",
+            "test.cube",
+        ),
+        (
+            "gaussian_cube_nvals",
+            IO_PATH + "gaussian_cube_nvals/Si_crystal_wfn_03_1.cube",
+            "test.cube",
+        ),
         ("zeo", IO_PATH + "zeo/Cs2Te_62_prim.cssr", "test.cssr"),
         ("zeo", IO_PATH + "zeo/Cs2Te_62_prim.cuc", "test.cuc"),
         ("zeo", IO_PATH + "zeo/Cs2Te_62_prim.v1", "test.v1"),
@@ -313,7 +324,9 @@ def test_cell_setter_and_wrap_positions(structure_comparison):
         ("xyz_crystal", IO_PATH + "xyz_crystal/crystal.xyz", "test.xyz"),
     ],
 )
-def test_internal_io(tmpdir, structure_comparison, system, read_path, write_file_name):
+def test_internal_io(
+    tmpdir, structure_comparison, nested_dict_comparison, system, read_path, write_file_name
+):
     """Test internal structure parsers."""
     ref = read_yaml_file(IO_PATH + system + "/ref.yaml")
 
@@ -323,6 +336,8 @@ def test_internal_io(tmpdir, structure_comparison, system, read_path, write_file
         assert file.read() == open(read_path, "r").read()
     structure = Structure.from_file(read_path, **ref["parameters"])
     structure_comparison(structure, ref["structure"])
+    if "attributes" in ref["structure"]:
+        nested_dict_comparison(structure.attributes, ref["structure"]["attributes"])
 
 
 def test_internal_io_str_input(structure_comparison):

@@ -7,7 +7,7 @@ Version 0.5.0
 
 **Enhancements:**
 
-* New read/write functions for FHI-aims geometry, cif, xsf, and xyz file formats have been added and interfaced to the ``strct.Structure`` and ``strct.StructureCollection`` classes (`PR 189 <https://github.com/aim2dat/aim2dat/pull/189>`_, `PR 205 <https://github.com/aim2dat/aim2dat/pull/205>`_).
+* New read/write functions for FHI-aims geometry, cif, xsf, xyz, and Gaussian cube file formats have been added and interfaced to the ``strct.Structure`` and ``strct.StructureCollection`` classes (`PR 189 <https://github.com/aim2dat/aim2dat/pull/189>`_, `PR 205 <https://github.com/aim2dat/aim2dat/pull/205>`_, `PR 206 <https://github.com/aim2dat/aim2dat/pull/206>`_).
 * The ``strct.ext_analysis.calc_molecular_fragments`` function has now the option to exclude periodic images via the keyword argument ``include_periodic_images`` (`PR #191 <https://github.com/aim2dat/aim2dat/pull/191>`_).
 * ``strct.ext_manipulation.add_structure_position`` now supports the addition to add molecules at a certain position (`PR #195 <https://github.com/aim2dat/aim2dat/pull/195>`_).
 
