@@ -144,7 +144,7 @@ class GaussianCubeData(Data):
         return data
 
     @classmethod
-    def set_from_file(cls, file_obj):
+    def set_from_file(cls, file_path):
         """
         Set information from existing cube file.
 
@@ -154,7 +154,7 @@ class GaussianCubeData(Data):
             Data object containing the information from the file.
         """
         gdata = GaussianCubeData()
-        strct_dict = read_gaussian_cube_file(file_obj, unit="bohr", get_data=False)
+        strct_dict = read_gaussian_cube_file(file_path, unit="bohr", get_data=False)
         cube_dict = strct_dict["attributes"]["cube"]
         for key in ["title", "comment", "origin", "n_values", "shape", "dset_ids", "data_start"]:
             gdata.base.attributes.set(key, cube_dict[key])
@@ -168,13 +168,13 @@ class GaussianCubeData(Data):
             "atomic_positions",
             [[v + o for v, o in zip(val, cube_dict["origin"])] for val in strct_dict["positions"]],
         )
-
-        file_obj.seek(0)
-        with tempfile.NamedTemporaryFile() as handle:
-            with bz2.open(handle, "wt", compresslevel=9) as bz2_handle:
-                for line in file_obj:
-                    bz2_handle.write(line)
-            handle.flush()
-            handle.seek(0)
-            gdata.base.repository.put_object_from_filelike(handle, gdata._comp_file_name)
+        with open(file_path, "r") as file_obj:
+            file_obj.seek(0)
+            with tempfile.NamedTemporaryFile() as handle:
+                with bz2.open(handle, "wt", compresslevel=9) as bz2_handle:
+                    for line in file_obj:
+                        bz2_handle.write(line)
+                handle.flush()
+                handle.seek(0)
+                gdata.base.repository.put_object_from_filelike(handle, gdata._comp_file_name)
         return gdata
