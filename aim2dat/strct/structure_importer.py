@@ -7,6 +7,8 @@ import itertools
 from typing import List, Union
 import uuid
 
+# Third party library imports
+from tqdm.auto import tqdm
 
 # Internal library imports
 from aim2dat.strct.structure import Structure
@@ -35,13 +37,14 @@ class StructureImporter(ConstraintsMixin):
     """Imports structures from online databases."""
 
     def __init__(
-        self, structures: StructureCollection = None, neglect_elemental_structures: bool = False
+        self, structures: StructureCollection = None, neglect_elemental_structures: bool = False, verbose: bool = True,
     ):
         """Initialize object."""
         if structures is None:
             structures = StructureCollection()
         self.structures = structures
         self.neglect_elemental_structures = neglect_elemental_structures
+        self.verbose = verbose
 
         self._import_details = {}
 
@@ -220,6 +223,44 @@ class StructureImporter(ConstraintsMixin):
             download_kwargs["property_data"].append("initial_structure")
         return self._import_from_odb("mp_openapi", formulas, {}, download_kwargs)
 
+    def import_from_h3(self, exclude_pks: list=(296, 301, 313, 1453, 1463, 1871)):
+        if exclude_pks is None:
+            exclude_pks = []
+        backend_module = _return_ext_interface_modules("hybrid3")
+        all_datasets = backend_module._get_all_datasets()
+
+        if self.verbose:
+            all_datasets = tqdm(all_datasets, desc="Download from hybrid3")
+        strct_counter = 0
+        for ds in all_datasets:
+            if ds["pk"] in exclude_pks:
+                continue
+
+            label = f"h3_{ds['pk']}"
+            if any(label in l for l in self.structures.labels):
+                print(f"Entry for {label} already imported.")
+                continue
+
+            data = backend_module._get_entry_data(ds["pk"])
+            chem_f = transform_str_to_dict(data["system"]["formula"])
+            if self._apply_constraint_checks({"chem_formula": chem_f}, False):
+                strcts = backend_module._get_entry_structures(ds["pk"])
+                if len(strcts) == 0:
+                    continue
+
+                if len(strcts) > 1:
+                    print(f"Found more than one structures for dataset {ds['pk']}")
+                for i, strct in enumerate(strcts):
+                    strct.label = label
+                    if len(strcts) > 1:
+                        strct.label += f"_{i}"
+                    strct.attributes["h3_dataset"] = data
+                    self.structures.append_structure(strct)
+                    strct_counter += 1
+            time.sleep(0.3)
+        _update_import_details(self._import_details, "h3", self.structures[-strct_counter:])
+        return self.structures[-strct_counter:]
+
     def import_from_mofxdb(
         self,
         name: str = None,
@@ -302,6 +343,7 @@ class StructureImporter(ConstraintsMixin):
             store_uptake,
             query_limit,
         )
+        _update_import_details(self._import_details, "h3", structures_collect)
         self.structures += structures_collect
         return structures_collect
 
