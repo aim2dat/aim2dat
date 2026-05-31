@@ -151,6 +151,21 @@ def test_structure_validation():
     assert strct.pbc == (False, False, False)
 
 
+def test_copy(structure_comparison, nested_dict_comparison):
+    """Test deepcopy of structure."""
+    strct1 = Structure.from_str("water")
+    strct1.calc_coordination()
+    strct1.set_attribute("test_attr", 10)
+    strct1.set_site_attribute("test_site_attr", [0, 1, 2])
+    strct1.store_calculated_properties = False
+    strct2 = strct1.copy()
+    assert strct2.store_calculated_properties == strct1.store_calculated_properties
+    structure_comparison(strct1, strct2, compare_site_attrs=True)
+    nested_dict_comparison(strct1.attributes, strct2.attributes)
+    nested_dict_comparison(strct1.extras, strct2.extras)
+    nested_dict_comparison(strct1.function_args, strct2.function_args)
+
+
 def test_to_dict(structure_comparison):
     """Test to_dict function."""
     calc_keys = ["extras", "function_args"]

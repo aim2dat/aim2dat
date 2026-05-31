@@ -2,6 +2,7 @@
 
 # Standard library imports
 import os
+import math
 
 # Third party library imports
 import pytest
@@ -232,7 +233,14 @@ def test_create_pandas_df(
     df_dict = {}
     for column in df.columns:
         if column != "structure":
-            df_dict[column] = [None if value is pd.NA else value for value in df[column]]
+            df_dict[column] = [
+                (
+                    None
+                    if (value is pd.NA or (isinstance(value, float) and math.isnan(value)))
+                    else value
+                )
+                for value in df[column]
+            ]
     nested_dict_comparison(df_dict, ref)
     strct_c_new = StructureCollection.from_pandas_df(df)
     for strct1, strct2 in zip(strct_c, strct_c_new):

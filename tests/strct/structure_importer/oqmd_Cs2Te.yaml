@@ -1,5 +1,24 @@
 %YAML 1.2
 ---
+- label: OQMD_2169063
+  elements: [Cs, Cs, Te]
+  pbc: [true, true, true]
+  cell:
+  - [0.0, 4.493929978, 4.493929978]
+  - [4.493929978, 0.0, 4.493929978]
+  - [4.493929978, 4.493929978, 0.0]
+  source_id: '2169063'
+  source: 'OQMD'
+  icsd_ids: []
+  formation_energy: {value: -1.0362079377777766, unit: eV/atom}
+  stability: {'value': 6.528000000338707e-05, unit: eV/atom}
+  functional: PBE
+  band_gap: {value: 1.956, unit: 'eV'}
+  space_group: 225
+  positions:
+  - [2.246964989, 2.246964989, 2.246964989]
+  - [6.740894966999999, 6.740894966999999, 6.740894966999999]
+  - [0.0, 0.0, 0.0]
 - label: OQMD_6763
   pbc: [true, true, true]
   elements: [Cs, Cs, Cs, Cs, Cs, Cs, Cs, Cs, Te, Te, Te, Te]

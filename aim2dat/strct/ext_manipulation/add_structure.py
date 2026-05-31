@@ -459,8 +459,8 @@ def _derive_bond(structure, index, cn_kwargs, bond_length=None):
     bond_positions = []
     if isinstance(index, int):
         index = [index]
-    coord = structure.calc_coordination(indices=index, get_statistics=False, **cn_kwargs)
-    for idx, cn_details in zip(index, coord):
+    coord = structure.calc_coordination(indices=index, **cn_kwargs)
+    for idx, cn_details in zip(index, coord["sites"]):
         bond_dir = np.zeros(3)
         pos = np.array(cn_details["position"])
         all_pos = np.array(structure.positions)
