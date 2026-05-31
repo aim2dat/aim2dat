@@ -232,18 +232,20 @@ class StructureImporter(ConstraintsMixin):
         if self.verbose:
             all_datasets = tqdm(all_datasets, desc="Download from hybrid3")
         strct_counter = 0
+        systems = {}
         for ds in all_datasets:
             if ds["pk"] in exclude_pks:
                 continue
 
-            label = f"h3_{ds['pk']}"
-            if any(label in l for l in self.structures.labels):
-                print(f"Entry for {label} already imported.")
-                continue
-
             data = backend_module._get_entry_data(ds["pk"])
+            label = f"h3_{data['system']['id']}"
+            # if any(label in l for l in self.structures.labels):
+            #     print(f"Entry for {label} already imported.")
+            #     continue
             chem_f = transform_str_to_dict(data["system"]["formula"])
             if self._apply_constraint_checks({"chem_formula": chem_f}, False):
+                system_data = systems.setdefault(label, {})
+                system_data[ds["pk"]] = data
                 strcts = backend_module._get_entry_structures(ds["pk"])
                 if len(strcts) == 0:
                     continue
@@ -251,10 +253,10 @@ class StructureImporter(ConstraintsMixin):
                 if len(strcts) > 1:
                     print(f"Found more than one structures for dataset {ds['pk']}")
                 for i, strct in enumerate(strcts):
-                    strct.label = label
+                    strct.label = label + "-" + str(ds["pk"])
                     if len(strcts) > 1:
                         strct.label += f"_{i}"
-                    strct.attributes["h3_dataset"] = data
+                    strct.attributes["h3_datasets"] = system_data
                     self.structures.append_structure(strct)
                     strct_counter += 1
             time.sleep(0.3)
