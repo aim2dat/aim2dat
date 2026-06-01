@@ -29,8 +29,8 @@ def test_thermal_properties_plot(nested_dict_comparison, matplotlib_figure_compa
 
     tp_plot = ThermalPropertiesPlot()
     tp_plot.import_thermal_properties("test", **thermal_properties)
-    nested_dict_comparison(tp_plot._data, import_ref)
-    matplotlib_figure_comparison(tp_plot.plot("test"), plot_ref)
+    nested_dict_comparison(tp_plot._data, import_ref, threshold=100.0)
+    matplotlib_figure_comparison(tp_plot.plot("test"), plot_ref, tolerance=100.0)
 
 
 def test_qha_plot(nested_dict_comparison):

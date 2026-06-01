@@ -10,6 +10,7 @@ from typing import TYPE_CHECKING, Union, List
 import numpy as np
 
 # Internal library imports
+from aim2dat.io.base_parser import transform_str_value
 from aim2dat.io.utils import custom_open, read_structure, write_structure
 
 if TYPE_CHECKING:
@@ -57,9 +58,13 @@ def _parse_comment_line(line):
                             values.append(_cut_off_delimiters(substr[: del_pos - 1].strip()))
                             keys.append(_cut_off_delimiters(substr[del_pos:].strip()))
                         break
-        add_pars = {"attributes": {key: val for key, val in zip(keys, values)}}
+        add_pars = {
+            "attributes": {key: transform_str_value(val) for key, val in zip(keys, values)}
+        }
         for attr in list(add_pars["attributes"].keys()):
-            if attr.lower() == "lattice":
+            if attr.lower() == "label":
+                add_pars["label"] = add_pars["attributes"].pop(attr)
+            elif attr.lower() == "lattice":
                 value = add_pars["attributes"].pop(attr).split()
                 if len(value) != 9:
                     raise ValueError("'Lattice' needs to have 9 numbers separated by space.")
@@ -291,6 +296,8 @@ def write_xyz_file(
             comment, column_lines = _create_columns(columns, len(strct))
 
             comment_line += comment
+            if strct.label is not None:
+                comment_line += _check_attribute_value("label", strct.label)
             if include_attributes is not None:
                 for attr in include_attributes:
                     if attr in strct.attributes:

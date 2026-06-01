@@ -7,7 +7,7 @@ Version 0.5.0
 
 **Enhancements:**
 
-* New read/write functions for FHI-aims geometry, cif, xsf, and xyz file formats have been added and interfaced to the ``strct.Structure`` and ``strct.StructureCollection`` classes (`PR 189 <https://github.com/aim2dat/aim2dat/pull/189>`_).
+* New read/write functions for FHI-aims geometry, cif, xsf, xyz, and Gaussian cube file formats have been added and interfaced to the ``strct.Structure`` and ``strct.StructureCollection`` classes (`PR 189 <https://github.com/aim2dat/aim2dat/pull/189>`_, `PR 205 <https://github.com/aim2dat/aim2dat/pull/205>`_, `PR 206 <https://github.com/aim2dat/aim2dat/pull/206>`_).
 * The ``strct.ext_analysis.calc_molecular_fragments`` function has now the option to exclude periodic images via the keyword argument ``include_periodic_images`` (`PR #191 <https://github.com/aim2dat/aim2dat/pull/191>`_).
 * ``strct.ext_manipulation.add_structure_position`` now supports the addition to add molecules at a certain position (`PR #195 <https://github.com/aim2dat/aim2dat/pull/195>`_).
 * New metals are added to ``aiida_workflows.cp2k.parameter_files.basis_sets.yaml`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
@@ -22,9 +22,12 @@ Version 0.5.0
 * ``strct.ext_manipulation.add_structure_coord`` resulted in a ``ValueError`` if no chemical bonds were detected in the guest structure (`PR #195 <https://github.com/aim2dat/aim2dat/pull/195>`_).
 * ``strct.ext_manipulation.add_structure_coord`` redundant rotations are skipped now (`PR #195 <https://github.com/aim2dat/aim2dat/pull/195>`_).
 * The ``strct.Structure.copy`` and ``strct.Structure.__deepcopy__`` functions did falsely not add ``site_attributes`` to the copied object (`PR #201 <https://github.com/aim2dat/aim2dat/pull/201>`_).
+* The ``chem_f.transform_str_to_dict`` function was throwing an error for some corner cases (`PR #204 <https://github.com/aim2dat/aim2dat/pull/204>`_).
+* The ``strct.Structure.copy`` and ``strct.Structure.__deepcopy__`` functions did falsely not add ``site_attributes`` to the copied object (`PR #201 <https://github.com/aim2dat/aim2dat/pull/201>`_).
 * The resubmit loop was fixed in ``aiida_workflows.cp2k.base_core_work_chain`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
 * In the BSSE calculation the fragments were fixed ``aiida_workflows.cp2k.interaction_energy_work_chain``, as well as the scf convergence for each calculation in the BSSE WC in ``io.cp2k.stdout`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
 * The still retrieved runtime error when the last row was empty. Fixed in ``aiida_workflows.utils.get_workchain_runtime`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
+
 **Breaking Changes:**
 
 * The ``strct.Structure`` and ``strct.StructureCollection`` now use the ``'internal'`` backend as default to read structures from and write structures to file and the key word argument ``backend_kwargs`` is deprecated and replaced by ``**`` (`PR 189 <https://github.com/aim2dat/aim2dat/pull/189>`_).
