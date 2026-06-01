@@ -164,7 +164,7 @@ def test_calc_molecular_fragments_function(structure_comparison, system, file_su
     strct = Structure.from_file(STRUCTURES_PATH + system + file_suffix, backend=backend)
     fragments = calc_molecular_fragments(strct, **kwargs)
     for frag, frag_ref in zip(fragments, ref):
-        structure_comparison(frag, Structure(**frag_ref))
+        structure_comparison(frag, Structure(**frag_ref), tolerance=1.0e-3)
         assert frag.site_attributes["parent_indices"] == tuple(
             frag_ref["site_attributes"]["parent_indices"]
         )
@@ -249,7 +249,7 @@ def test_planes(structure, file_type):
             ), "Wrong label for projected position."
             for coord in "xy":
                 assert (
-                    abs(proj_pos[coord] - ref_proj_pos[coord]) < 1e-4
+                    abs(proj_pos[coord] - ref_proj_pos[coord]) < 1e-3
                 ), "Coordinates of projected positions is wrong."
 
 

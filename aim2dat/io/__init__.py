@@ -12,6 +12,7 @@ from aim2dat.io.fhi_aims import (
     read_fhiaims_proj_dos,
     write_fhiaims_geometry_file,
 )
+from aim2dat.io.gaussian_cube import read_gaussian_cube_file, write_gaussian_cube_file
 from aim2dat.io.hdf5 import read_hdf5_structure, write_hdf5_structure
 from aim2dat.io.phonopy import (
     read_phonopy_band_structure,
@@ -49,6 +50,8 @@ __all__ = [
     "read_fhiaims_total_dos",
     "read_fhiaims_proj_dos",
     "write_fhiaims_geometry_file",
+    "read_gaussian_cube_file",
+    "write_gaussian_cube_file",
     "read_hdf5_structure",
     "write_hdf5_structure",
     "read_phonopy_band_structure",
