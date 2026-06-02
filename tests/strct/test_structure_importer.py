@@ -296,3 +296,14 @@ def test_mofxdb_interface(nested_dict_comparison, structure_comparison, system):
         structure_comparison(strct, ref_strct, compare_site_attrs=False)
         nested_dict_comparison(strct.attributes, ref_strct["attributes"])
         nested_dict_comparison(strct.extras, ref_strct["extras"])
+
+
+def test_hybrid3_interface(structure_comparison):
+    """Test Hybrid 3 interface."""
+    ref = read_yaml_file(REF_PATH + "hybrid3.yaml")
+    strct_import = StructureImporter()
+    structures = strct_import.import_from_h3(exclude_pks=[i for i in range(0, 5000) if i not in [2791, 2820]])
+    assert len(structures) == 1
+    structure_comparison(structures[0], ref)
+    for ds_key in ref["attributes"]["h3_datasets"]:
+        assert ds_key in structures[0].attributes["h3_datasets"]

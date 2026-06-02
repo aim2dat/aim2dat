@@ -166,7 +166,7 @@ class StructureImporter(ConstraintsMixin):
         structure_type: str = "initial",
     ) -> StructureCollection:
         """
-        Import structures from the crystal database Materials Project using the pymatgen interface.
+        Import structures from the crystal database Materials Project.
 
         Parameters
         ----------
@@ -224,6 +224,14 @@ class StructureImporter(ConstraintsMixin):
         return self._import_from_odb("mp_openapi", formulas, {}, download_kwargs)
 
     def import_from_h3(self, exclude_pks: list=(296, 301, 313, 1453, 1463, 1871)):
+        """
+        Import structures from the hybrid 3 database.
+
+        Parameters
+        ----------
+        exclude_pks : list
+            List of dataset primary keys that are excluded from the query.
+        """
         if exclude_pks is None:
             exclude_pks = []
         backend_module = _return_ext_interface_modules("hybrid3")
@@ -239,9 +247,6 @@ class StructureImporter(ConstraintsMixin):
 
             data = backend_module._get_entry_data(ds["pk"])
             label = f"h3_{data['system']['id']}"
-            # if any(label in l for l in self.structures.labels):
-            #     print(f"Entry for {label} already imported.")
-            #     continue
             chem_f = transform_str_to_dict(data["system"]["formula"])
             if self._apply_constraint_checks({"chem_formula": chem_f}, False):
                 system_data = systems.setdefault(label, {})
