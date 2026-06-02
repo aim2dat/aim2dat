@@ -302,7 +302,9 @@ def test_hybrid3_interface(structure_comparison):
     """Test Hybrid 3 interface."""
     ref = read_yaml_file(REF_PATH + "hybrid3.yaml")
     strct_import = StructureImporter()
-    structures = strct_import.import_from_h3(exclude_pks=[i for i in range(0, 5000) if i not in [2791, 2820]])
+    structures = strct_import.import_from_h3(
+        exclude_pks=[i for i in range(0, 5000) if i not in [2791, 2820]]
+    )
     assert len(structures) == 1
     structure_comparison(structures[0], ref)
     for ds_key in ref["attributes"]["h3_datasets"]:

@@ -37,7 +37,10 @@ class StructureImporter(ConstraintsMixin):
     """Imports structures from online databases."""
 
     def __init__(
-        self, structures: StructureCollection = None, neglect_elemental_structures: bool = False, verbose: bool = True,
+        self,
+        structures: StructureCollection = None,
+        neglect_elemental_structures: bool = False,
+        verbose: bool = True,
     ):
         """Initialize object."""
         if structures is None:
@@ -223,7 +226,7 @@ class StructureImporter(ConstraintsMixin):
             download_kwargs["property_data"].append("initial_structure")
         return self._import_from_odb("mp_openapi", formulas, {}, download_kwargs)
 
-    def import_from_h3(self, exclude_pks: list=(296, 301, 313, 1453, 1463, 1871)):
+    def import_from_h3(self, exclude_pks: list = (296, 301, 313, 1453, 1463, 1871)):
         """
         Import structures from the hybrid 3 database.
 
