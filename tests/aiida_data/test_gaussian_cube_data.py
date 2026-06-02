@@ -21,11 +21,11 @@ REF_PATH = os.path.dirname(__file__) + "/ref_data/"
 def test_gaussian_cube_data(structure_comparison, nested_dict_comparison, system):
     """Test gaussian cube data type."""
     ref = read_yaml_file(REF_PATH + system + "_ref.yaml")
+    cube_data = GaussianCubeData.set_from_file(CUBE_PATH + system + ".cube")
     with open(CUBE_PATH + system + ".cube", "r") as fobj:
-        cube_data = GaussianCubeData.set_from_file(fobj)
         for idx, (line, ref_line) in enumerate(zip(cube_data.get_content().splitlines(), fobj)):
             assert (
-                line == ref_line
+                line + "\n" == ref_line
             ), f"Retrieved file content does not match original cube file on line {idx}."
 
     # Trigger errors:

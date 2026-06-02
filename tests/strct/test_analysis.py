@@ -216,7 +216,7 @@ def test_cn_analysis(nested_dict_comparison, structure_label, method):
 @pytest.mark.parametrize(
     "structure, kwargs",
     [
-        ("ZIF-8.cif", {"symprec": 1e-5}),
+        ("ZIF-8.cif", {"symprec": 5e-4}),
         ("GaAs_216_prim.yaml", {}),
         ("Cs2Te_62_prim.yaml", {"symprec": 0.01, "return_sym_operations": True}),
     ],

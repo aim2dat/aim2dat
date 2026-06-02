@@ -171,8 +171,7 @@ class _Cp2kBaseParser(Parser):
                             label.append(grp.lower())
                     label = "_".join(label)
                     file_path = os.path.join(retrieved_temporary_folder, file_path)
-                    with open(file_path, "r") as fobj:
-                        g_cube_data = GCubeData.set_from_file(fobj)
+                    g_cube_data = GCubeData.set_from_file(file_path)
                     self.out("output_cubes." + label, g_cube_data)
         return {}
 
