@@ -1,0 +1,3640 @@
+%YAML 1.2
+---
+label: h3_677-2791
+elements: [I, I, I, I, Sn, F, N, H, H, H, C, H, H, C, H, H, C, C, H, C, H, C, C, H,
+  C, H, N, H, H, H, C, H, H, H, N, H, H, H, C, H, H, H, I, I, I, Sn, F, N, H, H, H,
+  C, H, H, C, H, H, C, C, H, C, H, C, C, H, C, H, N, H, H, H, C, H, H, H, N, H, H,
+  H, C, H, H, H, I, I, I, I, Sn, F, N, H, H, H, C, H, H, C, H, H, C, C, H, C, H, C,
+  C, H, C, H, N, H, H, H, C, H, H, H, N, H, H, H, C, H, H, H, I, I, I, Sn, F, N, H,
+  H, H, C, H, H, C, H, H, C, C, H, C, H, C, C, H, C, H, N, H, H, H, C, H, H, H, N,
+  H, H, H, C, H, H, H, I, I, I, I, Sn, F, N, H, H, H, C, H, H, C, H, H, C, C, H, C,
+  H, C, C, H, C, H, N, H, H, H, C, H, H, H, N, H, H, H, C, H, H, H, I, I, I, Sn, F,
+  N, H, H, H, C, H, H, C, H, H, C, C, H, C, H, C, C, H, C, H, N, H, H, H, C, H, H,
+  H, N, H, H, H, C, H, H, H, I, I, I, I, Sn, F, N, H, H, H, C, H, H, C, H, H, C, C,
+  H, C, H, C, C, H, C, H, N, H, H, H, C, H, H, H, N, H, H, H, C, H, H, H, I, I, I,
+  Sn, F, N, H, H, H, C, H, H, C, H, H, C, C, H, C, H, C, C, H, C, H, N, H, H, H, C,
+  H, H, H, N, H, H, H, C, H, H, H]
+pbc: [true, true, true]
+cell:
+- [45.35, 0.0, 0.0]
+- [0.0, 8.6744, 0.0]
+- [-0.7728247581678109, 0.0, 8.745519884670257]
+kinds: [I1, I2, I3, I4, Sn1, F1, N1, H1A, H1B, H1C, C1, H1D, H1E, C2, H2A, H2B, C6,
+  C5, H5, C4, H4, C3, C8, H8, C7, H7, N2, H2C, H2D, H2E, C9, H9A, H9B, H9C, N2A, H2AA,
+  H2AB, H2AC, C9A, H9AA, H9AB, H9AC, I1, I2, I3, Sn1, F1, N1, H1A, H1B, H1C, C1, H1D,
+  H1E, C2, H2A, H2B, C6, C5, H5, C4, H4, C3, C8, H8, C7, H7, N2, H2C, H2D, H2E, C9,
+  H9A, H9B, H9C, N2A, H2AA, H2AB, H2AC, C9A, H9AA, H9AB, H9AC, I1, I2, I3, I4, Sn1,
+  F1, N1, H1A, H1B, H1C, C1, H1D, H1E, C2, H2A, H2B, C6, C5, H5, C4, H4, C3, C8, H8,
+  C7, H7, N2, H2C, H2D, H2E, C9, H9A, H9B, H9C, N2A, H2AA, H2AB, H2AC, C9A, H9AA,
+  H9AB, H9AC, I1, I2, I3, Sn1, F1, N1, H1A, H1B, H1C, C1, H1D, H1E, C2, H2A, H2B,
+  C6, C5, H5, C4, H4, C3, C8, H8, C7, H7, N2, H2C, H2D, H2E, C9, H9A, H9B, H9C, N2A,
+  H2AA, H2AB, H2AC, C9A, H9AA, H9AB, H9AC, I1, I2, I3, I4, Sn1, F1, N1, H1A, H1B,
+  H1C, C1, H1D, H1E, C2, H2A, H2B, C6, C5, H5, C4, H4, C3, C8, H8, C7, H7, N2, H2C,
+  H2D, H2E, C9, H9A, H9B, H9C, N2A, H2AA, H2AB, H2AC, C9A, H9AA, H9AB, H9AC, I1, I2,
+  I3, Sn1, F1, N1, H1A, H1B, H1C, C1, H1D, H1E, C2, H2A, H2B, C6, C5, H5, C4, H4,
+  C3, C8, H8, C7, H7, N2, H2C, H2D, H2E, C9, H9A, H9B, H9C, N2A, H2AA, H2AB, H2AC,
+  C9A, H9AA, H9AB, H9AC, I1, I2, I3, I4, Sn1, F1, N1, H1A, H1B, H1C, C1, H1D, H1E,
+  C2, H2A, H2B, C6, C5, H5, C4, H4, C3, C8, H8, C7, H7, N2, H2C, H2D, H2E, C9, H9A,
+  H9B, H9C, N2A, H2AA, H2AB, H2AC, C9A, H9AA, H9AB, H9AC, I1, I2, I3, Sn1, F1, N1,
+  H1A, H1B, H1C, C1, H1D, H1E, C2, H2A, H2B, C6, C5, H5, C4, H4, C3, C8, H8, C7, H7,
+  N2, H2C, H2D, H2E, C9, H9A, H9B, H9C, N2A, H2AA, H2AB, H2AC, C9A, H9AA, H9AB, H9AC]
+site_attributes:
+  atom_site_u_iso_or_equiv: [0.03908, 0.0496, 0.04151, 0.0471, 0.02788, 0.102, 0.045,
+    0.054, 0.054, 0.054, 0.05, 0.061, 0.061, 0.054, 0.064, 0.064, 0.056, 0.066, 0.079,
+    0.048, 0.058, 0.04, 0.048, 0.057, 0.056, 0.068, 0.041, 0.05, 0.05, 0.05, 0.041,
+    0.062, 0.062, 0.062, 0.041, 0.05, 0.05, 0.05, 0.041, 0.062, 0.062, 0.062, 0.03908,
+    0.0496, 0.04151, 0.02788, 0.102, 0.045, 0.054, 0.054, 0.054, 0.05, 0.061, 0.061,
+    0.054, 0.064, 0.064, 0.056, 0.066, 0.079, 0.048, 0.058, 0.04, 0.048, 0.057, 0.056,
+    0.068, 0.041, 0.05, 0.05, 0.05, 0.041, 0.062, 0.062, 0.062, 0.041, 0.05, 0.05,
+    0.05, 0.041, 0.062, 0.062, 0.062, 0.03908, 0.0496, 0.04151, 0.0471, 0.02788, 0.102,
+    0.045, 0.054, 0.054, 0.054, 0.05, 0.061, 0.061, 0.054, 0.064, 0.064, 0.056, 0.066,
+    0.079, 0.048, 0.058, 0.04, 0.048, 0.057, 0.056, 0.068, 0.041, 0.05, 0.05, 0.05,
+    0.041, 0.062, 0.062, 0.062, 0.041, 0.05, 0.05, 0.05, 0.041, 0.062, 0.062, 0.062,
+    0.03908, 0.0496, 0.04151, 0.02788, 0.102, 0.045, 0.054, 0.054, 0.054, 0.05, 0.061,
+    0.061, 0.054, 0.064, 0.064, 0.056, 0.066, 0.079, 0.048, 0.058, 0.04, 0.048, 0.057,
+    0.056, 0.068, 0.041, 0.05, 0.05, 0.05, 0.041, 0.062, 0.062, 0.062, 0.041, 0.05,
+    0.05, 0.05, 0.041, 0.062, 0.062, 0.062, 0.03908, 0.0496, 0.04151, 0.0471, 0.02788,
+    0.102, 0.045, 0.054, 0.054, 0.054, 0.05, 0.061, 0.061, 0.054, 0.064, 0.064, 0.056,
+    0.066, 0.079, 0.048, 0.058, 0.04, 0.048, 0.057, 0.056, 0.068, 0.041, 0.05, 0.05,
+    0.05, 0.041, 0.062, 0.062, 0.062, 0.041, 0.05, 0.05, 0.05, 0.041, 0.062, 0.062,
+    0.062, 0.03908, 0.0496, 0.04151, 0.02788, 0.102, 0.045, 0.054, 0.054, 0.054, 0.05,
+    0.061, 0.061, 0.054, 0.064, 0.064, 0.056, 0.066, 0.079, 0.048, 0.058, 0.04, 0.048,
+    0.057, 0.056, 0.068, 0.041, 0.05, 0.05, 0.05, 0.041, 0.062, 0.062, 0.062, 0.041,
+    0.05, 0.05, 0.05, 0.041, 0.062, 0.062, 0.062, 0.03908, 0.0496, 0.04151, 0.0471,
+    0.02788, 0.102, 0.045, 0.054, 0.054, 0.054, 0.05, 0.061, 0.061, 0.054, 0.064,
+    0.064, 0.056, 0.066, 0.079, 0.048, 0.058, 0.04, 0.048, 0.057, 0.056, 0.068, 0.041,
+    0.05, 0.05, 0.05, 0.041, 0.062, 0.062, 0.062, 0.041, 0.05, 0.05, 0.05, 0.041,
+    0.062, 0.062, 0.062, 0.03908, 0.0496, 0.04151, 0.02788, 0.102, 0.045, 0.054, 0.054,
+    0.054, 0.05, 0.061, 0.061, 0.054, 0.064, 0.064, 0.056, 0.066, 0.079, 0.048, 0.058,
+    0.04, 0.048, 0.057, 0.056, 0.068, 0.041, 0.05, 0.05, 0.05, 0.041, 0.062, 0.062,
+    0.062, 0.041, 0.05, 0.05, 0.05, 0.041, 0.062, 0.062, 0.062]
+  atom_site_adp_type: [Uani, Uani, Uani, Uani, Uani, Uani, Uani, Uiso, Uiso, Uiso,
+    Uani, Uiso, Uiso, Uani, Uiso, Uiso, Uani, Uani, Uiso, Uani, Uiso, Uani, Uani,
+    Uiso, Uani, Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uiso,
+    Uiso, Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uani, Uani, Uani, Uani, Uani, Uiso,
+    Uiso, Uiso, Uani, Uiso, Uiso, Uani, Uiso, Uiso, Uani, Uani, Uiso, Uani, Uiso,
+    Uani, Uani, Uiso, Uani, Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uiso,
+    Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uani, Uani, Uani, Uani,
+    Uani, Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uani, Uiso, Uiso, Uani, Uani,
+    Uiso, Uani, Uiso, Uani, Uani, Uiso, Uani, Uiso, Uani, Uiso, Uiso, Uiso, Uani,
+    Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uani,
+    Uani, Uani, Uani, Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uani, Uiso, Uiso,
+    Uani, Uani, Uiso, Uani, Uiso, Uani, Uani, Uiso, Uani, Uiso, Uani, Uiso, Uiso,
+    Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uiso,
+    Uani, Uani, Uani, Uani, Uani, Uani, Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso,
+    Uani, Uiso, Uiso, Uani, Uani, Uiso, Uani, Uiso, Uani, Uani, Uiso, Uani, Uiso,
+    Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uiso, Uani,
+    Uiso, Uiso, Uiso, Uani, Uani, Uani, Uani, Uani, Uani, Uiso, Uiso, Uiso, Uani,
+    Uiso, Uiso, Uani, Uiso, Uiso, Uani, Uani, Uiso, Uani, Uiso, Uani, Uani, Uiso,
+    Uani, Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso,
+    Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uani, Uani, Uani, Uani, Uani, Uani, Uiso,
+    Uiso, Uiso, Uani, Uiso, Uiso, Uani, Uiso, Uiso, Uani, Uani, Uiso, Uani, Uiso,
+    Uani, Uani, Uiso, Uani, Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uiso,
+    Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uani, Uani, Uani, Uani,
+    Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uani, Uiso, Uiso, Uani, Uani, Uiso,
+    Uani, Uiso, Uani, Uani, Uiso, Uani, Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uiso,
+    Uiso, Uiso, Uani, Uiso, Uiso, Uiso, Uani, Uiso, Uiso, Uiso]
+  atom_site_occupancy: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+    0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+    0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.25, 0.25, 0.25, 0.25, 0.25,
+    0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.25, 0.25, 0.25,
+    0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+    0.25, 0.25, 0.25, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+    0.25, 0.25, 0.25, 0.25, 0.25, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+    0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25,
+    0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25, 0.25]
+  atom_site_site_symmetry_order: [1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1]
+  atom_site_calc_flag: [d, d, d, d, d, d, d, calc, calc, calc, d, calc, calc, d, calc,
+    calc, d, d, calc, d, calc, d, d, calc, d, calc, d, calc, calc, calc, d, calc,
+    calc, calc, d, calc, calc, calc, d, calc, calc, calc, d, d, d, d, d, d, calc,
+    calc, calc, d, calc, calc, d, calc, calc, d, d, calc, d, calc, d, d, calc, d,
+    calc, d, calc, calc, calc, d, calc, calc, calc, d, calc, calc, calc, d, calc,
+    calc, calc, d, d, d, d, d, d, d, calc, calc, calc, d, calc, calc, d, calc, calc,
+    d, d, calc, d, calc, d, d, calc, d, calc, d, calc, calc, calc, d, calc, calc,
+    calc, d, calc, calc, calc, d, calc, calc, calc, d, d, d, d, d, d, calc, calc,
+    calc, d, calc, calc, d, calc, calc, d, d, calc, d, calc, d, d, calc, d, calc,
+    d, calc, calc, calc, d, calc, calc, calc, d, calc, calc, calc, d, calc, calc,
+    calc, d, d, d, d, d, d, d, calc, calc, calc, d, calc, calc, d, calc, calc, d,
+    d, calc, d, calc, d, d, calc, d, calc, d, calc, calc, calc, d, calc, calc, calc,
+    d, calc, calc, calc, d, calc, calc, calc, d, d, d, d, d, d, calc, calc, calc,
+    d, calc, calc, d, calc, calc, d, d, calc, d, calc, d, d, calc, d, calc, d, calc,
+    calc, calc, d, calc, calc, calc, d, calc, calc, calc, d, calc, calc, calc, d,
+    d, d, d, d, d, d, calc, calc, calc, d, calc, calc, d, calc, calc, d, d, calc,
+    d, calc, d, d, calc, d, calc, d, calc, calc, calc, d, calc, calc, calc, d, calc,
+    calc, calc, d, calc, calc, calc, d, d, d, d, d, d, calc, calc, calc, d, calc,
+    calc, d, calc, calc, d, d, calc, d, calc, d, d, calc, d, calc, d, calc, calc,
+    calc, d, calc, calc, calc, d, calc, calc, calc, d, calc, calc, calc]
+  atom_site_refinement_flags_posn: [., ., ., S, ., ., ., R, R, R, ., R, R, ., R, R,
+    G, G, R, G, R, G, G, R, G, R, D, R, R, R, D, R, R, R, D, R, R, R, D, R, R, R,
+    ., ., ., ., ., ., R, R, R, ., R, R, ., R, R, G, G, R, G, R, G, G, R, G, R, D,
+    R, R, R, D, R, R, R, D, R, R, R, D, R, R, R, ., ., ., S, ., ., ., R, R, R, .,
+    R, R, ., R, R, G, G, R, G, R, G, G, R, G, R, D, R, R, R, D, R, R, R, D, R, R,
+    R, D, R, R, R, ., ., ., ., ., ., R, R, R, ., R, R, ., R, R, G, G, R, G, R, G,
+    G, R, G, R, D, R, R, R, D, R, R, R, D, R, R, R, D, R, R, R, ., ., ., S, ., .,
+    ., R, R, R, ., R, R, ., R, R, G, G, R, G, R, G, G, R, G, R, D, R, R, R, D, R,
+    R, R, D, R, R, R, D, R, R, R, ., ., ., ., ., ., R, R, R, ., R, R, ., R, R, G,
+    G, R, G, R, G, G, R, G, R, D, R, R, R, D, R, R, R, D, R, R, R, D, R, R, R, .,
+    ., ., S, ., ., ., R, R, R, ., R, R, ., R, R, G, G, R, G, R, G, G, R, G, R, D,
+    R, R, R, D, R, R, R, D, R, R, R, D, R, R, R, ., ., ., ., ., ., R, R, R, ., R,
+    R, ., R, R, G, G, R, G, R, G, G, R, G, R, D, R, R, R, D, R, R, R, D, R, R, R,
+    D, R, R, R]
+  atom_site_refinement_flags_adp: [., ., ., T, ., ., ., U, U, U, ., U, U, ., U, U,
+    ., ., U, ., U, ., ., U, ., U, ., U, U, U, ., U, U, U, ., U, U, U, ., U, U, U,
+    ., ., ., ., ., ., U, U, U, ., U, U, ., U, U, ., ., U, ., U, ., ., U, ., U, .,
+    U, U, U, ., U, U, U, ., U, U, U, ., U, U, U, ., ., ., T, ., ., ., U, U, U, .,
+    U, U, ., U, U, ., ., U, ., U, ., ., U, ., U, ., U, U, U, ., U, U, U, ., U, U,
+    U, ., U, U, U, ., ., ., ., ., ., U, U, U, ., U, U, ., U, U, ., ., U, ., U, .,
+    ., U, ., U, ., U, U, U, ., U, U, U, ., U, U, U, ., U, U, U, ., ., ., T, ., .,
+    ., U, U, U, ., U, U, ., U, U, ., ., U, ., U, ., ., U, ., U, ., U, U, U, ., U,
+    U, U, ., U, U, U, ., U, U, U, ., ., ., ., ., ., U, U, U, ., U, U, ., U, U, .,
+    ., U, ., U, ., ., U, ., U, ., U, U, U, ., U, U, U, ., U, U, U, ., U, U, U, .,
+    ., ., T, ., ., ., U, U, U, ., U, U, ., U, U, ., ., U, ., U, ., ., U, ., U, .,
+    U, U, U, ., U, U, U, ., U, U, U, ., U, U, U, ., ., ., ., ., ., U, U, U, ., U,
+    U, ., U, U, ., ., U, ., U, ., ., U, ., U, ., U, U, U, ., U, U, U, ., U, U, U,
+    ., U, U, U]
+  atom_site_refinement_flags_occupancy: [., ., ., P, ., ., ., ., ., ., ., ., ., .,
+    ., ., ., ., ., ., ., ., ., ., ., ., P, P, P, P, P, P, P, P, P, P, P, P, P, P,
+    P, P, ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+    ., P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, ., ., ., P, ., ., ., ., .,
+    ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., P, P, P, P, P, P, P, P, P,
+    P, P, P, P, P, P, P, ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+    ., ., ., ., ., ., P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, ., ., ., P,
+    ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., P, P, P, P,
+    P, P, P, P, P, P, P, P, P, P, P, P, ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+    ., ., ., ., ., ., ., ., ., ., ., P, P, P, P, P, P, P, P, P, P, P, P, P, P, P,
+    P, ., ., ., P, ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+    ., P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, P, ., ., ., ., ., ., ., ., .,
+    ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., P, P, P, P, P, P, P, P, P, P,
+    P, P, P, P, P, P]
+  atom_site_disorder_assembly: [., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+    ., ., ., ., ., ., ., ., ., A, A, A, A, A, A, A, A, B, B, B, B, B, B, B, B, .,
+    ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., A, A,
+    A, A, A, A, A, A, B, B, B, B, B, B, B, B, ., ., ., ., ., ., ., ., ., ., ., .,
+    ., ., ., ., ., ., ., ., ., ., ., ., ., ., A, A, A, A, A, A, A, A, B, B, B, B,
+    B, B, B, B, ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+    ., ., ., A, A, A, A, A, A, A, A, B, B, B, B, B, B, B, B, ., ., ., ., ., ., .,
+    ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., A, A, A, A, A, A, A,
+    A, B, B, B, B, B, B, B, B, ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+    ., ., ., ., ., ., ., ., A, A, A, A, A, A, A, A, B, B, B, B, B, B, B, B, ., .,
+    ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., A, A,
+    A, A, A, A, A, A, B, B, B, B, B, B, B, B, ., ., ., ., ., ., ., ., ., ., ., .,
+    ., ., ., ., ., ., ., ., ., ., ., ., ., A, A, A, A, A, A, A, A, B, B, B, B, B,
+    B, B, B]
+  atom_site_disorder_group: [., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+    ., ., ., ., ., ., ., ., -1, -1, -1, -1, -1, -1, -1, -1, -2, -2, -2, -2, -2, -2,
+    -2, -2, ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+    ., -1, -1, -1, -1, -1, -1, -1, -1, -2, -2, -2, -2, -2, -2, -2, -2, ., ., ., .,
+    ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., -1, -1, -1,
+    -1, -1, -1, -1, -1, -2, -2, -2, -2, -2, -2, -2, -2, ., ., ., ., ., ., ., ., .,
+    ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., -1, -1, -1, -1, -1, -1, -1, -1,
+    -2, -2, -2, -2, -2, -2, -2, -2, ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+    ., ., ., ., ., ., ., ., ., ., -1, -1, -1, -1, -1, -1, -1, -1, -2, -2, -2, -2,
+    -2, -2, -2, -2, ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., .,
+    ., ., ., ., -1, -1, -1, -1, -1, -1, -1, -1, -2, -2, -2, -2, -2, -2, -2, -2, .,
+    ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., -1,
+    -1, -1, -1, -1, -1, -1, -1, -2, -2, -2, -2, -2, -2, -2, -2, ., ., ., ., ., .,
+    ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., ., -1, -1, -1, -1, -1, -1,
+    -1, -1, -2, -2, -2, -2, -2, -2, -2, -2]
+attributes:
+  h3_datasets:
+    2820:
+      created: '2026-03-28T19:23:13-04:00'
+      created_by: emilieytl
+      updated: '2026-04-14T18:03:25-04:00'
+      updated_by: volkerblum
+      pk: 2820
+      caption: ''
+      system:
+        id: 677
+        compound_name: Bis(4-fluorophenethylammonium) methylammonium tin iodide
+        formula: C17H28N3F2Sn2I7
+        group: (4FPEA)2(MA)Sn2I7
+        organic: C8H11NF, CH6N
+        inorganic: Sn2I7, tin iodide
+        iupac: Bis(4-fluorophenethanaminium) methanaminium tin (II) iodide
+        last_update: '2026-02-02'
+        description: ''
+        message: ''
+        dimensionality: 3
+        n: '2'
+        derived_to_from: []
+        tags: []
+      primary_property: {id: 116, created: '2026-04-14T17:46:39-04:00', updated: '2026-04-14T17:46:39-04:00',
+        name: photoluminescence (fluence dependent), method: Photoluminescence spectroscopy,
+        created_by: 8, updated_by: 8}
+      primary_unit: {id: 13, created: '2019-08-21T16:14:05-04:00', updated: '2019-08-21T16:14:05-04:00',
+        label: a.u, created_by: 22, updated_by: 22}
+      secondary_property: {id: 5, created: '2019-03-14T14:56:03-04:00', updated: '2019-03-14T14:56:03-04:00',
+        name: wavelength, method: '', created_by: 15, updated_by: 15}
+      secondary_unit: {id: 5, created: '2019-03-14T14:56:23-04:00', updated: '2019-03-14T14:56:23-04:00',
+        label: nm, created_by: 15, updated_by: 15}
+      reference: {id: 369, title: Cage Balancing Enhances Optoelectronic and Lasing
+          Performance in Stable Quasi-2D Tin Iodide Perovskites in Stable Quasi-2D
+          Tin Iodide Perovskites, journal: Journal of the American Chemical Society,
+        vol: '147', pages_start: '34706', pages_end: '34720', year: '2025', doi_isbn: '10.1021/jacs.5c09938,
+          0002-7863'}
+      visible: true
+      is_experimental: true
+      sample_type: single crystal
+      extraction_method: manual from publication
+      representative: true
+      linked_to: []
+      verified_by: []
+      computational: []
+      synthesis:
+      - {id: 2179, created: '2026-03-28T19:23:13.157281-04:00', updated: '2026-03-28T20:11:51.862229-04:00',
+        starting_materials: '4-fluorophenethylamine, methylammonium iodide, SnCl2·2H2O,
+          HI, H3PO2', product: large black single crystals with plate morphology.
+          Exfoliated crystals (micrometer-sized) were used for the PL measurements.,
+        description: "Description: Slow-cooling method in hydroiodic acid. Precursors:\r
+          \n- 4-fluorophenethylamine (4FPEA; TCI, >98%), 0.75 mmol\r\n- methylammonium
+          iodide (Sigma Aldrich), 1.5 mmol\r\n- Tin(II) chloride dihydrate (Sigma
+          Aldrich, 98% ACS reagent), 1.0 mmol\r\n- hydroiodic acid ≥47.0% with ≤1.5%
+          hypophosphorous acid stabilizer (Sigma Aldrich), 2.0 mmol\r\n- hypophosphorous
+          acid 50% (Sigma Aldrich), 2.0 mmol\r\nTin chloride and A-site cation salts
+          were added an appropriate amount of 1:1 v/v HI and H3PO2 solution. Liquid
+          4FPEA was added dropwise to this solution prior to heating. Solution was
+          heated to full dissolution at 120 °C. The solution was then slow cooled
+          to room temperature to yield large black crystals.", created_by: 1312, updated_by: 1312,
+        dataset: 2820, system: 1}
+      experimental:
+      - {id: 2178, created: '2026-03-28T19:23:13.157822-04:00', updated: '2026-03-28T19:23:13.157703-04:00',
+        method: Photoluminescence (lasing), description: "Lasing measurements were
+          performed using a femtosecond laser\r\n(1030 nm, pulse width ≈ 300 fs, Pharos,
+          Light Conversion) with an external harmonic generator\r\n(Hiro, Light Conversion)
+          to generate a second harmonic 515 nm pump. The laser beam was then\r\ncollimated
+          into a fiber collimator and sent to a Nikon LV100ND upright microscope,
+          focused by a\r\n100x objective onto the exfoliated microflakes of 2D tin
+          perovskites that were placed in a cryostat\r\n(THMS60, Linkam) and cooled
+          down to 77 K. An Ocean Optics Maya2000 Pro spectrometer\r\ncollected the
+          PL signals.", created_by: 1312, updated_by: 1312, dataset: 2820, system: 1}
+      subsets:
+      - pk: 3300
+        label: ''
+        crystal_system: triclinic
+        fixed_values:
+        - physical_property: {id: 102, created: '2023-02-13T14:24:18-05:00', updated: '2023-02-13T14:24:18-05:00',
+            name: Fluence, method: '', created_by: 20, updated_by: 20}
+          unit: {id: 47, created: '2023-02-13T14:24:37-05:00', updated: '2023-02-13T14:24:37-05:00',
+            label: uJ/cm2, created_by: 20, updated_by: 20}
+          subset: {id: 3300, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '157.43'
+        - physical_property: {id: 2, created: '2019-02-21T11:16:12-05:00', updated: '2019-02-21T11:16:12-05:00',
+            name: temperature, method: '', created_by: 15, updated_by: 15}
+          unit: {id: 2, created: '2019-02-21T11:16:23-05:00', updated: '2019-02-21T11:16:23-05:00',
+            label: K, created_by: 15, updated_by: 15}
+          subset: {id: 3300, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '77.0'
+        datapoints:
+        - values:
+          - {qualifier: secondary, formatted: '701.36257'}
+          - {qualifier: primary, formatted: '0.00801'}
+        - values:
+          - {qualifier: secondary, formatted: '702.49862'}
+          - {qualifier: primary, formatted: '0.00801'}
+        - values:
+          - {qualifier: secondary, formatted: '703.49329'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '704.62809'}
+          - {qualifier: primary, formatted: '0.00977'}
+        - values:
+          - {qualifier: secondary, formatted: '705.48075'}
+          - {qualifier: primary, formatted: '0.00801'}
+        - values:
+          - {qualifier: secondary, formatted: '706.90143'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '708.03811'}
+          - {qualifier: primary, formatted: '0.00449'}
+        - values:
+          - {qualifier: secondary, formatted: '709.03215'}
+          - {qualifier: primary, formatted: '0.00449'}
+        - values:
+          - {qualifier: secondary, formatted: '710.31021'}
+          - {qualifier: primary, formatted: '0.00449'}
+        - values:
+          - {qualifier: secondary, formatted: '711.87165'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '713.43372'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '714.94228'}
+          - {qualifier: primary, formatted: '0.00806'}
+        - values:
+          - {qualifier: secondary, formatted: '716.4146'}
+          - {qualifier: primary, formatted: '0.00977'}
+        - values:
+          - {qualifier: secondary, formatted: '718.11868'}
+          - {qualifier: primary, formatted: '0.00977'}
+        - values:
+          - {qualifier: secondary, formatted: '719.39611'}
+          - {qualifier: primary, formatted: '0.01154'}
+        - values:
+          - {qualifier: secondary, formatted: '720.81555'}
+          - {qualifier: primary, formatted: '0.0133'}
+        - values:
+          - {qualifier: secondary, formatted: '721.9516'}
+          - {qualifier: primary, formatted: '0.0133'}
+        - values:
+          - {qualifier: secondary, formatted: '723.08641'}
+          - {qualifier: primary, formatted: '0.01682'}
+        - values:
+          - {qualifier: secondary, formatted: '724.22245'}
+          - {qualifier: primary, formatted: '0.01682'}
+        - values:
+          - {qualifier: secondary, formatted: '725.64189'}
+          - {qualifier: primary, formatted: '0.01859'}
+        - values:
+          - {qualifier: secondary, formatted: '726.94961'}
+          - {qualifier: primary, formatted: '0.02731'}
+        - values:
+          - {qualifier: secondary, formatted: '728.19551'}
+          - {qualifier: primary, formatted: '0.02564'}
+        - values:
+          - {qualifier: secondary, formatted: '729.3297'}
+          - {qualifier: primary, formatted: '0.03093'}
+        - values:
+          - {qualifier: secondary, formatted: '730.82174'}
+          - {qualifier: primary, formatted: '0.03693'}
+        - values:
+          - {qualifier: secondary, formatted: '732.16608'}
+          - {qualifier: primary, formatted: '0.0415'}
+        - values:
+          - {qualifier: secondary, formatted: '733.14366'}
+          - {qualifier: primary, formatted: '0.04655'}
+        - values:
+          - {qualifier: secondary, formatted: '734.30292'}
+          - {qualifier: primary, formatted: '0.05617'}
+        - values:
+          - {qualifier: secondary, formatted: '735.84973'}
+          - {qualifier: primary, formatted: '0.06579'}
+        - values:
+          - {qualifier: secondary, formatted: '736.55457'}
+          - {qualifier: primary, formatted: '0.08028'}
+        - values:
+          - {qualifier: secondary, formatted: '736.97561'}
+          - {qualifier: primary, formatted: '0.09438'}
+        - values:
+          - {qualifier: secondary, formatted: '737.25339'}
+          - {qualifier: primary, formatted: '0.11201'}
+        - values:
+          - {qualifier: secondary, formatted: '738.10045'}
+          - {qualifier: primary, formatted: '0.12611'}
+        - values:
+          - {qualifier: secondary, formatted: '738.37574'}
+          - {qualifier: primary, formatted: '0.15078'}
+        - values:
+          - {qualifier: secondary, formatted: '738.37948'}
+          - {qualifier: primary, formatted: '0.14021'}
+        - values:
+          - {qualifier: secondary, formatted: '738.65352'}
+          - {qualifier: primary, formatted: '0.16841'}
+        - values:
+          - {qualifier: secondary, formatted: '738.77373'}
+          - {qualifier: primary, formatted: '0.2301'}
+        - values:
+          - {qualifier: secondary, formatted: '738.78183'}
+          - {qualifier: primary, formatted: '0.20719'}
+        - values:
+          - {qualifier: secondary, formatted: '738.78743'}
+          - {qualifier: primary, formatted: '0.19132'}
+        - values:
+          - {qualifier: secondary, formatted: '738.91013'}
+          - {qualifier: primary, formatted: '0.24596'}
+        - values:
+          - {qualifier: secondary, formatted: '739.18044'}
+          - {qualifier: primary, formatted: '0.28474'}
+        - values:
+          - {qualifier: secondary, formatted: '739.18729'}
+          - {qualifier: primary, formatted: '0.26535'}
+        - values:
+          - {qualifier: secondary, formatted: '739.46391'}
+          - {qualifier: primary, formatted: '0.30304'}
+        - values:
+          - {qualifier: secondary, formatted: '739.58679'}
+          - {qualifier: primary, formatted: '0.34041'}
+        - values:
+          - {qualifier: secondary, formatted: '739.59359'}
+          - {qualifier: primary, formatted: '0.32117'}
+        - values:
+          - {qualifier: secondary, formatted: '739.81698'}
+          - {qualifier: primary, formatted: '0.35877'}
+        - values:
+          - {qualifier: secondary, formatted: '739.954'}
+          - {qualifier: primary, formatted: '0.37287'}
+        - values:
+          - {qualifier: secondary, formatted: '740.06736'}
+          - {qualifier: primary, formatted: '0.38697'}
+        - values:
+          - {qualifier: secondary, formatted: '740.16888'}
+          - {qualifier: primary, formatted: '0.40108'}
+        - values:
+          - {qualifier: secondary, formatted: '740.35758'}
+          - {qualifier: primary, formatted: '0.46986'}
+        - values:
+          - {qualifier: secondary, formatted: '740.36438'}
+          - {qualifier: primary, formatted: '0.45062'}
+        - values:
+          - {qualifier: secondary, formatted: '740.37117'}
+          - {qualifier: primary, formatted: '0.43138'}
+        - values:
+          - {qualifier: secondary, formatted: '740.37797'}
+          - {qualifier: primary, formatted: '0.41214'}
+        - values:
+          - {qualifier: secondary, formatted: '740.3794'}
+          - {qualifier: primary, formatted: '0.5086'}
+        - values:
+          - {qualifier: secondary, formatted: '740.38563'}
+          - {qualifier: primary, formatted: '0.49097'}
+        - values:
+          - {qualifier: secondary, formatted: '740.49249'}
+          - {qualifier: primary, formatted: '0.52343'}
+        - values:
+          - {qualifier: secondary, formatted: '740.62806'}
+          - {qualifier: primary, formatted: '0.54164'}
+        - values:
+          - {qualifier: secondary, formatted: '740.69144'}
+          - {qualifier: primary, formatted: '0.56324'}
+        - values:
+          - {qualifier: secondary, formatted: '740.91608'}
+          - {qualifier: primary, formatted: '0.5805'}
+        - values:
+          - {qualifier: secondary, formatted: '741.00348'}
+          - {qualifier: primary, formatted: '0.75184'}
+        - values:
+          - {qualifier: secondary, formatted: '741.01033'}
+          - {qualifier: primary, formatted: '0.73245'}
+        - values:
+          - {qualifier: secondary, formatted: '741.0178'}
+          - {qualifier: primary, formatted: '0.7113'}
+        - values:
+          - {qualifier: secondary, formatted: '741.02715'}
+          - {qualifier: primary, formatted: '0.68486'}
+        - values:
+          - {qualifier: secondary, formatted: '741.03275'}
+          - {qualifier: primary, formatted: '0.66899'}
+        - values:
+          - {qualifier: secondary, formatted: '741.04085'}
+          - {qualifier: primary, formatted: '0.64608'}
+        - values:
+          - {qualifier: secondary, formatted: '741.0477'}
+          - {qualifier: primary, formatted: '0.62669'}
+        - values:
+          - {qualifier: secondary, formatted: '741.05642'}
+          - {qualifier: primary, formatted: '0.60201'}
+        - values:
+          - {qualifier: secondary, formatted: '741.14175'}
+          - {qualifier: primary, formatted: '0.76241'}
+        - values:
+          - {qualifier: secondary, formatted: '741.14761'}
+          - {qualifier: primary, formatted: '0.7793'}
+        - values:
+          - {qualifier: secondary, formatted: '741.19593'}
+          - {qualifier: primary, formatted: '0.81'}
+        - values:
+          - {qualifier: secondary, formatted: '741.20071'}
+          - {qualifier: primary, formatted: '0.79649'}
+        - values:
+          - {qualifier: secondary, formatted: '741.24981'}
+          - {qualifier: primary, formatted: '0.82499'}
+        - values:
+          - {qualifier: secondary, formatted: '741.35828'}
+          - {qualifier: primary, formatted: '0.85282'}
+        - values:
+          - {qualifier: secondary, formatted: '741.36285'}
+          - {qualifier: primary, formatted: '0.83997'}
+        - values:
+          - {qualifier: secondary, formatted: '741.47086'}
+          - {qualifier: primary, formatted: '0.86913'}
+        - values:
+          - {qualifier: secondary, formatted: '741.7338'}
+          - {qualifier: primary, formatted: '0.96225'}
+        - values:
+          - {qualifier: secondary, formatted: '741.73982'}
+          - {qualifier: primary, formatted: '0.94521'}
+        - values:
+          - {qualifier: secondary, formatted: '741.74662'}
+          - {qualifier: primary, formatted: '0.92597'}
+        - values:
+          - {qualifier: secondary, formatted: '741.75991'}
+          - {qualifier: primary, formatted: '0.88837'}
+        - values:
+          - {qualifier: secondary, formatted: '741.76531'}
+          - {qualifier: primary, formatted: '0.90665'}
+        - values:
+          - {qualifier: secondary, formatted: '742.22776'}
+          - {qualifier: primary, formatted: '0.87052'}
+        - values:
+          - {qualifier: secondary, formatted: '742.36433'}
+          - {qualifier: primary, formatted: '0.85235'}
+        - values:
+          - {qualifier: secondary, formatted: '742.38684'}
+          - {qualifier: primary, formatted: '0.75522'}
+        - values:
+          - {qualifier: secondary, formatted: '742.41622'}
+          - {qualifier: primary, formatted: '0.77255'}
+        - values:
+          - {qualifier: secondary, formatted: '742.51593'}
+          - {qualifier: primary, formatted: '0.79179'}
+        - values:
+          - {qualifier: secondary, formatted: '742.52257'}
+          - {qualifier: primary, formatted: '0.7395'}
+        - values:
+          - {qualifier: secondary, formatted: '742.55766'}
+          - {qualifier: primary, formatted: '0.80765'}
+        - values:
+          - {qualifier: secondary, formatted: '742.57613'}
+          - {qualifier: primary, formatted: '0.72187'}
+        - values:
+          - {qualifier: secondary, formatted: '742.58236'}
+          - {qualifier: primary, formatted: '0.70425'}
+        - values:
+          - {qualifier: secondary, formatted: '742.58921'}
+          - {qualifier: primary, formatted: '0.68486'}
+        - values:
+          - {qualifier: secondary, formatted: '742.59731'}
+          - {qualifier: primary, formatted: '0.66194'}
+        - values:
+          - {qualifier: secondary, formatted: '742.60354'}
+          - {qualifier: primary, formatted: '0.64432'}
+        - values:
+          - {qualifier: secondary, formatted: '742.60665'}
+          - {qualifier: primary, formatted: '0.83644'}
+        - values:
+          - {qualifier: secondary, formatted: '742.60914'}
+          - {qualifier: primary, formatted: '0.62845'}
+        - values:
+          - {qualifier: secondary, formatted: '742.61662'}
+          - {qualifier: primary, formatted: '0.6073'}
+        - values:
+          - {qualifier: secondary, formatted: '742.62222'}
+          - {qualifier: primary, formatted: '0.59144'}
+        - values:
+          - {qualifier: secondary, formatted: '742.62378'}
+          - {qualifier: primary, formatted: '0.82146'}
+        - values:
+          - {qualifier: secondary, formatted: '742.6297'}
+          - {qualifier: primary, formatted: '0.57029'}
+        - values:
+          - {qualifier: secondary, formatted: '742.63655'}
+          - {qualifier: primary, formatted: '0.5509'}
+        - values:
+          - {qualifier: secondary, formatted: '742.64465'}
+          - {qualifier: primary, formatted: '0.52798'}
+        - values:
+          - {qualifier: secondary, formatted: '742.67099'}
+          - {qualifier: primary, formatted: '0.50354'}
+        - values:
+          - {qualifier: secondary, formatted: '742.67779'}
+          - {qualifier: primary, formatted: '0.4843'}
+        - values:
+          - {qualifier: secondary, formatted: '742.68459'}
+          - {qualifier: primary, formatted: '0.46505'}
+        - values:
+          - {qualifier: secondary, formatted: '742.69139'}
+          - {qualifier: primary, formatted: '0.44581'}
+        - values:
+          - {qualifier: secondary, formatted: '742.69819'}
+          - {qualifier: primary, formatted: '0.42657'}
+        - values:
+          - {qualifier: secondary, formatted: '743.11943'}
+          - {qualifier: primary, formatted: '0.40659'}
+        - values:
+          - {qualifier: secondary, formatted: '743.36265'}
+          - {qualifier: primary, formatted: '0.38809'}
+        - values:
+          - {qualifier: secondary, formatted: '743.44063'}
+          - {qualifier: primary, formatted: '0.28474'}
+        - values:
+          - {qualifier: secondary, formatted: '743.44561'}
+          - {qualifier: primary, formatted: '0.27064'}
+        - values:
+          - {qualifier: secondary, formatted: '743.48741'}
+          - {qualifier: primary, formatted: '0.36991'}
+        - values:
+          - {qualifier: secondary, formatted: '743.49369'}
+          - {qualifier: primary, formatted: '0.35214'}
+        - values:
+          - {qualifier: secondary, formatted: '743.51765'}
+          - {qualifier: primary, formatted: '0.33468'}
+        - values:
+          - {qualifier: secondary, formatted: '743.53449'}
+          - {qualifier: primary, formatted: '0.2534'}
+        - values:
+          - {qualifier: secondary, formatted: '743.53551'}
+          - {qualifier: primary, formatted: '0.31764'}
+        - values:
+          - {qualifier: secondary, formatted: '743.54129'}
+          - {qualifier: primary, formatted: '0.23415'}
+        - values:
+          - {qualifier: secondary, formatted: '743.54809'}
+          - {qualifier: primary, formatted: '0.21491'}
+        - values:
+          - {qualifier: secondary, formatted: '743.55489'}
+          - {qualifier: primary, formatted: '0.19567'}
+        - values:
+          - {qualifier: secondary, formatted: '743.57641'}
+          - {qualifier: primary, formatted: '0.30237'}
+        - values:
+          - {qualifier: secondary, formatted: '743.90339'}
+          - {qualifier: primary, formatted: '0.18075'}
+        - values:
+          - {qualifier: secondary, formatted: '743.909'}
+          - {qualifier: primary, formatted: '0.16488'}
+        - values:
+          - {qualifier: secondary, formatted: '744.05599'}
+          - {qualifier: primary, formatted: '0.15078'}
+        - values:
+          - {qualifier: secondary, formatted: '744.34498'}
+          - {qualifier: primary, formatted: '0.13668'}
+        - values:
+          - {qualifier: secondary, formatted: '744.35719'}
+          - {qualifier: primary, formatted: '0.1187'}
+        - values:
+          - {qualifier: secondary, formatted: '744.36399'}
+          - {qualifier: primary, formatted: '0.09946'}
+        - values:
+          - {qualifier: secondary, formatted: '744.93045'}
+          - {qualifier: primary, formatted: '0.08733'}
+        - values:
+          - {qualifier: secondary, formatted: '745.14929'}
+          - {qualifier: primary, formatted: '0.0706'}
+        - values:
+          - {qualifier: secondary, formatted: '745.79307'}
+          - {qualifier: primary, formatted: '0.05736'}
+        - values:
+          - {qualifier: secondary, formatted: '746.32215'}
+          - {qualifier: primary, formatted: '0.04174'}
+        - values:
+          - {qualifier: secondary, formatted: '747.22061'}
+          - {qualifier: primary, formatted: '0.03621'}
+        - values:
+          - {qualifier: secondary, formatted: '748.26501'}
+          - {qualifier: primary, formatted: '0.02731'}
+        - values:
+          - {qualifier: secondary, formatted: '749.21306'}
+          - {qualifier: primary, formatted: '0.02387'}
+        - values:
+          - {qualifier: secondary, formatted: '750.59373'}
+          - {qualifier: primary, formatted: '0.01769'}
+        - values:
+          - {qualifier: secondary, formatted: '752.05629'}
+          - {qualifier: primary, formatted: '0.01506'}
+        - values:
+          - {qualifier: secondary, formatted: '753.3356'}
+          - {qualifier: primary, formatted: '0.01154'}
+        - values:
+          - {qualifier: secondary, formatted: '754.89891'}
+          - {qualifier: primary, formatted: '0.00801'}
+        - values:
+          - {qualifier: secondary, formatted: '756.17759'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '757.31364'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '758.30768'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '759.72774'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '761.0058'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '763.13589'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '763.98793'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '765.40799'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '766.82805'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '768.10611'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '769.10015'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '770.52022'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '771.51426'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '772.79232'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '773.92837'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '775.34905'}
+          - {qualifier: primary, formatted: '0.00449'}
+        - values:
+          - {qualifier: secondary, formatted: '777.05312'}
+          - {qualifier: primary, formatted: '0.00449'}
+        - values:
+          - {qualifier: secondary, formatted: '778.04717'}
+          - {qualifier: primary, formatted: '0.00449'}
+        - values:
+          - {qualifier: secondary, formatted: '779.32522'}
+          - {qualifier: primary, formatted: '0.00449'}
+        - values:
+          - {qualifier: secondary, formatted: '780.74529'}
+          - {qualifier: primary, formatted: '0.00449'}
+        - values:
+          - {qualifier: secondary, formatted: '781.88071'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '783.72679'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '784.57883'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '786.1409'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '787.56096'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '789.40642'}
+          - {qualifier: primary, formatted: '0.00801'}
+        - values:
+          - {qualifier: secondary, formatted: '790.68447'}
+          - {qualifier: primary, formatted: '0.00801'}
+        - values:
+          - {qualifier: secondary, formatted: '791.82115'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '793.52522'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '795.2293'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '796.08133'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '797.78541'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '799.48824'}
+          - {qualifier: primary, formatted: '0.00977'}
+      - pk: 3301
+        label: ''
+        crystal_system: triclinic
+        fixed_values:
+        - physical_property: {id: 102, created: '2023-02-13T14:24:18-05:00', updated: '2023-02-13T14:24:18-05:00',
+            name: Fluence, method: '', created_by: 20, updated_by: 20}
+          unit: {id: 47, created: '2023-02-13T14:24:37-05:00', updated: '2023-02-13T14:24:37-05:00',
+            label: uJ/cm2, created_by: 20, updated_by: 20}
+          subset: {id: 3301, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '131.19'
+        - physical_property: {id: 2, created: '2019-02-21T11:16:12-05:00', updated: '2019-02-21T11:16:12-05:00',
+            name: temperature, method: '', created_by: 15, updated_by: 15}
+          unit: {id: 2, created: '2019-02-21T11:16:23-05:00', updated: '2019-02-21T11:16:23-05:00',
+            label: K, created_by: 15, updated_by: 15}
+          subset: {id: 3301, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '77.0'
+        datapoints:
+        - values:
+          - {qualifier: secondary, formatted: '709.16979'}
+          - {qualifier: primary, formatted: '0.00138'}
+        - values:
+          - {qualifier: secondary, formatted: '710.48332'}
+          - {qualifier: primary, formatted: '0.00138'}
+        - values:
+          - {qualifier: secondary, formatted: '711.93222'}
+          - {qualifier: primary, formatted: '0.00228'}
+        - values:
+          - {qualifier: secondary, formatted: '713.23358'}
+          - {qualifier: primary, formatted: '0.00331'}
+        - values:
+          - {qualifier: secondary, formatted: '714.30457'}
+          - {qualifier: primary, formatted: '0.00358'}
+        - values:
+          - {qualifier: secondary, formatted: '715.42181'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '716.27384'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '717.40958'}
+          - {qualifier: primary, formatted: '0.00713'}
+        - values:
+          - {qualifier: secondary, formatted: '718.54856'}
+          - {qualifier: primary, formatted: '0.00814'}
+        - values:
+          - {qualifier: secondary, formatted: '719.56547'}
+          - {qualifier: primary, formatted: '0.01034'}
+        - values:
+          - {qualifier: secondary, formatted: '720.96944'}
+          - {qualifier: primary, formatted: '0.01315'}
+        - values:
+          - {qualifier: secondary, formatted: '722.16388'}
+          - {qualifier: primary, formatted: '0.01536'}
+        - values:
+          - {qualifier: secondary, formatted: '723.34628'}
+          - {qualifier: primary, formatted: '0.01815'}
+        - values:
+          - {qualifier: secondary, formatted: '724.80362'}
+          - {qualifier: primary, formatted: '0.02217'}
+        - values:
+          - {qualifier: secondary, formatted: '726.24329'}
+          - {qualifier: primary, formatted: '0.02461'}
+        - values:
+          - {qualifier: secondary, formatted: '728.041'}
+          - {qualifier: primary, formatted: '0.02755'}
+        - values:
+          - {qualifier: secondary, formatted: '729.5364'}
+          - {qualifier: primary, formatted: '0.03252'}
+        - values:
+          - {qualifier: secondary, formatted: '730.86664'}
+          - {qualifier: primary, formatted: '0.03504'}
+        - values:
+          - {qualifier: secondary, formatted: '732.02439'}
+          - {qualifier: primary, formatted: '0.04062'}
+        - values:
+          - {qualifier: secondary, formatted: '733.10547'}
+          - {qualifier: primary, formatted: '0.04581'}
+        - values:
+          - {qualifier: secondary, formatted: '734.15043'}
+          - {qualifier: primary, formatted: '0.05208'}
+        - values:
+          - {qualifier: secondary, formatted: '735.14053'}
+          - {qualifier: primary, formatted: '0.06324'}
+        - values:
+          - {qualifier: secondary, formatted: '735.75632'}
+          - {qualifier: primary, formatted: '0.0706'}
+        - values:
+          - {qualifier: secondary, formatted: '736.47039'}
+          - {qualifier: primary, formatted: '0.0841'}
+        - values:
+          - {qualifier: secondary, formatted: '737.16324'}
+          - {qualifier: primary, formatted: '0.09923'}
+        - values:
+          - {qualifier: secondary, formatted: '737.92063'}
+          - {qualifier: primary, formatted: '0.11599'}
+        - values:
+          - {qualifier: secondary, formatted: '738.24121'}
+          - {qualifier: primary, formatted: '0.12963'}
+        - values:
+          - {qualifier: secondary, formatted: '738.37761'}
+          - {qualifier: primary, formatted: '0.1455'}
+        - values:
+          - {qualifier: secondary, formatted: '738.51526'}
+          - {qualifier: primary, formatted: '0.15783'}
+        - values:
+          - {qualifier: secondary, formatted: '738.79491'}
+          - {qualifier: primary, formatted: '0.17017'}
+        - values:
+          - {qualifier: secondary, formatted: '738.90572'}
+          - {qualifier: primary, formatted: '0.19147'}
+        - values:
+          - {qualifier: secondary, formatted: '738.95216'}
+          - {qualifier: primary, formatted: '0.22754'}
+        - values:
+          - {qualifier: secondary, formatted: '738.95804'}
+          - {qualifier: primary, formatted: '0.21091'}
+        - values:
+          - {qualifier: secondary, formatted: '739.24147'}
+          - {qualifier: primary, formatted: '0.24605'}
+        - values:
+          - {qualifier: secondary, formatted: '739.24631'}
+          - {qualifier: primary, formatted: '0.26579'}
+        - values:
+          - {qualifier: secondary, formatted: '739.2924'}
+          - {qualifier: primary, formatted: '0.30281'}
+        - values:
+          - {qualifier: secondary, formatted: '739.29878'}
+          - {qualifier: primary, formatted: '0.28474'}
+        - values:
+          - {qualifier: secondary, formatted: '739.56747'}
+          - {qualifier: primary, formatted: '0.34487'}
+        - values:
+          - {qualifier: secondary, formatted: '739.56785'}
+          - {qualifier: primary, formatted: '0.32705'}
+        - values:
+          - {qualifier: secondary, formatted: '739.68042'}
+          - {qualifier: primary, formatted: '0.36011'}
+        - values:
+          - {qualifier: secondary, formatted: '739.73383'}
+          - {qualifier: primary, formatted: '0.37641'}
+        - values:
+          - {qualifier: secondary, formatted: '739.74561'}
+          - {qualifier: primary, formatted: '0.39329'}
+        - values:
+          - {qualifier: secondary, formatted: '740.03471'}
+          - {qualifier: primary, formatted: '0.41239'}
+        - values:
+          - {qualifier: secondary, formatted: '740.1407'}
+          - {qualifier: primary, formatted: '0.43054'}
+        - values:
+          - {qualifier: secondary, formatted: '740.14075'}
+          - {qualifier: primary, formatted: '0.4472'}
+        - values:
+          - {qualifier: secondary, formatted: '740.2757'}
+          - {qualifier: primary, formatted: '0.46717'}
+        - values:
+          - {qualifier: secondary, formatted: '740.35294'}
+          - {qualifier: primary, formatted: '0.48297'}
+        - values:
+          - {qualifier: secondary, formatted: '740.43929'}
+          - {qualifier: primary, formatted: '0.49814'}
+        - values:
+          - {qualifier: secondary, formatted: '740.5034'}
+          - {qualifier: primary, formatted: '0.51485'}
+        - values:
+          - {qualifier: secondary, formatted: '740.76147'}
+          - {qualifier: primary, formatted: '0.5324'}
+        - values:
+          - {qualifier: secondary, formatted: '740.93218'}
+          - {qualifier: primary, formatted: '0.55164'}
+        - values:
+          - {qualifier: secondary, formatted: '741.25429'}
+          - {qualifier: primary, formatted: '0.56941'}
+        - values:
+          - {qualifier: secondary, formatted: '741.48929'}
+          - {qualifier: primary, formatted: '0.58263'}
+        - values:
+          - {qualifier: secondary, formatted: '742.20513'}
+          - {qualifier: primary, formatted: '0.56617'}
+        - values:
+          - {qualifier: secondary, formatted: '742.32809'}
+          - {qualifier: primary, formatted: '0.5531'}
+        - values:
+          - {qualifier: secondary, formatted: '742.39079'}
+          - {qualifier: primary, formatted: '0.54311'}
+        - values:
+          - {qualifier: secondary, formatted: '742.44394'}
+          - {qualifier: primary, formatted: '0.52666'}
+        - values:
+          - {qualifier: secondary, formatted: '742.50747'}
+          - {qualifier: primary, formatted: '0.51432'}
+        - values:
+          - {qualifier: secondary, formatted: '742.54842'}
+          - {qualifier: primary, formatted: '0.4988'}
+        - values:
+          - {qualifier: secondary, formatted: '742.55309'}
+          - {qualifier: primary, formatted: '0.48568'}
+        - values:
+          - {qualifier: secondary, formatted: '742.58112'}
+          - {qualifier: primary, formatted: '0.47334'}
+        - values:
+          - {qualifier: secondary, formatted: '742.66966'}
+          - {qualifier: primary, formatted: '0.45719'}
+        - values:
+          - {qualifier: secondary, formatted: '742.7439'}
+          - {qualifier: primary, formatted: '0.44794'}
+        - values:
+          - {qualifier: secondary, formatted: '742.79625'}
+          - {qualifier: primary, formatted: '0.43383'}
+        - values:
+          - {qualifier: secondary, formatted: '742.93222'}
+          - {qualifier: primary, formatted: '0.41735'}
+        - values:
+          - {qualifier: secondary, formatted: '742.93676'}
+          - {qualifier: primary, formatted: '0.4046'}
+        - values:
+          - {qualifier: secondary, formatted: '743.12049'}
+          - {qualifier: primary, formatted: '0.38697'}
+        - values:
+          - {qualifier: secondary, formatted: '743.45309'}
+          - {qualifier: primary, formatted: '0.24949'}
+        - values:
+          - {qualifier: secondary, formatted: '743.45994'}
+          - {qualifier: primary, formatted: '0.2301'}
+        - values:
+          - {qualifier: secondary, formatted: '743.48689'}
+          - {qualifier: primary, formatted: '0.38809'}
+        - values:
+          - {qualifier: secondary, formatted: '743.49357'}
+          - {qualifier: primary, formatted: '0.26888'}
+        - values:
+          - {qualifier: secondary, formatted: '743.49369'}
+          - {qualifier: primary, formatted: '0.36885'}
+        - values:
+          - {qualifier: secondary, formatted: '743.50049'}
+          - {qualifier: primary, formatted: '0.3496'}
+        - values:
+          - {qualifier: secondary, formatted: '743.50729'}
+          - {qualifier: primary, formatted: '0.33036'}
+        - values:
+          - {qualifier: secondary, formatted: '743.51579'}
+          - {qualifier: primary, formatted: '0.30631'}
+        - values:
+          - {qualifier: secondary, formatted: '743.52429'}
+          - {qualifier: primary, formatted: '0.28226'}
+        - values:
+          - {qualifier: secondary, formatted: '743.60755'}
+          - {qualifier: primary, formatted: '0.21424'}
+        - values:
+          - {qualifier: secondary, formatted: '743.61502'}
+          - {qualifier: primary, formatted: '0.19309'}
+        - values:
+          - {qualifier: secondary, formatted: '743.67881'}
+          - {qualifier: primary, formatted: '0.18001'}
+        - values:
+          - {qualifier: secondary, formatted: '743.7485'}
+          - {qualifier: primary, formatted: '0.16681'}
+        - values:
+          - {qualifier: secondary, formatted: '743.81277'}
+          - {qualifier: primary, formatted: '0.15238'}
+        - values:
+          - {qualifier: secondary, formatted: '743.95556'}
+          - {qualifier: primary, formatted: '0.1336'}
+        - values:
+          - {qualifier: secondary, formatted: '744.06907'}
+          - {qualifier: primary, formatted: '0.11377'}
+        - values:
+          - {qualifier: secondary, formatted: '744.43013'}
+          - {qualifier: primary, formatted: '0.09645'}
+        - values:
+          - {qualifier: secondary, formatted: '744.87387'}
+          - {qualifier: primary, formatted: '0.07998'}
+        - values:
+          - {qualifier: secondary, formatted: '745.27'}
+          - {qualifier: primary, formatted: '0.06412'}
+        - values:
+          - {qualifier: secondary, formatted: '745.93793'}
+          - {qualifier: primary, formatted: '0.04929'}
+        - values:
+          - {qualifier: secondary, formatted: '746.77072'}
+          - {qualifier: primary, formatted: '0.0368'}
+        - values:
+          - {qualifier: secondary, formatted: '747.44255'}
+          - {qualifier: primary, formatted: '0.02731'}
+        - values:
+          - {qualifier: secondary, formatted: '748.67545'}
+          - {qualifier: primary, formatted: '0.02121'}
+        - values:
+          - {qualifier: secondary, formatted: '749.97286'}
+          - {qualifier: primary, formatted: '0.01697'}
+        - values:
+          - {qualifier: secondary, formatted: '751.28381'}
+          - {qualifier: primary, formatted: '0.01548'}
+        - values:
+          - {qualifier: secondary, formatted: '752.71568'}
+          - {qualifier: primary, formatted: '0.01548'}
+        - values:
+          - {qualifier: secondary, formatted: '754.32871'}
+          - {qualifier: primary, formatted: '0.01418'}
+        - values:
+          - {qualifier: secondary, formatted: '755.60702'}
+          - {qualifier: primary, formatted: '0.01345'}
+        - values:
+          - {qualifier: secondary, formatted: '756.60148'}
+          - {qualifier: primary, formatted: '0.01227'}
+        - values:
+          - {qualifier: secondary, formatted: '757.73826'}
+          - {qualifier: primary, formatted: '0.01021'}
+        - values:
+          - {qualifier: secondary, formatted: '758.76726'}
+          - {qualifier: primary, formatted: '0.01093'}
+        - values:
+          - {qualifier: secondary, formatted: '760.01051'}
+          - {qualifier: primary, formatted: '0.00977'}
+        - values:
+          - {qualifier: secondary, formatted: '760.55487'}
+          - {qualifier: primary, formatted: '0.00977'}
+        - values:
+          - {qualifier: secondary, formatted: '761.90413'}
+          - {qualifier: primary, formatted: '0.00919'}
+        - values:
+          - {qualifier: secondary, formatted: '763.15904'}
+          - {qualifier: primary, formatted: '0.00772'}
+        - values:
+          - {qualifier: secondary, formatted: '764.55596'}
+          - {qualifier: primary, formatted: '0.00625'}
+        - values:
+          - {qualifier: secondary, formatted: '764.93658'}
+          - {qualifier: primary, formatted: '0.00806'}
+        - values:
+          - {qualifier: secondary, formatted: '766.25051'}
+          - {qualifier: primary, formatted: '0.00693'}
+        - values:
+          - {qualifier: secondary, formatted: '768.03785'}
+          - {qualifier: primary, formatted: '0.00566'}
+        - values:
+          - {qualifier: secondary, formatted: '769.58806'}
+          - {qualifier: primary, formatted: '0.00566'}
+        - values:
+          - {qualifier: secondary, formatted: '771.13827'}
+          - {qualifier: primary, formatted: '0.00566'}
+      - pk: 3302
+        label: ''
+        crystal_system: triclinic
+        fixed_values:
+        - physical_property: {id: 102, created: '2023-02-13T14:24:18-05:00', updated: '2023-02-13T14:24:18-05:00',
+            name: Fluence, method: '', created_by: 20, updated_by: 20}
+          unit: {id: 47, created: '2023-02-13T14:24:37-05:00', updated: '2023-02-13T14:24:37-05:00',
+            label: uJ/cm2, created_by: 20, updated_by: 20}
+          subset: {id: 3302, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '104.96'
+        - physical_property: {id: 2, created: '2019-02-21T11:16:12-05:00', updated: '2019-02-21T11:16:12-05:00',
+            name: temperature, method: '', created_by: 15, updated_by: 15}
+          unit: {id: 2, created: '2019-02-21T11:16:23-05:00', updated: '2019-02-21T11:16:23-05:00',
+            label: K, created_by: 15, updated_by: 15}
+          subset: {id: 3302, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '77.0'
+        datapoints:
+        - values:
+          - {qualifier: secondary, formatted: '719.39674'}
+          - {qualifier: primary, formatted: '0.00977'}
+        - values:
+          - {qualifier: secondary, formatted: '720.59102'}
+          - {qualifier: primary, formatted: '0.01242'}
+        - values:
+          - {qualifier: secondary, formatted: '721.9484'}
+          - {qualifier: primary, formatted: '0.01475'}
+        - values:
+          - {qualifier: secondary, formatted: '723.16872'}
+          - {qualifier: primary, formatted: '0.01829'}
+        - values:
+          - {qualifier: secondary, formatted: '724.2719'}
+          - {qualifier: primary, formatted: '0.01989'}
+        - values:
+          - {qualifier: secondary, formatted: '725.49864'}
+          - {qualifier: primary, formatted: '0.02211'}
+        - values:
+          - {qualifier: secondary, formatted: '726.77545'}
+          - {qualifier: primary, formatted: '0.02564'}
+        - values:
+          - {qualifier: secondary, formatted: '728.11227'}
+          - {qualifier: primary, formatted: '0.02731'}
+        - values:
+          - {qualifier: secondary, formatted: '729.61371'}
+          - {qualifier: primary, formatted: '0.03093'}
+        - values:
+          - {qualifier: secondary, formatted: '731.02064'}
+          - {qualifier: primary, formatted: '0.0346'}
+        - values:
+          - {qualifier: secondary, formatted: '732.28024'}
+          - {qualifier: primary, formatted: '0.03693'}
+        - values:
+          - {qualifier: secondary, formatted: '733.44331'}
+          - {qualifier: primary, formatted: '0.04385'}
+        - values:
+          - {qualifier: secondary, formatted: '734.69217'}
+          - {qualifier: primary, formatted: '0.05136'}
+        - values:
+          - {qualifier: secondary, formatted: '735.85077'}
+          - {qualifier: primary, formatted: '0.06265'}
+        - values:
+          - {qualifier: secondary, formatted: '736.41506'}
+          - {qualifier: primary, formatted: '0.07323'}
+        - values:
+          - {qualifier: secondary, formatted: '737.12322'}
+          - {qualifier: primary, formatted: '0.07852'}
+        - values:
+          - {qualifier: secondary, formatted: '737.59379'}
+          - {qualifier: primary, formatted: '0.09491'}
+        - values:
+          - {qualifier: secondary, formatted: '738.15804'}
+          - {qualifier: primary, formatted: '0.11389'}
+        - values:
+          - {qualifier: secondary, formatted: '738.80329'}
+          - {qualifier: primary, formatted: '0.12979'}
+        - values:
+          - {qualifier: secondary, formatted: '739.07472'}
+          - {qualifier: primary, formatted: '0.14858'}
+        - values:
+          - {qualifier: secondary, formatted: '739.22191'}
+          - {qualifier: primary, formatted: '0.16738'}
+        - values:
+          - {qualifier: secondary, formatted: '739.44029'}
+          - {qualifier: primary, formatted: '0.18572'}
+        - values:
+          - {qualifier: secondary, formatted: '739.57594'}
+          - {qualifier: primary, formatted: '0.20366'}
+        - values:
+          - {qualifier: secondary, formatted: '739.72464'}
+          - {qualifier: primary, formatted: '0.23496'}
+        - values:
+          - {qualifier: secondary, formatted: '739.77162'}
+          - {qualifier: primary, formatted: '0.21923'}
+        - values:
+          - {qualifier: secondary, formatted: '739.89011'}
+          - {qualifier: primary, formatted: '0.25228'}
+        - values:
+          - {qualifier: secondary, formatted: '740.00388'}
+          - {qualifier: primary, formatted: '0.26521'}
+        - values:
+          - {qualifier: secondary, formatted: '740.01317'}
+          - {qualifier: primary, formatted: '0.33938'}
+        - values:
+          - {qualifier: secondary, formatted: '740.01691'}
+          - {qualifier: primary, formatted: '0.32881'}
+        - values:
+          - {qualifier: secondary, formatted: '740.03373'}
+          - {qualifier: primary, formatted: '0.28122'}
+        - values:
+          - {qualifier: secondary, formatted: '740.05759'}
+          - {qualifier: primary, formatted: '0.29742'}
+        - values:
+          - {qualifier: secondary, formatted: '740.08179'}
+          - {qualifier: primary, formatted: '0.31265'}
+        - values:
+          - {qualifier: secondary, formatted: '740.21983'}
+          - {qualifier: primary, formatted: '0.35735'}
+        - values:
+          - {qualifier: secondary, formatted: '740.33306'}
+          - {qualifier: primary, formatted: '0.37178'}
+        - values:
+          - {qualifier: secondary, formatted: '740.38633'}
+          - {qualifier: primary, formatted: '0.38849'}
+        - values:
+          - {qualifier: secondary, formatted: '740.41615'}
+          - {qualifier: primary, formatted: '0.4046'}
+        - values:
+          - {qualifier: secondary, formatted: '740.44563'}
+          - {qualifier: primary, formatted: '0.42164'}
+        - values:
+          - {qualifier: secondary, formatted: '740.48673'}
+          - {qualifier: primary, formatted: '0.43927'}
+        - values:
+          - {qualifier: secondary, formatted: '740.53448'}
+          - {qualifier: primary, formatted: '0.47158'}
+        - values:
+          - {qualifier: secondary, formatted: '740.54009'}
+          - {qualifier: primary, formatted: '0.45572'}
+        - values:
+          - {qualifier: secondary, formatted: '740.81351'}
+          - {qualifier: primary, formatted: '0.48568'}
+        - values:
+          - {qualifier: secondary, formatted: '741.51089'}
+          - {qualifier: primary, formatted: '0.49632'}
+        - values:
+          - {qualifier: secondary, formatted: '742.51759'}
+          - {qualifier: primary, formatted: '0.48568'}
+        - values:
+          - {qualifier: secondary, formatted: '742.52299'}
+          - {qualifier: primary, formatted: '0.47041'}
+        - values:
+          - {qualifier: secondary, formatted: '742.54053'}
+          - {qualifier: primary, formatted: '0.42076'}
+        - values:
+          - {qualifier: secondary, formatted: '742.5466'}
+          - {qualifier: primary, formatted: '0.40357'}
+        - values:
+          - {qualifier: secondary, formatted: '742.55267'}
+          - {qualifier: primary, formatted: '0.38639'}
+        - values:
+          - {qualifier: secondary, formatted: '742.55994'}
+          - {qualifier: primary, formatted: '0.36582'}
+        - values:
+          - {qualifier: secondary, formatted: '742.56653'}
+          - {qualifier: primary, formatted: '0.34717'}
+        - values:
+          - {qualifier: secondary, formatted: '742.64615'}
+          - {qualifier: primary, formatted: '0.45674'}
+        - values:
+          - {qualifier: secondary, formatted: '742.65254'}
+          - {qualifier: primary, formatted: '0.43868'}
+        - values:
+          - {qualifier: secondary, formatted: '742.65586'}
+          - {qualifier: primary, formatted: '0.32881'}
+        - values:
+          - {qualifier: secondary, formatted: '742.73899'}
+          - {qualifier: primary, formatted: '0.31112'}
+        - values:
+          - {qualifier: secondary, formatted: '742.74579'}
+          - {qualifier: primary, formatted: '0.29188'}
+        - values:
+          - {qualifier: secondary, formatted: '742.75181'}
+          - {qualifier: primary, formatted: '0.27484'}
+        - values:
+          - {qualifier: secondary, formatted: '742.75742'}
+          - {qualifier: primary, formatted: '0.25894'}
+        - values:
+          - {qualifier: secondary, formatted: '742.88693'}
+          - {qualifier: primary, formatted: '0.2442'}
+        - values:
+          - {qualifier: secondary, formatted: '743.03392'}
+          - {qualifier: primary, formatted: '0.2301'}
+        - values:
+          - {qualifier: secondary, formatted: '743.06195'}
+          - {qualifier: primary, formatted: '0.21776'}
+        - values:
+          - {qualifier: secondary, formatted: '743.20893'}
+          - {qualifier: primary, formatted: '0.20366'}
+        - values:
+          - {qualifier: secondary, formatted: '743.27309'}
+          - {qualifier: primary, formatted: '0.18956'}
+        - values:
+          - {qualifier: secondary, formatted: '743.47862'}
+          - {qualifier: primary, formatted: '0.17722'}
+        - values:
+          - {qualifier: secondary, formatted: '743.48174'}
+          - {qualifier: primary, formatted: '0.16841'}
+        - values:
+          - {qualifier: secondary, formatted: '743.49025'}
+          - {qualifier: primary, formatted: '0.14432'}
+        - values:
+          - {qualifier: secondary, formatted: '743.56665'}
+          - {qualifier: primary, formatted: '0.12904'}
+        - values:
+          - {qualifier: secondary, formatted: '743.56825'}
+          - {qualifier: primary, formatted: '0.15785'}
+        - values:
+          - {qualifier: secondary, formatted: '743.66801'}
+          - {qualifier: primary, formatted: '0.1101'}
+        - values:
+          - {qualifier: secondary, formatted: '743.99433'}
+          - {qualifier: primary, formatted: '0.09085'}
+        - values:
+          - {qualifier: secondary, formatted: '744.43255'}
+          - {qualifier: primary, formatted: '0.07288'}
+        - values:
+          - {qualifier: secondary, formatted: '745.15439'}
+          - {qualifier: primary, formatted: '0.05617'}
+        - values:
+          - {qualifier: secondary, formatted: '746.36608'}
+          - {qualifier: primary, formatted: '0.04326'}
+        - values:
+          - {qualifier: secondary, formatted: '747.48991'}
+          - {qualifier: primary, formatted: '0.02731'}
+        - values:
+          - {qualifier: secondary, formatted: '748.78766'}
+          - {qualifier: primary, formatted: '0.02211'}
+        - values:
+          - {qualifier: secondary, formatted: '750.06696'}
+          - {qualifier: primary, formatted: '0.01859'}
+        - values:
+          - {qualifier: secondary, formatted: '751.06225'}
+          - {qualifier: primary, formatted: '0.01506'}
+        - values:
+          - {qualifier: secondary, formatted: '752.7671'}
+          - {qualifier: primary, formatted: '0.01286'}
+        - values:
+          - {qualifier: secondary, formatted: '754.32964'}
+          - {qualifier: primary, formatted: '0.01154'}
+        - values:
+          - {qualifier: secondary, formatted: '755.64372'}
+          - {qualifier: primary, formatted: '0.01007'}
+        - values:
+          - {qualifier: secondary, formatted: '757.0288'}
+          - {qualifier: primary, formatted: '0.0086'}
+        - values:
+          - {qualifier: secondary, formatted: '758.87508'}
+          - {qualifier: primary, formatted: '0.00801'}
+      - pk: 3303
+        label: ''
+        crystal_system: triclinic
+        fixed_values:
+        - physical_property: {id: 102, created: '2023-02-13T14:24:18-05:00', updated: '2023-02-13T14:24:18-05:00',
+            name: Fluence, method: '', created_by: 20, updated_by: 20}
+          unit: {id: 47, created: '2023-02-13T14:24:37-05:00', updated: '2023-02-13T14:24:37-05:00',
+            label: uJ/cm2, created_by: 20, updated_by: 20}
+          subset: {id: 3303, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '94.46'
+        - physical_property: {id: 2, created: '2019-02-21T11:16:12-05:00', updated: '2019-02-21T11:16:12-05:00',
+            name: temperature, method: '', created_by: 15, updated_by: 15}
+          unit: {id: 2, created: '2019-02-21T11:16:23-05:00', updated: '2019-02-21T11:16:23-05:00',
+            label: K, created_by: 15, updated_by: 15}
+          subset: {id: 3303, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '77.0'
+        datapoints:
+        - values:
+          - {qualifier: secondary, formatted: '715.1353'}
+          - {qualifier: primary, formatted: '0.0133'}
+        - values:
+          - {qualifier: secondary, formatted: '716.55537'}
+          - {qualifier: primary, formatted: '0.0133'}
+        - values:
+          - {qualifier: secondary, formatted: '717.54941'}
+          - {qualifier: primary, formatted: '0.0133'}
+        - values:
+          - {qualifier: secondary, formatted: '718.40145'}
+          - {qualifier: primary, formatted: '0.0133'}
+        - values:
+          - {qualifier: secondary, formatted: '719.25348'}
+          - {qualifier: primary, formatted: '0.0133'}
+        - values:
+          - {qualifier: secondary, formatted: '720.10552'}
+          - {qualifier: primary, formatted: '0.0133'}
+        - values:
+          - {qualifier: secondary, formatted: '720.81493'}
+          - {qualifier: primary, formatted: '0.01506'}
+        - values:
+          - {qualifier: secondary, formatted: '721.52496'}
+          - {qualifier: primary, formatted: '0.01506'}
+        - values:
+          - {qualifier: secondary, formatted: '722.47058'}
+          - {qualifier: primary, formatted: '0.01815'}
+        - values:
+          - {qualifier: secondary, formatted: '723.9249'}
+          - {qualifier: primary, formatted: '0.02167'}
+        - values:
+          - {qualifier: secondary, formatted: '724.90648'}
+          - {qualifier: primary, formatted: '0.02343'}
+        - values:
+          - {qualifier: secondary, formatted: '726.31461'}
+          - {qualifier: primary, formatted: '0.02437'}
+        - values:
+          - {qualifier: secondary, formatted: '727.47308'}
+          - {qualifier: primary, formatted: '0.02725'}
+        - values:
+          - {qualifier: secondary, formatted: '728.88553'}
+          - {qualifier: primary, formatted: '0.03252'}
+        - values:
+          - {qualifier: secondary, formatted: '730.60588'}
+          - {qualifier: primary, formatted: '0.03621'}
+        - values:
+          - {qualifier: secondary, formatted: '731.98333'}
+          - {qualifier: primary, formatted: '0.03994'}
+        - values:
+          - {qualifier: secondary, formatted: '733.3012'}
+          - {qualifier: primary, formatted: '0.04414'}
+        - values:
+          - {qualifier: secondary, formatted: '734.69217'}
+          - {qualifier: primary, formatted: '0.05136'}
+        - values:
+          - {qualifier: secondary, formatted: '735.85077'}
+          - {qualifier: primary, formatted: '0.06265'}
+        - values:
+          - {qualifier: secondary, formatted: '736.76562'}
+          - {qualifier: primary, formatted: '0.07761'}
+        - values:
+          - {qualifier: secondary, formatted: '737.44997'}
+          - {qualifier: primary, formatted: '0.09164'}
+        - values:
+          - {qualifier: secondary, formatted: '737.96405'}
+          - {qualifier: primary, formatted: '0.11024'}
+        - values:
+          - {qualifier: secondary, formatted: '738.38259'}
+          - {qualifier: primary, formatted: '0.13139'}
+        - values:
+          - {qualifier: secondary, formatted: '738.65975'}
+          - {qualifier: primary, formatted: '0.15078'}
+        - values:
+          - {qualifier: secondary, formatted: '738.79078'}
+          - {qualifier: primary, formatted: '0.16519'}
+        - values:
+          - {qualifier: secondary, formatted: '739.14676'}
+          - {qualifier: primary, formatted: '0.17913'}
+        - values:
+          - {qualifier: secondary, formatted: '739.42548'}
+          - {qualifier: primary, formatted: '0.19411'}
+        - values:
+          - {qualifier: secondary, formatted: '739.47251'}
+          - {qualifier: primary, formatted: '0.21153'}
+        - values:
+          - {qualifier: secondary, formatted: '739.53182'}
+          - {qualifier: primary, formatted: '0.22804'}
+        - values:
+          - {qualifier: secondary, formatted: '739.59748'}
+          - {qualifier: primary, formatted: '0.24317'}
+        - values:
+          - {qualifier: secondary, formatted: '739.65068'}
+          - {qualifier: primary, formatted: '0.26007'}
+        - values:
+          - {qualifier: secondary, formatted: '739.78516'}
+          - {qualifier: primary, formatted: '0.28136'}
+        - values:
+          - {qualifier: secondary, formatted: '739.97964'}
+          - {qualifier: primary, formatted: '0.30031'}
+        - values:
+          - {qualifier: secondary, formatted: '740.13281'}
+          - {qualifier: primary, formatted: '0.31883'}
+        - values:
+          - {qualifier: secondary, formatted: '740.19115'}
+          - {qualifier: primary, formatted: '0.33789'}
+        - values:
+          - {qualifier: secondary, formatted: '740.22028'}
+          - {qualifier: primary, formatted: '0.35607'}
+        - values:
+          - {qualifier: secondary, formatted: '740.35916'}
+          - {qualifier: primary, formatted: '0.37331'}
+        - values:
+          - {qualifier: secondary, formatted: '740.47152'}
+          - {qualifier: primary, formatted: '0.39022'}
+        - values:
+          - {qualifier: secondary, formatted: '740.48109'}
+          - {qualifier: primary, formatted: '0.43851'}
+        - values:
+          - {qualifier: secondary, formatted: '740.56359'}
+          - {qualifier: primary, formatted: '0.42261'}
+        - values:
+          - {qualifier: secondary, formatted: '740.56987'}
+          - {qualifier: primary, formatted: '0.40483'}
+        - values:
+          - {qualifier: secondary, formatted: '740.6382'}
+          - {qualifier: primary, formatted: '0.45429'}
+        - values:
+          - {qualifier: secondary, formatted: '740.86391'}
+          - {qualifier: primary, formatted: '0.46862'}
+        - values:
+          - {qualifier: secondary, formatted: '741.46917'}
+          - {qualifier: primary, formatted: '0.47761'}
+        - values:
+          - {qualifier: secondary, formatted: '742.02642'}
+          - {qualifier: primary, formatted: '0.46902'}
+        - values:
+          - {qualifier: secondary, formatted: '742.32159'}
+          - {qualifier: primary, formatted: '0.45422'}
+        - values:
+          - {qualifier: secondary, formatted: '742.39229'}
+          - {qualifier: primary, formatted: '0.43832'}
+        - values:
+          - {qualifier: secondary, formatted: '742.458'}
+          - {qualifier: primary, formatted: '0.41981'}
+        - values:
+          - {qualifier: secondary, formatted: '742.53557'}
+          - {qualifier: primary, formatted: '0.40116'}
+        - values:
+          - {qualifier: secondary, formatted: '742.53652'}
+          - {qualifier: primary, formatted: '0.36503'}
+        - values:
+          - {qualifier: secondary, formatted: '742.54237'}
+          - {qualifier: primary, formatted: '0.38192'}
+        - values:
+          - {qualifier: secondary, formatted: '742.5424'}
+          - {qualifier: primary, formatted: '0.34839'}
+        - values:
+          - {qualifier: secondary, formatted: '742.61975'}
+          - {qualifier: primary, formatted: '0.33036'}
+        - values:
+          - {qualifier: secondary, formatted: '742.68528'}
+          - {qualifier: primary, formatted: '0.31237'}
+        - values:
+          - {qualifier: secondary, formatted: '742.80991'}
+          - {qualifier: primary, formatted: '0.29473'}
+        - values:
+          - {qualifier: secondary, formatted: '742.88843'}
+          - {qualifier: primary, formatted: '0.23994'}
+        - values:
+          - {qualifier: secondary, formatted: '742.89503'}
+          - {qualifier: primary, formatted: '0.22129'}
+        - values:
+          - {qualifier: secondary, formatted: '742.89861'}
+          - {qualifier: primary, formatted: '0.27813'}
+        - values:
+          - {qualifier: secondary, formatted: '742.92471'}
+          - {qualifier: primary, formatted: '0.20425'}
+        - values:
+          - {qualifier: secondary, formatted: '742.96421'}
+          - {qualifier: primary, formatted: '0.25992'}
+        - values:
+          - {qualifier: secondary, formatted: '743.04949'}
+          - {qualifier: primary, formatted: '0.18604'}
+        - values:
+          - {qualifier: secondary, formatted: '743.20271'}
+          - {qualifier: primary, formatted: '0.15431'}
+        - values:
+          - {qualifier: secondary, formatted: '743.23328'}
+          - {qualifier: primary, formatted: '0.16826'}
+        - values:
+          - {qualifier: secondary, formatted: '743.4917'}
+          - {qualifier: primary, formatted: '0.14021'}
+        - values:
+          - {qualifier: secondary, formatted: '743.78132'}
+          - {qualifier: primary, formatted: '0.12434'}
+        - values:
+          - {qualifier: secondary, formatted: '743.78817'}
+          - {qualifier: primary, formatted: '0.10496'}
+        - values:
+          - {qualifier: secondary, formatted: '744.07779'}
+          - {qualifier: primary, formatted: '0.08909'}
+        - values:
+          - {qualifier: secondary, formatted: '744.36616'}
+          - {qualifier: primary, formatted: '0.07675'}
+        - values:
+          - {qualifier: secondary, formatted: '745.15439'}
+          - {qualifier: primary, formatted: '0.05617'}
+        - values:
+          - {qualifier: secondary, formatted: '745.93819'}
+          - {qualifier: primary, formatted: '0.04855'}
+        - values:
+          - {qualifier: secondary, formatted: '746.36795'}
+          - {qualifier: primary, formatted: '0.03798'}
+        - values:
+          - {qualifier: secondary, formatted: '747.22123'}
+          - {qualifier: primary, formatted: '0.03445'}
+        - values:
+          - {qualifier: secondary, formatted: '748.07763'}
+          - {qualifier: primary, formatted: '0.02211'}
+        - values:
+          - {qualifier: secondary, formatted: '749.2143'}
+          - {qualifier: primary, formatted: '0.02035'}
+        - values:
+          - {qualifier: secondary, formatted: '750.4936'}
+          - {qualifier: primary, formatted: '0.01682'}
+        - values:
+          - {qualifier: secondary, formatted: '751.75639'}
+          - {qualifier: primary, formatted: '0.01769'}
+        - values:
+          - {qualifier: secondary, formatted: '752.92599'}
+          - {qualifier: primary, formatted: '0.01475'}
+        - values:
+          - {qualifier: secondary, formatted: '754.17466'}
+          - {qualifier: primary, formatted: '0.01477'}
+        - values:
+          - {qualifier: secondary, formatted: '755.18105'}
+          - {qualifier: primary, formatted: '0.0133'}
+        - values:
+          - {qualifier: secondary, formatted: '756.03309'}
+          - {qualifier: primary, formatted: '0.0133'}
+        - values:
+          - {qualifier: secondary, formatted: '757.02713'}
+          - {qualifier: primary, formatted: '0.0133'}
+        - values:
+          - {qualifier: secondary, formatted: '758.30519'}
+          - {qualifier: primary, formatted: '0.0133'}
+      - pk: 3304
+        label: ''
+        crystal_system: triclinic
+        fixed_values:
+        - physical_property: {id: 102, created: '2023-02-13T14:24:18-05:00', updated: '2023-02-13T14:24:18-05:00',
+            name: Fluence, method: '', created_by: 20, updated_by: 20}
+          unit: {id: 47, created: '2023-02-13T14:24:37-05:00', updated: '2023-02-13T14:24:37-05:00',
+            label: uJ/cm2, created_by: 20, updated_by: 20}
+          subset: {id: 3304, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '78.72'
+        - physical_property: {id: 2, created: '2019-02-21T11:16:12-05:00', updated: '2019-02-21T11:16:12-05:00',
+            name: temperature, method: '', created_by: 15, updated_by: 15}
+          unit: {id: 2, created: '2019-02-21T11:16:23-05:00', updated: '2019-02-21T11:16:23-05:00',
+            label: K, created_by: 15, updated_by: 15}
+          subset: {id: 3304, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '77.0'
+        datapoints:
+        - values:
+          - {qualifier: secondary, formatted: '714.00827'}
+          - {qualifier: primary, formatted: '0.0058'}
+        - values:
+          - {qualifier: secondary, formatted: '714.90086'}
+          - {qualifier: primary, formatted: '0.00631'}
+        - values:
+          - {qualifier: secondary, formatted: '715.83418'}
+          - {qualifier: primary, formatted: '0.00784'}
+        - values:
+          - {qualifier: secondary, formatted: '716.85005'}
+          - {qualifier: primary, formatted: '0.00835'}
+        - values:
+          - {qualifier: secondary, formatted: '717.94791'}
+          - {qualifier: primary, formatted: '0.00937'}
+        - values:
+          - {qualifier: secondary, formatted: '718.9224'}
+          - {qualifier: primary, formatted: '0.01068'}
+        - values:
+          - {qualifier: secondary, formatted: '719.70251'}
+          - {qualifier: primary, formatted: '0.01236'}
+        - values:
+          - {qualifier: secondary, formatted: '720.5542'}
+          - {qualifier: primary, formatted: '0.01236'}
+        - values:
+          - {qualifier: secondary, formatted: '721.44715'}
+          - {qualifier: primary, formatted: '0.01185'}
+        - values:
+          - {qualifier: secondary, formatted: '722.32093'}
+          - {qualifier: primary, formatted: '0.01272'}
+        - values:
+          - {qualifier: secondary, formatted: '723.07908'}
+          - {qualifier: primary, formatted: '0.01316'}
+        - values:
+          - {qualifier: secondary, formatted: '723.73592'}
+          - {qualifier: primary, formatted: '0.01485'}
+        - values:
+          - {qualifier: secondary, formatted: '724.62839'}
+          - {qualifier: primary, formatted: '0.01571'}
+        - values:
+          - {qualifier: secondary, formatted: '725.44941'}
+          - {qualifier: primary, formatted: '0.01791'}
+        - values:
+          - {qualifier: secondary, formatted: '726.17729'}
+          - {qualifier: primary, formatted: '0.01944'}
+        - values:
+          - {qualifier: secondary, formatted: '727.24495'}
+          - {qualifier: primary, formatted: '0.02132'}
+        - values:
+          - {qualifier: secondary, formatted: '727.85504'}
+          - {qualifier: primary, formatted: '0.0241'}
+        - values:
+          - {qualifier: secondary, formatted: '728.88771'}
+          - {qualifier: primary, formatted: '0.02636'}
+        - values:
+          - {qualifier: secondary, formatted: '729.8083'}
+          - {qualifier: primary, formatted: '0.02957'}
+        - values:
+          - {qualifier: secondary, formatted: '730.95206'}
+          - {qualifier: primary, formatted: '0.03372'}
+        - values:
+          - {qualifier: secondary, formatted: '732.37195'}
+          - {qualifier: primary, formatted: '0.03693'}
+        - values:
+          - {qualifier: secondary, formatted: '733.47988'}
+          - {qualifier: primary, formatted: '0.04116'}
+        - values:
+          - {qualifier: secondary, formatted: '734.45252'}
+          - {qualifier: primary, formatted: '0.04771'}
+        - values:
+          - {qualifier: secondary, formatted: '735.27215'}
+          - {qualifier: primary, formatted: '0.05384'}
+        - values:
+          - {qualifier: secondary, formatted: '736.3266'}
+          - {qualifier: primary, formatted: '0.06142'}
+        - values:
+          - {qualifier: secondary, formatted: '736.97959'}
+          - {qualifier: primary, formatted: '0.07402'}
+        - values:
+          - {qualifier: secondary, formatted: '737.47979'}
+          - {qualifier: primary, formatted: '0.08823'}
+        - values:
+          - {qualifier: secondary, formatted: '738.03285'}
+          - {qualifier: primary, formatted: '0.10171'}
+        - values:
+          - {qualifier: secondary, formatted: '738.36352'}
+          - {qualifier: primary, formatted: '0.11381'}
+        - values:
+          - {qualifier: secondary, formatted: '738.54099'}
+          - {qualifier: primary, formatted: '0.12693'}
+        - values:
+          - {qualifier: secondary, formatted: '738.86435'}
+          - {qualifier: primary, formatted: '0.1421'}
+        - values:
+          - {qualifier: secondary, formatted: '739.05866'}
+          - {qualifier: primary, formatted: '0.15777'}
+        - values:
+          - {qualifier: secondary, formatted: '739.27722'}
+          - {qualifier: primary, formatted: '0.17089'}
+        - values:
+          - {qualifier: secondary, formatted: '739.46506'}
+          - {qualifier: primary, formatted: '0.18633'}
+        - values:
+          - {qualifier: secondary, formatted: '739.66033'}
+          - {qualifier: primary, formatted: '0.19931'}
+        - values:
+          - {qualifier: secondary, formatted: '739.81951'}
+          - {qualifier: primary, formatted: '0.21396'}
+        - values:
+          - {qualifier: secondary, formatted: '739.93224'}
+          - {qualifier: primary, formatted: '0.24377'}
+        - values:
+          - {qualifier: secondary, formatted: '739.93742'}
+          - {qualifier: primary, formatted: '0.22912'}
+        - values:
+          - {qualifier: secondary, formatted: '740.06215'}
+          - {qualifier: primary, formatted: '0.25937'}
+        - values:
+          - {qualifier: secondary, formatted: '740.20292'}
+          - {qualifier: primary, formatted: '0.27591'}
+        - values:
+          - {qualifier: secondary, formatted: '740.27987'}
+          - {qualifier: primary, formatted: '0.29071'}
+        - values:
+          - {qualifier: secondary, formatted: '740.35687'}
+          - {qualifier: primary, formatted: '0.30536'}
+        - values:
+          - {qualifier: secondary, formatted: '740.43405'}
+          - {qualifier: primary, formatted: '0.3195'}
+        - values:
+          - {qualifier: secondary, formatted: '740.54747'}
+          - {qualifier: primary, formatted: '0.33421'}
+        - values:
+          - {qualifier: secondary, formatted: '740.57743'}
+          - {qualifier: primary, formatted: '0.34719'}
+        - values:
+          - {qualifier: secondary, formatted: '740.58422'}
+          - {qualifier: primary, formatted: '0.35965'}
+        - values:
+          - {qualifier: secondary, formatted: '740.62615'}
+          - {qualifier: primary, formatted: '0.37402'}
+        - values:
+          - {qualifier: secondary, formatted: '740.90374'}
+          - {qualifier: primary, formatted: '0.38568'}
+        - values:
+          - {qualifier: secondary, formatted: '741.54733'}
+          - {qualifier: primary, formatted: '0.39319'}
+        - values:
+          - {qualifier: secondary, formatted: '741.97357'}
+          - {qualifier: primary, formatted: '0.38415'}
+        - values:
+          - {qualifier: secondary, formatted: '742.08884'}
+          - {qualifier: primary, formatted: '0.37242'}
+        - values:
+          - {qualifier: secondary, formatted: '742.18762'}
+          - {qualifier: primary, formatted: '0.3598'}
+        - values:
+          - {qualifier: secondary, formatted: '742.2618'}
+          - {qualifier: primary, formatted: '0.34807'}
+        - values:
+          - {qualifier: secondary, formatted: '742.37796'}
+          - {qualifier: primary, formatted: '0.33648'}
+        - values:
+          - {qualifier: secondary, formatted: '742.4747'}
+          - {qualifier: primary, formatted: '0.31112'}
+        - values:
+          - {qualifier: secondary, formatted: '742.4788'}
+          - {qualifier: primary, formatted: '0.29953'}
+        - values:
+          - {qualifier: secondary, formatted: '742.48252'}
+          - {qualifier: primary, formatted: '0.32336'}
+        - values:
+          - {qualifier: secondary, formatted: '742.5238'}
+          - {qualifier: primary, formatted: '0.28845'}
+        - values:
+          - {qualifier: secondary, formatted: '742.61381'}
+          - {qualifier: primary, formatted: '0.26629'}
+        - values:
+          - {qualifier: secondary, formatted: '742.65099'}
+          - {qualifier: primary, formatted: '0.27737'}
+        - values:
+          - {qualifier: secondary, formatted: '742.69996'}
+          - {qualifier: primary, formatted: '0.25506'}
+        - values:
+          - {qualifier: secondary, formatted: '742.8281'}
+          - {qualifier: primary, formatted: '0.24216'}
+        - values:
+          - {qualifier: secondary, formatted: '742.93112'}
+          - {qualifier: primary, formatted: '0.23079'}
+        - values:
+          - {qualifier: secondary, formatted: '743.01733'}
+          - {qualifier: primary, formatted: '0.21936'}
+        - values:
+          - {qualifier: secondary, formatted: '743.04653'}
+          - {qualifier: primary, formatted: '0.20651'}
+        - values:
+          - {qualifier: secondary, formatted: '743.06689'}
+          - {qualifier: primary, formatted: '0.19539'}
+        - values:
+          - {qualifier: secondary, formatted: '743.08718'}
+          - {qualifier: primary, formatted: '0.18448'}
+        - values:
+          - {qualifier: secondary, formatted: '743.13954'}
+          - {qualifier: primary, formatted: '0.17388'}
+        - values:
+          - {qualifier: secondary, formatted: '743.22649'}
+          - {qualifier: primary, formatted: '0.16127'}
+        - values:
+          - {qualifier: secondary, formatted: '743.23767'}
+          - {qualifier: primary, formatted: '0.14727'}
+        - values:
+          - {qualifier: secondary, formatted: '743.39434'}
+          - {qualifier: primary, formatted: '0.13467'}
+        - values:
+          - {qualifier: secondary, formatted: '743.52188'}
+          - {qualifier: primary, formatted: '0.12256'}
+        - values:
+          - {qualifier: secondary, formatted: '743.73895'}
+          - {qualifier: primary, formatted: '0.1082'}
+        - values:
+          - {qualifier: secondary, formatted: '743.90177'}
+          - {qualifier: primary, formatted: '0.09494'}
+        - values:
+          - {qualifier: secondary, formatted: '744.19448'}
+          - {qualifier: primary, formatted: '0.08233'}
+        - values:
+          - {qualifier: secondary, formatted: '744.52181'}
+          - {qualifier: primary, formatted: '0.06863'}
+        - values:
+          - {qualifier: secondary, formatted: '744.87899'}
+          - {qualifier: primary, formatted: '0.05595'}
+        - values:
+          - {qualifier: secondary, formatted: '745.52906'}
+          - {qualifier: primary, formatted: '0.04509'}
+        - values:
+          - {qualifier: secondary, formatted: '746.3247'}
+          - {qualifier: primary, formatted: '0.03452'}
+        - values:
+          - {qualifier: secondary, formatted: '747.09737'}
+          - {qualifier: primary, formatted: '0.02556'}
+        - values:
+          - {qualifier: secondary, formatted: '747.99267'}
+          - {qualifier: primary, formatted: '0.01842'}
+        - values:
+          - {qualifier: secondary, formatted: '748.76416'}
+          - {qualifier: primary, formatted: '0.01281'}
+        - values:
+          - {qualifier: secondary, formatted: '749.75741'}
+          - {qualifier: primary, formatted: '0.00857'}
+        - values:
+          - {qualifier: secondary, formatted: '750.76798'}
+          - {qualifier: primary, formatted: '0.00822'}
+        - values:
+          - {qualifier: secondary, formatted: '751.75979'}
+          - {qualifier: primary, formatted: '0.00806'}
+        - values:
+          - {qualifier: secondary, formatted: '752.73479'}
+          - {qualifier: primary, formatted: '0.00792'}
+        - values:
+          - {qualifier: secondary, formatted: '753.70987'}
+          - {qualifier: primary, formatted: '0.00755'}
+        - values:
+          - {qualifier: secondary, formatted: '754.80836'}
+          - {qualifier: primary, formatted: '0.00682'}
+        - values:
+          - {qualifier: secondary, formatted: '755.78349'}
+          - {qualifier: primary, formatted: '0.00631'}
+        - values:
+          - {qualifier: secondary, formatted: '756.84098'}
+          - {qualifier: primary, formatted: '0.00529'}
+        - values:
+          - {qualifier: secondary, formatted: '757.75739'}
+          - {qualifier: primary, formatted: '0.00449'}
+      - pk: 3305
+        label: ''
+        crystal_system: triclinic
+        fixed_values:
+        - physical_property: {id: 102, created: '2023-02-13T14:24:18-05:00', updated: '2023-02-13T14:24:18-05:00',
+            name: Fluence, method: '', created_by: 20, updated_by: 20}
+          unit: {id: 47, created: '2023-02-13T14:24:37-05:00', updated: '2023-02-13T14:24:37-05:00',
+            label: uJ/cm2, created_by: 20, updated_by: 20}
+          subset: {id: 3305, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '62.97'
+        - physical_property: {id: 2, created: '2019-02-21T11:16:12-05:00', updated: '2019-02-21T11:16:12-05:00',
+            name: temperature, method: '', created_by: 15, updated_by: 15}
+          unit: {id: 2, created: '2019-02-21T11:16:23-05:00', updated: '2019-02-21T11:16:23-05:00',
+            label: K, created_by: 15, updated_by: 15}
+          subset: {id: 3305, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '77.0'
+        datapoints:
+        - values:
+          - {qualifier: secondary, formatted: '717.20964'}
+          - {qualifier: primary, formatted: '0.00646'}
+        - values:
+          - {qualifier: secondary, formatted: '718.30166'}
+          - {qualifier: primary, formatted: '0.00726'}
+        - values:
+          - {qualifier: secondary, formatted: '719.20569'}
+          - {qualifier: primary, formatted: '0.00711'}
+        - values:
+          - {qualifier: secondary, formatted: '720.13956'}
+          - {qualifier: primary, formatted: '0.00711'}
+        - values:
+          - {qualifier: secondary, formatted: '720.96076'}
+          - {qualifier: primary, formatted: '0.00879'}
+        - values:
+          - {qualifier: secondary, formatted: '721.7533'}
+          - {qualifier: primary, formatted: '0.00966'}
+        - values:
+          - {qualifier: secondary, formatted: '722.47489'}
+          - {qualifier: primary, formatted: '0.01134'}
+        - values:
+          - {qualifier: secondary, formatted: '723.27875'}
+          - {qualifier: primary, formatted: '0.01367'}
+        - values:
+          - {qualifier: secondary, formatted: '723.97722'}
+          - {qualifier: primary, formatted: '0.01383'}
+        - values:
+          - {qualifier: secondary, formatted: '724.91006'}
+          - {qualifier: primary, formatted: '0.01673'}
+        - values:
+          - {qualifier: secondary, formatted: '725.56726'}
+          - {qualifier: primary, formatted: '0.0174'}
+        - values:
+          - {qualifier: secondary, formatted: '726.33682'}
+          - {qualifier: primary, formatted: '0.01724'}
+        - values:
+          - {qualifier: secondary, formatted: '727.07548'}
+          - {qualifier: primary, formatted: '0.01995'}
+        - values:
+          - {qualifier: secondary, formatted: '728.00845'}
+          - {qualifier: primary, formatted: '0.0225'}
+        - values:
+          - {qualifier: secondary, formatted: '728.94784'}
+          - {qualifier: primary, formatted: '0.02359'}
+        - values:
+          - {qualifier: secondary, formatted: '729.99826'}
+          - {qualifier: primary, formatted: '0.02585'}
+        - values:
+          - {qualifier: secondary, formatted: '730.94273'}
+          - {qualifier: primary, formatted: '0.02753'}
+        - values:
+          - {qualifier: secondary, formatted: '731.87595'}
+          - {qualifier: primary, formatted: '0.02935'}
+        - values:
+          - {qualifier: secondary, formatted: '732.58539'}
+          - {qualifier: primary, formatted: '0.03285'}
+        - values:
+          - {qualifier: secondary, formatted: '733.14752'}
+          - {qualifier: primary, formatted: '0.03562'}
+        - values:
+          - {qualifier: secondary, formatted: '734.16179'}
+          - {qualifier: primary, formatted: '0.04065'}
+        - values:
+          - {qualifier: secondary, formatted: '735.15784'}
+          - {qualifier: primary, formatted: '0.04699'}
+        - values:
+          - {qualifier: secondary, formatted: '735.87635'}
+          - {qualifier: primary, formatted: '0.05741'}
+        - values:
+          - {qualifier: secondary, formatted: '736.70136'}
+          - {qualifier: primary, formatted: '0.06594'}
+        - values:
+          - {qualifier: secondary, formatted: '737.42035'}
+          - {qualifier: primary, formatted: '0.07498'}
+        - values:
+          - {qualifier: secondary, formatted: '737.99851'}
+          - {qualifier: primary, formatted: '0.08438'}
+        - values:
+          - {qualifier: secondary, formatted: '738.43432'}
+          - {qualifier: primary, formatted: '0.0967'}
+        - values:
+          - {qualifier: secondary, formatted: '738.74748'}
+          - {qualifier: primary, formatted: '0.10902'}
+        - values:
+          - {qualifier: secondary, formatted: '739.11211'}
+          - {qualifier: primary, formatted: '0.1228'}
+        - values:
+          - {qualifier: secondary, formatted: '739.44857'}
+          - {qualifier: primary, formatted: '0.13526'}
+        - values:
+          - {qualifier: secondary, formatted: '739.59604'}
+          - {qualifier: primary, formatted: '0.14867'}
+        - values:
+          - {qualifier: secondary, formatted: '739.7685'}
+          - {qualifier: primary, formatted: '0.16011'}
+        - values:
+          - {qualifier: secondary, formatted: '739.79253'}
+          - {qualifier: primary, formatted: '0.17403'}
+        - values:
+          - {qualifier: secondary, formatted: '739.88245'}
+          - {qualifier: primary, formatted: '0.18649'}
+        - values:
+          - {qualifier: secondary, formatted: '739.90702'}
+          - {qualifier: primary, formatted: '0.19888'}
+        - values:
+          - {qualifier: secondary, formatted: '740.07448'}
+          - {qualifier: primary, formatted: '0.22446'}
+        - values:
+          - {qualifier: secondary, formatted: '740.11949'}
+          - {qualifier: primary, formatted: '0.21338'}
+        - values:
+          - {qualifier: secondary, formatted: '740.14593'}
+          - {qualifier: primary, formatted: '0.23721'}
+        - values:
+          - {qualifier: secondary, formatted: '740.16633'}
+          - {qualifier: primary, formatted: '0.26317'}
+        - values:
+          - {qualifier: secondary, formatted: '740.17133'}
+          - {qualifier: primary, formatted: '0.24903'}
+        - values:
+          - {qualifier: secondary, formatted: '740.20296'}
+          - {qualifier: primary, formatted: '0.27578'}
+        - values:
+          - {qualifier: secondary, formatted: '740.26887'}
+          - {qualifier: primary, formatted: '0.29013'}
+        - values:
+          - {qualifier: secondary, formatted: '740.36384'}
+          - {qualifier: primary, formatted: '0.30238'}
+        - values:
+          - {qualifier: secondary, formatted: '740.46675'}
+          - {qualifier: primary, formatted: '0.31156'}
+        - values:
+          - {qualifier: secondary, formatted: '740.64007'}
+          - {qualifier: primary, formatted: '0.31882'}
+        - values:
+          - {qualifier: secondary, formatted: '740.82573'}
+          - {qualifier: primary, formatted: '0.3283'}
+        - values:
+          - {qualifier: secondary, formatted: '740.92118'}
+          - {qualifier: primary, formatted: '0.33728'}
+        - values:
+          - {qualifier: secondary, formatted: '741.56613'}
+          - {qualifier: primary, formatted: '0.33998'}
+        - values:
+          - {qualifier: secondary, formatted: '741.85846'}
+          - {qualifier: primary, formatted: '0.33605'}
+        - values:
+          - {qualifier: secondary, formatted: '742.00119'}
+          - {qualifier: primary, formatted: '0.32749'}
+        - values:
+          - {qualifier: secondary, formatted: '742.16033'}
+          - {qualifier: primary, formatted: '0.32074'}
+        - values:
+          - {qualifier: secondary, formatted: '742.22308'}
+          - {qualifier: primary, formatted: '0.30966'}
+        - values:
+          - {qualifier: secondary, formatted: '742.23205'}
+          - {qualifier: primary, formatted: '0.30011'}
+        - values:
+          - {qualifier: secondary, formatted: '742.3298'}
+          - {qualifier: primary, formatted: '0.29042'}
+        - values:
+          - {qualifier: secondary, formatted: '742.36843'}
+          - {qualifier: primary, formatted: '0.26302'}
+        - values:
+          - {qualifier: secondary, formatted: '742.37409'}
+          - {qualifier: primary, formatted: '0.28138'}
+        - values:
+          - {qualifier: secondary, formatted: '742.37523'}
+          - {qualifier: primary, formatted: '0.24377'}
+        - values:
+          - {qualifier: secondary, formatted: '742.38203'}
+          - {qualifier: primary, formatted: '0.22453'}
+        - values:
+          - {qualifier: secondary, formatted: '742.38883'}
+          - {qualifier: primary, formatted: '0.20529'}
+        - values:
+          - {qualifier: secondary, formatted: '742.39088'}
+          - {qualifier: primary, formatted: '0.23385'}
+        - values:
+          - {qualifier: secondary, formatted: '742.39563'}
+          - {qualifier: primary, formatted: '0.18605'}
+        - values:
+          - {qualifier: secondary, formatted: '742.39786'}
+          - {qualifier: primary, formatted: '0.2141'}
+        - values:
+          - {qualifier: secondary, formatted: '742.40448'}
+          - {qualifier: primary, formatted: '0.19537'}
+        - values:
+          - {qualifier: secondary, formatted: '742.41164'}
+          - {qualifier: primary, formatted: '0.17511'}
+        - values:
+          - {qualifier: secondary, formatted: '742.41801'}
+          - {qualifier: primary, formatted: '0.27336'}
+        - values:
+          - {qualifier: secondary, formatted: '742.42517'}
+          - {qualifier: primary, formatted: '0.25309'}
+        - values:
+          - {qualifier: secondary, formatted: '742.5266'}
+          - {qualifier: primary, formatted: '0.16426'}
+        - values:
+          - {qualifier: secondary, formatted: '742.73067'}
+          - {qualifier: primary, formatted: '0.1523'}
+        - values:
+          - {qualifier: secondary, formatted: '742.90465'}
+          - {qualifier: primary, formatted: '0.14094'}
+        - values:
+          - {qualifier: secondary, formatted: '743.07942'}
+          - {qualifier: primary, formatted: '0.12999'}
+        - values:
+          - {qualifier: secondary, formatted: '743.11124'}
+          - {qualifier: primary, formatted: '0.12183'}
+        - values:
+          - {qualifier: secondary, formatted: '743.36221'}
+          - {qualifier: primary, formatted: '0.11198'}
+        - values:
+          - {qualifier: secondary, formatted: '743.51836'}
+          - {qualifier: primary, formatted: '0.10084'}
+        - values:
+          - {qualifier: secondary, formatted: '743.74021'}
+          - {qualifier: primary, formatted: '0.08613'}
+        - values:
+          - {qualifier: secondary, formatted: '744.02615'}
+          - {qualifier: primary, formatted: '0.07505'}
+        - values:
+          - {qualifier: secondary, formatted: '744.33653'}
+          - {qualifier: primary, formatted: '0.06758'}
+        - values:
+          - {qualifier: secondary, formatted: '744.76599'}
+          - {qualifier: primary, formatted: '0.05857'}
+        - values:
+          - {qualifier: secondary, formatted: '745.08159'}
+          - {qualifier: primary, formatted: '0.04815'}
+        - values:
+          - {qualifier: secondary, formatted: '745.54776'}
+          - {qualifier: primary, formatted: '0.0397'}
+        - values:
+          - {qualifier: secondary, formatted: '746.12018'}
+          - {qualifier: primary, formatted: '0.0319'}
+        - values:
+          - {qualifier: secondary, formatted: '746.77127'}
+          - {qualifier: primary, formatted: '0.0235'}
+        - values:
+          - {qualifier: secondary, formatted: '747.51681'}
+          - {qualifier: primary, formatted: '0.01812'}
+        - values:
+          - {qualifier: secondary, formatted: '748.48752'}
+          - {qualifier: primary, formatted: '0.01338'}
+        - values:
+          - {qualifier: secondary, formatted: '749.3348'}
+          - {qualifier: primary, formatted: '0.01003'}
+        - values:
+          - {qualifier: secondary, formatted: '750.32735'}
+          - {qualifier: primary, formatted: '0.00777'}
+        - values:
+          - {qualifier: secondary, formatted: '751.32698'}
+          - {qualifier: primary, formatted: '0.00667'}
+        - values:
+          - {qualifier: secondary, formatted: '752.28509'}
+          - {qualifier: primary, formatted: '0.00412'}
+        - values:
+          - {qualifier: secondary, formatted: '753.3117'}
+          - {qualifier: primary, formatted: '0.00325'}
+        - values:
+          - {qualifier: secondary, formatted: '754.45101'}
+          - {qualifier: primary, formatted: '0.00325'}
+        - values:
+          - {qualifier: secondary, formatted: '755.33853'}
+          - {qualifier: primary, formatted: '0.00301'}
+        - values:
+          - {qualifier: secondary, formatted: '756.41212'}
+          - {qualifier: primary, formatted: '0.00325'}
+      - pk: 3306
+        label: ''
+        crystal_system: triclinic
+        fixed_values:
+        - physical_property: {id: 102, created: '2023-02-13T14:24:18-05:00', updated: '2023-02-13T14:24:18-05:00',
+            name: Fluence, method: '', created_by: 20, updated_by: 20}
+          unit: {id: 47, created: '2023-02-13T14:24:37-05:00', updated: '2023-02-13T14:24:37-05:00',
+            label: uJ/cm2, created_by: 20, updated_by: 20}
+          subset: {id: 3306, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '52.48'
+        - physical_property: {id: 2, created: '2019-02-21T11:16:12-05:00', updated: '2019-02-21T11:16:12-05:00',
+            name: temperature, method: '', created_by: 15, updated_by: 15}
+          unit: {id: 2, created: '2019-02-21T11:16:23-05:00', updated: '2019-02-21T11:16:23-05:00',
+            label: K, created_by: 15, updated_by: 15}
+          subset: {id: 3306, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '77.0'
+        datapoints:
+        - values:
+          - {qualifier: secondary, formatted: '718.25693'}
+          - {qualifier: primary, formatted: '0.00924'}
+        - values:
+          - {qualifier: secondary, formatted: '719.66999'}
+          - {qualifier: primary, formatted: '0.01046'}
+        - values:
+          - {qualifier: secondary, formatted: '720.82836'}
+          - {qualifier: primary, formatted: '0.01148'}
+        - values:
+          - {qualifier: secondary, formatted: '721.58383'}
+          - {qualifier: primary, formatted: '0.01311'}
+        - values:
+          - {qualifier: secondary, formatted: '722.4301'}
+          - {qualifier: primary, formatted: '0.01362'}
+        - values:
+          - {qualifier: secondary, formatted: '723.2847'}
+          - {qualifier: primary, formatted: '0.01383'}
+        - values:
+          - {qualifier: secondary, formatted: '724.0982'}
+          - {qualifier: primary, formatted: '0.01403'}
+        - values:
+          - {qualifier: secondary, formatted: '724.96055'}
+          - {qualifier: primary, formatted: '0.01556'}
+        - values:
+          - {qualifier: secondary, formatted: '725.78241'}
+          - {qualifier: primary, formatted: '0.01536'}
+        - values:
+          - {qualifier: secondary, formatted: '726.63679'}
+          - {qualifier: primary, formatted: '0.01617'}
+        - values:
+          - {qualifier: secondary, formatted: '727.59793'}
+          - {qualifier: primary, formatted: '0.01719'}
+        - values:
+          - {qualifier: secondary, formatted: '728.39471'}
+          - {qualifier: primary, formatted: '0.01821'}
+        - values:
+          - {qualifier: secondary, formatted: '729.34763'}
+          - {qualifier: primary, formatted: '0.01923'}
+        - values:
+          - {qualifier: secondary, formatted: '730.5055'}
+          - {qualifier: primary, formatted: '0.02168'}
+        - values:
+          - {qualifier: secondary, formatted: '731.56396'}
+          - {qualifier: primary, formatted: '0.02637'}
+        - values:
+          - {qualifier: secondary, formatted: '732.15482'}
+          - {qualifier: primary, formatted: '0.02872'}
+        - values:
+          - {qualifier: secondary, formatted: '732.68812'}
+          - {qualifier: primary, formatted: '0.03117'}
+        - values:
+          - {qualifier: secondary, formatted: '733.53313'}
+          - {qualifier: primary, formatted: '0.03525'}
+        - values:
+          - {qualifier: secondary, formatted: '734.41818'}
+          - {qualifier: primary, formatted: '0.04228'}
+        - values:
+          - {qualifier: secondary, formatted: '735.13066'}
+          - {qualifier: primary, formatted: '0.04932'}
+        - values:
+          - {qualifier: secondary, formatted: '735.80921'}
+          - {qualifier: primary, formatted: '0.05932'}
+        - values:
+          - {qualifier: secondary, formatted: '736.48752'}
+          - {qualifier: primary, formatted: '0.07003'}
+        - values:
+          - {qualifier: secondary, formatted: '737.0994'}
+          - {qualifier: primary, formatted: '0.08268'}
+        - values:
+          - {qualifier: secondary, formatted: '737.55614'}
+          - {qualifier: primary, formatted: '0.09247'}
+        - values:
+          - {qualifier: secondary, formatted: '738.11943'}
+          - {qualifier: primary, formatted: '0.10308'}
+        - values:
+          - {qualifier: secondary, formatted: '738.49353'}
+          - {qualifier: primary, formatted: '0.1142'}
+        - values:
+          - {qualifier: secondary, formatted: '738.91773'}
+          - {qualifier: primary, formatted: '0.12307'}
+        - values:
+          - {qualifier: secondary, formatted: '739.07171'}
+          - {qualifier: primary, formatted: '0.12919'}
+        - values:
+          - {qualifier: secondary, formatted: '739.28191'}
+          - {qualifier: primary, formatted: '0.13898'}
+        - values:
+          - {qualifier: secondary, formatted: '739.50052'}
+          - {qualifier: primary, formatted: '0.14827'}
+        - values:
+          - {qualifier: secondary, formatted: '739.73563'}
+          - {qualifier: primary, formatted: '0.15734'}
+        - values:
+          - {qualifier: secondary, formatted: '739.85345'}
+          - {qualifier: primary, formatted: '0.16812'}
+        - values:
+          - {qualifier: secondary, formatted: '740.05656'}
+          - {qualifier: primary, formatted: '0.17938'}
+        - values:
+          - {qualifier: secondary, formatted: '740.08554'}
+          - {qualifier: primary, formatted: '0.19039'}
+        - values:
+          - {qualifier: secondary, formatted: '740.16513'}
+          - {qualifier: primary, formatted: '0.19774'}
+        - values:
+          - {qualifier: secondary, formatted: '740.30126'}
+          - {qualifier: primary, formatted: '0.20784'}
+        - values:
+          - {qualifier: secondary, formatted: '740.33597'}
+          - {qualifier: primary, formatted: '0.22589'}
+        - values:
+          - {qualifier: secondary, formatted: '740.33965'}
+          - {qualifier: primary, formatted: '0.21549'}
+        - values:
+          - {qualifier: secondary, formatted: '740.43116'}
+          - {qualifier: primary, formatted: '0.23558'}
+        - values:
+          - {qualifier: secondary, formatted: '740.47853'}
+          - {qualifier: primary, formatted: '0.24384'}
+        - values:
+          - {qualifier: secondary, formatted: '740.55223'}
+          - {qualifier: primary, formatted: '0.26506'}
+        - values:
+          - {qualifier: secondary, formatted: '740.55598'}
+          - {qualifier: primary, formatted: '0.25445'}
+        - values:
+          - {qualifier: secondary, formatted: '740.90215'}
+          - {qualifier: primary, formatted: '0.27485'}
+        - values:
+          - {qualifier: secondary, formatted: '741.14047'}
+          - {qualifier: primary, formatted: '0.27485'}
+        - values:
+          - {qualifier: secondary, formatted: '741.68411'}
+          - {qualifier: primary, formatted: '0.27128'}
+        - values:
+          - {qualifier: secondary, formatted: '742.12673'}
+          - {qualifier: primary, formatted: '0.25129'}
+        - values:
+          - {qualifier: secondary, formatted: '742.12772'}
+          - {qualifier: primary, formatted: '0.26236'}
+        - values:
+          - {qualifier: secondary, formatted: '742.27639'}
+          - {qualifier: primary, formatted: '0.24071'}
+        - values:
+          - {qualifier: secondary, formatted: '742.29877'}
+          - {qualifier: primary, formatted: '0.22956'}
+        - values:
+          - {qualifier: secondary, formatted: '742.35229'}
+          - {qualifier: primary, formatted: '0.21763'}
+        - values:
+          - {qualifier: secondary, formatted: '742.47924'}
+          - {qualifier: primary, formatted: '0.20722'}
+        - values:
+          - {qualifier: secondary, formatted: '742.62359'}
+          - {qualifier: primary, formatted: '0.19407'}
+        - values:
+          - {qualifier: secondary, formatted: '742.75155'}
+          - {qualifier: primary, formatted: '0.18081'}
+        - values:
+          - {qualifier: secondary, formatted: '742.75551'}
+          - {qualifier: primary, formatted: '0.16958'}
+        - values:
+          - {qualifier: secondary, formatted: '742.96496'}
+          - {qualifier: primary, formatted: '0.15826'}
+        - values:
+          - {qualifier: secondary, formatted: '743.08521'}
+          - {qualifier: primary, formatted: '0.14531'}
+        - values:
+          - {qualifier: secondary, formatted: '743.19474'}
+          - {qualifier: primary, formatted: '0.13592'}
+        - values:
+          - {qualifier: secondary, formatted: '743.3299'}
+          - {qualifier: primary, formatted: '0.12552'}
+        - values:
+          - {qualifier: secondary, formatted: '743.3671'}
+          - {qualifier: primary, formatted: '0.11328'}
+        - values:
+          - {qualifier: secondary, formatted: '743.36969'}
+          - {qualifier: primary, formatted: '0.10593'}
+        - values:
+          - {qualifier: secondary, formatted: '743.669'}
+          - {qualifier: primary, formatted: '0.09614'}
+        - values:
+          - {qualifier: secondary, formatted: '743.76935'}
+          - {qualifier: primary, formatted: '0.09125'}
+        - values:
+          - {qualifier: secondary, formatted: '743.97105'}
+          - {qualifier: primary, formatted: '0.0786'}
+        - values:
+          - {qualifier: secondary, formatted: '744.25334'}
+          - {qualifier: primary, formatted: '0.07044'}
+        - values:
+          - {qualifier: secondary, formatted: '744.50193'}
+          - {qualifier: primary, formatted: '0.06462'}
+        - values:
+          - {qualifier: secondary, formatted: '744.93168'}
+          - {qualifier: primary, formatted: '0.05779'}
+        - values:
+          - {qualifier: secondary, formatted: '745.55913'}
+          - {qualifier: primary, formatted: '0.04963'}
+        - values:
+          - {qualifier: secondary, formatted: '746.17807'}
+          - {qualifier: primary, formatted: '0.04228'}
+        - values:
+          - {qualifier: secondary, formatted: '746.75592'}
+          - {qualifier: primary, formatted: '0.03494'}
+        - values:
+          - {qualifier: secondary, formatted: '747.36657'}
+          - {qualifier: primary, formatted: '0.0278'}
+        - values:
+          - {qualifier: secondary, formatted: '748.19889'}
+          - {qualifier: primary, formatted: '0.02127'}
+        - values:
+          - {qualifier: secondary, formatted: '748.95682'}
+          - {qualifier: primary, formatted: '0.01597'}
+        - values:
+          - {qualifier: secondary, formatted: '749.5905'}
+          - {qualifier: primary, formatted: '0.01342'}
+        - values:
+          - {qualifier: secondary, formatted: '750.42985'}
+          - {qualifier: primary, formatted: '0.01026'}
+        - values:
+          - {qualifier: secondary, formatted: '751.49898'}
+          - {qualifier: primary, formatted: '0.00801'}
+        - values:
+          - {qualifier: secondary, formatted: '752.55938'}
+          - {qualifier: primary, formatted: '0.0072'}
+        - values:
+          - {qualifier: secondary, formatted: '753.60321'}
+          - {qualifier: primary, formatted: '0.00679'}
+        - values:
+          - {qualifier: secondary, formatted: '754.76212'}
+          - {qualifier: primary, formatted: '0.00628'}
+        - values:
+          - {qualifier: secondary, formatted: '755.85507'}
+          - {qualifier: primary, formatted: '0.00638'}
+        - values:
+          - {qualifier: secondary, formatted: '756.89071'}
+          - {qualifier: primary, formatted: '0.00587'}
+      - pk: 3307
+        label: ''
+        crystal_system: triclinic
+        fixed_values:
+        - physical_property: {id: 102, created: '2023-02-13T14:24:18-05:00', updated: '2023-02-13T14:24:18-05:00',
+            name: Fluence, method: '', created_by: 20, updated_by: 20}
+          unit: {id: 47, created: '2023-02-13T14:24:37-05:00', updated: '2023-02-13T14:24:37-05:00',
+            label: uJ/cm2, created_by: 20, updated_by: 20}
+          subset: {id: 3307, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '41.98'
+        - physical_property: {id: 2, created: '2019-02-21T11:16:12-05:00', updated: '2019-02-21T11:16:12-05:00',
+            name: temperature, method: '', created_by: 15, updated_by: 15}
+          unit: {id: 2, created: '2019-02-21T11:16:23-05:00', updated: '2019-02-21T11:16:23-05:00',
+            label: K, created_by: 15, updated_by: 15}
+          subset: {id: 3307, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '77.0'
+        datapoints:
+        - values:
+          - {qualifier: secondary, formatted: '721.21442'}
+          - {qualifier: primary, formatted: '0.01199'}
+        - values:
+          - {qualifier: secondary, formatted: '722.39748'}
+          - {qualifier: primary, formatted: '0.01291'}
+        - values:
+          - {qualifier: secondary, formatted: '723.81082'}
+          - {qualifier: primary, formatted: '0.01332'}
+        - values:
+          - {qualifier: secondary, formatted: '725.06778'}
+          - {qualifier: primary, formatted: '0.01444'}
+        - values:
+          - {qualifier: secondary, formatted: '726.21789'}
+          - {qualifier: primary, formatted: '0.01556'}
+        - values:
+          - {qualifier: secondary, formatted: '727.39241'}
+          - {qualifier: primary, formatted: '0.0174'}
+        - values:
+          - {qualifier: secondary, formatted: '728.49326'}
+          - {qualifier: primary, formatted: '0.01842'}
+        - values:
+          - {qualifier: secondary, formatted: '729.49505'}
+          - {qualifier: primary, formatted: '0.02066'}
+        - values:
+          - {qualifier: secondary, formatted: '730.38191'}
+          - {qualifier: primary, formatted: '0.0226'}
+        - values:
+          - {qualifier: secondary, formatted: '731.36763'}
+          - {qualifier: primary, formatted: '0.02382'}
+        - values:
+          - {qualifier: secondary, formatted: '732.25427'}
+          - {qualifier: primary, formatted: '0.02637'}
+        - values:
+          - {qualifier: secondary, formatted: '732.78814'}
+          - {qualifier: primary, formatted: '0.02719'}
+        - values:
+          - {qualifier: secondary, formatted: '733.53497'}
+          - {qualifier: primary, formatted: '0.03004'}
+        - values:
+          - {qualifier: secondary, formatted: '734.12558'}
+          - {qualifier: primary, formatted: '0.0331'}
+        - values:
+          - {qualifier: secondary, formatted: '734.61772'}
+          - {qualifier: primary, formatted: '0.03576'}
+        - values:
+          - {qualifier: secondary, formatted: '735.4956'}
+          - {qualifier: primary, formatted: '0.03984'}
+        - values:
+          - {qualifier: secondary, formatted: '736.00392'}
+          - {qualifier: primary, formatted: '0.0432'}
+        - values:
+          - {qualifier: secondary, formatted: '736.57767'}
+          - {qualifier: primary, formatted: '0.04749'}
+        - values:
+          - {qualifier: secondary, formatted: '737.13389'}
+          - {qualifier: primary, formatted: '0.05483'}
+        - values:
+          - {qualifier: secondary, formatted: '737.62466'}
+          - {qualifier: primary, formatted: '0.06136'}
+        - values:
+          - {qualifier: secondary, formatted: '738.19756'}
+          - {qualifier: primary, formatted: '0.06812'}
+        - values:
+          - {qualifier: secondary, formatted: '738.55632'}
+          - {qualifier: primary, formatted: '0.07605'}
+        - values:
+          - {qualifier: secondary, formatted: '738.82024'}
+          - {qualifier: primary, formatted: '0.08459'}
+        - values:
+          - {qualifier: secondary, formatted: '738.98592'}
+          - {qualifier: primary, formatted: '0.09288'}
+        - values:
+          - {qualifier: secondary, formatted: '739.20489'}
+          - {qualifier: primary, formatted: '0.10114'}
+        - values:
+          - {qualifier: secondary, formatted: '739.30851'}
+          - {qualifier: primary, formatted: '0.11022'}
+        - values:
+          - {qualifier: secondary, formatted: '739.43676'}
+          - {qualifier: primary, formatted: '0.1194'}
+        - values:
+          - {qualifier: secondary, formatted: '739.57978'}
+          - {qualifier: primary, formatted: '0.12861'}
+        - values:
+          - {qualifier: secondary, formatted: '739.61247'}
+          - {qualifier: primary, formatted: '0.13378'}
+        - values:
+          - {qualifier: secondary, formatted: '739.70834'}
+          - {qualifier: primary, formatted: '0.14153'}
+        - values:
+          - {qualifier: secondary, formatted: '739.78739'}
+          - {qualifier: primary, formatted: '0.15041'}
+        - values:
+          - {qualifier: secondary, formatted: '739.90788'}
+          - {qualifier: primary, formatted: '0.15826'}
+        - values:
+          - {qualifier: secondary, formatted: '740.036'}
+          - {qualifier: primary, formatted: '0.16687'}
+        - values:
+          - {qualifier: secondary, formatted: '740.09098'}
+          - {qualifier: primary, formatted: '0.17499'}
+        - values:
+          - {qualifier: secondary, formatted: '740.24417'}
+          - {qualifier: primary, formatted: '0.18336'}
+        - values:
+          - {qualifier: secondary, formatted: '740.32318'}
+          - {qualifier: primary, formatted: '0.19233'}
+        - values:
+          - {qualifier: secondary, formatted: '740.37046'}
+          - {qualifier: primary, formatted: '0.20084'}
+        - values:
+          - {qualifier: secondary, formatted: '740.44003'}
+          - {qualifier: primary, formatted: '0.21049'}
+        - values:
+          - {qualifier: secondary, formatted: '740.73437'}
+          - {qualifier: primary, formatted: '0.21753'}
+        - values:
+          - {qualifier: secondary, formatted: '741.22107'}
+          - {qualifier: primary, formatted: '0.21972'}
+        - values:
+          - {qualifier: secondary, formatted: '741.65344'}
+          - {qualifier: primary, formatted: '0.21855'}
+        - values:
+          - {qualifier: secondary, formatted: '741.90171'}
+          - {qualifier: primary, formatted: '0.21365'}
+        - values:
+          - {qualifier: secondary, formatted: '741.95361'}
+          - {qualifier: primary, formatted: '0.20631'}
+        - values:
+          - {qualifier: secondary, formatted: '742.00434'}
+          - {qualifier: primary, formatted: '0.19662'}
+        - values:
+          - {qualifier: secondary, formatted: '742.01132'}
+          - {qualifier: primary, formatted: '0.17687'}
+        - values:
+          - {qualifier: secondary, formatted: '742.03424'}
+          - {qualifier: primary, formatted: '0.18744'}
+        - values:
+          - {qualifier: secondary, formatted: '742.06592'}
+          - {qualifier: primary, formatted: '0.16754'}
+        - values:
+          - {qualifier: secondary, formatted: '742.16847'}
+          - {qualifier: primary, formatted: '0.15643'}
+        - values:
+          - {qualifier: secondary, formatted: '742.16857'}
+          - {qualifier: primary, formatted: '0.14677'}
+        - values:
+          - {qualifier: secondary, formatted: '742.25728'}
+          - {qualifier: primary, formatted: '0.13766'}
+        - values:
+          - {qualifier: secondary, formatted: '742.29276'}
+          - {qualifier: primary, formatted: '0.12832'}
+        - values:
+          - {qualifier: secondary, formatted: '742.33005'}
+          - {qualifier: primary, formatted: '0.11777'}
+        - values:
+          - {qualifier: secondary, formatted: '742.4238'}
+          - {qualifier: primary, formatted: '0.10828'}
+        - values:
+          - {qualifier: secondary, formatted: '742.55111'}
+          - {qualifier: primary, formatted: '0.09686'}
+        - values:
+          - {qualifier: secondary, formatted: '742.8179'}
+          - {qualifier: primary, formatted: '0.08604'}
+        - values:
+          - {qualifier: secondary, formatted: '743.19226'}
+          - {qualifier: primary, formatted: '0.0749'}
+        - values:
+          - {qualifier: secondary, formatted: '743.63105'}
+          - {qualifier: primary, formatted: '0.06401'}
+        - values:
+          - {qualifier: secondary, formatted: '744.13961'}
+          - {qualifier: primary, formatted: '0.0526'}
+        - values:
+          - {qualifier: secondary, formatted: '744.68345'}
+          - {qualifier: primary, formatted: '0.03933'}
+        - values:
+          - {qualifier: secondary, formatted: '745.3849'}
+          - {qualifier: primary, formatted: '0.03106'}
+        - values:
+          - {qualifier: secondary, formatted: '746.30833'}
+          - {qualifier: primary, formatted: '0.0225'}
+        - values:
+          - {qualifier: secondary, formatted: '747.23058'}
+          - {qualifier: primary, formatted: '0.01729'}
+        - values:
+          - {qualifier: secondary, formatted: '748.28356'}
+          - {qualifier: primary, formatted: '0.01423'}
+        - values:
+          - {qualifier: secondary, formatted: '749.36094'}
+          - {qualifier: primary, formatted: '0.01189'}
+        - values:
+          - {qualifier: secondary, formatted: '750.45454'}
+          - {qualifier: primary, formatted: '0.01015'}
+        - values:
+          - {qualifier: secondary, formatted: '751.44106'}
+          - {qualifier: primary, formatted: '0.00913'}
+        - values:
+          - {qualifier: secondary, formatted: '752.40295'}
+          - {qualifier: primary, formatted: '0.00801'}
+        - values:
+          - {qualifier: secondary, formatted: '753.52935'}
+          - {qualifier: primary, formatted: '0.00648'}
+        - values:
+          - {qualifier: secondary, formatted: '754.59001'}
+          - {qualifier: primary, formatted: '0.00495'}
+        - values:
+          - {qualifier: secondary, formatted: '755.69176'}
+          - {qualifier: primary, formatted: '0.00342'}
+        - values:
+          - {qualifier: secondary, formatted: '756.89972'}
+          - {qualifier: primary, formatted: '0.00362'}
+      - pk: 3308
+        label: ''
+        crystal_system: triclinic
+        fixed_values:
+        - physical_property: {id: 102, created: '2023-02-13T14:24:18-05:00', updated: '2023-02-13T14:24:18-05:00',
+            name: Fluence, method: '', created_by: 20, updated_by: 20}
+          unit: {id: 47, created: '2023-02-13T14:24:37-05:00', updated: '2023-02-13T14:24:37-05:00',
+            label: uJ/cm2, created_by: 20, updated_by: 20}
+          subset: {id: 3308, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '31.49'
+        - physical_property: {id: 2, created: '2019-02-21T11:16:12-05:00', updated: '2019-02-21T11:16:12-05:00',
+            name: temperature, method: '', created_by: 15, updated_by: 15}
+          unit: {id: 2, created: '2019-02-21T11:16:23-05:00', updated: '2019-02-21T11:16:23-05:00',
+            label: K, created_by: 15, updated_by: 15}
+          subset: {id: 3308, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '77.0'
+        datapoints:
+        - values:
+          - {qualifier: secondary, formatted: '722.39878'}
+          - {qualifier: primary, formatted: '0.00924'}
+        - values:
+          - {qualifier: secondary, formatted: '723.75442'}
+          - {qualifier: primary, formatted: '0.01015'}
+        - values:
+          - {qualifier: secondary, formatted: '725.18373'}
+          - {qualifier: primary, formatted: '0.01189'}
+        - values:
+          - {qualifier: secondary, formatted: '726.56377'}
+          - {qualifier: primary, formatted: '0.01352'}
+        - values:
+          - {qualifier: secondary, formatted: '727.82025'}
+          - {qualifier: primary, formatted: '0.01597'}
+        - values:
+          - {qualifier: secondary, formatted: '728.65805'}
+          - {qualifier: primary, formatted: '0.01719'}
+        - values:
+          - {qualifier: secondary, formatted: '729.38083'}
+          - {qualifier: primary, formatted: '0.01831'}
+        - values:
+          - {qualifier: secondary, formatted: '730.38274'}
+          - {qualifier: primary, formatted: '0.02025'}
+        - values:
+          - {qualifier: secondary, formatted: '731.19541'}
+          - {qualifier: primary, formatted: '0.0228'}
+        - values:
+          - {qualifier: secondary, formatted: '732.18052'}
+          - {qualifier: primary, formatted: '0.02576'}
+        - values:
+          - {qualifier: secondary, formatted: '733.08614'}
+          - {qualifier: primary, formatted: '0.02964'}
+        - values:
+          - {qualifier: secondary, formatted: '733.92867'}
+          - {qualifier: primary, formatted: '0.03219'}
+        - values:
+          - {qualifier: secondary, formatted: '734.61714'}
+          - {qualifier: primary, formatted: '0.03739'}
+        - values:
+          - {qualifier: secondary, formatted: '735.50209'}
+          - {qualifier: primary, formatted: '0.04473'}
+        - values:
+          - {qualifier: secondary, formatted: '736.48565'}
+          - {qualifier: primary, formatted: '0.05208'}
+        - values:
+          - {qualifier: secondary, formatted: '737.247'}
+          - {qualifier: primary, formatted: '0.06034'}
+        - values:
+          - {qualifier: secondary, formatted: '737.95853'}
+          - {qualifier: primary, formatted: '0.07003'}
+        - values:
+          - {qualifier: secondary, formatted: '738.40775'}
+          - {qualifier: primary, formatted: '0.07788'}
+        - values:
+          - {qualifier: secondary, formatted: '738.77456'}
+          - {qualifier: primary, formatted: '0.08635'}
+        - values:
+          - {qualifier: secondary, formatted: '739.03494'}
+          - {qualifier: primary, formatted: '0.09369'}
+        - values:
+          - {qualifier: secondary, formatted: '739.42551'}
+          - {qualifier: primary, formatted: '0.10471'}
+        - values:
+          - {qualifier: secondary, formatted: '739.70826'}
+          - {qualifier: primary, formatted: '0.11389'}
+        - values:
+          - {qualifier: secondary, formatted: '740.01028'}
+          - {qualifier: primary, formatted: '0.1243'}
+        - values:
+          - {qualifier: secondary, formatted: '740.20449'}
+          - {qualifier: primary, formatted: '0.13286'}
+        - values:
+          - {qualifier: secondary, formatted: '740.30007'}
+          - {qualifier: primary, formatted: '0.14143'}
+        - values:
+          - {qualifier: secondary, formatted: '740.59246'}
+          - {qualifier: primary, formatted: '0.15122'}
+        - values:
+          - {qualifier: secondary, formatted: '740.68848'}
+          - {qualifier: primary, formatted: '0.15857'}
+        - values:
+          - {qualifier: secondary, formatted: '741.24147'}
+          - {qualifier: primary, formatted: '0.162'}
+        - values:
+          - {qualifier: secondary, formatted: '741.37922'}
+          - {qualifier: primary, formatted: '0.15734'}
+        - values:
+          - {qualifier: secondary, formatted: '741.67636'}
+          - {qualifier: primary, formatted: '0.15367'}
+        - values:
+          - {qualifier: secondary, formatted: '741.89848'}
+          - {qualifier: primary, formatted: '0.14735'}
+        - values:
+          - {qualifier: secondary, formatted: '742.05093'}
+          - {qualifier: primary, formatted: '0.14021'}
+        - values:
+          - {qualifier: secondary, formatted: '742.17766'}
+          - {qualifier: primary, formatted: '0.13042'}
+        - values:
+          - {qualifier: secondary, formatted: '742.30356'}
+          - {qualifier: primary, formatted: '0.12297'}
+        - values:
+          - {qualifier: secondary, formatted: '742.34786'}
+          - {qualifier: primary, formatted: '0.11389'}
+        - values:
+          - {qualifier: secondary, formatted: '742.49077'}
+          - {qualifier: primary, formatted: '0.10481'}
+        - values:
+          - {qualifier: secondary, formatted: '742.58466'}
+          - {qualifier: primary, formatted: '0.09492'}
+        - values:
+          - {qualifier: secondary, formatted: '742.84292'}
+          - {qualifier: primary, formatted: '0.08502'}
+        - values:
+          - {qualifier: secondary, formatted: '743.08423'}
+          - {qualifier: primary, formatted: '0.07656'}
+        - values:
+          - {qualifier: secondary, formatted: '743.38267'}
+          - {qualifier: primary, formatted: '0.06921'}
+        - values:
+          - {qualifier: secondary, formatted: '743.77973'}
+          - {qualifier: primary, formatted: '0.06187'}
+        - values:
+          - {qualifier: secondary, formatted: '743.97912'}
+          - {qualifier: primary, formatted: '0.05575'}
+        - values:
+          - {qualifier: secondary, formatted: '744.47436'}
+          - {qualifier: primary, formatted: '0.04963'}
+        - values:
+          - {qualifier: secondary, formatted: '744.77194'}
+          - {qualifier: primary, formatted: '0.04473'}
+        - values:
+          - {qualifier: secondary, formatted: '745.1677'}
+          - {qualifier: primary, formatted: '0.04106'}
+        - values:
+          - {qualifier: secondary, formatted: '745.56346'}
+          - {qualifier: primary, formatted: '0.03739'}
+        - values:
+          - {qualifier: secondary, formatted: '745.86146'}
+          - {qualifier: primary, formatted: '0.03127'}
+        - values:
+          - {qualifier: secondary, formatted: '746.15774'}
+          - {qualifier: primary, formatted: '0.03004'}
+        - values:
+          - {qualifier: secondary, formatted: '746.75117'}
+          - {qualifier: primary, formatted: '0.02515'}
+        - values:
+          - {qualifier: secondary, formatted: '747.31961'}
+          - {qualifier: primary, formatted: '0.02117'}
+        - values:
+          - {qualifier: secondary, formatted: '748.15892'}
+          - {qualifier: primary, formatted: '0.01811'}
+        - values:
+          - {qualifier: secondary, formatted: '749.03976'}
+          - {qualifier: primary, formatted: '0.01383'}
+        - values:
+          - {qualifier: secondary, formatted: '749.93623'}
+          - {qualifier: primary, formatted: '0.01179'}
+        - values:
+          - {qualifier: secondary, formatted: '750.84872'}
+          - {qualifier: primary, formatted: '0.01097'}
+        - values:
+          - {qualifier: secondary, formatted: '751.88436'}
+          - {qualifier: primary, formatted: '0.01046'}
+        - values:
+          - {qualifier: secondary, formatted: '752.67328'}
+          - {qualifier: primary, formatted: '0.01046'}
+        - values:
+          - {qualifier: secondary, formatted: '753.75805'}
+          - {qualifier: primary, formatted: '0.01046'}
+        - values:
+          - {qualifier: secondary, formatted: '754.8186'}
+          - {qualifier: primary, formatted: '0.00924'}
+        - values:
+          - {qualifier: secondary, formatted: '755.91973'}
+          - {qualifier: primary, formatted: '0.00944'}
+      - pk: 3309
+        label: ''
+        crystal_system: triclinic
+        fixed_values:
+        - physical_property: {id: 102, created: '2023-02-13T14:24:18-05:00', updated: '2023-02-13T14:24:18-05:00',
+            name: Fluence, method: '', created_by: 20, updated_by: 20}
+          unit: {id: 47, created: '2023-02-13T14:24:37-05:00', updated: '2023-02-13T14:24:37-05:00',
+            label: uJ/cm2, created_by: 20, updated_by: 20}
+          subset: {id: 3309, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '20.99'
+        - physical_property: {id: 2, created: '2019-02-21T11:16:12-05:00', updated: '2019-02-21T11:16:12-05:00',
+            name: temperature, method: '', created_by: 15, updated_by: 15}
+          unit: {id: 2, created: '2019-02-21T11:16:23-05:00', updated: '2019-02-21T11:16:23-05:00',
+            label: K, created_by: 15, updated_by: 15}
+          subset: {id: 3309, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '77.0'
+        datapoints:
+        - values:
+          - {qualifier: secondary, formatted: '729.61436'}
+          - {qualifier: primary, formatted: '0.00862'}
+        - values:
+          - {qualifier: secondary, formatted: '730.74025'}
+          - {qualifier: primary, formatted: '0.00852'}
+        - values:
+          - {qualifier: secondary, formatted: '731.76714'}
+          - {qualifier: primary, formatted: '0.00954'}
+        - values:
+          - {qualifier: secondary, formatted: '732.65349'}
+          - {qualifier: primary, formatted: '0.01291'}
+        - values:
+          - {qualifier: secondary, formatted: '733.44154'}
+          - {qualifier: primary, formatted: '0.01536'}
+        - values:
+          - {qualifier: secondary, formatted: '734.03241'}
+          - {qualifier: primary, formatted: '0.0177'}
+        - values:
+          - {qualifier: secondary, formatted: '734.86887'}
+          - {qualifier: primary, formatted: '0.0227'}
+        - values:
+          - {qualifier: secondary, formatted: '735.62287'}
+          - {qualifier: primary, formatted: '0.02851'}
+        - values:
+          - {qualifier: secondary, formatted: '736.24843'}
+          - {qualifier: primary, formatted: '0.03423'}
+        - values:
+          - {qualifier: secondary, formatted: '737.0821'}
+          - {qualifier: primary, formatted: '0.03861'}
+        - values:
+          - {qualifier: secondary, formatted: '737.79514'}
+          - {qualifier: primary, formatted: '0.04414'}
+        - values:
+          - {qualifier: secondary, formatted: '738.26159'}
+          - {qualifier: primary, formatted: '0.04963'}
+        - values:
+          - {qualifier: secondary, formatted: '738.75294'}
+          - {qualifier: primary, formatted: '0.05452'}
+        - values:
+          - {qualifier: secondary, formatted: '739.24385'}
+          - {qualifier: primary, formatted: '0.06064'}
+        - values:
+          - {qualifier: secondary, formatted: '739.83208'}
+          - {qualifier: primary, formatted: '0.07044'}
+        - values:
+          - {qualifier: secondary, formatted: '740.49696'}
+          - {qualifier: primary, formatted: '0.07541'}
+        - values:
+          - {qualifier: secondary, formatted: '741.30915'}
+          - {qualifier: primary, formatted: '0.07656'}
+        - values:
+          - {qualifier: secondary, formatted: '742.00162'}
+          - {qualifier: primary, formatted: '0.07044'}
+        - values:
+          - {qualifier: secondary, formatted: '742.59634'}
+          - {qualifier: primary, formatted: '0.06187'}
+        - values:
+          - {qualifier: secondary, formatted: '742.79487'}
+          - {qualifier: primary, formatted: '0.0582'}
+        - values:
+          - {qualifier: secondary, formatted: '743.19193'}
+          - {qualifier: primary, formatted: '0.05085'}
+        - values:
+          - {qualifier: secondary, formatted: '743.74965'}
+          - {qualifier: primary, formatted: '0.04356'}
+        - values:
+          - {qualifier: secondary, formatted: '744.28974'}
+          - {qualifier: primary, formatted: '0.03718'}
+        - values:
+          - {qualifier: secondary, formatted: '744.85076'}
+          - {qualifier: primary, formatted: '0.03096'}
+        - values:
+          - {qualifier: secondary, formatted: '745.32121'}
+          - {qualifier: primary, formatted: '0.02525'}
+        - values:
+          - {qualifier: secondary, formatted: '745.84056'}
+          - {qualifier: primary, formatted: '0.02066'}
+        - values:
+          - {qualifier: secondary, formatted: '746.45791'}
+          - {qualifier: primary, formatted: '0.0178'}
+        - values:
+          - {qualifier: secondary, formatted: '746.95229'}
+          - {qualifier: primary, formatted: '0.01413'}
+        - values:
+          - {qualifier: secondary, formatted: '747.76641'}
+          - {qualifier: primary, formatted: '0.0126'}
+        - values:
+          - {qualifier: secondary, formatted: '748.49849'}
+          - {qualifier: primary, formatted: '0.01066'}
+        - values:
+          - {qualifier: secondary, formatted: '749.34559'}
+          - {qualifier: primary, formatted: '0.00883'}
+        - values:
+          - {qualifier: secondary, formatted: '749.96997'}
+          - {qualifier: primary, formatted: '0.00934'}
+        - values:
+          - {qualifier: secondary, formatted: '750.81711'}
+          - {qualifier: primary, formatted: '0.0074'}
+        - values:
+          - {qualifier: secondary, formatted: '751.869'}
+          - {qualifier: primary, formatted: '0.0074'}
+      - pk: 3310
+        label: ''
+        crystal_system: triclinic
+        fixed_values:
+        - physical_property: {id: 102, created: '2023-02-13T14:24:18-05:00', updated: '2023-02-13T14:24:18-05:00',
+            name: Fluence, method: '', created_by: 20, updated_by: 20}
+          unit: {id: 47, created: '2023-02-13T14:24:37-05:00', updated: '2023-02-13T14:24:37-05:00',
+            label: uJ/cm2, created_by: 20, updated_by: 20}
+          subset: {id: 3310, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '10.5'
+        - physical_property: {id: 2, created: '2019-02-21T11:16:12-05:00', updated: '2019-02-21T11:16:12-05:00',
+            name: temperature, method: '', created_by: 15, updated_by: 15}
+          unit: {id: 2, created: '2019-02-21T11:16:23-05:00', updated: '2019-02-21T11:16:23-05:00',
+            label: K, created_by: 15, updated_by: 15}
+          subset: {id: 3310, created: '2026-03-28T19:23:13-04:00', updated: '2026-03-28T19:23:13-04:00',
+            label: '', space_group: '', crystal_system: 0, created_by: 1312, updated_by: 1312,
+            dataset: 2820, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '77.0'
+        datapoints:
+        - values:
+          - {qualifier: secondary, formatted: '735.09162'}
+          - {qualifier: primary, formatted: '0.01769'}
+        - values:
+          - {qualifier: secondary, formatted: '735.86546'}
+          - {qualifier: primary, formatted: '0.02126'}
+        - values:
+          - {qualifier: secondary, formatted: '736.43948'}
+          - {qualifier: primary, formatted: '0.02476'}
+        - values:
+          - {qualifier: secondary, formatted: '737.04951'}
+          - {qualifier: primary, formatted: '0.0268'}
+        - values:
+          - {qualifier: secondary, formatted: '737.82911'}
+          - {qualifier: primary, formatted: '0.02993'}
+        - values:
+          - {qualifier: secondary, formatted: '738.46264'}
+          - {qualifier: primary, formatted: '0.03417'}
+        - values:
+          - {qualifier: secondary, formatted: '739.00149'}
+          - {qualifier: primary, formatted: '0.03679'}
+        - values:
+          - {qualifier: secondary, formatted: '739.73329'}
+          - {qualifier: primary, formatted: '0.04305'}
+        - values:
+          - {qualifier: secondary, formatted: '740.2339'}
+          - {qualifier: primary, formatted: '0.04963'}
+        - values:
+          - {qualifier: secondary, formatted: '740.62749'}
+          - {qualifier: primary, formatted: '0.05208'}
+        - values:
+          - {qualifier: secondary, formatted: '741.12057'}
+          - {qualifier: primary, formatted: '0.05208'}
+        - values:
+          - {qualifier: secondary, formatted: '741.41642'}
+          - {qualifier: primary, formatted: '0.05208'}
+        - values:
+          - {qualifier: secondary, formatted: '742.05737'}
+          - {qualifier: primary, formatted: '0.04655'}
+        - values:
+          - {qualifier: secondary, formatted: '742.83538'}
+          - {qualifier: primary, formatted: '0.03832'}
+        - values:
+          - {qualifier: secondary, formatted: '743.45402'}
+          - {qualifier: primary, formatted: '0.03183'}
+        - values:
+          - {qualifier: secondary, formatted: '744.03816'}
+          - {qualifier: primary, formatted: '0.02821'}
+        - values:
+          - {qualifier: secondary, formatted: '744.64324'}
+          - {qualifier: primary, formatted: '0.02272'}
+        - values:
+          - {qualifier: secondary, formatted: '745.54324'}
+          - {qualifier: primary, formatted: '0.01813'}
+        - values:
+          - {qualifier: secondary, formatted: '746.53117'}
+          - {qualifier: primary, formatted: '0.0131'}
+      space_group: ''
+    2791:
+      created: '2026-01-29T18:23:47-05:00'
+      created_by: volkerblum
+      updated: '2026-01-29T18:23:47-05:00'
+      updated_by: volkerblum
+      pk: 2791
+      caption: ''
+      system:
+        id: 677
+        compound_name: Bis(4-fluorophenethylammonium) methylammonium tin iodide
+        formula: C17H28N3F2Sn2I7
+        group: (4FPEA)2(MA)Sn2I7
+        organic: C8H11NF, CH6N
+        inorganic: Sn2I7, tin iodide
+        iupac: Bis(4-fluorophenethanaminium) methanaminium tin (II) iodide
+        last_update: '2026-02-02'
+        description: ''
+        message: ''
+        dimensionality: 3
+        n: '2'
+        derived_to_from: []
+        tags: []
+      primary_property: {id: 7, created: '2019-03-14T17:08:40-04:00', updated: '2019-05-02T11:13:46-04:00',
+        name: atomic structure, method: '', created_by: 15, updated_by: 15}
+      primary_unit: {id: 6, created: '2019-03-14T17:08:58-04:00', updated: '2019-03-14T17:08:58-04:00',
+        label: Å, created_by: 15, updated_by: 15}
+      secondary_property:
+      secondary_unit:
+      reference: {id: 369, title: Cage Balancing Enhances Optoelectronic and Lasing
+          Performance in Stable Quasi-2D Tin Iodide Perovskites in Stable Quasi-2D
+          Tin Iodide Perovskites, journal: Journal of the American Chemical Society,
+        vol: '147', pages_start: '34706', pages_end: '34720', year: '2025', doi_isbn: '10.1021/jacs.5c09938,
+          0002-7863'}
+      visible: true
+      is_experimental: true
+      sample_type: single crystal
+      extraction_method: manual from publication and authors
+      representative: true
+      linked_to: []
+      verified_by: []
+      computational: []
+      synthesis:
+      - {id: 2150, created: '2026-01-29T18:23:47.255576-05:00', updated: '2026-01-29T18:23:47.255388-05:00',
+        starting_materials: '4-fluorophenethylamine, methylammonium iodide, SnCl2·2H2O,
+          HI, H3PO2', product: large black single crystals with plate morphology,
+        description: "Slow-cooling method in hydroiodic acid. Precursors:\r\n- 4-fluorophenethylamine
+          (4FPEA; TCI, >98%), 0.75 mmol\r\n- methylammonium iodide (Sigma Aldrich),
+          1.5 mmol\r\n- Tin(II) chloride dihydrate (Sigma Aldrich, 98% ACS reagent),
+          1.0 mmol\r\n- hydroiodic acid ≥47.0% with ≤1.5% hypophosphorous acid stabilizer
+          (Sigma Aldrich), 2.0 mmol\r\n- hypophosphorous acid 50% (Sigma Aldrich),
+          2.0 mmol\r\nTin chloride and A-site cation salts were added an appropriate
+          amount of 1:1 v/v HI and H3PO2 solution. Liquid 4FPEA was added dropwise
+          to this solution prior to heating. Solution was heated to full dissolution
+          at 120 °C. The solution was then slow cooled to room temperature to yield
+          large black crystals.", created_by: 8, updated_by: 8, dataset: 2791, system: 1}
+      experimental:
+      - {id: 2149, created: '2026-01-29T18:23:47.259097-05:00', updated: '2026-01-29T18:23:47.258923-05:00',
+        method: Single-crystal X-ray diffraction, description: 'Bruker Quazar SMART
+          APEXII diffractometer with Mo Kα (λ = 0.71073 Å) radiation. Riding model
+          (idealized positions, not refined) used for hydrogen positions. Single crystals
+          turned out to be non-merohedral twins with43.21% second component contributions.
+          Reflections from only the first twin domains were included in the data refinement.',
+        created_by: 8, updated_by: 8, dataset: 2791, system: 1}
+      subsets:
+      - pk: 3260
+        label: ''
+        crystal_system: monoclinic
+        fixed_values:
+        - physical_property: {id: 2, created: '2019-02-21T11:16:12-05:00', updated: '2019-02-21T11:16:12-05:00',
+            name: temperature, method: '', created_by: 15, updated_by: 15}
+          unit: {id: 2, created: '2019-02-21T11:16:23-05:00', updated: '2019-02-21T11:16:23-05:00',
+            label: K, created_by: 15, updated_by: 15}
+          subset: {id: 3260, created: '2026-01-29T18:23:47-05:00', updated: '2026-01-29T18:23:47-05:00',
+            label: '', space_group: '', crystal_system: 1, created_by: 8, updated_by: 8,
+            dataset: 2791, space_group_ID: null}
+          error:
+          upper_bound:
+          formatted: '295.0'
+        datapoints:
+        - values:
+          - {qualifier: primary, formatted: 45.35 (±0.009)}
+        - values:
+          - {qualifier: primary, formatted: 8.6744 (±0.0017)}
+        - values:
+          - {qualifier: primary, formatted: 8.7796 (±0.0018)}
+        - values:
+          - {qualifier: primary, formatted: '90.0'}
+        - values:
+          - {qualifier: primary, formatted: 95.05 (±0.03)}
+        - values:
+          - {qualifier: primary, formatted: '90.0'}
+      space_group: P 21/c
+positions:
+- [28.407025220746007, 2.3343677840000003, 6.961346372998678]
+- [25.502101778431886, 0.397981472, 4.264840226958297]
+- [25.373032992912336, 4.7203482480000005, 5.032609417633499]
+- [22.095381431374143, 2.1413623840000002, 6.559139913502692]
+- [25.31361868740662, 2.155848632, 6.813459631748904]
+- [33.09338454394941, 2.13130008, 7.013906947505546]
+- [28.093055501219105, 2.7567243200000004, 3.298810100497621]
+- [27.915889769392177, 3.5196204512, 2.874722350250191]
+- [28.61356942957227, 2.921190944, 4.000498142924254]
+- [27.329951273603744, 2.3888343416, 3.574906163256661]
+- [28.78235579568162, 1.8268286400000002, 2.3752832006764417]
+- [28.33769716266986, 1.8429109776, 1.5141643307522696]
+- [28.72133893926981, 0.9249339232, 2.7265470068442226]
+- [30.2318769630306, 2.18681624, 2.1890036271329656]
+- [30.637022024994394, 1.554625968, 1.5738175218856054]
+- [30.289419086771314, 3.0675454208, 1.787251934670983]
+- [32.42346312955175, 2.13130008, 5.860372874717539]
+- [32.02463834301042, 0.9420398400000001, 5.262179314606094]
+- [32.23050367009756, 0.1279647488, 5.662225630690565]
+- [31.318673052403604, 0.9689304799999999, 4.064917642394735]
+- [31.05175296113156, 0.1727853736, 3.6645127599949925]
+- [31.011001765862282, 2.1850813600000003, 3.4667240822832897]
+- [31.4098265524036, 3.3743416, 4.064917642394735]
+- [31.203825948141233, 4.1882518776, 3.664862580790379]
+- [32.11579184301043, 3.34745096, 5.262179314606094]
+- [32.382530534282466, 4.1434659503999995, 5.662584197005836]
+- [21.991155458432104, 1.4486248000000002, 3.017204360211238]
+- [21.21841383819056, 1.0070631424, 2.9912913847929605]
+- [22.01546282412313, 1.9620885592000001, 3.7428638726417534]
+- [22.66412240888254, 0.8667113504, 3.0416305972491227]
+- [22.1151724503011, 2.2900416000000003, 1.8190681360114134]
+- [22.99929315530705, 2.201432604, 1.4585515698056515]
+- [21.951404434864212, 3.2040804767999997, 2.053701688997232]
+- [21.472029769265042, 2.0055733264, 1.1641074063285732]
+- [22.198857842562465, 2.9666448000000005, 1.539211499701965]
+- [22.68863656406449, 2.811286296, 0.8151086898109219]
+- [22.47717923310102, 3.7134325704, 1.9347888551253705]
+- [21.343207137808264, 3.0554012608, 1.3076126421161276]
+- [22.33384559343851, 1.8389728, 2.4749821273616823]
+- [23.228413018885036, 1.491216104, 2.42784377518331]
+- [21.710273924899365, 1.1492018607999999, 2.238503269680199]
+- [22.15545956727755, 2.140147968, 3.36873053197556]
+- [-28.79343759982991, 2.3343677840000003, -2.588586430663549]
+- [-25.888514157515793, 0.397981472, 0.10791971537683112]
+- [-25.75944537199624, 4.7203482480000005, -0.659849475298371]
+- [-25.700031066490524, 2.155848632, -2.4406996894137754]
+- [-33.47979692303332, 2.13130008, -2.641147005170418]
+- [-28.47946788030301, 2.7567243200000004, 1.0739498418375077]
+- [-28.302302148476084, 3.5196204512, 1.4980375920849376]
+- [-28.999981808656173, 2.921190944, 0.3722617994108741]
+- [-27.71636365268765, 2.3888343416, 0.7978537790784673]
+- [-29.16876817476553, 1.8268286400000002, 1.9974767416586865]
+- [-28.724109541753762, 1.8429109776, 2.858595611582859]
+- [-29.107751318353717, 0.9249339232, 1.6462129354909056]
+- [-30.618289342114508, 2.18681624, 2.183756315202163]
+- [-31.0234344040783, 1.554625968, 2.7989424204495226]
+- [-30.675831465855218, 3.0675454208, 2.5855080076641457]
+- [-32.809875508635656, 2.13130008, -1.487612932382411]
+- [-32.41105072209433, 0.9420398400000001, -0.8894193722709652]
+- [-32.61691604918147, 0.1279647488, -1.2894656883554365]
+- [-31.70508543148751, 0.9689304799999999, 0.30784229994039314]
+- [-31.438165340215463, 0.1727853736, 0.7082471823401361]
+- [-31.397414144946186, 2.1850813600000003, 0.9060358600518388]
+- [-31.79623893148751, 3.3743416, 0.30784229994039314]
+- [-31.59023832722514, 4.1882518776, 0.7078973615447494]
+- [-32.502204222094335, 3.34745096, -0.8894193722709652]
+- [-32.768942913366374, 4.1434659503999995, -1.2898242546707077]
+- [-22.37756783751601, 1.4486248000000002, 1.35555558212389]
+- [-21.604826217274464, 1.0070631424, 1.381468557542168]
+- [-22.401875203207037, 1.9620885592000001, 0.6298960696933753]
+- [-23.05053478796645, 0.8667113504, 1.3311293450860056]
+- [-22.501584829385003, 2.2900416000000003, 2.5536918063237155]
+- [-23.385705534390954, 2.201432604, 2.914208372529477]
+- [-22.337816813948116, 3.2040804767999997, 2.3190582533378965]
+- [-21.858442148348946, 2.0055733264, 3.208652536006555]
+- [-22.585270221646372, 2.9666448000000005, 2.8335484426331634]
+- [-23.075048943148392, 2.811286296, 3.5576512525242068]
+- [-22.863591612184926, 3.7134325704, 2.437971087209758]
+- [-21.72961951689217, 3.0554012608, 3.065147300219001]
+- [-22.72025797252242, 1.8389728, 1.8977778149734459]
+- [-23.614825397968943, 1.491216104, 1.9449161671518183]
+- [-22.096686303983272, 1.1492018607999999, 2.1342566726549292]
+- [-22.541871946361457, 2.140147968, 1.0040294103595688]
+- [51.082025220746, 6.671567784, 6.961346372998678]
+- [48.1771017784319, 4.735181472000001, 4.264840226958297]
+- [48.04803299291234, 9.057548248000002, 5.032609417633499]
+- [44.77038143137414, 6.478562384, 6.559139913502692]
+- [47.98861868740663, 6.493048632000001, 6.813459631748904]
+- [55.76838454394941, 6.46850008, 7.013906947505546]
+- [50.76805550121911, 7.093924320000001, 3.298810100497621]
+- [50.59088976939218, 7.8568204512, 2.874722350250191]
+- [51.28856942957227, 7.258390943999999, 4.000498142924254]
+- [50.00495127360375, 6.7260343416, 3.574906163256661]
+- [51.45735579568162, 6.164028640000001, 2.3752832006764417]
+- [51.01269716266985, 6.180110977600001, 1.5141643307522696]
+- [51.39633893926981, 5.2621339231999995, 2.7265470068442226]
+- [52.9068769630306, 6.52401624, 2.1890036271329656]
+- [53.31202202499439, 5.891825968, 1.5738175218856054]
+- [52.96441908677131, 7.404745420799999, 1.787251934670983]
+- [55.09846312955175, 6.46850008, 5.860372874717539]
+- [54.69963834301042, 5.279239840000001, 5.262179314606094]
+- [54.90550367009756, 4.4651647488, 5.662225630690565]
+- [53.9936730524036, 5.30613048, 4.064917642394735]
+- [53.72675296113155, 4.5099853736, 3.6645127599949925]
+- [53.68600176586229, 6.52228136, 3.4667240822832897]
+- [54.084826552403605, 7.7115416, 4.064917642394735]
+- [53.878825948141234, 8.5254518776, 3.664862580790379]
+- [54.79079184301043, 7.684650960000001, 5.262179314606094]
+- [55.05753053428248, 8.480665950399999, 5.662584197005836]
+- [44.66615545843211, 5.7858248, 3.017204360211238]
+- [43.89341383819056, 5.3442631424, 2.9912913847929605]
+- [44.69046282412314, 6.2992885592, 3.7428638726417534]
+- [45.339122408882545, 5.2039113504, 3.0416305972491227]
+- [44.7901724503011, 6.6272416000000005, 1.8190681360114134]
+- [45.674293155307055, 6.538632604, 1.4585515698056515]
+- [44.626404434864206, 7.541280476800001, 2.053701688997232]
+- [44.14702976926504, 6.342773326400001, 1.1641074063285732]
+- [44.873857842562465, 7.303844800000001, 1.539211499701965]
+- [45.363636564064485, 7.148486296, 0.8151086898109219]
+- [45.15217923310102, 8.0506325704, 1.9347888551253705]
+- [44.018207137808275, 7.3926012608, 1.3076126421161276]
+- [45.008845593438515, 6.1761728, 2.4749821273616823]
+- [45.90341301888504, 5.828416104, 2.42784377518331]
+- [44.385273924899366, 5.4864018608, 2.238503269680199]
+- [44.83045956727755, 6.477347968000001, 3.36873053197556]
+- [-6.1184375998299085, 6.671567784, -2.588586430663549]
+- [-3.2135141575157906, 4.735181472000001, 0.10791971537683112]
+- [-3.08444537199624, 9.057548248000002, -0.659849475298371]
+- [-3.025031066490526, 6.493048632000001, -2.4406996894137754]
+- [-10.804796923033319, 6.46850008, -2.641147005170418]
+- [-5.804467880303008, 7.093924320000001, 1.0739498418375077]
+- [-5.627302148476082, 7.8568204512, 1.4980375920849376]
+- [-6.3249818086561715, 7.258390943999999, 0.3722617994108741]
+- [-5.04136365268765, 6.7260343416, 0.7978537790784673]
+- [-6.493768174765528, 6.164028640000001, 1.9974767416586865]
+- [-6.049109541753762, 6.180110977600001, 2.858595611582859]
+- [-6.432751318353716, 5.2621339231999995, 1.6462129354909056]
+- [-7.943289342114505, 6.52401624, 2.183756315202163]
+- [-8.3484344040783, 5.891825968, 2.7989424204495226]
+- [-8.000831465855217, 7.404745420799999, 2.5855080076641457]
+- [-10.134875508635657, 6.46850008, -1.487612932382411]
+- [-9.736050722094332, 5.279239840000001, -0.8894193722709652]
+- [-9.941916049181465, 4.4651647488, -1.2894656883554365]
+- [-9.030085431487509, 5.30613048, 0.30784229994039314]
+- [-8.76316534021546, 4.5099853736, 0.7082471823401361]
+- [-8.722414144946187, 6.52228136, 0.9060358600518388]
+- [-9.121238931487508, 7.7115416, 0.30784229994039314]
+- [-8.915238327225138, 8.5254518776, 0.7078973615447494]
+- [-9.827204222094336, 7.684650960000001, -0.8894193722709652]
+- [-10.093942913366377, 8.480665950399999, -1.2898242546707077]
+- [0.2974321624839886, 5.7858248, 1.35555558212389]
+- [1.0701737827255373, 5.3442631424, 1.381468557542168]
+- [0.2731247967929625, 6.2992885592, 0.6298960696933753]
+- [-0.3755347879664479, 5.2039113504, 1.3311293450860056]
+- [0.17341517061499806, 6.6272416000000005, 2.5536918063237155]
+- [-0.7107055343909539, 6.538632604, 2.914208372529477]
+- [0.33718318605188435, 7.541280476800001, 2.3190582533378965]
+- [0.8165578516510537, 6.342773326400001, 3.208652536006555]
+- [0.08972977835362955, 7.303844800000001, 2.8335484426331634]
+- [-0.40004894314839234, 7.148486296, 3.5576512525242068]
+- [-0.18859161218492518, 8.0506325704, 2.437971087209758]
+- [0.9453804831078286, 7.3926012608, 3.065147300219001]
+- [-0.045257972522415896, 6.1761728, 1.8977778149734459]
+- [-0.9398253979689397, 5.828416104, 1.9449161671518183]
+- [0.5783136960167279, 5.4864018608, 2.1342566726549292]
+- [0.1331280536385448, 6.477347968000001, 1.0040294103595688]
+- [-28.407025220746007, -2.3343677840000003, -6.961346372998678]
+- [-25.502101778431886, -0.397981472, -4.264840226958297]
+- [-25.373032992912336, -4.7203482480000005, -5.032609417633499]
+- [-22.095381431374143, -2.1413623840000002, -6.559139913502692]
+- [-25.31361868740662, -2.155848632, -6.813459631748904]
+- [-33.09338454394941, -2.13130008, -7.013906947505546]
+- [-28.093055501219105, -2.7567243200000004, -3.298810100497621]
+- [-27.915889769392177, -3.5196204512, -2.874722350250191]
+- [-28.61356942957227, -2.921190944, -4.000498142924254]
+- [-27.329951273603744, -2.3888343416, -3.574906163256661]
+- [-28.78235579568162, -1.8268286400000002, -2.3752832006764417]
+- [-28.33769716266986, -1.8429109776, -1.5141643307522696]
+- [-28.72133893926981, -0.9249339232, -2.7265470068442226]
+- [-30.2318769630306, -2.18681624, -2.1890036271329656]
+- [-30.637022024994394, -1.554625968, -1.5738175218856054]
+- [-30.289419086771314, -3.0675454208, -1.787251934670983]
+- [-32.42346312955175, -2.13130008, -5.860372874717539]
+- [-32.02463834301042, -0.9420398400000001, -5.262179314606094]
+- [-32.23050367009756, -0.1279647488, -5.662225630690565]
+- [-31.318673052403604, -0.9689304799999999, -4.064917642394735]
+- [-31.05175296113156, -0.1727853736, -3.6645127599949925]
+- [-31.011001765862282, -2.1850813600000003, -3.4667240822832897]
+- [-31.4098265524036, -3.3743416, -4.064917642394735]
+- [-31.203825948141233, -4.1882518776, -3.664862580790379]
+- [-32.11579184301043, -3.34745096, -5.262179314606094]
+- [-32.382530534282466, -4.1434659503999995, -5.662584197005836]
+- [-21.991155458432104, -1.4486248000000002, -3.017204360211238]
+- [-21.21841383819056, -1.0070631424, -2.9912913847929605]
+- [-22.01546282412313, -1.9620885592000001, -3.7428638726417534]
+- [-22.66412240888254, -0.8667113504, -3.0416305972491227]
+- [-22.1151724503011, -2.2900416000000003, -1.8190681360114134]
+- [-22.99929315530705, -2.201432604, -1.4585515698056515]
+- [-21.951404434864212, -3.2040804767999997, -2.053701688997232]
+- [-21.472029769265042, -2.0055733264, -1.1641074063285732]
+- [-22.198857842562465, -2.9666448000000005, -1.539211499701965]
+- [-22.68863656406449, -2.811286296, -0.8151086898109219]
+- [-22.47717923310102, -3.7134325704, -1.9347888551253705]
+- [-21.343207137808264, -3.0554012608, -1.3076126421161276]
+- [-22.33384559343851, -1.8389728, -2.4749821273616823]
+- [-23.228413018885036, -1.491216104, -2.42784377518331]
+- [-21.710273924899365, -1.1492018607999999, -2.238503269680199]
+- [-22.15545956727755, -2.140147968, -3.36873053197556]
+- [28.79343759982991, -2.3343677840000003, 2.588586430663549]
+- [25.888514157515793, -0.397981472, -0.10791971537683112]
+- [25.75944537199624, -4.7203482480000005, 0.659849475298371]
+- [25.700031066490524, -2.155848632, 2.4406996894137754]
+- [33.47979692303332, -2.13130008, 2.641147005170418]
+- [28.47946788030301, -2.7567243200000004, -1.0739498418375077]
+- [28.302302148476084, -3.5196204512, -1.4980375920849376]
+- [28.999981808656173, -2.921190944, -0.3722617994108741]
+- [27.71636365268765, -2.3888343416, -0.7978537790784673]
+- [29.16876817476553, -1.8268286400000002, -1.9974767416586865]
+- [28.724109541753762, -1.8429109776, -2.858595611582859]
+- [29.107751318353717, -0.9249339232, -1.6462129354909056]
+- [30.618289342114508, -2.18681624, -2.183756315202163]
+- [31.0234344040783, -1.554625968, -2.7989424204495226]
+- [30.675831465855218, -3.0675454208, -2.5855080076641457]
+- [32.809875508635656, -2.13130008, 1.487612932382411]
+- [32.41105072209433, -0.9420398400000001, 0.8894193722709652]
+- [32.61691604918147, -0.1279647488, 1.2894656883554365]
+- [31.70508543148751, -0.9689304799999999, -0.30784229994039314]
+- [31.438165340215463, -0.1727853736, -0.7082471823401361]
+- [31.397414144946186, -2.1850813600000003, -0.9060358600518388]
+- [31.79623893148751, -3.3743416, -0.30784229994039314]
+- [31.59023832722514, -4.1882518776, -0.7078973615447494]
+- [32.502204222094335, -3.34745096, 0.8894193722709652]
+- [32.768942913366374, -4.1434659503999995, 1.2898242546707077]
+- [22.37756783751601, -1.4486248000000002, -1.35555558212389]
+- [21.604826217274464, -1.0070631424, -1.381468557542168]
+- [22.401875203207037, -1.9620885592000001, -0.6298960696933753]
+- [23.05053478796645, -0.8667113504, -1.3311293450860056]
+- [22.501584829385003, -2.2900416000000003, -2.5536918063237155]
+- [23.385705534390954, -2.201432604, -2.914208372529477]
+- [22.337816813948116, -3.2040804767999997, -2.3190582533378965]
+- [21.858442148348946, -2.0055733264, -3.208652536006555]
+- [22.585270221646372, -2.9666448000000005, -2.8335484426331634]
+- [23.075048943148392, -2.811286296, -3.5576512525242068]
+- [22.863591612184926, -3.7134325704, -2.437971087209758]
+- [21.72961951689217, -3.0554012608, -3.065147300219001]
+- [22.72025797252242, -1.8389728, -1.8977778149734459]
+- [23.614825397968943, -1.491216104, -1.9449161671518183]
+- [22.096686303983272, -1.1492018607999999, -2.1342566726549292]
+- [22.541871946361457, -2.140147968, -1.0040294103595688]
+- [-5.732025220746003, 2.002832216, -6.961346372998678]
+- [-2.827101778431885, 3.9392185280000005, -4.264840226958297]
+- [-2.6980329929123346, -0.38314824800000036, -5.032609417633499]
+- [0.5796185686258581, 2.1958376160000004, -6.559139913502692]
+- [-2.6386186874066206, 2.1813513679999996, -6.813459631748904]
+- [-10.418384543949413, 2.20589992, -7.013906947505546]
+- [-5.4180555012191025, 1.5804756799999997, -3.298810100497621]
+- [-5.240889769392177, 0.8175795488, -2.874722350250191]
+- [-5.938569429572267, 1.416009056, -4.000498142924254]
+- [-4.654951273603745, 1.9483656584000002, -3.574906163256661]
+- [-6.107355795681622, 2.51037136, -2.3752832006764417]
+- [-5.662697162669857, 2.4942890224, -1.5141643307522696]
+- [-6.046338939269811, 3.4122660768, -2.7265470068442226]
+- [-7.556876963030599, 2.15038376, -2.1890036271329656]
+- [-7.962022024994396, 2.7825740320000003, -1.5738175218856054]
+- [-7.614419086771312, 1.2696545792, -1.787251934670983]
+- [-9.748463129551752, 2.20589992, -5.860372874717539]
+- [-9.349638343010426, 3.3951601599999996, -5.262179314606094]
+- [-9.55550367009756, 4.2092352512, -5.662225630690565]
+- [-8.643673052403603, 3.36826952, -4.064917642394735]
+- [-8.376752961131555, 4.1644146264, -3.6645127599949925]
+- [-8.336001765862282, 2.15211864, -3.4667240822832897]
+- [-8.734826552403602, 0.9628583999999999, -4.064917642394735]
+- [-8.528825948141233, 0.14894812239999994, -3.664862580790379]
+- [-9.44079184301043, 0.9897490399999999, -5.262179314606094]
+- [-9.707530534282473, 0.19373404960000018, -5.662584197005836]
+- [0.6838445415678941, 2.8885751999999996, -3.017204360211238]
+- [1.4565861618094427, 3.3301368576000003, -2.9912913847929605]
+- [0.659537175876868, 2.3751114408000005, -3.7428638726417534]
+- [0.010877591117457563, 3.4704886496, -3.0416305972491227]
+- [0.5598275496989036, 2.0471584, -1.8190681360114134]
+- [-0.32429315530704833, 2.1357673960000003, -1.4585515698056515]
+- [0.7235955651357898, 1.1331195232000002, -2.053701688997232]
+- [1.2029702307349592, 2.3316266735999998, -1.1641074063285732]
+- [0.47614215743753496, 1.3705551999999999, -1.539211499701965]
+- [-0.013636564064486864, 1.5259137040000001, -0.8151086898109219]
+- [0.19782076689898032, 0.6237674296, -1.9347888551253705]
+- [1.331792862191734, 1.2817987392, -1.3076126421161276]
+- [0.34115440656148954, 2.4982272000000005, -2.4749821273616823]
+- [-0.5534130188850342, 2.845983896, -2.42784377518331]
+- [0.9647260751006334, 3.1879981392000003, -2.238503269680199]
+- [0.5195404327224502, 2.197052032, -3.36873053197556]
+- [51.468437599829905, 2.002832216, 2.588586430663549]
+- [48.5635141575158, 3.9392185280000005, -0.10791971537683112]
+- [48.43444537199625, -0.38314824800000036, 0.659849475298371]
+- [48.375031066490536, 2.1813513679999996, 2.4406996894137754]
+- [56.15479692303332, 2.20589992, 2.641147005170418]
+- [51.15446788030302, 1.5804756799999997, -1.0739498418375077]
+- [50.977302148476085, 0.8175795488, -1.4980375920849376]
+- [51.67498180865618, 1.416009056, -0.3722617994108741]
+- [50.39136365268766, 1.9483656584000002, -0.7978537790784673]
+- [51.84376817476552, 2.51037136, -1.9974767416586865]
+- [51.39910954175376, 2.4942890224, -2.858595611582859]
+- [51.78275131835372, 3.4122660768, -1.6462129354909056]
+- [53.293289342114505, 2.15038376, -2.183756315202163]
+- [53.6984344040783, 2.7825740320000003, -2.7989424204495226]
+- [53.350831465855215, 1.2696545792, -2.5855080076641457]
+- [55.48487550863566, 2.20589992, 1.487612932382411]
+- [55.08605072209433, 3.3951601599999996, 0.8894193722709652]
+- [55.29191604918147, 4.2092352512, 1.2894656883554365]
+- [54.38008543148751, 3.36826952, -0.30784229994039314]
+- [54.11316534021546, 4.1644146264, -0.7082471823401361]
+- [54.072414144946194, 2.15211864, -0.9060358600518388]
+- [54.47123893148751, 0.9628583999999999, -0.30784229994039314]
+- [54.26523832722514, 0.14894812239999994, -0.7078973615447494]
+- [55.17720422209434, 0.9897490399999999, 0.8894193722709652]
+- [55.443942913366385, 0.19373404960000018, 1.2898242546707077]
+- [45.05256783751601, 2.8885751999999996, -1.35555558212389]
+- [44.27982621727447, 3.3301368576000003, -1.381468557542168]
+- [45.07687520320704, 2.3751114408000005, -0.6298960696933753]
+- [45.72553478796645, 3.4704886496, -1.3311293450860056]
+- [45.17658482938501, 2.0471584, -2.5536918063237155]
+- [46.06070553439096, 2.1357673960000003, -2.914208372529477]
+- [45.01281681394811, 1.1331195232000002, -2.3190582533378965]
+- [44.533442148348946, 2.3316266735999998, -3.208652536006555]
+- [45.26027022164637, 1.3705551999999999, -2.8335484426331634]
+- [45.75004894314839, 1.5259137040000001, -3.5576512525242068]
+- [45.53859161218492, 0.6237674296, -2.437971087209758]
+- [44.404619516892176, 1.2817987392, -3.065147300219001]
+- [45.395257972522415, 2.4982272000000005, -1.8977778149734459]
+- [46.28982539796894, 2.845983896, -1.9449161671518183]
+- [44.77168630398327, 3.1879981392000003, -2.1342566726549292]
+- [45.21687194636146, 2.197052032, -1.0040294103595688]
