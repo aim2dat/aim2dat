@@ -35,12 +35,6 @@ class CubecruncherCalculation(CalcJob):
             "List of input parameters for the final charge-density-difference cube calculation.",
         )
         spec.input(
-            "cubecruncher_executable",
-            valid_type=aiida_orm.Str,
-            default=lambda: aiida_orm.Str("cubecruncher.x"),
-            help="Path or executable name of cubecruncher.",
-        )
-        spec.input(
             "charge_density_folder",
             valid_type=aiida_orm.RemoteData,
             help="Folder containing the charge-density cube files",
@@ -53,11 +47,12 @@ class CubecruncherCalculation(CalcJob):
         }
         spec.inputs["metadata"]["options"]["withmpi"].default = False
         spec.inputs["metadata"]["options"]["parser_name"].default = "aim2dat.cubecruncher"
-        spec.output(
-            "charge_density_difference_folder",
-            valid_type=aiida_orm.RemoteData,
-            help="Folder containing the charge-density-difference cube files.",
-        )
+        # spec.output( # This one results in the [11] error of the workchain it needs to be added
+        # to the parser.
+        #     "charge_density_difference_folder",
+        #     valid_type=aiida_orm.RemoteData,
+        #     help="Folder containing the charge-density-difference cube files.",
+        # )
         spec.output(
             "cdd_cube",
             valid_type=GCubeData,
@@ -83,39 +78,28 @@ class CubecruncherCalculation(CalcJob):
             copy_links.append((comp_uuid, remote_path + "/" + cube_f, cube_f))
         cube_files = list(reversed(cube_files))
 
-        cubecruncher_exec = self.inputs.cubecruncher_executable.value
-
-        with folder.open(self.options.input_filename, "w", encoding="utf8") as handle:
-            handle.write("#!/bin/bash\n\n")
-            handle.write("set -e\n\n")
-            parameters = self.inputs.parameters.get_list()
-            parameters_str = " ".join(f"-{parameter}" for parameter in parameters)
-            for i, cube_f in enumerate(cube_files[1:], start=1):
-
-                input_cube = cube_files[0] if i == 1 else f"tmp{i-1}.cube"
-                output_cube = "cdd.cube" if cube_f == cube_files[-1] else f"tmp{i}.cube"
-
-                cmd = (
-                    f"{cubecruncher_exec} "
-                    f"-i {input_cube} "
-                    f"-o {output_cube} "
-                    f"-subtract {cube_f}"
-                )
-
-                if output_cube == "cdd.cube":
-                    cmd += f" {parameters_str}"
-
-                handle.write(cmd + "\n")
-
-            handle.write("\nrm -f tmp*.cube\n")
-
-        codeinfo = CodeInfo()
-        codeinfo.code_uuid = self.inputs.code.uuid
-        codeinfo.stdin_name = self.options.input_filename
-        codeinfo.cmdline_params = [self.options.input_filename]
-
         calcinfo = CalcInfo()
-        calcinfo.codes_info = [codeinfo]
+        calcinfo.codes_info = []
+        parameters = self.inputs.parameters.get_list()
+        parameters_str = [f"-{parameter}" for parameter in parameters]
+        for i, cube_f in enumerate(cube_files[1:], start=1):
+            input_cube = cube_files[0] if i == 1 else f"tmp{i-1}.cube"
+            output_cube = "cdd.cube" if cube_f == cube_files[-1] else f"tmp{i}.cube"
+            codeinfo = CodeInfo()
+            codeinfo.code_uuid = self.inputs.code.uuid
+            cmd = [
+                "-i",
+                input_cube,
+                "-o",
+                output_cube,
+                "-subtract",
+                cube_f,
+            ]
+            if output_cube == "cdd.cube":
+                cmd += parameters_str
+            codeinfo.cmdline_params = cmd
+            calcinfo.codes_info.append(codeinfo)
+
         calcinfo.local_copy_list = []
         if self.inputs.code.computer.uuid == cd_folder.computer.uuid:
             calcinfo.remote_symlink_list = copy_links
