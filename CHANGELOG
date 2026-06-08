@@ -12,6 +12,7 @@ Version 0.5.0
 * ``strct.ext_manipulation.add_structure_position`` now supports the addition to add molecules at a certain position (`PR #195 <https://github.com/aim2dat/aim2dat/pull/195>`_).
 * New metals are added to ``aiida_workflows.cp2k.parameter_files.basis_sets.yaml`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
 * New adsorption protocols ``cp2k-adsorption-mofs-standard_v2.0`` and ``cp2k-crystal-mofs_v4.0`` are added to the ``aiida_workflows.protocols.`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
+* New calcjob ``aim2dat.cubecruncher`` to calculate the charge density differences of multiple components is added and is imbedded into the ``aiida_workflows.cp2k.charge_density_difference`` workchain (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
 
 **Fixes:**
 
