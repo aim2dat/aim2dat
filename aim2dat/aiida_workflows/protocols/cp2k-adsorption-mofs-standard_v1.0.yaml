@@ -289,12 +289,6 @@ user_input:
     optional: true
     compare: false
     tasks: [charge_density_difference]
-  cubecruncher.cubecruncher_executable:
-    validation: aim2dat.cp2k.charge_density_difference
-    aiida_node: true
-    dependency: cubecruncher.code
-    compare: false
-    tasks: [charge_density_difference]
   clean_workdir:
     validation: aim2dat.cp2k.find_scf_p
     aiida_node: true

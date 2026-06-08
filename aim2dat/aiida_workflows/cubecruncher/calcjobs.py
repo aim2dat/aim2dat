@@ -1,8 +1,5 @@
 """
-Calcjobs for the cubecruncher software package. The calculations are performed via cubecruncher.
-Please make sure to set the path `cubecruncher_executable` correctly.
-The calculation will the be submitted via `bash`.
-Make sure to have the code `bash` implemented `verdi code create core.code.installed`.
+Calcjobs for the cubecruncher software package.
 """
 
 # Third party library imports
@@ -17,10 +14,7 @@ GCubeData = DataFactory("aim2dat.gaussian_cube")
 
 class CubecruncherCalculation(CalcJob):
     """
-    Calcjob for the cubecruncher software package. The calculations are performed via cubecruncher.
-    Please make sure to set the path `cubecruncher_executable` correctly. The calculation will the
-    be submitted via `bash`.
-    Make sure to have the code `bash` implemented `verdi code create core.code.installed`.
+    Calcjob for the cubecruncher software package.
     """
 
     @classmethod
