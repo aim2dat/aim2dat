@@ -113,7 +113,7 @@ general_input:
     value: super_cell
     aiida_node: true
   minimum_cell_length->pdos:
-    value: 25.0
+    value: 15.0
     aiida_node: true
   maximum_cell_length->pdos:
     value: 40.0
