@@ -23,9 +23,9 @@ class CubecruncherParser(Parser):
         retrieved_temporary_folder = kwargs.get("retrieved_temporary_folder", None)
 
         try:
-            retrieved_temporary_folder = pathlib.Path(retrieved_temporary_folder)
+            temporary_folder = pathlib.Path(retrieved_temporary_folder)
 
-            for subpath in retrieved_temporary_folder.iterdir():
+            for subpath in temporary_folder.iterdir():
                 if subpath.is_file():
                     g_cube_data = GCubeData.set_from_file(subpath)
                 self.out("cdd_cube", g_cube_data)

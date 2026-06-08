@@ -39,7 +39,6 @@ class CubecruncherCalculation(CalcJob):
             valid_type=aiida_orm.RemoteData,
             help="Folder containing the charge-density cube files",
         )
-        spec.inputs["metadata"]["options"]["input_filename"].default = "run_cubecruncher.sh"
         spec.inputs["metadata"]["options"]["output_filename"].default = "cdd.cube"
         spec.inputs["metadata"]["options"]["resources"].default = {
             "num_machines": 1,
@@ -47,12 +46,6 @@ class CubecruncherCalculation(CalcJob):
         }
         spec.inputs["metadata"]["options"]["withmpi"].default = False
         spec.inputs["metadata"]["options"]["parser_name"].default = "aim2dat.cubecruncher"
-        # spec.output( # This one results in the [11] error of the workchain it needs to be added
-        # to the parser.
-        #     "charge_density_difference_folder",
-        #     valid_type=aiida_orm.RemoteData,
-        #     help="Folder containing the charge-density-difference cube files.",
-        # )
         spec.output(
             "cdd_cube",
             valid_type=GCubeData,
