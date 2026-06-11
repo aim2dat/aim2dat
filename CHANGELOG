@@ -13,6 +13,7 @@ Version 0.5.0
 * New metals are added to ``aiida_workflows.cp2k.parameter_files.basis_sets.yaml`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
 * New adsorption protocols ``cp2k-adsorption-mofs-standard_v2.0`` and ``cp2k-crystal-mofs_v4.0`` are added to the ``aiida_workflows.protocols.`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
 * New calcjob ``aim2dat.cubecruncher`` to calculate the charge density differences of multiple components is added and is imbedded into the ``aiida_workflows.cp2k.charge_density_difference`` workchain (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
+* The ``strct.StructureImporter`` now implements an interface to the Hybrid 3 database (`PR #207 <https://github.com/aim2dat/aim2dat/pull/207>`_).
 
 **Fixes:**
 
@@ -27,7 +28,7 @@ Version 0.5.0
 * The ``strct.Structure.copy`` and ``strct.Structure.__deepcopy__`` functions did falsely not add ``site_attributes`` to the copied object (`PR #201 <https://github.com/aim2dat/aim2dat/pull/201>`_).
 * The resubmit loop was fixed in ``aiida_workflows.cp2k.base_core_work_chain`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
 * In the BSSE calculation the fragments were fixed ``aiida_workflows.cp2k.interaction_energy_work_chain``, as well as the scf convergence for each calculation in the BSSE WC in ``io.cp2k.stdout`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
-* The still retrieved runtime error when the last row was empty. Fixed in ``aiida_workflows.utils.get_workchain_runtime`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
+* The ``aiida_workflows.utils.get_workchain_runtime`` function retrieved runtime error when the last row was empty. Fixed in (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
 
 **Breaking Changes:**
 
