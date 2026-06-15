@@ -137,6 +137,7 @@ pre-commit = [
 "aim2dat.find_equivalent_sites" = "aim2dat.aiida_workflows.utils:find_equivalent_sites"
 "aim2dat.rotate_molecule" = "aim2dat.aiida_workflows.utils:rotate_molecule"
 "aim2dat.seekpath.structure_analysis" = "aim2dat.aiida_workflows.utils:seekpath_structure_analysis"
+"aim2dat.cubecruncher" = "aim2dat.aiida_workflows.cubecruncher.calcjobs:CubecruncherCalculation"
 
 [project.entry-points."aiida.parsers"]
 "aim2dat.cp2k.standard" = "aim2dat.aiida_workflows.cp2k.parsers:Cp2kStandardParser"
@@ -145,6 +146,7 @@ pre-commit = [
 "aim2dat.critic2" = "aim2dat.aiida_workflows.critic2.parsers:Critic2Parser"
 "aim2dat.chargemol" = "aim2dat.aiida_workflows.chargemol.parsers:ChargemolParser"
 "aim2dat.enumlib" = "aim2dat.aiida_workflows.enumlib.enum_parsers:EnumlibParser"
+"aim2dat.cubecruncher" = "aim2dat.aiida_workflows.cubecruncher.parsers:CubecruncherParser"
 
 [project.entry-points."aiida.workflows"]
 "aim2dat.cp2k.find_scf_p" = "aim2dat.aiida_workflows.cp2k.find_scf_p_work_chain:FindSCFParametersWorkChain"
@@ -159,6 +161,7 @@ pre-commit = [
 "aim2dat.cp2k.combined.surface_opt" = "aim2dat.aiida_workflows.cp2k.combined_work_chains:SurfaceOptWorkChain"
 "aim2dat.cp2k.combined.electronic_properties" = "aim2dat.aiida_workflows.cp2k.combined_work_chains:ElectronicPropertiesWorkChain"
 "aim2dat.cp2k.interaction_energy" = "aim2dat.aiida_workflows.cp2k.interaction_energy_work_chain:InteractionEnergyWorkChain"
+"aim2dat.cp2k.charge_density_difference" = "aim2dat.aiida_workflows.cp2k.charge_density_difference_work_chain:ChargeDensityDifferenceWorkChain"
 
 [tool.setuptools.packages.find]
 include = ["aim2dat*"]

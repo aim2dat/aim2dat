@@ -154,7 +154,7 @@ class _BaseDensityOfStates(_SmearingMixin):
             List of energy values.
         pdos : list
             List of projected density of states data. The list should consist of dictionaries with
-            the orbital labels as keys and the pdos as values. Additionallly, the element and/or
+            the orbital labels as keys and the pdos as values. Additionally, the element and/or
             kind of the atom should be included.
         unit_x : str (optional)
             Unit of the energy. The default value is ``'eV'``.
@@ -302,6 +302,17 @@ class _BaseDensityOfStates(_SmearingMixin):
         pdos = []
         kinds_dict = {}
         kind_index = -1
+
+        # When ldos is calculated next to pdos, then kinds are summed automatically in xy data.
+        # We need to split them to either plot pdos of kinds or the ldos.
+        mixed_kinds = any(kind[0][0].isdigit() for kind in pdos_aiida)
+        if mixed_kinds and sum_kinds:
+            pdos_aiida = [kind for kind in pdos_aiida if not kind[0][0].isdigit()]
+        elif mixed_kinds:
+            pdos_aiida.sort(key=lambda point: _sort_key(point[0]))
+            pdos_aiida = [pdos_aiida[0]] + [
+                kind for kind in pdos_aiida[1:] if kind[0][0].isdigit()
+            ]
 
         for pdos0_aiida in pdos_aiida:
             if pdos0_aiida[0] == "occupation":
@@ -532,3 +543,15 @@ class _BaseDensityOfStates(_SmearingMixin):
             "dos": tdos[:max_spin],
             "labels": {"tDOS": {("", idx): idx for idx in range(max_spin)}},
         }
+
+
+def _sort_key(item):
+    split_item = item.split("_")[0]
+    if split_item == "occupation":
+        return (0, item)
+    elif split_item.isalpha():
+        return (1, split_item)
+    elif split_item.isdigit():
+        return (2, int(split_item))
+    else:
+        return (3, split_item)

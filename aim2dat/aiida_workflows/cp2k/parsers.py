@@ -119,6 +119,9 @@ class _Cp2kBaseParser(Parser):
         if result_dict is None:
             raise OutputParsingError("CP2K version is not supported.")
 
+        if self.node.exit_status == 120:
+            result_dict["exceeded_walltime"] = True
+
         return result_dict
 
     def _parse_output_structure(self):
