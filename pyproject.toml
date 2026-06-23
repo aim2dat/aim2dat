@@ -29,6 +29,7 @@ authors = [
   {name = "Holger-Dietrich Saßnick", email = "holger-dietrich.sassnick@uni-oldenburg.de"},
   {name = "Timo Reents", email = "timo.reents@uni-oldenburg.de"},
   {name = "Joshua Edzards", email = "joshua.edzards@uni-oldenburg.de"},
+  {name = "Maddox Turner", email = "mdturne9@asu.edu"},
 ]
 maintainers = [
   {name = "Holger-Dietrich Saßnick", email = "holger-dietrich.sassnick@uni-oldenburg.de"}
@@ -159,6 +160,11 @@ pre-commit = [
 "aim2dat.cp2k.combined.surface_opt" = "aim2dat.aiida_workflows.cp2k.combined_work_chains:SurfaceOptWorkChain"
 "aim2dat.cp2k.combined.electronic_properties" = "aim2dat.aiida_workflows.cp2k.combined_work_chains:ElectronicPropertiesWorkChain"
 "aim2dat.cp2k.interaction_energy" = "aim2dat.aiida_workflows.cp2k.interaction_energy_work_chain:InteractionEnergyWorkChain"
+"aim2dat.cp2k.force_eval" = "aim2dat.aiida_workflows.cp2k.force_work_chain:ForceWorkChain"
+"aim2dat.cp2k.phonons"   = "aim2dat.aiida_workflows.cp2k.phonon_work_chain:PhononWorkChain"
+"aim2dat.phonopy.displacements" = "aim2dat.aiida_workflows.cp2k.phonopy_utils:phonopy_generate_displacements"
+"aim2dat.phonopy.parse_forces"  = "aim2dat.aiida_workflows.cp2k.phonopy_utils:parse_cp2k_forces"
+"aim2dat.phonopy.collect"       = "aim2dat.aiida_workflows.cp2k.phonopy_utils:phonopy_collect_phonons"
 
 [tool.setuptools.packages.find]
 include = ["aim2dat*"]
