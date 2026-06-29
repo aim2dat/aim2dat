@@ -324,3 +324,29 @@ def test_append_from_aiida_structuredata(
     if not use_node_label:
         ref_structure_dict["label"] = "test"
     structure_comparison(strct_c[0], ref_structure_dict)
+
+
+@pytest.mark.parametrize(
+    "structure",
+    ["MOF-5_prim.xsf", "ZIF-8.cif"],
+)
+def test_append_from_phonopy_atoms(structure_comparison, structure):
+    """Test append_from_phonopy_atoms function."""
+    ref_structure = Structure.from_file(STRUCTURES_PATH + structure, backend="internal")
+    strct_c = StructureCollection()
+    strct_c.append_from_phonopy_atoms(phonopy_atoms=ref_structure.to_phonopy_atoms(), label="test")
+    ref_structure.label = "test"
+    structure_comparison(strct_c["test"], ref_structure)
+
+
+def test_append_from_phonopy_atoms_error():
+    """Test append_from_phonopy_atoms function."""
+    ref_structure = Structure.from_file(STRUCTURES_PATH + "Benzene.yaml", backend="internal")
+    strct_c = StructureCollection()
+    with pytest.raises(ValueError) as error:
+        strct_c.append_from_phonopy_atoms(
+            phonopy_atoms=ref_structure.to_phonopy_atoms(), label="test"
+        )
+    assert (
+        str(error.value) == "`cell` must be set if `pbc` is set to true for one or more direction."
+    )
