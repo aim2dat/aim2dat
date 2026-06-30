@@ -10,6 +10,9 @@ Version 0.5.0
 * New read/write functions for FHI-aims geometry, cif, xsf, xyz, and Gaussian cube file formats have been added and interfaced to the ``strct.Structure`` and ``strct.StructureCollection`` classes (`PR 189 <https://github.com/aim2dat/aim2dat/pull/189>`_, `PR 205 <https://github.com/aim2dat/aim2dat/pull/205>`_, `PR 206 <https://github.com/aim2dat/aim2dat/pull/206>`_).
 * The ``strct.ext_analysis.calc_molecular_fragments`` function has now the option to exclude periodic images via the keyword argument ``include_periodic_images`` (`PR #191 <https://github.com/aim2dat/aim2dat/pull/191>`_).
 * ``strct.ext_manipulation.add_structure_position`` now supports the addition to add molecules at a certain position (`PR #195 <https://github.com/aim2dat/aim2dat/pull/195>`_).
+* New metals are added to ``aiida_workflows.cp2k.parameter_files.basis_sets.yaml`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
+* New adsorption protocols ``cp2k-adsorption-mofs-standard_v2.0`` and ``cp2k-crystal-mofs_v4.0`` are added to the ``aiida_workflows.protocols.`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
+* New calcjob ``aim2dat.cubecruncher`` to calculate the charge density differences of multiple components is added and is imbedded into the ``aiida_workflows.cp2k.charge_density_difference`` workchain (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
 * The ``strct.StructureImporter`` now implements an interface to the Hybrid 3 database (`PR #207 <https://github.com/aim2dat/aim2dat/pull/207>`_).
 
 **Fixes:**
@@ -22,6 +25,11 @@ Version 0.5.0
 * ``strct.ext_manipulation.add_structure_coord`` redundant rotations are skipped now (`PR #195 <https://github.com/aim2dat/aim2dat/pull/195>`_).
 * The ``strct.Structure.copy`` and ``strct.Structure.__deepcopy__`` functions did falsely not add ``site_attributes`` to the copied object (`PR #201 <https://github.com/aim2dat/aim2dat/pull/201>`_).
 * The ``chem_f.transform_str_to_dict`` function was throwing an error for some corner cases (`PR #204 <https://github.com/aim2dat/aim2dat/pull/204>`_).
+* The ``strct.Structure.copy`` and ``strct.Structure.__deepcopy__`` functions did falsely not add ``site_attributes`` to the copied object (`PR #201 <https://github.com/aim2dat/aim2dat/pull/201>`_).
+* The resubmit loop was fixed in ``aiida_workflows.cp2k.base_core_work_chain`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
+* In the BSSE calculation the fragments were fixed ``aiida_workflows.cp2k.interaction_energy_work_chain``, as well as the scf convergence for each calculation in the BSSE WC in ``io.cp2k.stdout`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
+* The ``aiida_workflows.utils.get_workchain_runtime`` function retrieved runtime error when the last row was empty. Fixed in (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
+* When ``ldos`` is calculated with CP2K then ``pdos`` of kinds and ``ldos`` is both captured in the ``xydata`` output. ``plots.base_dos._BaseDensityOfStates.import_from_aiida_xydata`` distinguishes now between ``ldos`` and ``pdos`` of kinds. Fixed in (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
 
 **Breaking Changes:**
 
