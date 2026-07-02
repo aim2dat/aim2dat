@@ -98,3 +98,33 @@ def dict_merge(a, b, path=None):
                 a[key] = b[key]
         else:
             a[key] = b[key]
+
+
+def dict_transform_case(input_dict, case):
+    """Set all keywords in dict to upper/lower-case."""
+
+    def recursive_to_case(input_dict, output_dict):
+        for key, value in input_dict.items():
+            if case == "upper":
+                key_case = key.upper()
+            elif case == "lower":
+                key_case = key.lower()
+            else:
+                raise ValueError(f"{case} not supported. Try `lower` or `upper`")
+            if isinstance(value, dict):
+                output_dict[key_case] = {}
+                recursive_to_case(value, output_dict[key_case])
+            elif isinstance(value, list):
+                output_dict[key_case] = []
+                for value0 in value:
+                    if isinstance(value0, dict):
+                        output_dict[key_case].append({})
+                        recursive_to_case(value0, output_dict[key_case][-1])
+                    else:
+                        output_dict[key_case].append(value0)
+            else:
+                output_dict[key_case] = value
+
+    output_dict = {}
+    recursive_to_case(input_dict, output_dict)
+    return output_dict

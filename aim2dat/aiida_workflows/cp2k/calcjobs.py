@@ -15,9 +15,11 @@ from aiida.orm import List, Dict, RemoteData, SinglefileData
 from aim2dat.utils.dict_tools import (
     dict_set_parameter,
     dict_retrieve_parameter,
+    dict_transform_case,
 )
 
 BandsData = DataFactory("core.array.bands")
+ArrayData = DataFactory("core.array")
 XyData = DataFactory("core.array.xy")
 StructureData = DataFactory("core.structure")
 
@@ -56,31 +58,6 @@ def _transform_dict_to_cp2k(input_dict):
     for key, value in input_dict.items():
         recursive_transform(output_list, spaces, key, value)
     return output_list
-
-
-def _set_dict_to_upper(input_dict):
-    """Set all keywords in dict to upper-case."""
-
-    def recursive_to_upper(input_dict, output_dict):
-        for key, value in input_dict.items():
-            key_upper = key.upper()
-            if isinstance(value, dict):
-                output_dict[key_upper] = {}
-                recursive_to_upper(value, output_dict[key_upper])
-            elif isinstance(value, list):
-                output_dict[key_upper] = []
-                for value0 in value:
-                    if isinstance(value0, dict):
-                        output_dict[key_upper].append({})
-                        recursive_to_upper(value0, output_dict[key_upper][-1])
-                    else:
-                        output_dict[key_upper].append(value0)
-            else:
-                output_dict[key_upper] = value
-
-    output_dict = {}
-    recursive_to_upper(input_dict, output_dict)
-    return output_dict
 
 
 class Cp2kCalculation(CalcJob):
@@ -181,6 +158,12 @@ class Cp2kCalculation(CalcJob):
             required=False,
             help="Calculated final Hirshfeld charges.",
         )
+        spec.output(
+            "output_forces",
+            valid_type=ArrayData,
+            required=False,
+            help="Calculated forces.",
+        )
         spec.default_output_node = "output_parameters"
         spec.exit_code(303, "ERROR_OUTPUT_INCOMPLETE", message="The output file was incomplete.")
         spec.exit_code(
@@ -238,7 +221,7 @@ class Cp2kCalculation(CalcJob):
 
     def prepare_for_submission(self, folder):
         """Prepare input for calculation."""
-        parameters = _set_dict_to_upper(self.inputs.parameters.get_dict())
+        parameters = dict_transform_case(self.inputs.parameters.get_dict(), "upper")
         dict_set_parameter(parameters, ["GLOBAL", "PROJECT"], self._PROJECT_NAME)
 
         if "structure" in self.inputs:

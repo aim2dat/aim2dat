@@ -25,6 +25,7 @@ from aim2dat.io import (
 
 StructureData = DataFactory("core.structure")
 BandsData = DataFactory("core.array.bands")
+ArrayData = DataFactory("core.array")
 XyData = DataFactory("core.array.xy")
 GCubeData = DataFactory("aim2dat.gaussian_cube")
 
@@ -241,6 +242,13 @@ class Cp2kStandardParser(_Cp2kBaseParser):
         if "eigenvalues_info" in result_dict:
             ev_info = result_dict.pop("eigenvalues_info")
             self.out("output_eigenvalues", Dict(dict=ev_info))
+        if "forces" in result_dict:
+            forces = result_dict.pop("forces")
+            forces_array = ArrayData()
+            forces_array.set_array(
+                "forces", np.array([result["atom_forces"] for result in forces])
+            )
+            self.out("output_forces", forces_array)
         self.out("output_parameters", Dict(dict=result_dict))
 
 

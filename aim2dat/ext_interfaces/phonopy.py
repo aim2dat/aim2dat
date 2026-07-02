@@ -10,9 +10,6 @@ from phonopy.phonon.band_structure import get_band_qpoints_and_path_connections
 from phonopy.file_IO import read_v_e, read_thermal_properties_yaml
 from aiida.plugins import DataFactory
 
-# Internal library imports
-from aim2dat.strct import Structure
-
 
 StructureData = DataFactory("core.structure")
 
@@ -57,41 +54,62 @@ def _extract_structure_from_atoms(atoms):
     return structure_dict
 
 
-def _extract_band_structure(load_parameters, path, path_labels, npoints, with_eigenvectors):
+def _extract_band_structure(
+    load_parameters,
+    path,
+    path_labels,
+    npoints,
+    with_eigenvectors,
+    pre_load=None,
+):
     """Get phonon band structure."""
     qpoints, connections = get_band_qpoints_and_path_connections(path, npoints)
-    phonon = phonopy.load(**load_parameters)
+    phonon = __load_phonopy(load_parameters, pre_load)
     phonon.run_band_structure(
         qpoints,
         path_connections=connections,
         labels=path_labels,
         with_eigenvectors=with_eigenvectors,
     )
-    return phonon.get_band_structure_dict(), phonon.primitive.cell
+    return {
+        "qpoints": phonon.band_structure.qpoints,
+        "frequencies": phonon.band_structure.frequencies,
+    }, phonon.primitive.cell
 
 
-def _extract_projected_dos(load_parameters, mesh):
+def _extract_projected_dos(load_parameters, mesh, pre_load=None):
     """Get phonon projected DOS."""
-    phonon = phonopy.load(**load_parameters)
+    phonon = __load_phonopy(load_parameters, pre_load)
     phonon.run_mesh(mesh, with_eigenvectors=True, is_mesh_symmetry=False)
     phonon.run_projected_dos()
-    return phonon.get_projected_dos_dict(), phonon.primitive.symbols
+    return {
+        "pdos": phonon.projected_dos.projected_dos,
+        "frequency_points": phonon.projected_dos.frequency_points,
+    }, phonon.primitive.symbols
 
 
-def _extract_total_dos(load_parameters, mesh):
+def _extract_total_dos(load_parameters, mesh, pre_load=None):
     """Get phonon total DOS."""
-    phonon = phonopy.load(**load_parameters)
+    phonon = __load_phonopy(load_parameters, pre_load)
     phonon.run_mesh(mesh)
     phonon.run_total_dos()
-    return phonon.get_total_dos_dict()
+    return {
+        "total_dos": phonon.total_dos.dos,
+        "frequency_points": phonon.total_dos.frequency_points,
+    }
 
 
-def _extract_thermal_properties(load_parameters, mesh, t_min, t_max, t_step):
+def _extract_thermal_properties(load_parameters, mesh, t_min, t_max, t_step, pre_load=None):
     """Get thermal properties."""
-    phonon = phonopy.load(**load_parameters)
+    phonon = __load_phonopy(load_parameters, pre_load)
     phonon.run_mesh(mesh)
     phonon.run_thermal_properties(t_min=t_min, t_max=t_max, t_step=t_step)
-    return phonon.get_thermal_properties_dict()
+    return {
+        "temperatures": phonon.thermal_properties.temperatures,
+        "free_energy": phonon.thermal_properties.thermal_properties[1],
+        "entropy": phonon.thermal_properties.thermal_properties[2],
+        "heat_capacity": phonon.thermal_properties.thermal_properties[3],
+    }
 
 
 def _extract_qha_properties(
@@ -148,12 +166,18 @@ def _create_phonopy_atoms(structure):
     )
 
 
-def _to_aiida_structuredata(ph_atoms):
-    """Convert a ``PhonopyAtoms`` object into an AiiDA ``StructureData`` node."""
-    strct = Structure(
-        elements=ph_atoms.symbols,
-        cell=ph_atoms.cell,
-        positions=ph_atoms.positions,
-        pbc=True,
+def _build_phonopy(
+    unitcell=None, supercell_matrix=None, primitive_matrix=None, symprec=None, calculator=None
+):
+    """Instantiate a ``Phonopy`` object."""
+    return phonopy.Phonopy(
+        unitcell=unitcell,
+        supercell_matrix=supercell_matrix,
+        primitive_matrix=primitive_matrix,
+        symprec=symprec,
+        calculator=calculator,
     )
-    return strct.to_aiida_structuredata()
+
+
+def __load_phonopy(load_parameters, pre_load):
+    return pre_load if type(pre_load) is phonopy.Phonopy else phonopy.load(**load_parameters)

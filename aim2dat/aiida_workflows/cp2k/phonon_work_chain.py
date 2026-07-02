@@ -22,38 +22,18 @@ Proposed entry point (pyproject.toml)::
 """
 
 # Third party library imports
-import aiida.orm as aiida_orm
-from aiida.engine import WorkChain, ToContext
-from aiida.plugins import WorkflowFactory
+import numpy as np
+from aiida.orm import Bool, Str, Int, Float, List, Dict
+from aiida.plugins import DataFactory, CalculationFactory, WorkflowFactory
+from aiida.engine import WorkChain
 
-# Internal library imports
-from aim2dat.aiida_workflows.cp2k.work_chain_specs import structural_p_specs
-from aim2dat.aiida_workflows.utils import seekpath_structure_analysis
-from aim2dat.aiida_workflows.cp2k.phonopy_utils import (
-    phonopy_generate_displacements,
-    parse_cp2k_forces,
-    phonopy_collect_phonons,
-)
+phonopy_generate_displacements = CalculationFactory("aim2dat.phonopy.displacements")
+phonopy_calculate_phonons = CalculationFactory("aim2dat.phonopy.phonons")
+ForceWorkChain = WorkflowFactory("aim2dat.cp2k.forces")
 
-ForceWorkChain = WorkflowFactory("aim2dat.cp2k.force_eval")
-
-
-def _seekpath_to_phonopy_path(path_parameters):
-    """Convert SeekPath ``path_parameters`` into a phonopy band path + labels.
-
-    NOTE for review/validation: the band path is defined in the reciprocal
-    coordinates of SeekPath's primitive cell, and phonopy is run on that same
-    primitive cell (``primitive_matrix='auto'``). For low-symmetry frameworks
-    the primitive-cell conventions should be cross-checked against the
-    script-pipeline ground truth (e.g. ZIF-8) -- this is the main correctness
-    point to validate.
-    """
-    point_coords = path_parameters["point_coords"]
-    band_path, band_labels = [], []
-    for segment in path_parameters["path"]:
-        band_path.append([point_coords[segment[0]], point_coords[segment[1]]])
-        band_labels.extend([segment[0], segment[1]])
-    return band_path, band_labels
+StructureData = DataFactory("core.structure")
+XyData = DataFactory("core.array.xy")
+BandsData = DataFactory("core.array.bands")
 
 
 class PhononWorkChain(WorkChain):
@@ -62,110 +42,141 @@ class PhononWorkChain(WorkChain):
     finite-displacement method with CP2K and phonopy.
     """
 
+    _keep_scf_method_fixed = True
+    _keep_smearing_fixed = True
+    _initial_scf_guess = "RESTART"
+
     @classmethod
     def define(cls, spec):
-        """Specify inputs, outputs and the outline."""
+        """Specify inputs and outputs."""
         super().define(spec)
-        spec = structural_p_specs(spec)
-
-        # --- phonopy settings ------------------------------------------------ #
+        # --- CP2K settings ------------------------------------------------ #
+        spec.input(
+            "force.adjust_scf_parameters",
+            valid_type=Bool,
+            default=lambda: Bool(False),
+            help="Restart calculation with adjusted parameters if SCF-cycles are not converged.",
+        )
+        # --- phonopy settings I ----------------------------------------------- #
+        spec.input(
+            "phonopy_p.structure", valid_type=StructureData, help="The main input structure."
+        )
         spec.input(
             "phonopy_p.supercell_matrix",
-            valid_type=aiida_orm.List,
+            valid_type=List,
             help="Supercell matrix, e.g. [[2,0,0],[0,2,0],[0,0,2]].",
         )
         spec.input(
-            "phonopy_p.displacement",
-            valid_type=aiida_orm.Float,
-            default=lambda: aiida_orm.Float(0.01),
-            help="Displacement amplitude in Angstrom.",
+            "phonopy_p.primitive_matrix",
+            valid_type=(List, Str),
+            default=lambda: Str("auto"),
+            help="Primitive matrix, e.g. ``auto`` or [[2,0,0],[0,2,0],[0,0,2]].",
         )
         spec.input(
             "phonopy_p.symprec",
-            valid_type=aiida_orm.Float,
-            default=lambda: aiida_orm.Float(0.005),
+            valid_type=Float,
+            default=lambda: Float(0.005),
             help="Symmetry tolerance; should match the `eps_symmetry` used in the "
             "upstream cell optimization.",
         )
         spec.input(
+            "phonopy_p.displacement",
+            valid_type=Float,
+            default=lambda: Float(0.01),
+            help="Displacement amplitude in Angstrom.",
+        )
+        # --- phonopy settings II ---------------------------------------------- #
+        spec.input(
+            "phonopy_p.path_parameters",
+            valid_type=Dict,
+            help="Band path in reciprocal coordinates retrieved from SeekPath.",
+        )
+        spec.input(
+            "phonopy_p.band_npoints",
+            valid_type=Int,
+            default=lambda: Int(101),
+            help="Number of q-points in each path including end points.",
+        )
+        spec.input(
             "phonopy_p.dos_mesh",
-            valid_type=aiida_orm.List,
-            default=lambda: aiida_orm.List(list=[20, 20, 20]),
+            valid_type=List,
+            default=lambda: List(list=[20, 20, 20]),
             help="q-point mesh for the phonon DOS.",
         )
         spec.input(
+            "phonopy_p.with_eigenvectors",
+            valid_type=Bool,
+            required=False,
+            help="Whether eigenvectors are calculated.",
+        )
+        spec.input(
             "phonopy_p.thermal_properties",
-            valid_type=aiida_orm.Bool,
-            default=lambda: aiida_orm.Bool(False),
+            valid_type=Bool,
+            required=False,
             help="Also compute thermal properties (free energy, Cv, entropy).",
+        )
+        spec.input(
+            "phonopy_p.temp_range",
+            valid_type=List,
+            required=False,
+            help="Temperature range (start, end, step) for thermal properties.",
         )
         # v2 TODO: non-analytical correction. Reserved now so adding it later
         # does not change the input spec.
         spec.input(
             "phonopy_p.nac_parameters",
-            valid_type=aiida_orm.Dict,
+            valid_type=Dict,
             required=False,
             help="Reserved (v2): Born effective charges + dielectric tensor for the "
             "non-analytical correction. Not used in v1.",
         )
-
-        # --- band path (SeekPath) ------------------------------------------- #
-        spec.input(
-            "seekpath_parameters",
-            valid_type=aiida_orm.Dict,
-            default=lambda: aiida_orm.Dict(dict={"reference_distance": 0.015, "symprec": 0.005}),
-            help="Arguments passed to the SeekPath analysis for the band path.",
-        )
+        spec.output("phonon_bands", valid_type=BandsData)
+        spec.output("phonon_dos", valid_type=XyData)
+        spec.output("thermal_properties", valid_type=XyData, required=False)
 
         # --- per-displacement force calculation ----------------------------- #
         # Exposes the CP2K code, numerical_p and SCF settings of ForceWorkChain;
         # the structure is supplied per displacement.
-        spec.expose_inputs(
-            ForceWorkChain, namespace="force", exclude=("structural_p.structure",)
+        spec.expose_inputs(ForceWorkChain, namespace="force", exclude=("structural_p.structure",))
+        spec.expose_outputs(
+            ForceWorkChain,
+            namespace="force",
         )
 
         spec.outline(
-            cls.setup,
+            cls.run_displacements,
             cls.run_forces,
             cls.inspect_forces,
-            cls.collect_phonons,
-            cls.result,
+            cls.run_phonopy,
+            cls.post_processing,
         )
 
-        spec.output("phonon_bands", valid_type=aiida_orm.Dict)
-        spec.output("phonon_dos", valid_type=aiida_orm.XyData)
-        spec.output("thermal_properties", valid_type=aiida_orm.Dict, required=False)
-        spec.output("phonon_setting_info", valid_type=aiida_orm.Dict)
-        spec.output_namespace(
-            "seekpath", required=False, dynamic=True,
-            help="Primitive structure / path from SeekPath."
-        )
+    def run_displacements(self):
+        """Generate displaced supercells."""
+        structure = self.inputs.phonopy_p.structure
+        supercell_matrix = self.inputs.phonopy_p.supercell_matrix.get_list()
+        if isinstance(self.inputs.phonopy_p.primitive_matrix, List):
+            primitive_matrix = self.inputs.phonopy_p.primitive_matrix.get_list()
+        elif isinstance(self.inputs.phonopy_p.primitive_matrix, Str):
+            primitive_matrix = self.inputs.phonopy_p.primitive_matrix.value
+        symprec = self.inputs.phonopy_p.symprec.value
+        displacement = self.inputs.phonopy_p.displacement.value
 
-        spec.exit_code(
-            401,
-            "ERROR_FORCE_CALCULATION",
-            message="One or more displacement force calculations did not finish OK.",
-        )
-
-    def setup(self):
-        """Run SeekPath for the band path, then generate displaced supercells."""
-        seekpath = seekpath_structure_analysis(
-            self.inputs.structural_p.structure, self.inputs.seekpath_parameters
-        )
-        self.ctx.primitive_structure = seekpath["primitive_structure"]
-        self.ctx.path_parameters = seekpath["parameters"].get_dict()
-        self.out("seekpath.primitive_structure", seekpath["primitive_structure"])
-        self.out("seekpath.path_parameters", seekpath["parameters"])
-
-        gen_parameters = aiida_orm.Dict(
+        phonopy_parameters = Dict(
             dict={
-                "supercell_matrix": self.inputs.phonopy_p.supercell_matrix.get_list(),
-                "displacement": self.inputs.phonopy_p.displacement.value,
-                "symprec": self.inputs.phonopy_p.symprec.value,
+                "supercell_matrix": supercell_matrix,
+                "primitive_matrix": primitive_matrix,
+                "symprec": symprec,
+                "calculator": "cp2k",
             }
         )
-        generated = phonopy_generate_displacements(self.ctx.primitive_structure, gen_parameters)
-        self.ctx.phonon_setting_info = generated.pop("phonon_setting_info")
+        parameters = Dict(
+            dict={
+                "displacement": displacement,
+            }
+        )
+        generated = phonopy_generate_displacements(structure, phonopy_parameters, parameters)
+        self.ctx.displacement_dataset = generated.pop("displacement_dataset")
         self.ctx.supercells = dict(generated)  # supercell_XXXX -> StructureData
         self.report(f"Generated {len(self.ctx.supercells)} displaced supercells.")
 
@@ -186,35 +197,91 @@ class PhononWorkChain(WorkChain):
             if not wc.is_finished_ok:
                 self.report(f"ForceWorkChain for {key} failed ({wc.exit_status}).")
                 return self.exit_codes.ERROR_FORCE_CALCULATION
-            # NOTE: verify the retrieved-folder output port name against the
-            # aim2dat.cp2k calcjob exposed outputs (assumed `cp2k.retrieved`).
-            self.ctx.retrieved[key] = wc.outputs.cp2k.retrieved
 
-    def collect_phonons(self):
+    def run_phonopy(self):
         """Parse forces and assemble the band structure + DOS."""
-        force_sets = parse_cp2k_forces(self.ctx.phonon_setting_info, **self.ctx.retrieved)[
-            "force_sets"
-        ]
-        band_path, band_labels = _seekpath_to_phonopy_path(self.ctx.path_parameters)
-        collect_parameters = aiida_orm.Dict(
+        structure = self.inputs.phonopy_p.structure
+        supercell_matrix = self.inputs.phonopy_p.supercell_matrix.get_list()
+        if isinstance(self.inputs.phonopy_p.primitive_matrix, List):
+            primitive_matrix = self.inputs.phonopy_p.primitive_matrix.get_list()
+        elif isinstance(self.inputs.phonopy_p.primitive_matrix, Str):
+            primitive_matrix = self.inputs.phonopy_p.primitive_matrix.value
+        symprec = self.inputs.phonopy_p.symprec.value
+
+        displacement_dataset = self.ctx.displacement_dataset.get_dict()
+
+        force_list = []
+        for key in sorted(self.ctx.supercells):
+            force_list.append(
+                self.ctx[f"force_{key}"].outputs.cp2k.output_forces.get_array("forces")
+            )
+        force_sets = np.array(force_list)
+
+        path_parameters = self.inputs.phonopy_p.path_parameters.get_dict()
+        band_path, band_labels = _seekpath_to_phonopy_path(path_parameters)
+
+        band_npoints = self.inputs.phonopy_p.band_npoints.value
+        dos_mesh = self.inputs.phonopy_p.dos_mesh.get_list()
+
+        phonopy_parameters = Dict(
             dict={
-                "band_path": band_path,
-                "band_labels": band_labels,
-                "dos_mesh": self.inputs.phonopy_p.dos_mesh.get_list(),
-                "thermal_properties": self.inputs.phonopy_p.thermal_properties.value,
+                "supercell_matrix": supercell_matrix,
+                "primitive_matrix": primitive_matrix,
+                "symprec": symprec,
+                "calculator": "cp2k",
             }
         )
-        self.ctx.results = phonopy_collect_phonons(
-            self.ctx.primitive_structure,
-            self.ctx.phonon_setting_info,
-            force_sets,
-            collect_parameters,
+        parameters = {
+            "displacement_dataset": displacement_dataset,
+            "force_sets": force_sets,
+            "band_path": band_path,
+            "band_labels": band_labels,
+            "band_npoints": band_npoints,
+            "dos_mesh": dos_mesh,
+        }
+
+        if "with_eigenvectors" in self.inputs.phonopy_p:
+            with_eigenvectors = self.inputs.phonopy_p.with_eigenvectors.value
+            parameters.update({"with_eigenvectors": with_eigenvectors})
+        if "thermal_properties" in self.inputs.phonopy_p:
+            thermal_properties = self.inputs.phonopy_p.thermal_properties.value
+            temp_range = self.inputs.phonopy_p.temp_range.get_list()
+            parameters.update(
+                {
+                    "thermal_properties": thermal_properties,
+                    "temp_range": temp_range,
+                }
+            )
+
+        parameters = Dict(dict=parameters)
+
+        self.ctx.results = phonopy_calculate_phonons(
+            structure,
+            phonopy_parameters,
+            parameters,
         )
 
-    def result(self):
-        """Expose the outputs."""
+    def post_processing(self):
+        """Parse forces and assemble the band structure + DOS."""
         self.out("phonon_bands", self.ctx.results["band_structure"])
         self.out("phonon_dos", self.ctx.results["total_dos"])
-        self.out("phonon_setting_info", self.ctx.phonon_setting_info)
         if "thermal_properties" in self.ctx.results:
             self.out("thermal_properties", self.ctx.results["thermal_properties"])
+
+
+def _seekpath_to_phonopy_path(path_parameters):
+    """Convert SeekPath ``path_parameters`` into a phonopy band path + labels.
+
+    NOTE for review/validation: the band path is defined in the reciprocal
+    coordinates of SeekPath's primitive cell, and phonopy is run on that same
+    primitive cell (``primitive_matrix='auto'``). For low-symmetry frameworks
+    the primitive-cell conventions should be cross-checked against the
+    script-pipeline ground truth (e.g. ZIF-8) -- this is the main correctness
+    point to validate.
+    """
+    point_coords = path_parameters["point_coords"]
+    band_path, band_labels = [], []
+    for segment in path_parameters["path"]:
+        band_path.append([point_coords[segment[0]], point_coords[segment[1]]])
+        band_labels.extend([segment[0], segment[1]])
+    return band_path, band_labels
