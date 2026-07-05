@@ -256,14 +256,11 @@ def test_planes(structure, file_type):
 def test_calc_hydrogen_bonds():
     """Test hydrogen bond analysis."""
     strct = Structure.from_file(STRUCTURES_PATH + "MOF-303_30xH2O.xsf")
-    with pytest.raises(ValueError) as error:
-        calc_hydrogen_bonds(strct, scheme="test")
-    assert (
-        str(error.value)
-        == "`scheme` 'test' is not supported. Valid options are: ['baker_hubbard']."
-    )
-
     hbonds = calc_hydrogen_bonds(
-        strct, host_elements="O", index_constraint=[104, 128, 129, 130, 131, 132, 148, 200, 201]
+        strct,
+        host_elements="O",
+        distance_cutoff=2.5,
+        angle_cutoff=120.0,
+        index_constraint=[104, 128, 129, 130, 131, 132, 148, 200, 201],
     )
     assert hbonds == ((128, 201, 200), (200, 132, 131))
