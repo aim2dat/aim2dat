@@ -25,7 +25,7 @@ tasks:
     blacklist_inputs:
     - custom_scf_method
   force_eval:
-    process: aim2dat.cp2k.force_eval
+    process: aim2dat.cp2k.forces
     blacklist_inputs:
     - custom_scf_method
     dependencies:

@@ -16,6 +16,10 @@ CP2K
 .. aiida:calcjob:: Cp2kCalculation
     :module: aim2dat.aiida_workflows.cp2k.calcjobs
 
+
+.. aiida:calcjob:: CubecruncherCalculation
+    :module: aim2dat.aiida_workflows.cubecruncher.calcjobs
+
 .. aiida:workchain:: FindSCFParametersWorkChain
     :module: aim2dat.aiida_workflows.cp2k.find_scf_p_work_chain
 
@@ -42,6 +46,9 @@ CP2K
 
 .. aiida:workchain:: PlanarFieldsWorkChain
     :module: aim2dat.aiida_workflows.cp2k.planar_fields_work_chain
+
+.. aiida:workchain:: ChargeDensityDifferenceWorkChain
+    :module: aim2dat.aiida_workflows.cp2k.charge_density_difference_work_chain
 
 .. aiida:workchain:: ElectronicPropertiesWorkChain
     :module: aim2dat.aiida_workflows.cp2k.combined_work_chains

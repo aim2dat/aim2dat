@@ -44,7 +44,7 @@ tasks:
     process: aim2dat.cp2k.phonons
     dependencies:
       unit_cell_opt:
-      - [cp2k.output_structure, structural_p.structure]
+      - [cp2k.output_structure, phonopy_p.structure]
       - [scf_parameters, force.structural_p.scf_parameters]
 
 general_input:
@@ -175,10 +175,6 @@ general_input:
     tasks: [phonons]
   phonopy_p.dos_mesh:
     value: [20, 20, 20]
-    aiida_node: true
-    tasks: [phonons]
-  seekpath_parameters:
-    value: {reference_distance: 0.015, symprec: 0.005}
     aiida_node: true
     tasks: [phonons]
 
@@ -323,6 +319,14 @@ user_input:
     compare: false
     tasks: [phonons]
     value: false
+
+  # ── Band path (run SeekPath on the optimized structure, pass its
+  # path_parameters dict) — the workchain no longer runs SeekPath itself ────
+  phonopy_p.path_parameters:
+    validation: aim2dat.cp2k.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
 
   # ── Supercell matrix — must be set per structure ──────────────────────────
   phonopy_p.supercell_matrix:

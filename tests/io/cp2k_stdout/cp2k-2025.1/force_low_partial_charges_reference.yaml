@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - []
+- [cp2k_version, 2025.1]
+- [run_type, ENERGY_FORCE]
+- [natoms, 8]
+- [nelectrons, 32]
+- [nr_occ_orbitals, 16]
+- [scf_converged, true]
+- [energy_scf, -31.29788527015824]
+- [energy, -31.29788537278413]
+- [runtime, 1.458]
+- [energy_units, hartree]

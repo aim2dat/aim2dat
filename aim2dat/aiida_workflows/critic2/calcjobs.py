@@ -25,7 +25,7 @@ class Critic2Calculation(CalcJob):
         spec.input(
             "charge_density_folder",
             valid_type=aiida_orm.RemoteData,
-            help="Folder containing the carge-density cube files",
+            help="Folder containing the charge-density cube files",
         )
         spec.input(
             "kind_info",
@@ -109,7 +109,7 @@ class Critic2Calculation(CalcJob):
             calcinfo.remote_symlink_list = copy_links
         else:
             self.report(
-                f"Transfering files from {cd_folder.computer.label} to "
+                f"Transferring files from {cd_folder.computer.label} to "
                 f"{self.inputs.code.computer.label}."
             )
             calcinfo.remote_copy_list = copy_links

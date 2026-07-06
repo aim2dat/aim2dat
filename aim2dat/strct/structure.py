@@ -33,6 +33,7 @@ if TYPE_CHECKING:
     import ase
     import openmm
     import pymatgen
+    import phonopy
 
 
 def _compare_function_args(args1, args2):
@@ -819,6 +820,42 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
 
     @import_method
     @classmethod
+    def from_phonopy_atoms(
+        cls,
+        phonopy_atoms: "phonopy.structure.atoms",
+        attributes: dict = None,
+        site_attributes: dict = None,
+        extras: dict = None,
+        label: str = None,
+    ) -> "Structure":
+        """
+        Get structure from phonopy atoms object.
+
+        Parameters
+        ----------
+        phonopy.structure.atoms
+            phonopy atoms object of the structure.
+        attributes : dict
+            Attributes stored within the structure object.
+        site_attributes : dict
+            Site attributes stored within the structure object.
+        extras : dict
+            Extras stored within the structure object.
+        label : str
+            Label used internally to store the structure in the object.
+
+        Returns
+        -------
+        aim2dat.strct.Structure
+            Structure.
+        """
+        backend_module = _return_ext_interface_modules("phonopy")
+        strct_dict = backend_module._extract_structure_from_atoms(phonopy_atoms)
+        _update_label_attributes_extras(strct_dict, label, attributes, site_attributes, extras)
+        return cls(**strct_dict)
+
+    @import_method
+    @classmethod
     def from_openmm_simulation(
         cls,
         simulation,
@@ -992,6 +1029,19 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
         """
         backend_module = _return_ext_interface_modules("aiida")
         return backend_module._create_structure_node(self)
+
+    @export_method
+    def to_phonopy_atoms(self):
+        """
+        Create phonopy atoms object.
+
+        Returns
+        -------
+        phonopy.structure.atoms
+            phonopy atoms object of the structure.
+        """
+        backend_module = _return_ext_interface_modules("phonopy")
+        return backend_module._create_phonopy_atoms(self)
 
     @export_method
     def to_openmm_simulation(

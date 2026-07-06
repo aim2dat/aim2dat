@@ -5,7 +5,7 @@ title: cp2k-crystal-mofs
 version: '3.0'
 description: Settings to calculate metal-organic frameworks.
 dependencies:
-- [aiida-core, '2.7', Null]
+- [aiida-core, '2.5', Null]
 parent_node_type: core.structure
 parent_node_input:
   find_scf_parameters: structural_p.structure
@@ -148,7 +148,7 @@ general_input:
     value: 0.1
     aiida_node: true
   minimum_cell_length->pdos:
-    value: 25.0
+    value: 15.0
     aiida_node: true
   maximum_cell_length->pdos:
     value: 40.0
@@ -159,7 +159,7 @@ general_input:
   critic2.parameters->partial_charges:
     value:
     - crystal aiida-ELECTRON_DENSITY-1_0.cube
-    - load aiida-ELECTRON_DENSITY-1_0.cube core zpsp
+    - load aiida-ELECTRON_DENSITY-1_0.cube zpsp
     - load aiida-ELECTRON_DENSITY-1_0.cube
     - integrable 2
     - yt

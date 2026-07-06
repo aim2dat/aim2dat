@@ -47,7 +47,8 @@ def _setup_wc_specific_inputs(ctx, inputs):
     # (e.g. if only molecule was set and framework was forgotten)
     all_numbers = set(range(len(sites)))
     missing_fragment = list(all_numbers - set(fragment_numbers))
-    fragments_list.append(missing_fragment)
+    if missing_fragment:
+        fragments_list.append(missing_fragment)
 
     # CP2K starts counting at 1 not at 0. Thus add 1 to each index if necessary
     if min(i for fragments in fragments_list for i in fragments) == 0:
@@ -80,7 +81,7 @@ class InteractionEnergyWorkChain(_BaseCoreWorkChain):
 
     _keep_scf_method_fixed = True
     _keep_smearing_fixed = True
-    _initial_scf_guess = "RESTART"
+    _initial_scf_guess = "ATOMIC"
 
     @classmethod
     def define(cls, spec):

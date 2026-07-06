@@ -15,7 +15,7 @@ phonopy's CP2K interface can read them.
 Proposed entry point (pyproject.toml)::
 
     [project.entry-points."aiida.workflows"]
-    "aim2dat.cp2k.force_eval" =
+    "aim2dat.cp2k.forces" =
         "aim2dat.aiida_workflows.cp2k.force_work_chain:ForceWorkChain"
 """
 
@@ -25,7 +25,7 @@ import aiida.orm as aiida_orm
 # Internal library imports
 from aim2dat.aiida_workflows.cp2k.base_core_work_chain import _BaseCoreWorkChain
 from aim2dat.aiida_workflows.cp2k.core_work_chain_handlers import _switch_to_atomic_scf_guess
-from aim2dat.utils.dict_tools import dict_set_parameter, dict_create_tree
+from aim2dat.utils.dict_tools import dict_set_parameter
 
 from aiida.engine import process_handler, ExitCode
 
@@ -55,8 +55,12 @@ class ForceWorkChain(_BaseCoreWorkChain):
         parameters = self.ctx.inputs.parameters.get_dict()
         dict_set_parameter(parameters, ["GLOBAL", "RUN_TYPE"], "ENERGY_FORCE")
         # Print the atomic forces into the CP2K output (read later by phonopy).
-        dict_create_tree(parameters, ["FORCE_EVAL", "PRINT", "FORCES"])
-        parameters["FORCE_EVAL"]["PRINT"]["FORCES"]["_"] = "ON"
+        dict_set_parameter(parameters, ["FORCE_EVAL", "PRINT", "FORCES", "_"], "ON")
+        # If multiple calculations are run the storage gets full quickly.
+        # Also the WFN/KP is not needed for further processes.
+        dict_set_parameter(
+            parameters, ["FORCE_EVAL", "DFT", "SCF", "PRINT", "RESTART", "_"], "OFF"
+        )
         self.ctx.inputs.parameters = aiida_orm.Dict(dict=parameters)
         self.ctx.inputs.settings = aiida_orm.Dict(dict={"output_check_scf_conv": True})
 

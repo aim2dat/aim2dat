@@ -168,7 +168,6 @@ class _BaseOptimizationWorkChain(_BaseCoreWorkChain):
     @process_handler(
         priority=402,
         exit_codes=[
-            ExitCode(310),
             ExitCode(400),
         ],
     )

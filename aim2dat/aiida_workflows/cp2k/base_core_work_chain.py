@@ -30,7 +30,6 @@ from aim2dat.aiida_workflows.cp2k.work_chain_specs import (
     core_work_chain_exit_codes,
 )
 from aim2dat.aiida_workflows.cp2k.core_work_chain_handlers import (
-    _resubmit_calculation,
     _switch_scf_parameters,
     _switch_to_broyden_mixing,
     _switch_to_open_shell_ks,
@@ -251,11 +250,6 @@ class _BaseCoreWorkChain(BaseRestartWorkChain):
 
     def wc_specific_post_processing(self):
         pass
-
-    @process_handler(priority=402, exit_codes=ExitCode(310))
-    def resubmit_calculation(self, calc):
-        """Resubmit in case the calculation did not start."""
-        return self._execute_error_handler(calc, _resubmit_calculation)
 
     @process_handler(
         priority=401,

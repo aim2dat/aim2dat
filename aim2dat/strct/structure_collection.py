@@ -25,6 +25,7 @@ from aim2dat.chem_f import transform_dict_to_str
 if TYPE_CHECKING:
     import aiida
     import pymatgen
+    import phonopy
 
 
 def _process_strct_list(structures, indices):
@@ -374,6 +375,25 @@ class StructureCollection(ImportExportMixin):
             Structure.from_pymatgen_structure(
                 pymatgen_structure, label=label, attributes=attributes
             )
+        )
+
+    def append_from_phonopy_atoms(
+        self, label: str, phonopy_atoms: "phonopy.structure.atoms", attributes: dict = None
+    ):
+        """
+        Append structure from phonopy atoms object.
+
+        Parameters
+        ----------
+        label : str
+            String used to identify the structure.
+        phonopy_atoms : phonopy.structure.atoms
+            phonopy atoms object.
+        attributes : dict
+            Additional information about the structure.
+        """
+        self.append_structure(
+            Structure.from_phonopy_atoms(phonopy_atoms, label=label, attributes=attributes)
         )
 
     def append_from_file(
