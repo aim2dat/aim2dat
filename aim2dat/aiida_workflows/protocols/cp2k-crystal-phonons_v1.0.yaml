@@ -165,10 +165,6 @@ general_input:
     aiida_node: true
 
   # ── Phonopy defaults ──────────────────────────────────────────────────────
-  phonopy_p.displacement:
-    value: 0.01
-    aiida_node: true
-    tasks: [phonons]
   phonopy_p.symprec:
     value: 0.005
     aiida_node: true
@@ -311,6 +307,17 @@ user_input:
     compare: false
     value: 1.9e-5
 
+  # ── Displacement amplitude — overridable: semicore species on production
+  # grids need larger displacements for clean force constants (see the NaCl
+  # egg-box case, 2026-07-06) ─────────────────────────────────────────────────
+  phonopy_p.displacement:
+    validation: aim2dat.cp2k.phonons
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [phonons]
+    value: 0.01
+
   # ── Thermal properties (free energy, Cv, entropy vs. T) ─────────────────────
   phonopy_p.thermal_properties:
     validation: aim2dat.cp2k.phonons
@@ -327,6 +334,14 @@ user_input:
     aiida_node: true
     compare: false
     tasks: [phonons]
+
+  phonopy_p.temp_range:
+    validation: aim2dat.cp2k.phonons
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [phonons]
+    value: [0.0, 1000.0, 10.0]
 
   # ── Supercell matrix — must be set per structure ──────────────────────────
   phonopy_p.supercell_matrix:
@@ -380,6 +395,9 @@ results:
   phonon_dos:
     task: phonons
     output_port: phonon_dos
-  phonon_setting_info:
+  thermal_properties:
     task: phonons
-    output_port: phonon_setting_info
+    output_port: thermal_properties
+  ref_forces:
+    task: phonons
+    output_port: ref_forces
