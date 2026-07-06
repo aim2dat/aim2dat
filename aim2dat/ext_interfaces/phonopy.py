@@ -155,10 +155,25 @@ def _create_phonopy_atoms(structure):
     """Create phonopy atoms object from structure dictionary."""
     if not all(structure.pbc):
         raise ValueError("`cell` must be set if `pbc` is set to true for one or more direction.")
-    if all(structure.kinds) and all(re.findall(r"\d+", el) for el in structure.kinds):
-        symbols = structure.kinds
-    else:
-        symbols = structure.elements
+    # Kind names are passed to phonopy only when they encode a real
+    # distinction (an element with more than one kind). PhonopyAtoms species
+    # indices must start at 1, while kind names in the wild are often
+    # zero-indexed (e.g. AiiDA kinds "Na0"/"Cl1"), so kinds are re-indexed
+    # per element in order of first appearance instead of passed verbatim.
+    symbols = structure.elements
+    kinds = structure.kinds
+    if kinds is not None and all(kinds) and len(set(kinds)) > len(set(structure.elements)):
+        kinds_per_element = {}
+        for element, kind in zip(structure.elements, kinds):
+            element_kinds = kinds_per_element.setdefault(element, [])
+            if kind not in element_kinds:
+                element_kinds.append(kind)
+        symbols = [
+            element
+            if len(kinds_per_element[element]) == 1
+            else f"{element}{kinds_per_element[element].index(kind) + 1}"
+            for element, kind in zip(structure.elements, kinds)
+        ]
     return PhonopyAtoms(
         symbols=symbols,
         cell=structure.cell,
