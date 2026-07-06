@@ -10,9 +10,17 @@ Pipeline
 --------
 1. ``seekpath_structure_analysis``  -> primitive cell + q-point band path
 2. ``phonopy_generate_displacements`` -> N displaced supercells + setting info
-3. ``ForceWorkChain`` x N            -> CP2K ENERGY_FORCE per displacement
-4. ``parse_cp2k_forces``             -> stacked force sets
-5. ``phonopy_collect_phonons``       -> phonon band structure + DOS
+3. ``ForceWorkChain`` on the undisplaced reference supercell -> abort early
+   (exit code 402) if any force exceeds ``phonopy_p.ref_forces_threshold``:
+   the structure is not at a force-free minimum or the numerical setup
+   produces spurious forces. Runs *before* the fan-out so no compute is
+   wasted on a bad structure/setup. NOTE: on high-symmetry crystals where
+   atoms sit on special positions, site symmetry can cancel systematic
+   force errors (e.g. egg-box) in the reference cell, so a passing check
+   there is necessary but not sufficient.
+4. ``ForceWorkChain`` x N            -> CP2K ENERGY_FORCE per displacement
+5. ``parse_cp2k_forces``             -> stacked force sets
+6. ``phonopy_collect_phonons``       -> phonon band structure + DOS
 
 Proposed entry point (pyproject.toml)::
 
@@ -22,6 +30,7 @@ Proposed entry point (pyproject.toml)::
 """
 
 # Third party library imports
+import numpy as np
 import aiida.orm as aiida_orm
 from aiida.engine import WorkChain, ToContext
 from aiida.plugins import WorkflowFactory
@@ -29,9 +38,10 @@ from aiida.plugins import WorkflowFactory
 # Internal library imports
 from aim2dat.aiida_workflows.cp2k.work_chain_specs import structural_p_specs
 from aim2dat.aiida_workflows.utils import seekpath_structure_analysis
-from aim2dat.aiida_workflows.cp2k.phonopy_utils import (
+from aim2dat.utils.phonopy_utils import (
     phonopy_generate_displacements,
     parse_cp2k_forces,
+    subtract_reference_forces,
     phonopy_collect_phonons,
 )
 
@@ -108,6 +118,34 @@ class PhononWorkChain(WorkChain):
             help="Reserved (v2): Born effective charges + dielectric tensor for the "
             "non-analytical correction. Not used in v1.",
         )
+        # --- reference-forces sanity gate ------------------------------------ #
+        spec.input(
+            "phonopy_p.ref_forces_check",
+            valid_type=aiida_orm.Bool,
+            default=lambda: aiida_orm.Bool(True),
+            help="Also run a force calculation on the undisplaced reference "
+            "supercell and abort if any force exceeds `ref_forces_threshold`. "
+            "Non-zero reference forces mean an under-relaxed input structure or "
+            "numerical force noise (grid/basis) -- either corrupts the force "
+            "constants far more subtly downstream than failing here.",
+        )
+        spec.input(
+            "phonopy_p.ref_forces_threshold",
+            valid_type=aiida_orm.Float,
+            default=lambda: aiida_orm.Float(5.0e-5),
+            help="Maximum tolerated force component norm (Ha/Bohr) on the "
+            "reference supercell. Default sits between a converged cell-opt "
+            "residual (~2e-5) and the smallest displacement force signal "
+            "(~3e-4 for a 0.01 A displacement).",
+        )
+        spec.input(
+            "phonopy_p.subtract_ref_forces",
+            valid_type=aiida_orm.Bool,
+            default=lambda: aiida_orm.Bool(False),
+            help="Subtract the reference-supercell forces from every displaced "
+            "force set before building force constants (mitigates systematic "
+            "residual forces; no substitute for a sound numerical setup).",
+        )
 
         # --- band path (SeekPath) ------------------------------------------- #
         spec.input(
@@ -126,6 +164,8 @@ class PhononWorkChain(WorkChain):
 
         spec.outline(
             cls.setup,
+            cls.run_ref_force,
+            cls.inspect_ref_force,
             cls.run_forces,
             cls.inspect_forces,
             cls.collect_phonons,
@@ -136,6 +176,13 @@ class PhononWorkChain(WorkChain):
         spec.output("phonon_dos", valid_type=aiida_orm.XyData)
         spec.output("thermal_properties", valid_type=aiida_orm.Dict, required=False)
         spec.output("phonon_setting_info", valid_type=aiida_orm.Dict)
+        spec.output(
+            "ref_forces",
+            valid_type=aiida_orm.ArrayData,
+            required=False,
+            help="Forces on the undisplaced reference supercell (Ha/Bohr); "
+            "~zero for a relaxed structure and a numerically sound setup.",
+        )
         spec.output_namespace(
             "seekpath", required=False, dynamic=True,
             help="Primitive structure / path from SeekPath."
@@ -145,6 +192,15 @@ class PhononWorkChain(WorkChain):
             401,
             "ERROR_FORCE_CALCULATION",
             message="One or more displacement force calculations did not finish OK.",
+        )
+        spec.exit_code(
+            402,
+            "ERROR_REFERENCE_FORCES",
+            message="Forces on the undisplaced reference supercell exceed "
+            "`phonopy_p.ref_forces_threshold`: the input structure is not at a "
+            "force-free minimum or the numerical setup produces spurious forces "
+            "(check basis set / grid cutoff). Force constants built on top of "
+            "this would be unreliable.",
         )
 
     def setup(self):
@@ -166,8 +222,51 @@ class PhononWorkChain(WorkChain):
         )
         generated = phonopy_generate_displacements(self.ctx.primitive_structure, gen_parameters)
         self.ctx.phonon_setting_info = generated.pop("phonon_setting_info")
+        self.ctx.supercell_ref = generated.pop("supercell_ref")
         self.ctx.supercells = dict(generated)  # supercell_XXXX -> StructureData
+        self.ctx.run_ref = (
+            self.inputs.phonopy_p.ref_forces_check.value
+            or self.inputs.phonopy_p.subtract_ref_forces.value
+        )
         self.report(f"Generated {len(self.ctx.supercells)} displaced supercells.")
+
+    def run_ref_force(self):
+        """Run the reference (undisplaced) supercell force calculation first.
+
+        Gating on the reference before fanning out the displacements avoids
+        burning N force calculations on a structure that is not force-free or
+        a numerical setup that produces spurious forces.
+        """
+        if not self.ctx.run_ref:
+            return
+        inputs = self.exposed_inputs(ForceWorkChain, namespace="force")
+        inputs.structural_p.structure = self.ctx.supercell_ref
+        running = self.submit(ForceWorkChain, **inputs)
+        self.report(f"Launching ForceWorkChain <{running.pk}> for the reference supercell.")
+        self.to_context(force_supercell_ref=running)
+
+    def inspect_ref_force(self):
+        """Gate on the reference forces before running the displacements."""
+        if not self.ctx.run_ref:
+            return
+        wc = self.ctx.force_supercell_ref
+        if not wc.is_finished_ok:
+            self.report(f"ForceWorkChain for the reference supercell failed ({wc.exit_status}).")
+            return self.exit_codes.ERROR_FORCE_CALCULATION
+        self.ctx.ref_forces = parse_cp2k_forces(
+            self.ctx.phonon_setting_info, supercell_ref=wc.outputs.cp2k.retrieved
+        )["force_sets"]
+        self.out("ref_forces", self.ctx.ref_forces)
+        max_force = float(
+            np.max(np.linalg.norm(self.ctx.ref_forces.get_array("force_sets")[0], axis=1))
+        )
+        threshold = self.inputs.phonopy_p.ref_forces_threshold.value
+        self.report(
+            f"Reference supercell max |F| = {max_force:.3e} Ha/Bohr "
+            f"(threshold {threshold:.3e})."
+        )
+        if self.inputs.phonopy_p.ref_forces_check.value and max_force > threshold:
+            return self.exit_codes.ERROR_REFERENCE_FORCES
 
     def run_forces(self):
         """Fan out one ForceWorkChain per displaced supercell."""
@@ -179,7 +278,7 @@ class PhononWorkChain(WorkChain):
             self.to_context(**{f"force_{key}": running})
 
     def inspect_forces(self):
-        """Verify every force calculation finished and collect its output folder."""
+        """Verify every displacement force calculation finished OK."""
         self.ctx.retrieved = {}
         for key in sorted(self.ctx.supercells):
             wc = self.ctx[f"force_{key}"]
@@ -195,6 +294,8 @@ class PhononWorkChain(WorkChain):
         force_sets = parse_cp2k_forces(self.ctx.phonon_setting_info, **self.ctx.retrieved)[
             "force_sets"
         ]
+        if self.inputs.phonopy_p.subtract_ref_forces.value:
+            force_sets = subtract_reference_forces(force_sets, self.ctx.ref_forces)
         band_path, band_labels = _seekpath_to_phonopy_path(self.ctx.path_parameters)
         collect_parameters = aiida_orm.Dict(
             dict={

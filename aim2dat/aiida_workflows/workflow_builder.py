@@ -653,11 +653,16 @@ class WorkflowBuilder(_BaseWorkflowBuilder):
                 if check_input_parameter(task, process_builder, input_port, input_details):
                     self._set_input_parameter(process_builder, input_port, input_details["value"])
 
-        # Set dependencies from previous tasks:
+        # Set dependencies from previous tasks.
+        # individual_input takes priority: if the user explicitly set a value for
+        # this port (value is not None), skip the dependency so the override wins.
         if "dependencies" in task_details:
             for dep_task, dep_inputs in task_details["dependencies"].items():
                 dep_outputs = self._completed_tasks[dep_task][2]
                 for dep_input in dep_inputs:
+                    ind_inp = self._individual_input[task].get(dep_input[1], {})
+                    if ind_inp.get("value") is not None:
+                        continue
                     self._set_input_parameter(
                         process_builder, dep_input[1], dep_outputs[dep_input[0]]
                     )

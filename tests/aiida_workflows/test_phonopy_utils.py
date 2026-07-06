@@ -12,7 +12,7 @@ from aiida.plugins import DataFactory
 
 # Internal library imports
 from aim2dat.io import read_yaml_file
-from aim2dat.aiida_workflows.cp2k.phonopy_utils import (
+from aim2dat.utils.phonopy_utils import (
     phonopy_generate_displacements,
     parse_cp2k_forces,
     phonopy_collect_phonons,

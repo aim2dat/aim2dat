@@ -1,0 +1,304 @@
+%YAML 1.2
+---
+title: cp2k-phonon-mofs
+version: '1.0'
+description: >
+  Post-optimization phonon pipeline for MOFs. Designed to follow cp2k-crystal-mofs_v3:
+  (1) find_scf_parameters — fast SCF convergence search on the pre-optimized cell;
+  (2) phonons             — finite-displacement phonon band structure + DOS.
+  Takes a pre-optimized StructureData (e.g. the optimized_structure result from
+  cp2k-crystal-mofs_v3) as the parent node. SeekPath reduces the cell to its
+  primitive form and imposes crystal symmetry before phonopy generates
+  displacements — no separate symmetrization task is needed.
+  SCF parameters are found fresh on the optimized cell (fast, typically < 5 min)
+  rather than reused from the upstream mofs run, since the parent node differs.
+dependencies:
+- [aiida-core, '2.7', Null]
+parent_node_type: core.structure
+parent_node_input:
+  find_scf_parameters: structural_p.structure
+  phonons: structural_p.structure
+tasks:
+  find_scf_parameters:
+    process: aim2dat.cp2k.find_scf_p
+    blacklist_inputs:
+    - custom_scf_method
+  phonons:
+    process: aim2dat.cp2k.phonons
+    dependencies:
+      find_scf_parameters:
+      - [scf_parameters, force.structural_p.scf_parameters]
+general_input:
+  # ── CP2K parameters for find_scf_parameters ───────────────────────────────
+  cp2k.parameters:
+    value:
+      GLOBAL:
+        PRINT_LEVEL: MEDIUM
+        PREFERRED_DIAG_LIBRARY: SCALAPACK
+        EXTENDED_FFT_LENGTHS: true
+      FORCE_EVAL:
+        METHOD: Quickstep
+        STRESS_TENSOR: ANALYTICAL
+        DFT:
+          MGRID: {}
+          POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+          BASIS_SET_FILE_NAME: BASIS_MOLOPT_UZH
+          POTENTIAL_FILE_NAME: POTENTIALS_UZH
+          QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
+          SCF: {EPS_SCF: 5.0e-7}
+          KPOINTS:
+            EPS_GEO: 1.0E-8
+          XC: {}
+        SUBSYS:
+          CELL: {PERIODIC: XYZ}
+    aiida_node: true
+    tasks: [find_scf_parameters]
+
+  # ── k-point density (Å⁻¹) — matches cp2k-crystal-mofs_v3 ─────────────────
+  numerical_p.kpoints_ref_dist:
+    value: 0.20
+    aiida_node: true
+    tasks: [find_scf_parameters]
+
+  # ── SCF solver settings ───────────────────────────────────────────────────
+  scf_method:
+    value: density_mixing
+    aiida_node: true
+    tasks: [find_scf_parameters]
+  force.scf_method:
+    value: density_mixing
+    aiida_node: true
+    tasks: [phonons]
+
+  factor_unocc_states:
+    value: 0.75
+    aiida_node: true
+    tasks: [find_scf_parameters]
+  force.factor_unocc_states:
+    value: 0.75
+    aiida_node: true
+    tasks: [phonons]
+
+  enable_roks:
+    value: false
+    aiida_node: true
+    tasks: [find_scf_parameters]
+  force.enable_roks:
+    value: false
+    aiida_node: true
+    tasks: [phonons]
+
+  always_add_unocc_states:
+    value: true
+    aiida_node: true
+    tasks: [find_scf_parameters]
+
+  max_iterations:
+    value: 100
+    aiida_node: true
+    compare: false
+    tasks: [find_scf_parameters]
+  force.max_iterations:
+    value: 100
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+
+  # ── Phonopy defaults ──────────────────────────────────────────────────────
+  phonopy_p.displacement:
+    value: 0.01
+    aiida_node: true
+    tasks: [phonons]
+  phonopy_p.symprec:
+    value: 0.005
+    aiida_node: true
+    tasks: [phonons]
+  phonopy_p.dos_mesh:
+    value: [20, 20, 20]
+    aiida_node: true
+    tasks: [phonons]
+  seekpath_parameters:
+    value: {reference_distance: 0.015, symprec: 0.005}
+    aiida_node: true
+    tasks: [phonons]
+
+user_input:
+  # ── Extended-system flag ──────────────────────────────────────────────────
+  scf_extended_system:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters]
+  force.scf_extended_system:
+    validation: aim2dat.cp2k.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+
+  # ── CP2K parameters for per-displacement force evaluations ────────────────
+  # Default: EPS_SCF=1e-8 / MAX_SCF=200 — tighter than the find_scf run
+  # because SCF noise at 5e-7 causes imaginary modes at zone boundaries.
+  force.cp2k.parameters:
+    validation: aim2dat.cp2k.phonons
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [phonons]
+    value:
+      GLOBAL:
+        PRINT_LEVEL: MEDIUM
+        PREFERRED_DIAG_LIBRARY: SCALAPACK
+        EXTENDED_FFT_LENGTHS: true
+      FORCE_EVAL:
+        METHOD: Quickstep
+        DFT:
+          MGRID: {}
+          POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+          BASIS_SET_FILE_NAME: BASIS_MOLOPT_UZH
+          POTENTIAL_FILE_NAME: POTENTIALS_UZH
+          QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1.0e-14}
+          SCF: {EPS_SCF: 1.0e-8, MAX_SCF: 200}
+          XC: {}
+        SUBSYS:
+          CELL: {PERIODIC: XYZ}
+
+  # ── XC functional ─────────────────────────────────────────────────────────
+  numerical_p.xc_functional:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters]
+  force.numerical_p.xc_functional:
+    validation: aim2dat.cp2k.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+
+  # ── Basis sets ────────────────────────────────────────────────────────────
+  numerical_p.basis_sets:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters]
+  force.numerical_p.basis_sets:
+    validation: aim2dat.cp2k.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+
+  # ── Grid cutoffs ──────────────────────────────────────────────────────────
+  numerical_p.cutoff_values:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters]
+  force.numerical_p.cutoff_values:
+    validation: aim2dat.cp2k.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+
+  # ── Custom potential / basis files (optional) ─────────────────────────────
+  numerical_p.pseudo_file:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters]
+  numerical_p.basis_file:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters]
+  force.numerical_p.pseudo_file:
+    validation: aim2dat.cp2k.phonons
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [phonons]
+  force.numerical_p.basis_file:
+    validation: aim2dat.cp2k.phonons
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [phonons]
+
+  # ── Compute code & scheduler metadata ─────────────────────────────────────
+  cp2k.code:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: false
+    tasks: [find_scf_parameters]
+  cp2k.metadata:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters]
+  force.cp2k.code:
+    validation: aim2dat.cp2k.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+  force.cp2k.metadata:
+    validation: aim2dat.cp2k.phonons
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+    tasks: [phonons]
+
+  # ── Thermal properties (free energy, Cv, entropy vs. T) ──────────────────
+  phonopy_p.thermal_properties:
+    validation: aim2dat.cp2k.phonons
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [phonons]
+    value: false
+
+  # ── Supercell matrix — must be set per structure ──────────────────────────
+  phonopy_p.supercell_matrix:
+    validation: aim2dat.cp2k.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+
+  # ── Optional: clean scratch directories after each step ───────────────────
+  clean_workdir:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters]
+  force.clean_workdir:
+    validation: aim2dat.cp2k.phonons
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [phonons]
+
+results:
+  scf_method_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [method_level]
+  scf_parameter_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [parameter_level]
+  scf_smearing_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [smearing_level]
+  phonon_bands:
+    task: phonons
+    output_port: phonon_bands
+  phonon_dos:
+    task: phonons
+    output_port: phonon_dos
+  phonon_setting_info:
+    task: phonons
+    output_port: phonon_setting_info

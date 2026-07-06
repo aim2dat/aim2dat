@@ -162,9 +162,9 @@ pre-commit = [
 "aim2dat.cp2k.interaction_energy" = "aim2dat.aiida_workflows.cp2k.interaction_energy_work_chain:InteractionEnergyWorkChain"
 "aim2dat.cp2k.force_eval" = "aim2dat.aiida_workflows.cp2k.force_work_chain:ForceWorkChain"
 "aim2dat.cp2k.phonons"   = "aim2dat.aiida_workflows.cp2k.phonon_work_chain:PhononWorkChain"
-"aim2dat.phonopy.displacements" = "aim2dat.aiida_workflows.cp2k.phonopy_utils:phonopy_generate_displacements"
-"aim2dat.phonopy.parse_forces"  = "aim2dat.aiida_workflows.cp2k.phonopy_utils:parse_cp2k_forces"
-"aim2dat.phonopy.collect"       = "aim2dat.aiida_workflows.cp2k.phonopy_utils:phonopy_collect_phonons"
+"aim2dat.phonopy.displacements" = "aim2dat.utils.phonopy_utils:phonopy_generate_displacements"
+"aim2dat.phonopy.parse_forces"  = "aim2dat.utils.phonopy_utils:parse_cp2k_forces"
+"aim2dat.phonopy.collect"       = "aim2dat.utils.phonopy_utils:phonopy_collect_phonons"
 
 [tool.setuptools.packages.find]
 include = ["aim2dat*"]

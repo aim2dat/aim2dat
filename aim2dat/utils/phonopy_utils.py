@@ -27,11 +27,11 @@ Proposed AiiDA workflow entry points (pyproject.toml)::
 
     [project.entry-points."aiida.workflows"]
     "aim2dat.phonopy.displacements" =
-        "aim2dat.aiida_workflows.cp2k.phonopy_utils:phonopy_generate_displacements"
+        "aim2dat.utils.phonopy_utils:phonopy_generate_displacements"
     "aim2dat.phonopy.parse_forces" =
-        "aim2dat.aiida_workflows.cp2k.phonopy_utils:parse_cp2k_forces"
+        "aim2dat.utils.phonopy_utils:parse_cp2k_forces"
     "aim2dat.phonopy.collect" =
-        "aim2dat.aiida_workflows.cp2k.phonopy_utils:phonopy_collect_phonons"
+        "aim2dat.utils.phonopy_utils:phonopy_collect_phonons"
 """
 
 # Standard library imports
@@ -128,6 +128,10 @@ def phonopy_generate_displacements(structure, parameters):
         ``supercell_0000`` ... ``supercell_NNNN`` : aiida.orm.StructureData
             One displaced supercell per displacement, fed to the per-displacement
             force calculations (:class:`ForceWorkChain`, RUN_TYPE ENERGY_FORCE).
+        ``supercell_ref`` : aiida.orm.StructureData
+            The undisplaced reference supercell. All its forces are ~zero for a
+            relaxed structure and a numerically sound setup, so it serves as a
+            sanity gate and, optionally, as the residual-force reference.
         ``phonon_setting_info`` : aiida.orm.Dict
             Displacement dataset + supercell settings, carried forward to
             :func:`parse_cp2k_forces` and :func:`phonopy_collect_phonons`.
@@ -142,6 +146,7 @@ def phonopy_generate_displacements(structure, parameters):
     outputs = {}
     for i, supercell in enumerate(supercells):
         outputs[f"supercell_{i:04d}"] = _phonopy_atoms_to_structuredata(supercell)
+    outputs["supercell_ref"] = _phonopy_atoms_to_structuredata(phonon.supercell)
 
     outputs["phonon_setting_info"] = aiida_orm.Dict(
         dict={
@@ -199,6 +204,37 @@ def parse_cp2k_forces(phonon_setting_info, **retrieved):
 
 
 @calcfunction
+def subtract_reference_forces(force_sets, ref_forces):
+    """
+    Subtract the reference (undisplaced) supercell forces from each force set.
+
+    Residual reference forces are systematic errors (incomplete relaxation,
+    grid/basis force noise); subtracting them from every displaced force set
+    removes the position-independent part of that error from the force
+    constants. NOTE: this cannot repair error contributions that change when
+    an atom is displaced (e.g. egg-box error of the displaced atom itself) --
+    it is a mitigation, not a substitute for a numerically sound setup.
+
+    Parameters
+    ----------
+    force_sets : aiida.orm.ArrayData
+        Array ``force_sets`` of shape ``(n_displacements, n_atoms, 3)``.
+    ref_forces : aiida.orm.ArrayData
+        Array ``force_sets`` of shape ``(1, n_atoms, 3)`` from the reference
+        supercell run.
+
+    Returns
+    -------
+    aiida.orm.ArrayData
+        Corrected ``force_sets`` array of the same shape.
+    """
+    fsets = force_sets.get_array("force_sets") - ref_forces.get_array("force_sets")[0]
+    array = aiida_orm.ArrayData()
+    array.set_array("force_sets", fsets)
+    return array
+
+
+@calcfunction
 def phonopy_collect_phonons(structure, phonon_setting_info, force_sets, parameters):
     """
     Assemble force constants and extract the phonon band structure and DOS.
@@ -241,13 +277,23 @@ def phonopy_collect_phonons(structure, phonon_setting_info, force_sets, paramete
     phonon.produce_force_constants()
     phonon.symmetrize_force_constants()
 
-    # --- v2 TODO: non-analytical correction (NAC) -------------------------- #
-    # For polar frameworks, set the Born effective charges + dielectric tensor
-    # here (computed by CP2K) to capture LO-TO splitting near Gamma:
-    #     phonon.nac_params = {"born": ..., "dielectric": ..., "factor": ...}
-    # The input spec deliberately reserves a `nac_parameters` slot so adding
-    # this in v2 does not break the API.
-    # ----------------------------------------------------------------------- #
+    # Non-analytical correction (NAC) for polar materials (v2).
+    # Born effective charges and the high-frequency dielectric tensor must be
+    # computed externally (e.g. via CP2K LINRES) and supplied as
+    # ``parameters["nac_parameters"]`` with keys:
+    #   "born"       – ndarray shape (n_prim_atoms, 3, 3) [dimensionless, in e]
+    #   "dielectric" – ndarray shape (3, 3)              [dimensionless]
+    #   "factor"     – float, optional; defaults to 1.0 (atomic units, Ha/Bohr)
+    nac = p_dict.get("nac_parameters")
+    save_settings = {"force_constants": True}
+    if nac:
+        phonon.nac_params = {
+            "born": np.array(nac["born"]),
+            "dielectric": np.array(nac["dielectric"]),
+            "factor": nac.get("factor", 1.0),
+        }
+        save_settings["born_charges"] = True
+        save_settings["dielectric_constant"] = True
 
     outputs = {}
     # Reuse aim2dat's existing extraction interface, which loads from a
@@ -260,7 +306,7 @@ def phonopy_collect_phonons(structure, phonon_setting_info, force_sets, paramete
     # untouched for the first PR.
     with tempfile.TemporaryDirectory() as tmp:
         yaml_path = os.path.join(tmp, "phonopy_params.yaml")
-        phonon.save(filename=yaml_path, settings={"force_constants": True})
+        phonon.save(filename=yaml_path, settings=save_settings)
         load_parameters = {"phonopy_yaml": yaml_path, "calculator": "cp2k"}
 
         # Band structure
