@@ -119,7 +119,39 @@ general_input:
         SUBSYS:
           CELL: {PERIODIC: XYZ}
     aiida_node: true
-    tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt, band_structure, eigenvalues, pdos, partial_charges]
+    tasks: [find_scf_parameters, unit_cell_preopt, band_structure, eigenvalues, pdos, partial_charges]
+  # Same dict as above plus FORCE_EVAL/DFT/WFN_RESTART_FILE_NAME pointed into
+  # ./parent_calc/ (2026-07-06). aim2dat only flips SCF_GUESS to RESTART when
+  # a parent_calc_folder exists (core_work_chain_inputs.py) — CP2K then looks
+  # for ./aiida-RESTART.kp in the FRESH workdir, which never exists, so every
+  # k-point opt chunk fell back to an atomic guess even though the previous
+  # chunk's wavefunction sits in the ./parent_calc/ symlink. Harmless when no
+  # parent folder is passed (file missing -> CP2K falls back to atomic guess,
+  # same as before). unit_cell_opt was removed from the general entry's task
+  # list above because the builder forbids covering one task's port twice.
+  cp2k.parameters->unit_cell_opt:
+    value:
+      GLOBAL:
+        PRINT_LEVEL: MEDIUM
+        PREFERRED_DIAG_LIBRARY: SCALAPACK
+        EXTENDED_FFT_LENGTHS: true
+      FORCE_EVAL:
+        METHOD: Quickstep
+        STRESS_TENSOR: ANALYTICAL
+        DFT:
+          MGRID: {}
+          POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+          BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UZH, BASIS_MOLOPT_UCL, BASIS_MOLOPT]
+          POTENTIAL_FILE_NAME: GTH_POTENTIALS
+          QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
+          SCF: {EPS_SCF: 5.0e-7}
+          KPOINTS:
+            EPS_GEO: 1.0E-8
+          WFN_RESTART_FILE_NAME: ./parent_calc/aiida-RESTART.kp
+          XC: {}
+        SUBSYS:
+          CELL: {PERIODIC: XYZ}
+    aiida_node: true
   numerical_p.kpoints_ref_dist:
     value: 0.20
     aiida_node: true
@@ -176,7 +208,12 @@ general_input:
     value: 1.9e-05
     aiida_node: true
   # 2026-07-06: raised 100 -> 500 bar; TZV2P shrinks but does not remove the
-  # Pulay-stress offset, 100 bar is likely unreachable.
+  # Pulay-stress offset, 100 bar is likely unreachable. Confirmed same day:
+  # the production tier plateaus at -890..-1200 bar (killed run 5562), so 500
+  # bar vs CP2K's default +100 bar target is ALSO unreachable on its own —
+  # pair this tolerance with EXTERNAL_PRESSURE ~ -1000 bar inside
+  # custom_opt_method->unit_cell_opt (see below) so the criterion measures
+  # deviation from the Pulay plateau instead of from +100 bar.
   optimization_p.pressure_tolerance->unit_cell_opt:
     value: 500.0
     aiida_node: true
@@ -326,7 +363,7 @@ user_input:
     aiida_node: true
     optional: true
     compare: false
-  # ── SCF-parameter override (resume with different MAX_SCF/mixing) ─────────
+  # ── SCF-parameter override (resume with different MAX_SCF/mixing/EPS_SCF) ──
   # structural_p.scf_parameters is normally wired from find_scf_parameters' /
   # unit_cell_preopt's `scf_parameters` output (see the `dependencies` mapping
   # in `tasks:` above). individual_input takes priority over that dependency
@@ -335,14 +372,15 @@ user_input:
   # for just one task. compare: false, mirroring parent_calc_folder->unit_cell_opt
   # above, so it's excluded from determine_workflow_state's completed-task
   # comparison and can't make an already-finished task look "changed."
-  # To resume an aborted SCF with a higher MAX_SCF instead of restarting from
-  # an atomic guess:
-  #   wf.set_user_input("cp2k.parent_calc_folder->unit_cell_opt",
-  #                     load_node(pk=<remote_pk_of_aborted_calc>))  # -> SCF_GUESS RESTART
-  #   wf.set_user_input("structural_p.scf_parameters->unit_cell_opt", {
-  #       "MAX_SCF": 150,
-  #       "MIXING": {"METHOD": "BROYDEN_MIXING", "BETA": 0.5, "ALPHA": 0.5, "NBUFFER": 10},
-  #   })
+  # SHAPE (corrected 2026-07-06): core_work_chain_scf.py
+  # `_initialize_scf_parameters` reads the mixing/SCF keywords from the
+  # "parameters" sub-dict (`scf_parameters.get("parameters")`), which is
+  # dict_merge'd into FORCE_EVAL/DFT/SCF — a flat {"MAX_SCF": ...} dict is
+  # silently ignored. Pass the same shape find_scf/preopt output, e.g.:
+  #   sp = preopt_workchain.outputs.scf_parameters.get_dict()
+  #   sp["parameters"]["MAX_SCF"] = 200
+  #   sp["parameters"]["EPS_SCF"] = 1.0e-8   # overrides the template's 5.0e-7
+  #   wf.set_user_input("structural_p.scf_parameters->unit_cell_opt", sp)
   # No factor_extended_system scaling is reapplied here (that only runs inside
   # find_scf_parameters' search) — MAX_SCF is taken literally.
   structural_p.scf_parameters->unit_cell_opt:
@@ -350,6 +388,40 @@ user_input:
     aiida_node: true
     optional: true
     compare: false
+  # ── Optimizer-schedule override (2026-07-06, UiO-66 noise/continuity fix) ──
+  # Replaces opt_parameter_files/cell_opt_p.yaml's hard-coded ladder of
+  # 25-step BFGS levels (trust radius 0.35 -> 0.025, then CG). Each level is
+  # one CP2K job; _resubmit_unconverged_geometry carries the geometry and
+  # parent_calc_folder to the next level but CP2K starts a FRESH BFGS Hessian
+  # every 25 steps — a 114-atom framework never gets enough continuous BFGS
+  # to settle. Pass a list of MOTION/CELL_OPT-level dicts instead; from level
+  # 1 on, restart the Hessian from the previous chunk:
+  #   {"OPTIMIZER": "BFGS", "MAX_ITER": 25, "TYPE": "DIRECT_CELL_OPT",
+  #    "EXTERNAL_PRESSURE": -1000.0,      # cancel measured Pulay offset
+  #    "BFGS": {"TRUST_RADIUS": 0.25, "RESTART_HESSIAN": true,
+  #             "RESTART_FILE_NAME": "./parent_calc/aiida-BFGS.Hessian"}}
+  # NOTE: the Hessian/wfn hand-off only works if cp2k.parent_calc_folder is
+  # ALSO seeded (any RemoteData on a matching basis) — the error handlers only
+  # re-point parent_calc_folder between chunks when the input already exists.
+  custom_opt_method->unit_cell_opt:
+    validation: aim2dat.cp2k.cell_opt
+    aiida_node: true
+    optional: true
+    compare: false
+  # ── Structure override (resume opt from a later/symmetrized geometry) ─────
+  # structural_p.structure is normally wired from unit_cell_preopt's
+  # cp2k.output_structure. Override it to resume from the last geometry of a
+  # killed/aborted opt run (optionally re-symmetrized) without rerunning
+  # preopt. individual_input beats the dependency wiring; compare: false as
+  # above.
+  structural_p.structure->unit_cell_opt:
+    validation: aim2dat.cp2k.cell_opt
+    aiida_node: true
+    optional: true
+    compare: false
+  # (cp2k.parameters override for unit_cell_opt lives in general_input above —
+  # the builder forbids a user_input port that duplicates a general_input port
+  # for the same task.)
   # ── Convergence / preopt failure handling ──────────────────────────────────
   ignore_convergence_failure:
     validation: aim2dat.cp2k.cell_opt

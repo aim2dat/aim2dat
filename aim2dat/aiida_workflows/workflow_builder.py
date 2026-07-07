@@ -653,9 +653,10 @@ class WorkflowBuilder(_BaseWorkflowBuilder):
                 if check_input_parameter(task, process_builder, input_port, input_details):
                     self._set_input_parameter(process_builder, input_port, input_details["value"])
 
-        # Set dependencies from previous tasks.
-        # individual_input takes priority: if the user explicitly set a value for
-        # this port (value is not None), skip the dependency so the override wins.
+        # Set dependencies from previous tasks. A port explicitly set via
+        # `set_user_input` (value is not None) takes priority over the dependency
+        # wire; Allows users to overwrite dependencies, such as in the case of
+        # resuming a job with tightened SCF parameters
         if "dependencies" in task_details:
             for dep_task, dep_inputs in task_details["dependencies"].items():
                 dep_outputs = self._completed_tasks[dep_task][2]

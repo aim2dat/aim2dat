@@ -177,9 +177,18 @@ class PhononWorkChain(WorkChain):
         # Exposes the CP2K code, numerical_p and SCF settings of ForceWorkChain;
         # the structure is supplied per displacement.
         spec.expose_inputs(ForceWorkChain, namespace="force", exclude=("structural_p.structure",))
+        # namespace_options required=False: ForceWorkChain runs as a fan-out (N
+        # per-displacement instances, run_forces/inspect_forces), so there is
+        # no single coherent "force" output to collapse them into -- nothing
+        # in the outline ever populates this namespace (per-displacement
+        # outputs are consumed internally to build force_sets). Without this,
+        # the workchain always exits 11 ("did not register a required
+        # output") despite phonon_bands/phonon_dos/thermal_properties/
+        # ref_forces all being set correctly (confirmed 2026-07-07).
         spec.expose_outputs(
             ForceWorkChain,
             namespace="force",
+            namespace_options={"required": False},
         )
 
         spec.outline(

@@ -27,9 +27,15 @@ def _extract_structure_from_atoms(atoms):
     elements = atoms.symbols
     cell = atoms.cell.tolist()
     positions = atoms.positions.tolist()
-    if atoms.permutation_types:
+    # `permutation_types` doesn't exist on PhonopyAtoms in phonopy 4.2.1 (the
+    # version installed here) -- getattr guards against the AttributeError
+    # that otherwise crashes every displacement generation. Falls through to
+    # the digit-suffix branch below, which is what actually handles kinds for
+    # elements with more than one AiiDA kind (see commit 1edd820).
+    permutation_types = getattr(atoms, "permutation_types", None)
+    if permutation_types is not None:
         kinds = []
-        for element, permutation in zip(elements, atoms.permutation_types.tolist()):
+        for element, permutation in zip(elements, permutation_types.tolist()):
             kinds.append(f"{element}{permutation}")
     elif any(re.findall(r"\d+", el) for el in elements):
         kinds = []
