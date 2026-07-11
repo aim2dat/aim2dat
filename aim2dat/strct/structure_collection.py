@@ -263,6 +263,7 @@ class StructureCollection(ImportExportMixin):
         cell: list = None,
         is_cartesian: bool = True,
         wrap: bool = False,
+        check_overlap: bool = True,
         kinds: list = None,
         attributes: dict = None,
         site_attributes: dict = None,
@@ -287,6 +288,8 @@ class StructureCollection(ImportExportMixin):
             Whether the coordinates are cartesian or scaled.
         wrap : bool (optional)
             Wrap atomic positions back into the unit cell.
+        check_overlap : bool
+            Whether to check if atomic sites are too close to each other.
         kinds : list
             List of kind names (this allows custom kinds like Ni0, Ni1, ...). If None,
             the elements will be used as the kind names.
@@ -305,6 +308,7 @@ class StructureCollection(ImportExportMixin):
             cell=cell,
             is_cartesian=is_cartesian,
             wrap=wrap,
+            check_overlap=check_overlap,
             kinds=kinds,
             attributes=attributes,
             site_attributes=site_attributes,
@@ -418,6 +422,8 @@ class StructureCollection(ImportExportMixin):
         raise_error: bool = True,
         backend: str = "internal",
         file_format: str = None,
+        wrap: bool = False,
+        check_overlap: bool = True,
         backend_kwargs: dict = None,
         **backend_kwargs_,
     ):
@@ -444,6 +450,10 @@ class StructureCollection(ImportExportMixin):
             ``io.{module}.read_structure`` to ``'{module}'`` or from
             ``{module}.read_{specification}_structure`` to ``'module-specification'``. If set to
             ``None`` the corresponding function is searched based on the file name and suffix.
+        wrap : bool
+            Wrap atomic positions into the unit cell.
+        check_overlap : bool
+            Whether to check if atomic sites are too close to each other.
         backend_kwargs : dict (optional)
             Arguments passed to the backend function.
         **backend_kwargs
@@ -471,7 +481,7 @@ class StructureCollection(ImportExportMixin):
                 structure["label"] = labels[idx]
             strct_c._add_structure(
                 structure.get("label", f"strct_{idx}"),
-                Structure(**structure),
+                Structure(**structure, wrap=wrap, check_overlap=check_overlap),
                 raise_label_warning=True,
                 raise_label_error=raise_error,
             )
