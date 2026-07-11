@@ -1,0 +1,6 @@
+%YAML 1.2
+---
+inputs:
+  parameters:
+  - fold
+  - stride 2

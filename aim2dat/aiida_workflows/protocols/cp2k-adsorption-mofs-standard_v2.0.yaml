@@ -2,7 +2,7 @@
 ---
 # Protocol with standard settings for the adsorption workflow.
 title: cp2k-adsorption-standard
-version: '1.0'
+version: '2.0'
 description: Standard settings to calculated the adsorption properties.
 dependencies:
 - [aiida-core, '2.5', Null]
@@ -80,38 +80,24 @@ general_input:
           BASIS_SET_FILE_NAME: BASIS_MOLOPT_UZH
           POTENTIAL_FILE_NAME: POTENTIALS_UZH
           QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1e-14}
-          SCF: {EPS_SCF: 5.0e-7}
-          KPOINTS:
-            EPS_GEO: 1.0E-8
+          SCF: {EPS_SCF: 1.0e-5}
           XC: {}
         SUBSYS:
           CELL: {PERIODIC: XYZ}
     aiida_node: true
     tasks: [find_scf_parameters, pre_geo_opt, geo_opt, interaction_energy, pdos, partial_charges, charge_density_difference]
-  numerical_p.kpoints_ref_dist:
-    value: 0.15
-    aiida_node: true
-    tasks: [find_scf_parameters, pre_geo_opt, geo_opt, interaction_energy, partial_charges, charge_density_difference]
   enable_roks:
     value: false
     aiida_node: true
     tasks: [find_scf_parameters, pre_geo_opt, geo_opt, interaction_energy, pdos, partial_charges, charge_density_difference]
   scf_method:
-    value: density_mixing
+    value: orbital_transformation
     aiida_node: true
     tasks: [find_scf_parameters, pre_geo_opt, geo_opt, interaction_energy, partial_charges, charge_density_difference]
   adjust_scf_parameters:
     value: true
     aiida_node: true
     tasks: [pre_geo_opt, geo_opt, interaction_energy, pdos, partial_charges, charge_density_difference]
-  always_add_unocc_states:
-    value: true
-    aiida_node: true
-    tasks: [find_scf_parameters, pre_geo_opt, geo_opt, partial_charges]
-  factor_unocc_states:
-    value: 0.75
-    aiida_node: true
-    tasks: [find_scf_parameters, pre_geo_opt, geo_opt, interaction_energy, pdos, partial_charges, charge_density_difference]
   max_iterations:
     value: 100
     aiida_node: true
