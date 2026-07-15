@@ -12,6 +12,7 @@ from aiida.engine import calcfunction
 from aiida.plugins import DataFactory
 
 # Internal library imports
+from aim2dat.ext_interfaces import _return_ext_interface_modules
 from aim2dat.ext_interfaces.pandas import _turn_dict_into_pandas_df
 from aim2dat.ext_interfaces.aiida import _create_structure_node
 from aim2dat.strct.surface_utils import (
@@ -199,7 +200,7 @@ def phonopy_generate_displacements(structure, phonopy_parameters, parameters):
             One displaced supercell per displacement, fed to the per-displacement
             force calculations (:class:`ForceWorkChain`, RUN_TYPE ENERGY_FORCE).
     """
-    from aim2dat.ext_interfaces.phonopy import _build_phonopy
+    phonopy_module = _return_ext_interface_modules("phonopy")
 
     phonopy_dict = phonopy_parameters.get_dict()
     supercell_matrix = phonopy_dict.pop("supercell_matrix")
@@ -211,7 +212,7 @@ def phonopy_generate_displacements(structure, phonopy_parameters, parameters):
     displacement = p_dict.pop("displacement", 0.01)
 
     phonopy_atoms = Structure.from_aiida_structuredata(structure).to_phonopy_atoms()
-    phonon = _build_phonopy(
+    phonon = phonopy_module._build_phonopy(
         unitcell=phonopy_atoms,
         supercell_matrix=supercell_matrix,
         primitive_matrix=primitive_matrix,
@@ -273,12 +274,7 @@ def phonopy_calculate_phonons(structure, phonopy_parameters, parameters):
         ``total_dos`` : XyData - frequency vs. total phonon DOS.
         ``thermal_properties`` : aiida.orm.Dict - present only if requested.
     """
-    from aim2dat.ext_interfaces.phonopy import (
-        _build_phonopy,
-        _extract_band_structure,
-        _extract_total_dos,
-        _extract_thermal_properties,
-    )
+    phonopy_module = _return_ext_interface_modules("phonopy")
 
     phonopy_dict = phonopy_parameters.get_dict()
     supercell_matrix = phonopy_dict.pop("supercell_matrix")
@@ -301,7 +297,7 @@ def phonopy_calculate_phonons(structure, phonopy_parameters, parameters):
     thermal_properties = p_dict.pop("thermal_properties", False)
     t_min, t_max, t_step = p_dict.pop("temp_range", [0.0, 1000.0, 10.0])
 
-    phonon = _build_phonopy(
+    phonon = phonopy_module._build_phonopy(
         unitcell=phonopy_atoms,
         supercell_matrix=supercell_matrix,
         primitive_matrix=primitive_matrix,
@@ -324,7 +320,7 @@ def phonopy_calculate_phonons(structure, phonopy_parameters, parameters):
     outputs = {}
 
     # Band structure -> BandsData
-    band_dict, _ = _extract_band_structure(
+    band_dict, _ = phonopy_module._extract_band_structure(
         load_parameters={},
         path=band_path,
         path_labels=band_labels,
@@ -369,7 +365,7 @@ def phonopy_calculate_phonons(structure, phonopy_parameters, parameters):
     outputs["band_structure"] = bands
 
     # Total DOS -> XyData
-    dos_dict = _extract_total_dos(
+    dos_dict = phonopy_module._extract_total_dos(
         load_parameters={},
         mesh=dos_mesh,
         pre_load=phonon,
@@ -381,7 +377,7 @@ def phonopy_calculate_phonons(structure, phonopy_parameters, parameters):
 
     # Optional thermal properties
     if thermal_properties:
-        thermal_dict = _extract_thermal_properties(
+        thermal_dict = phonopy_module._extract_thermal_properties(
             load_parameters={},
             mesh=dos_mesh,
             t_min=t_min,

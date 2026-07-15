@@ -20,8 +20,8 @@ description: >
   Optimizing the conventional (already orthogonal/cubic) cell is far more
   forgiving for this same re-detection step -- this is what the original,
   validated v1 Si/NaCl pipeline did. Feed this protocol's optimized_structure
-  result into cp2k-crystal-phonons-only_v1.0 (parent_node) for the phonon
-  stage, which does its own SeekPath reduction once, after optimization.
+  result into cp2k-phonons_v1.0 (parent_node) for the phonon stage, which
+  does its own SeekPath reduction once, after optimization.
 dependencies:
 - [aiida-core, '1.6', Null]
 - [seekpath, '2.0', Null]

@@ -44,10 +44,6 @@ class PhononWorkChain(WorkChain):
     finite-displacement method with CP2K and phonopy.
     """
 
-    _keep_scf_method_fixed = True
-    _keep_smearing_fixed = True
-    _initial_scf_guess = "RESTART"
-
     @classmethod
     def define(cls, spec):
         """Specify inputs and outputs."""
