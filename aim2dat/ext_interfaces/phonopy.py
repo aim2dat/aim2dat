@@ -8,10 +8,6 @@ import phonopy
 from phonopy.structure.atoms import PhonopyAtoms
 from phonopy.phonon.band_structure import get_band_qpoints_and_path_connections
 from phonopy.file_IO import read_v_e, read_thermal_properties_yaml
-from aiida.plugins import DataFactory
-
-
-StructureData = DataFactory("core.structure")
 
 
 def _read_v_e_file(file_path):
