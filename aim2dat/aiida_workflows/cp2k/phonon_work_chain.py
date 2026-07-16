@@ -265,9 +265,7 @@ class PhononWorkChain(WorkChain):
             return self.exit_codes.ERROR_FORCE_CALCULATION
         self.ctx.ref_forces = wc.outputs.cp2k.output_forces
         self.out("ref_forces", self.ctx.ref_forces)
-        max_force = float(
-            np.max(np.linalg.norm(self.ctx.ref_forces.get_array("forces"), axis=-1))
-        )
+        max_force = float(np.max(np.linalg.norm(self.ctx.ref_forces.get_array("forces"), axis=-1)))
         threshold = self.inputs.phonopy_p.ref_forces_threshold.value
         self.report(
             f"Reference supercell max |F| = {max_force:.3e} Ha/Bohr "

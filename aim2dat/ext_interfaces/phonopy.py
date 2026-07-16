@@ -171,9 +171,11 @@ def _create_phonopy_atoms(structure):
             if kind not in element_kinds:
                 element_kinds.append(kind)
         symbols = [
-            element
-            if len(kinds_per_element[element]) == 1
-            else f"{element}{kinds_per_element[element].index(kind) + 1}"
+            (
+                element
+                if len(kinds_per_element[element]) == 1
+                else f"{element}{kinds_per_element[element].index(kind) + 1}"
+            )
             for element, kind in zip(structure.elements, kinds)
         ]
     return PhonopyAtoms(
