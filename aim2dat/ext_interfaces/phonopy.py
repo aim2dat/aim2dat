@@ -23,9 +23,15 @@ def _extract_structure_from_atoms(atoms):
     elements = atoms.symbols
     cell = atoms.cell.tolist()
     positions = atoms.positions.tolist()
-    if atoms.permutation_types:
+    # `permutation_types` doesn't exist on PhonopyAtoms in phonopy 4.2.1 (the
+    # version installed here) -- getattr guards against the AttributeError
+    # that otherwise crashes every displacement generation. Falls through to
+    # the digit-suffix branch below, which is what actually handles kinds for
+    # elements with more than one AiiDA kind (see commit 1edd820).
+    permutation_types = getattr(atoms, "permutation_types", None)
+    if permutation_types is not None:
         kinds = []
-        for element, permutation in zip(elements, atoms.permutation_types.tolist()):
+        for element, permutation in zip(elements, permutation_types.tolist()):
             kinds.append(f"{element}{permutation}")
     elif any(re.findall(r"\d+", el) for el in elements):
         kinds = []
@@ -151,10 +157,27 @@ def _create_phonopy_atoms(structure):
     """Create phonopy atoms object from structure dictionary."""
     if not all(structure.pbc):
         raise ValueError("`cell` must be set if `pbc` is set to true for one or more direction.")
-    if all(structure.kinds) and all(re.findall(r"\d+", el) for el in structure.kinds):
-        symbols = structure.kinds
-    else:
-        symbols = structure.elements
+    # Kind names are passed to phonopy only when they encode a real
+    # distinction (an element with more than one kind). PhonopyAtoms species
+    # indices must start at 1, while kind names in the wild are often
+    # zero-indexed (e.g. AiiDA kinds "Na0"/"Cl1"), so kinds are re-indexed
+    # per element in order of first appearance instead of passed verbatim.
+    symbols = structure.elements
+    kinds = structure.kinds
+    if kinds is not None and all(kinds) and len(set(kinds)) > len(set(structure.elements)):
+        kinds_per_element = {}
+        for element, kind in zip(structure.elements, kinds):
+            element_kinds = kinds_per_element.setdefault(element, [])
+            if kind not in element_kinds:
+                element_kinds.append(kind)
+        symbols = [
+            (
+                element
+                if len(kinds_per_element[element]) == 1
+                else f"{element}{kinds_per_element[element].index(kind) + 1}"
+            )
+            for element, kind in zip(structure.elements, kinds)
+        ]
     return PhonopyAtoms(
         symbols=symbols,
         cell=structure.cell,

@@ -8,17 +8,17 @@ displacement -- so this is a fan-out orchestrator (a plain ``WorkChain``, like
 
 Pipeline
 --------
-1. ``seekpath_structure_analysis``  -> primitive cell + q-point band path
-2. ``phonopy_generate_displacements`` -> N displaced supercells + setting info
+1. ``phonopy_generate_displacements`` -> N displaced supercells + the
+   undisplaced reference supercell + displacement dataset
+2. ``ForceWorkChain`` on the undisplaced reference supercell -> abort early
+   (exit code 402) if any force exceeds ``phonopy_p.ref_forces_threshold``:
+   the structure is not at a force-free minimum or the numerical setup
+   produces spurious forces (basis/grid). Runs *before* the fan-out so no
+   compute is wasted on a bad structure/setup. Per Julia's suggestion, we
+   exit if any forces exceed the threshold rather than only warning, since
+   downstream phonon results from a bad reference cell are not salvageable.
 3. ``ForceWorkChain`` x N            -> CP2K ENERGY_FORCE per displacement
-4. ``parse_cp2k_forces``             -> stacked force sets
-5. ``phonopy_collect_phonons``       -> phonon band structure + DOS
-
-Proposed entry point (pyproject.toml)::
-
-    [project.entry-points."aiida.workflows"]
-    "aim2dat.cp2k.combined.phonons" =
-        "aim2dat.aiida_workflows.cp2k.phonon_work_chain:PhononWorkChain"
+4. ``phonopy_calculate_phonons``     -> phonon band structure + DOS
 """
 
 # Third party library imports
@@ -34,6 +34,7 @@ ForceWorkChain = WorkflowFactory("aim2dat.cp2k.forces")
 StructureData = DataFactory("core.structure")
 XyData = DataFactory("core.array.xy")
 BandsData = DataFactory("core.array.bands")
+ArrayData = DataFactory("core.array")
 
 
 class PhononWorkChain(WorkChain):
@@ -126,25 +127,83 @@ class PhononWorkChain(WorkChain):
             help="Reserved (v2): Born effective charges + dielectric tensor for the "
             "non-analytical correction. Not used in v1.",
         )
+        # --- reference-forces sanity gate ------------------------------------ #
+        spec.input(
+            "phonopy_p.ref_forces_check",
+            valid_type=Bool,
+            default=lambda: Bool(True),
+            help="First run a force calculation on the undisplaced reference "
+            "supercell and abort (before the displacement fan-out) if any force "
+            "exceeds `ref_forces_threshold`. Non-zero reference forces mean an "
+            "under-relaxed input structure or numerical force noise (grid/basis) "
+            "-- either corrupts the force constants far more subtly downstream "
+            "than failing here.",
+        )
+        spec.input(
+            "phonopy_p.ref_forces_threshold",
+            valid_type=Float,
+            default=lambda: Float(5.0e-5),
+            help="Maximum tolerated force norm (Ha/Bohr) on the reference "
+            "supercell. Default sits between a converged cell-opt residual "
+            "(~2e-5) and the smallest displacement force signal (~3e-4 for a "
+            "0.01 A displacement).",
+        )
+        spec.input(
+            "phonopy_p.subtract_ref_forces",
+            valid_type=Bool,
+            default=lambda: Bool(False),
+            help="Subtract the reference-supercell forces from every displaced "
+            "force set before building force constants (mitigates systematic "
+            "residual forces; no substitute for a sound numerical setup).",
+        )
+
         spec.output("phonon_bands", valid_type=BandsData)
         spec.output("phonon_dos", valid_type=XyData)
         spec.output("thermal_properties", valid_type=XyData, required=False)
+        spec.output(
+            "ref_forces",
+            valid_type=ArrayData,
+            required=False,
+            help="Forces on the undisplaced reference supercell (Ha/Bohr); "
+            "~zero for a relaxed structure and a numerically sound setup.",
+        )
 
         # --- per-displacement force calculation ----------------------------- #
         # Exposes the CP2K code, numerical_p and SCF settings of ForceWorkChain;
         # the structure is supplied per displacement.
         spec.expose_inputs(ForceWorkChain, namespace="force", exclude=("structural_p.structure",))
+        # required=False: this namespace is never populated (fan-out outputs
+        # are consumed internally to build force_sets), so it would otherwise
+        # exit 11 despite the real outputs being set correctly.
         spec.expose_outputs(
             ForceWorkChain,
             namespace="force",
+            namespace_options={"required": False},
         )
 
         spec.outline(
             cls.run_displacements,
+            cls.run_ref_force,
+            cls.inspect_ref_force,
             cls.run_forces,
             cls.inspect_forces,
             cls.run_phonopy,
             cls.post_processing,
+        )
+
+        spec.exit_code(
+            401,
+            "ERROR_FORCE_CALCULATION",
+            message="One or more displacement force calculations did not finish OK.",
+        )
+        spec.exit_code(
+            402,
+            "ERROR_REFERENCE_FORCES",
+            message="Forces on the undisplaced reference supercell exceed "
+            "`phonopy_p.ref_forces_threshold`: the input structure is not at a "
+            "force-free minimum or the numerical setup produces spurious forces "
+            "(check basis set / grid cutoff). Force constants built on top of "
+            "this would be unreliable.",
         )
 
     def run_displacements(self):
@@ -173,8 +232,47 @@ class PhononWorkChain(WorkChain):
         )
         generated = phonopy_generate_displacements(structure, phonopy_parameters, parameters)
         self.ctx.displacement_dataset = generated.pop("displacement_dataset")
+        self.ctx.supercell_ref = generated.pop("supercell_ref")
         self.ctx.supercells = dict(generated)  # supercell_XXXX -> StructureData
+        self.ctx.run_ref = (
+            self.inputs.phonopy_p.ref_forces_check.value
+            or self.inputs.phonopy_p.subtract_ref_forces.value
+        )
         self.report(f"Generated {len(self.ctx.supercells)} displaced supercells.")
+
+    def run_ref_force(self):
+        """Run the reference (undisplaced) supercell force calculation first.
+
+        Gating on the reference before fanning out the displacements avoids
+        burning N force calculations on a structure that is not force-free or
+        a numerical setup that produces spurious forces.
+        """
+        if not self.ctx.run_ref:
+            return
+        inputs = self.exposed_inputs(ForceWorkChain, namespace="force")
+        inputs.structural_p.structure = self.ctx.supercell_ref
+        running = self.submit(ForceWorkChain, **inputs)
+        self.report(f"Launching ForceWorkChain <{running.pk}> for the reference supercell.")
+        self.to_context(force_supercell_ref=running)
+
+    def inspect_ref_force(self):
+        """Gate on the reference forces before running the displacements."""
+        if not self.ctx.run_ref:
+            return
+        wc = self.ctx.force_supercell_ref
+        if not wc.is_finished_ok:
+            self.report(f"ForceWorkChain for the reference supercell failed ({wc.exit_status}).")
+            return self.exit_codes.ERROR_FORCE_CALCULATION
+        self.ctx.ref_forces = wc.outputs.cp2k.output_forces
+        self.out("ref_forces", self.ctx.ref_forces)
+        max_force = float(np.max(np.linalg.norm(self.ctx.ref_forces.get_array("forces"), axis=-1)))
+        threshold = self.inputs.phonopy_p.ref_forces_threshold.value
+        self.report(
+            f"Reference supercell max |F| = {max_force:.3e} Ha/Bohr "
+            f"(threshold {threshold:.3e})."
+        )
+        if self.inputs.phonopy_p.ref_forces_check.value and max_force > threshold:
+            return self.exit_codes.ERROR_REFERENCE_FORCES
 
     def run_forces(self):
         """Fan out one ForceWorkChain per displaced supercell."""
@@ -186,8 +284,7 @@ class PhononWorkChain(WorkChain):
             self.to_context(**{f"force_{key}": running})
 
     def inspect_forces(self):
-        """Verify every force calculation finished and collect its output folder."""
-        self.ctx.retrieved = {}
+        """Verify every force calculation finished OK."""
         for key in sorted(self.ctx.supercells):
             wc = self.ctx[f"force_{key}"]
             if not wc.is_finished_ok:
@@ -195,7 +292,7 @@ class PhononWorkChain(WorkChain):
                 return self.exit_codes.ERROR_FORCE_CALCULATION
 
     def run_phonopy(self):
-        """Parse forces and assemble the band structure + DOS."""
+        """Collect forces and assemble the band structure + DOS."""
         structure = self.inputs.phonopy_p.structure
         supercell_matrix = self.inputs.phonopy_p.supercell_matrix.get_list()
         if isinstance(self.inputs.phonopy_p.primitive_matrix, List):
@@ -212,6 +309,11 @@ class PhononWorkChain(WorkChain):
                 self.ctx[f"force_{key}"].outputs.cp2k.output_forces.get_array("forces")
             )
         force_sets = np.array(force_list)
+        if force_sets.ndim == 4:  # parser may stack as (1, n_atoms, 3) per calc
+            force_sets = force_sets.reshape(force_sets.shape[0], *force_sets.shape[-2:])
+        if self.inputs.phonopy_p.subtract_ref_forces.value:
+            ref = self.ctx.ref_forces.get_array("forces")
+            force_sets = force_sets - np.asarray(ref).reshape(1, *force_sets.shape[-2:])
 
         path_parameters = self.inputs.phonopy_p.path_parameters.get_dict()
         band_path, band_labels = _seekpath_to_phonopy_path(path_parameters)
@@ -229,7 +331,8 @@ class PhononWorkChain(WorkChain):
         )
         parameters = {
             "displacement_dataset": displacement_dataset,
-            "force_sets": force_sets,
+            # tolist(): keep the Dict JSON-serializable for provenance storage.
+            "force_sets": force_sets.tolist(),
             "band_path": band_path,
             "band_labels": band_labels,
             "band_npoints": band_npoints,
@@ -258,7 +361,7 @@ class PhononWorkChain(WorkChain):
         )
 
     def post_processing(self):
-        """Parse forces and assemble the band structure + DOS."""
+        """Expose the outputs."""
         self.out("phonon_bands", self.ctx.results["band_structure"])
         self.out("phonon_dos", self.ctx.results["total_dos"])
         if "thermal_properties" in self.ctx.results:
