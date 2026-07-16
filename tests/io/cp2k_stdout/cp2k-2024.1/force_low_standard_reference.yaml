@@ -1,0 +1,48 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - []
+- [cp2k_version, 2024.1]
+- [run_type, ENERGY_FORCE]
+- [natoms, 8]
+- [nelectrons, 32]
+- [nr_occ_orbitals, 16]
+- [scf_converged, true]
+- [energy_scf, -31.29788527015823]
+- [energy, -31.297885372784116]
+- - forces
+  - - atom: 1
+      element: Si
+      kind: 1
+      atom_forces: [0.0, 0.0, 0.0]
+    - atom: 2
+      element: Si
+      kind: 1
+      atom_forces: [0.0, 1e-08, 1e-08]
+    - atom: 3
+      element: Si
+      kind: 1
+      atom_forces: [1e-08, 1e-08, 0.0]
+    - atom: 4
+      element: Si
+      kind: 1
+      atom_forces: [1e-08, 0.0, 1e-08]
+    - atom: 5
+      element: Si
+      kind: 1
+      atom_forces: [-1e-08, -1e-08, -1e-08]
+    - atom: 6
+      element: Si
+      kind: 1
+      atom_forces: [-1e-08, -1e-08, -1e-08]
+    - atom: 7
+      element: Si
+      kind: 1
+      atom_forces: [-1e-08, -1e-08, -1e-08]
+    - atom: 8
+      element: Si
+      kind: 1
+      atom_forces: [-1e-08, -1e-08, -1e-08]
+- [runtime, 1.682]
+- [energy_units, a.u.]

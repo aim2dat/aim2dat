@@ -170,6 +170,8 @@ def test_read_cp2k_stdout_error():
         ("smearing_need_added_mos", "medium", 2025.1),
         ("need_lsd", "medium", 2025.1),
         ("unconverged_scf", "medium", 2025.1),
+        ("force", "low", 2024.1),
+        ("force", "low", 2025.1),
     ],
 )
 def test_mainoutput(test_case, print_level, cp2k_version):

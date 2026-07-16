@@ -5,9 +5,11 @@ import time
 from datetime import timedelta
 
 # Third party library imports
+import numpy as np
 import aiida.orm as aiida_orm
 import aiida.tools.data.array.kpoints as aiida_kpoints
 from aiida.engine import calcfunction
+from aiida.plugins import DataFactory
 
 # Internal library imports
 from aim2dat.ext_interfaces.pandas import _turn_dict_into_pandas_df
@@ -20,12 +22,17 @@ from aim2dat.strct import Structure, StructureOperations
 from aim2dat.strct.ext_manipulation import add_structure_coord, rotate_structure
 from aim2dat.strct.analysis.brillouin_zone_2d import _get_kpath
 from aim2dat.utils.dict_tools import dict_retrieve_parameter
+from aim2dat.ext_interfaces import _return_ext_interface_modules
+
+StructureData = DataFactory("core.structure")
+XyData = DataFactory("core.array.xy")
+BandsData = DataFactory("core.array.bands")
 
 
 @calcfunction
 def find_equivalent_sites(structure):
     """Wrap the 'find_eq_sites_via_coordination' function to be used as a calcfunction."""
-    if not isinstance(structure, aiida_orm.StructureData):
+    if not isinstance(structure, StructureData):
         raise ValueError(f"{type(structure)} is not supported.")
     eq_sites = aiida_orm.Dict(
         dict=StructureOperations(
@@ -42,7 +49,7 @@ def find_equivalent_sites(structure):
 def add_molecule(structure, parameters):
     """Wrap the 'add_structure_position' function to be used as a calcfunction."""
     p_dict = parameters.get_dict()
-    if not isinstance(structure, aiida_orm.StructureData):
+    if not isinstance(structure, StructureData):
         raise ValueError(f"{type(structure)} is not supported.")
     for parameter in [
         "host_indices",
@@ -80,7 +87,7 @@ def add_molecule(structure, parameters):
 def rotate_molecule(structure, parameters):
     """Wrap the 'rotate_structure' function to be used as a calcfunction."""
     p_dict = parameters.get_dict()
-    if not isinstance(structure, aiida_orm.StructureData):
+    if not isinstance(structure, StructureData):
         raise ValueError(f"{type(structure)} is not supported.")
     for parameter in [
         "angles",
@@ -160,6 +167,235 @@ def create_surface_slab(surface, nr_layers, parameters):
     slab["pbc"] = pbc
     slab["label"] = label
     outputs["slab"] = _create_structure_node(Structure(**slab))
+    return outputs
+
+
+@calcfunction
+def phonopy_generate_displacements(structure, phonopy_parameters, parameters):
+    """
+    Generate the symmetry-reduced set of displaced supercells.
+
+    Parameters
+    ----------
+    structure : StructureData
+        The optimized unit cell. NOTE: to keep the displaced cell consistent
+        with the optimization, ``symprec`` should match the ``eps_symmetry``
+        used by the upstream ``cell_opt`` task (default 0.005 in the standard
+        protocols) rather than phonopy's looser default.
+    phonopy_parameters : aiida.orm.Dict
+        Settings dictionary with the keys:
+            ``supercell_matrix`` (list[list[int]] | list[int]) - required,
+            ``primitive_matrix`` (str | list) - optional, default ``"auto"``,
+            ``symprec`` (float) - optional, default ``1e-5``,
+            ``calculator`` (str) - optional calculator, default ``cp2k``.
+    parameters : aiida.orm.Dict
+        Settings dictionary with the keys:
+            ``displacement`` (float) - optional displacement amplitude in
+            Angstrom, default ``0.01``.
+
+    Returns
+    -------
+    dict
+        ``supercell_0000`` ... ``supercell_NNNN`` : StructureData
+            One displaced supercell per displacement, fed to the per-displacement
+            force calculations (:class:`ForceWorkChain`, RUN_TYPE ENERGY_FORCE).
+    """
+    phonopy_module = _return_ext_interface_modules("phonopy")
+
+    phonopy_dict = phonopy_parameters.get_dict()
+    supercell_matrix = phonopy_dict.pop("supercell_matrix")
+    primitive_matrix = phonopy_dict.pop("primitive_matrix", "auto")
+    symprec = phonopy_dict.pop("symprec", 1e-5)
+    calculator = phonopy_dict.pop("calculator", "cp2k")
+
+    p_dict = parameters.get_dict()
+    displacement = p_dict.pop("displacement", 0.01)
+
+    phonopy_atoms = Structure.from_aiida_structuredata(structure).to_phonopy_atoms()
+    phonon = phonopy_module._build_phonopy(
+        unitcell=phonopy_atoms,
+        supercell_matrix=supercell_matrix,
+        primitive_matrix=primitive_matrix,
+        symprec=symprec,
+        calculator=calculator,
+    )
+    phonon.generate_displacements(distance=displacement)
+
+    supercells = phonon.supercells_with_displacements
+
+    outputs = {"displacement_dataset": aiida_orm.Dict(dict=phonon.dataset)}
+    for i, supercell in enumerate(supercells):
+        outputs[f"supercell_{i:04d}"] = Structure.from_phonopy_atoms(
+            supercell
+        ).to_aiida_structuredata()
+    return outputs
+
+
+@calcfunction
+def phonopy_calculate_phonons(structure, phonopy_parameters, parameters):
+    """
+    Assemble force constants and extract the phonon band structure and DOS.
+
+    Parameters
+    ----------
+    structure : StructureData
+        The same optimized unit cell passed to
+        :func:`phonopy_generate_displacements`.
+    phonopy_parameters : aiida.orm.Dict
+        Settings dictionary with the keys:
+            ``supercell_matrix`` (list[list[int]] | list[int]) - required,
+            ``primitive_matrix`` (str | list) - optional, default ``"auto"``,
+            ``symprec`` (float) - optional, default ``1e-5``,
+            ``calculator`` (str) - optional calculator, default ``cp2k``.
+    parameters : aiida.orm.Dict
+        Post-processing settings:
+            ``displacement_dataset`` () -
+                dataset of displacements retrieved from ``phonopy_generate_displacements``,
+            ``force_sets`` (array) of shape ``(n_displacements, n_atoms, 3) -
+                forces for each displacement per atom in each direction,
+            ``band_path`` (list) - q-point path segments (from SeekPath),
+            ``band_labels`` (list) - high-symmetry point labels,
+            ``band_npoints`` (int) - points per segment, default ``101``,
+            ``with_eigenvectors`` (bool) - default ``False``,
+            ``dos_mesh`` (list[int]) - q-mesh for the DOS, default ``[20,20,20]``,
+            ``thermal_properties`` (bool) - default ``False``,
+            ``temp_range`` (list) - thermal range.
+
+    Returns
+    -------
+    dict
+        ``band_structure`` : aiida.orm.Dict - phonopy band-structure dict.
+        ``total_dos`` : XyData - frequency vs. total phonon DOS.
+        ``thermal_properties`` : aiida.orm.Dict - present only if requested.
+    """
+    from aim2dat.ext_interfaces.phonopy import (
+        _build_phonopy,
+        _extract_band_structure,
+        _extract_total_dos,
+        _extract_thermal_properties,
+    )
+
+    phonopy_dict = phonopy_parameters.get_dict()
+    supercell_matrix = phonopy_dict.pop("supercell_matrix")
+    primitive_matrix = phonopy_dict.pop("primitive_matrix", "auto")
+    symprec = phonopy_dict.pop("symprec", 1e-5)
+    calculator = phonopy_dict.pop("calculator", "cp2k")
+    phonopy_atoms = Structure.from_aiida_structuredata(structure).to_phonopy_atoms()
+
+    p_dict = parameters.get_dict()
+    displacement_dataset = p_dict.pop("displacement_dataset")
+    force_sets = p_dict.pop("force_sets")
+
+    band_path = p_dict.pop("band_path")
+    band_labels = p_dict.pop("band_labels")
+    band_npoints = p_dict.pop("band_npoints", 101)
+    with_eigenvectors = p_dict.pop("with_eigenvectors", False)
+
+    dos_mesh = p_dict.pop("dos_mesh", [20, 20, 20])
+
+    thermal_properties = p_dict.pop("thermal_properties", False)
+    t_min, t_max, t_step = p_dict.pop("temp_range", [0.0, 1000.0, 10.0])
+
+    phonon = _build_phonopy(
+        unitcell=phonopy_atoms,
+        supercell_matrix=supercell_matrix,
+        primitive_matrix=primitive_matrix,
+        symprec=symprec,
+        calculator=calculator,
+    )
+    phonon.dataset = displacement_dataset
+    phonon.forces = force_sets
+    phonon.produce_force_constants()
+    phonon.symmetrize_force_constants()
+
+    # --- v2 TODO: non-analytical correction (NAC) -------------------------- #
+    # For polar frameworks, set the Born effective charges + dielectric tensor
+    # here (computed by CP2K) to capture LO-TO splitting near Gamma:
+    #     phonon.nac_params = {"born": ..., "dielectric": ..., "factor": ...}
+    # The input spec deliberately reserves a `nac_parameters` slot so adding
+    # this in v2 does not break the API.
+    # ----------------------------------------------------------------------- #
+
+    outputs = {}
+
+    # Band structure -> BandsData
+    band_dict, _ = _extract_band_structure(
+        load_parameters={},
+        path=band_path,
+        path_labels=band_labels,
+        npoints=band_npoints,
+        with_eigenvectors=with_eigenvectors,
+        pre_load=phonon,
+    )
+
+    # Parse bands output
+    output_bands = {
+        "kpoints": [],
+        "bands": [],
+        "path_labels": [],
+    }
+
+    counter_points = 0
+    counter_seg = 0
+    path_start = 0
+    for cont_segment in band_path:
+        path_end = path_start + len(cont_segment) - 1
+        for qpoints, band_seg in zip(
+            band_dict["qpoints"][path_start:path_end],
+            band_dict["frequencies"][path_start:path_end],
+        ):
+            output_bands["path_labels"].append((counter_points, band_labels[counter_seg]))
+            counter_seg += 1
+            counter_points += band_npoints - 1
+            output_bands["kpoints"] += [
+                [float(pt[0]), float(pt[1]), float(pt[2])] for pt in qpoints
+            ]
+            output_bands["bands"] += [[float(ev) for ev in pt] for pt in band_seg]
+            output_bands["path_labels"].append((counter_points, band_labels[counter_seg]))
+            counter_points += 1
+        path_start = path_end
+        counter_seg += 1
+
+    bands = BandsData()
+    bands.set_cell_from_structure(structuredata=structure)
+    bands.set_kpoints(np.array(output_bands["kpoints"]))
+    bands.set_bands(np.array(output_bands["bands"]), units="THz")
+    bands.labels = output_bands["path_labels"]
+    outputs["band_structure"] = bands
+
+    # Total DOS -> XyData
+    dos_dict = _extract_total_dos(
+        load_parameters={},
+        mesh=dos_mesh,
+        pre_load=phonon,
+    )
+    dos = XyData()
+    dos.set_x(np.array(dos_dict["frequency_points"]), "frequency", "THz")
+    dos.set_y(np.array(dos_dict["total_dos"]), "total densities", "states/THz")
+    outputs["total_dos"] = dos
+
+    # Optional thermal properties
+    if thermal_properties:
+        thermal_dict = _extract_thermal_properties(
+            load_parameters={},
+            mesh=dos_mesh,
+            t_min=t_min,
+            t_max=t_max,
+            t_step=t_step,
+            pre_load=phonon,
+        )
+        thermal = XyData()
+        thermal.set_x(np.array(thermal_dict["temperatures"]), "temperatures", "K")
+        y_arrays = [
+            np.array(thermal_dict["free_energy"]),
+            np.array(thermal_dict["entropy"]),
+            np.array(thermal_dict["heat_capacity"]),
+        ]
+        y_names = ["helmholtz free energies", "entropies", "heat capacities"]
+        y_units = ["kJmol", "J/K/mol", "J/K/mol"]
+        thermal.set_y(y_arrays, y_names, y_units)
+        outputs["thermal_properties"] = thermal
+
     return outputs
 
 

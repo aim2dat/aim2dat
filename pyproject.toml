@@ -29,6 +29,7 @@ authors = [
   {name = "Holger-Dietrich Saßnick", email = "holger-dietrich.sassnick@uni-oldenburg.de"},
   {name = "Timo Reents", email = "timo.reents@uni-oldenburg.de"},
   {name = "Joshua Edzards", email = "joshua.edzards@uni-oldenburg.de"},
+  {name = "Maddox Turner", email = "mdturne9@asu.edu"},
 ]
 maintainers = [
   {name = "Holger-Dietrich Saßnick", email = "holger-dietrich.sassnick@uni-oldenburg.de"}
@@ -138,6 +139,8 @@ pre-commit = [
 "aim2dat.rotate_molecule" = "aim2dat.aiida_workflows.utils:rotate_molecule"
 "aim2dat.seekpath.structure_analysis" = "aim2dat.aiida_workflows.utils:seekpath_structure_analysis"
 "aim2dat.cubecruncher" = "aim2dat.aiida_workflows.cubecruncher.calcjobs:CubecruncherCalculation"
+"aim2dat.phonopy.displacements" = "aim2dat.aiida_workflows.utils:phonopy_generate_displacements"
+"aim2dat.phonopy.phonons" = "aim2dat.aiida_workflows.utils:phonopy_calculate_phonons"
 
 [project.entry-points."aiida.parsers"]
 "aim2dat.cp2k.standard" = "aim2dat.aiida_workflows.cp2k.parsers:Cp2kStandardParser"
@@ -161,6 +164,8 @@ pre-commit = [
 "aim2dat.cp2k.combined.surface_opt" = "aim2dat.aiida_workflows.cp2k.combined_work_chains:SurfaceOptWorkChain"
 "aim2dat.cp2k.combined.electronic_properties" = "aim2dat.aiida_workflows.cp2k.combined_work_chains:ElectronicPropertiesWorkChain"
 "aim2dat.cp2k.interaction_energy" = "aim2dat.aiida_workflows.cp2k.interaction_energy_work_chain:InteractionEnergyWorkChain"
+"aim2dat.cp2k.forces" = "aim2dat.aiida_workflows.cp2k.force_work_chain:ForceWorkChain"
+"aim2dat.cp2k.combined.phonons"   = "aim2dat.aiida_workflows.cp2k.phonon_work_chain:PhononWorkChain"
 "aim2dat.cp2k.charge_density_difference" = "aim2dat.aiida_workflows.cp2k.charge_density_difference_work_chain:ChargeDensityDifferenceWorkChain"
 
 [tool.setuptools.packages.find]

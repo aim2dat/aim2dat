@@ -1,0 +1,40 @@
+%YAML 1.2
+---
+- [exceeded_walltime, false]
+- - warnings
+  - []
+- [cp2k_version, 2025.1]
+- [run_type, ENERGY_FORCE]
+- [natoms, 8]
+- [nelectrons, 32]
+- [nr_occ_orbitals, 16]
+- [scf_converged, true]
+- [energy_scf, -31.29788527015824]
+- [energy, -31.29788537278413]
+- - forces
+  - - atom: 1
+      atom_forces: [4.817113e-09, 4.81761627e-09, 4.87307408e-09]
+      absolute_force: 8.37620769e-09
+    - atom: 2
+      atom_forces: [4.24234947e-09, 1.29178728e-08, 1.29771653e-08]
+      absolute_force: 1.87956321e-08
+    - atom: 3
+      atom_forces: [1.29576404e-08, 1.30672903e-08, 4.21750448e-09]
+      absolute_force: 1.8879668e-08
+    - atom: 4
+      atom_forces: [1.29473998e-08, 4.24268339e-09, 1.30446454e-08]
+      absolute_force: 1.88626164e-08
+    - atom: 5
+      atom_forces: [-5.05171027e-09, -1.28584104e-08, -5.10257336e-09]
+      absolute_force: 1.4727347e-08
+    - atom: 6
+      atom_forces: [-1.22003072e-08, -1.22352947e-08, -1.22924238e-08]
+      absolute_force: 2.12050375e-08
+    - atom: 7
+      atom_forces: [-1.30878462e-08, -5.19159413e-09, -5.23707422e-09]
+      absolute_force: 1.50223605e-08
+    - atom: 8
+      atom_forces: [-5.05052618e-09, -5.19278231e-09, -1.2758663e-08]
+      absolute_force: 1.4671615e-08
+- [runtime, 1.458]
+- [energy_units, hartree]

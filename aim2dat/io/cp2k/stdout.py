@@ -317,6 +317,39 @@ class SCFBlock(_BaseDataBlock):
         return output
 
 
+class ForceBlock(_BaseDataBlock):
+    """Force data block."""
+
+    start_str = ["FORCES|   Atom     x", "# Atom   Kind   Element"]
+    end_str = ["FORCES| Sum", "SUM OF ATOMIC FORCES"]
+    current_data_type = list
+
+    def _parse_line(self, line):
+        if line == "" or "#" in line or "SUM" in line or "x" in line or "Sum" in line:
+            return None
+        line_sp = line.split()
+        if "FORCES|" in line:
+            # Post 2025.1 output files:
+            force_dict = {
+                "atom": int(line_sp[1]),
+                "atom_forces": [float(force) for force in line_sp[2:5]],
+                "absolute_force": float(line_sp[5]),
+            }
+        else:
+            # Pre 2025.1 output files:
+            force_dict = {
+                "atom": int(line_sp[0]),
+                "element": line_sp[2],
+                "kind": int(line_sp[1]),
+                "atom_forces": [float(force) for force in line_sp[3:]],
+            }
+        self.current_data.append(force_dict)
+
+    def _process_output(self):
+        if len(self.all_data) > 0:
+            return {"forces": self.all_data[-1]}
+
+
 class MullikenBlock(_BaseDataBlock):
     """Mulliken charges data block."""
 
@@ -714,6 +747,7 @@ _BLOCKS = {
         SPGRBlock,
         RuntimeBlock,
         SCFBlock,
+        ForceBlock,
         StepInformationBlock,
         MaxOptStepsBlock,
         BandsBlock,
@@ -738,6 +772,7 @@ _BLOCKS = {
         SPGRBlock,
         RuntimeBlock,
         SCFBlock,
+        ForceBlock,
         MullikenBlock,
         HirshfeldBlock,
         OptStepBlock,
