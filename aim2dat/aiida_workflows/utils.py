@@ -23,7 +23,6 @@ from aim2dat.strct import Structure, StructureOperations
 from aim2dat.strct.ext_manipulation import add_structure_coord, rotate_structure
 from aim2dat.strct.analysis.brillouin_zone_2d import _get_kpath
 from aim2dat.utils.dict_tools import dict_retrieve_parameter
-from aim2dat.ext_interfaces import _return_ext_interface_modules
 
 StructureData = DataFactory("core.structure")
 XyData = DataFactory("core.array.xy")
