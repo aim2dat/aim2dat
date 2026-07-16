@@ -11,13 +11,54 @@
 # materializes it at protocol-load time, `optional: true` doesn't stop
 # that), which would silently turn on a k-point mesh for the Si/NaCl force
 # evals that were validated Gamma-only. See the gotcha below.
+#
+# Absorbed the standalone cp2k-crystal-opt_v1.0 cell-opt stage on
+# 2026-07-16: that file duplicated cp2k-crystal-standard/preopt's two-stage
+# cell-opt pattern without adding anything beyond feeding this protocol --
+# folding it in here removes the extra hop of manually chaining two
+# protocols together.
+#
+# Re-architected 2026-07-16 to SeekPath-first (per Josh's suggestion, same
+# fix already applied to cp2k-crystal-mofs-custom_v1.0): seekpath_analysis
+# now runs before the cell-opt tasks, so unit_cell_opt relaxes the
+# primitive cell in place -- no later re-expression into a different cell
+# setting that could fail the phonon reference gate (this is what happened
+# on a real MOF run: re-expressing an already-converged geometry changed
+# the FFT grid registration enough to fail the gate). Since cell-opt now
+# runs on a (possibly non-orthogonal) SeekPath cell, `keep_space_group` was
+# swapped for `keep_angles` -- KEEP_SPACE_GROUP's spglib re-detection is
+# what misclassified Si/NaCl as P-1 on a non-orthogonal cell (see the
+# gotcha below); KEEP_ANGLES is a plain geometric constraint, no spglib
+# involved. Also collapsed find_scf_parameters back to one task: the
+# second search (find_scf_parameters_prim) existed only to handle the old
+# conventional-vs-primitive cell mismatch, which no longer exists.
+# NOT YET VALIDATED: this SeekPath-first + keep_angles combination hasn't
+# been re-run against Si/NaCl -- confirm space-group preservation and a
+# clean phonon spectrum before trusting it for production.
 title: cp2k-phonons
 version: '1.0'
 description: >
-  Finite-displacement phonon band structure + DOS on an already-optimized
-  StructureData parent_node: (1) seekpath_analysis -- primitive cell +
-  q-point band path, once; (2) find_scf_parameters -- fresh SCF search on
-  the primitive cell; (3) phonons -- PhononWorkChain fan-out.
+  Full pipeline from a raw structure (e.g. straight from a CIF) to
+  finite-displacement phonons: (1) seekpath_analysis -- primitive cell +
+  q-point band path, once, on the structure exactly as given by
+  parent_node; (2) find_scf_parameters -- SCF method/mixing/smearing search
+  on the primitive cell; (3) unit_cell_preopt -- fast pre-relaxation with
+  DZVP, loose thresholds; (4) unit_cell_opt -- production cell optimization
+  with TZV2P, tight thresholds, KEEP_ANGLES (not KEEP_SPACE_GROUP -- see the
+  gotcha below); (5) phonons -- PhononWorkChain fan-out, consuming
+  unit_cell_opt's optimized structure and find_scf_parameters's
+  scf_parameters directly, with phonopy_p.path_parameters wired straight
+  from the single upfront seekpath_analysis call.
+  GOTCHA (why this isn't simply "optimize the primitive cell from the
+  start", the original v1 design's assumption): running KEEP_SPACE_GROUP
+  cell-opt directly on a SeekPath primitive cell (non-orthogonal, e.g.
+  60-degree rhombohedral angles for an fcc-derived lattice) made spglib's
+  own re-detection fragile after small numerical drift introduced by
+  KEEP_SPACE_GROUP's BFGS projection -- both Si and NaCl were misclassified
+  as space group 2 (P-1) at the unit_cell_opt stage in an earlier version of
+  this pipeline. Switching to KEEP_ANGLES (a plain geometric constraint, no
+  spglib involved) is this file's current answer to that failure mode --
+  see the NOT YET VALIDATED note above.
 dependencies:
 - [aiida-core, '1.6', Null]
 - [seekpath, '2.0', Null]
@@ -34,16 +75,37 @@ tasks:
     dependencies:
       seekpath_analysis:
       - [primitive_structure, structural_p.structure]
+  unit_cell_preopt:
+    process: aim2dat.cp2k.cell_opt
+    blacklist_inputs:
+    - custom_scf_method
+    - optimization_p.keep_symmetry
+    dependencies:
+      seekpath_analysis:
+      - [primitive_structure, structural_p.structure]
+      find_scf_parameters:
+      - [scf_parameters, structural_p.scf_parameters]
+  unit_cell_opt:
+    process: aim2dat.cp2k.cell_opt
+    blacklist_inputs:
+    - custom_scf_method
+    - optimization_p.keep_symmetry
+    dependencies:
+      unit_cell_preopt:
+      - [cp2k.output_structure, structural_p.structure]
+      - [scf_parameters, structural_p.scf_parameters]
   phonons:
     process: aim2dat.cp2k.combined.phonons
     dependencies:
+      unit_cell_opt:
+      - [cp2k.output_structure, phonopy_p.structure]
       seekpath_analysis:
-      - [primitive_structure, phonopy_p.structure]
       - [parameters, phonopy_p.path_parameters]
       find_scf_parameters:
       - [scf_parameters, force.structural_p.scf_parameters]
 
 general_input:
+  # ── CP2K parameters shared by all cell-opt/SCF-search tasks ───────────────
   cp2k.parameters:
     value:
       GLOBAL:
@@ -68,11 +130,13 @@ general_input:
         SUBSYS:
           CELL: {PERIODIC: XYZ}
     aiida_node: true
-    tasks: [find_scf_parameters]
+    tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt]
+
+  # ── SCF solver settings -- shared across cell-opt and phonon-stage SCF ────
   scf_method:
     value: density_mixing
     aiida_node: true
-    tasks: [find_scf_parameters]
+    tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt]
   force.scf_method:
     value: density_mixing
     aiida_node: true
@@ -80,7 +144,7 @@ general_input:
   factor_unocc_states:
     value: 0.75
     aiida_node: true
-    tasks: [find_scf_parameters]
+    tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt]
   force.factor_unocc_states:
     value: 0.75
     aiida_node: true
@@ -88,7 +152,7 @@ general_input:
   enable_roks:
     value: false
     aiida_node: true
-    tasks: [find_scf_parameters]
+    tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt]
   force.enable_roks:
     value: false
     aiida_node: true
@@ -96,17 +160,43 @@ general_input:
   always_add_unocc_states:
     value: true
     aiida_node: true
-    tasks: [find_scf_parameters]
+    tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt]
+  adjust_scf_parameters:
+    value: true
+    aiida_node: true
+    tasks: [unit_cell_preopt, unit_cell_opt]
   max_iterations:
     value: 100
     aiida_node: true
     compare: false
-    tasks: [find_scf_parameters]
+    tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt]
   force.max_iterations:
     value: 100
     aiida_node: true
     compare: false
     tasks: [phonons]
+
+  # ── Geometry optimisation thresholds (cell-opt stage) ──────────────────────
+  # KEEP_ANGLES, not KEEP_SPACE_GROUP -- see the file-level gotcha above.
+  optimization_p.keep_angles:
+    value: true
+    aiida_node: true
+    tasks: [unit_cell_preopt, unit_cell_opt]
+  optimization_p.ref_cell_scaling_factor:
+    value: 1.5
+    aiida_node: true
+    tasks: [unit_cell_preopt, unit_cell_opt]
+  # Preopt — loose pressure threshold for speed
+  optimization_p.pressure_tolerance->unit_cell_preopt:
+    value: 200.0
+    aiida_node: true
+    compare: false
+  # Final opt — tight pressure threshold so cell volume is well-converged for phonons
+  optimization_p.pressure_tolerance->unit_cell_opt:
+    value: 100.0
+    aiida_node: true
+
+  # ── Phonon fan-out settings ─────────────────────────────────────────────
   phonopy_p.symprec:
     value: 0.005
     aiida_node: true
@@ -117,16 +207,135 @@ general_input:
     tasks: [phonons]
 
 user_input:
-  # k-point density (1/A) for find_scf_parameters. Semiconductor/insulator
-  # default; MOFs' larger cells typically want ~0.20 -- override via
-  # set_user_input("numerical_p.kpoints_ref_dist", 0.20).
+  # ── k-point density (Å⁻¹) -- shared by find_scf_parameters and unit_cell_opt.
+  # Semiconductor/insulator default; MOFs' larger cells typically want ~0.20 --
+  # override via set_user_input("numerical_p.kpoints_ref_dist", 0.20).
   numerical_p.kpoints_ref_dist:
     validation: aim2dat.cp2k.find_scf_p
     aiida_node: true
     optional: true
     compare: false
-    tasks: [find_scf_parameters]
+    tasks: [find_scf_parameters, unit_cell_opt]
     value: 0.15
+  numerical_p.kpoints_ref_dist->unit_cell_preopt:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    value: 0.25
+
+  # ── Extended-system flag (false for semiconductors / insulators) ──────────
+  scf_extended_system:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt]
+  force.scf_extended_system:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+
+  # ── XC functional ─────────────────────────────────────────────────────────
+  numerical_p.xc_functional:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt]
+  force.numerical_p.xc_functional:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+
+  # ── Basis sets — DZVP for find_scf/preopt, TZV2P for opt+phonon SCF ───────
+  numerical_p.basis_sets:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, unit_cell_opt]
+  numerical_p.basis_sets->unit_cell_preopt:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: false
+  force.numerical_p.basis_sets:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+
+  # ── Grid cutoffs — lower for find_scf/preopt, higher for opt ──────────────
+  numerical_p.cutoff_values:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters]
+  numerical_p.cutoff_values->unit_cell_preopt:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: false
+  numerical_p.cutoff_values->unit_cell_opt:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: false
+  force.numerical_p.cutoff_values:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+
+  # ── Compute code & scheduler metadata ─────────────────────────────────────
+  cp2k.code:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: false
+    tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt]
+  cp2k.metadata:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt]
+  force.cp2k.code:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+  force.cp2k.metadata:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+    tasks: [phonons]
+
+  # ── Geometry optimisation force thresholds (user-overridable with defaults) ─
+  # Preopt uses a loose threshold for speed; opt uses 1.9e-5 Ha/Bohr so that
+  # residual forces in the relaxed cell are small enough for accurate phonons.
+  optimization_p.max_force->unit_cell_preopt:
+    validation: aim2dat.cp2k.cell_opt
+    aiida_node: true
+    optional: true
+    compare: false
+    value: 0.005
+  optimization_p.max_force->unit_cell_opt:
+    validation: aim2dat.cp2k.cell_opt
+    aiida_node: true
+    optional: true
+    compare: false
+    value: 1.9e-5
+
+  # ── Structure override for unit_cell_opt (rarely needed) ──────────────────
+  # structural_p.structure is normally wired automatically from
+  # unit_cell_preopt.cp2k.output_structure. Kept available for the rare case
+  # a notebook needs to hand-correct unit_cell_opt's input directly.
+  structural_p.structure->unit_cell_opt:
+    validation: aim2dat.cp2k.cell_opt
+    aiida_node: true
+    optional: true
+    compare: false
+
   # Left unset (no default here, deliberately): Gamma-only force evals, only
   # safe when the supercell folds the BZ on its own (Si/NaCl 3x3x3 -- the
   # validated recipe this port must not silently change for). Whenever the
@@ -144,13 +353,17 @@ user_input:
     optional: true
     compare: false
     tasks: [phonons]
-  # Overrides phonopy_p.structure for the phonons task only (arrow syntax
-  # beats the seekpath_analysis dependency wire). Needed when the seekpath
-  # structure must be re-relaxed on the force-eval PES first -- a structure
-  # relaxed in one cell setting is not force-free when re-expressed in
-  # another (UiO-66 2026-07-08, PhononWorkChain 7379: max |F| 4.7e-4 Ha/Bohr
-  # despite matching k-grid/basis/cutoff). Must keep the seekpath cell,
-  # otherwise path_parameters become invalid.
+  # Safety-valve override for phonopy_p.structure, kept from the pre-2026-07-16
+  # (post-optimization SeekPath) architecture: with SeekPath now running
+  # upfront, unit_cell_opt's output should already be force-free in the
+  # setting phonons uses, so this shouldn't normally be needed -- but if the
+  # reference gate (exit 402) still fires, this is the escape hatch: rerun a
+  # fixed-cell re-relax on the force-eval PES (4x4x4 grid/production
+  # basis/etc.) and feed the result in here (arrow syntax beats the
+  # unit_cell_opt dependency wire). Must keep the seekpath cell, otherwise
+  # path_parameters become invalid. (UiO-66 gotcha this originally fixed:
+  # 2026-07-08, PhononWorkChain 7379, max |F| 4.7e-4 Ha/Bohr from re-expressing
+  # a converged geometry into a different cell setting post-hoc.)
   phonopy_p.structure->phonons:
     validation: aim2dat.cp2k.combined.phonons
     aiida_node: true
@@ -165,16 +378,6 @@ user_input:
     compare: false
     tasks: [seekpath_analysis]
     value: {reference_distance: 0.015, symprec: 0.005}
-  scf_extended_system:
-    validation: aim2dat.cp2k.find_scf_p
-    aiida_node: true
-    compare: true
-    tasks: [find_scf_parameters]
-  force.scf_extended_system:
-    validation: aim2dat.cp2k.combined.phonons
-    aiida_node: true
-    compare: false
-    tasks: [phonons]
   # Default EPS_SCF=1e-8/MAX_SCF=200 -- tighter than find_scf_parameters
   # because SCF noise at 5e-7 caused imaginary modes at zone boundaries (X,
   # L) when force constants are reconstructed from a single displacement.
@@ -201,60 +404,6 @@ user_input:
           XC: {}
         SUBSYS:
           CELL: {PERIODIC: XYZ}
-  numerical_p.xc_functional:
-    validation: aim2dat.cp2k.find_scf_p
-    aiida_node: true
-    compare: true
-    tasks: [find_scf_parameters]
-  force.numerical_p.xc_functional:
-    validation: aim2dat.cp2k.combined.phonons
-    aiida_node: true
-    compare: false
-    tasks: [phonons]
-  numerical_p.basis_sets:
-    validation: aim2dat.cp2k.find_scf_p
-    aiida_node: true
-    compare: true
-    tasks: [find_scf_parameters]
-  force.numerical_p.basis_sets:
-    validation: aim2dat.cp2k.combined.phonons
-    aiida_node: true
-    compare: false
-    tasks: [phonons]
-  numerical_p.cutoff_values:
-    validation: aim2dat.cp2k.find_scf_p
-    aiida_node: true
-    compare: true
-    tasks: [find_scf_parameters]
-  force.numerical_p.cutoff_values:
-    validation: aim2dat.cp2k.combined.phonons
-    aiida_node: true
-    compare: false
-    tasks: [phonons]
-  cp2k.code:
-    validation: aim2dat.cp2k.find_scf_p
-    aiida_node: true
-    compare: false
-    tasks: [find_scf_parameters]
-  cp2k.metadata:
-    validation: aim2dat.cp2k.find_scf_p
-    aiida_node: false
-    unstored: true
-    optional: true
-    compare: false
-    tasks: [find_scf_parameters]
-  force.cp2k.code:
-    validation: aim2dat.cp2k.combined.phonons
-    aiida_node: true
-    compare: false
-    tasks: [phonons]
-  force.cp2k.metadata:
-    validation: aim2dat.cp2k.combined.phonons
-    aiida_node: false
-    unstored: true
-    optional: true
-    compare: false
-    tasks: [phonons]
   # Semicore species on production grids need larger displacements for
   # clean force constants (NaCl egg-box case, 2026-07-06).
   phonopy_p.displacement:
@@ -288,7 +437,7 @@ user_input:
     aiida_node: true
     optional: true
     compare: false
-    tasks: [find_scf_parameters]
+    tasks: [find_scf_parameters, unit_cell_preopt, unit_cell_opt]
   force.clean_workdir:
     validation: aim2dat.cp2k.combined.phonons
     aiida_node: true
@@ -297,6 +446,12 @@ user_input:
     tasks: [phonons]
 
 results:
+  primitive_structure:
+    task: seekpath_analysis
+    output_port: primitive_structure
+  conventional_structure:
+    task: seekpath_analysis
+    output_port: conv_structure
   scf_method_level:
     task: find_scf_parameters
     output_port: scf_parameters
@@ -309,6 +464,18 @@ results:
     task: find_scf_parameters
     output_port: scf_parameters
     retrieve_value: [smearing_level]
+  optimized_structure:
+    task: unit_cell_opt
+    output_port: cp2k.output_structure
+  total_energy:
+    task: unit_cell_opt
+    output_port: cp2k.output_parameters
+    retrieve_value: [energy]
+    unit: Hartree
+  space_group:
+    task: unit_cell_opt
+    output_port: cp2k.output_parameters
+    retrieve_value: [spgr_info, sg_number]
   phonon_bands:
     task: phonons
     output_port: phonon_bands

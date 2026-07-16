@@ -14,10 +14,9 @@ Pipeline
    (exit code 402) if any force exceeds ``phonopy_p.ref_forces_threshold``:
    the structure is not at a force-free minimum or the numerical setup
    produces spurious forces (basis/grid). Runs *before* the fan-out so no
-   compute is wasted on a bad structure/setup. NOTE: on high-symmetry
-   crystals where atoms sit on special positions, site symmetry can cancel
-   systematic force errors (e.g. egg-box) in the reference cell, so a
-   passing check there is necessary but not sufficient.
+   compute is wasted on a bad structure/setup. Per Julia's suggestion, we
+   exit if any forces exceed the threshold rather than only warning, since
+   downstream phonon results from a bad reference cell are not salvageable.
 3. ``ForceWorkChain`` x N            -> CP2K ENERGY_FORCE per displacement
 4. ``phonopy_calculate_phonons``     -> phonon band structure + DOS
 """
@@ -173,14 +172,9 @@ class PhononWorkChain(WorkChain):
         # Exposes the CP2K code, numerical_p and SCF settings of ForceWorkChain;
         # the structure is supplied per displacement.
         spec.expose_inputs(ForceWorkChain, namespace="force", exclude=("structural_p.structure",))
-        # namespace_options required=False: ForceWorkChain runs as a fan-out (N
-        # per-displacement instances, run_forces/inspect_forces), so there is
-        # no single coherent "force" output to collapse them into -- nothing
-        # in the outline ever populates this namespace (per-displacement
-        # outputs are consumed internally to build force_sets). Without this,
-        # the workchain always exits 11 ("did not register a required
-        # output") despite phonon_bands/phonon_dos/thermal_properties/
-        # ref_forces all being set correctly (confirmed 2026-07-07).
+        # required=False: this namespace is never populated (fan-out outputs
+        # are consumed internally to build force_sets), so it would otherwise
+        # exit 11 despite the real outputs being set correctly.
         spec.expose_outputs(
             ForceWorkChain,
             namespace="force",
