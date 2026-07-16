@@ -41,7 +41,7 @@ tasks:
       - [cp2k.output_structure, structural_p.structure]
       - [scf_parameters, structural_p.scf_parameters]
   phonons:
-    process: aim2dat.cp2k.phonons
+    process: aim2dat.cp2k.combined.phonons
     dependencies:
       unit_cell_opt:
       - [cp2k.output_structure, structural_p.structure]

@@ -22,6 +22,7 @@ from aim2dat.strct import Structure, StructureOperations
 from aim2dat.strct.ext_manipulation import add_structure_coord, rotate_structure
 from aim2dat.strct.analysis.brillouin_zone_2d import _get_kpath
 from aim2dat.utils.dict_tools import dict_retrieve_parameter
+from aim2dat.ext_interfaces import _return_ext_interface_modules
 
 StructureData = DataFactory("core.structure")
 XyData = DataFactory("core.array.xy")
@@ -199,7 +200,7 @@ def phonopy_generate_displacements(structure, phonopy_parameters, parameters):
             One displaced supercell per displacement, fed to the per-displacement
             force calculations (:class:`ForceWorkChain`, RUN_TYPE ENERGY_FORCE).
     """
-    from aim2dat.ext_interfaces.phonopy import _build_phonopy
+    phonopy_module = _return_ext_interface_modules("phonopy")
 
     phonopy_dict = phonopy_parameters.get_dict()
     supercell_matrix = phonopy_dict.pop("supercell_matrix")
@@ -211,7 +212,7 @@ def phonopy_generate_displacements(structure, phonopy_parameters, parameters):
     displacement = p_dict.pop("displacement", 0.01)
 
     phonopy_atoms = Structure.from_aiida_structuredata(structure).to_phonopy_atoms()
-    phonon = _build_phonopy(
+    phonon = phonopy_module._build_phonopy(
         unitcell=phonopy_atoms,
         supercell_matrix=supercell_matrix,
         primitive_matrix=primitive_matrix,

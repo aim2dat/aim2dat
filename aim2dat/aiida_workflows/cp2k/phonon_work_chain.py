@@ -17,7 +17,7 @@ Pipeline
 Proposed entry point (pyproject.toml)::
 
     [project.entry-points."aiida.workflows"]
-    "aim2dat.cp2k.phonons" =
+    "aim2dat.cp2k.combined.phonons" =
         "aim2dat.aiida_workflows.cp2k.phonon_work_chain:PhononWorkChain"
 """
 
@@ -41,10 +41,6 @@ class PhononWorkChain(WorkChain):
     AiiDA work chain to compute the phonon band structure and DOS via the
     finite-displacement method with CP2K and phonopy.
     """
-
-    _keep_scf_method_fixed = True
-    _keep_smearing_fixed = True
-    _initial_scf_guess = "RESTART"
 
     @classmethod
     def define(cls, spec):
