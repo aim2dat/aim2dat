@@ -9,10 +9,12 @@ from aim2dat.elements import get_element_symbol
 @external_analysis_method(attr_mapping=None)
 def calc_hydrogen_bonds(
     structure: Structure,
-    host_elements="O",
-    bond_threshold=1.25,
-    index_constraint=None,
-    scheme: str = "baker_hubbard",
+    host_elements: str = "O",
+    bond_threshold: float = 1.25,
+    distance_cutoff: float = 3.0,
+    angle_cutoff: float = 120.0,
+    index_constraint: list = None,
+    scheme: str = None,
 ):
     """
     Search for hydrogen bonds.
@@ -25,11 +27,16 @@ def calc_hydrogen_bonds(
         Elements considered as host atoms for hydrogen atoms and hydrogen bonds.
     bond_threshold : float
         Upper threshold to consider the hydrogen atom chemically bonded to the donor.
+    distance_cutoff : float
+        Upper limit of the H...acceptor distance to be considered hydrogen bonded.
+    angle_cutoff : float
+        Lower limit (in degrees) of the acceptor...H-donor angle.
     index_constraint : list or None
         List of site indices to constrain the search.
     scheme : str
         The applied scheme. Supported options are `'baker_hubbard'`
-        (:doi:`10.1016/0079-6107(84)90007-5`).
+        (:doi:`10.1016/0079-6107(84)90007-5`). This argument is deprecated and replaced by
+        ``distance_cutoff`` and ``angle_cutoff``.
 
     Returns
     -------
@@ -37,14 +44,30 @@ def calc_hydrogen_bonds(
         Tuple of triples: site of the hydrogen acceptor, hydrogen site, and site of the hydrogen
         donor.
     """
-    schemes = ["baker_hubbard"]
+    if scheme is not None:
+        schemes = ["baker_hubbard"]
+        from warnings import warn
+
+        warn(
+            "The argument `scheme` is deprecated, "
+            + "please use `distance_cutoff` and `angle_cutoff` instead.",
+            DeprecationWarning,
+            2,
+        )
+
+        if scheme not in schemes:
+            raise ValueError(
+                f"`scheme` '{scheme}' is not supported. Valid options are: {schemes}."
+            )
+
+        distance_cutoff = 2.5
+        angle_cutoff = 120.0
+
     if isinstance(host_elements, str):
         host_elements = [host_elements]
     host_elements = [get_element_symbol(el) for el in host_elements]
     if index_constraint is None:
         index_constraint = list(range(len(structure)))
-    if scheme not in schemes:
-        raise ValueError(f"`scheme` '{scheme}' is not supported. Valid options are: {schemes}.")
 
     host_indices = [
         idx
@@ -60,11 +83,11 @@ def calc_hydrogen_bonds(
     hbonds = []
     for host_idx in host_indices:
         for h_idx in h_indices:
-            if dists[(host_idx, h_idx)] >= 2.5:
+            if dists[(host_idx, h_idx)] >= distance_cutoff:
                 continue
 
             for don_idx in host_indices:
                 if dists[(don_idx, h_idx)] < bond_threshold and don_idx != host_idx:
-                    if structure.calc_angle(h_idx, host_idx, don_idx) > 120.0:
+                    if structure.calc_angle(h_idx, host_idx, don_idx) > angle_cutoff:
                         hbonds.append((host_idx, h_idx, don_idx))
     return tuple(hbonds)

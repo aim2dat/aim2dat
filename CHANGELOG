@@ -36,6 +36,8 @@ Version 0.5.0
 * The ``strct.Structure`` and ``strct.StructureCollection`` now use the ``'internal'`` backend as default to read structures from and write structures to file and the key word argument ``backend_kwargs`` is deprecated and replaced by ``**`` (`PR 189 <https://github.com/aim2dat/aim2dat/pull/189>`_).
 * Slight adjustment in the ``strct.Structure.label`` upon translation manipulation from ``"*_translated-[1.0, 0.4, 0.6]"`` to ``"*_translated-[1.00,0.40,0.60]"`` (`PR #195 <https://github.com/aim2dat/aim2dat/pull/195>`_).
 * Removal of the `get_statistics` kwarg of `strct.Structure.calc_coordination` implemented in `PR #177 <https://github.com/aim2dat/aim2dat/pull/177>`_ to maintain a common interface and avoid recalculation (`PR #197 <https://github.com/aim2dat/aim2dat/pull/197>`_).
+* The ``distance_cutoff`` and ``angle_cutoff`` arguments have been added to the ``strct.ext_analysis.calc_hydrogen_bonds``, replacing the argument ``scheme`` which is now deprecated (`PR #211 <https://github.com/aim2dat/aim2dat/pull/211>`_).
+* The ``__init__`` function of the ``strct.Structure`` class has now the keyword argument ``check_overlap`` to avoid errors due to positional overlap of sites. At the same time, the overlap check has been improved by increasing the tolerance. The ``append`` and ``from_file`` functions of the ``strct.StructureCollection`` class  have been adjusted accordingly as well (`PR #212 <https://github.com/aim2dat/aim2dat/pull/212>`_).
 
 
 Version 0.4.0

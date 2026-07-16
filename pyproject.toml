@@ -165,7 +165,7 @@ pre-commit = [
 "aim2dat.cp2k.combined.electronic_properties" = "aim2dat.aiida_workflows.cp2k.combined_work_chains:ElectronicPropertiesWorkChain"
 "aim2dat.cp2k.interaction_energy" = "aim2dat.aiida_workflows.cp2k.interaction_energy_work_chain:InteractionEnergyWorkChain"
 "aim2dat.cp2k.forces" = "aim2dat.aiida_workflows.cp2k.force_work_chain:ForceWorkChain"
-"aim2dat.cp2k.combined.phonons" = "aim2dat.aiida_workflows.cp2k.phonon_work_chain:PhononWorkChain"
+"aim2dat.cp2k.combined.phonons"   = "aim2dat.aiida_workflows.cp2k.phonon_work_chain:PhononWorkChain"
 "aim2dat.cp2k.charge_density_difference" = "aim2dat.aiida_workflows.cp2k.charge_density_difference_work_chain:ChargeDensityDifferenceWorkChain"
 
 [tool.setuptools.packages.find]

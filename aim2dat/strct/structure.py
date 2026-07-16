@@ -99,6 +99,7 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
         pbc: List[bool],
         is_cartesian: bool = True,
         wrap: bool = False,
+        check_overlap: bool = True,
         cell: List[List[float]] = None,
         kinds: List[str] = None,
         label: str = None,
@@ -115,7 +116,9 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
         self.kinds = kinds
         self.cell = cell
         self.pbc = pbc
-        self.set_positions(positions, is_cartesian=is_cartesian, wrap=wrap)
+        self.set_positions(
+            positions, is_cartesian=is_cartesian, wrap=wrap, check_overlap=check_overlap
+        )
 
         self.label = label
         self.attributes = attributes
@@ -505,7 +508,11 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
                 yield tuple(output)
 
     def set_positions(
-        self, positions: Union[list, tuple], is_cartesian: bool = True, wrap: bool = False
+        self,
+        positions: Union[list, tuple],
+        is_cartesian: bool = True,
+        wrap: bool = False,
+        check_overlap: bool = True,
     ):
         """
         Set positions of all sites.
@@ -518,11 +525,13 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
             Whether the coordinates are cartesian or scaled.
         wrap : bool (optional)
             Wrap atomic positions into the unit cell.
+        check_overlap : bool
+            Whether to check if atomic sites are too close to each other.
         """
         if len(self.elements) != len(positions):
             raise ValueError("`elements` and `positions` must have the same length.")
         self._positions, self._scaled_positions = _structure_validate_positions(
-            positions, is_cartesian, self.cell, self._inverse_cell, self.pbc
+            positions, is_cartesian, self.cell, self._inverse_cell, self.pbc, check_overlap
         )
         if wrap:
             new_positions = [
@@ -650,6 +659,8 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
     def from_file(
         cls,
         file_path: str,
+        wrap: bool = False,
+        check_overlap: bool = True,
         attributes: dict = None,
         site_attributes: dict = None,
         extras: dict = None,
@@ -667,6 +678,10 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
         ----------
         file_path : str
             File path.
+        wrap : bool
+            Wrap atomic positions into the unit cell.
+        check_overlap : bool
+            Whether to check if atomic sites are too close to each other.
         attributes : dict
             Attributes stored within the structure object(s).
         site_attributes : dict
@@ -708,6 +723,8 @@ class Structure(AnalysisMixin, ManipulationMixin, ImportExportMixin):
         strct_dict = get_structures_from_file(file_path, backend, file_format, backend_kwargs_)[
             index
         ]
+        strct_dict["check_overlap"] = check_overlap
+        strct_dict["wrap"] = wrap
         _update_label_attributes_extras(strct_dict, label, attributes, site_attributes, extras)
         return cls(**strct_dict)
 

@@ -40,7 +40,7 @@ def _structure_validate_cell(cell: List[List[float]]):
         raise TypeError("`cell` must be a list or numpy array for periodic boundaries.")
 
 
-def _structure_validate_positions(positions, is_cartesian, cell, inv_cell, pbc):
+def _structure_validate_positions(positions, is_cartesian, cell, inv_cell, pbc, check_overlap):
     if not is_cartesian and cell is None:
         raise ValueError("`cell` must be set if `is_cartesian` is False.")
     positions_cart = []
@@ -69,18 +69,19 @@ def _structure_validate_positions(positions, is_cartesian, cell, inv_cell, pbc):
     else:
         pos2check = []
         for pos in positions_scaled:
-            pos2check.append([round(pos[i], 15) % 1 if pbc[i] else pos[i] for i in range(3)])
+            pos2check.append([round(pos[i], 3) % 1 if pbc[i] else pos[i] for i in range(3)])
 
-    dist_m = cdist(pos2check, pos2check)
-    sites = set()
-    for i in range(len(pos2check)):
-        for j in range(i):
-            if dist_m[i][j] < 1e-3:
-                sites.add((i, j))
-    if sites:
-        raise SamePositionsError(
-            "Sites with the same position: " + ", ".join([f"{i}" for i in sites]) + "."
-        )
+    if check_overlap:
+        dist_m = cdist(pos2check, pos2check)
+        sites = set()
+        for i in range(len(pos2check)):
+            for j in range(i):
+                if dist_m[i][j] < 1e-3:
+                    sites.add((i, j))
+        if sites:
+            raise SamePositionsError(
+                "Sites with the same position: " + ", ".join([f"{i}" for i in sites]) + "."
+            )
 
     if len(positions_scaled) == 0:
         return tuple(positions_cart), None

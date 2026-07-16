@@ -223,9 +223,7 @@ user_input:
   # ── Structure override for unit_cell_opt (rarely needed) ──────────────────
   # structural_p.structure is normally wired automatically from
   # unit_cell_preopt.cp2k.output_structure. Kept available for the rare case
-  # a notebook needs to hand-correct unit_cell_opt's input directly (same
-  # mechanism as cp2k.parent_calc_folder->unit_cell_opt in
-  # cp2k-crystal-mofs-custom_v1.0.yaml).
+  # a notebook needs to hand-correct unit_cell_opt's input directly.
   structural_p.structure->unit_cell_opt:
     validation: aim2dat.cp2k.cell_opt
     aiida_node: true
