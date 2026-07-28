@@ -1,0 +1,457 @@
+%YAML 1.2
+---
+# Post-optimization, phonons-only pipeline for crystalline semiconductors and
+# insulators. The cell optimization must be run beforehand on the conventional
+# (orthogonal) cell -- e.g. via cp2k-conventional-crystal-opt_v1.0 -- and passed
+# in via parent_node; this protocol never runs CELL_OPT itself. That split is
+# deliberate: CP2K's CELL_OPT has no supported algorithm for the upper-triangular
+# cell components (CP2K manual, FORCE_EVAL/SUBSYS/CELL), so it cannot relax the
+# shape of a primitive rhombohedral cell (e.g. the SeekPath primitive setting of
+# an FCC-derived lattice like Si or NaCl); KEEP_SPACE_GROUP/KEEP_ANGLES do not
+# work around it. Optimizing the conventional cell upstream avoids this.
+#
+# `confirmatory_geo_opt` (aim2dat.cp2k.geo_opt), inserted between SeekPath and
+# the phonon fan-out, is a FIXED-CELL, atoms-only relaxation that cleans up the
+# small residual position noise left by SeekPath's primitive-cell
+# standardization before the finite-displacement phonon step, where
+# force-constant quality is critical. Its basis set and cutoff MUST be set (via
+# the notebook) to the phonon force-eval values (force.numerical_p.basis_sets /
+# force.numerical_p.cutoff_values), not find_scf_parameters's cheaper search
+# tier -- otherwise the "confirmed" geometry is not a stationary point on the PES
+# the force evaluations use, and PhononWorkChain's reference-force gate can fail.
+title: cp2k-crystal-phonons-only
+version: '1.1'
+description: >
+  Post-optimization, phonons-only pipeline for crystalline semiconductors/
+  insulators. Takes an already-optimized StructureData as parent_node (e.g.
+  the optimized_structure result of cp2k-conventional-crystal-opt_v1.0):
+  (1) seekpath_analysis     — reduce to the primitive cell + compute the
+                              q-point band path, once, on the optimized cell;
+  (2) find_scf_parameters   — fresh SCF convergence search on the primitive
+                              cell (SCF parameters from an upstream cell-opt
+                              don't transfer -- different structure/basis);
+  (3) confirmatory_geo_opt  — fixed-cell, atoms-only relaxation on the
+                              primitive cell, at the SAME basis/cutoff the
+                              phonon force evaluations use, to clean up any
+                              residual noise from SeekPath's idealization
+                              before the (expensive) displacement fan-out;
+  (4) phonons               — finite-displacement phonon band structure +
+                              DOS, consuming confirmatory_geo_opt's
+                              optimized structure/scf_parameters and
+                              seekpath_analysis's band path.
+dependencies:
+- [aiida-core, '1.6', Null]
+- [seekpath, '2.0', Null]
+parent_node_type: structure
+parent_node_input:
+  seekpath_analysis: structure
+tasks:
+  seekpath_analysis:
+    process: aim2dat.seekpath.structure_analysis
+  find_scf_parameters:
+    process: aim2dat.cp2k.find_scf_p
+    blacklist_inputs:
+    - custom_scf_method
+    dependencies:
+      seekpath_analysis:
+      - [primitive_structure, structural_p.structure]
+  confirmatory_geo_opt:
+    process: aim2dat.cp2k.geo_opt
+    blacklist_inputs:
+    - custom_scf_method
+    dependencies:
+      seekpath_analysis:
+      - [primitive_structure, structural_p.structure]
+      find_scf_parameters:
+      - [scf_parameters, structural_p.scf_parameters]
+  phonons:
+    process: aim2dat.cp2k.combined.phonons
+    dependencies:
+      confirmatory_geo_opt:
+      - [cp2k.output_structure, phonopy_p.structure]
+      - [scf_parameters, force.structural_p.scf_parameters]
+      seekpath_analysis:
+      - [parameters, phonopy_p.path_parameters]
+
+general_input:
+  # ── CP2K parameters for find_scf_parameters ────────────────────────────────
+  # NOT shared with confirmatory_geo_opt (see the arrow-scoped variant below)
+  # -- this block's KPOINTS section has no SCHEME baked in, relying on
+  # numerical_p.kpoints_ref_dist (set below, tasks: [find_scf_parameters]
+  # only) to populate it via _set_numerical_p_kpoints_ref_dist. Reusing this
+  # same block for confirmatory_geo_opt (which deliberately has no
+  # kpoints_ref_dist, to stay Gamma-only like the phonon force evals) left
+  # KPOINTS.SCHEME unset -- CP2K aborts on that ("Value requested, but no
+  # value set getting value from keyword SCHEME of section KPOINTS") and the
+  # CP2K calculation aborts. Fixed by giving confirmatory_geo_opt its own
+  # block with no KPOINTS section at all, mirroring force.cp2k.parameters
+  # exactly (CP2K defaults to Gamma-only when the section is absent, not
+  # just when SCHEME is unset).
+  cp2k.parameters:
+    value:
+      GLOBAL:
+        PRINT_LEVEL: MEDIUM
+        PREFERRED_DIAG_LIBRARY: SCALAPACK
+        EXTENDED_FFT_LENGTHS: true
+      FORCE_EVAL:
+        METHOD: Quickstep
+        STRESS_TENSOR: ANALYTICAL
+        DFT:
+          MGRID: {}
+          POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+          BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UZH, BASIS_MOLOPT, BASIS_MOLOPT_UCL]
+          POTENTIAL_FILE_NAME: GTH_POTENTIALS
+          QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1.0e-14}
+          SCF: {EPS_SCF: 5.0e-7}
+          KPOINTS:
+            EPS_GEO: 1.0e-8
+            FULL_GRID: false
+            SYMMETRY: false
+          XC: {}
+        SUBSYS:
+          CELL: {PERIODIC: XYZ}
+    aiida_node: true
+    tasks: [find_scf_parameters]
+
+  # ── CP2K parameters for confirmatory_geo_opt -- Gamma-only, matching the
+  # phonon force evals (no KPOINTS section at all, same EPS_SCF/MAX_SCF
+  # tightness as force.cp2k.parameters below) ───────────────────────────────
+  cp2k.parameters->confirmatory_geo_opt:
+    value:
+      GLOBAL:
+        PRINT_LEVEL: MEDIUM
+        PREFERRED_DIAG_LIBRARY: SCALAPACK
+        EXTENDED_FFT_LENGTHS: true
+      FORCE_EVAL:
+        METHOD: Quickstep
+        DFT:
+          MGRID: {}
+          POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+          BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UZH, BASIS_MOLOPT, BASIS_MOLOPT_UCL]
+          POTENTIAL_FILE_NAME: GTH_POTENTIALS
+          QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1.0e-14}
+          SCF: {EPS_SCF: 1.0e-8, MAX_SCF: 200}
+          XC: {}
+        SUBSYS:
+          CELL: {PERIODIC: XYZ}
+    aiida_node: true
+
+  # CP2K parameters for the per-displacement force evaluations moved to
+  # user_input (force.cp2k.parameters below) so EPS_SCF/MAX_SCF are tunable
+  # from a notebook without editing this file.
+
+  # ── k-point density (Å⁻¹) for find_scf_parameters ─────────────────────────
+  # Deliberately NOT applied to confirmatory_geo_opt: the phonon force evals
+  # run Gamma-only for a supercell that folds its own BZ (see
+  # force.numerical_p.kpoints_ref_dist below) -- confirmatory_geo_opt must
+  # match that (Gamma-only too) rather than pick up a k-mesh here.
+  numerical_p.kpoints_ref_dist:
+    value: 0.15
+    aiida_node: true
+    tasks: [find_scf_parameters]
+
+  # ── SCF solver settings ───────────────────────────────────────────────────
+  scf_method:
+    value: density_mixing
+    aiida_node: true
+    tasks: [find_scf_parameters, confirmatory_geo_opt]
+  force.scf_method:
+    value: density_mixing
+    aiida_node: true
+    tasks: [phonons]
+
+  factor_unocc_states:
+    value: 0.75
+    aiida_node: true
+    tasks: [find_scf_parameters, confirmatory_geo_opt]
+  force.factor_unocc_states:
+    value: 0.75
+    aiida_node: true
+    tasks: [phonons]
+
+  enable_roks:
+    value: false
+    aiida_node: true
+    tasks: [find_scf_parameters, confirmatory_geo_opt]
+  force.enable_roks:
+    value: false
+    aiida_node: true
+    tasks: [phonons]
+
+  always_add_unocc_states:
+    value: true
+    aiida_node: true
+    tasks: [find_scf_parameters, confirmatory_geo_opt]
+
+  adjust_scf_parameters:
+    value: true
+    aiida_node: true
+    tasks: [confirmatory_geo_opt]
+
+  max_iterations:
+    value: 100
+    aiida_node: true
+    compare: false
+    tasks: [find_scf_parameters, confirmatory_geo_opt]
+  force.max_iterations:
+    value: 100
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+
+  # ── Geometry thresholds for confirmatory_geo_opt ──────────────────────────
+  # Space group preserved as cheap insurance on a symmetric primitive cell
+  # (mirrors unit_cell_opt in cp2k-conventional-crystal-opt_v1.0) -- keeps
+  # confirmatory_space_group (below) a meaningful post-hoc check.
+  optimization_p.keep_space_group:
+    value: true
+    aiida_node: true
+    tasks: [confirmatory_geo_opt]
+  optimization_p.eps_symmetry:
+    value: 0.005
+    aiida_node: true
+    tasks: [confirmatory_geo_opt]
+
+  # ── Phonopy defaults ──────────────────────────────────────────────────────
+  phonopy_p.symprec:
+    value: 0.005
+    aiida_node: true
+    tasks: [phonons]
+  phonopy_p.dos_mesh:
+    value: [20, 20, 20]
+    aiida_node: true
+    tasks: [phonons]
+
+user_input:
+  # ── SeekPath settings (primitive-cell reduction + band path) ──────────────
+  # Port name must be exactly `parameters` -- it maps directly onto
+  # seekpath_structure_analysis(structure, parameters)'s own second argument
+  # (aiida_workflows/utils.py:113), not an aim2dat-chosen name (confirmed via
+  # workflow_builder.py's _set_input_parameter: general_input/user_input keys
+  # map 1:1 onto the process builder's actual ports, no aliasing). Kept as
+  # user_input (overridable per-notebook, e.g. a tighter reference_distance)
+  # rather than general_input.
+  parameters:
+    validation: aim2dat.seekpath.structure_analysis
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [seekpath_analysis]
+    value: {reference_distance: 0.015, symprec: 0.005}
+
+  # ── Extended-system flag (false for semiconductors / insulators) ──────────
+  scf_extended_system:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, confirmatory_geo_opt]
+  force.scf_extended_system:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+
+  # CP2K parameters for per-displacement force evaluations.
+  # Default: EPS_SCF=1e-8 / MAX_SCF=200 — tighter than the find_scf run
+  # because SCF noise at 5e-7 caused imaginary modes at zone boundaries (X,
+  # L) when force constants are reconstructed from a single displaced
+  # supercell.
+  force.cp2k.parameters:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [phonons]
+    value:
+      GLOBAL:
+        PRINT_LEVEL: MEDIUM
+        PREFERRED_DIAG_LIBRARY: SCALAPACK
+        EXTENDED_FFT_LENGTHS: true
+      FORCE_EVAL:
+        METHOD: Quickstep
+        DFT:
+          MGRID: {}
+          POISSON: {PERIODIC: XYZ, POISSON_SOLVER: PERIODIC}
+          BASIS_SET_FILE_NAME: [BASIS_MOLOPT_UZH, BASIS_MOLOPT, BASIS_MOLOPT_UCL]
+          POTENTIAL_FILE_NAME: GTH_POTENTIALS
+          QS: {EXTRAPOLATION: USE_GUESS, EPS_DEFAULT: 1.0e-14}
+          SCF: {EPS_SCF: 1.0e-8, MAX_SCF: 200}
+          XC: {}
+        SUBSYS:
+          CELL: {PERIODIC: XYZ}
+
+  # ── XC functional ─────────────────────────────────────────────────────────
+  numerical_p.xc_functional:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters, confirmatory_geo_opt]
+  force.numerical_p.xc_functional:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+
+  # ── Basis sets — find_scf_parameters uses the cheap search tier ───────────
+  numerical_p.basis_sets:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters]
+  force.numerical_p.basis_sets:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+  # confirmatory_geo_opt MUST use the same basis as force.numerical_p.basis_sets
+  # (the phonon force-eval tier), NOT numerical_p.basis_sets above -- no
+  # default on purpose, see the file-level header note. Set explicitly from
+  # the notebook, e.g. set_user_input("numerical_p.basis_sets->confirmatory_geo_opt",
+  # cfg["basis_main"]) using the exact same dict passed to force.numerical_p.basis_sets.
+  numerical_p.basis_sets->confirmatory_geo_opt:
+    validation: aim2dat.cp2k.geo_opt
+    aiida_node: true
+    compare: false
+
+  # ── Grid cutoffs — find_scf_parameters uses the cheap search tier ─────────
+  numerical_p.cutoff_values:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: true
+    tasks: [find_scf_parameters]
+  force.numerical_p.cutoff_values:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+  # Same must-match constraint as numerical_p.basis_sets->confirmatory_geo_opt
+  # above -- no default, set explicitly to the same dict as
+  # force.numerical_p.cutoff_values.
+  numerical_p.cutoff_values->confirmatory_geo_opt:
+    validation: aim2dat.cp2k.geo_opt
+    aiida_node: true
+    compare: false
+
+  # ── Compute code & scheduler metadata ─────────────────────────────────────
+  cp2k.code:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    compare: false
+    tasks: [find_scf_parameters, confirmatory_geo_opt]
+  cp2k.metadata:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters, confirmatory_geo_opt]
+  force.cp2k.code:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+  force.cp2k.metadata:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: false
+    unstored: true
+    optional: true
+    compare: false
+    tasks: [phonons]
+
+  # ── Geometry force threshold for confirmatory_geo_opt ─────────────────────
+  # Tight on purpose (matches unit_cell_opt in cp2k-conventional-crystal-opt_v1.0):
+  # PhononWorkChain's reference-force gate defaults to 5.0e-5 Ha/Bohr, so a
+  # looser confirmatory threshold could itself sit above that and trip the
+  # gate, defeating the point of this step.
+  optimization_p.max_force->confirmatory_geo_opt:
+    validation: aim2dat.cp2k.geo_opt
+    aiida_node: true
+    optional: true
+    compare: false
+    value: 1.9e-5
+
+  # ── Displacement amplitude — overridable: semicore species on production
+  # grids can need larger displacements for clean force constants (e.g. NaCl) ─
+  phonopy_p.displacement:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [phonons]
+    value: 0.01
+
+  # ── Thermal properties (free energy, Cv, entropy vs. T) ───────────────────
+  phonopy_p.thermal_properties:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [phonons]
+    value: false
+
+  phonopy_p.temp_range:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [phonons]
+    value: [0.0, 1000.0, 10.0]
+
+  # ── Supercell matrix — must be set per structure ──────────────────────────
+  phonopy_p.supercell_matrix:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    compare: false
+    tasks: [phonons]
+
+  # ── Optional: clean scratch directories after each step ───────────────────
+  clean_workdir:
+    validation: aim2dat.cp2k.find_scf_p
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [find_scf_parameters, confirmatory_geo_opt]
+  force.clean_workdir:
+    validation: aim2dat.cp2k.combined.phonons
+    aiida_node: true
+    optional: true
+    compare: false
+    tasks: [phonons]
+
+results:
+  scf_method_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [method_level]
+  scf_parameter_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [parameter_level]
+  scf_smearing_level:
+    task: find_scf_parameters
+    output_port: scf_parameters
+    retrieve_value: [smearing_level]
+  confirmatory_optimized_structure:
+    task: confirmatory_geo_opt
+    output_port: cp2k.output_structure
+  confirmatory_total_energy:
+    task: confirmatory_geo_opt
+    output_port: cp2k.output_parameters
+    retrieve_value: [energy]
+    unit: Hartree
+  confirmatory_space_group:
+    task: confirmatory_geo_opt
+    output_port: cp2k.output_parameters
+    retrieve_value: [spgr_info, sg_number]
+  phonon_bands:
+    task: phonons
+    output_port: phonon_bands
+  phonon_dos:
+    task: phonons
+    output_port: phonon_dos
+  thermal_properties:
+    task: phonons
+    output_port: thermal_properties
+  ref_forces:
+    task: phonons
+    output_port: ref_forces

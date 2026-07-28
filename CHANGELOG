@@ -14,6 +14,7 @@ Version 0.5.0
 * New adsorption protocols ``cp2k-adsorption-mofs-standard_v2.0`` and ``cp2k-crystal-mofs_v4.0`` are added to the ``aiida_workflows.protocols.`` (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
 * New calcjob ``aim2dat.cubecruncher`` to calculate the charge density differences of multiple components is added and is imbedded into the ``aiida_workflows.cp2k.charge_density_difference`` workchain (`PR #202 <https://github.com/aim2dat/aim2dat/pull/202>`_).
 * The ``strct.StructureImporter`` now implements an interface to the Hybrid 3 database (`PR #207 <https://github.com/aim2dat/aim2dat/pull/207>`_).
+* A phonon workflow is added for crystalline semiconductors and insulators, together with the protocols ``cp2k-conventional-crystal-opt_v1.0`` (cell optimization on the conventional cell) and ``cp2k-crystal-phonons-only_v1.1`` (SeekPath reduction to the primitive cell, a fixed-cell confirmatory geometry optimization, and finite-displacement phonons). The ``aiida_workflows.cp2k.PhononWorkChain`` now gates the phonon calculation on a reference-force check of the undisplaced supercell (`PR #213 <https://github.com/aim2dat/aim2dat/pull/213>`_).
 
 **Fixes:**
 
