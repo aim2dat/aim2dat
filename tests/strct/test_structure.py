@@ -234,6 +234,7 @@ def test_list_methods():
         "from_ase_atoms",
         "from_pymatgen_structure",
         "from_aiida_structuredata",
+        "from_phonopy_atoms",
         "from_openmm_simulation",
     ]
     assert Structure.export_methods == [
@@ -242,6 +243,7 @@ def test_list_methods():
         "to_ase_atoms",
         "to_pymatgen_structure",
         "to_aiida_structuredata",
+        "to_phonopy_atoms",
         "to_openmm_simulation",
     ]
     assert Structure.analysis_methods == [

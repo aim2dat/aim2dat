@@ -1,6 +1,7 @@
 """External manipulation methods."""
 
 # Internal library imports
+from aim2dat.strct.ext_manipulation.add_atom import add_atom_prototype
 from aim2dat.strct.ext_manipulation.add_structure import (
     add_structure_random,
     add_structure_coord,
@@ -17,6 +18,7 @@ from aim2dat.strct.ext_manipulation.add_functional_group import (
 
 
 __all__ = [
+    "add_atom_prototype",
     "add_structure_random",
     "add_structure_coord",
     "add_functional_group",
