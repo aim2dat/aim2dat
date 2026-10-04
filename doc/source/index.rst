@@ -33,6 +33,12 @@ The main functionalities related to each of the steps are the following:
    To exploit the produced data, a direct interface to the |sklearn_page| package is given by the `StructureTransformer`
    classes that allow to extract features from crystalline or molecular structures and can be integrated in pipelines (:doc:`more details <ml-overview>`).
 
+If you find this software package useful for your research, please cite:
+
+    Saßnick, Holger-Dietrich, Edzards, Joshua, Reents, Timo, and Cocchi, Caterina
+    *AIM2DAT: a python-based automated ab initio material modeling and data analysis toolkit*
+    Electronic Structure, vol. 8, no. 3, Sept. 2026, p. 037001.
+    |doi|
 
 Feature List
 ============
@@ -117,6 +123,11 @@ The package |precommit_pypi| can be used to run style checks before every commit
     :caption: Changelog
 
     changelog
+
+
+.. |doi| raw:: html
+
+   <a href="https://doi.org/10.1088/2516-1075/ae8964" target="_blank">DOI</a>
 
 
 .. |aiida_page| raw:: html
