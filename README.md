@@ -5,6 +5,14 @@
 aim2dat (Automated Ab Initio Materials Modeling and Data Analysis Toolkit) is a library for pre-, post-processing and data management of ab initio, high-throughput workflows for computational materials science.
 For further details and documentation, please visit https://aim2dat.github.io.
 
+If you find this software package useful for your research, please cite:
+
+> Saßnick, Holger-Dietrich, Edzards, Joshua, Reents, Timo, and Cocchi, Caterina
+> _AIM2DAT: a python-based automated ab initio material modeling and data analysis toolkit_
+> Electronic Structure, vol. 8, no. 3, Sept. 2026, p. 037001.
+> [DOI](https://doi.org/10.1088/2516-1075/ae8964)
+
+
 ## Feature List
 
 * Managing and analysing sets of crystals and molecules.

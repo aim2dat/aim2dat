@@ -10,6 +10,7 @@ import pytest
 # Internal library imports
 from aim2dat.strct import Structure, StructureCollection, StructureOperations
 from aim2dat.strct.ext_manipulation import (
+    add_atom_prototype,
     add_structure_coord,
     add_structure_random,
     add_structure_position,
@@ -453,3 +454,36 @@ def test_translate_structure(structure_comparison):
     ref_strct.set_positions([np.array(pos) + vector for pos in ref_strct.positions])
     new_strct = translate_structure(strct, vector=vector, change_label=True)
     structure_comparison(new_strct, ref_strct)
+
+
+def test_atom_prototype(structure_comparison):
+    """Test add_atom_prototype function."""
+    strct = Structure.from_str("CH3")
+    with pytest.raises(ValueError) as error:
+        new_strct = add_atom_prototype(strct, indices=[0], elements=["H"] * 2, bond_lengths=[1.0])
+    assert str(error.value) == "`elements` and `bond_lengths` must have the same length."
+    with pytest.raises(ValueError) as error:
+        new_strct = add_atom_prototype(
+            strct, indices=[0], elements=["H"] * 2, bond_lengths=[1.0] * 2
+        )
+    assert str(error.value) == "No prototype found for site 0 with coord. 3."
+    new_strct = add_atom_prototype(strct, indices=0, elements=["H"], bond_lengths=[1.0])
+    strct_comp = Structure(
+        elements=list(strct.elements) + ["H"],
+        positions=list(strct.positions) + [[-1.0, 0.0, 0.0]],
+        pbc=False,
+    )
+    structure_comparison(new_strct, strct_comp)
+    strct = Structure(elements=strct.elements[:2], positions=strct.positions[:2], pbc=False)
+    new_strct = add_atom_prototype(strct, indices=0, elements=["H", "H"], bond_lengths=[1.0, 1.0])
+    strct_comp = Structure(
+        elements=["C", "H", "H", "H"],
+        positions=[
+            [0.0000, 0.0000, 0.0000],
+            [0.3632, -0.9923, 0.2659],
+            [0.6220, 0.7827, 0.0223],
+            [-0.9553, 0.1280, -0.2663],
+        ],
+        pbc=False,
+    )
+    structure_comparison(new_strct, strct_comp, tolerance=1.0e-3)
