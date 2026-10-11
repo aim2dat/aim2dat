@@ -68,7 +68,7 @@ crystal_structure_generation = [
     "pyxtal>=0.3.4",
 ]
 phonons = [
-    "phonopy>=2.17.1",
+    "phonopy>=4.2.1",
 ]
 database_interfaces = [
     "msgpack>=1.0.2",
@@ -93,7 +93,7 @@ tests = [
     "seekpath>=2.0.1",
     "pyxtal>=0.3.4",
     "boto3>=1.25",
-    "phonopy>=2.17.1",
+    "phonopy>=4.2.1",
     "qmpy_rester>=0.2.0",
     "mofdb_client>=0.10.0",
     "openmm>=8.2.0",

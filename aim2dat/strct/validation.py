@@ -69,7 +69,7 @@ def _structure_validate_positions(positions, is_cartesian, cell, inv_cell, pbc, 
     else:
         pos2check = []
         for pos in positions_scaled:
-            pos2check.append([round(pos[i], 3) % 1 if pbc[i] else pos[i] for i in range(3)])
+            pos2check.append([pos[i] % 1 if pbc[i] else pos[i] for i in range(3)])
 
     if check_overlap:
         dist_m = cdist(pos2check, pos2check)

@@ -244,10 +244,14 @@ class Cp2kStandardParser(_Cp2kBaseParser):
             self.out("output_eigenvalues", Dict(dict=ev_info))
         if "forces" in result_dict:
             forces = result_dict.pop("forces")
-            forces_array = ArrayData()
-            forces_array.set_array(
-                "forces", np.array([result["atom_forces"] for result in forces])
+            atom_forces = np.array([result["atom_forces"] for result in forces])
+            settings = (
+                self.node.inputs.settings.get_dict() if "settings" in self.node.inputs else {}
             )
+            if settings.get("output_remove_force_drift", False):
+                atom_forces = atom_forces - np.mean(atom_forces, axis=0)
+            forces_array = ArrayData()
+            forces_array.set_array("forces", atom_forces)
             self.out("output_forces", forces_array)
         self.out("output_parameters", Dict(dict=result_dict))
 
