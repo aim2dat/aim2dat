@@ -1,5 +1,8 @@
 """Plot class for radial distribution functions."""
 
+# Standard library imports
+from typing import Union
+
 # Third party library imports
 import numpy as np
 
@@ -16,20 +19,98 @@ class PartialRDFPlot(_BasePlot):
     def __init__(self, custom_linestyles=["solid", "dashed", "dotted", "dashdot"], **kwargs):
         """Initialize object."""
         _BasePlot.__init__(self, custom_linestyles=custom_linestyles, **kwargs)
+        self._el_pairs = None
         self._el_pairs_color_indices = {}
         self._x_unit = None
 
     @property
-    def x_unit(self):
+    def element_pairs(self) -> Union[tuple, None]:
+        """Set element pairs (and order) to b plotted."""
+        return self._el_pairs
+
+    @element_pairs.setter
+    def element_pairs(self, value: list):
+        if value is not None:
+            value = tuple(value)
+        self._el_pairs = value
+
+    @property
+    def x_unit(self) -> Union[str, None]:
         """Set unit of the x coordinate."""
         return self._x_unit
 
     @x_unit.setter
-    def x_unit(self, value):
+    def x_unit(self, value: str):
         value = value.lower()
         if value not in UnitConverter.available_units:
-            raise ValueError(f"{value} as unit not supported.")
+            raise ValueError(f"'{value}' is not a supported unit.")
         self._x_unit = value
+
+    def import_rdf(
+        self,
+        data_label: str,
+        bins: list,
+        rdf_prefix: Union[str, None] = "el_",
+        x_unit: Union[str, None] = None,
+        **rdfs,
+    ):
+        """
+        Import a data set of radial distribution functions.
+
+        Parameters
+        ----------
+        data_label : str
+            Internal label used to plot and compare multiple data sets.
+        bins : list
+            Bins of the distance.
+        rdf_tpye : str or None
+            If not ``None`` only radial distribution functions with the specific prefix are
+            imported, i.e. ``'el_'`` or ``'atomic'``.
+        x_unit : str or None
+            Unit of the x-axis.
+        rdfs :
+            Element pairs and rdf functions as keys and values.
+        """
+        self._check_data_label(data_label)
+        coord_factor, self._x_unit = self._set_unit_conv_factor(x_unit, self._x_unit)
+        bins = np.array(bins) * coord_factor
+
+        # Choose which element pairs to plot and in which order:
+        el_pair_map = {}
+        for rdf_label in rdfs.keys():
+            el_pair = None
+            if rdf_prefix is not None:
+                if rdf_label.startswith(rdf_prefix):
+                    el_pair = rdf_label[len(rdf_prefix) :]
+            else:
+                el_pair = rdf_label
+            if el_pair is not None:
+                el_pair_map[el_pair] = rdf_label
+        el_pairs = el_pair_map.keys() if self.element_pairs is None else self.element_pairs
+
+        data_sets = []
+        for el_pair in el_pairs:
+            if el_pair not in el_pair_map:
+                continue
+
+            if el_pair not in self._el_pairs_color_indices:
+                self._el_pairs_color_indices[el_pair] = (
+                    max(list(self._el_pairs_color_indices.values()) + [-1]) + 1
+                )
+
+            data_sets.append(
+                {
+                    "x_values": bins,
+                    "y_values": rdfs[el_pair_map[el_pair]],
+                    "type": "scatter",
+                    "color": self._el_pairs_color_indices[el_pair],
+                    "legendgrouptitle_text": el_pair,
+                    "legendgroup": el_pair,
+                    "label": data_label,
+                    "group_by": "color",
+                }
+            )
+        self._data[data_label] = data_sets
 
     def import_ffingerprint(
         self,
@@ -53,31 +134,23 @@ class PartialRDFPlot(_BasePlot):
         x_unit : str or None (optional)
             Unit of the x-axis.
         """
-        self._check_data_label(data_label)
-        data_sets = []
+        from warnings import warn
 
-        coord_factor, self._x_unit = self._set_unit_conv_factor(x_unit, self._x_unit)
+        warn(
+            "This function will be removed soon, please use the `import_rdf` instead.",
+            DeprecationWarning,
+            2,
+        )
 
-        bins = np.array(bins) * coord_factor
-
-        for el_pair, fingerprint in fingerprints.items():
-            if el_pair not in self._el_pairs_color_indices:
-                self._el_pairs_color_indices[el_pair] = (
-                    max(list(self._el_pairs_color_indices.values()) + [-1]) + 1
-                )
-            data_sets.append(
-                {
-                    "x_values": bins,
-                    "y_values": fingerprint,
-                    "type": "scatter",
-                    "color": self._el_pairs_color_indices[el_pair],
-                    "legendgrouptitle_text": el_pair[0] + "-" + el_pair[1],
-                    "legendgroup": el_pair[0] + "-" + el_pair[1],
-                    "label": data_label,
-                    "group_by": "color",
-                }
-            )
-        self._data[data_label] = data_sets
+        proc_fingerprints = {}
+        for el_pair, fprint in fingerprints.items():
+            proc_fingerprints[el_pair[0] + "-" + el_pair[1]] = fprint
+        self.import_rdf(
+            data_label=data_label,
+            bins=bins,
+            x_unit=x_unit,
+            **proc_fingerprints,
+        )
 
     def _prepare_to_plot(self, data_labels, subplot_assignment):
         data_sets_plot = [[] for idx0 in range(max(subplot_assignment) + 1)]

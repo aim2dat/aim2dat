@@ -54,15 +54,13 @@ def ffprint_cosine(fprint1, fprint2):
             raise ValueError("F-Fingerprints are not compatible.")
 
         counter = 0
-        fprints_proc = {"fingerprints": {}}
+        fprints_proc = {}
         for idx0 in range(n_elements):
             for idx1 in range(idx0, n_elements):
                 if str(idx0) in element_dict and str(idx1) in element_dict:
                     start_idx = int(fprint[0]) + counter * len_fprint
                     end_idx = start_idx + len_fprint
-                    fprints_proc["fingerprints"][(str(idx0), str(idx1))] = fprint[
-                        start_idx:end_idx
-                    ]
+                    fprints_proc[f"el_{idx0}-{idx1}"] = fprint[start_idx:end_idx]
                 counter += 1
         element_dicts.append(element_dict)
         fprints.append(fprints_proc)

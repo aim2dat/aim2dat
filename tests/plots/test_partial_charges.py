@@ -1,4 +1,4 @@
-"""Test spectrum plots."""
+"""Test partial charges plots."""
 
 # Standard library imports
 import os

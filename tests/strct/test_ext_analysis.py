@@ -5,6 +5,7 @@ import os
 
 # Third party library imports
 import pytest
+import numpy as np
 
 # Internal library imports
 from aim2dat.strct import Structure
@@ -120,33 +121,13 @@ def test_ffingerprint_order_parameters(structure, ref_order_p):
 @pytest.mark.parametrize("structure", ["Cs2Te_62_prim", "GaAs_216_conv", "GaAs_216_prim"])
 def test_prdf_functions(structure, nested_dict_comparison):
     """Test partial radial distribution calculation."""
-    ref = read_yaml_file(REF_PATH + "calc_prdf_" + structure + ".yaml")
+    parameters = {"r_max": 10.0, "delta_bin": 0.1}
+    ref = np.load(REF_PATH + "calc_prdf_" + structure + ".npz")
     strct = Structure.from_file(STRUCTURES_PATH + structure + ".yaml", backend="internal")
-    element_prdf, atomic_prdf = calc_prdf(strct, **ref["parameters"])
-    assert len(element_prdf) == len(ref["element_prdf"]), "Wrong number of el-pairs."
-    for el_pair, prdf in element_prdf.items():
-        assert el_pair in ref["element_prdf"], f"Element pair {el_pair} not in reference output."
-        assert all(
-            [
-                abs(val0 - ref["element_prdf"][el_pair][idx]) < 1.0e-5
-                for idx, val0 in enumerate(prdf)
-            ]
-        ), f"Element prdf is wrong for element pair {el_pair}."
-    assert len(atomic_prdf) == len(ref["atomic_prdf"]), "Wrong number of sites."
-    for site_idx, site in enumerate(atomic_prdf):
-        assert len(site) == len(
-            ref["atomic_prdf"][site_idx]
-        ), f"Wrong number of element pairs for site {site_idx}."
-        for el_pair, prdf in site.items():
-            assert (
-                el_pair in ref["atomic_prdf"][site_idx]
-            ), f"Element pair {el_pair} not in atomic prdf."
-            assert all(
-                [
-                    abs(val0 - ref["atomic_prdf"][site_idx][el_pair][idx]) < 1.0e-5
-                    for idx, val0 in enumerate(prdf)
-                ]
-            ), f"Atomic prdf is wrong for element pair {el_pair} at site {site_idx}."
+    prdfs = calc_prdf(strct, **parameters)
+    for key in ref.keys():
+        assert key in prdfs, f"Key {key} not present."
+        np.testing.assert_allclose(prdfs[key], ref[key], rtol=1.0e-5)
 
 
 @pytest.mark.parametrize(

@@ -17,8 +17,7 @@ def calc_prdf(
     distinguish_kinds: bool = False,
 ) -> Tuple[dict, dict]:
     """
-    Calculate the partial radial distribution function. The calculation is based on:
-    :doi:`10.1103/PhysRevB.89.205118`.
+    Calculate the partial radial distribution function.
 
     Parameters
     ----------
@@ -41,12 +40,14 @@ def calc_prdf(
         Dictionary containing all individual partial radial distribution functions for each
         atomic site.
     """
-    bins, element_prdf, atomic_prdf = _calculate_prdf(
-        structure, r_max, delta_bin, distinguish_kinds, "prdf"
-    )
-    for el_pair, prdf in element_prdf.items():
-        element_prdf[el_pair] = prdf.tolist()
-    for idx, prdfs in enumerate(atomic_prdf):
-        for el_pair, prdf in prdfs.items():
-            atomic_prdf[idx][el_pair] = prdf.tolist()
-    return (element_prdf, atomic_prdf)
+    rdfs = _calculate_prdf(structure, r_max, delta_bin, distinguish_kinds, "prdf")
+
+    for key, rdf in rdfs.items():
+        if key.startswith("el_"):
+            rdfs[key] = rdf.tolist()
+        elif key.startswith("atomic_"):
+            atomic_rdf = []
+            for sit_idx, value in enumerate(rdf):
+                atomic_rdf.append(value.tolist())
+            rdfs[key] = atomic_rdf
+    return rdfs

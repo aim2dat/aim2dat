@@ -101,7 +101,7 @@ def _structure_validate_el_pos(
         raise ValueError("`elements` and `positions` must have the same length.")
     elements = _structure_validate_elements(elements)
     positions_cart, positions_scaled = _structure_validate_positions(
-        positions, is_cartesian, cell, inv_cell, pbc
+        positions, is_cartesian, cell, inv_cell, pbc, check_overlap=True
     )
     if cell is None:
         positions_scaled = None
