@@ -587,7 +587,9 @@ class StructureFFPrintTransformer(_BaseStructureTransformer):
 
     def _fit(self, X, y=None):
         self.elements_ = _get_all_elements(X, self.distinguish_kinds)
-        self.el_pairs_ = list(itertools.combinations_with_replacement(self.elements_, 2))
+        self.el_pairs_ = [
+            sorted(list(v)) for v in itertools.combinations_with_replacement(self.elements_, 2)
+        ]
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
         return strct_op[label_list].calc_ffingerprint(**input_p)
@@ -614,11 +616,11 @@ class StructureFFPrintTransformer(_BaseStructureTransformer):
             )
             for el_idx, el in enumerate(self.elements_):
                 features[idx][3 + el_idx] = el_dict.get(el, 0.0)
-            for el_pair, fprint in fprints[0]["fingerprints"].items():
-                if el_pair in self.el_pairs_:
+            for el_pair in self.el_pairs_:
+                if f"el_{el_pair[0]}-{el_pair[1]}" in fprints:
                     start_idx = header_size + self.el_pairs_.index(el_pair) * len_ffprint
                     end_idx = start_idx + len_ffprint
-                    features[idx][start_idx:end_idx] = fprint
+                    features[idx][start_idx:end_idx] = fprints[f"el_{el_pair[0]}-{el_pair[1]}"]
         return features
 
 
@@ -662,8 +664,10 @@ class StructurePRDFTransformer(_BaseStructureTransformer):
         self.distinguish_kinds = distinguish_kinds
 
     def _fit(self, X, y=None):
-        all_elements = _get_all_elements(X, self.distinguish_kinds)
-        self.el_pairs_ = list(itertools.product(all_elements, repeat=2))
+        self.elements_ = _get_all_elements(X, self.distinguish_kinds)
+        self.el_pairs_ = [
+            sorted(list(v)) for v in itertools.combinations_with_replacement(self.elements_, 2)
+        ]
 
     def _get_strct_op_properties(self, label_list, strct_op, input_p):
         return strct_op[label_list].perform_analysis(method=calc_prdf, kwargs=input_p)
@@ -674,12 +678,13 @@ class StructurePRDFTransformer(_BaseStructureTransformer):
         features = np.zeros((len(label_list), len(self.el_pairs_) * len_prdf))
         all_prdfs = self._get_strct_op_properties(label_list, strct_op, input_p)
         for idx, label in enumerate(label_list):
-            prdfs = all_prdfs[label][0]
-            for el_pair, prdf in prdfs.items():
-                if el_pair in self.el_pairs_:
+            for el_pair in self.el_pairs_:
+                if f"el_{el_pair[0]}-{el_pair[1]}" in all_prdfs[label]:
                     start_idx = self.el_pairs_.index(el_pair) * len_prdf
                     end_idx = start_idx + len_prdf
-                    features[idx][start_idx:end_idx] = prdf
+                    features[idx][start_idx:end_idx] = all_prdfs[label][
+                        f"el_{el_pair[0]}-{el_pair[1]}"
+                    ]
         return features
 
 

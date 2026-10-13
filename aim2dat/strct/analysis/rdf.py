@@ -22,41 +22,36 @@ def calc_ffingerprint(structure, r_max, delta_bin, sigma, use_legacy_smearing, d
             raise ValueError("If `distinguish_kinds` is true, all `kinds` must be unequal None.")
         elements_uc = structure["kinds"]
         element_dict = structure._kind_dict
-    bins, el_rdf, atomic_rdf = _calculate_prdf(
-        structure, r_max, delta_bin, distinguish_kinds, "ffingerprint"
-    )
+    fingerprints = _calculate_prdf(structure, r_max, delta_bin, distinguish_kinds, "ffingerprint")
 
     if use_legacy_smearing:
         sigma /= delta_bin
 
     # Subtract 1, smear out RDFs and add fingerprints to structure:
-    element_fingerprints = {"bins": bins, "fingerprints": {}}
-    for el_pair in itertools.combinations_with_replacement(element_dict.keys(), 2):
-        el_pair = tuple(sorted(el_pair))
-        fingerprint = apply_smearing(el_rdf[el_pair], sigma=sigma, method="gaussian")
-        fingerprint -= 1.0
-        element_fingerprints["fingerprints"][el_pair] = fingerprint.tolist()
-
-    atomic_fingerprints = []
-    for atom_idx, atom_fps in enumerate(atomic_rdf):
-        atomic_fprint = {"bins": bins, "fingerprints": {}}
-        element0 = elements_uc[atom_idx]
-        for element in element_dict.keys():
-            el_tuple = tuple(sorted([element0, element]))
-            atom_fps[element] *= len(element_dict[element0])
-            fingerprint = apply_smearing(atom_fps[element], sigma=sigma, method="gaussian")
+    for key, rdf in fingerprints.items():
+        if key.startswith("el_"):
+            fingerprint = apply_smearing(rdf, sigma=sigma, method="gaussian")
             fingerprint -= 1.0
-            atomic_fprint["fingerprints"][el_tuple] = fingerprint.tolist()
-        atomic_fingerprints.append(atomic_fprint)
-    return (element_fingerprints, atomic_fingerprints)
+            fingerprints[key] = fingerprint.tolist()
+        elif key.startswith("atomic_"):
+            atomic_rdf = []
+            for sit_idx, value in enumerate(rdf):
+                el1 = elements_uc[sit_idx]
+                value *= len(element_dict[el1])
+                value = apply_smearing(value, sigma=sigma, method="gaussian")
+                value -= 1.0
+                atomic_rdf.append(value.tolist())
+            fingerprints[key] = atomic_rdf
+    return fingerprints
 
 
 def _calculate_prdf(structure, r_max, delta_bin, distinguish_kinds, method):
     def _get_weights(el_pair, el_dict, delta_bin, distances, volume, method):
+        el_product = len(element_dict[el_pair[0]]) * len(element_dict[el_pair[1]])
         if method == "prdf":
             b_min = distances - distances % delta_bin
             b_max = distances - distances % delta_bin + delta_bin
-            return 3.0 / (4.0 * np.pi * (b_max**3.0 - b_min**3.0) * len(element_dict[el_pair[0]]))
+            return 3.0 * volume / (4.0 * np.pi * (b_max**3.0 - b_min**3.0) * el_product)
         elif method == "ffingerprint":
             el_product = len(element_dict[el_pair[0]]) * len(element_dict[el_pair[1]])
             return volume / (4.0 * delta_bin * np.pi * distances**2.0 * el_product)
@@ -67,6 +62,7 @@ def _calculate_prdf(structure, r_max, delta_bin, distinguish_kinds, method):
     elements_sc, kinds_sc, positions_sc, indices_sc, _, _ = _create_supercell_positions(
         structure, r_max
     )
+
     element_dict = structure._element_dict
     if distinguish_kinds:
         if any(k is None for k in structure.kinds):
@@ -95,8 +91,9 @@ def _calculate_prdf(structure, r_max, delta_bin, distinguish_kinds, method):
     # Create array of bins corresponding to each distance value
     bins_idx = np.floor(distance_matrix / delta_bin).astype(int)
 
-    el_rdf = {}
-    for el_pair in itertools.product(element_dict.keys(), element_dict.keys()):
+    rdfs = {"bins": bins}
+    for el_pair in itertools.combinations_with_replacement(element_dict.keys(), 2):
+        el_pair = tuple(sorted(el_pair))
         el_tuple_mask = (mapped_elements_uc == el_mapping[el_pair[0]]) & (
             mapped_elements_sc == el_mapping[el_pair[1]]
         )
@@ -104,43 +101,58 @@ def _calculate_prdf(structure, r_max, delta_bin, distinguish_kinds, method):
         bins_idx0 = bins_idx[mask]
         distances = distance_matrix[mask]
         weights = _get_weights(el_pair, element_dict, delta_bin, distances, volume, method)
-        el_rdf[el_pair] = np.bincount(bins_idx0, weights=weights, minlength=len(bins)).astype(
-            float
-        )
-    atomic_rdf = []
-    for site_idx, el1 in enumerate(elements_uc):
-        site_rdf = {}
-        for el2 in element_dict.keys():
-            el_tuple_mask = (mapped_elements_sc == el_mapping[el2]).reshape(-1)
+        rdfs[f"el_{el_pair[0]}-{el_pair[1]}"] = np.bincount(
+            bins_idx0, weights=weights, minlength=len(bins)
+        ).astype(float)
+
+    for el in element_dict.keys():
+        site_rdf = np.zeros((len(structure), len(bins)))
+        for site_idx, el1 in enumerate(elements_uc):
+            el_tuple_mask = (mapped_elements_sc == el_mapping[el]).reshape(-1)
             mask = np.logical_and(general_mask[site_idx], el_tuple_mask)
             distances = distance_matrix[site_idx][mask]
             bins_idx0 = bins_idx[site_idx][mask]
-            weights = _get_weights([el1, el2], element_dict, delta_bin, distances, volume, method)
-            site_rdf[el2] = np.bincount(bins_idx0, weights=weights, minlength=len(bins)).astype(
-                float
-            )
-        atomic_rdf.append(site_rdf)
-    return bins, el_rdf, atomic_rdf
+            weights = _get_weights([el1, el], element_dict, delta_bin, distances, volume, method)
+            site_rdf[site_idx] = np.bincount(
+                bins_idx0, weights=weights, minlength=len(bins)
+            ).astype(float)
+        rdfs[f"atomic_{el}"] = site_rdf
+    return rdfs
 
 
-def _ffingerprint_compare_sites(
-    structures, site_indices, calc_properties, distinguish_kinds, use_weights
-):
-    element_dicts = [strct._element_dict for strct in structures]
+def _ffingerprint_compare_sites(structures, site_indices, fprints, distinguish_kinds, use_weights):
     if distinguish_kinds:
         element_dicts = [strct._kind_dict for strct in structures]
-    return _ffingerprint_compare(
-        element_dicts,
-        [calc_properties[idx][1][site_indices[idx]] for idx in range(2)],
-        use_weights,
-    )
+        site_indices = [(idx, strct.kinds[idx]) for idx, strct in zip(site_indices, structures)]
+    else:
+        element_dicts = [strct._element_dict for strct in structures]
+        site_indices = [(idx, strct.elements[idx]) for idx, strct in zip(site_indices, structures)]
+    return _ffingerprint_compare(element_dicts, fprints, use_weights, site_indices=site_indices)
 
 
-def _ffingerprint_compare(element_dicts, fprints, use_weights):
+def _ffingerprint_compare(element_dicts, fprints, use_weights, site_indices=None, elements=None):
     """
-    Calculate the cosine distance of f-fingerprints, if site_index1 and site_index2 are -1,
+    Calculate the cosine distance of f-fingerprints, if site_indices is ``None``,
     elemental fingerprints are calculated otherwise atomic ones are used.
     """
+    el_pairs = [
+        tuple(sorted(v))
+        for v in itertools.combinations_with_replacement(element_dicts[0].keys(), 2)
+    ]
+    if site_indices is None:
+        used_fprints = [
+            {el_pair: fprint[f"el_{el_pair[0]}-{el_pair[1]}"] for el_pair in el_pairs}
+            for fprint in fprints
+        ]
+    else:
+        used_fprints = [
+            {
+                tuple(sorted([el, el2])): fprint[f"atomic_{el}"][idx]
+                for el in element_dicts[0].keys()
+            }
+            for (idx, el2), fprint in zip(site_indices, fprints)
+        ]
+
     # Get weights:
     if use_weights:
         weights1 = _calculate_weights(element_dicts[0])
@@ -152,12 +164,12 @@ def _ffingerprint_compare(element_dicts, fprints, use_weights):
             for el_pair1, weight1 in weights1.items()
         }
     else:
-        weights1 = {el_pair1: 1.0 for el_pair1 in fprints[0]["fingerprints"].keys()}
+        weights1 = {el_pair1: 1.0 for el_pair1 in el_pairs}
         weights2 = weights1
         av_weights = weights1
 
     # Calculate the distance of between the two fingerprints and return it:
-    return _calculate_cosine_dist(fprints[0], fprints[1], weights1, weights2, av_weights)
+    return _calculate_cosine_dist(used_fprints[0], used_fprints[1], weights1, weights2, av_weights)
 
 
 def _calculate_weights(element_dict):
@@ -179,9 +191,9 @@ def _calculate_cosine_dist(vectors1, vectors2, weights1, weights2, av_weights):
     distance = 0.0
     norm1 = 0.0
     norm2 = 0.0
-    for el_pair in vectors1["fingerprints"].keys():
-        y_values1 = np.array(vectors1["fingerprints"][el_pair])
-        y_values2 = np.array(vectors2["fingerprints"][el_pair])
+    for el_pair in vectors1.keys():
+        y_values1 = np.array(vectors1[el_pair])
+        y_values2 = np.array(vectors2[el_pair])
         norm1 += (np.linalg.norm(y_values1) ** 2) * weights1[el_pair]
         norm2 += (np.linalg.norm(y_values2) ** 2) * weights2[el_pair]
         distance += np.sum(y_values1 * y_values2) * av_weights[el_pair]

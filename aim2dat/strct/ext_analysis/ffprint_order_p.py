@@ -49,9 +49,9 @@ def calc_ffingerprint_order_p(
 
     def _calc_order_p(delta_bin, fprint, weights, cell_v, n_atoms):
         order_p = 0.0
-        for el_pair in fprint["fingerprints"].keys():
+        for el_pair in fprint.keys():
             prefactor = weights[el_pair] * delta_bin * (cell_v / n_atoms) ** (1.0 / 3.0)
-            order_p += prefactor * np.linalg.norm(np.array(fprint["fingerprints"][el_pair])) ** 2
+            order_p += prefactor * np.linalg.norm(np.array(fprint[el_pair])) ** 2
         return order_p
 
     fprints = structure.calc_ffingerprint(
@@ -63,9 +63,20 @@ def calc_ffingerprint_order_p(
         element_dict = structure._kind_dict
     cell_v = structure["cell_volume"]
     weights = _calculate_weights(element_dict)
-    n_atoms = sum(len(sites) for sites in element_dict.values())
-    el_order_p = _calc_order_p(delta_bin, fprints[0], weights, cell_v, n_atoms)
-    site_order_p = [
-        _calc_order_p(delta_bin, fprint, weights, cell_v, n_atoms) for fprint in fprints[1]
-    ]
+
+    el_fprints = {
+        tuple(key[3:].split("-")): value for key, value in fprints.items() if key.startswith("el_")
+    }
+    el_order_p = _calc_order_p(delta_bin, el_fprints, weights, cell_v, len(structure))
+
+    site_order_p = []
+    for site_idx in range(len(structure)):
+        atomic_fprints = {
+            tuple(sorted([structure.elements[site_idx], key[7:]])): value[site_idx]
+            for key, value in fprints.items()
+            if key.startswith("atomic_")
+        }
+        site_order_p.append(
+            _calc_order_p(delta_bin, atomic_fprints, weights, cell_v, len(structure))
+        )
     return {"order_p": el_order_p, "site_order_p": site_order_p}

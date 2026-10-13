@@ -35,7 +35,7 @@ def _compare_structures_ffprint(
                 sigma=sigma,
                 use_legacy_smearing=use_legacy_smearing,
                 distinguish_kinds=distinguish_kinds,
-            )[0]
+            )
             for strct in structures
         ]
         return _ffingerprint_compare(element_dicts, ffprints, use_weights)
