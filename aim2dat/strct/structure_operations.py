@@ -24,6 +24,7 @@ from aim2dat.strct.comparison import (
     _compare_structures_ffprint,
     _compare_structures_direct_comp,
     _compare_structures_comp_sym,
+    _compare_structures_coord,
 )
 from aim2dat.strct.stability import _calculate_stabilities
 from aim2dat.strct.analysis.coordination import _coordination_compare_sites
@@ -454,6 +455,31 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             keys=(key1, key2),
             threshold=None,
             desc="composition_symmetry_comp",
+            parse_output=True,
+        )
+
+    def compare_structures_via_coordination(
+        self,
+        key1: Union[str, int],
+        key2: Union[str, int],
+        length_threshold: float = 0.08,
+        distinguish_kinds: bool = False,
+        # TODO add coordination kwargs
+    ) -> bool:
+        """
+        TODO docstring.
+        """
+        comp_kwargs = {
+            "length_threshold": length_threshold,
+            "distinguish_kinds": distinguish_kinds,
+        }
+        return self._compare_structures(
+            compare_function=_compare_structures_coord,
+            comp_kwargs=comp_kwargs,
+            confined=None,
+            keys=(key1, key2),
+            threshold=None,
+            desc="coordination_comp",
             parse_output=True,
         )
 

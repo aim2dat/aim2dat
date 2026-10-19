@@ -9,6 +9,7 @@ import numpy as np
 # Internal library imports
 from aim2dat.strct.structure import Structure
 from aim2dat.strct.analysis.rdf import _ffingerprint_compare
+from aim2dat.strct.analysis.coordination import _coordination_compare_sites
 from aim2dat.chem_f import transform_list_to_dict, compare_formulas
 
 
@@ -189,3 +190,88 @@ def _compare_structures_comp_sym(
     if not compare_formulas(formulas[0], formulas[1], reduce_formulas=False):
         return False
     return True
+
+
+def _compare_structures_coord(
+    structure1, structure2, distinguish_kinds, length_threshold, **cn_kwargs
+):
+    # def _check_connected(site1, site2, matched_sites):
+    #     for neigh1 in site1["neighbors"]:
+    #         for neigh2 in site2["neighbours"]:
+
+    # TODO check this, allow only for molecules for now.
+    same_chem_f = compare_formulas(
+        structure1.chem_formula, structure2.chem_formula, reduce_formulas=True
+    )
+    if not same_chem_f:
+        return False
+
+    # Create neighbour lists for each site:
+    comp_type = "kind" if distinguish_kinds else "element"
+    neigh_lists = []
+    coords = []
+    for strct in [structure1, structure2]:
+        neigh_list = []
+        coords.append(structure1.calc_coordination(**cn_kwargs))  # TODO expose cn_kwargs
+        for site in coords[-1]["sites"]:
+            neigh_dict = {k: 0 for k in getattr(strct, f"_{comp_type}_dict")}
+            for neigh in site["neighbours"]:
+                neigh_dict[neigh[comp_type]] += 1
+            neigh_list.append(neigh_dict)
+        neigh_lists.append(neigh_list)
+    print(neigh_lists)
+
+    # First, we match each site that has the same element and neighbours:
+    matched_sites = {i: [] for i in range(len(structure1))}
+    for i, neighs1 in enumerate(neigh_lists[0]):
+        for j, neighs2 in enumerate(neigh_lists[1]):
+            if neighs1 == neighs2:
+                matched_sites[i].append(j)
+    print(matched_sites)
+    if any(len(val) == 0 for val in matched_sites.values()):
+        return False
+
+    # Then we discard sites that don't have the same distances:
+    for i in range(len(structure1)):
+        new_matched_sites = []
+        for j in matched_sites[i]:
+            # if not _check_connected(coords[0]["sites"][i], coord[1]["sites"][j], matched_sites):
+            #    continue
+            if not _coordination_compare_sites(
+                [structure1, structure2], [i, j], coords, distinguish_kinds, length_threshold
+            ):  # TODO expose this
+                continue
+            new_matched_sites.append(j)
+        matched_sites[i] = set(new_matched_sites)
+    print(matched_sites)
+
+    strct_factor = len(structure2) / len(structure1)
+    multiplicities = [0] * len(structure1)
+    for i, sites1 in matched_sites.items():
+        if multiplicities[i] > 0:
+            continue
+
+        target_mult = len(matched_sites[i]) / strct_factor
+        if target_mult == 0:
+            return False
+        elif target_mult == 1:
+            multiplicities[i] = 1
+        else:
+            mult_to_add = [i]
+            for j, sites2 in matched_sites.items():
+                if i == j:
+                    continue
+                if multiplicities[j] > 0:
+                    continue
+                if sites1 == sites2:
+                    mult_to_add.append(j)
+            if len(mult_to_add) != target_mult:
+                return False
+
+            for j in mult_to_add:
+                multiplicities[j] = target_mult
+    print(multiplicities)
+    if all(mult > 0 for mult in multiplicities):
+        return True
+    else:
+        return False
