@@ -193,15 +193,11 @@ def _compare_structures_comp_sym(
 
 
 def _compare_structures_coord(
-    structure1, structure2, distinguish_kinds, length_threshold, **cn_kwargs
+    structure1, structure2, distinguish_kinds, distance_threshold, **cn_kwargs
 ):
-    # def _check_connected(site1, site2, matched_sites):
-    #     for neigh1 in site1["neighbors"]:
-    #         for neigh2 in site2["neighbours"]:
-
-    # TODO check this, allow only for molecules for now.
+    red_f = any(bc for strct in [structure1, structure2] for bc in strct.pbc)
     same_chem_f = compare_formulas(
-        structure1.chem_formula, structure2.chem_formula, reduce_formulas=True
+        structure1.chem_formula, structure2.chem_formula, reduce_formulas=red_f
     )
     if not same_chem_f:
         return False
@@ -212,22 +208,22 @@ def _compare_structures_coord(
     coords = []
     for strct in [structure1, structure2]:
         neigh_list = []
-        coords.append(structure1.calc_coordination(**cn_kwargs))  # TODO expose cn_kwargs
+        coords.append(strct.calc_coordination(**cn_kwargs))
         for site in coords[-1]["sites"]:
             neigh_dict = {k: 0 for k in getattr(strct, f"_{comp_type}_dict")}
             for neigh in site["neighbours"]:
                 neigh_dict[neigh[comp_type]] += 1
             neigh_list.append(neigh_dict)
         neigh_lists.append(neigh_list)
-    print(neigh_lists)
 
     # First, we match each site that has the same element and neighbours:
     matched_sites = {i: [] for i in range(len(structure1))}
+    species1 = getattr(structure1, f"{comp_type}s")
+    species2 = getattr(structure2, f"{comp_type}s")
     for i, neighs1 in enumerate(neigh_lists[0]):
         for j, neighs2 in enumerate(neigh_lists[1]):
-            if neighs1 == neighs2:
+            if species1[i] == species2[j] and neighs1 == neighs2:
                 matched_sites[i].append(j)
-    print(matched_sites)
     if any(len(val) == 0 for val in matched_sites.values()):
         return False
 
@@ -235,16 +231,18 @@ def _compare_structures_coord(
     for i in range(len(structure1)):
         new_matched_sites = []
         for j in matched_sites[i]:
-            # if not _check_connected(coords[0]["sites"][i], coord[1]["sites"][j], matched_sites):
-            #    continue
             if not _coordination_compare_sites(
-                [structure1, structure2], [i, j], coords, distinguish_kinds, length_threshold
-            ):  # TODO expose this
+                [structure1, structure2],
+                [i, j],
+                coords,
+                distinguish_kinds,
+                distance_threshold,
+            ):
                 continue
             new_matched_sites.append(j)
         matched_sites[i] = set(new_matched_sites)
-    print(matched_sites)
 
+    # Calculate multiplicities:
     strct_factor = len(structure2) / len(structure1)
     multiplicities = [0] * len(structure1)
     for i, sites1 in matched_sites.items():
@@ -255,7 +253,7 @@ def _compare_structures_coord(
         if target_mult == 0:
             return False
         elif target_mult == 1:
-            multiplicities[i] = 1
+            multiplicities[i] = 1.0
         else:
             mult_to_add = [i]
             for j, sites2 in matched_sites.items():
@@ -270,7 +268,7 @@ def _compare_structures_coord(
 
             for j in mult_to_add:
                 multiplicities[j] = target_mult
-    print(multiplicities)
+
     if all(mult > 0 for mult in multiplicities):
         return True
     else:
