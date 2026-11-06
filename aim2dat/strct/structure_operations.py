@@ -24,6 +24,7 @@ from aim2dat.strct.comparison import (
     _compare_structures_ffprint,
     _compare_structures_direct_comp,
     _compare_structures_comp_sym,
+    _compare_structures_coord,
 )
 from aim2dat.strct.stability import _calculate_stabilities
 from aim2dat.strct.analysis.coordination import _coordination_compare_sites
@@ -457,6 +458,50 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
             parse_output=True,
         )
 
+    def compare_structures_via_coordination(
+        self,
+        key1: Union[str, int],
+        key2: Union[str, int],
+        distance_threshold: float = 0.1,
+        distinguish_kinds: bool = False,
+        **cn_kwargs,
+    ) -> bool:
+        """
+        Compare two structures based on the coordination of each site.
+
+        Parameters
+        ----------
+        key1 : str, int, list or tuple
+            Index or label of the structure or list/tuple of indices or labels of several
+            structures.
+        key2 : str, int, list, tuple or None
+            Index or label of the structure or list/tuple of indices or labels of several
+            structures. If set to ``None``, all structures given with ``key1`` are compared
+            to each other. Otherwise, ``key1`` and ``key2`` are compared pair-wise (in this
+            case, ``key1`` and ``key2`` must be of same length).
+        distance_threshold : float
+            Distance threshold to consider two neighbouring atoms equivalent.
+        distinguish_kinds: bool (optional)
+            Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
+            different elements if ``True``.
+
+        Returns
+        -------
+        bool
+            Returns ``True`` if the structures match and otherwise ``False``.
+        """
+        cn_kwargs["distance_threshold"] = distance_threshold
+        cn_kwargs["distinguish_kinds"] = distinguish_kinds
+        return self._compare_structures(
+            compare_function=_compare_structures_coord,
+            comp_kwargs=cn_kwargs,
+            confined=None,
+            keys=(key1, key2),
+            threshold=None,
+            desc="coordination_comp",
+            parse_output=True,
+        )
+
     def compare_structures_via_direct_comp(
         self,
         key1: Union[str, int],
@@ -589,6 +634,41 @@ class StructureOperations(AnalysisMixin, ManipulationMixin):
         }
         return self._find_duplicate_structures(
             _compare_structures_comp_sym, comp_kwargs, None, confined, remove_structures
+        )
+
+    def find_duplicates_via_coordination(
+        self,
+        confined: list = None,
+        remove_structures: bool = False,
+        distance_threshold: float = 0.1,
+        distinguish_kinds: bool = False,
+        **cn_kwargs,
+    ) -> List[Tuple[str]]:
+        """
+        Find duplicate structures comparing the coordination of each site.
+
+        Parameters
+        ----------
+        confined : list or None (optional)
+            Confine comparison to a subset of the structure collection by giving a minimum and
+            maximum index.
+        remove_structures : bool (optional)
+            Whether to remove the duplicate structures.
+        distance_threshold : float
+            Distance threshold to consider two neighbouring atoms equivalent.
+        distinguish_kinds: bool (optional)
+            Whether different kinds should be distinguished e.g. Ni0 and Ni1 would be considered as
+            different elements if ``True``.
+
+        Returns
+        -------
+        list
+            List of tuples containing the indices of the found duplicate pairs.
+        """
+        cn_kwargs["distance_threshold"] = distance_threshold
+        cn_kwargs["distinguish_kinds"] = distinguish_kinds
+        return self._find_duplicate_structures(
+            _compare_structures_coord, cn_kwargs, None, confined, remove_structures
         )
 
     def find_duplicates_via_direct_comp(
