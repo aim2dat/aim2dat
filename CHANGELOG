@@ -17,6 +17,7 @@ Version 0.5.0
 * A phonon workflow is added for crystalline semiconductors and insulators, together with the protocols ``cp2k-conventional-crystal-opt_v1.0`` (cell optimization on the conventional cell) and ``cp2k-crystal-phonons-only_v1.1`` (SeekPath reduction to the primitive cell, a fixed-cell confirmatory geometry optimization, and finite-displacement phonons). The ``aiida_workflows.cp2k.PhononWorkChain`` now gates the phonon calculation on a reference-force check of the undisplaced supercell (`PR #213 <https://github.com/aim2dat/aim2dat/pull/213>`_).
 * The newly implemented ``strct.ext_manipulation.add_atom_prototype`` function allows to add atoms at specific sites such that a tetrahedral, planar trigonal or linear geometry is obtained (`PR #214 <https://github.com/aim2dat/aim2dat/pull/214>`_).
 * The newly implemented ``strct.StructureOperations.compare_structures_via_coordination`` and ``strct.StructureOperations.find_duplicates_via_coordination`` functions allow to compare structures and find duplicate structures via the coordination of the atomic sites (`PR #217 <https://github.com/aim2dat/aim2dat/pull/217>`_).
+* A new set of atomic radii was added, specifically designed to determine the coordination environment of atomic sites (`PR #218 <https://github.com/aim2dat/aim2dat/pull/218>`_).
 
 **Fixes:**
 

@@ -40,6 +40,7 @@ def get_atomic_radius(element, radius_type="covalent"):
     * ``'vdw'`` are from :doi:`10.1039/C3DT50599E`.
     * ``'chen_manz'`` are from :doi:`10.1039/C9RA07327B`.
     * ``'vdw_charry_tkatchenko'`` are from :doi:`10.26434/chemrxiv-2024-m3rtp-v2`.
+    * ``'coord'`` is designed to determine the coordination environment of atomic sites..
 
     Parameters
     ----------
@@ -47,7 +48,7 @@ def get_atomic_radius(element, radius_type="covalent"):
         Atomic number, name or symbol of the element.
     radius_type : str (optional)
         Radius type. Valid options are ``'covalent'``, ``'vdw'``, ``'chen_manz'``,
-        or ``'vdw_charry_tkatchenko'``.
+        ``'vdw_charry_tkatchenko'``, or ``'coord'``.
 
     Returns
     -------
