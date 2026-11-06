@@ -197,6 +197,32 @@ def test_compare_structures_via_ffingerprint(
 
 
 @pytest.mark.parametrize(
+    "structure1,structure2,distinguish_kinds,ref_value",
+    [
+        ("GaAs_216_conv", "GaAs_216_prim", False, True),
+        ("Cs2Te_62_prim", "Cs2Te_19_prim", False, True),
+        ("Cs2Te_62_prim", "Cs2Te_19_prim", True, False),
+    ],
+)
+def test_compare_structures_via_coordination(structure1, structure2, distinguish_kinds, ref_value):
+    """Test structure comparison via coordination."""
+    kwargs = {
+        "method": "voronoi",
+        "distance_threshold": 0.1,
+        "distinguish_kinds": distinguish_kinds,
+    }
+    strct_collect = StructureCollection()
+    for structure in [structure1, structure2]:
+        inputs = dict(read_yaml_file(STRUCTURES_PATH + structure + ".yaml"))
+        strct_collect.append(structure, **inputs)
+    strct_ops = StructureOperations(strct_collect)
+    assert (
+        strct_ops.compare_structures_via_coordination(structure1, structure2, **kwargs)
+        == ref_value
+    )
+
+
+@pytest.mark.parametrize(
     "structure1,structure2,site_index1,site_index2,distinguish_kinds,ref_value",
     [
         ("GaAs_216_conv", "GaAs_216_prim", 0, 0, False, True),
@@ -286,6 +312,7 @@ def test_compare_sites_via_ffingerprint(
         ("comp_sym", [None, 7], False, 1, False, 8),
         ("comp_sym", [1, 10], True, 1, False, 6),
         ("direct_comp", None, True, 1, False, 6),
+        ("coordination", [3, None], True, 1, False, 6),
     ],
 )
 def test_find_duplicates(method, confined, remove_structures, n_procs, verbose, ref):
