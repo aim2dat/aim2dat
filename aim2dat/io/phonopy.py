@@ -177,12 +177,17 @@ def read_phonopy_proj_dos(
         load_parameters, mesh
     )
     # TODO: check equivalent sites?
+
+    # Work around for key change in phonopy.
+    pdos_values = phonopy_pdos.get("projected_dos", None)
+    if pdos_values is None:
+        pdos_values = phonopy_pdos["pdos"]
     pdos = {
         "energy": phonopy_pdos["frequency_points"].tolist(),
         "unit_x": "states/THz/cell",
         "pdos": [
             {"kind": symbol, "total": pdos.tolist()}
-            for symbol, pdos in zip(symbols, phonopy_pdos["projected_dos"])
+            for symbol, pdos in zip(symbols, pdos_values)
         ],
     }
     return pdos
