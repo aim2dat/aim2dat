@@ -19,7 +19,7 @@ with_lines:
       linestyle: '-'
       linewidth: 1.5
       marker: None
-    - color: '#1f77b4'
+    - color: [0.12156862745098039, 0.4666666666666667, 0.7058823529411765]
       xdata: [0.0, 1.0, 2.0, 3.0]
       ydata: [-1.0, 2.0, 3.0, 0.0]
       linestyle: '-'
@@ -39,7 +39,7 @@ with_lines:
       linestyle: '-'
       linewidth: 1.5
       marker: None
-    - color: '#1f77b4'
+    - color: [0.12156862745098039, 0.4666666666666667, 0.7058823529411765]
       xdata: [0.0, 1.0, 2.0, 3.0]
       ydata: [4.0, 1.0, 3.0, 2.0]
       linestyle: '-'
@@ -64,7 +64,7 @@ with_lines:
     legend:
       Test 2: 
         type: line
-        color: '#1f77b4'
+        color: [0.12156862745098039, 0.4666666666666667, 0.7058823529411765]
         xdata: [0.0, 1.0, 2.0, 3.0]
         ydata: [4.0, 1.0, 3.0, 2.0]
         linestyle: '-'
@@ -101,7 +101,7 @@ without_lines:
   n_axes: 2
   axes:
   - lines:
-    - color: '#1f77b4'
+    - color: [0.12156862745098039, 0.4666666666666667, 0.7058823529411765]
       xdata: [0.0, 1.0, 2.0, 3.0]
       ydata: [-1.0, 2.0, 3.0, 0.0]
       linestyle: '-'
@@ -109,7 +109,7 @@ without_lines:
       marker: None
     patches: []
   - lines:
-    - color: '#1f77b4'
+    - color: [0.12156862745098039, 0.4666666666666667, 0.7058823529411765]
       xdata: [0.0, 1.0, 2.0, 3.0]
       ydata: [4.0, 1.0, 3.0, 2.0]
       linestyle: '-'
@@ -134,7 +134,7 @@ without_lines:
     legend:
       Test 2: 
         type: line
-        color: '#1f77b4'
+        color: [0.12156862745098039, 0.4666666666666667, 0.7058823529411765]
         xdata: [0.0, 1.0, 2.0, 3.0]
         ydata: [4.0, 1.0, 3.0, 2.0]
         linestyle: '-'

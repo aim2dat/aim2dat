@@ -30,13 +30,13 @@ ref:
   n_axes: 1
   axes:
   - lines:
-    - color: '#1f77b4'
+    - color: [0.12156862745098039, 0.4666666666666667, 0.7058823529411765]
       xdata: [0.0, 1.0, 2.0, 3.0]
       ydata: [-1.0, 2.0, 3.0, 0.0]
       linestyle: '-'
       linewidth: 1.5
       marker: None
-    - color: '#ff7f0e'
+    - color: [1.0, 0.4980392156862745, 0.054901960784313725]
       xdata: [0.0, 1.0, 2.0, 3.0]
       ydata: [4.0, 1.0, 3.0, 2.0]
       linestyle: '-'
@@ -61,7 +61,7 @@ ref:
     legend:
       Test 2: 
         type: line
-        color: '#ff7f0e'
+        color: [1.0, 0.4980392156862745, 0.054901960784313725]
         xdata: [0.0, 1.0, 2.0, 3.0]
         ydata: [4.0, 1.0, 3.0, 2.0]
         linestyle: '-'

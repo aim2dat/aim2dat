@@ -279,7 +279,8 @@ def matplotlib_figure_comparison():
             _check_patch(patch, ref_dict["patches"][idx0], label + "patch" + str(idx0), tolerance)
 
     def _check_line(line, ref_dict, label, tolerance):
-        assert line.get_color() == ref_dict["color"], f"`color` of {label} doesn't match."
+        color = tuple(ref_dict["color"]) if isinstance(ref_dict["color"], list) else ref_dict["color"]
+        assert line.get_color() == color, f"`color` of {label} doesn't match."
         assert all(
             abs(val0 - val1) < tolerance for val0, val1 in zip(line.get_xdata(), ref_dict["xdata"])
         ), f"`xdata` of {label} doesn't match."
