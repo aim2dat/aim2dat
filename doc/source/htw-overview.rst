@@ -37,8 +37,8 @@ Once the library is installed all relevant work chains for high-throughput workf
 Workflow builder classes
 ========================
 
-The two workflow builder classes, namely the :class:`WorkflowBuilder <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder>` and
-:class:`MultipleWorkflowBuilder <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder>` class,
+The two workflow builder classes, namely the :class:`WorkflowBuilder <aim2dat.wfl.WorkflowBuilder>` and
+:class:`MultipleWorkflowBuilder <aim2dat.wfl.MultipleWorkflowBuilder>` class,
 have been implemented to facilitate the design and management of high-throughput workflows, more details are given :doc:`here <htw-workflow_builders>`.
 
 Related examples
@@ -50,8 +50,8 @@ Related examples
 Related API instances
 =====================
 
-* :class:`WorkflowBuilder <aim2dat.aiida_workflows.workflow_builder.WorkflowBuilder>`
-* :class:`MultipleWorkflowBuilder <aim2dat.aiida_workflows.workflow_builder.MultipleWorkflowBuilder>`
+* :class:`WorkflowBuilder <aim2dat.wfl.WorkflowBuilder>`
+* :class:`MultipleWorkflowBuilder <aim2dat.wfl.MultipleWorkflowBuilder>`
 
 
 .. |aiida_page| raw:: html
