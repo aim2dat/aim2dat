@@ -19,7 +19,7 @@ from aiida.plugins.entry_point import format_entry_point_string
 from aim2dat.strct import Structure, StructureCollection
 from aim2dat.aiida_data.surface_data import SurfaceData
 from aim2dat.io import read_yaml_file
-from aim2dat.aiida_workflows.utils import create_aiida_node
+from aim2dat.wfl.aiida.utils import create_aiida_node
 from aim2dat.utils.dict_tools import dict_set_parameter
 
 

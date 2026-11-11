@@ -8,8 +8,8 @@ import pytest
 
 # Internal library import
 from aim2dat.io import read_yaml_file
-from aim2dat.aiida_workflows.utils import create_aiida_node
-from aim2dat.aiida_workflows.cp2k.cube_work_chain import (
+from aim2dat.wfl.aiida.utils import create_aiida_node
+from aim2dat.wfl.aiida.cp2k.cube_work_chain import (
     _validate_cube_types,
     _setup_wc_specific_inputs,
 )

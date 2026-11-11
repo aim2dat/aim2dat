@@ -10,7 +10,7 @@ from aim2dat.utils.dict_tools import (
     dict_set_parameter,
     dict_merge,
 )
-from aim2dat.aiida_workflows.cp2k.core_work_chain_scf import (
+from aim2dat.wfl.aiida.cp2k.core_work_chain_scf import (
     _update_scf_parameters,
     _iterate_scf_parameters,
 )
