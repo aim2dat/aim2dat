@@ -1,33 +1,20 @@
-"""
-Parsers for the cubecruncher software package.
-"""
+"""Deprecated module redirecting to the new wfl sub-package."""
 
-# Standard library imports
-import pathlib
-
-# Third party library imports
-from aiida.parsers import Parser
-from aiida.plugins import DataFactory
+# Internal library imports
+import aim2dat.wfl.aiida.cubecruncher as aiida_cuberuncher
 
 
-GCubeData = DataFactory("aim2dat.gaussian_cube")
+class CubecruncherParser(aiida_cuberuncher.parsers.CubecruncherParser):
+    """Deprecated parser class."""
 
+    def __init__(self, *args, **kwargs):
+        """Initialize class."""
+        from warnings import warn
 
-class CubecruncherParser(Parser):
-    """
-    Output parser for the cubecruncher software package.
-    """
-
-    def parse(self, **kwargs):
-        """Receives in input a dictionary of retrieved nodes. Does all the logic here."""
-        retrieved_temporary_folder = kwargs.get("retrieved_temporary_folder", None)
-
-        try:
-            temporary_folder = pathlib.Path(retrieved_temporary_folder)
-
-            for subpath in temporary_folder.iterdir():
-                if subpath.is_file():
-                    g_cube_data = GCubeData.set_from_file(subpath)
-                self.out("cdd_cube", g_cube_data)
-        except OSError:
-            return self.exit_codes.ERROR_READING_OUTPUT_FILE
+        warn(
+            "This class will be removed, please use "
+            + "`aim2dat.wfl.aiida.cubecruncher.parsers.CubecruncherParser` instead.",
+            DeprecationWarning,
+            2,
+        )
+        super().__init__(*args, **kwargs)

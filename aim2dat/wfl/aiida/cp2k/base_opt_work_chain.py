@@ -12,9 +12,9 @@ from aiida.engine import (
 )
 
 # Internal library imports
-from aim2dat.aiida_workflows.cp2k.base_core_work_chain import _BaseCoreWorkChain
-from aim2dat.aiida_workflows.cp2k.core_work_chain_opt import _initialize_opt_parameters
-from aim2dat.aiida_workflows.cp2k.core_work_chain_handlers import (
+from aim2dat.wfl.aiida.cp2k.base_core_work_chain import _BaseCoreWorkChain
+from aim2dat.wfl.aiida.cp2k.core_work_chain_opt import _initialize_opt_parameters
+from aim2dat.wfl.aiida.cp2k.core_work_chain_handlers import (
     _resubmit_calculation,
     _resubmit_unconverged_geometry,
 )

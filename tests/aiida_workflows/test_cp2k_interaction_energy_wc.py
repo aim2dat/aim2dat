@@ -12,7 +12,7 @@ from aiida.engine import run_get_node
 
 # Internal library imports
 from aim2dat.io import read_yaml_file
-from aim2dat.aiida_workflows.cp2k.interaction_energy_work_chain import _setup_wc_specific_inputs
+from aim2dat.wfl.aiida.cp2k.interaction_energy_work_chain import _setup_wc_specific_inputs
 
 
 InteractionEnergyWC = WorkflowFactory("aim2dat.cp2k.interaction_energy")

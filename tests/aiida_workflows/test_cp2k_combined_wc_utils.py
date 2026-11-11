@@ -9,13 +9,13 @@ import aiida.orm as aiida_orm
 from aiida.common.extendeddicts import AttributeDict
 
 # Internal library imports
-from aim2dat.aiida_workflows.cp2k.surface_opt_utils import (
+from aim2dat.wfl.aiida.cp2k.surface_opt_utils import (
     surfopt_setup,
     surfopt_should_run_slab_conv,
     surfopt_should_run_add_calc,
 )
-from aim2dat.aiida_workflows.utils import obtain_value_from_aiida_node
-from aim2dat.aiida_workflows.cp2k.el_properties_utils import elprop_setup
+from aim2dat.wfl.aiida.utils import obtain_value_from_aiida_node
+from aim2dat.wfl.aiida.cp2k.el_properties_utils import elprop_setup
 from aim2dat.io import read_yaml_file
 from aim2dat.strct import Structure, SurfaceGeneration
 

@@ -1,6 +1,4 @@
-"""
-Aiida work chains for cp2k to find parameters that converge the Kohn-Sham equations.
-"""
+"""Deprecated module redirecting to the new wfl sub-package."""
 
 # Third party library imports
 import aiida.orm as aiida_orm

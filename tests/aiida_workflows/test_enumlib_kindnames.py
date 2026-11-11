@@ -5,7 +5,7 @@ import pytest
 import aiida.orm as aiida_orm
 
 # Internal library imports
-from aim2dat.aiida_workflows.enumlib.utils import get_kindnames
+from aim2dat.wfl.aiida.enumlib.utils import get_kindnames
 
 # aiida.load_profile("test_profile")
 

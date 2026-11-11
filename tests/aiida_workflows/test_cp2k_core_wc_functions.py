@@ -9,8 +9,8 @@ from aiida.orm import SinglefileData
 
 # Internal library imports
 from aim2dat.io import read_yaml_file
-from aim2dat.aiida_workflows.cp2k.core_work_chain_inputs import _set_input_parameters
-from aim2dat.aiida_workflows.cp2k.core_work_chain_scf import _initialize_scf_parameters
+from aim2dat.wfl.aiida.cp2k.core_work_chain_inputs import _set_input_parameters
+from aim2dat.wfl.aiida.cp2k.core_work_chain_scf import _initialize_scf_parameters
 
 REF_PATH = os.path.dirname(__file__) + "/cp2k/inputs/"
 

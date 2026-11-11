@@ -15,21 +15,21 @@ from aiida.plugins import CalculationFactory
 from aiida.common import AttributeDict
 
 # Internal library imports
-from aim2dat.aiida_workflows.cp2k.auxiliary_functions import (
+from aim2dat.wfl.aiida.cp2k.auxiliary_functions import (
     return_scf_parameters,
     return_runtime_stats,
 )
-from aim2dat.aiida_workflows.cp2k.core_work_chain_inputs import _set_input_parameters
-from aim2dat.aiida_workflows.cp2k.core_work_chain_scf import (
+from aim2dat.wfl.aiida.cp2k.core_work_chain_inputs import _set_input_parameters
+from aim2dat.wfl.aiida.cp2k.core_work_chain_scf import (
     _initialize_scf_parameters,
     _compare_scf_p,
 )
-from aim2dat.aiida_workflows.cp2k.work_chain_specs import (
+from aim2dat.wfl.aiida.cp2k.work_chain_specs import (
     structural_p_specs,
     numerical_p_specs,
     core_work_chain_exit_codes,
 )
-from aim2dat.aiida_workflows.cp2k.core_work_chain_handlers import (
+from aim2dat.wfl.aiida.cp2k.core_work_chain_handlers import (
     _switch_scf_parameters,
     _switch_to_broyden_mixing,
     _switch_to_open_shell_ks,

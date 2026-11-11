@@ -1,23 +1,4 @@
-"""
-AiiDA work chain for CP2K single-point force evaluations.
-
-This is the per-displacement force calculation used by the phonon workflow. It
-is a thin subclass of :class:`_BaseCoreWorkChain`, so every displacement
-inherits aim2dat's SCF-convergence recovery (atomic-guess fallback, mixing
-switches, open-shell escalation) -- the main reason to run finite-displacement
-phonons *inside* aim2dat rather than with a bare phonopy+CP2K driver.
-
-It differs from the property work chains only in the CP2K parameter block it
-injects: ``RUN_TYPE ENERGY_FORCE`` plus ``FORCE_EVAL/PRINT/FORCES ON`` so that
-the atomic forces appear in the (already-retrieved) CP2K output file, where
-phonopy's CP2K interface can read them.
-
-Proposed entry point (pyproject.toml)::
-
-    [project.entry-points."aiida.workflows"]
-    "aim2dat.cp2k.forces" =
-        "aim2dat.aiida_workflows.cp2k.force_work_chain:ForceWorkChain"
-"""
+"""Deprecated module redirecting to the new wfl sub-package."""
 
 # Third party library imports
 import aiida.orm as aiida_orm

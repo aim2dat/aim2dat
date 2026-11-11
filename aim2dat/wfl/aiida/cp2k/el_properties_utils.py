@@ -6,8 +6,8 @@ Auxiliary functions for the ElectronicPropertiesWorkChain.
 import os
 
 # Internal library imports
-from aim2dat.aiida_workflows._workflow_builder_utils import _load_protocol
-from aim2dat.aiida_workflows.utils import (
+from aim2dat.wfl._workflow_builder_utils import _load_protocol
+from aim2dat.wfl.aiida.utils import (
     create_aiida_node,
     obtain_value_from_aiida_node,
 )
@@ -21,7 +21,7 @@ def elprop_setup(ctx, inputs):
     if "custom_protocol" in inputs:
         protocol_dict = inputs.workflow.custom_protocol.get_dict()
     else:
-        protocol_dict = _load_protocol(inputs.workflow.protocol.value, cwd + "/../protocols/")
+        protocol_dict = _load_protocol(inputs.workflow.protocol.value, cwd + "/../../protocols/")
 
     general_parameters = {}
     if "general_input" in protocol_dict:

@@ -8,7 +8,7 @@ import pytest
 
 # Internal library imports
 from aim2dat.io import read_yaml_file
-import aim2dat.aiida_workflows.cp2k.auxiliary_functions as aux_functions
+import aim2dat.wfl.aiida.cp2k.auxiliary_functions as aux_functions
 
 
 MAIN_PATH = os.path.dirname(__file__) + "/cp2k/test_systems/"

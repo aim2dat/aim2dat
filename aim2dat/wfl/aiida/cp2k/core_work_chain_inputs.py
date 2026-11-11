@@ -8,12 +8,12 @@ import re
 import aiida.orm as aiida_orm
 
 # Internal library imports
-from aim2dat.aiida_workflows.cp2k import _supported_versions
+from aim2dat.wfl.aiida.cp2k import _supported_versions
 from aim2dat.utils.dict_tools import (
     dict_set_parameter,
     dict_retrieve_parameter,
 )
-from aim2dat.aiida_workflows.cp2k.auxiliary_functions import estimate_comp_resources
+from aim2dat.wfl.aiida.cp2k.auxiliary_functions import estimate_comp_resources
 from aim2dat.io import read_yaml_file
 
 

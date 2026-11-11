@@ -10,8 +10,8 @@ from aiida.engine import run_get_node
 
 # Internal library imports
 from workflow_utils import generate_work_function_node
-from aim2dat.aiida_workflows.workflow_builder import WorkflowBuilder, WorkflowProtocolError
-from aim2dat.aiida_workflows._workflow_builder_utils import _load_protocol
+from aim2dat.wfl import WorkflowBuilder, WorkflowProtocolError
+from aim2dat.wfl._workflow_builder_utils import _load_protocol
 from aim2dat.aiida_workflows.utils import obtain_value_from_aiida_node
 from aim2dat.io import read_yaml_file
 

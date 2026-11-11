@@ -45,6 +45,7 @@ Version 0.5.0
 * The ``__init__`` function of the ``strct.Structure`` class has now the keyword argument ``check_overlap`` to avoid errors due to positional overlap of sites. At the same time, the overlap check has been improved by increasing the tolerance. The ``append`` and ``from_file`` functions of the ``strct.StructureCollection`` class  have been adjusted accordingly as well (`PR #212 <https://github.com/aim2dat/aim2dat/pull/212>`_).
 * The ``strct.ext_analysis.calc_prdf`` and the ``strct.Structure.calc_ffingerprint`` functions have been revised to just return a single dicionary (`PR #216 <https://github.com/aim2dat/aim2dat/pull/216>`_).
 * The ``plots.PartialRDFPlot`` class has a new more general import function (``PartialRDFPlot.import_rdf``) replacing the ``PartialRDFPlot.import_ffingerprint`` function (`PR #216 <https://github.com/aim2dat/aim2dat/pull/216>`_).
+* All AiiDA workflows have been moved to the ``wfl`` sub-package to allowing shorter import paths and a flexible user interface in the future (`PR #219 <https://github.com/aim2dat/aim2dat/pull/219>`_).
 
 
 Version 0.4.0
